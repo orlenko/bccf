@@ -1,12 +1,12 @@
 {% load mezzanine_tags rating_tags i18n future %}
 
 <div class="panel rating">
-
+<h1>This is an override</h1>
 <p id="rating-{{ rating_object.id }}">
     {% if rating_average %}
     {% trans "Current rating" %}: {{ rating_average|floatformat }}
-    {{ rating_sum }}
-    {{ rating_count }}
+    Sum : {{ rating_sum }}
+    Count : {{ rating_count }}
     {% else %}
     {% trans "Currently unrated" %}
     {% endif %}

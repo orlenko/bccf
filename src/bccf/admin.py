@@ -1,6 +1,5 @@
 from django.contrib import admin
 from bccf.models import Topic
-from bccf.models import Rating
 from bccf.models import TopicLink
 
 
