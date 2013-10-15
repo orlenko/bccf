@@ -1,4 +1,4 @@
-bccf
+BCCF
 ====
 
 VNC BCCF Project
