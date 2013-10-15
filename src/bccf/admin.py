@@ -6,4 +6,3 @@ from bccf.models import TopicLink
 
 admin.site.register(Topic)
 admin.site.register(TopicLink)
-admin.site.register(Rating)
