@@ -5,7 +5,6 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 
 import logging
-
 log = logging.getLogger(__name__)
 
 try:
@@ -18,8 +17,6 @@ from bccf.forms import BCCFRatingForm
 from mezzanine.conf import settings
 from mezzanine.utils.cache import add_cache_bypass
 from mezzanine.utils.views import set_cookie
-
-log.debug("==========Inside right view==========")
 
 def initial_validation(request, prefix):
     """

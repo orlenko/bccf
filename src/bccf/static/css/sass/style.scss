@@ -545,8 +545,67 @@ textarea {
 // ==========================================================================
 
 // Your custom website styles for desktop go here...
+// Colors:
+$bccfColorHex: #6eb43f;
+$bccfColorRGBA: rgba(110, 180, 63, 0.90);
+$bccfColor2Hex: #00aeef;
+$bccfColor2RGBA: rgba(0, 174, 239, 0.90);
+$white: #fff;
 
+// Measurements
+$margins: 5px;
+$padding: 10px;
 
+// Content Slider CSS
+.bccf-slider {
+    margin: 0;
+    
+    .slide {
+        
+    }
+    
+    .content-header {
+        background-color: $bccfColorHex;
+        margin: 0 $margins;
+        cursor: pointer;
+        padding: $padding 0 0 0;
+        text-align: center;
+        
+        img {
+            box-shadow: none;
+        }
+        
+        h3 {
+            margin: 0;
+        }
+        
+        div {
+            display: none;
+        }
+    }
+    
+    .content-header-active {
+        background-color: $bccfColor2Hex;
+        border-bottom: $margins solid $bccfColor2Hex;
+    }
+}
+
+#contents-container {
+    background-color: $bccfColor2Hex;
+    padding: $padding;
+    margin: 0 ($margins - 1) 0 $margins;
+    width: auto;
+    color: $white;
+    
+    img {
+        display: block;
+        margin: auto;
+    }
+    
+    #close-btn {
+        display: none;
+    }
+}
 
 /* ==========================================================================
 /* -- Tablet Devices (Layout, Modifications, etc)
@@ -677,6 +736,44 @@ table td {
 // ==========================================================================
 
 // Your custom website styles for mobile devices go here...
+.bccf-slider {
 
+    .owl-wrapper > div[class$="owl-item"] {
+        position: relative;
+        left: -$margins*2;
+    }
+    
+    .active {
+        margin-right: $margins/2;
+    }
+    
+    .content-header-active {
+        border-bottom: none;
+    }
+}
+
+#contents-container {
+    background: $bccfColor2RGBA;
+    position: fixed !important;
+    max-height: 100% !important;
+    overflow-y: auto !important;
+    margin: 0;
+    top: 0;
+    left: 0;
+    z-index: 99 !important;
+    
+    #close-btn {
+        display: block;
+        color: $white;
+        font-weight: bold;
+        margin-bottom: $margins;
+        cursor: pointer;
+        text-align: right;
+        
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
 
 } /* End Mobile Media Query */

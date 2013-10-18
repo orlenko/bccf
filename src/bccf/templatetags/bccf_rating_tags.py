@@ -2,10 +2,7 @@ from mezzanine import template
 from bccf.forms import BCCFRatingForm
 
 import logging
-
 log = logging.getLogger(__name__)
-
-log.debug('==========rating_tags.py=============')
 
 register = template.Library()
 

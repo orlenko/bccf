@@ -8,10 +8,7 @@ from mezzanine.conf import settings
 from mezzanine.generic.models import Rating
 
 import logging
-
 log = logging.getLogger(__name__)
-
-log.debug("==========Inside right form==========")
 
 class RatingRenderer(RadioFieldRenderer):
     def render(self):
