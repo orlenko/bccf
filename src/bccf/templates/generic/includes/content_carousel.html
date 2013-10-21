@@ -70,7 +70,7 @@
         </div>
     </div>
     <div id="contents-container" class="col six center">
-        <a id="close-btn">CLOSE</a>
+        <a id="close-btn" href="#" onclick="reset()">CLOSE</a>
         <div id="contents"></div>
     </div>
 </div>
@@ -101,9 +101,6 @@
                 reset();
             }
         });
-        
-        // Close the content container (used for mobile)
-        $('#close-btn').on('click', function(e){reset();});
     });
     
     // Closes the content container, empties it, and resets the classes

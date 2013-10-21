@@ -553,8 +553,8 @@ $bccfColor2RGBA: rgba(0, 174, 239, 0.90);
 $white: #fff;
 
 // Measurements
-$margins: 5px;
-$padding: 10px;
+$margin10: 10px;
+$padding10: 10px;
 
 // Content Slider CSS
 .bccf-slider {
@@ -566,9 +566,9 @@ $padding: 10px;
     
     .content-header {
         background-color: $bccfColorHex;
-        margin: 0 $margins;
+        margin: 0 ($margin10/2);
         cursor: pointer;
-        padding: $padding 0 0 0;
+        padding: ($padding10) 0 0 0;
         text-align: center;
         
         img {
@@ -586,14 +586,14 @@ $padding: 10px;
     
     .content-header-active {
         background-color: $bccfColor2Hex;
-        border-bottom: $margins solid $bccfColor2Hex;
+        border-bottom: ($margin10) solid $bccfColor2Hex;
     }
 }
 
 #contents-container {
     background-color: $bccfColor2Hex;
-    padding: $padding;
-    margin: 0 ($margins - 1) 0 $margins;
+    padding: ($padding10);
+    margin: 0 (($margin10/2) - 1) 0 ($margin10/2);
     width: auto;
     color: $white;
     
@@ -740,11 +740,11 @@ table td {
 
     .owl-wrapper > div[class$="owl-item"] {
         position: relative;
-        left: -$margins*2;
+        left: -($margin10);
     }
     
     .active {
-        margin-right: $margins/2;
+        margin-right: ($margin10/4);
     }
     
     .content-header-active {
@@ -755,7 +755,7 @@ table td {
 #contents-container {
     background: $bccfColor2RGBA;
     position: fixed !important;
-    max-height: 100% !important;
+    height: 100vh !important;
     overflow-y: auto !important;
     margin: 0;
     top: 0;
@@ -766,7 +766,7 @@ table td {
         display: block;
         color: $white;
         font-weight: bold;
-        margin-bottom: $margins;
+        margin-bottom: ($margin10/2);
         cursor: pointer;
         text-align: right;
         
