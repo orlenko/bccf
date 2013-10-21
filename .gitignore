@@ -6,3 +6,6 @@ local_settings.py
 .pydevproject
 *.db
 *.log
+*~
+.sass-cache
+

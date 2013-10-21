@@ -1,0 +1,33 @@
+{% load mezzanine_tags rating_tags i18n future staticfiles %}
+
+<div class="panel my-rating">
+<p id="rating-{{ rating_object.id }}">
+</p>
+
+{% if not rated or request.user.is_authenticated %}
+<form method="post" action="{% url "rating" %}" id="rate-form">
+    {% nevercache %}
+    {% csrf_token %}
+    {% endnevercache %}
+    
+    <div id="rating-container">
+        {{ rating_form }}
+    </div>
+
+    <input type="submit" class="btn" value="{% trans "Rate" %}"
+        onclick="return $(this.form).find('input:checked').length == 1;">
+        
+    ({{ rating_count }} votes)
+</form>
+{% endif %}
+
+<br style="clear:both">
+</div>
+
+<!-- Activate proper number of stars -->
+<script type="text/javascript">
+    $(function() {
+        $('input.star').hide();
+        $('input.star').rating('select', ({{ rating_average|floatformat:"0" }} - 1));
+    });
+</script>

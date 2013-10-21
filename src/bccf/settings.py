@@ -358,3 +358,8 @@ except ImportError:
     pass
 else:
     set_dynamic_settings(globals())
+    
+##################
+## OWN SETTINGS ##
+##################
+#JQUERY_FILENAME = "js/jquery-1.8.3-min.js"

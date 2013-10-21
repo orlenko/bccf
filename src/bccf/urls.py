@@ -54,6 +54,11 @@ urlpatterns = patterns("",
 
     # url("^$", "mezzanine.blog.views.blog_post_list", name="home"),
 
+    # MEZZANINE URL OVERRIDES
+    #------------------------
+    # The patterns here will be used to override Mezzanine-specific urls.
+    url("^rating/$", "views.views.rating", name="rating"),
+
     # MEZZANINE'S URLS
     # ----------------
     # ADD YOUR OWN URLPATTERNS *ABOVE* THE LINE BELOW.
