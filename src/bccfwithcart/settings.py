@@ -60,7 +60,6 @@
 #     (2, "Colour"),
 # )
 
-
 ######################
 # MEZZANINE SETTINGS #
 ######################
@@ -77,17 +76,10 @@
 # ADMIN_MENU_ORDER = (
 #     ("Content", ("pages.Page", "blog.BlogPost",
 #        "generic.ThreadedComment", ("Media Library", "fb_browse"),)),
+#     ("Shop", ("shop.Product", "shop.ProductOption", "shop.DiscountCode",
+#         "shop.Sale", "shop.Order")),
 #     ("Site", ("sites.Site", "redirects.Redirect", "conf.Setting")),
 #     ("Users", ("auth.User", "auth.Group",)),
-# )
-
-# A three item sequence, each containing a sequence of template tags
-# used to render the admin dashboard.
-#
-# DASHBOARD_TAGS = (
-#     ("blog_tags.quick_blog", "mezzanine_tags.app_list"),
-#     ("comment_tags.recent_comments",),
-#     ("mezzanine_tags.recent_actions",),
 # )
 
 # A sequence of templates used by the ``page_menu`` template tag. Each
@@ -101,6 +93,15 @@
 #     (1, "Top navigation bar", "pages/menus/dropdown.html"),
 #     (2, "Left-hand tree", "pages/menus/tree.html"),
 #     (3, "Footer", "pages/menus/footer.html"),
+# )
+
+# A three item sequence, each containing a sequence of template tags
+# used to render the admin dashboard.
+#
+# DASHBOARD_TAGS = (
+#     ("blog_tags.quick_blog", "mezzanine_tags.app_list"),
+#     ("comment_tags.recent_comments",),
+#     ("mezzanine_tags.recent_actions",),
 # )
 
 # A sequence of fields that will be injected into Mezzanine's (or any
@@ -183,9 +184,8 @@ SITE_ID = 1
 # to load the internationalization machinery.
 USE_I18N = False
 
-# Make these unique, and don't share it with anybody.
-SECRET_KEY = "ac80eaea-1f51-42ed-ab04-821a5126563f5828551c-1116-44df-9dd4-72809374476d4b168d32-46df-4462-942a-959cdf9c8bcc"
-NEVERCACHE_KEY = "2985023f-d904-479b-8c2d-fa0f2034b44f4fb12480-8a99-49e0-88bc-bc763f2245cfa2234156-1a5b-43f5-999c-71bc47751b1a"
+# Make this unique, and don't share it with anybody.
+SECRET_KEY = "0a4bb31c-7bdd-4654-8e96-0e7e3455e475c128e9b1-7c25-481b-aca9-4705d0c9d015345a498e-df50-4602-9dda-82bc0df08e6a"
 
 # Tuple of IP addresses, as strings, that:
 #   * See debug comments, when DEBUG is true
@@ -207,10 +207,6 @@ STATICFILES_FINDERS = (
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
-
-# The numeric mode to set newly-uploaded files to. The value should be
-# a mode you'd pass directly to os.chmod.
-FILE_UPLOAD_PERMISSIONS = 0644
 
 
 #############
@@ -306,7 +302,6 @@ INSTALLED_APPS = (
     "mezzanine.twitter",
     "mezzanine.accounts",
     #"mezzanine.mobile",
-    'bccf'
 )
 
 # List of processors used by RequestContext to populate the context.
@@ -331,12 +326,12 @@ MIDDLEWARE_CLASSES = (
     "mezzanine.core.middleware.UpdateCacheMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.redirects.middleware.RedirectFallbackMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "cartridge.shop.middleware.ShopMiddleware",
     "mezzanine.core.request.CurrentRequestMiddleware",
-    "mezzanine.core.middleware.RedirectFallbackMiddleware",
     "mezzanine.core.middleware.TemplateForDeviceMiddleware",
     "mezzanine.core.middleware.TemplateForHostMiddleware",
     "mezzanine.core.middleware.AdminLoginInterfaceSelectorMiddleware",
@@ -347,10 +342,12 @@ MIDDLEWARE_CLASSES = (
     "mezzanine.core.middleware.FetchFromCacheMiddleware",
 )
 
+
 # Store these package names here as they may change in the future since
 # at the moment we are using custom forks of them.
 PACKAGE_NAME_FILEBROWSER = "filebrowser_safe"
 PACKAGE_NAME_GRAPPELLI = "grappelli_safe"
+
 
 #########################
 # OPTIONAL APPLICATIONS #
@@ -366,31 +363,6 @@ OPTIONAL_APPS = (
 )
 
 DEBUG_TOOLBAR_CONFIG = {"INTERCEPT_REDIRECTS": False}
-
-###################
-# DEPLOY SETTINGS #
-###################
-
-# These settings are used by the default fabfile.py provided.
-# Check fabfile.py for defaults.
-
-# FABRIC = {
-#     "SSH_USER": "", # SSH username
-#     "SSH_PASS":  "", # SSH password (consider key-based authentication)
-#     "SSH_KEY_PATH":  "", # Local path to SSH key file, for key-based auth
-#     "HOSTS": [], # List of hosts to deploy to
-#     "VIRTUALENV_HOME":  "", # Absolute remote path for virtualenvs
-#     "PROJECT_NAME": "", # Unique identifier for project
-#     "REQUIREMENTS_PATH": "", # Path to pip requirements, relative to project
-#     "GUNICORN_PORT": 8000, # Port gunicorn will listen on
-#     "LOCALE": "en_US.UTF-8", # Should end with ".UTF-8"
-#     "LIVE_HOSTNAME": "www.example.com", # Host for public site.
-#     "REPO_URL": "", # Git or Mercurial remote repo URL for the project
-#     "DB_PASS": "", # Live database password
-#     "ADMIN_PASS": "", # Live admin user password
-#     "SECRET_KEY": SECRET_KEY,
-#     "NEVERCACHE_KEY": NEVERCACHE_KEY,
-# }
 
 
 ##################
@@ -412,18 +384,6 @@ except ImportError:
 
 # set_dynamic_settings() will rewrite globals based on what has been
 # defined so far, in order to provide some better defaults where
-# applicable. We also allow this settings module to be imported
-# without Mezzanine installed, as the case may be when using the
-# fabfile, where setting the dynamic settings below isn't strictly
-# required.
-try:
-    from mezzanine.utils.conf import set_dynamic_settings
-except ImportError:
-    pass
-else:
-    set_dynamic_settings(globals())
-
-##################
-## OWN SETTINGS ##
-##################
-#JQUERY_FILENAME = "js/jquery-1.8.3-min.js"
+# applicable.
+from mezzanine.utils.conf import set_dynamic_settings
+set_dynamic_settings(globals())

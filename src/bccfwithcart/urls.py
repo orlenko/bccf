@@ -22,7 +22,7 @@ urlpatterns = patterns("",
     url("^account/orders/$", "cartridge.shop.views.order_history",
         name="shop_order_history"),
 
-    # We don't want to presume how your homepage works, so here are a
+     # We don't want to presume how your homepage works, so here are a
     # few patterns you can use to set it up.
 
     # HOMEPAGE AS STATIC TEMPLATE
@@ -40,12 +40,15 @@ urlpatterns = patterns("",
     # homepage can be managed via the page tree in the admin. If you
     # use this pattern, you'll need to create a page in the page tree,
     # and specify its URL (in the Meta Data section) as "/", which
-    # is the value used below in the ``{"slug": "/"}`` part.
-    # Also note that the normal rule of adding a custom
+    # is the value used below in the ``{"slug": "/"}`` part. Make
+    # sure to uncheck all templates for the "show in menus" field
+    # when you create the page, since the link to the homepage is
+    # always hard-coded into all the page menus that display navigation
+    # on the site. Also note that the normal rule of adding a custom
     # template per page with the template name using the page's slug
     # doesn't apply here, since we can't have a template called
-    # "/.html" - so for this case, the template "pages/index.html"
-    # should be used if you want to customize the homepage's template.
+    # "/.html" - so for this case, the template "pages/index.html" can
+    # be used.
 
     # url("^$", "mezzanine.pages.views.page", {"slug": "/"}, name="home"),
 
@@ -58,11 +61,6 @@ urlpatterns = patterns("",
     # page tree in the admin if it was installed.
 
     # url("^$", "mezzanine.blog.views.blog_post_list", name="home"),
-
-    # MEZZANINE URL OVERRIDES
-    #------------------------
-    # The patterns here will be used to override Mezzanine-specific urls.
-    url("^rating/$", "views.views.rating", name="rating"),
 
     # MEZZANINE'S URLS
     # ----------------
