@@ -8,6 +8,7 @@ from mezzanine.conf import settings
 from mezzanine.generic.models import Rating
 
 import logging
+from bccf.models import UserProfile
 log = logging.getLogger(__name__)
 
 class RatingRenderer(RadioFieldRenderer):
@@ -66,3 +67,9 @@ class BCCFRatingForm(CommentSecurityForm):
             rating_instance = Rating(value=rating_value)
             rating_manager.add(rating_instance)
         return rating_instance
+
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        exclude = ('membership_order',)
+        model = UserProfile

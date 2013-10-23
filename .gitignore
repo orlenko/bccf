@@ -8,4 +8,7 @@ local_settings.py
 *.log
 *~
 .sass-cache
+mezzanine
+cartridge
+django
 

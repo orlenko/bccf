@@ -1,0 +1,10 @@
+{% overextends "shop/complete.html" %}
+
+{% block main %}
+	{{ block.super }}
+	{% if request.GET.next %}
+	<div class="nextaction">
+		<a class="btn btn-large btn-primary" href="{{ request.GET.next }}">Continue</a>
+	</div>
+	{% endif %}
+{% endblock %}

@@ -22,6 +22,13 @@ urlpatterns = patterns("",
     url("^account/orders/$", "cartridge.shop.views.order_history",
         name="shop_order_history"),
 
+    url(r'^member/profile/$', 'bccf.views.member.profile', name='member-profile'),
+    url(r'^member/membership/(?P<slug>.*)/$', 'bccf.views.member.membership', name='member-membership'),
+
+    url(r'^parents/$', 'bccf.views.parents.parents_page', name='parents-page'),
+    url(r'^parents/event/signup/(?P<slug>.*)/$', 'bccf.views.events.parents_event_signup', name='parents-event-signup'),
+    url(r'^parents/event/(?P<slug>.*)/$', 'bccf.views.events.parents_event', name='parents-event'),
+
     # We don't want to presume how your homepage works, so here are a
     # few patterns you can use to set it up.
 

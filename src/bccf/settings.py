@@ -393,6 +393,24 @@ DEBUG_TOOLBAR_CONFIG = {"INTERCEPT_REDIRECTS": False}
 # }
 
 
+AUTH_PROFILE_MODULE = 'bccf.UserProfile'
+ACCOUNTS_PROFILE_FORM_EXCLUDE_FIELDS = ['membership_order']
+
+ALLOWED_HOSTS = ['*']
+
+
+#######################
+# MEMBERSHIP SETTINGS #
+#######################
+
+PARENT_MEMBERSHIP_CATEGORY = 'membership-parents'
+PROFESSIONAL_MEMBERSHIP_CATEGORY = 'membership-professionals'
+ORGANIZATION_MEMBERSHIP_CATEGORY = 'membership-organizations'
+CORPORATE_MEMBERSHIP_CATEGORY = 'membership-corporate'
+EMPLOYEE_MEMBERSHIP_CATEGORY = 'membership-corporate-employee'
+
+
+
 ##################
 # LOCAL SETTINGS #
 ##################
