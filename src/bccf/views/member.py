@@ -27,7 +27,6 @@ def membership(request, slug):
         if categ.slug in slugs:
             the_category = categ
             break
-    request.GET.get('next', '/')
     if not the_category:
         messages.warning(request, 'Sorry, could not find membership types matching "%s"' % slug)
         return HttpResponseRedirect()
@@ -38,6 +37,7 @@ def membership(request, slug):
         request.cart.add_item(product.variations.all()[0], 1)
         recalculate_cart(request)
         messages.info(request, "Your membership has been added to cart")
+        request.session['aftercheckout'] = request.GET.get('next', '/')
         if request.cart.total_price():
             return redirect("shop_checkout")
         else:
