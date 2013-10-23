@@ -1,13 +1,14 @@
-from django.db import models
-from django.contrib.auth.models import User
-from bccf.fields import MyImageField
-from mezzanine.utils.models import upload_to
-from cartridge.shop.models import Product
-from django.conf import settings
-from mezzanine.core.models import Slugged, Displayable, RichText
-from django.db.models import permalink
 from cartridge.shop.fields import MoneyField
+from cartridge.shop.models import Product, Order
+from django.conf import settings
+from django.contrib.auth.models import User
+from django.db import models
+from django.db.models import permalink
 from mezzanine.core.fields import RichTextField
+from mezzanine.core.models import Displayable
+from mezzanine.utils.models import upload_to
+
+from bccf.fields import MyImageField
 
 
 class Topic(models.Model):
@@ -48,9 +49,24 @@ class UserProfile(models.Model):
     @property
     def membership_product(self):
         if not self.membership_order:
+            # Special case: if this user has purchased anything at all, there might be a recent membership purchase
+            # In this case, we assign the most recent membership purchase as the membership order for this user.
+            for order in Order.objects.filter(user_id=self.user_id).order_by('-time'):  # @UndefinedVariable
+                for order_item in order.items.all():
+                    product = Product.objects.get(sku=order_item.sku)
+                    for category in product.categories.all():
+                        if category.title.startswith('Membership'):
+                            self.membership_order = order
+                            self.save()
+                            break
+                    if self.membership_order:
+                        break
+                if self.membership_order:
+                    break
+        if not self.membership_order:
             return None
         for order_item in self.membership_order.items.all():
-            product = Product.objects.get(sku=order_item.sku)  # @UndefinedVariable get
+            product = Product.objects.get(sku=order_item.sku)
             for category in product.categories.all():
                 if category.title.startswith('Membership'):
                     return product

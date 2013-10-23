@@ -3,14 +3,10 @@
 {% block main %}
 	{{ block.super }}
 
-	overextended!
 
-	session: {{request.session}}
-
-	aftercheckout: {{request.session.aftercheckout}}
 	{% if request.GET.next or request.session.aftercheckout %}
-	<div class="nextaction">
-		<a class="btn btn-large btn-primary" href="{{ request.GET.next|default:request.session.aftercheckout }}">Continue</a>
-	</div>
+		<div class="nextaction">
+			<a class="btn btn-large btn-primary" href="{{ request.GET.next|default:request.session.aftercheckout }}">Continue</a>
+		</div>
 	{% endif %}
 {% endblock %}
