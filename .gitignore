@@ -9,7 +9,6 @@ local_settings.py
 *~
 .sass-cache
 mezzanine
-cartridge
 django
 grappelli-safe
 
