@@ -1,4 +1,4 @@
-from cartridge.shop.models import Category, Product, Order
+from cartridge.shop.models import Category, Product, Order, ProductVariation
 from django.contrib import messages
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render_to_response, redirect
@@ -32,9 +32,9 @@ def membership(request, slug):
         return HttpResponseRedirect()
 
     if request.method == 'POST':
-        product_id = int(request.POST.get('product_id'))
-        product = Product.objects.get(id=product_id)
-        request.cart.add_item(product.variations.all()[0], 1)
+        variation_id = int(request.POST.get('variation_id'))
+        variation = ProductVariation.objects.get(id=variation_id)
+        request.cart.add_item(variation, 1)
         recalculate_cart(request)
         messages.info(request, "Your membership has been added to cart")
         request.session['aftercheckout'] = request.GET.get('next', '/')

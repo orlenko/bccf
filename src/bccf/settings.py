@@ -55,9 +55,40 @@
 
 # Sequence of value/name pairs for types of product options,
 # eg Size, Colour.
-SHOP_OPTION_TYPE_CHOICES = (
-    (1, "Subscription Term"),
-)
+
+# Option names
+OPTION_SUBSCRIPTION_TERM = 'Subscription Term'
+OPTION_BCCF_VOTING = 'BCCF Voting'
+OPTION_CREATE_EVENTS_FOR_PARENTS = 'Create Events for Parents'
+OPTION_DIRECTORY_LISTING = 'Directory Listing'
+OPTION_STORE_DISCOUNT = 'Store Discount'
+
+
+SHOP_OPTION_TYPE_CHOICES = [(i+1, label) for i, label in enumerate([
+
+    # Period of subscription - annual, quarterly, monthly
+    OPTION_SUBSCRIPTION_TERM,
+
+    # Parent membership perks
+    OPTION_BCCF_VOTING,
+
+    # Professional membership perks
+    OPTION_CREATE_EVENTS_FOR_PARENTS, # Level 2: accredited programs only; Level 3: +other program types
+    OPTION_DIRECTORY_LISTING, # Level 1: basic listing; Level 2: Business Card style; Level 3: High Profile Listing
+    OPTION_STORE_DISCOUNT, # Level 3: 15% discount
+
+])]
+
+def get_option_number(option_name):
+    for num, name in SHOP_OPTION_TYPE_CHOICES:
+        if name == option_name:
+            return num
+
+
+def get_option_name(option_number):
+    for num, name in SHOP_OPTION_TYPE_CHOICES:
+        if num == option_number:
+            return name
 
 
 ######################
