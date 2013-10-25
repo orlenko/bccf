@@ -9,6 +9,7 @@ from django.template.context import Context
 from django.template.loader import get_template
 from mezzanine import template
 from mezzanine.conf import settings
+from bccf.models import TopicLink
 
 # Try to import PIL in either of the two ways it can end up installed.
 try:
@@ -140,3 +141,9 @@ def bccf_thumbnail(image_url, width, height, quality=95):
             pass
         return image_url
     return thumb_url
+
+
+@register.assignment_tag
+def topics_for(record):
+    return [topic_link.topic for topic_link in TopicLink.objects.filter(
+        model_name=record._meta.db_table, entity_id=record.id)]

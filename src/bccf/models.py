@@ -10,7 +10,10 @@ from mezzanine.core.models import Displayable
 from mezzanine.utils.models import upload_to
 
 from bccf.fields import MyImageField
-from bccf.settings import OPTION_SUBSCRIPTION_TERM, get_option_number
+from bccf.settings import OPTION_SUBSCRIPTION_TERM, get_option_number, INSTALLED_APPS
+import logging
+
+log = logging.getLogger(__name__)
 
 
 class Topic(models.Model):
@@ -29,8 +32,31 @@ class TopicLink(models.Model):
     entity_id = models.IntegerField()
 
     @property
+    def target_model(self):
+        for appname in INSTALLED_APPS:
+            try:
+                module = __import__('%s.models' % appname).models
+                for attrname in dir(module):
+                    attr = getattr(module, attrname)
+                    try:
+                        if self.model_name == attr._meta.db_table:
+                            return attr
+                        else:
+                            pass
+                            #log.debug('Nope, %r != %r' % (self.model_name, attr._meta.db_table))
+                    except:
+                        pass
+                        #log.debug('Failed to get table from %s.%s' % (appname, attrname))
+            except:
+                pass
+                #log.debug('Failed to import %s.models' % (appname, ))
+
+    @property
     def target(self):
-        return globals()[self.model_name].objects.get(pk=self.entity_id)
+        model_class = self.target_model
+        if not model_class:
+            return None
+        return model_class.objects.get(pk=self.entity_id)
 
     def __unicode__(self):
         return '%s - %s' % (self.topic.name, self.target)
