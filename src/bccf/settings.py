@@ -387,6 +387,14 @@ MIDDLEWARE_CLASSES = (
 PACKAGE_NAME_FILEBROWSER = "filebrowser_safe"
 PACKAGE_NAME_GRAPPELLI = "grappelli_safe"
 
+def check_superuser(user, post):
+    if user.is_superuser:
+        return True
+    return False
+
+PYBB_PREMODERATION = check_superuser
+
+
 
 #########################
 # OPTIONAL APPLICATIONS #
