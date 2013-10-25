@@ -1,0 +1,21 @@
+{% extends "pages/page.html" %}
+
+{% load mezzanine_tags bccf_tags %}
+
+{% block contentclass %}green{% endblock %}
+{% block main %}{{ block.super }}
+
+	<div id="main-content-block">
+		{% if newspost.featured_image %}
+			<img class="featured-image" src="{{ MEDIA_URL }}{% bccf_thumbnail page.featured_image 250 0 %}" />
+		{% endif %}
+		<h2>{{newspost.title}}</h2>
+		<p><span style="font-weight:bold;">Published on:</span> {{ newspost.publish_date|date:"M d, Y" }} at {{ newspost.publish_date|date:"g:iA" }}</p>
+
+		{% editable newspost.content %}
+			{{ newspost.content|richtext_filter|safe }}
+		{% endeditable %}
+	</div>
+
+
+{% endblock %}
