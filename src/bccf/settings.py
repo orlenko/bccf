@@ -387,12 +387,12 @@ MIDDLEWARE_CLASSES = (
 PACKAGE_NAME_FILEBROWSER = "filebrowser_safe"
 PACKAGE_NAME_GRAPPELLI = "grappelli_safe"
 
-def check_superuser(user, post):
-    if user.is_superuser:
-        return True
+def forum_instant_post(user, post):
+    if user.profile:
+        return user.profile.can_post_on_forum(post)
     return False
 
-PYBB_PREMODERATION = check_superuser
+PYBB_PREMODERATION = forum_instant_post
 
 
 
@@ -438,7 +438,11 @@ DEBUG_TOOLBAR_CONFIG = {"INTERCEPT_REDIRECTS": False}
 
 
 AUTH_PROFILE_MODULE = 'bccf.UserProfile'
-ACCOUNTS_PROFILE_FORM_EXCLUDE_FIELDS = ['membership_order']
+ACCOUNTS_PROFILE_FORM_EXCLUDE_FIELDS = [
+    'membership_order',
+    'is_forum_moderator',
+]
+ACCOUNTS_PROFILE_VIEWS_ENABLED = True
 
 GRAPPELLI_ADMIN_TITLE = 'BCCF'
 GRAPPELLI_ADMIN_HEADLINE = 'BCCF'

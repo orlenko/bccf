@@ -44,9 +44,13 @@ class UserProfile(models.Model):
         help_text='User photo')
     admin_thumb_field = "photo"
     membership_order = models.ForeignKey('shop.Order', null=True, blank=True)
+    is_forum_moderator = models.NullBooleanField(null=True, blank=True, default=False)
 
     def __unicode__(self):
         return 'Profile of %s' % (self.user.get_full_name() or self.user.username)
+
+    def can_post_on_forum(self, post):
+        return self.is_forum_moderator
 
     @property
     def membership_product_variation(self):
