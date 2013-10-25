@@ -1,5 +1,6 @@
 from cartridge.shop.fields import MoneyField
-from cartridge.shop.models import Product, Order, ProductVariation
+from cartridge.shop.models import Order, ProductVariation
+from dateutil.relativedelta import relativedelta
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
@@ -10,9 +11,6 @@ from mezzanine.utils.models import upload_to
 
 from bccf.fields import MyImageField
 from bccf.settings import OPTION_SUBSCRIPTION_TERM, get_option_number
-import datetime
-from bccf.util.timeutil import datetime_to_timestamp, quarter_boundaries
-from dateutil.relativedelta import relativedelta
 
 
 class Topic(models.Model):

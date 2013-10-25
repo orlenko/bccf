@@ -3,6 +3,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 
 from mezzanine.core.views import direct_to_template
+from bccf.feeds import EventsForParentsFeed
 
 
 admin.autodiscover()
@@ -19,6 +20,10 @@ urlpatterns = patterns("",
 
     # Cartridge URLs.
     ("^shop/", include("cartridge.shop.urls")),
+
+    # Podcasts
+    #('^podcasts/', include('podcasting.urls')),
+
     url("^account/orders/$", "cartridge.shop.views.order_history",
         name="shop_order_history"),
 
@@ -26,6 +31,7 @@ urlpatterns = patterns("",
     url(r'^member/membership/(?P<slug>.*)/$', 'bccf.views.member.membership', name='member-membership'),
 
     url(r'^parents/$', 'bccf.views.parents.parents_page', name='parents-page'),
+    url(r'^parents/event/feed/', EventsForParentsFeed()),
     url(r'^parents/event/signup/(?P<slug>.*)/$', 'bccf.views.events.parents_event_signup', name='parents-event-signup'),
     url(r'^parents/event/(?P<slug>.*)/$', 'bccf.views.events.parents_event', name='parents-event'),
 
