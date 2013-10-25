@@ -11,4 +11,5 @@ local_settings.py
 mezzanine
 django
 grappelli-safe
-
+askbot-devel
+pybbm

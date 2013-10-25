@@ -338,6 +338,7 @@ INSTALLED_APPS = (
     "mezzanine.accounts",
     #"mezzanine.mobile",
     'news',
+    'pybb',
     'bccf',
 )
 
@@ -354,6 +355,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.request",
     "django.core.context_processors.tz",
     "mezzanine.conf.context_processors.settings",
+    'pybb.context_processors.processor',
 )
 
 # List of middleware classes to use. Order is important; in the request phase,
@@ -377,12 +379,14 @@ MIDDLEWARE_CLASSES = (
     # "mezzanine.core.middleware.SSLRedirectMiddleware",
     "mezzanine.pages.middleware.PageMiddleware",
     "mezzanine.core.middleware.FetchFromCacheMiddleware",
+    'pybb.middleware.PybbMiddleware',
 )
 
 # Store these package names here as they may change in the future since
 # at the moment we are using custom forks of them.
 PACKAGE_NAME_FILEBROWSER = "filebrowser_safe"
 PACKAGE_NAME_GRAPPELLI = "grappelli_safe"
+
 
 #########################
 # OPTIONAL APPLICATIONS #

@@ -18,6 +18,8 @@ urlpatterns = patterns("",
     # admin interface, which would be marginally more secure.
     ("^admin/", include(admin.site.urls)),
 
+    (r'^forum/', include('pybb.urls', namespace='pybb')),
+
     url(r'^news/(?P<news>.*)/$', 'bccf.views.newsposts.newspost', {}, name='news-post'),
 
     # Cartridge URLs.
