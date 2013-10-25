@@ -4,7 +4,7 @@ from django.contrib import admin
 from mezzanine.core.admin import DisplayableAdmin
 
 from bccf.models import (Topic, TopicLink, Settings, EventForProfessionals,
-    EventForParents)
+    EventForParents, Article, Magazine, TipSheet, DownloadableForm, Video)
 
 
 class SettingsAdmin(admin.ModelAdmin):
@@ -38,3 +38,8 @@ admin.site.register(TopicLink)
 admin.site.register(Settings, SettingsAdmin)
 admin.site.register(EventForParents, EventAdmin)
 admin.site.register(EventForProfessionals, EventAdmin)
+admin.site.register(Article)
+admin.site.register(Magazine)
+admin.site.register(TipSheet)
+admin.site.register(DownloadableForm)
+admin.site.register(Video)

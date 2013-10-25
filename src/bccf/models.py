@@ -1,3 +1,5 @@
+import logging
+
 from cartridge.shop.fields import MoneyField
 from cartridge.shop.models import Order, ProductVariation
 from dateutil.relativedelta import relativedelta
@@ -5,13 +7,14 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import permalink
-from mezzanine.core.fields import RichTextField
-from mezzanine.core.models import Displayable
-from mezzanine.utils.models import upload_to
+from mezzanine.core.fields import FileField, RichTextField
+from mezzanine.core.models import Displayable, Ownable, RichText
+from mezzanine.utils.models import upload_to, AdminThumbMixin
 
 from bccf.fields import MyImageField
-from bccf.settings import OPTION_SUBSCRIPTION_TERM, get_option_number, INSTALLED_APPS
-import logging
+from bccf.settings import (OPTION_SUBSCRIPTION_TERM, get_option_number,
+    INSTALLED_APPS)
+
 
 log = logging.getLogger(__name__)
 
@@ -186,3 +189,50 @@ class Settings(models.Model):
         retval = getattr(settings, name, default_value or '-')
         cls.objects.create(name=name, value=retval)
         return retval
+
+
+class DocumentResource(Displayable, Ownable, RichText, AdminThumbMixin):
+    attached_document = FileField('Downloadable Document',
+        upload_to=upload_to("bccf.DocumentResource.attachment_file", "resource/document"),
+        extensions=['.doc','.pdf','.rtf','.txt','.odf','.docx', '.xls', '.xlsx', '.ppt', '.pptx'],
+        max_length=255,
+        null=True,
+        blank=True,
+        help_text='You can upload an office document or a PDF file. '
+            'Acceptable file types: .doc, .pdf, .rtf, .txt, .odf, .docx, .xls, .xlsx, .ppt, .pptx.')
+    class Meta:
+        abstract = True
+
+
+class Magazine(DocumentResource):
+    pass
+
+
+class Article(DocumentResource):
+    pass
+
+
+class TipSheet(DocumentResource):
+    pass
+
+
+class DownloadableForm(DocumentResource):
+    pass
+
+
+class Video(Displayable, Ownable, RichText, AdminThumbMixin):
+    video_url = models.URLField("Video", max_length=1024, blank=True, default='', null=True,
+        help_text='Paste a YouTube URL here. '
+            'Example: http://www.youtube.com/watch?v=6Bm7DVqJTHo')
+    link_url = models.URLField("Web Link", max_length=1024, blank=True, default='', null=True,
+        help_text='A link to a web resource. '
+            'The address must start with http:// or https://. '
+            'For example: http://plei.publiclegaled.bc.ca')
+    audio_file = FileField("Video File",
+        upload_to=upload_to("bccf.Video.video_file", "resource/video"),
+        extensions=['.avi', '.flv', '.mkv', '.mov', '.mp4', '.ogg', '.wmv'],
+        max_length=255,
+        null=True,
+        blank=True,
+        help_text='You can upload a video file. '
+            'Acceptable file types: .avi, .flv, .mkv, .mov, .mp4, .ogg, .wmv.')
