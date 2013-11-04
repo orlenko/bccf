@@ -1,0 +1,101 @@
+<div class="section container row">
+    <div class="col three">
+        <!-- Common Fields -->
+        <div class="section twelve row section-head">
+            <span>Common Fields</span>
+        </div>
+        <div class="twelve field-container">
+            <div class="section twelve row field-container-inner">
+                <span id="text-field"  class="field draggable">Text Field</span>
+            </div>
+            <div class="section twelve row field-container-inner">
+                <span id="textarea-field" class="field draggable">Multiline Text Field</span>
+            </div>
+            <div class="section twelve row field-container-inner">
+                <span id="password-field" class="field draggable">Password Field</span>
+            </div>
+            <div class="section twelve row field-container-inner">
+                <span id="select-field" class="field draggable">Select Field</span>
+            </div>
+            <div class="section twelve row field-container-inner">
+                <span id="multiselect-field" class="field draggable">Multiselect Field</span>
+            </div>
+            <div class="section twelve row field-container-inner">
+                <span id="checkbox-field" class="field draggable">Checkbox Field</span>
+            </div>
+            <div class="section twelve row field-container-inner">
+                <span id="radioset-field" class="field draggable">Radioset Field</span>
+            </div>
+        </div>
+        
+        <!-- Static Fields -->
+        <div class="section twelve row section-head">
+            <span>Static Fields</span>
+        </div>
+        <div class="twelve field-container">
+            <div class="section twelve row field-container-inner">
+                <span id="static-text-field" class="field draggable">Static Text</span>
+            </div>
+            <div class="section twelve row field-container-inner">
+                <span id="static-section-field" class="field draggable">Section Heading</span>
+            </div>
+        </div>
+        
+        <!-- Settings Buttons -->
+        {% block settings_buttons %}
+        <div class="section twelve row section-head">
+            <span>Settings Buttons</span>
+        </div>
+        <div class="twelve field-container">
+            <div class="section twelve row field-container-inner">
+                <a id="add-row" href="#">Add Fieldset</a>
+            </div>
+            <div class="section twelve row field-container-inner">
+                <a id="import-btn" href="#">Import Form</a>
+            </div>
+            <div class="section twelve row field-container-inner">
+                <a id="export-btn" href="#">Export Form</a>
+            </div>
+        </div>
+        {% endblock %}
+    </div>
+    <div id="form-container" class="col nine">
+        <form action="">
+            <input type="text" id="form-title" class="form-title section twelve" placeholder="Form Title" />
+            <ul id="form-body" class="section row-one twelve no-style-list sortable"></ul>
+        </form>
+    </div>
+</div>
+
+<form id="form_structure_form" action="/save/" method="POST">
+    {% csrf_token %}
+    <input id="form_structure_title" type="hidden" name="form_structure_title"/>
+    <input id="form_structure_data" type="hidden" name="form_structure_data"/>
+    <input id="form_structure_type" type="hidden" name="form_structure_type"/>
+</form>
+
+<!-- Dialog Box -->
+<div id="settings-box">
+    <h3 id="settings-title"></h3>
+    <table></table>
+</div>
+
+<script>
+    $(function() {
+        $(".draggable").draggable({
+            revert: true,
+            revertDuration: 0, 
+        });
+        $(".form_row").draggable();
+        $(".sortable").sortable().disableSelection();
+        
+        // Link Buttons
+        $("#add-row").on('click', function(){add_row();});
+        $("#export-btn").on('click', function(){export_form();});
+        $("#import-btn").on('click', function(){import_form();});
+        
+        {% if form_structure %}
+        import_form({{ form_structure|safe }})
+        {% endif %}
+    });
+</script>

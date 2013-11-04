@@ -544,66 +544,147 @@ textarea {
 // -- Custom Website Styles for Desktop
 // ==========================================================================
 
-// Your custom website styles for desktop go here...
-// Colors:
-$bccfColorHex: #6eb43f;
-$bccfColorRGBA: rgba(110, 180, 63, 0.90);
-$bccfColor2Hex: #00aeef;
-$bccfColor2RGBA: rgba(0, 174, 239, 0.90);
-$white: #fff;
-
-// Measurements
-$margin10: 10px;
+// Sizes
 $padding10: 10px;
+$margin10: 10px;
+$height10: 10px;
+$width10: 10px;
 
-// Content Slider CSS
-.bccf-slider {
-    margin: 0;
-    
-    .slide {
+// Colors
+$gray: #CCC;
+$lightblue: lightblue;
+$lightgreen: lightgreen;
+
+// Defaults
+$border: 1px solid #CCC;
+
+.icon {
+    height: 22px;
+    width: 22px;
+}
+
+// Your custom website styles for desktop go here...
+header {
+    border-bottom: 1px solid #CCC;
+    padding-left: ($padding10);
+    div {
+        padding-right: ($padding10);
+        text-align: right;
+        height: 50px;
+        line-height: 50px;
         
-    }
-    
-    .content-header {
-        background-color: $bccfColorHex;
-        margin: 0 ($margin10/2);
-        cursor: pointer;
-        padding: ($padding10) 0 0 0;
-        text-align: center;
-        
-        img {
-            box-shadow: none;
+        a {
+            padding: ($padding10);
+            text-decoration: none;
+            
+            &:hover {
+                text-decoration: underline;
+            }
         }
-        
-        h3 {
-            margin: 0;
-        }
-        
-        > div {
-            display: none;
-        }
-    }
-    
-    .content-header-active {
-        background-color: $bccfColor2Hex;
-        border-bottom: ($margin10) solid $bccfColor2Hex;
     }
 }
 
-#contents-container {
-    background-color: $bccfColor2Hex;
-    padding: ($padding10);
-    margin: 0 (($margin10/2) - 1) 0 ($margin10/2);
-    width: auto;
-    color: $white;
+.section-head {
+    @include font-size(20);
+}
+
+.field-container {
+    border: $border;
+    padding: 0;
     
-    img {
-        display: block;
-        margin: auto;
+    .field-container-inner {
+        padding: $padding10;
+        
+        .field {
+            cursor: move;
+            z-index: 99 !important
+        }
+        
+        &:hover {
+            background-color: $lightblue
+        }
     }
     
-    #close-btn {
-        display: none;
+    a {
+        display: block;
+    }
+}
+
+#form-body {
+    //border: $border;
+    
+    .form_row {
+        
+        fieldset {
+            border: $border;
+            min-height: ($height10*2.5);
+            
+            li {
+                min-height: 30px;
+                line-height: 30px;
+            }
+            
+            .icon-container {
+                float: right;
+                               
+                b {
+                    margin:($margin10/2);
+                    float: right;
+                    display: block;
+                }
+                
+                .sort-icon {
+                    @extend .icon;
+                    cursor: move;
+                    background-image: url('../images/sort_icon.png');
+                    
+                    &:hover {
+                        background-image: url('../images/sort_icon_hover.png');
+                    }
+                }
+                
+                .edit-icon {
+                    @extend .icon;
+                    cursor: pointer;
+                    background-image: url('../images/edit_icon.png');
+                }
+                
+                .del-icon {
+                    @extend .icon;
+                    cursor: pointer;
+                    background-image: url('../images/del_icon.png');
+                }
+            }
+        }
+    }
+    
+    .row-active {
+        background-color: ($lightgreen);
+    }
+}
+
+#form_view {
+    fieldset {
+        border: 1px solid #ccc;
+        
+        legend {
+            margin-left: ($margin10);
+        }
+    }
+    ul {
+        label {
+            width: ($width10*10);
+            display: inline-block;
+        }
+        li {
+            margin: ($margin10);
+        }
+        ul {
+            @extend .no-style-list;
+            li {
+                display: inline;
+            }
+        }
     }
 }
 
@@ -736,44 +817,6 @@ table td {
 // ==========================================================================
 
 // Your custom website styles for mobile devices go here...
-.bccf-slider {
 
-    .owl-wrapper > div[class$="owl-item"] {
-        position: relative;
-        left: -($margin10);
-    }
-    
-    .active {
-        margin-right: ($margin10/4);
-    }
-    
-    .content-header-active {
-        border-bottom: none;
-    }
-}
-
-#contents-container {
-    background: $bccfColor2RGBA;
-    position: fixed !important;
-    height: 100vh !important;
-    overflow-y: auto !important;
-    margin: 0;
-    top: 0;
-    left: 0;
-    z-index: 99 !important;
-    
-    #close-btn {
-        display: block;
-        color: $white;
-        font-weight: bold;
-        margin-bottom: ($margin10/2);
-        cursor: pointer;
-        text-align: right;
-        
-        &:hover {
-            text-decoration: underline;
-        }
-    }
-}
 
 } /* End Mobile Media Query */

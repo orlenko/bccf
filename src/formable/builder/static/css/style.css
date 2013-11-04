@@ -438,7 +438,7 @@ nav ul, nav ol {
 
 /* Remove Styling from List */
 /* line 261, sass/style.scss */
-.no-style-list {
+.no-style-list, #form_view ul ul {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -807,59 +807,134 @@ textarea {
   width: 100%;
 }
 
-/* line 560, sass/style.scss */
-.bccf-slider {
-  margin: 0;
-}
-/* line 567, sass/style.scss */
-.bccf-slider .content-header {
-  background-color: #6eb43f;
-  margin: 0 5px;
-  cursor: pointer;
-  padding: 10px 0 0 0;
-  text-align: center;
-}
-/* line 574, sass/style.scss */
-.bccf-slider .content-header img {
-  box-shadow: none;
-}
-/* line 578, sass/style.scss */
-.bccf-slider .content-header h3 {
-  margin: 0;
-}
-/* line 582, sass/style.scss */
-.bccf-slider .content-header > div {
-  display: none;
-}
-/* line 587, sass/style.scss */
-.bccf-slider .content-header-active {
-  background-color: #00aeef;
-  border-bottom: 10px solid #00aeef;
+/* line 561, sass/style.scss */
+.icon, #form-body .form_row fieldset .icon-container .sort-icon, #form-body .form_row fieldset .icon-container .edit-icon, #form-body .form_row fieldset .icon-container .del-icon {
+  height: 22px;
+  width: 22px;
 }
 
-/* line 593, sass/style.scss */
-#contents-container {
-  background-color: #00aeef;
+/* line 567, sass/style.scss */
+header {
+  border-bottom: 1px solid #CCC;
+  padding-left: 10px;
+}
+/* line 570, sass/style.scss */
+header div {
+  padding-right: 10px;
+  text-align: right;
+  height: 50px;
+  line-height: 50px;
+}
+/* line 576, sass/style.scss */
+header div a {
   padding: 10px;
-  margin: 0 4px 0 5px;
-  width: auto;
-  color: white;
+  text-decoration: none;
 }
-/* line 600, sass/style.scss */
-#contents-container img {
+/* line 580, sass/style.scss */
+header div a:hover {
+  text-decoration: underline;
+}
+
+/* line 587, sass/style.scss */
+.section-head {
+  font-size: 20px;
+  font-size: 1.25rem;
+}
+
+/* line 591, sass/style.scss */
+.field-container {
+  border: 1px solid #cccccc;
+  padding: 0;
+}
+/* line 595, sass/style.scss */
+.field-container .field-container-inner {
+  padding: 10px;
+}
+/* line 598, sass/style.scss */
+.field-container .field-container-inner .field {
+  cursor: move;
+  z-index: 99 !important;
+}
+/* line 603, sass/style.scss */
+.field-container .field-container-inner:hover {
+  background-color: lightblue;
+}
+/* line 608, sass/style.scss */
+.field-container a {
   display: block;
-  margin: auto;
 }
-/* line 605, sass/style.scss */
-#contents-container #close-btn {
-  display: none;
+
+/* line 618, sass/style.scss */
+#form-body .form_row fieldset {
+  border: 1px solid #cccccc;
+  min-height: 25px;
+}
+/* line 622, sass/style.scss */
+#form-body .form_row fieldset li {
+  min-height: 30px;
+  line-height: 30px;
+}
+/* line 627, sass/style.scss */
+#form-body .form_row fieldset .icon-container {
+  float: right;
+}
+/* line 630, sass/style.scss */
+#form-body .form_row fieldset .icon-container b {
+  margin: 5px;
+  float: right;
+  display: block;
+}
+/* line 636, sass/style.scss */
+#form-body .form_row fieldset .icon-container .sort-icon {
+  cursor: move;
+  background-image: url("../images/sort_icon.png");
+}
+/* line 641, sass/style.scss */
+#form-body .form_row fieldset .icon-container .sort-icon:hover {
+  background-image: url("../images/sort_icon_hover.png");
+}
+/* line 646, sass/style.scss */
+#form-body .form_row fieldset .icon-container .edit-icon {
+  cursor: pointer;
+  background-image: url("../images/edit_icon.png");
+}
+/* line 652, sass/style.scss */
+#form-body .form_row fieldset .icon-container .del-icon {
+  cursor: pointer;
+  background-image: url("../images/del_icon.png");
+}
+/* line 661, sass/style.scss */
+#form-body .row-active {
+  background-color: lightgreen;
+}
+
+/* line 667, sass/style.scss */
+#form_view fieldset {
+  border: 1px solid #ccc;
+}
+/* line 670, sass/style.scss */
+#form_view fieldset legend {
+  margin-left: 10px;
+}
+/* line 675, sass/style.scss */
+#form_view ul label {
+  width: 100px;
+  display: inline-block;
+}
+/* line 679, sass/style.scss */
+#form_view ul li {
+  margin: 10px;
+}
+/* line 684, sass/style.scss */
+#form_view ul ul li {
+  display: inline;
 }
 
 /* ==========================================================================
 /* -- Tablet Devices (Layout, Modifications, etc)
    ========================================================================== */
 @media only screen and (min-width: 740px) and (max-width: 999px) {
-  /* line 614, sass/style.scss */
+  /* line 695, sass/style.scss */
   .container, .tablet-container {
     width: 720px;
     padding-left: 10px;
@@ -868,67 +943,67 @@ textarea {
 
   /* Tablet Grid
   * For stacking full width columns, please use the new class .tablet-full */
-  /* line 622, sass/style.scss */
+  /* line 703, sass/style.scss */
   .tablet-one {
     width: 6.5%;
   }
 
-  /* line 623, sass/style.scss */
+  /* line 704, sass/style.scss */
   .tablet-two {
     width: 15%;
   }
 
-  /* line 624, sass/style.scss */
+  /* line 705, sass/style.scss */
   .tablet-three {
     width: 23.5%;
   }
 
-  /* line 625, sass/style.scss */
+  /* line 706, sass/style.scss */
   .tablet-four {
     width: 32%;
   }
 
-  /* line 626, sass/style.scss */
+  /* line 707, sass/style.scss */
   .tablet-five {
     width: 40.5%;
   }
 
-  /* line 627, sass/style.scss */
+  /* line 708, sass/style.scss */
   .tablet-six {
     width: 49.0%;
   }
 
-  /* line 628, sass/style.scss */
+  /* line 709, sass/style.scss */
   .tablet-seven {
     width: 57.5%;
   }
 
-  /* line 629, sass/style.scss */
+  /* line 710, sass/style.scss */
   .tablet-eight {
     width: 66%;
   }
 
-  /* line 630, sass/style.scss */
+  /* line 711, sass/style.scss */
   .tablet-nine {
     width: 74.5%;
   }
 
-  /* line 631, sass/style.scss */
+  /* line 712, sass/style.scss */
   .tablet-ten {
     width: 83%;
   }
 
-  /* line 632, sass/style.scss */
+  /* line 713, sass/style.scss */
   .tablet-eleven {
     width: 91.5%;
   }
 
-  /* line 633, sass/style.scss */
+  /* line 714, sass/style.scss */
   .tablet-twelve {
     width: 100%;
   }
 
-  /* line 635, sass/style.scss */
+  /* line 716, sass/style.scss */
   .tablet-full {
     clear: both;
     float: none;
@@ -937,49 +1012,49 @@ textarea {
     display: block;
   }
 
-  /* line 642, sass/style.scss */
+  /* line 723, sass/style.scss */
   .tablet-full:first-child {
     margin-top: 0;
   }
 
-  /* line 646, sass/style.scss */
+  /* line 727, sass/style.scss */
   .tablet-center {
     margin-left: auto;
     margin-right: auto;
     float: none;
   }
 
-  /* line 651, sass/style.scss */
+  /* line 732, sass/style.scss */
   .tablet-left {
     float: left;
   }
 
-  /* line 652, sass/style.scss */
+  /* line 733, sass/style.scss */
   .tablet-right {
     float: right;
   }
 
-  /* line 653, sass/style.scss */
+  /* line 734, sass/style.scss */
   .tablet-no-float {
     float: none;
   }
 
-  /* line 655, sass/style.scss */
+  /* line 736, sass/style.scss */
   .tablet-center:first-child {
     margin-left: auto;
   }
 
-  /* line 656, sass/style.scss */
+  /* line 737, sass/style.scss */
   .tablet-center-text {
     text-align: center;
   }
 
-  /* line 660, sass/style.scss */
+  /* line 741, sass/style.scss */
   .no-tablet {
     display: none;
   }
 
-  /* line 661, sass/style.scss */
+  /* line 742, sass/style.scss */
   .show-tablet {
     display: block;
   }
@@ -991,67 +1066,67 @@ textarea {
 @media only screen and (max-width: 739px) {
   /* Mobile Grid
   * For stacking full width columns, please use the new class .mobile-full */
-  /* line 683, sass/style.scss */
+  /* line 764, sass/style.scss */
   .mobile-one {
     width: 6.5%;
   }
 
-  /* line 684, sass/style.scss */
+  /* line 765, sass/style.scss */
   .mobile-two {
     width: 15%;
   }
 
-  /* line 685, sass/style.scss */
+  /* line 766, sass/style.scss */
   .mobile-three {
     width: 23.5%;
   }
 
-  /* line 686, sass/style.scss */
+  /* line 767, sass/style.scss */
   .mobile-four {
     width: 32%;
   }
 
-  /* line 687, sass/style.scss */
+  /* line 768, sass/style.scss */
   .mobile-five {
     width: 40.5%;
   }
 
-  /* line 688, sass/style.scss */
+  /* line 769, sass/style.scss */
   .mobile-six {
     width: 49.0%;
   }
 
-  /* line 689, sass/style.scss */
+  /* line 770, sass/style.scss */
   .mobile-seven {
     width: 57.5%;
   }
 
-  /* line 690, sass/style.scss */
+  /* line 771, sass/style.scss */
   .mobile-eight {
     width: 66%;
   }
 
-  /* line 691, sass/style.scss */
+  /* line 772, sass/style.scss */
   .mobile-nine {
     width: 74.5%;
   }
 
-  /* line 692, sass/style.scss */
+  /* line 773, sass/style.scss */
   .mobile-ten {
     width: 83%;
   }
 
-  /* line 693, sass/style.scss */
+  /* line 774, sass/style.scss */
   .mobile-eleven {
     width: 91.5%;
   }
 
-  /* line 694, sass/style.scss */
+  /* line 775, sass/style.scss */
   .mobile-twelve {
     width: 100%;
   }
 
-  /* line 696, sass/style.scss */
+  /* line 777, sass/style.scss */
   .mobile-full {
     clear: both;
     float: none;
@@ -1060,103 +1135,64 @@ textarea {
     display: block;
   }
 
-  /* line 703, sass/style.scss */
+  /* line 784, sass/style.scss */
   .mobile-full:first-child {
     margin-top: 0;
   }
 
-  /* line 706, sass/style.scss */
+  /* line 787, sass/style.scss */
   .mobile-center {
     margin-left: auto;
     margin-right: auto;
     float: none;
   }
 
-  /* line 711, sass/style.scss */
+  /* line 792, sass/style.scss */
   .mobile-center:first-child {
     margin-left: auto;
   }
 
-  /* line 712, sass/style.scss */
+  /* line 793, sass/style.scss */
   .mobile-center-text {
     text-align: center;
   }
 
-  /* line 715, sass/style.scss */
+  /* line 796, sass/style.scss */
   .mobile-left {
     float: left;
   }
 
-  /* line 716, sass/style.scss */
+  /* line 797, sass/style.scss */
   .mobile-right {
     float: right;
   }
 
-  /* line 717, sass/style.scss */
+  /* line 798, sass/style.scss */
   .mobile-no-float {
     float: none;
   }
 
-  /* line 719, sass/style.scss */
+  /* line 800, sass/style.scss */
   .container, .mobile-container {
     padding-left: 20px;
     padding-right: 20px;
   }
 
   /* Mobile Tables */
-  /* line 726, sass/style.scss */
+  /* line 807, sass/style.scss */
   table th,
   table td {
     padding: 4px;
   }
 
-  /* line 730, sass/style.scss */
+  /* line 811, sass/style.scss */
   .no-mobile {
     display: none;
   }
 
-  /* line 731, sass/style.scss */
+  /* line 812, sass/style.scss */
   .show-mobile {
     display: block;
-  }
-
-  /* line 741, sass/style.scss */
-  .bccf-slider .owl-wrapper > div[class$="owl-item"] {
-    position: relative;
-    left: -10px;
-  }
-  /* line 746, sass/style.scss */
-  .bccf-slider .active {
-    margin-right: 2.5px;
-  }
-  /* line 750, sass/style.scss */
-  .bccf-slider .content-header-active {
-    border-bottom: none;
-  }
-
-  /* line 755, sass/style.scss */
-  #contents-container {
-    background: rgba(0, 174, 239, 0.9);
-    position: fixed !important;
-    height: 100vh !important;
-    overflow-y: auto !important;
-    margin: 0;
-    top: 0;
-    left: 0;
-    z-index: 99 !important;
-  }
-  /* line 765, sass/style.scss */
-  #contents-container #close-btn {
-    display: block;
-    color: white;
-    font-weight: bold;
-    margin-bottom: 5px;
-    cursor: pointer;
-    text-align: right;
-  }
-  /* line 773, sass/style.scss */
-  #contents-container #close-btn:hover {
-    text-decoration: underline;
   }
 }
 /* End Mobile Media Query */

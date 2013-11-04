@@ -1,0 +1,10 @@
+<ul class="no-style-list">
+{% for field in fields %}
+    {% if field.is_hidden %}
+        {{ field }}
+    {% else %}
+            <li>{{ field.label_tag }}
+            {{ field }} {{ field.erros }}</li>
+    {% endif %}
+{% endfor %}
+</ul>
