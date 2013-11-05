@@ -1,13 +1,17 @@
 import json
+import logging
 
 from django.http import HttpResponse
 from django.template import RequestContext, loader
 from django.shortcuts import redirect
 from django.views.decorators.cache import never_cache
+from django.db.models import get_model, ObjectDoesNotExist
 
 from formable.builder.models import FormStructure
-from formable.builder.forms import CloneFormForm, ViewFormForm
+from formable.builder.forms import CloneFormForm, ViewFormForm, FormStructureForm
 from formable.builder.utils import parse
+
+log = logging.getLogger(__name__)
 
 @never_cache
 def index(request):
@@ -38,30 +42,38 @@ def build(request, id=None):
         if id is not None:
             form_structure = FormStructure.objects.get(pk=id)
             context = RequestContext(request, {
-                'form_structure': json.dumps(form_structure.form_structure)
+                'form_structure': json.dumps(form_structure.form_structure),
             })
         else:
             context = RequestContext(request)
         
+    context["save_url"] = "/save/structure/"
     return HttpResponse(template.render(context));
     
 @never_cache
-def save(request):
+def save_structure(request):
     """
     Saves a form structure to be cloned later. The any request that is not post
     will be redirected to the form builder. If all goes well, the user will be
     redirected to view the form as HTML.
     """
-    if request.method == 'POST':
-        form_structure = FormStructure.objects.create(
-            form_title = request.POST.get('form_structure_title', ''),
-            form_structure = request.POST.get('form_structure_data', ''),
-            form_structure_type = request.POST.get('form_structure_type', ''),
-        )
-        return redirect('/view/'+str(form_structure.id))
-    else:
-        return redirect('/build/')
-        
+    obj = None
+    redirect_url = ""
+    
+    if request.method == 'POST':          
+        form_structure_form = FormStructureForm(request.POST)
+
+        if form_structure_form.is_valid():
+            form_structure_form.save()
+        else:
+            log.info(form_structure_form.errors)
+
+    return redirect('/')
+     
+@never_cache
+def save_form(request):
+    pass
+   
 @never_cache
 def delete(request):
     """
@@ -87,10 +99,10 @@ def view(request, id=None):
             return redirect('/')
         
         form_structure = FormStructure.objects.get(pk=id)
-        struct = parse(form_structure.form_structure)
-        form = ViewFormForm(struct[0], struct[1])
+        fieldset, field = parse(form_structure.structure)
+        form = ViewFormForm(fieldset, field)
         context = RequestContext(request, {
-            'form_title': form_structure.form_title,
+            'form_title': form_structure.title,
             'form': form,
         })
         return HttpResponse(template.render(context))

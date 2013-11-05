@@ -50,29 +50,19 @@
             <div class="section twelve row field-container-inner">
                 <a id="add-row" href="#">Add Fieldset</a>
             </div>
-            <div class="section twelve row field-container-inner">
-                <a id="import-btn" href="#">Import Form</a>
-            </div>
-            <div class="section twelve row field-container-inner">
-                <a id="export-btn" href="#">Export Form</a>
-            </div>
         </div>
         {% endblock %}
     </div>
     <div id="form-container" class="col nine">
-        <form action="">
-            <input type="text" id="form-title" class="form-title section twelve" placeholder="Form Title" />
-            <ul id="form-body" class="section row-one twelve no-style-list sortable"></ul>
+        <input type="text" id="form-title" class="form-title section twelve" placeholder="Form Title" />
+        <ul id="form-body" class="section row-one twelve no-style-list sortable"></ul>
+        <form id="form_structure_form" action="{% url 'save-structure' %}" method="POST">
+            {% csrf_token %}
+            {{ structure_form }}
+            <input type="submit" id="export-btn" />
         </form>
     </div>
 </div>
-
-<form id="form_structure_form" action="/save/" method="POST">
-    {% csrf_token %}
-    <input id="form_structure_title" type="hidden" name="form_structure_title"/>
-    <input id="form_structure_data" type="hidden" name="form_structure_data"/>
-    <input id="form_structure_type" type="hidden" name="form_structure_type"/>
-</form>
 
 <!-- Dialog Box -->
 <div id="settings-box">
@@ -91,8 +81,7 @@
         
         // Link Buttons
         $("#add-row").on('click', function(){add_row();});
-        $("#export-btn").on('click', function(){export_form();});
-        $("#import-btn").on('click', function(){import_form();});
+        $("#export-btn").on('click', function(e){e.preventDefault();export_form();});
         
         {% if form_structure %}
         import_form({{ form_structure|safe }})

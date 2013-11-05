@@ -82,7 +82,7 @@ def parse(struct):
         # Add fieldset to the fieldset list
         fieldsets.append((re.sub(r"[-\s]", "_", fieldset["title"].lower()),) + (new_set,)) # Add new fieldset to the list
         # end for fieldset
-    return [fieldsets, fields]
+    return fieldsets, fields
   
 def create_choices(lst):
     """

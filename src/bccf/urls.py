@@ -24,6 +24,9 @@ urlpatterns = patterns("",
 
     # Cartridge URLs.
     ("^shop/", include("cartridge.shop.urls")),
+    
+    # Formable URLs
+    url("formable/", include("formable.builder.urls")),
 
     # Podcasts
     #('^podcasts/', include('podcasting.urls')),

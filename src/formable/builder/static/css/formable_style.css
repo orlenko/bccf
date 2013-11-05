@@ -1,0 +1,136 @@
+/* ==========================================================================
+
+  Base Stylesheet - http://git.io/base
+  Author: Matthew Hartman - http://www.matthewhartman.com.au/
+  Version: 1.5 - Last Updated: 21st June, 2013
+
+========================================================================== */
+/* line 11, sass/formable_style.scss */
+.no-style-list, #form_view ul ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* line 35, sass/formable_style.scss */
+.icon, #form-body .form_row fieldset .icon-container .sort-icon, #form-body .form_row fieldset .icon-container .edit-icon, #form-body .form_row fieldset .icon-container .del-icon {
+  height: 22px;
+  width: 22px;
+}
+
+/* line 41, sass/formable_style.scss */
+header {
+  border-bottom: 1px solid #CCC;
+  padding-left: 10px;
+}
+/* line 44, sass/formable_style.scss */
+header div {
+  padding-right: 10px;
+  text-align: right;
+  height: 50px;
+  line-height: 50px;
+}
+/* line 50, sass/formable_style.scss */
+header div a {
+  padding: 10px;
+  text-decoration: none;
+}
+/* line 54, sass/formable_style.scss */
+header div a:hover {
+  text-decoration: underline;
+}
+
+/* line 61, sass/formable_style.scss */
+.section-head {
+  font-size: 20px;
+  font-size: 1.25rem;
+}
+
+/* line 65, sass/formable_style.scss */
+.field-container {
+  border: 1px solid #cccccc;
+  padding: 0;
+}
+/* line 69, sass/formable_style.scss */
+.field-container .field-container-inner {
+  padding: 10px;
+}
+/* line 72, sass/formable_style.scss */
+.field-container .field-container-inner .field {
+  cursor: move;
+  z-index: 99 !important;
+}
+/* line 77, sass/formable_style.scss */
+.field-container .field-container-inner:hover {
+  background-color: lightblue;
+}
+/* line 82, sass/formable_style.scss */
+.field-container a {
+  display: block;
+}
+
+/* line 92, sass/formable_style.scss */
+#form-body .form_row fieldset {
+  border: 1px solid #cccccc;
+  min-height: 25px;
+}
+/* line 96, sass/formable_style.scss */
+#form-body .form_row fieldset li {
+  min-height: 30px;
+  line-height: 30px;
+}
+/* line 101, sass/formable_style.scss */
+#form-body .form_row fieldset .icon-container {
+  float: right;
+}
+/* line 104, sass/formable_style.scss */
+#form-body .form_row fieldset .icon-container b {
+  margin: 5px;
+  float: right;
+  display: block;
+}
+/* line 110, sass/formable_style.scss */
+#form-body .form_row fieldset .icon-container .sort-icon {
+  cursor: move;
+  background-image: url("../images/sort_icon.png");
+}
+/* line 115, sass/formable_style.scss */
+#form-body .form_row fieldset .icon-container .sort-icon:hover {
+  background-image: url("../images/sort_icon_hover.png");
+}
+/* line 120, sass/formable_style.scss */
+#form-body .form_row fieldset .icon-container .edit-icon {
+  cursor: pointer;
+  background-image: url("../images/edit_icon.png");
+}
+/* line 126, sass/formable_style.scss */
+#form-body .form_row fieldset .icon-container .del-icon {
+  cursor: pointer;
+  background-image: url("../images/del_icon.png");
+}
+/* line 135, sass/formable_style.scss */
+#form-body .row-active {
+  background-color: lightgreen;
+}
+
+/* line 141, sass/formable_style.scss */
+#form_view fieldset {
+  border: 1px solid #ccc;
+}
+/* line 144, sass/formable_style.scss */
+#form_view fieldset legend {
+  margin-left: 10px;
+}
+/* line 149, sass/formable_style.scss */
+#form_view ul label {
+  width: 100px;
+  display: inline-block;
+}
+/* line 153, sass/formable_style.scss */
+#form_view ul li {
+  margin: 10px;
+}
+/* line 158, sass/formable_style.scss */
+#form_view ul ul li {
+  display: inline;
+}

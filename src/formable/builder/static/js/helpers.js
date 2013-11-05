@@ -280,12 +280,9 @@ var export_form = function() {
         obj.fieldset.push(fieldset);
     });
     
-    var json = JSON.stringify(obj);
-    console.log(json);
-    
     $("#form_structure_title").val(obj.title);
-    $("#form_structure_data").val(json);
-    $("#form_structure_type").val("JSON");
+    $("#form_structure_data").val(JSON.stringify(obj));
+    $("#form_structure_type").val('JSON');
     $("#form_structure_form").submit();
 }
 
