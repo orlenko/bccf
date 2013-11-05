@@ -12,43 +12,6 @@ from formable.builder.forms import CloneFormForm, ViewFormForm, FormStructureFor
 from formable.builder.utils import parse
 
 log = logging.getLogger(__name__)
-
-@never_cache
-def index(request):
-    """
-    Calls the index template. Creates a dropdown select containing all the created
-    form structures for cloning.
-    """
-    template_name = 'index.html'
-    form = CloneFormForm()
-    clone_url = '/build/'
-    template = loader.get_template(template_name)
-    context = RequestContext(request, {
-        'form': form,
-        'clone_url': clone_url
-    })
-    
-    return HttpResponse(template.render(context))
-    
-@never_cache
-def build(request, id=None):
-    """
-    Calls the builder template. If the request is a post, it looks for the ID
-    of an existing form structure to clone.
-    """
-    template_name = 'builder.html'
-    template = loader.get_template(template_name)
-    if request.method == 'GET':
-        if id is not None:
-            form_structure = FormStructure.objects.get(pk=id)
-            context = RequestContext(request, {
-                'form_structure': json.dumps(form_structure.form_structure),
-            })
-        else:
-            context = RequestContext(request)
-        
-    context["save_url"] = "/save/structure/"
-    return HttpResponse(template.render(context));
     
 @never_cache
 def save_structure(request):
