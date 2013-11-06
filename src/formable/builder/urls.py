@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, include, url
+from django.views.generic import TemplateView
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -10,11 +11,12 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'formable.views.home', name='home'),
     # url(r'^formable/', include('formable.foo.urls')),
-    url('^build/(?P<id>\d+)*$', views.build, name='build'),
     url('^save/$', views.save_structure, name='save-structure'),
-    url('^save/form/$', views.save_form, name='save-form'),
-    url('^delete/$', views.delete, name='delete'),
+    url('^submit/$', views.submit_form, name='submit-form'),
+    url('^publish/$', views.publish_form, name='publish-form'),
+    url('^clone/$', views.clone_structure, name='clone-structure'),
     url('^view/(?P<id>\d+)', views.view, name='view'),
+    url('^test/', TemplateView.as_view(template_name="test/test.html")),
     
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

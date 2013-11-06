@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% load form_utils %}
+
+{% block main %}
+
+<div id="form_view" class="section row">
+    <form action="{% url 'submit-form' %}" method="POST">
+        <h2>{{ form_title }}</h2>
+        {{ form|render }}
+        <input type="hidden" name="publish_id" value="{{ publish_id }}"/>
+        {% csrf_token %}
+        <input type="Submit" />
+    </form>
+</div>
+
+{% endblock %}

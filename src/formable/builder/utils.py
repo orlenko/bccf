@@ -3,9 +3,11 @@ import json
 import re
 
 from django import forms
+
+from formable.builder.models import Question
 from formable.builder.fields import StaticTextField, StaticText, StaticSection
 
-def parse(struct):
+def parse(struct, publish_id):
     """
     Parses the struct and uses BetterForm to create the form with the specified
     fields in fieldsets.
@@ -75,8 +77,9 @@ def parse(struct):
                 fields[re.sub(r"[-\s]", "_", field["attr"]["text"].lower())] = field_class
                 new_set["fields"].append(re.sub(r"[-\s]", "_", field["attr"]["text"].lower()))
             else:
-                fields[re.sub(r"[-\s]", "_", field["attr"]["name"].lower())] = field_class
-                new_set["fields"].append(re.sub(r"[-\s]", "_", field["attr"]["name"].lower()))
+                question = Question.objects.get(form_published=publish_id, question__exact=field["label"])
+                fields[str(question.id)+"."+re.sub(r"[-\s]", "_", field["class"]).lower()] = field_class
+                new_set["fields"].append(str(question.id)+"."+re.sub(r"[-\s]", "_", field["class"]).lower())
             # end for field
         
         # Add fieldset to the fieldset list
@@ -89,11 +92,9 @@ def create_choices(lst):
     Creates the proper structure for the django form choices.
     """
     to_tuple = []
-    counter = 1
     for choice in lst:
-        tmp = (str(counter),) + (choice,)
+        tmp = (choice,) + (choice,)
         to_tuple.append(tmp)
-        counter = counter + 1
     return tuple(to_tuple)
     
 def convert(data):

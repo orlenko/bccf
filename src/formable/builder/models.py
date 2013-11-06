@@ -1,4 +1,5 @@
 import logging
+from datetime import datetime
 
 from django.db import models
 from django.contrib.auth.models import User
@@ -30,28 +31,56 @@ class FormStructure(models.Model):
     def __unicode__(self):
         return self.title
         
+class FormPublished(models.Model):
+    """
+    Model for a published form structure.
+    """
+    title = models.CharField(_('Title'), max_length=100)
+    form_structure = models.ForeignKey('FormStructure', editable=False)
+    user = models.ForeignKey(User)
+    published = models.DateTimeField(_("Published"), auto_now_add=True)
+    
+    class Meta:
+        verbose_name = _("Published Form")
+        verbose_name_plural = _("Published Forms")
+        
+    def __unicode__(self):
+        return self.title
+        
+    def save(self):
+        if self.pk is None:
+            self.published = datetime.now()
+            self.title = self.form_structure.title+"-"+self.user.__unicode__()+"-"+self.published.__str__()
+        super(FormPublished, self).save()
+
 class FormFilled(models.Model):
     """
     Model for when a form is filled out.
     """
-    form_structure = models.ForeignKey('FormStructure')
+    title = models.CharField(_('Title'), max_length=100)
+    form_published = models.ForeignKey('FormPublished')
     user = models.ForeignKey(User)
     filled = models.DateTimeField(_('Date Filled'), auto_now_add=True)
     
     class Meta:
-        verbose_name = _("Form Filled")
-        verbose_name_plural = _("Forms Filled")
+        verbose_name = _("Filled Form")
+        verbose_name_plural = _("Filled Forms")
     
     def __unicode__(self):
-        return self.form_structure
+        return self.title
+        
+    def save(self):
+        if self.pk is None:
+            self.filled = datetime.now()
+            self.title = self.form_published.title+"-"+self.user.__unicode__()+"-"+self.filled.__str__()
+        super(FormFilled, self).save()
         
 class Question(models.Model):
     """
     Model for a question in the form.
     """
     question = models.CharField(_("Question"), max_length=100)
-    form_structure = models.ForeignKey('FormStructure')
-    form_filled = models.ForeignKey('FormFilled')
+    form_published = models.ForeignKey('FormPublished')
     date = models.DateTimeField(auto_now_add=True)
     
     class Meta:
@@ -64,7 +93,7 @@ class Question(models.Model):
 class FieldAnswer(models.Model):
     """
     Model for a field when a user answers the form. Multiple rows will be used to
-    store each question.
+    store each answer (ie. 5 check boxes - up to 5 rows will be stored).
     """
     answer = models.TextField(_("Answer"))
     question = models.ForeignKey("Question")
@@ -72,8 +101,8 @@ class FieldAnswer(models.Model):
     answered = models.DateTimeField(_('Date Answered'), auto_now_add=True)
     
     class Meta:
-        verbose_name = _("Field Answer")
-        verbose_name_plural = _("Field Answers")
+        verbose_name = _("Answer")
+        verbose_name_plural = _("Answers")
     
     def __unicode__(self):
         return self.answer

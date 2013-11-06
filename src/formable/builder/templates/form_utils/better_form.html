@@ -1,6 +1,3 @@
-{% block content %}
-
-<div id="form_view" class="section container row">
 {% for fieldset in form.fieldsets %}
     <fieldset class="{{ fieldset.classes }} section row row-one">
        {% if fieldset.legend %}
@@ -11,6 +8,4 @@
         {% endwith %}
     </fieldset>
 {% endfor %}
-</div>    
-
-{% endblock %}
+  

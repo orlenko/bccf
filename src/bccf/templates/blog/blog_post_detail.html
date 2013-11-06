@@ -1,5 +1,5 @@
 {% extends "blog/blog_post_list.html" %}
-{% load mezzanine_tags bccf_rating_tags builder_tags content_carousel_tags comment_tags keyword_tags i18n future disqus_tags %}
+{% load mezzanine_tags bccf_rating_tags content_carousel_tags comment_tags keyword_tags i18n future disqus_tags %}
 
 {% block meta_title %}{{ blog_post.meta_title }}{% endblock %}
 
@@ -83,8 +83,6 @@
 {% bccf_rating_for blog_post %}
 
 {% content_carousel_for blog_post %}
-
-{% builder_for blog_post %}
 
 {% block blog_post_detail_sharebuttons %}
 {% set_short_url_for blog_post %}

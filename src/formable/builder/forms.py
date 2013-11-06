@@ -21,21 +21,19 @@ class FormStructureForm(forms.ModelForm):
         model = FormStructure
         fields = ['title', 'structure', 'type']
         
-    def __init__(self, *args, **kwargs):
-        super(FormStructureForm, self).__init__(*args, **kwargs)
-        content_type = self.instance._meta.app_label+"."+self.instance.__class__.__name__.lower()
+class ListForPublishForm(forms.Form):
+    """
+    Form for creating a select field consisting the available structures for publishing
+    """
+    records = FormStructure.objects.all().values_list('id', 'title')
+    struct_id = forms.ChoiceField(records)
 
-class CloneFormForm(forms.ModelForm):
+class CloneFormForm(forms.Form):
     """
     Creates a dropdown containing the created form structures
     """
-    records = FormStructure.objects.all()
-    titles = records.values_list('id','title')
-    form_structure = forms.ChoiceField(titles)
-    
-    class Meta:
-        model = FormStructure
-        fields = ['form_structure']
+    form_structure = forms.ChoiceField(FormStructure.objects.all()
+        .values_list('id', 'title'))
   
 class ViewFormForm(BetterForm):
     """
