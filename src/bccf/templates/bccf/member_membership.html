@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load mezzanine_tags shop_tags i18n %}
+
+{% block main %}
+	<h2>membership page</h2>
+
+	<div class="memberships-selection">
+	<ul class="thumbnails">
+	{% for product in the_category.products.all %}
+		{% for variation in product.variations.all %}
+			<li>
+				<form method="post">
+					{% csrf_token %}
+					<input type="hidden" name="variation_id" value="{{ variation.id }}" />
+				    {% if variation.image %}
+			    	    <img src="{{ MEDIA_URL }}{% thumbnail variation.image 100 100 %}">
+			        {% else %}
+			        	<div class="placeholder"></div>
+			        {% endif %}
+
+			        <h6>{{ variation }} &mdash;
+				        {% if variation.has_price %}
+				            <span class="price">
+				            	{% if variation.price %}
+				            		{{ variation.price|currency }}
+				            	{% else %}
+				            		Free!
+				            	{% endif %}
+				            </span>
+				        {% endif %}
+			        </h6>
+				    <input type="submit" class="btn btn-primary btn-large" name="add_cart" value="{% trans "Sign up for membership" %}">
+			    </form>
+			</li>
+		{% endfor %}
+	{% endfor %}
+	</ul>
+	</div>
+{% endblock %}

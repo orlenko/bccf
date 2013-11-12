@@ -1,0 +1,29 @@
+<div class="forum-posts-for-moderation">
+	{% if not posts and not topics %}
+		<div class="message">
+			No posts or topics awaiting moderation.
+		</div>
+	{% endif %}
+
+	{% if topics %}
+		<div class="moderation-section">
+			<h2>Forum Topics awaiting moderation</h2>
+			<ul>
+			{% for topic in topics %}
+				<li><a href="{{ topic.get_absolute_url }}">{{ topic.name }}</a></li>
+			{% endfor %}
+			</ul>
+		</div>
+	{% endif %}
+
+	{% if posts %}
+		<div class="moderation-section">
+			<h2>Forum Posts awaiting moderation</h2>
+			<ul>
+			{% for post in posts %}
+				<li><a href="{{ post.get_absolute_url }}">{{ post.summary }}</a></li>
+			{% endfor %}
+			</ul>
+		</div>
+	{% endif %}
+</div>
