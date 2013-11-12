@@ -7,6 +7,7 @@ urlpatterns = patterns('formable.builder.views',
     url('^publish/$', 'publish_form', name='publish-form'),
     url('^clone/$', 'clone_structure', name='clone-structure'),
     url('^view/(?P<id>\d+)', 'view', name='view'),
+    url(r'^success/$', TemplateView.as_view(template_name="success.html")),
     
     # Added for testing purposes, will be removed after full integration
     url('^test/', TemplateView.as_view(template_name="test/test.html")),

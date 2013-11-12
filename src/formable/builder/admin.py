@@ -79,7 +79,7 @@ class QuestionAdmin(admin.ModelAdmin):
     """
     readonly_fields = ('date',)
     fieldsets = [
-        ('Question Details', {'fields':['question']}),
+        ('Question Details', {'fields':['question', 'required']}),
         ('Question Owners', {'fields':['form_published']}),
         ('Meta', {'fields':['date']})
     ]
@@ -87,7 +87,7 @@ class QuestionAdmin(admin.ModelAdmin):
         FieldAnswerLine
     ]
     list_display = ('question', 'form_published', 'date')
-    list_filter = ['form_published', 'date']
+    list_filter = ['form_published', 'date', 'required']
     search_fields = ['question', 'form_published']
     
 class FieldAnswerAdmin(admin.ModelAdmin):
