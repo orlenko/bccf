@@ -340,6 +340,9 @@ INSTALLED_APPS = (
     'news',
     'pybb',
     'bccf',
+    'formable.builder',
+    # install via pip or easy_install django-form-utils
+    'form_utils', # required by builder to call template tags
 )
 
 # List of processors used by RequestContext to populate the context.

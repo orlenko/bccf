@@ -1,0 +1,11 @@
+{% for fieldset in form.fieldsets %}
+    <fieldset class="{{ fieldset.classes }} section row row-one">
+       {% if fieldset.legend %}
+       <legend>{{ fieldset.legend }}</legend>
+       {% endif %}
+        {% with fieldset as fields %}
+            {% include "form_utils/fields_as_lis.html" %}
+        {% endwith %}
+    </fieldset>
+{% endfor %}
+  

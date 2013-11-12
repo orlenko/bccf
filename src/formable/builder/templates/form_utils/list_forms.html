@@ -1,0 +1,8 @@
+<div>
+    <h2>Publish Form</h2>
+    <form action="{% url 'publish-form' %}" method="POST">
+        {% csrf_token %}
+        {{ list_form.as_p }}
+        <input type="Submit" name="submit-btn" value="Publish" />
+    </form>
+</div>

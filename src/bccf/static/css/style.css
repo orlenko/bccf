@@ -828,7 +828,7 @@ textarea {
   margin: 0;
 }
 /* line 582, sass/style.scss */
-.bccf-slider .content-header div {
+.bccf-slider .content-header > div {
   display: none;
 }
 /* line 587, sass/style.scss */
