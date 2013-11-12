@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+
+{% block main %}
+	<h2>{{ event.title }}</h2>
+	{{ event.content|safe }}
+	<p>
+		Here you, {{ user.get_full_name|default:user.username }}, will sign up for the event! Yay!
+	</p>
+{% endblock %}

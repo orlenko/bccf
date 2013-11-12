@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+
+{% block main %}
+	<h2>{{ event.title }}</h2>
+	{{ event.content|safe }}
+	<p>
+		<a href="{{ event.signup_url }}">Sign up</a>
+	</p>
+{% endblock %}
