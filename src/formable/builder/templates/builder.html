@@ -56,10 +56,39 @@
     <div id="form-container" class="col nine">
         <input type="text" id="form-title" class="form-title section twelve" placeholder="Form Title" />
         <ul id="form-body" class="section row-one twelve no-style-list sortable"></ul>
-        <form id="form_structure_form" action="{% url 'save-structure' %}" method="POST">
+        {% if wizard %}
+            <form id="form_structure_form" action="" method="POST">
+        {% else %}
+            <form id="form_structure_form" action="{% url 'save-structure' %}" method="POST">
+        {% endif %}
             {% csrf_token %}
-            {{ structure_form }}
-            <input type="submit" id="export-btn" />
+            <!-- custom for BCCF -->
+            {% if wizard %}
+                {{ wizard.management_form }}
+                {% if  wizard.forms.forms %}
+                    {{ wizard.form.management.form }}
+                    {% for form in wizard.form.forms %}
+                        {{ form }}
+                    {% endfor %}
+                {% else %}
+                    {{ wizard.form }}
+                {% endif %}
+                <br/><br/>
+                {% if wizard.steps.prev %}
+                    <button name="wizard_goto_step" type="submit" value="{{ wizards.steps.prev }}" class="export-btn">
+                        Prev Step
+                    </button>
+                {% endif %}
+                {% if wizard.steps.next %}
+                    <button name="wizard_goto_step" type="submit" value="{{ wizards.steps.next }}" class="export-btn">
+                        Next Step
+                    </button>
+                {% endif %}
+            {% else %}
+                {{ structure_form }}
+            {% endif %}
+            <!-- end custom -->
+            <input type="submit" class="export-btn" />
         </form>
     </div>
 </div>
@@ -81,7 +110,7 @@
         
         // Link Buttons
         $("#add-row").on('click', function(){add_row();});
-        $("#export-btn").on('click', function(e){e.preventDefault();export_form();});
+        $(".export-btn").on('click', function(e){e.preventDefault();export_form();});
         
         {% if form_structure %}
         import_form({{ form_structure|safe }})

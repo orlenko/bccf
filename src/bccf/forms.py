@@ -8,7 +8,7 @@ from mezzanine.conf import settings
 from mezzanine.generic.models import Rating
 
 import logging
-from bccf.models import UserProfile
+from bccf.models import UserProfile, EventForProfessionals
 log = logging.getLogger(__name__)
 
 class RatingRenderer(RadioFieldRenderer):
@@ -73,3 +73,45 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         exclude = ('membership_order',)
         model = UserProfile
+        
+class ProfessionalEventForm(forms.Form):
+    """
+    Form for creating a Professional Event using the Wizard
+    """
+    def __init__(self, *args, **kwargs):
+        super(ProfessionalEventForm, self).__init__(*args, **kwargs)
+        self.fields['title'] = forms.CharField(label='Title', 
+            widget=forms.TextInput(attrs={'required':''}), required=True)
+        self.fields['content'] = forms.CharField(label='Event Description',
+            widget=forms.Textarea(attrs={'class':'mceEditor'}), required=True)
+        self.fields['date_start'] = forms.CharField(label='Event Start (Date Time):',
+            widget=forms.DateTimeInput(attrs={'class':'vDatefield', 'placeholder':'YYYY-MM-DD HH:MM', 'required':''}),
+            required=True)
+        self.fields['date_end'] = forms.CharField(label='Event End (Date Time):',
+            widget=forms.DateTimeInput(attrs={'class':'vDatefield', 'placeholder':'YYYY-MM-DD HH:MM', 'required':''}),
+            required=True)
+        self.fields['location_city'] = forms.CharField(label='City', required=False)
+        self.fields['location_street'] = forms.CharField(label='Street', required=False)
+        self.fields['location_street2'] = forms.CharField(label='Street (line2)', required=False)
+        self.fields['location_postal_code'] = forms.CharField(label='Postal Code', required=False)
+        self.fields['price'] = forms.CharField(label='Price($)',
+            widget=forms.TextInput(attrs={'required':''}), required=True)
+        self.fields['survey'] = forms.BooleanField(label='Create Surveys?',
+            widget=forms.CheckboxInput, required=False)
+            
+class FormStructureSurveyFormOne(forms.Form):
+    """
+    Form for creating a survey in the Professional Event creation Wizard
+    """
+    title = forms.CharField(widget=forms.HiddenInput(attrs={'id': 'form_structure_title'}))
+    structure = forms.CharField(widget=forms.HiddenInput(attrs={'id': 'form_structure_data'}))
+    type = forms.CharField(widget=forms.HiddenInput(attrs={'id': 'form_structure_type'}))
+    after_survey = forms.BooleanField(label='Create After Survey?',
+        widget=forms.CheckboxInput, required=False)
+    clone = forms.BooleanField(label='Clone this Structure?',
+        widget=forms.CheckboxInput, required=False)
+       
+class FormStructureSurveyFormTwo(forms.Form):
+    title = forms.CharField(widget=forms.HiddenInput(attrs={'id': 'form_structure_title'}))
+    structure = forms.CharField(widget=forms.HiddenInput(attrs={'id': 'form_structure_data'}))
+    type = forms.CharField(widget=forms.HiddenInput(attrs={'id': 'form_structure_type'}))

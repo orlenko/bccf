@@ -5,7 +5,6 @@ from pybb.models import Topic, Post
 from django.template.loader import get_template
 from django.template.context import Context
 
-
 log = logging.getLogger(__name__)
 
 

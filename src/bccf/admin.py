@@ -25,7 +25,9 @@ class EventAdmin(DisplayableAdmin):
                                     'location_street',
                                     'location_street2',
                                     'location_postal_code',
-                                    'price']):
+                                    'price',
+                                    'survey_before',
+                                    'survey_after']):
                 self.fieldsets[0][1]['fields'].insert(3, field)
         if self.list_display == DisplayableAdmin.list_display:
             self.list_display = list(deepcopy(self.list_display))

@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% load builder_tags %}
+
+{% block main %}
+    <p>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</p>
+    {% builder %}
+{% endblock %}

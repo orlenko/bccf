@@ -1,5 +1,6 @@
 import logging
 
+from formable.builder.models import FormPublished
 from cartridge.shop.fields import MoneyField
 from cartridge.shop.models import Order, ProductVariation
 from dateutil.relativedelta import relativedelta
@@ -14,7 +15,6 @@ from mezzanine.utils.models import upload_to, AdminThumbMixin
 from bccf.fields import MyImageField
 from bccf.settings import (OPTION_SUBSCRIPTION_TERM, get_option_number,
     INSTALLED_APPS)
-
 
 log = logging.getLogger(__name__)
 
@@ -158,6 +158,9 @@ class EventForParents(EventBase):
 
 
 class EventForProfessionals(EventBase):
+    survey_before = models.ForeignKey(FormPublished, null=True, blank=True, related_name='survey_before')
+    survey_after = models.ForeignKey(FormPublished, null=True, blank=True, related_name='survey_after')
+    
     @permalink
     def get_absolute_url(self):
         return ('professionals-event', (), {'slug': self.slug})

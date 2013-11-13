@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block head %}
+    {{ wizard.form.media }}
+{% endblock %}
+
+{% block main %}
+<p>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</p>
+<form action="" method="POST">
+    {% csrf_token %}
+    {{ wizard.management_form }}
+    {% if  wizard.forms.forms %}
+        {{ wizard.form.management.form }}
+        {% for form in wizard.form.forms %}
+            {{ form }}
+        {% endfor %}
+    {% else %}
+        {{ wizard.form }}
+    {% endif %}
+    <br/><br/>
+    {% if wizard.steps.prev %}
+        <button name="wizard_goto_step" type="submit" value="{{ wizards.steps.prev }}">
+            Prev Step
+        </button>
+    {% endif %}
+    <input name="wizard_goto_step" type="submit" value="Submit" />
+</form>
+{% endblock %}

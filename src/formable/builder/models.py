@@ -50,7 +50,9 @@ class FormPublished(models.Model):
     def save(self):
         if self.pk is None:
             self.published = datetime.now()
-            self.title = self.form_structure.title+"-"+self.user.__unicode__()+"-"+self.published.__str__()
+            self.title = 'Published: %s - %s - %s' % (self.form_structure.title,
+                self.user.get_full_name() or self.user.username, 
+                self.published.__str__())
         super(FormPublished, self).save()
 
 class FormFilled(models.Model):
@@ -72,7 +74,9 @@ class FormFilled(models.Model):
     def save(self):
         if self.pk is None:
             self.filled = datetime.now()
-            self.title = self.form_published.title+"-"+self.user.__unicode__()+"-"+self.filled.__str__()
+            self.title = 'Filled: %s - %s %s' % (self.form_published.title,
+                self.user.get_full_name() or self.user.username, 
+                self.form_published.__str__())
         super(FormFilled, self).save()
         
 class Question(models.Model):

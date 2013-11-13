@@ -296,6 +296,10 @@ var import_form = function(json) {
     var formbody = $("#form-body");
     formbody.html("");
     
+    if(obj === null) {
+        obj = json
+    }
+    
     $("#form-title").val(obj.title+' - Clone');
     
     $(obj).each(function(i, form) {

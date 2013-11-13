@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load bccf_tags %}
+
+{% block main %}
+
+<br/>	User: {{user}}
+<br/>
+<br/>	Membership: {{membership_product}}
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+{% if membership_product %}
+	Your membership was purchased on {{ profile.membership_order.time }}.
+<br/><br/>
+	It will expire on {{ profile.membership_expiration_datetime }}.
+{% endif %}
+
+<h2>Sign up to Events:</h2>
+<ul>
+	{% for event in events %}
+		<li><a href="{{event.get_absolute_url}}">{{event.title}}</a></li>
+	{% endfor %}
+</ul>
+
+{% bccf_pagination events %}
+
+
+Events feed: <a href="/parents/event/feed/">Atom</a>.
+
+{% endblock %}
