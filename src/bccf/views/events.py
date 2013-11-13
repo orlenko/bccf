@@ -116,6 +116,9 @@ class ProfessionalEventWizard(SessionWizardView):
         return redirect('/professionals/event/%s' % (event.slug))            
     
     def process_survey(self, form):
+        """
+        Process each survey form and publishes them automatically.
+        """
         data = form.cleaned_data
         if 'clone' in data:
             del data['clone']
