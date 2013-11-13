@@ -68,11 +68,6 @@ class ProfessionalEventWizard(SessionWizardView):
     def get_template_names(self):
         return [TEMPLATES[self.steps.current]]
                 
-    def render(self, form=None, **kwargs):
-        form = form or self.get_form()
-        context = self.get_context_data(form=form, **kwargs)
-        return self.render_to_response(context)
-                
     def process_step(self, form):
         """
         Process a step when a form is submitted. The values in the form are clean and valid
