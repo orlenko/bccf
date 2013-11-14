@@ -4,6 +4,8 @@ import json
 from django.shortcuts import render_to_response, redirect
 from django.template.context import RequestContext
 from django.contrib.formtools.wizard.views import SessionWizardView
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import Http404
 
 from bccf.models import EventForParents, EventForProfessionals
 from bccf.util.membership import require_parent, require_professional
@@ -14,8 +16,14 @@ from formable.builder.models import FormStructure, FormPublished, Question
 
 log = logging.getLogger(__name__)
 
+##################
+# Parent Stuff
+
 def parents_event(request, slug):
-    event = EventForParents.objects.get(slug=slug)  # @UndefinedVariable get
+    try:
+        event = EventForParents.objects.get(slug=slug)  # @UndefinedVariable get
+    except ObjectDoesNotExist:
+        raise Http404
     context = RequestContext(request, locals())
     return render_to_response('bccf/event.html', {}, context_instance=context)
 
@@ -30,7 +38,7 @@ def parents_event_signup(request, slug):
     context = RequestContext(request, locals())
     return render_to_response('bccf/event_signup.html', {}, context_instance=context)
     
-    
+@require_parent
 @never_cache
 def parents_event_create(request):
     """
@@ -45,9 +53,21 @@ def parents_event_create(request):
         form = ParentEventForm
     context = RequestContext(request, locals())
     return render_to_response('bccf/event_create.html', {}, context_instance=context)
-    
-@never_cache
+
+#####################
+# Professional Stuff
+
 def professionals_event(request, slug):
+    try:
+        event = EventForProfessionals.objects.get(slug=slug)  # @UndefinedVariable get
+    except ObjectDoesNotExist:
+        raise Http404
+    context = RequestContext(request, locals())
+    return render_to_response('bccf/event.html', {}, context_instance=context)
+
+@require_professional    
+@never_cache
+def professionals_event_signup(request, slug):
     event = EventForProfessionals.objects.get(slug=slug)
     # Since we might have arrived through a membership-purchase page, let's clear the session variable that brought us here.
     if 'aftercheckout' in request.session:
