@@ -39,8 +39,8 @@ def parents_event_create(request):
     if request.method == 'POST':
         form = ParentEventForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('/parents/event/%s' % (form.slug))
+            event = form.save()
+            return redirect('/parents/event/%s' % (event.slug))
     else:
         form = ParentEventForm
     context = RequestContext(request, locals())
