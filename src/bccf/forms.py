@@ -8,7 +8,7 @@ from mezzanine.conf import settings
 from mezzanine.generic.models import Rating
 
 import logging
-from bccf.models import UserProfile, EventForProfessionals
+from bccf.models import UserProfile, EventForParents, EventForProfessionals
 from formable.builder.forms import FormStructureForm
 log = logging.getLogger(__name__)
 
@@ -75,32 +75,34 @@ class ProfileForm(forms.ModelForm):
         exclude = ('membership_order',)
         model = UserProfile
 
-class EventForm(forms.ModelForm):
-    pass
+class ParentEventForm(forms.ModelForm):
+    class Meta:
+        model = EventForParents
+        fields = ('title', 'content', 'provider', 'price', 'location_city',
+            'location_street', 'location_street2', 'location_postal_code',
+            'date_start', 'date_end')
+        widgets = {
+            'date_start': forms.DateTimeInput(attrs={'class':'vDatefield', 'placeholder':'YYYY-MM-DD HH:MM'}),
+            'date_end': forms.DateTimeInput(attrs={'class':'vDatefield', 'placeholder':'YYYY-MM-DD HH:MM'})
+        }
 
 # For Wizard       
-class ProfessionalEventForm(forms.Form):
+class ProfessionalEventForm(forms.ModelForm):
     """
     Form for creating a Professional Event using the Wizard
     """
+    class Meta:
+        model = EventForProfessionals
+        fields = ('title', 'content', 'provider', 'price', 'location_city',
+            'location_street', 'location_street2', 'location_postal_code',
+            'date_start', 'date_end')
+        widgets = {
+            'date_start': forms.DateTimeInput(attrs={'class':'vDatefield', 'placeholder':'YYYY-MM-DD HH:MM'}),
+            'date_end': forms.DateTimeInput(attrs={'class':'vDatefield', 'placeholder':'YYYY-MM-DD HH:MM'})
+        }
+            
     def __init__(self, *args, **kwargs):
         super(ProfessionalEventForm, self).__init__(*args, **kwargs)
-        self.fields['title'] = forms.CharField(label='Title', 
-            widget=forms.TextInput(attrs={'required':''}), required=True)
-        self.fields['content'] = forms.CharField(label='Event Description',
-            widget=forms.Textarea(attrs={'class':'mceEditor'}), required=True)
-        self.fields['date_start'] = forms.CharField(label='Event Start (Date Time):',
-            widget=forms.DateTimeInput(attrs={'class':'vDatefield', 'placeholder':'YYYY-MM-DD HH:MM', 'required':''}),
-            required=True)
-        self.fields['date_end'] = forms.CharField(label='Event End (Date Time):',
-            widget=forms.DateTimeInput(attrs={'class':'vDatefield', 'placeholder':'YYYY-MM-DD HH:MM', 'required':''}),
-            required=True)
-        self.fields['location_city'] = forms.CharField(label='City', required=False)
-        self.fields['location_street'] = forms.CharField(label='Street', required=False)
-        self.fields['location_street2'] = forms.CharField(label='Street (line2)', required=False)
-        self.fields['location_postal_code'] = forms.CharField(label='Postal Code', required=False)
-        self.fields['price'] = forms.CharField(label='Price($)',
-            widget=forms.TextInput(attrs={'required':''}), required=True)
         self.fields['survey'] = forms.BooleanField(label='Create Surveys?',
             widget=forms.CheckboxInput, required=False)
             

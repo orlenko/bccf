@@ -2,23 +2,11 @@
 
 {% load i18n %}
 
-{% block head %}
-    {{ wizard.form.media }}
-{% endblock %}
-
 {% block main %}
-<p>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</p>
-<form action="" method="POST">
+<h2>Create Event</h2>
+<form action="{% url 'parents-event-create' %}" method="POST">
     {% csrf_token %}
-    {{ wizard.management_form }}
-    {% if  wizard.forms.forms %}
-        {{ wizard.form.management.form }}
-        {% for form in wizard.form.forms %}
-            {{ form }}
-        {% endfor %}
-    {% else %}
-        {{ wizard.form }}
-    {% endif %}
+    {{ form }}
     <br/><br/>
     <input type="submit" value="{% trans 'submit' %}" />
 </form>
