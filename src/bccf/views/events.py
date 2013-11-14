@@ -82,7 +82,7 @@ class ProfessionalEventWizard(SessionWizardView):
         elif self.steps.current == 'before': # Before Survey form?
             if 'before-after_survey' in form.data and len(self.form_list) == 2: # After survey
                 self.form_list['after'] = FORMS['after']
-            elif 'before-after_survey' not in form.data and len(self.form_list) == 3:
+            elif 'before-after_survey' not in form.data and len(self.form_list) == 3: # No After Survey
                 del self.form_list['after']
         return self.get_form_step_data(form)
     
@@ -91,12 +91,17 @@ class ProfessionalEventWizard(SessionWizardView):
         Adds form_structure to context for cloning before survey
         """
         context = super(ProfessionalEventWizard, self).get_context_data(form=form, **kwargs)
-        if self.steps.current == 'after':
-            before_data = self.get_cleaned_data_for_step(step='before')
-            if 'clone' in before_data: # Clone the before form?
-                log.info(before_data)
+        if self.steps.current == 'before': # Rebuild the form just in case the user goes back a step
+            before_data = self.get_cleaned_data_for_step(step=self.steps.current)
+            if before_data is not None and 'structure' in before_data:
                 context.update({'form_structure':before_data['structure']})
-            log.info(context)
+        elif self.steps.current == 'after':
+            before_data = self.get_cleaned_data_for_step(step='before')
+            after_data = self.get_cleaned_data_for_step(step='after')
+            if before_data['clone']: # Clone the before form?
+                context.update({'form_structure':before_data['structure']})
+            elif after_data is not None and 'structure' in after_data:
+                context.update({'form_structure':after_data['structure']})
         return context
     
     def done(self, form_list, **kwargs):
@@ -105,7 +110,7 @@ class ProfessionalEventWizard(SessionWizardView):
         them with the Event. Form structures will be automatically published.
         """
         event_data = form_list[0].cleaned_data
-        if 'survey' in event_data:
+        if 'survey' in event_data: # check and remove the survey key-value pair
             del event_data['survey']
         if len(form_list) >= 2: # If there's a before survey
             event_data.update({'survey_before':self.process_survey(form_list[1])})
@@ -118,11 +123,13 @@ class ProfessionalEventWizard(SessionWizardView):
     def process_survey(self, form):
         """
         Process each survey form and publishes them automatically.
+        
+        This is an almost copy of the publish view found in formable.builder.views
         """
         data = form.cleaned_data
-        if 'clone' in data:
+        if 'clone' in data: # check and remove the clone key-value pair
             del data['clone']
-        if 'after_survey' in data:
+        if 'after_survey' in data: # check and remove the after_survey key-value pair
             del data['after_survey']
         form_struct = FormStructure.objects.create(**data)
         published = FormPublished(form_structure=form_struct, user=self.request.user)

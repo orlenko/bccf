@@ -300,7 +300,7 @@ var import_form = function(json) {
         obj = json
     }
     
-    $("#form-title").val(obj.title+' - Clone');
+    $("#form-title").val(obj.title);
     
     $(obj).each(function(i, form) {
         $(form.fieldset).each(function(i, fieldset) {

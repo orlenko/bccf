@@ -9,6 +9,7 @@ from mezzanine.generic.models import Rating
 
 import logging
 from bccf.models import UserProfile, EventForProfessionals
+from formable.builder.forms import FormStructureForm
 log = logging.getLogger(__name__)
 
 class RatingRenderer(RadioFieldRenderer):
@@ -99,19 +100,20 @@ class ProfessionalEventForm(forms.Form):
         self.fields['survey'] = forms.BooleanField(label='Create Surveys?',
             widget=forms.CheckboxInput, required=False)
             
-class FormStructureSurveyFormOne(forms.Form):
+class FormStructureSurveyFormOne(FormStructureForm):
     """
-    Form for creating a survey in the Professional Event creation Wizard
+    Form for creating a before survey in the Professional Event creation Wizard
+    
+    It is a child class of FormStructureForm found in formable.builder.forms
     """
-    title = forms.CharField(widget=forms.HiddenInput(attrs={'id': 'form_structure_title'}))
-    structure = forms.CharField(widget=forms.HiddenInput(attrs={'id': 'form_structure_data'}))
-    type = forms.CharField(widget=forms.HiddenInput(attrs={'id': 'form_structure_type'}))
     after_survey = forms.BooleanField(label='Create After Survey?',
         widget=forms.CheckboxInput, required=False)
     clone = forms.BooleanField(label='Clone this Structure?',
         widget=forms.CheckboxInput, required=False)
        
-class FormStructureSurveyFormTwo(forms.Form):
-    title = forms.CharField(widget=forms.HiddenInput(attrs={'id': 'form_structure_title'}))
-    structure = forms.CharField(widget=forms.HiddenInput(attrs={'id': 'form_structure_data'}))
-    type = forms.CharField(widget=forms.HiddenInput(attrs={'id': 'form_structure_type'}))
+class FormStructureSurveyFormTwo(FormStructureForm):
+    """
+    Form for creating an after survey in the Professional Event creation Wizard.
+    
+    It is a child class of FormStructureForm found in formable.builder.forms
+    """

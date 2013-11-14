@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <div class="section container row">
     <div class="col three">
         <!-- Common Fields -->
@@ -56,13 +58,13 @@
     <div id="form-container" class="col nine">
         <input type="text" id="form-title" class="form-title section twelve" placeholder="Form Title" />
         <ul id="form-body" class="section row-one twelve no-style-list sortable"></ul>
+        <!-- custom for BCCF -->
         {% if wizard %}
             <form id="form_structure_form" action="" method="POST">
         {% else %}
             <form id="form_structure_form" action="{% url 'save-structure' %}" method="POST">
         {% endif %}
             {% csrf_token %}
-            <!-- custom for BCCF -->
             {% if wizard %}
                 {{ wizard.management_form }}
                 {% if  wizard.forms.forms %}
@@ -75,20 +77,15 @@
                 {% endif %}
                 <br/><br/>
                 {% if wizard.steps.prev %}
-                    <button name="wizard_goto_step" type="submit" value="{{ wizards.steps.prev }}" class="export-btn">
-                        Prev Step
-                    </button>
-                {% endif %}
-                {% if wizard.steps.next %}
-                    <button name="wizard_goto_step" type="submit" value="{{ wizards.steps.next }}" class="export-btn">
-                        Next Step
+                    <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}">
+                        {% trans "prev step" %} 
                     </button>
                 {% endif %}
             {% else %}
                 {{ structure_form }}
             {% endif %}
-            <!-- end custom -->
-            <input type="submit" class="export-btn" />
+        <!-- end custom -->
+            <input type="submit" value="{% trans 'submit' %}" class="export-btn" />
         </form>
     </div>
 </div>
