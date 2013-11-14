@@ -30,6 +30,11 @@ def parents_event_signup(request, slug):
     context = RequestContext(request, locals())
     return render_to_response('bccf/event_signup.html', {}, context_instance=context)
     
+    
+@never_cache
+def parents_event_create(request):
+    pass
+    
 @never_cache
 def professionals_event(request, slug):
     event = EventForProfessionals.objects.get(slug=slug)
@@ -39,22 +44,11 @@ def professionals_event(request, slug):
     context = RequestContext(request, locals())
     return render_to_response('bccf/event_signup.html', {}, context_instance=context)
     
-#@require_professional
-@never_cache
-def professionals_event_create(request):
-    """
-    For professionals to create a new event.
-    """
-    if request.method == 'POST':
-        events_form = ProfessionalEventForm(request.POST)
-        if events_form.is_valid():
-            events_form.save()
-    
 # For Professional Event Wizard
 FORMS = [('event', ProfessionalEventForm), # Main Form
          ('before', FormStructureSurveyFormOne), # Before Survey
          ('after', FormStructureSurveyFormTwo)] # After Survey
-         
+# Custom templates for each step
 TEMPLATES = {'event': 'bccf/event_create.html',
              'before': 'generic/includes/form_builder.html',
              'after': 'generic/includes/form_builder.html'}
@@ -100,7 +94,7 @@ class ProfessionalEventWizard(SessionWizardView):
             after_data = self.get_cleaned_data_for_step(step='after')
             if before_data['clone']: # Clone the before form?
                 context.update({'form_structure':before_data['structure']})
-            elif after_data is not None and 'structure' in after_data:
+            elif after_data is not None and 'structure' in after_data: # Rebuild the form just in case there's an error
                 context.update({'form_structure':after_data['structure']})
         return context
     

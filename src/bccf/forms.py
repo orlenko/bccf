@@ -74,7 +74,11 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         exclude = ('membership_order',)
         model = UserProfile
-        
+
+class EventForm(forms.ModelForm):
+    pass
+
+# For Wizard       
 class ProfessionalEventForm(forms.Form):
     """
     Form for creating a Professional Event using the Wizard

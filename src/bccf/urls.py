@@ -41,12 +41,12 @@ urlpatterns = patterns("",
     url(r'^parents/$', 'bccf.views.parents.parents_page', name='parents-page'),
     url(r'^parents/event/feed/', EventsForParentsFeed()),
     url(r'^parents/event/signup/(?P<slug>.*)/$', 'bccf.views.events.parents_event_signup', name='parents-event-signup'),
+    url(r'^parents/event/create/$', 'bccf.views.events.parents_event_create', name='parents-event-create'),
     url(r'^parents/event/(?P<slug>.*)/$', 'bccf.views.events.parents_event', name='parents-event'),
 
     # Professionals
     url(r'^professionals/$', 'bccf.views.professionals.professionals_page', name='professionals-page'),
     url(r'^professionals/event/create/$', ProfessionalEventWizard.as_view(FORMS), name='professionals-event-wizard'),
-    url(r'^professionals/event/create/save/$', 'bccf.views.events.professionals_event_create', name='professionals-event-create'),
     url(r'^professionals/event/(?P<slug>.*)/$', 'bccf.views.events.professionals_event', name='professionals-event'),
 
     # We don't want to presume how your homepage works, so here are a
