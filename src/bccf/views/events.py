@@ -7,7 +7,7 @@ from django.contrib.formtools.wizard.views import SessionWizardView
 
 from bccf.models import EventForParents, EventForProfessionals
 from bccf.util.membership import require_parent, require_professional
-from bccf.forms import ProfessionalEventForm, FormStructureSurveyFormOne, FormStructureSurveyFormTwo
+from bccf.forms import ProfessionalEventForm, ParentEventForm, FormStructureSurveyFormOne, FormStructureSurveyFormTwo
 from django.views.decorators.cache import never_cache
 
 from formable.builder.models import FormStructure, FormPublished, Question
@@ -33,7 +33,18 @@ def parents_event_signup(request, slug):
     
 @never_cache
 def parents_event_create(request):
-    pass
+    """
+    View for creating an event as a parent.
+    """
+    if request.method == 'POST':
+        form = ParentEventForm(request.POST)
+        if form.is_valid():
+            event = form.save()
+            return redirect('/parents/event/%s' % (event.slug))
+    else:
+        form = ParentEventForm
+    context = RequestContext(request, locals())
+    return render_to_response('bccf/event_create.html', {}, context_instance=context)
     
 @never_cache
 def professionals_event(request, slug):
@@ -49,7 +60,7 @@ FORMS = [('event', ProfessionalEventForm), # Main Form
          ('before', FormStructureSurveyFormOne), # Before Survey
          ('after', FormStructureSurveyFormTwo)] # After Survey
 # Custom templates for each step
-TEMPLATES = {'event': 'bccf/event_create.html',
+TEMPLATES = {'event': 'bccf/wizard_event_create.html',
              'before': 'generic/includes/form_builder.html',
              'after': 'generic/includes/form_builder.html'}
     

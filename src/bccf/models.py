@@ -151,6 +151,10 @@ class EventForParents(EventBase):
     @permalink
     def signup_url(self):
         return ('parents-event-signup', (), {'slug': self.slug})
+        
+    @permalink
+    def create_url(self):
+        return('parents-event-create', (), {})
 
     class Meta:
         verbose_name = 'Event for Parents'
@@ -168,6 +172,10 @@ class EventForProfessionals(EventBase):
     @permalink
     def signup_url(self):
         return ('professionals-event-signup', (), {'slug': self.slug})
+    
+    @permalink
+    def create_url(self):
+        return('professionals-event-create', (), {})
 
     class Meta:
         verbose_name = 'Event for Professionals'

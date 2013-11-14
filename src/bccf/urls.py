@@ -46,7 +46,7 @@ urlpatterns = patterns("",
 
     # Professionals
     url(r'^professionals/$', 'bccf.views.professionals.professionals_page', name='professionals-page'),
-    url(r'^professionals/event/create/$', ProfessionalEventWizard.as_view(FORMS), name='professionals-event-wizard'),
+    url(r'^professionals/event/create/$', ProfessionalEventWizard.as_view(FORMS), name='professionals-event-create'),
     url(r'^professionals/event/(?P<slug>.*)/$', 'bccf.views.events.professionals_event', name='professionals-event'),
 
     # We don't want to presume how your homepage works, so here are a
