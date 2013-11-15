@@ -26,7 +26,7 @@ urlpatterns = patterns("",
     ("^shop/", include("cartridge.shop.urls")),
     
     # Formable URLs
-    url("formable/", include("formable.builder.urls")),
+    ("^formable/", include("formable.builder.urls")),
 
     # Podcasts
     #('^podcasts/', include('podcasting.urls')),
@@ -47,6 +47,7 @@ urlpatterns = patterns("",
     # Professionals
     url(r'^professionals/$', 'bccf.views.professionals.professionals_page', name='professionals-page'),
     url(r'^professionals/event/create/$', ProfessionalEventWizard.as_view(FORMS), name='professionals-event-create'),
+    url(r'^professionals/event/report/$', 'bccf.views.events.professionals_event_report', name='professionals-event-report'),
     url(r'^professionals/event/(?P<slug>.*)/$', 'bccf.views.events.professionals_event', name='professionals-event'),
 
     # We don't want to presume how your homepage works, so here are a

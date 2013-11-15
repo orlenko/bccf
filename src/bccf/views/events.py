@@ -1,15 +1,16 @@
 import logging
 import json
+import csv
 
 from django.shortcuts import render_to_response, redirect
 from django.template.context import RequestContext
 from django.contrib.formtools.wizard.views import SessionWizardView
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import Http404
+from django.http import Http404, HttpResponse
 
 from bccf.models import EventForParents, EventForProfessionals
 from bccf.util.membership import require_parent, require_professional
-from bccf.forms import ProfessionalEventForm, ParentEventForm, FormStructureSurveyFormOne, FormStructureSurveyFormTwo
+from bccf.forms import ProfessionalEventForm, ParentEventForm, FormStructureSurveyFormOne, FormStructureSurveyFormTwo, ProfessionalSurveyReport
 from django.views.decorators.cache import never_cache
 
 from formable.builder.models import FormStructure, FormPublished, Question
@@ -75,6 +76,18 @@ def professionals_event_signup(request, slug):
     context = RequestContext(request, locals())
     return render_to_response('bccf/event_signup.html', {}, context_instance=context)
     
+@never_cache
+def professionals_event_report(request):
+    """
+    For report creation based on the survey.
+    """
+    form = ProfessionalSurveyReport
+    if request.method == 'POST':
+        form = ProfessionalSurveyReport(request.POST)
+    
+    context = RequestContext(request, locals())
+    return render_to_response('bccf/survey_report.html', {}, context_instance=context)
+    
 # For Professional Event Wizard
 FORMS = [('event', ProfessionalEventForm), # Main Form
          ('before', FormStructureSurveyFormOne), # Before Survey
@@ -84,17 +97,26 @@ TEMPLATES = {'event': 'bccf/wizard_event_create.html',
              'before': 'generic/includes/form_builder.html',
              'after': 'generic/includes/form_builder.html'}
     
+#@require_professional
+#@never_cache
 class ProfessionalEventWizard(SessionWizardView):
     """
     Form Wizard for creating a new professional event
     
     Steps: Event Details -> Before Survey (Optional) -> After Survey (Optional)
-    """          
+    """
     def get_template_names(self):
+        """
+        Override of form wizard's `get_template_names`
+        
+        Returns the proper template depending on step
+        """
         return [TEMPLATES[self.steps.current]]
                 
     def process_step(self, form):
         """
+        Override of form wizard's `process_step`
+        
         Process a step when a form is submitted. The values in the form are clean and valid
         """
         if self.steps.current == 'event': # Event form?
@@ -113,6 +135,8 @@ class ProfessionalEventWizard(SessionWizardView):
     
     def get_context_data(self, form, **kwargs):
         """
+        Override of form wizard's `get_context_data`
+        
         Adds form_structure to context for cloning before survey
         """
         context = super(ProfessionalEventWizard, self).get_context_data(form=form, **kwargs)
@@ -133,6 +157,8 @@ class ProfessionalEventWizard(SessionWizardView):
         """
         This is where the forms will be saved! If there are surveys, associate
         them with the Event. Form structures will be automatically published.
+        
+        REQUIRED by form wizard
         """
         event_data = form_list[0].cleaned_data
         if 'survey' in event_data: # check and remove the survey key-value pair
@@ -173,4 +199,4 @@ class ProfessionalEventWizard(SessionWizardView):
                     question.save()
         # End Create Questions
         
-        return published
+        return published # FormPublished object
