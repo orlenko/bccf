@@ -151,7 +151,7 @@ class EventForParents(EventBase):
     @permalink
     def signup_url(self):
         return ('parents-event-signup', (), {'slug': self.slug})
-        
+
     @permalink
     def create_url(self):
         return('parents-event-create', (), {})
@@ -164,7 +164,7 @@ class EventForParents(EventBase):
 class EventForProfessionals(EventBase):
     survey_before = models.ForeignKey(FormPublished, null=True, blank=True, related_name='survey_before')
     survey_after = models.ForeignKey(FormPublished, null=True, blank=True, related_name='survey_after')
-    
+
     @permalink
     def get_absolute_url(self):
         return ('professionals-event', (), {'slug': self.slug})
@@ -172,7 +172,7 @@ class EventForProfessionals(EventBase):
     @permalink
     def signup_url(self):
         return ('professionals-event-signup', (), {'slug': self.slug})
-    
+
     @permalink
     def create_url(self):
         return('professionals-event-create', (), {})
@@ -239,7 +239,7 @@ class Video(Displayable, Ownable, RichText, AdminThumbMixin):
         help_text='A link to a web resource. '
             'The address must start with http:// or https://. '
             'For example: http://plei.publiclegaled.bc.ca')
-    audio_file = FileField("Video File",
+    video_file = FileField("Video File",
         upload_to=upload_to("bccf.Video.video_file", "resource/video"),
         extensions=['.avi', '.flv', '.mkv', '.mov', '.mp4', '.ogg', '.wmv'],
         max_length=255,
