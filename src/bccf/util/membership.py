@@ -39,11 +39,11 @@ def require_member(category_name, func, request, *args, **kwargs):
         log.debug('User has no profile. Redirecting to profile page')
         return HttpResponseRedirect('/member/profile/?%s' % urlencode((('next', path),)))
     # Must have a parent membership product
-    membership_product = user.profile.membership_product
-    if membership_product:
+    membership_product_variation = user.profile.membership_product_variation
+    if membership_product_variation:
         is_parent_product = False
         categ_slugs = [category_name, 'membership/%s' % category_name]
-        for category in membership_product.categories.all():
+        for category in membership_product_variation.product.categories.all():
             log.debug('Checking if %s is in %s' % (category.slug, categ_slugs))
             if category.slug in categ_slugs:
                 is_parent_product = True
