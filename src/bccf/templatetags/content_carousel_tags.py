@@ -7,7 +7,7 @@ log = logging.getLogger(__name__)
 register = template.Library()
 
 @register.inclusion_tag("generic/includes/content_carousel.html", takes_context=True)
-def content_carousel_for(context, obj):
+def content_carousel_for(context, obj=None):
     """
     Provides a generic context variable name for the object that carousels are
     being rendered for.

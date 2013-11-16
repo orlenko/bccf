@@ -1,0 +1,89 @@
+/* line 17, sass/slider.scss */
+.bccf-slider {
+  margin: 0;
+}
+/* line 20, sass/slider.scss */
+.bccf-slider .content-header {
+  display: block;
+  background-color: #6eb43f;
+  margin: 0 5px;
+  cursor: pointer;
+  padding: 10px 0 0 0;
+  text-align: center;
+}
+/* line 28, sass/slider.scss */
+.bccf-slider .content-header img {
+  box-shadow: none;
+}
+/* line 32, sass/slider.scss */
+.bccf-slider .content-header h3 {
+  margin: 0;
+}
+/* line 36, sass/slider.scss */
+.bccf-slider .content-header > div {
+  display: none;
+}
+/* line 41, sass/slider.scss */
+.bccf-slider .content-header-active {
+  background-color: #00aeef;
+  border-bottom: 10px solid #00aeef;
+}
+
+/* line 47, sass/slider.scss */
+#slide-content-container {
+  background-color: #00aeef;
+  padding: 10px;
+  margin: 0 4px 0 5px;
+  width: auto;
+  color: white;
+}
+/* line 54, sass/slider.scss */
+#slide-content-container img {
+  display: block;
+  margin: auto;
+}
+/* line 59, sass/slider.scss */
+#slide-content-container #close-btn {
+  display: none;
+}
+
+@media only screen and (max-width: 739px) {
+  /* line 68, sass/slider.scss */
+  .bccf-slider .owl-wrapper > div[class$="owl-item"] {
+    position: relative;
+    left: -10px;
+  }
+  /* line 73, sass/slider.scss */
+  .bccf-slider .active {
+    margin-right: 2.5px;
+  }
+  /* line 77, sass/slider.scss */
+  .bccf-slider .content-header-active {
+    border-bottom: none;
+  }
+
+  /* line 82, sass/slider.scss */
+  #slide-content-container {
+    background: rgba(0, 174, 239, 0.9);
+    position: fixed !important;
+    height: 100vh !important;
+    overflow-y: auto !important;
+    margin: 0;
+    top: 0;
+    left: 0;
+    z-index: 99 !important;
+  }
+  /* line 92, sass/slider.scss */
+  #slide-content-container #close-btn {
+    display: block;
+    color: white;
+    font-weight: bold;
+    margin-bottom: 5px;
+    cursor: pointer;
+    text-align: right;
+  }
+  /* line 100, sass/slider.scss */
+  #slide-content-container #close-btn:hover {
+    text-decoration: underline;
+  }
+}

@@ -39,9 +39,9 @@ urlpatterns = patterns("",
 
     # Parents
     url(r'^parents/$', 'bccf.views.parents.parents_page', name='parents-page'),
+    url(r'^parents/(?P<slug>.*)/$', 'bccf.views.parents.parents_page', name='parents-ajax-page'),
     url(r'^parents/event/feed/', EventsForParentsFeed()),
     url(r'^parents/event/signup/(?P<slug>.*)/$', 'bccf.views.events.parents_event_signup', name='parents-event-signup'),
-    url(r'^parents/event/create/$', 'bccf.views.events.parents_event_create', name='parents-event-create'),
     url(r'^parents/event/(?P<slug>.*)/$', 'bccf.views.events.parents_event', name='parents-event'),
 
     # Professionals

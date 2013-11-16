@@ -1,10 +1,11 @@
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
+from django.http import HttpResponse
 from django.template.context import RequestContext
 from bccf.models import EventForParents
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 
-def parents_page(request):
+def parents_page(request, slug=None):
     user = request.user
     authenticated = user and not user.is_anonymous()
     profile = None
