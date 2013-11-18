@@ -1,69 +1,90 @@
-/* line 17, sass/slider.scss */
-.bccf-slider {
-  margin: 0;
+/* line 16, sass/slider.scss */
+#show-type-container {
+  text-align: right;
 }
-/* line 20, sass/slider.scss */
-.bccf-slider .content-header {
+/* line 18, sass/slider.scss */
+#show-type-container .show-type-control {
+  cursor: pointer;
+}
+
+/* line 24, sass/slider.scss */
+.content-header {
   display: block;
   background-color: #6eb43f;
-  margin: 0 5px;
   cursor: pointer;
   padding: 10px 0 0 0;
   text-align: center;
 }
-/* line 28, sass/slider.scss */
-.bccf-slider .content-header img {
+/* line 31, sass/slider.scss */
+.content-header img {
   box-shadow: none;
 }
-/* line 32, sass/slider.scss */
-.bccf-slider .content-header h3 {
+/* line 35, sass/slider.scss */
+.content-header h3 {
   margin: 0;
 }
-/* line 36, sass/slider.scss */
-.bccf-slider .content-header > div {
-  display: none;
-}
-/* line 41, sass/slider.scss */
-.bccf-slider .content-header-active {
+
+/* line 40, sass/slider.scss */
+.content-header-active {
   background-color: #00aeef;
   border-bottom: 10px solid #00aeef;
 }
 
-/* line 47, sass/slider.scss */
-#slide-content-container {
+/* line 45, sass/slider.scss */
+.slide-box {
+  margin: 0 5px;
+}
+
+/* line 49, sass/slider.scss */
+.content-box, #slide-content, .grid-content {
   background-color: #00aeef;
   padding: 10px;
-  margin: 0 4px 0 5px;
   width: auto;
   color: white;
 }
-/* line 54, sass/slider.scss */
-#slide-content-container img {
+/* line 55, sass/slider.scss */
+.content-box img, #slide-content img, .grid-content img {
   display: block;
   margin: auto;
 }
-/* line 59, sass/slider.scss */
-#slide-content-container #close-btn {
-  display: none;
+
+/* line 61, sass/slider.scss */
+.grid-row:first {
+  margin-top: 0;
+}
+
+/* line 65, sass/slider.scss */
+.grid-row {
+  margin-top: 10px;
+}
+
+/* line 69, sass/slider.scss */
+#slide-content {
+  margin: 0 5px;
+}
+
+/* line 74, sass/slider.scss */
+.grid-content {
+  margin: 0 0 10px 0;
 }
 
 @media only screen and (max-width: 739px) {
-  /* line 68, sass/slider.scss */
+  /* line 83, sass/slider.scss */
   .bccf-slider .owl-wrapper > div[class$="owl-item"] {
     position: relative;
     left: -10px;
   }
-  /* line 73, sass/slider.scss */
+  /* line 88, sass/slider.scss */
   .bccf-slider .active {
     margin-right: 2.5px;
   }
-  /* line 77, sass/slider.scss */
+  /* line 92, sass/slider.scss */
   .bccf-slider .content-header-active {
     border-bottom: none;
   }
 
-  /* line 82, sass/slider.scss */
-  #slide-content-container {
+  /* line 97, sass/slider.scss */
+  #mobile-content-container {
     background: rgba(0, 174, 239, 0.9);
     position: fixed !important;
     height: 100vh !important;
@@ -71,10 +92,11 @@
     margin: 0;
     top: 0;
     left: 0;
+    right: 0;
     z-index: 99 !important;
   }
-  /* line 92, sass/slider.scss */
-  #slide-content-container #close-btn {
+  /* line 108, sass/slider.scss */
+  #mobile-content-container #close-btn {
     display: block;
     color: white;
     font-weight: bold;
@@ -82,8 +104,8 @@
     cursor: pointer;
     text-align: right;
   }
-  /* line 100, sass/slider.scss */
-  #slide-content-container #close-btn:hover {
+  /* line 116, sass/slider.scss */
+  #mobile-content-container #close-btn:hover {
     text-decoration: underline;
   }
 }

@@ -13,41 +13,42 @@ $white: #fff;
 $margin10: 10px;
 $padding10: 10px;
 
-// Content Slider CSS
-.bccf-slider {
-    margin: 0;
-    
-    .content-header {
-        display: block;
-        background-color: $bccfColorHex;
-        margin: 0 ($margin10/2);
+#show-type-container {
+    text-align: right;
+    .show-type-control {
         cursor: pointer;
-        padding: ($padding10) 0 0 0;
-        text-align: center;
-        
-        img {
-            box-shadow: none;
-        }
-        
-        h3 {
-            margin: 0;
-        }
-        
-        > div {
-            display: none;
-        }
-    }
-    
-    .content-header-active {
-        background-color: $bccfColor2Hex;
-        border-bottom: ($margin10) solid $bccfColor2Hex;
     }
 }
 
-#slide-content-container {
+// Content Slider CSS
+.content-header {
+    display: block;
+    background-color: $bccfColorHex;
+    cursor: pointer;
+    padding: ($padding10) 0 0 0;
+    text-align: center;
+    
+    img {
+        box-shadow: none;
+    }
+    
+    h3 {
+        margin: 0;
+    }
+}
+
+.content-header-active {
+    background-color: $bccfColor2Hex;
+    border-bottom: ($margin10) solid $bccfColor2Hex;
+}
+
+.slide-box {
+    margin: 0 ($margin10/2);
+}
+
+.content-box {
     background-color: $bccfColor2Hex;
     padding: ($padding10);
-    margin: 0 (($margin10/2) - 1) 0 ($margin10/2);
     width: auto;
     color: $white;
     
@@ -55,10 +56,24 @@ $padding10: 10px;
         display: block;
         margin: auto;
     }
-    
-    #close-btn {
-        display: none;
-    }
+}
+
+.grid-row:first {
+    margin-top: 0;
+}
+
+.grid-row {
+    margin-top: ($margin10);
+}
+
+#slide-content {
+    @extend .content-box;
+    margin: 0 ($margin10/2);
+}
+
+.grid-content {
+    @extend .content-box;
+    margin: 0 0 ($margin10) 0;
 }
 
 @media only screen and (max-width: $mobile-breakpoint) {
@@ -79,7 +94,7 @@ $padding10: 10px;
         }
     }
 
-    #slide-content-container {
+    #mobile-content-container {
         background: $bccfColor2RGBA;
         position: fixed !important;
         height: 100vh !important;
@@ -87,6 +102,7 @@ $padding10: 10px;
         margin: 0;
         top: 0;
         left: 0;
+        right: 0;
         z-index: 99 !important;
         
         #close-btn {

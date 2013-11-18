@@ -6,6 +6,40 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 
 def parents_page(request, slug=None):
+    if slug is not None and request.is_ajax():
+        """
+        We will generate a completely new page with the data we have and send it
+        back via ajax to the caller page
+        """
+        context = RequestContext(request, locals())
+        return render_to_response('generic/sub_page_box.html', {}, context_instance=context)
+    boxes = [
+        {
+         'slug':'test',
+         'img':'http://placehold.it/100x50/6eb43f/ffffff&text=Placeholder',
+         'text':'Product 1'
+        },
+        {
+         'slug':'test2',
+         'img':'http://placehold.it/100x50/6eb43f/ffffff&text=Placeholder',
+         'text':'Product 2'
+        },
+        {
+         'slug':'test3',
+         'img':'http://placehold.it/100x50/6eb43f/ffffff&text=Placeholder',
+         'text':'Product 3'
+        },
+        {
+         'slug':'test4',
+         'img':'http://placehold.it/100x50/6eb43f/ffffff&text=Placeholder',
+         'text':'Product 4'
+        },
+        {
+         'slug':'test5',
+         'img':'http://placehold.it/100x50/6eb43f/ffffff&text=Placeholder',
+         'text':'Product 5'
+        },
+    ]
     user = request.user
     authenticated = user and not user.is_anonymous()
     profile = None

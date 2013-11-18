@@ -1,57 +1,101 @@
 <div id="banner" class="section row row-one">
     <h1>Fancy Carousel Prototype</h1>
 </div>
-<div id="carousel-container" class="section row row-one">
-    <div id="carousel" class="col six center">
+<div id="top-control-container" class="section row">
+    <div id="filter-container" class="col nine">
+        <form>
+            <input type="text" name="sub-page-filter" placeholder="Filter" />
+        </form>
+    </div>
+    <div id="show-type-container" class="col three no-mobile">
+        <a class="show-type-control" id="toGrid">Grid</a> | 
+        <a class="show-type-control" id="toSlide">Slide</a>
+    </div>
+</div>
+<div id="carousel-container" class="section row">
+    <div id="carousel" class="section">
+        {% for slide in boxes %}
         <div class="slide">
-            <a class="content-header" href="{% url 'parents-ajax-page' "test" %}">   
-                <img src="http://placehold.it/100x50/6eb43f/ffffff&text=Placeholder"/>
-                <h3>Parent 1</h3>
+            <a class="content-header slide-box" href="{% url 'parents-ajax-page' slide.slug %}">
+                <img src="{{ slide.img }}"/>
+                <h3>{{ slide.text }}</h3>
             </a>
         </div>
-        <div class="slide">
-            <a class="content-header" href="{% url 'parents-ajax-page' "test2" %}">   
-                <img src="http://placehold.it/100x50/6eb43f/ffffff&text=Placeholder"/>
-                <h3>Parent 1</h3>
+        {% endfor %}
+    </div>
+    <div id="slide-content" class="reset section"></div>
+</div>
+<div id="grid-container" class="section row">
+    {% for box in boxes %}
+    {% if forloop.counter|divisibleby:"5" or forloop.first %}
+    <div class="grid-row section">
+    {% endif %}
+        <div class="grid-box col three">
+            <a class="content-header" href="{% url 'parents-ajax-page' box.slug %}">
+                <img src="{{ box.img }}"/>
+                <h3>{{ box.text }}</h3>
             </a>
         </div>
+    {% if forloop.counter|divisibleby:"4" or forloop.last %}
     </div>
-    <div id="slide-content-container" class="col six center">
-        <a id="close-btn" href="#" onclick="reset()">CLOSE</a>
-        <div id="slide-content"></div>
-    </div>
+    <div class="grid-content reset section"></div>
+    {% endif %}
+    {% endfor %}
+</div>
+<div id="mobile-content-container" class="no-desktop">
+    <a id="close-btn" href="#" onclick="reset()">CLOSE</a>
+    <div id="mobile-content" class="content-box"></div>
 </div>
 
 <script>
-    $(document).ready(function() {
+    $(function() {
         // Create new Owl Carousel
         $('#carousel').owlCarousel({
             'items': 4,
             'pagination': false,
             'theme': 'bccf-slider',
             'addClassActive': true,
-            'startDragging': function(){reset();},
+            'startDragging': function(){reset();}
         });
         console.log("test");
-        // Reset the contents container
-        reset(); 
+        $('#carousel-container').hide();
+        
+        reset();
+        
+        {% if slug %}
+        if($('#carousel-container').is(':visible')) {
+            $('.slide:first a').trigger('click');
+        } else if($('#grid-container').is(':visible')) {
+            $('.grid-row:first .grid-box:first a').trigger('click');
+        }
+        {% endif %}
+        // Reset the contents container 
     });
     
     // Closes the content container, empties it, and resets the classes
-    function reset() {
-        $('#slide-content-container').hide();
-        $('#slide-content').html('');
+    var reset = function() {
+        $('.reset').hide();
+        $('#mobile-content-container').hide();
+        $('.reset').html('');
+        $('#mobile-content').html('');
         $('.content-header-active').removeClass('content-header-active');
-    }
-    
-    $.cergis = $.cergis || {};
-    $.cergis.loadContent = function () {
+    };
+    var loadContent = function() {
         $('.ajax-loader').show();
         $.ajax({
             url: pageUrl + '?type=ajax',
             success: function (data) {
-                $('#slide-content').html(data);
-                console.log("test2");
+                if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                    $('#mobile-content').html(data);
+                    $('#mobile-content-container').fadeIn(500);
+                } else if($('#carousel-container').is(':visible')) {
+                    $('#slide-content').html(data);
+                    $('#slide-content').fadeIn(500);
+                } else if($('#grid-container').is(':visible')) {
+                    $('.content-header-active').parent()
+                    .parent().next('.grid-content').html(data)
+                    .fadeIn(500);
+                }
                 // hide ajax loader
                 $('.ajax-loader').hide();
             }
@@ -59,10 +103,9 @@
         if (pageUrl != window.location) {
             window.history.pushState({ path: pageUrl }, '', pageUrl);
         }
-        console.log("test3");
-    }
-    $.cergis.backForwardButtons = function () {
-        $(window).on('popstate', function () {
+    };
+    var backForwardButtons = function() {
+        $(window).on('popstate', function() {
             $.ajax({
                 url: location.pathname + '?type=ajax',
                 success: function (data) {
@@ -70,18 +113,28 @@
                 }
             });
         });
-    }
+    };
     $('.content-header').on('click', function(e) {
         if(!$(this).hasClass('content-header-active')) { // was the active one clicked?
             reset();
             pageUrl = $(this).attr('href');
-            $.cergis.loadContent();
+            loadContent();
             $(this).addClass('content-header-active');
-            $('#slide-content-container').fadeIn(500);
         } else {
             reset();
         }
         e.preventDefault();
     });
-    $.cergis.backForwardButtons();
+    $('.show-type-control').on('click', function(e) {
+        var id = $(this).attr('id');
+        reset();
+        if(id === 'toGrid') {
+            $('#carousel-container').hide();
+            $('#grid-container').show();
+        } else if(id === 'toSlide') {
+            $('#grid-container').hide();
+            $('#carousel-container').show();
+        }
+    });
+    backForwardButtons();
 </script>
