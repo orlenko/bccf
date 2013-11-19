@@ -79,7 +79,7 @@ class QuestionAdmin(admin.ModelAdmin):
     """
     readonly_fields = ('date',)
     fieldsets = [
-        ('Question Details', {'fields':['question', 'required']}),
+        ('Question Details', {'fields':['question', 'num_answers', 'required']}),
         ('Question Owners', {'fields':['form_published']}),
         ('Meta', {'fields':['date']})
     ]

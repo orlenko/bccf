@@ -100,7 +100,13 @@ def publish_form(request):
                         required = 1
                     else:
                         required = 0
-                    question = Question(question=field["label"], form_published=form_published, required=required)
+                    
+                    if "options" in field:
+                        num_answers = len(field["options"])
+                        
+                    question = Question(question=field["label"], 
+                        form_published=form_published, required=required,
+                        num_answers=len(field["options"]) or '')
                     question.save()
         # End Create Questions
             

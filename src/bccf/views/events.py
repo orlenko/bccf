@@ -1,6 +1,7 @@
 import logging
 import json
 import csv
+import time
 
 from django.shortcuts import render_to_response, redirect
 from django.template.context import RequestContext
@@ -13,7 +14,7 @@ from bccf.util.membership import require_parent, require_professional
 from bccf.forms import ProfessionalEventForm, ParentEventForm, FormStructureSurveyFormOne, FormStructureSurveyFormTwo, ProfessionalSurveyReport
 from django.views.decorators.cache import never_cache
 
-from formable.builder.models import FormStructure, FormPublished, Question
+from formable.builder.models import FormStructure, FormPublished, FormFilled, FieldAnswer, Question
 
 log = logging.getLogger(__name__)
 
@@ -75,18 +76,6 @@ def professionals_event_signup(request, slug):
         del request.session['aftercheckout']
     context = RequestContext(request, locals())
     return render_to_response('bccf/event_signup.html', {}, context_instance=context)
-    
-@never_cache
-def professionals_event_report(request):
-    """
-    For report creation based on the survey.
-    """
-    form = ProfessionalSurveyReport
-    if request.method == 'POST':
-        form = ProfessionalSurveyReport(request.POST)
-    
-    context = RequestContext(request, locals())
-    return render_to_response('bccf/survey_report.html', {}, context_instance=context)
     
 # For Professional Event Wizard
 FORMS = [('event', ProfessionalEventForm), # Main Form
@@ -192,11 +181,63 @@ class ProfessionalEventWizard(SessionWizardView):
             for field in fieldset["fields"]:
                 if "label" in field: # don't save static text
                     if "required" in field["attr"]:
-                        required = 1
-                    else:
                         required = 0
-                    question = Question(question=field["label"], form_published=published, required=required)
+                    else:
+                        required = 1
+                        
+                    if "options" in field:
+                        num_answers = len(field["options"])
+                        
+                    question = Question(question=field["label"], 
+                        form_published=published, required=required,
+                        num_answers=len(field["options"]) or '')
                     question.save()
         # End Create Questions
         
         return published # FormPublished object
+        
+######################################
+# Survey Report
+def professional_survey_download_report(request, slug):
+    """
+    Downloads a CSV file of the survey results
+    """
+    if not request.user.is_authenticated():
+        return redirect('/')
+        
+    try:
+        event = EventForProfessionals.objects.get(slug=slug)
+    except ObjectDoesNotExist:
+        raise Http404
+        
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="%s-%s-report.csv"' % (event.slug, time.strftime("%x"))
+    
+    writer = csv.writer(response)
+    writer.writerow(['Report for %s' % (event.title)])
+        
+    if event.survey_before is not None:
+        before_filled_forms = FormFilled.objects.filter(form_published=event.survey_before)
+        headers = ['User Name', 'Date Filled']
+        headers.extend(Question.objects.filter(form_published=event.survey_before))
+        writer.writerow(headers)
+        
+        for form in before_filled_forms:
+            answers = [form.user.get_full_name() or form.user.username, form.filled]
+            answers.extend(FieldAnswer.objects.filter(form_filled=form))
+            writer.writerow(answers)
+        
+    if event.survey_after is not None:
+        writer.writerow(["After Survey"])
+        after_filled_forms = FormFilled.objects.filter(form_published=event.survey_after)
+        headers = ['User Name', 'Date Filled']
+        headers.extend(Question.objects.filter(form_published=event.survey_after))
+        writer.writerow(headers)
+        
+        for form in after_filled_forms:
+            answers = [form.user.get_full_name() or form.user.username, form.filled]
+            answers.extend(FieldAnswer.objects.filter(form_filled=form))
+            writer.writerow(answers)
+
+    #pass
+    return response

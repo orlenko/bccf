@@ -4,6 +4,8 @@
 {% block main %}
 	<h2>{{ event.title }}</h2>
 	{{ event.content|safe }}
+	
+	<a href="{% url 'professional-download-report' event.slug %}">Download Report</a>
 	<p>
 		<a href="{{ event.signup_url }}">Sign up</a>
 	</p>

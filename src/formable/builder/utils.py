@@ -52,7 +52,7 @@ def parse(struct, publish_id):
                     field_class = forms.ChoiceField(label=field["label"],
                         required=isRequired,
                         widget=forms.RadioSelect,
-                        choices=create_choices(field["buttons"]))
+                        choices=create_choices(field["options"]))
             
             # MultiSelect, Checkboxes
             elif field["class"] == "multiselect-field" or field["class"] == "checkbox-field":
@@ -64,7 +64,7 @@ def parse(struct, publish_id):
                     field_class = forms.MultipleChoiceField(label=field["label"],
                         required=isRequired,
                         widget=forms.CheckboxSelectMultiple,
-                        choices=create_choices(field["buttons"]))
+                        choices=create_choices(field["options"]))
                         
             # StaticText, StaticSection
             elif field["class"] == "static-text-field" or field["class"] == "static-section-field":
