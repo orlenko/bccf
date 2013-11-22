@@ -1,41 +1,43 @@
 /*------------------------------------*\
     Flaunt JS Navigation
 \*------------------------------------*/
-/*
-.nav {
-	display:inline-block;
-	position:relative;
-	font-size:16px;
-	font-weight:bold;
-	float:left;
+#browse-by {
+    .nav {
+    	display:inline-block;
+    	position:relative;
+    	font-size:16px;
+    	font-weight:bold;
+    	float:left;
+    }
+    .nav-list {
+    	width:auto;
+    	text-align:center;
+    	margin:0;
+    	padding:0;
+    }
+    .nav-item {
+    	float:left;
+    	*display:inline;
+    	zoom:1;
+    	position:relative;
+    }
+    .nav-item a {
+    	display:block;
+    	color:#000;
+    	padding:14px 30px;
+    	background:$lgreen;
+    	text-decoration:none;
+    	text-transform:uppercase;
+    
+    }
+    .nav-item > a:hover {
+    	background:$sgreen;
+    }
+    .nav-item:hover .nav-submenu {
+        z-index: 9999;
+    	display:block;
+    }
 }
-.nav-list {
-	width:auto;
-	text-align:left;
-	margin:0;
-	padding:0;
-}
-.nav-item {
-	float:left;
-	*display:inline;
-	zoom:1;
-	position:relative;
-}
-.nav-item a {
-	display:block;
-	color:#000;
-	padding:14px 30px;
-	background:$lgreen;
-	text-decoration:none;
-	text-transform:uppercase;
-
-}
-.nav-item > a:hover {
-	background:$sgreen;
-}
-.nav-item:hover .nav-submenu {
-	display:block;
-}*/
 /* Navigation submenu */
 .nav-submenu {
 	display:none;
@@ -98,7 +100,19 @@
 @media only screen and (max-width: 768px) {
 	.nav-mobile {
 		display:block;
+		background-color: $lgreen
 	}
+	#browse-by {
+	    min-height: 50px !important;
+    	.browse {
+    	    margin-bottom: 15px;
+    	}
+    	#browse-by-nav .nav-mobile {
+    	    display: block;
+            top: -50px;
+    }
+    }
+	#browse-by-nav,
 	#main-top-nav {
 		width:100%;
         > span {
@@ -106,9 +120,12 @@
             line-height: 47px;        
         }
        .nav-list {
+           min-height: 50px;
 	       display:none;
+	       padding: 0;
 	   }
 	   .nav-item {
+	        text-align: left;
             width:100%;
             min-height: 47px;
             display: block;

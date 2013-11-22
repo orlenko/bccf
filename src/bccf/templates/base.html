@@ -85,7 +85,7 @@
         </div>
     </header>
     
-    <nav id="main-top-nav" class="section">
+    <nav id="main-top-nav" class="nav-mobile-container section">
         <span class="row no-desktop mobile-full">Menu</span>
         <ul class="col eight mobile-full">
             <li>
@@ -117,9 +117,7 @@
         </div>
     </nav>
     
-  <div id="marquee-home" class="section clear"> 
-    <a href="#"><img src="{% static "img/marquee-home-filler.jpg" %}" alt="Marquee Filler"/></a>
-  </div>
+  {% block main %}{% endblock %}
       <!-- end of page content, start of website footer -->
   <footer>
   

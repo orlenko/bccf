@@ -1,28 +1,96 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n static %}
 
 {% block meta_title %}{% trans "Home" %}{% endblock %}
 {% block title %}{% trans "Home" %}{% endblock %}
 
-{% block breadcrumb_menu %}
-<li class="active">{% trans "Home" %}</li>
-{% endblock %}
-
 {% block main %}
-{% blocktrans %}
-<h2>Congratulations!</h2>
-<p>
-    Welcome to your new Mezzanine powered website.
-    Here are some quick links to get you started:
-</p>
-<ul>
-    <li><a href="/admin/">Log in to the admin interface</a></li>
-    <li><a href="http://mezzanine.jupo.org/docs/content-architecture.html">Creating custom page types</a></li>
-    <li><a href="http://mezzanine.jupo.org/docs/frequently-asked-questions.html#templates">Modifying HTML templates</a></li>
-    <li><a href="http://mezzanine.jupo.org/docs/frequently-asked-questions.html#why-isn-t-the-homepage-a-page-object-i-can-edit-via-the-admin">Changing this homepage</a></li>
-    <li><a href="http://mezzanine.jupo.org/docs/frequently-asked-questions.html">Other frequently asked questions</a></li>
-    <li><a href="http://mezzanine.jupo.org/docs/configuration.html#default-settings">Full list of settings</a></li>
-    <li><a href="http://mezzanine.jupo.org/docs/deployment.html">Deploying to a production server</a></li>
-</ul>
-{% endblocktrans %}
+<div id="marquee-home" class="section clear"> 
+    <a href="#"><img src="{% static "img/marquee-home-filler.jpg" %}" alt="Marquee Filler"/></a>
+</div>
+
+<nav id="browse-by" class="section"> 
+    <div class="browse">Browse By:</div>
+    <div id="browse-by-nav" class="mobile-nav-container nav">
+        <ul>
+            <li>
+                <a href="#">Topic</a>
+	            <ul>
+   	                <li><a href="#">Test Sub Menu1</a></li>
+                    <li><a href="#">Test Sub Menu2</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">Resources</a>
+                <ul>
+   	                <li><a href="#">Test Sub Menu1</a></li>
+                    <li><a href="#">Test Sub Menu2</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">Program</a>
+                <ul>
+   	                <li><a href="#">Test Sub Menu1</a></li>
+                    <li><a href="#">Test Sub Menu2</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
+<section id="home-features" class="section">
+  
+  <div id="home-calendar" class="col six tablet-full mobile-full">
+  	
+  </div>
+  
+  <div id="home-noteworthy" class="col six tablet-full mobile-full">
+  
+  </div>
+  
+  <div id="home-programs" class="col six tablet-full mobile-full">
+  
+  </div>
+  
+  <div id="home-listings" class="twelve tablet-full mobile-full">
+  
+  
+  </div>
+  
+  <div id="home-resources" class="twelve tablet-full mobile-full">
+  
+  <ul id="carousel-resources" class="twelve tablet-full mobile-full">
+  
+  </ul>
+  
+  </div>
+  
+  
+  <ul id="home-history" class="twelve tablet-full mobile-full">
+  
+      <li>
+          <div class="history-image col six"><img src="../../static/img/history-filler-image.png" alt="History Filler Image"/></div>
+          <div class="history-text col six">
+              <h3>It all started in 1976</h3>
+              <p>At the 1976 BC Conference on the Family 94 recommendations for action were issued and it was resolved to establish the BC Council for the Family. In 1977 the BC Council for the Family is incorporated as a non-profit society and opens an office in Victoria.</p>
+          </div>
+      </li>
+      
+      <li>
+          <div class="history-image"><img src="../../static/img/history-filler-image.png" alt="History Filler Image"/></div>
+          <div class="history-text">
+              <h3>Slide 2 Test</h3>
+              <p>At the 1976 BC Conference on the Family 94 recommendations for action were issued and it was resolved to establish the BC Council for the Family. In 1977 the BC Council for the Family is incorporated as a non-profit society and opens an office in Victoria.</p>
+          </div>
+      </li>
+  
+  </ul>
+  
+  </section>
+
+
+<script type="text/javascript" >
+$(function(){
+    $('#browse-by-nav').Flaunt();
+});
+</script>
 {% endblock %}

@@ -1,4 +1,4 @@
-(function($) {
+(function($, window) {
     var Flaunt = {
         init: function(options, elem) {
             var base = this;
@@ -18,21 +18,29 @@
                 mobileContainer.addClass('nav-mobile');
             }
             base.$elem.append(mobileContainer);
-            $('.nav-item').has('ul').prepend('<span class="nav-click"><i class="nav-arrow"></i></span>');
+            base.$elem.children('.nav-list').children('.nav-item').has('ul').prepend('<span class="nav-click"><i class="nav-arrow"></i></span>');                        
             mobileContainer.on('click', function() {
-                $('.nav-list').toggle();            
+                base.$elem.children('.nav-list').slideToggle(200);        
             });
-            $('.nav-list').on('click', '.nav-click', function() {
+            base.$elem.children('.nav-list').on('click', '.nav-click', function() {
                 $(this).siblings('.nav-submenu').toggle();
                 $(this).children('.nav-arrow').toggleClass('nav-rotate');
             });
+            $(window).resize(function() {
+                if(!mobileContainer.is(':visible') && !base.$elem.children('.nav-list').is(':visible')) {
+                    console.log('resize');
+                    base.$elem.children('.nav-list').show(); 
+                } else if(mobileContainer.is(':visible') && base.$elem.children('.nav-list').is(':visible')) {
+                    base.$elem.children('.nav-list').hide();     
+                }
+            });
         },
         prepContainer: function() {
-            var base = this;
+            var base = this; 
             base.$elem.children('ul').addClass('nav-list');
-            $('.nav-list').children('li').addClass('nav-item');
-            $('.nav-list').children('li').children('ul').addClass('nav-submenu');
-            $('.nav-list').children('li').children('ul').children('li').addClass('nav-submenu-item');    
+            base.$elem.children('.nav-list').children('li').addClass('nav-item');
+            base.$elem.children('.nav-list').children('li').children('ul').addClass('nav-submenu');
+            base.$elem.children('.nav-list').children('li').children('ul').children('li').addClass('nav-submenu-item');    
         },
     };
     $.fn.Flaunt = function(options) {
@@ -45,4 +53,4 @@
     $.fn.Flaunt.options = {
         mobileContainer: null   // Id of the DIV that will contain the mobile button
     };
-})(jQuery);
+})(jQuery, window);
