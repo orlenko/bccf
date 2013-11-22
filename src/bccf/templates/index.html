@@ -5,10 +5,95 @@
 {% block title %}{% trans "Home" %}{% endblock %}
 
 {% block main %}
-<div id="marquee-home" class="section clear"> 
-    <a href="#"><img src="{% static "img/marquee-home-filler.jpg" %}" alt="Marquee Filler"/></a>
+<div id="big-marquee" class="section clear"> 
+    <div id="slide-container">
+        <div>
+            <img src="{% static "img/marquee-home-filler.jpg" %}" alt="Marquee Filler"/>
+            <div class="lightbox mobile-full">
+                <span class="lightbox-title">TAG Your Family &amp; Friends</span>
+                <p class="no-mobile">
+                    You have a voice and your opinions can make a difference for your family and the families of BC! Join us and together
+                    we can make BC a better place for families.                
+                </p>
+                <div class="a-wrapper">
+                    <a href="#">Join Us</a>
+                </div>
+            </div>
+        </div>
+        <div>
+            <img src="{% static "img/marquee-home-filler.jpg" %}" alt="Marquee Filler"/>
+            <div class="lightbox mobile-full">
+                <span class="lightbox-title">TAG Your Family &amp; Friends</span>
+                <p class="no-mobile">
+                    You have a voice and your opinions can make a difference for your family and the families of BC! Join us and together
+                    we can make BC a better place for families.                
+                </p>
+                <div class="a-wrapper">
+                    <a href="#">Join Us</a>
+                </div>
+            </div>
+        </div>
+        <div>
+            <img src="{% static "img/marquee-home-filler.jpg" %}" alt="Marquee Filler"/>
+            <div class="lightbox mobile-full">
+                <span class="lightbox-title">TAG Your Family &amp; Friends</span>
+                <p class="no-mobile">
+                    You have a voice and your opinions can make a difference for your family and the families of BC! Join us and together
+                    we can make BC a better place for families.                
+                </p>
+                <div class="a-wrapper">
+                    <a href="#">Join Us</a>
+                </div>
+            </div>
+        </div>
+        <div>
+            <img src="{% static "img/marquee-home-filler.jpg" %}" alt="Marquee Filler"/>
+            <div class="lightbox mobile-full">
+                <span class="lightbox-title">TAG Your Family &amp; Friends</span>
+                <p class="no-mobile">
+                    You have a voice and your opinions can make a difference for your family and the families of BC! Join us and together
+                    we can make BC a better place for families.                
+                </p>
+                <div class="a-wrapper">
+                    <a href="#">Join Us</a>
+                </div>
+            </div>
+        </div>
+        <div>
+            <img src="{% static "img/marquee-home-filler.jpg" %}" alt="Marquee Filler"/>
+            <div class="lightbox mobile-full">
+                <span class="lightbox-title">TAG Your Family &amp; Friends</span>
+                <p class="no-mobile">
+                    You have a voice and your opinions can make a difference for your family and the families of BC! Join us and together
+                    we can make BC a better place for families.                
+                </p>
+                <div class="a-wrapper">
+                    <a href="#">Join Us</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="tag-container">
+        <div class="a-wrapper">
+            <a href="#" class="tag-box mobile-full">
+                <span class="tag-title">Talk</span> 
+                <span>Share your story</span>   
+            </a>
+        </div>
+        <div class="a-wrapper">
+            <a href="#" class="tag-box mobile-full">
+                <span class="tag-title">Act</span>  
+                <span>Take a survey</span>     
+            </a>
+        </div>
+        <div class="a-wrapper">
+            <a href="#" class="tag-box mobile-full">
+                <span class="tag-title">Get Involved</span>
+                <span>Make change happen</span>
+            </a>
+        </div>
+    </div>
 </div>
-
 <nav id="browse-by" class="section"> 
     <div class="browse">Browse By:</div>
     <div id="browse-by-nav" class="mobile-nav-container nav">
@@ -91,6 +176,12 @@
 <script type="text/javascript" >
 $(function(){
     $('#browse-by-nav').Flaunt();
+    $('#slide-container').owlCarousel({
+        'singleItem': true,
+        'autoPlay': 5000,
+        'autoHeight': true,
+        'theme': "big-marquee",
+    });
 });
 </script>
 {% endblock %}

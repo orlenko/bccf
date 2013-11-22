@@ -33,16 +33,12 @@
     .nav-item > a:hover {
     	background:$sgreen;
     }
-    .nav-item:hover .nav-submenu {
-        z-index: 9999;
-    	display:block;
-    }
 }
 /* Navigation submenu */
 .nav-submenu {
+    z-index: 9999;
 	display:none;
 	position:absolute;
-	left:0;
 	width:180px;
 }
 .nav-submenu-item a {
@@ -54,6 +50,7 @@
 .nav-submenu-item a:hover {
 	background:$sgreen;
 }
+
 /* Mobile navigation */
 .nav-mobile {
 	display:none; /* Hide from browsers that don't support media queries */
@@ -63,7 +60,7 @@
 	right:0;
 	background:#3D3D3B url(../img/nav.svg) no-repeat center center;
 	background-size:18px;
-	height:50px;
+	height:47px;
 	width:50px;
 }
 /* Mobile navigation, clickable area for revealing <ul> */
@@ -71,7 +68,7 @@
 	float: right;
 	display:none;
 	border-left:1px solid $dgreen;
-	height:49px;
+	height:47px;
 	width:50px;
 	cursor:pointer;
 }
@@ -102,15 +99,21 @@
 		display:block;
 		background-color: $lgreen
 	}
+	#main-top-nav {
+	    .nav-mobile {
+            height: 50px;
+        }	    
+    }
 	#browse-by {
+	    margin-top: 5px;
 	    min-height: 50px !important;
     	.browse {
     	    margin-bottom: 15px;
     	}
     	#browse-by-nav .nav-mobile {
     	    display: block;
-            top: -50px;
-    }
+            top: -47px;
+        }
     }
 	#browse-by-nav,
 	#main-top-nav {
@@ -149,11 +152,6 @@
     	}
     	.nav-click {
     		display: block;
-    	}
-    	.nav-mobile-open {
-    		border-radius:5px 5px 0 0;
-    		-webkit-border-radius:5px 5px 0 0;
-    		-moz-border-radius:5px 5px 0 0;
     	}
     	.nav-item:hover .nav-submenu {
     		display:none;
