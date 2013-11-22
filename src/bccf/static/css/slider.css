@@ -1,13 +1,13 @@
-/* line 16, sass/slider.scss */
+/* line 16, ../sass/slider.scss */
 #show-type-container {
   text-align: right;
 }
-/* line 18, sass/slider.scss */
+/* line 18, ../sass/slider.scss */
 #show-type-container .show-type-control {
   cursor: pointer;
 }
 
-/* line 24, sass/slider.scss */
+/* line 24, ../sass/slider.scss */
 .content-header {
   display: block;
   background-color: #6eb43f;
@@ -15,75 +15,75 @@
   padding: 10px 0 0 0;
   text-align: center;
 }
-/* line 31, sass/slider.scss */
+/* line 31, ../sass/slider.scss */
 .content-header img {
   box-shadow: none;
 }
-/* line 35, sass/slider.scss */
+/* line 35, ../sass/slider.scss */
 .content-header h3 {
   margin: 0;
 }
 
-/* line 40, sass/slider.scss */
+/* line 40, ../sass/slider.scss */
 .content-header-active {
   background-color: #00aeef;
   border-bottom: 10px solid #00aeef;
 }
 
-/* line 45, sass/slider.scss */
+/* line 45, ../sass/slider.scss */
 .slide-box {
   margin: 0 5px;
 }
 
-/* line 49, sass/slider.scss */
+/* line 49, ../sass/slider.scss */
 .content-box, #slide-content, .grid-content {
   background-color: #00aeef;
   padding: 10px;
   width: auto;
   color: white;
 }
-/* line 55, sass/slider.scss */
+/* line 55, ../sass/slider.scss */
 .content-box img, #slide-content img, .grid-content img {
   display: block;
   margin: auto;
 }
 
-/* line 61, sass/slider.scss */
+/* line 61, ../sass/slider.scss */
 .grid-row:first {
   margin-top: 0;
 }
 
-/* line 65, sass/slider.scss */
+/* line 65, ../sass/slider.scss */
 .grid-row {
   margin-top: 10px;
 }
 
-/* line 69, sass/slider.scss */
+/* line 69, ../sass/slider.scss */
 #slide-content {
   margin: 0 5px;
 }
 
-/* line 74, sass/slider.scss */
+/* line 74, ../sass/slider.scss */
 .grid-content {
   margin: 0 0 10px 0;
 }
 
 @media only screen and (max-width: 739px) {
-  /* line 83, sass/slider.scss */
+  /* line 83, ../sass/slider.scss */
   .bccf-slider .owl-wrapper > div[class$="owl-item"] {
     position: relative;
     left: -10px;
   }
-  /* line 88, sass/slider.scss */
+  /* line 88, ../sass/slider.scss */
   .bccf-slider .active {
     margin-right: 2.5px;
   }
-  /* line 92, sass/slider.scss */
+  /* line 92, ../sass/slider.scss */
   .bccf-slider .content-header-active {
     border-bottom: none;
   }
 
-  /* line 97, sass/slider.scss */
+  /* line 97, ../sass/slider.scss */
   #mobile-content-container {
     background: rgba(0, 174, 239, 0.9);
     position: fixed !important;
@@ -95,7 +95,7 @@
     right: 0;
     z-index: 99 !important;
   }
-  /* line 108, sass/slider.scss */
+  /* line 108, ../sass/slider.scss */
   #mobile-content-container #close-btn {
     display: block;
     color: white;
@@ -104,7 +104,7 @@
     cursor: pointer;
     text-align: right;
   }
-  /* line 116, sass/slider.scss */
+  /* line 116, ../sass/slider.scss */
   #mobile-content-container #close-btn:hover {
     text-decoration: underline;
   }

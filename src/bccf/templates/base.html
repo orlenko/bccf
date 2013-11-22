@@ -1,5 +1,3 @@
-{% load static %}
-
 <!doctype html>
 <html lang="{{ LANGUAGE_CODE }}"{% if LANGUAGE_BIDI %} dir="rtl"{% endif %}>
 {% load pages_tags mezzanine_tags i18n future staticfiles %}
@@ -10,7 +8,11 @@
 <meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
 <meta name="description" content="{% block meta_description %}{% endblock %}">
 <title>{% block meta_title %}{% endblock %}{% if settings.SITE_TITLE %} | {{ settings.SITE_TITLE }}{% endif %}</title>
-<link rel="shortcut icon" href="{% static "img/favicon.ico" %}">
+<link rel="shortcut icon" href="{% static "img/favicon.png" %}">
+<link rel="apple-touch-icon" sizes="57x57" href="{% static "img/apple-touch-icon.png" %}">
+<link rel="apple-touch-icon" sizes="72x72" href="{% static "img/apple-touch-icon-72x72.png" %}">
+<link rel="apple-touch-icon" sizes="114x114" href="{% static "img/apple-touch-icon-114x114.png" %}">
+<link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,700,300|PT+Sans:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
 
 {% ifinstalled mezzanine.blog %}
 <link rel="alternate" type="application/rss+xml" title="RSS" href="{% url "blog_post_feed" "rss" %}">
@@ -18,9 +20,7 @@
 {% endifinstalled %}
 
 {% compress css %}
-<link rel="stylesheet" href="{% static "css/bootstrap.css" %}">
-<link rel="stylesheet" href="{% static "css/mezzanine.css" %}">
-<link rel="stylesheet" href="{% static "css/bootstrap-responsive.css" %}">
+<link rel="stylesheet" href="{% static "css/bccf-style.css" %}">
 {% if LANGUAGE_BIDI %}
 <link rel="stylesheet" href="{% static "css/rtl.css" %}">
 {% endif %}
@@ -31,7 +31,6 @@
 {% endif %}
 {% endifinstalled %}
 {% block extra_css %}
-<link rel="stylesheet" href="{% static "css/style.css" %}" />
 <link rel="stylesheet" href="{% static "css/slider.css" %}" />
 <link rel="stylesheet" href="{% static "css/vendor/owl.carousel.css" %}" />
 <link rel="stylesheet" href="{% static "css/vendor/owl.theme.css" %}" />
@@ -43,15 +42,13 @@
 
 {% compress js %}
 <script src="{% static "js/jquery-1.8.3.min.js" %}"></script>
-<script src="{% static "js/bootstrap.js" %}"></script>
-<script src="{% static "js/bootstrap-extras.js" %}"></script>
 {% block extra_js %}
-<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 <script src="{% static "js/rating/jquery.MetaData.js" %}"></script>
 <script src="{% static "js/rating/jquery.rating.pack.js" %}"></script>
 <script src="{% static "js/base/default.js" %}"></script>
 <script src="{% static "js/owl.carousel.min.js" %}"></script>
 <script src="{% static "js/helpers.js" %}"></script>
+<script src="{% static "js/flaunt_custom.js" %}"></script>
 {% endblock %}
 {% endcompress %}
 <!--[if lt IE 9]>
@@ -72,94 +69,132 @@
 </head>
 <body id="{% block body_id %}body{% endblock %}">
 
-<div class="navbar navbar-fixed-top">
-<div class="navbar-inner">
 <div class="container">
-    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-    </a>
-    {% if settings.SITE_TITLE %}<a class="brand" href="/">{{ settings.SITE_TITLE }}</a>{% endif %}
-    {% if settings.SITE_TAGLINE %}<p class="navbar-text">{{ settings.SITE_TAGLINE }}</p>{% endif %}
-    <div class="nav-collapse collapse">
-        {% search_form "all" %}
-        {% page_menu "pages/menus/dropdown.html" %}
-    </div>
+    <header class="section row-two">
+        <div id="bccflogo" class="col four tablet-six mobile-full"><a href="/"><img src="{% static "img/BCCF_logo_2013.png" %}" alt="BC Council for FAMILIES"/></a></div>
+        <div id="bccftagline" class="col tablet-three five mobile-full">y<em><strong>our</strong></em> family.</div>
+        <div id="bccflogin" class="col three mobile-full">
+            {% if request.user.is_authenticated %}
+            <p>Welcome {{ request.user.get_full_name }}</p>
+            <p><a href="{% url "logout" %}">Logout</a></p>
+            {% else %}
+            <p><a href="{% url "login" %}">Login</a></p>
+            <p><a href="{% url "signup" %}">Create Account</a></p>
+            {% endif %}
+            <p><a href="#">Shopping Cart</a></p>
+        </div>
+    </header>
+    
+    <nav id="main-top-nav" class="section">
+        <span class="row no-desktop mobile-full">Menu</span>
+        <ul class="col eight mobile-full">
+            <li>
+                <a href="#">Programs</a>
+                <ul>
+                    <li>Stuff</li>
+                    <li>Stuff 2</li>
+                </ul>
+            </li>
+            <li><a href="#">Trainings</a></li>
+            <li>
+                <a href="#">Tag</a>
+                <ul>
+                    <li>Stuff</li>
+                    <li>Stuff 2</li>
+                </ul>
+            </li>
+            <li><a href="#">Resources</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Donate</a></li>
+        </ul>
+        
+        <div id="search-bar" class="col four mobile-full"> 
+            <form method="get" id="searchform" action="/search/">
+                <input type="hidden" name="type" value="" />
+                <input type="submit" class="submit" name="submit" id="searchsubmit" value=""  />
+                <input type="text" class="field" name="q" id="q" placeholder="Search BCCF" />
+            </form>
+        </div>
+    </nav>
+    
+  <div id="marquee-home" class="section clear"> 
+    <a href="#"><img src="{% static "img/marquee-home-filler.jpg" %}" alt="Marquee Filler"/></a>
+  </div>
+      <!-- end of page content, start of website footer -->
+  <footer>
+  
+  <nav id="main-footer-nav" class="section row-two">
+    <ul class="col twelve mobile-full">
+      <li><a href="#">NEWS</a></li>
+      <li><a href="#">DONATE</a></li>
+      <li><a href="#">MEMBERSHIP</a></li>
+      <li><a href="#">ABOUT</a></li>
+      <li><a href="#">CONTACT</a></li>
+      <li><a href="#">SITEMAP</a></li>
+      <li><a href="#">PRIVACY POLICY</a></li>
+      <li><a href="#">TERMS & CONDITIONS</a></li>                       
+    </ul>
+  </nav>
+  
+  <section class="section row-one">
+  
+    <aside id="newsfeed" class="col four mobile-full">
+    
+    <ul>
+    
+    <li>
+    <h6>Date of News Item ex: November 21, 2013</h6>
+    <p><a href="#">Title of the News Item. Doluptatio commolu ndae core postor magniet abo. 
+</a></p>
+    </li>
+    
+    <li>
+    <h6>Date of News Item ex: November 21, 2013</h6>
+    <p><a href="#">Title of the News Item. doluptatio commolu ndae core postor magniet abo. 
+</a></p>
+    </li>
+    
+    </ul>
+    
+    </aside>
+    
+    <aside id="social" class="col four mobile-full">
+    
+    <p>Follow us on:</p>
+    <p>
+    <a href="https://www.facebook.com/BCFamilies" target="_blank"><img src="../../static/img/social-icons-FB.gif" alt="Facebook"/></a> 
+    <a href="https://twitter.com/BC_Families" target="_blank"><img src="../../static/img/social-icons-TW.gif" alt="Twitter"/></a>
+    <a href="http://www.linkedin.com/company/bc-council-for-families" target="_blank"><img src="../../static/img/social-icons-LI.gif" alt="Linked In"/></a>
+    <a href="http://www.youtube.com/user/FamiliesofBC" target="_blank"><img src="../../static/img/social-icons-YT.gif" alt="You Tube"/></a>
+    </p>
+    
+    </aside>
+    
+    <aside id="newsletter" class="col four mobile-full">
+    
+    <h5>Keep up-to-date!</h5>
+    <p>Sign-up for our newsletter</p>
+    
+    <div class="dashed-button"><a href="#" target="_blank">join</a></div>
+    
+    </aside>
+    
+    </section>
+  
+  </footer>
+  
+  <div id="copyright" class="section row-two">
+  <p>BC Council for Families &copy; 2014, All rights reserved. | <a href="http://www.webteam.vcn.bc.ca/" target="_blank">Web Design &amp; Development by VCN webteam</a>.</p>
+  </div>
 </div>
-</div>
-</div>
-
-<div class="container">
-
-{% nevercache %}
-{% for message in messages %}
-<div class="alert alert-{{ message.tags }}" data-alert="alert">
-    <a class="close" href="#" onclick="$(this).parent().fadeOut('fast'); return false;">×</a>{{ message }}
-</div>
-{% endfor %}
-{% endnevercache %}
-
-
-<h1>{% block title %}{% endblock %}</h1>
-
-<ul class="breadcrumb">
-{% spaceless %}
-{% block breadcrumb_menu %}{% page_menu "pages/menus/breadcrumb.html" %}{% endblock %}
-{% endspaceless %}
-</ul>
-
-</div>
-
-<div class="container">
-<div class="row">
-
-<div class="span2 left">
-    {% block left_panel %}
-    <div class="panel tree">{% page_menu "pages/menus/tree.html" %}</div>
-    {% endblock %}
-</div>
-
-<div class="span7 middle">
-    {% block main %}{% endblock %}
-</div>
-
-<div class="span3 right">
-    {% nevercache %}
-    {% include "includes/user_panel.html" %}
-    {% endnevercache %}
-    <div class="panel">
-    {% block right_panel %}
-    {% ifinstalled mezzanine.twitter %}
-    {% include "twitter/tweets.html" %}
-    {% endifinstalled %}
-    {% endblock %}
-    </div>
-</div>
-
-</div>
-</div>
-
-<footer>
-<div class="container">
-{% page_menu "pages/menus/footer.html" %}
-<p>
-    {% trans "Powered by" %}
-    <a href="http://mezzanine.jupo.org">Mezzanine</a>{% ifinstalled cartridge.shop %},
-    <a href="http://cartridge.jupo.org">Cartridge</a>{% endifinstalled %}
-    {% trans "and" %}
-    <a href="http://www.djangoproject.com">Django</a>
-    <span class="separator">|</span>
-    {% trans "Theme by" %} <a href="http://twitter.github.com/bootstrap/">Bootstrap</a>
-    {% ifinstalled mezzanine.mobile %}
-    <span class="separator">|</span>
-    <a href="{% url "set_device" "mobile" %}?next={{ request.path }}">{% trans "View Mobile Site" %}</a>
-    {% endifinstalled %}
-</p>
-</div>
-</footer>
 
 {% include "includes/footer_scripts.html" %}
+
+<script>
+    $(function() {
+        $('#main-top-nav').Flaunt();
+    });
+</script>
 
 </body>
 </html>
