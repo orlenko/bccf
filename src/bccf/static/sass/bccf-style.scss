@@ -739,12 +739,20 @@ textarea {
 #home-resources{
 	float:left;
 	height:235px;
+	background:$grey-stripes repeat;
 		
 	#carousel-resources {
 		margin:40px 0 20px;
 		float:left;
 		height:175px;
-		background:$grey-stripes repeat;
+	}
+	.button-next,
+	.button-prev {
+	    display: block;
+	    cursor:  pointer;
+        margin:40px 0 20px;
+        line-height: 175px;
+        height: 175px;  
 	}
 }
 #home-history{
@@ -1233,6 +1241,12 @@ table td {
 	margin:0;
 	float:left;
 	}	
+}
+#home-resources {
+	.button-next,
+	.button-prev {
+	    display: none;
+	}
 }
 
 #home-history{

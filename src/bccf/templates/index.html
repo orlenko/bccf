@@ -174,24 +174,39 @@
   
   <div id="home-listings" class="twelve tablet-full mobile-full">
     <h2>Member Listing</h2>
-  
+    <div id="member-container">
+        <a id="member-professionals" class="member-active member-button">Families</a>
+        <a id="member-organization" class="member-button">Professionals</a>
+        <div id="member-professionals-carousel">
+            <div>Member 1</div>
+            <div>Member 2</div>
+            <div>Member 3</div>
+        </div>
+        <div id="member-organization-carousel">
+            <div>Organization 1</div>
+            <div>Organization 2</div>
+            <div>Organization 3</div>        
+        </div>
+    </div>
   </div>
   
   <div id="home-resources" class="twelve tablet-full mobile-full">
-  
-  <div id="carousel-resources" class="twelve tablet-full mobile-full">
-    <div>Resource 1</div>
-    <div>Resource 2</div>
-    <div>Resource 3</div>
-    <div>Resource 4</div>
+  <a class="button-prev col one no-mobile">&lt;</a>
+  <div id="carousel-container" class="col ten mobile-full">
+    <div id="carousel-resources">
+        <div>Resource 1</div>
+        <div>Resource 2</div>
+        <div>Resource 3</div>
+        <div>Resource 4</div>
+    </div>
   </div>
-  
+  <a class="button-next col one no-mobile">&gt;</a>
   </div>
   
   
   <div id="home-history" class="twelve tablet-full mobile-full">
       <div>
-          <div class="history-image col six"><img src="../../static/img/history-filler-image.png" alt="History Filler Image"/></div>
+          <div class="history-image col six"><img src="{% static 'img/history-filler-image.png' %}" alt="History Filler Image"/></div>
           <div class="history-text col six">
               <h3>It all started in 1976</h3>
               <p>At the 1976 BC Conference on the Family 94 recommendations for action were issued and it was resolved to establish the BC Council for the Family. In 1977 the BC Council for the Family is incorporated as a non-profit society and opens an office in Victoria.</p>
@@ -199,7 +214,7 @@
       </div>
       
       <div>
-          <div class="history-image col six"><img src="../../static/img/history-filler-image.png" alt="History Filler Image"/></div>
+          <div class="history-image col six"><img src="{% static 'img/history-filler-image.png' %}" alt="History Filler Image"/></div>
           <div class="history-text col six">
               <h3>Slide 2 Test</h3>
               <p>At the 1976 BC Conference on the Family 94 recommendations for action were issued and it was resolved to establish the BC Council for the Family. In 1977 the BC Council for the Family is incorporated as a non-profit society and opens an office in Victoria.</p>
@@ -226,19 +241,43 @@ $(function(){
         'autoPlay': 5000,
         'pagination': false,
         'stopOnHover': true,
-        'navigation': true,
-        'theme': 'reseource-theme',
+        'theme': 'resource-theme',
     });
-    $('#home-history').owlCarousel({
+    var home_history = $('#home-history').owlCarousel({
         'singleItem': true,
-        'autoPlage': 5000,
+        'autoPlay': 5000,
         'pagination': false,
         'stopOnHover': true,
-        'navigation': true,
         'theme': 'history-theme',
     });
+    $('#member-professionals-carousel').owlCarousel({
+        'singleItem': true,
+        'autoPlay': 5000,
+        'pagination': false,
+        'stopOnHover': true,
+        'theme': 'members-theme',
+    });
+    $('#member-organization-carousel').owlCarousel({
+        'singleItem': true,
+        'autoPlay': 5000,
+        'pagination': false,
+        'stopOnHover': true,
+        'theme': 'members-theme',
+    });
+    $('#member-professionals-carousel').show()
+        .data('owlCarousel').play();
+    $('#member-organization-carousel').hide()
+        .data('owlCarousel').stop();
     $('#training-families-table').show();
     $('#training-professionals-table').hide();
+});
+
+$('#home-resources').on('click', 'a[class^="button"]', function() {
+    if($(this).hasClass('button-prev')) {
+        $('#carousel-resources').trigger('owl.prev');
+    } else {
+        $('#carousel-resources').trigger('owl.next');
+    }
 });
 
 $('.training-button').on('click', function() {
@@ -252,6 +291,24 @@ $('.training-button').on('click', function() {
         $(this).addClass('training-active');
         $('#training-families-table').hide();
         $('#training-professionals-table').show();
+    }
+});
+
+$('.member-button').on('click', function() {
+    if($(this).attr('id') === 'member-professionals') {
+        $('.member-active').removeClass('member-active');
+        $(this).addClass('training-active');
+        $('#member-professionals-carousel').show()
+            .data('owlCarousel').play();
+        $('#member-organization-carousel').hide()
+            .data('owlCarousel').stop();
+    } else {
+        $('.member-active').removeClass('member-active');
+        $(this).addClass('training-active');
+        $('#member-organization-carousel').show()
+            .data('owlCarousel').play();
+        $('#member-professionals-carousel').hide()
+            .data('owlCarousel').stop();
     }
 });
 </script>

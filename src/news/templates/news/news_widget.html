@@ -1,8 +1,8 @@
 <ul>
 	{% for rec in news %}
 	<li>
-	   <span class="news-date">{{ rec.publish_date|date:"F d" }}</span>
-		<a href="{{ rec.get_absolute_url }}">{{ rec.title }}</a>
+	   <h6>{{ rec.publish_date|date:"F d" }}</h6>
+	   <p><a href="{{ rec.get_absolute_url }}">{{ rec.title }}</a></p>
 	</li>
 	{% endfor %}
 </ul>
