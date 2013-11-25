@@ -10,12 +10,9 @@
             <div class="section twelve row field-container-inner">
                 <span id="text-field"  class="field draggable">Text Field</span>
             </div>
-            <div class="section twelve row field-container-inner">
+            <!-- <div class="section twelve row field-container-inner">
                 <span id="textarea-field" class="field draggable">Multiline Text Field</span>
-            </div>
-            <div class="section twelve row field-container-inner">
-                <span id="password-field" class="field draggable">Password Field</span>
-            </div>
+            </div> -->
             <div class="section twelve row field-container-inner">
                 <span id="select-field" class="field draggable">Select Field</span>
             </div>
@@ -85,7 +82,7 @@
                 {{ structure_form }}
             {% endif %}
         <!-- end custom -->
-            <input type="submit" value="{% trans 'submit' %}" class="export-btn" />
+            <input id="form_submit" type="submit" value="{% trans 'submit' %}" class="export-btn" />
         </form>
     </div>
 </div>
