@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="{{ LANGUAGE_CODE }}"{% if LANGUAGE_BIDI %} dir="rtl"{% endif %}>
-{% load pages_tags mezzanine_tags i18n future staticfiles %}
+{% load pages_tags news_tags mezzanine_tags i18n future staticfiles %}
 <head>
 
 <meta http-equiv="Content-type" content="text/html; charset=utf-8">
@@ -127,21 +127,7 @@
   
     <aside id="newsfeed" class="col four mobile-full">
     
-    <ul>
-    
-    <li>
-    <h6>Date of News Item ex: November 21, 2013</h6>
-    <p><a href="#">Title of the News Item. Doluptatio commolu ndae core postor magniet abo. 
-</a></p>
-    </li>
-    
-    <li>
-    <h6>Date of News Item ex: November 21, 2013</h6>
-    <p><a href="#">Title of the News Item. doluptatio commolu ndae core postor magniet abo. 
-</a></p>
-    </li>
-    
-    </ul>
+    {% news_list %}
     
     </aside>
     

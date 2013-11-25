@@ -100,24 +100,33 @@
         <ul>
             <li>
                 <a href="#">Topic</a>
+   	            {% if topics %}
 	            <ul>
-   	                <li><a href="#">Test Sub Menu1</a></li>
-                    <li><a href="#">Test Sub Menu2</a></li>
+   	                {% for topic in topics %}
+   	                <li><a href="#">{{ topic.name }}</a></li>
+   	                {% endfor %}
                 </ul>
+                {% endif %}
             </li>
             <li>
                 <a href="#">Resources</a>
+                {% if resources %}
                 <ul>
-   	                <li><a href="#">Test Sub Menu1</a></li>
-                    <li><a href="#">Test Sub Menu2</a></li>
+   	                {% for resource in resources %}
+   	                <li><a href="#">{{ resource.name }}</a></li>
+   	                {% endfor %}
                 </ul>
+                {% endif %}
             </li>
             <li>
                 <a href="#">Program</a>
+                {% if programs %}
                 <ul>
-   	                <li><a href="#">Test Sub Menu1</a></li>
-                    <li><a href="#">Test Sub Menu2</a></li>
+   	                {% for program in programs %}
+   	                <li><a href="#">{{ program.name }}</a></li>
+   	                {% endfor %}
                 </ul>
+                {% endif %}
             </li>
         </ul>
     </div>
@@ -125,50 +134,79 @@
 <section id="home-features" class="section">
   
   <div id="home-calendar" class="col six tablet-full mobile-full">
-  	
+    <h2>Training Calendar</h2>
+    Find trainings for:
+    <a id="training-families" class="training-active training-button">Families</a>
+    <a id="training-professionals" class="training-button">Professionals</a>
+    <table id="training-families-table">
+        <tr>
+            <th>Date</th>
+            <th colspan="3">Program</th>
+        </tr>
+        <tr>
+            <td>January 17</td>
+            <td>My Tween & Me</td>
+            <td>Learn More</td>
+            <td>Register</td>        
+        </tr>
+  	</table>
+  	<table id="training-professionals-table">
+        <tr>
+            <th>Date</th>
+            <th colspan="3">Program</th>
+        </tr>
+        <tr>
+            <td>January 17</td>
+            <td>Mother Goose</td>
+            <td>Learn More</td>
+            <td>Register</td>        
+        </tr>
+  	</table>
   </div>
   
   <div id="home-noteworthy" class="col six tablet-full mobile-full">
-  
+    <h2>Note-Worthy</h2>
   </div>
   
   <div id="home-programs" class="col six tablet-full mobile-full">
-  
+    <h2>Programs</h2>
   </div>
   
   <div id="home-listings" class="twelve tablet-full mobile-full">
-  
+    <h2>Member Listing</h2>
   
   </div>
   
   <div id="home-resources" class="twelve tablet-full mobile-full">
   
-  <ul id="carousel-resources" class="twelve tablet-full mobile-full">
-  
-  </ul>
+  <div id="carousel-resources" class="twelve tablet-full mobile-full">
+    <div>Resource 1</div>
+    <div>Resource 2</div>
+    <div>Resource 3</div>
+    <div>Resource 4</div>
+  </div>
   
   </div>
   
   
-  <ul id="home-history" class="twelve tablet-full mobile-full">
-  
-      <li>
+  <div id="home-history" class="twelve tablet-full mobile-full">
+      <div>
           <div class="history-image col six"><img src="../../static/img/history-filler-image.png" alt="History Filler Image"/></div>
           <div class="history-text col six">
               <h3>It all started in 1976</h3>
               <p>At the 1976 BC Conference on the Family 94 recommendations for action were issued and it was resolved to establish the BC Council for the Family. In 1977 the BC Council for the Family is incorporated as a non-profit society and opens an office in Victoria.</p>
           </div>
-      </li>
+      </div>
       
-      <li>
-          <div class="history-image"><img src="../../static/img/history-filler-image.png" alt="History Filler Image"/></div>
-          <div class="history-text">
+      <div>
+          <div class="history-image col six"><img src="../../static/img/history-filler-image.png" alt="History Filler Image"/></div>
+          <div class="history-text col six">
               <h3>Slide 2 Test</h3>
               <p>At the 1976 BC Conference on the Family 94 recommendations for action were issued and it was resolved to establish the BC Council for the Family. In 1977 the BC Council for the Family is incorporated as a non-profit society and opens an office in Victoria.</p>
           </div>
-      </li>
+      </div>
   
-  </ul>
+  </div>
   
   </section>
 
@@ -180,8 +218,41 @@ $(function(){
         'singleItem': true,
         'autoPlay': 5000,
         'autoHeight': true,
+        'stopOnHover': true,
         'theme': "big-marquee",
     });
+    $('#carousel-resources').owlCarousel({
+        'items': 3,
+        'autoPlay': 5000,
+        'pagination': false,
+        'stopOnHover': true,
+        'navigation': true,
+        'theme': 'reseource-theme',
+    });
+    $('#home-history').owlCarousel({
+        'singleItem': true,
+        'autoPlage': 5000,
+        'pagination': false,
+        'stopOnHover': true,
+        'navigation': true,
+        'theme': 'history-theme',
+    });
+    $('#training-families-table').show();
+    $('#training-professionals-table').hide();
+});
+
+$('.training-button').on('click', function() {
+    if($(this).attr('id') === 'training-families') {
+        $('.training-active').removeClass('training-active');
+        $(this).addClass('training-active');
+        $('#training-families-table').show();
+        $('#training-professionals-table').hide();
+    } else {
+        $('.training-active').removeClass('training-active');
+        $(this).addClass('training-active');
+        $('#training-families-table').hide();
+        $('#training-professionals-table').show();
+    }
 });
 </script>
 {% endblock %}
