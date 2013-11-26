@@ -40,13 +40,14 @@ $pt: 'PT Sans', sans-serif;
 $sgrey: #F5F5F5;
 $lgrey: #A6B2A6;
 $dgrey: #414042;
+$lyellow: #FFF0C2;
 $yellow: #FDCD26;
 $steal: #C0DFCF;
 $lteal: #9FCEB4;
-$teal: #5CAC8B;
+$dteal: #5CAC8B;
 $sgreen: #E5E9D2; 
-$lgreen: #758F25;
-$dgreen: #20472F;
+$lgreen: #8FAB3D;
+$dgreen: #336442;
 
 // Main BCCF Background Stripe Images
 
@@ -716,6 +717,105 @@ textarea {
 	background:$grey-stripes repeat;
 	height:510px;
 	margin-bottom:10px;
+	
+	h2{
+		background:$lyellow url(../img/header-colour-bg-yellow.gif) left top repeat-y;
+		height:50px;
+		font-weight:300;
+		font-size:24px;
+		padding:8px 34px 8px 80px;
+		display:table-cell;		
+	}
+	.hcal-text{
+		float:left;
+		width:100%;
+		padding:0 83px;
+		text-align:left;
+		margin-bottom:50px;
+		}
+	.hcal-tabs{
+		float:left;
+		width:100%;
+		
+		.hcal-left-side{
+			width:50%;
+			float:left;
+			text-align:center;
+			font-size:12px;
+			font-style:italic;
+			margin-bottom: 8px;
+			}
+		.hcal-right-side{
+			float:left;
+			width:50%;
+			
+			a {
+				text-decoration:none;
+				font-weight:bold;
+				padding: 5px 18px 6px;
+				background-color:$lgrey;
+				color:#FFFFFF;
+				&:hover {background-color:$lgreen;}
+				&.selected {
+					padding: 18px 18px 6px;
+					background-color:$dgreen;
+					}
+				
+			}
+			}
+		}
+	
+	.hcal-outer {
+		width:95%;
+		margin:0 2.5%;
+		float:left;
+		background-color:#FFFFFF;
+		}
+	.hcal-inner {
+		float:left;
+		width:98.5%;
+		margin:4px;
+		padding:4px 20px;
+		border:1px dashed $lgrey; 
+		
+		ul{
+			list-style:none;
+			margin:0;
+			padding:0;
+			}
+		li{
+			display:inline-block;
+			height:30px;
+			width:103px;
+			padding:4px 6px 0 0;
+			a {
+				color:#FFFFFF;
+				background-color:$dgrey;
+				padding:1px 6px;
+				text-decoration:none;
+				box-shadow: 2px 2px 2px $lgrey; 
+				&:hover {
+					background-color:$lgrey;}
+				}
+		}
+	}
+	.hcal-heading {
+		width:100%;
+		font-weight:bold;
+		border-bottom:1px solid #000000;
+		}
+	.hcal-line {
+		width:100%;
+		border-bottom:1px solid $lgrey;
+		}
+	.hcal-pagination {
+		text-align:right;
+		padding:6px;
+	}
+	
+	#hcal-professionals {
+	   display: none;    
+	}
 }
 
 #home-noteworthy{
@@ -736,6 +836,12 @@ textarea {
 
 	
 }
+/** Carousel Arrows **/
+.button-next,
+.button-prev {
+    display: block;
+    cursor:  pointer;
+}
 #home-resources{
 	float:left;
 	height:235px;
@@ -748,11 +854,8 @@ textarea {
 	}
 	.button-next,
 	.button-prev {
-	    display: block;
-	    cursor:  pointer;
-        margin:40px 0 20px;
-        line-height: 175px;
-        height: 175px;  
+        line-height: 235px;
+        height: 235px;  
 	}
 }
 #home-history{
@@ -763,19 +866,11 @@ textarea {
 	padding:0;
 	overflow:hidden;
 	display:block;
-	
-	li {
-		list-style:none;
-		height:280px;
-		margin:0;
-		padding:0;
-	}
-	.history-image {
-		padding:0 0 0 60px;
-		}
+
 	.history-text {
 		padding:108px 80px 0 0;
 		color:#000000;
+		float: right;
 		
 		h3 {
 			font-weight:300;
@@ -784,6 +879,15 @@ textarea {
 			font-size:14px;
 		}
 		}
+    .history-image { 
+        padding:0 0 0 60px;
+        display: none;
+     }
+    .button-next,
+	.button-prev {
+        line-height: 285px;
+        height: 285px;  
+	}
 }
 #page-header {
 	background-color:$sgrey;
@@ -1079,7 +1183,7 @@ footer {
 	}
 	.history-image {
 		padding:0 20px;
-		}
+	}
 	.history-text {
 		padding:64px 26px 0 0;
 		

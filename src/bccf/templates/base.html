@@ -43,13 +43,13 @@
 {% compress js %}
 <script src="{% static "js/jquery-1.10.2.min.js" %}"></script>
 <script src="//code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-{% block extra_js %}
 <script src="{% static "js/rating/jquery.MetaData.js" %}"></script>
 <script src="{% static "js/rating/jquery.rating.pack.js" %}"></script>
 <script src="{% static "js/base/default.js" %}"></script>
+<script src="{% static "js/flaunt_custom.js" %}"></script>
 <script src="{% static "js/owl.carousel.min.js" %}"></script>
 <script src="{% static "js/helpers.js" %}"></script>
-<script src="{% static "js/flaunt_custom.js" %}"></script>
+{% block extra_js %}
 {% endblock %}
 {% endcompress %}
 <!--[if lt IE 9]>

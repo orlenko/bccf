@@ -1,35 +1,41 @@
-.big-marquee {
+.normal-marquee {
     .owl-controls {
         position: absolute;
         text-align: right;
-        bottom: 25px;
-        right: 25px;  
-        
-        .owl-page {
-            height: 10px;
-            width: 10px;
-            margin-left: 5px;
-            display: inline-block;
-        	zoom: 1;
-        	*display: inline;/*IE7 life-saver */   
-            span {
-                display: block;
-                background-color: $lgreen;
-            	padding: 5px;
-            }      
+        bottom: -30px;
+        right: 0;
+    }
+    .owl-page {
+        height: 10px;
+        width: 10px;
+        margin-left: 5px;
+        display: inline-block;
+    	zoom: 1;
+    	*display: inline;/*IE7 life-saver */   
+        span {
+            display: block;
+            background-color: $lgreen;
+        	padding: 5px;
+        }      
+    }
+    .owl-page.active {
+        span {
+            background-color: $dgreen;            
         }
-        .owl-page.active {
-            span {
-                background-color: $dgreen;            
-            }
-        }
+    }
+}
+.big-marquee {
+    @extend .normal-marquee;
+    .owl-controls {
+        bottom: 5%;
+        right: 2%;  
     }
 }
 
 .lightbox {
     position: absolute;
-    bottom: 95px;
-    right: 65px;
+    bottom: 15%;
+    right: 5%;
     width: 400px;
     padding: 15px;
     background: rgba(159,206,180,0.80);
@@ -88,35 +94,36 @@
     }
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: $mobile-breakpoint) {
+.big-marquee {
     .owl-controls {
-        right: -5px;
-        top: 5px;
+        right: 5%;
+        top: 2%;
         bottom: 0;  
     }
-    
-    #tag-container {
-        position: static;
+}
+#tag-container {
+    position: static;
+    width: 100%;
+    font-size: 20px;
+    .a-wrapper {
         width: 100%;
-        font-size: 20px;
-        .a-wrapper {
-            width: 100%;
-            display: block;
-            margin: 0;      
-        }    
-    }
+        display: block;
+        margin: 0;      
+    }    
+}
+
+.lightbox {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    right: 0;
     
-    .lightbox {
-        position: absolute;
-        width: 100%;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        
-        .a-wrapper {
-            width: 100px;        
-        }  
-    }
+    .a-wrapper {
+        width: 100px;        
+    }  
+}
 }
 
 /******************************************

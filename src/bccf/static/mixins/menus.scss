@@ -94,7 +94,7 @@
     Media Queries
 \*------------------------------------*/
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: $mobile-breakpoint) {
 	.nav-mobile {
 		display:block;
 		background-color: $lgreen
