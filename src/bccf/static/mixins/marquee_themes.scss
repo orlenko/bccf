@@ -24,6 +24,13 @@
         }
     }
 }
+.med-marquee {
+    @extend .normal-marquee;
+    .owl-controls {
+        bottom: 5%;
+        right: 2%;  
+    }
+}
 .big-marquee {
     @extend .normal-marquee;
     .owl-controls {

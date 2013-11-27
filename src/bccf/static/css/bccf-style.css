@@ -2030,14 +2030,14 @@ footer #newsletter .dashed-button a:hover {
 }
 /* End Mobile Media Query */
 /* line 2, ../mixins/marquee_themes.scss */
-.normal-marquee .owl-controls, .big-marquee .owl-controls {
+.normal-marquee .owl-controls, .med-marquee .owl-controls, .big-marquee .owl-controls {
   position: absolute;
   text-align: right;
   bottom: -30px;
   right: 0;
 }
 /* line 8, ../mixins/marquee_themes.scss */
-.normal-marquee .owl-page, .big-marquee .owl-page {
+.normal-marquee .owl-page, .med-marquee .owl-page, .big-marquee .owl-page {
   height: 10px;
   width: 10px;
   margin-left: 5px;
@@ -2047,23 +2047,29 @@ footer #newsletter .dashed-button a:hover {
   /*IE7 life-saver */
 }
 /* line 15, ../mixins/marquee_themes.scss */
-.normal-marquee .owl-page span, .big-marquee .owl-page span {
+.normal-marquee .owl-page span, .med-marquee .owl-page span, .big-marquee .owl-page span {
   display: block;
   background-color: #8fab3d;
   padding: 5px;
 }
 /* line 22, ../mixins/marquee_themes.scss */
-.normal-marquee .owl-page.active span, .big-marquee .owl-page.active span {
+.normal-marquee .owl-page.active span, .med-marquee .owl-page.active span, .big-marquee .owl-page.active span {
   background-color: #336442;
 }
 
 /* line 29, ../mixins/marquee_themes.scss */
+.med-marquee .owl-controls {
+  bottom: 5%;
+  right: 2%;
+}
+
+/* line 36, ../mixins/marquee_themes.scss */
 .big-marquee .owl-controls {
   bottom: 5%;
   right: 2%;
 }
 
-/* line 35, ../mixins/marquee_themes.scss */
+/* line 42, ../mixins/marquee_themes.scss */
 .lightbox {
   position: absolute;
   bottom: 15%;
@@ -2073,11 +2079,11 @@ footer #newsletter .dashed-button a:hover {
   background: rgba(159, 206, 180, 0.8);
   z-index: 9999;
 }
-/* line 44, ../mixins/marquee_themes.scss */
+/* line 51, ../mixins/marquee_themes.scss */
 .lightbox .lightbox-title {
   font-size: 25px;
 }
-/* line 48, ../mixins/marquee_themes.scss */
+/* line 55, ../mixins/marquee_themes.scss */
 .lightbox .a-wrapper {
   padding: 5px;
   background-color: #336442;
@@ -2085,7 +2091,7 @@ footer #newsletter .dashed-button a:hover {
   text-align: center;
   width: 145px;
 }
-/* line 54, ../mixins/marquee_themes.scss */
+/* line 61, ../mixins/marquee_themes.scss */
 .lightbox .a-wrapper a {
   color: #FFF;
   font-weight: bold;
@@ -2095,13 +2101,13 @@ footer #newsletter .dashed-button a:hover {
   text-decoration: none;
 }
 
-/* line 65, ../mixins/marquee_themes.scss */
+/* line 72, ../mixins/marquee_themes.scss */
 #tag-container {
   position: absolute;
   bottom: 25px;
   left: 25px;
 }
-/* line 69, ../mixins/marquee_themes.scss */
+/* line 76, ../mixins/marquee_themes.scss */
 #tag-container .a-wrapper {
   font-size: 15px;
   margin-right: 25px;
@@ -2113,47 +2119,47 @@ footer #newsletter .dashed-button a:hover {
   background-color: #fdcd26;
   width: 170px;
 }
-/* line 79, ../mixins/marquee_themes.scss */
+/* line 86, ../mixins/marquee_themes.scss */
 #tag-container .a-wrapper .tag-box {
   display: block;
   text-decoration: none;
   padding: 5px 10px;
   border: 1px dashed #FFF;
 }
-/* line 84, ../mixins/marquee_themes.scss */
+/* line 91, ../mixins/marquee_themes.scss */
 #tag-container .a-wrapper .tag-box .tag-title {
   font-weight: bold;
   display: block;
   border-bottom: 1px solid black;
 }
-/* line 89, ../mixins/marquee_themes.scss */
+/* line 96, ../mixins/marquee_themes.scss */
 #tag-container .a-wrapper .tag-box span:last-child {
   font-size: 12px;
   font-style: italic;
 }
 
 @media only screen and (max-width: 739px) {
-  /* line 99, ../mixins/marquee_themes.scss */
+  /* line 106, ../mixins/marquee_themes.scss */
   .big-marquee .owl-controls {
     right: 5%;
     top: 2%;
     bottom: 0;
   }
 
-  /* line 105, ../mixins/marquee_themes.scss */
+  /* line 112, ../mixins/marquee_themes.scss */
   #tag-container {
     position: static;
     width: 100%;
     font-size: 20px;
   }
-  /* line 109, ../mixins/marquee_themes.scss */
+  /* line 116, ../mixins/marquee_themes.scss */
   #tag-container .a-wrapper {
     width: 100%;
     display: block;
     margin: 0;
   }
 
-  /* line 116, ../mixins/marquee_themes.scss */
+  /* line 123, ../mixins/marquee_themes.scss */
   .lightbox {
     position: absolute;
     width: 100%;
@@ -2161,7 +2167,7 @@ footer #newsletter .dashed-button a:hover {
     bottom: 0;
     right: 0;
   }
-  /* line 123, ../mixins/marquee_themes.scss */
+  /* line 130, ../mixins/marquee_themes.scss */
   .lightbox .a-wrapper {
     width: 100px;
   }
@@ -2169,120 +2175,120 @@ footer #newsletter .dashed-button a:hover {
 /******************************************
 -- Resource Theme
 *******************************************/
-/* line 132, ../mixins/marquee_themes.scss */
+/* line 139, ../mixins/marquee_themes.scss */
 .button-slide, .button-prev-dgreen, .button-prev-dgrey, .button-prev-dteal, .button-prev-lgreen, .button-prev-lgrey, .button-prev-lteal, .button-prev-lyellow, .button-prev-sgreen, .button-prev-sgrey, .button-next-steal, .button-prev-yellow, .button-next-dgreen, .button-next-dgrey, .button-next-dteal, .button-next-lgreen, .button-next-lgrey, .button-next-lteal, .button-next-lyellow, .button-next-sgreen, .button-next-sgrey, .button-next-yellow {
   background-repeat: no-repeat;
   background-position: 50% 50%;
 }
 
 /** Prev Buttons **/
-/* line 138, ../mixins/marquee_themes.scss */
+/* line 145, ../mixins/marquee_themes.scss */
 .button-prev-dgreen {
   background-image: url("../img/arrow-left-dgreen.png");
 }
 
-/* line 142, ../mixins/marquee_themes.scss */
+/* line 149, ../mixins/marquee_themes.scss */
 .button-prev-dgrey {
   background-image: url("../img/arrow-left-dgrey.png");
 }
 
-/* line 146, ../mixins/marquee_themes.scss */
+/* line 153, ../mixins/marquee_themes.scss */
 .button-prev-dteal {
   background-image: url("../img/arrow-left-dteal.png");
 }
 
-/* line 150, ../mixins/marquee_themes.scss */
+/* line 157, ../mixins/marquee_themes.scss */
 .button-prev-lgreen {
   background-image: url("../img/arrow-left-lgreen.png");
 }
 
-/* line 154, ../mixins/marquee_themes.scss */
+/* line 161, ../mixins/marquee_themes.scss */
 .button-prev-lgrey {
   background-image: url("../img/arrow-left-lgrey.png");
 }
 
-/* line 158, ../mixins/marquee_themes.scss */
+/* line 165, ../mixins/marquee_themes.scss */
 .button-prev-lteal {
   background-image: url("../img/arrow-left-lteal.png");
 }
 
-/* line 162, ../mixins/marquee_themes.scss */
+/* line 169, ../mixins/marquee_themes.scss */
 .button-prev-lyellow {
   background-image: url("../img/arrow-left-lyellow.png");
 }
 
-/* line 166, ../mixins/marquee_themes.scss */
+/* line 173, ../mixins/marquee_themes.scss */
 .button-prev-sgreen {
   background-image: url("../img/arrow-left-sgreen.png");
 }
 
-/* line 170, ../mixins/marquee_themes.scss */
+/* line 177, ../mixins/marquee_themes.scss */
 .button-prev-sgrey {
   background-image: url("../img/arrow-left-sgrey.png");
 }
 
-/* line 174, ../mixins/marquee_themes.scss */
+/* line 181, ../mixins/marquee_themes.scss */
 .button-next-steal {
   background-image: url("../img/arrow-left-steal.png");
 }
 
-/* line 178, ../mixins/marquee_themes.scss */
+/* line 185, ../mixins/marquee_themes.scss */
 .button-prev-yellow {
   background-image: url("../img/arrow-left-yellow.png");
 }
 
 /** Next Buttons **/
-/* line 184, ../mixins/marquee_themes.scss */
+/* line 191, ../mixins/marquee_themes.scss */
 .button-next-dgreen {
   background-image: url("../img/arrow-right-dgreen.png");
 }
 
-/* line 188, ../mixins/marquee_themes.scss */
+/* line 195, ../mixins/marquee_themes.scss */
 .button-next-dgrey {
   background-image: url("../img/arrow-right-dgrey.png");
 }
 
-/* line 192, ../mixins/marquee_themes.scss */
+/* line 199, ../mixins/marquee_themes.scss */
 .button-next-dteal {
   background-image: url("../img/arrow-right-dteal.png");
 }
 
-/* line 196, ../mixins/marquee_themes.scss */
+/* line 203, ../mixins/marquee_themes.scss */
 .button-next-lgreen {
   background-image: url("../img/arrow-right-lgreen.png");
 }
 
-/* line 200, ../mixins/marquee_themes.scss */
+/* line 207, ../mixins/marquee_themes.scss */
 .button-next-lgrey {
   background-image: url("../img/arrow-right-lgrey.png");
 }
 
-/* line 204, ../mixins/marquee_themes.scss */
+/* line 211, ../mixins/marquee_themes.scss */
 .button-next-lteal {
   background-image: url("../img/arrow-right-lteal.png");
 }
 
-/* line 208, ../mixins/marquee_themes.scss */
+/* line 215, ../mixins/marquee_themes.scss */
 .button-next-lyellow {
   background-image: url("../img/arrow-right-lyellow.png");
 }
 
-/* line 212, ../mixins/marquee_themes.scss */
+/* line 219, ../mixins/marquee_themes.scss */
 .button-next-sgreen {
   background-image: url("../img/arrow-right-sgreen.png");
 }
 
-/* line 216, ../mixins/marquee_themes.scss */
+/* line 223, ../mixins/marquee_themes.scss */
 .button-next-sgrey {
   background-image: url("../img/arrow-right-sgrey.png");
 }
 
-/* line 220, ../mixins/marquee_themes.scss */
+/* line 227, ../mixins/marquee_themes.scss */
 .button-next-steal {
   background-image: url("../img/arrow-right-steal.png");
 }
 
-/* line 224, ../mixins/marquee_themes.scss */
+/* line 231, ../mixins/marquee_themes.scss */
 .button-next-yellow {
   background-image: url("../img/arrow-right-yellow.png");
 }

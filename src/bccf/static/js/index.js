@@ -50,13 +50,13 @@ $(function(){
         'singleItem': true,
         'autoPlay': 20000,
         'stopOnHover': true,
-        'theme': "big-marquee"
+        'theme': "med-marquee"
     });
     $('#noteworthy-carousel').owlCarousel({
         'singleItem': true,
         'autoPlay': 15000,
         'stopOnHover': true,
-        'theme': "big-marquee"
+        'theme': "med-marquee"
     });
     $('#resources-carousel').owlCarousel({
         'items': 3,
