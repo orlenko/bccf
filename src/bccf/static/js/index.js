@@ -46,6 +46,18 @@ $(function(){
         'stopOnHover': true,
         'theme': "big-marquee",
     });
+    $('#programs-carousel').owlCarousel({
+        'singleItem': true,
+        'autoPlay': 20000,
+        'stopOnHover': true,
+        'theme': "big-marquee"
+    });
+    $('#noteworthy-carousel').owlCarousel({
+        'singleItem': true,
+        'autoPlay': 15000,
+        'stopOnHover': true,
+        'theme': "big-marquee"
+    });
     $('#resources-carousel').owlCarousel({
         'items': 3,
         'pagination': false,

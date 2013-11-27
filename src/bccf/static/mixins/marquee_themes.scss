@@ -129,9 +129,101 @@
 /******************************************
 -- Resource Theme
 *******************************************/
-.button-next,
-.button-prev {
-    text-align: center;
+.button-slide {
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+}
+
+/** Prev Buttons **/
+.button-prev-dgreen {
+    background-image: url('../img/arrow-left-dgreen.png');
+    @extend .button-slide;
+}
+.button-prev-dgrey {
+    background-image: url('../img/arrow-left-dgrey.png');
+    @extend .button-slide;
+}
+.button-prev-dteal {
+    background-image: url('../img/arrow-left-dteal.png');
+    @extend .button-slide;
+}
+.button-prev-lgreen {
+    background-image: url('../img/arrow-left-lgreen.png');
+    @extend .button-slide;
+}
+.button-prev-lgrey {
+    background-image: url('../img/arrow-left-lgrey.png');
+    @extend .button-slide;
+}
+.button-prev-lteal {
+    background-image: url('../img/arrow-left-lteal.png');
+    @extend .button-slide;
+}
+.button-prev-lyellow {
+    background-image: url('../img/arrow-left-lyellow.png');
+    @extend .button-slide;
+}
+.button-prev-sgreen {
+    background-image: url('../img/arrow-left-sgreen.png');
+    @extend .button-slide;
+}
+.button-prev-sgrey {
+    background-image: url('../img/arrow-left-sgrey.png');
+    @extend .button-slide;
+}
+.button-next-steal {
+    background-image: url('../img/arrow-left-steal.png');
+    @extend .button-slide;
+}
+.button-prev-yellow {
+    background-image: url('../img/arrow-left-yellow.png');
+    @extend .button-slide;
+}
+
+/** Next Buttons **/
+.button-next-dgreen {
+    background-image: url('../img/arrow-right-dgreen.png');
+    @extend .button-slide;
+}
+.button-next-dgrey {
+    background-image: url('../img/arrow-right-dgrey.png');
+    @extend .button-slide;
+}
+.button-next-dteal {
+    background-image: url('../img/arrow-right-dteal.png');
+    @extend .button-slide;
+}
+.button-next-lgreen {
+    background-image: url('../img/arrow-right-lgreen.png');
+    @extend .button-slide;
+}
+.button-next-lgrey {
+    background-image: url('../img/arrow-right-lgrey.png');
+    @extend .button-slide;
+}
+.button-next-lteal {
+    background-image: url('../img/arrow-right-lteal.png');
+    @extend .button-slide;
+}
+.button-next-lyellow {
+    background-image: url('../img/arrow-right-lyellow.png');
+    @extend .button-slide;
+}
+.button-next-sgreen {
+    background-image: url('../img/arrow-right-sgreen.png');
+    @extend .button-slide;
+}
+.button-next-sgrey {
+    background-image: url('../img/arrow-right-sgrey.png');
+    @extend .button-slide;
+}
+.button-next-steal {
+    background-image: url('../img/arrow-right-steal.png');
+    @extend .button-slide;
+}
+.button-next-yellow {
+    background-image: url('../img/arrow-right-yellow.png');
+    @extend .button-slide;
 }
 .resource-theme {
     
