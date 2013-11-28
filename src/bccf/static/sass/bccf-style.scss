@@ -818,7 +818,8 @@ textarea {
 	}
 }
 
-#home-noteworthy{
+#home-noteworthy {
+	
 	height:250px;
 	margin-bottom:10px;
 	position: relative;
@@ -883,8 +884,11 @@ textarea {
 		right: 10px;
 		z-index:100;
 		}
-}
+	
+} /* End #home-noteworthy */
+
 #home-programs{
+	
 	height:250px;
 	margin-bottom:10px;
 	position: relative;
@@ -948,7 +952,9 @@ textarea {
 		right: 10px;
 		z-index:100;
 		}
-}
+	
+} /* End #home-programs */
+
 #home-listings{
 	background:$green-stripes repeat;
 	float:left;
@@ -1211,6 +1217,30 @@ footer {
 
 } /* End Footer */
 
+
+.dashed-button {
+	background-color:$lgreen;
+	min-width:80px;
+	min-height:36px;
+	float:left;
+
+	a {
+	font-weight:bold;	
+	color: #000;
+	float: left;
+	margin: 2px;
+	padding: 4px 22px;
+	text-decoration: none;
+	text-transform: uppercase;
+ 			border:1px dashed #fff;
+		
+		&:hover {color:$dgreen;
+		text-decoration:none;
+		background-color:$yellow;}
+	}
+}
+
+
 #copyright {
 	font-size:11px;
 	text-align:center;
@@ -1381,8 +1411,6 @@ footer {
 	
 
 } /* End Footer */
-
-
 
 
 } /* End Tablet Media Query */
