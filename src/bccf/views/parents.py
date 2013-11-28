@@ -13,7 +13,7 @@ def parents_page(request):
         profile = user.profile
         if profile:
             membership_product = profile.membership_product_variation
-    queryset = EventForParents.objects.all()  # @UndefinedVariable
+    queryset = EventForParents.objects.all()
     paginator = Paginator(queryset, 6)
     pagenum = request.GET.get('page')
     try:

@@ -37,22 +37,7 @@ def parents_event_signup(request, slug):
         del request.session['aftercheckout']
     context = RequestContext(request, locals())
     return render_to_response('bccf/event_signup.html', {}, context_instance=context)
-    
-@require_parent
-@never_cache
-def parents_event_create(request):
-    """
-    View for creating an event as a parent.
-    """
-    if request.method == 'POST':
-        form = ParentEventForm(request.POST)
-        if form.is_valid():
-            event = form.save()
-            return redirect('/parents/event/%s' % (event.slug))
-    else:
-        form = ParentEventForm
-    context = RequestContext(request, locals())
-    return render_to_response('bccf/event_create.html', {}, context_instance=context)
+
 
 #####################
 # Professional Stuff
@@ -65,7 +50,8 @@ def professionals_event(request, slug):
     context = RequestContext(request, locals())
     return render_to_response('bccf/event.html', {}, context_instance=context)
 
-@require_professional    
+
+@require_professional
 @never_cache
 def professionals_event_signup(request, slug):
     event = EventForProfessionals.objects.get(slug=slug)
@@ -74,7 +60,7 @@ def professionals_event_signup(request, slug):
         del request.session['aftercheckout']
     context = RequestContext(request, locals())
     return render_to_response('bccf/event_signup.html', {}, context_instance=context)
-    
+
 # For Professional Event Wizard
 FORMS = [('event', ProfessionalEventForm), # Main Form
          ('before', FormStructureSurveyFormOne), # Before Survey
@@ -83,16 +69,17 @@ FORMS = [('event', ProfessionalEventForm), # Main Form
 TEMPLATES = {'event': 'bccf/wizard_event_create.html',
              'before': 'generic/includes/form_builder.html',
              'after': 'generic/includes/form_builder.html'}
-    
+
+
 class ProfessionalEventWizard(SessionWizardView):
     """
     Form Wizard for creating a new professional event
-    
+
     Steps: Event Details -> Before Survey (Optional) -> After Survey (Optional)
-    """          
+    """
     def get_template_names(self):
         return [TEMPLATES[self.steps.current]]
-                
+
     def process_step(self, form):
         """
         Process a step when a form is submitted. The values in the form are clean and valid
@@ -110,7 +97,7 @@ class ProfessionalEventWizard(SessionWizardView):
             elif 'before-after_survey' not in form.data and len(self.form_list) == 3: # No After Survey
                 del self.form_list['after']
         return self.get_form_step_data(form)
-    
+
     def get_context_data(self, form, **kwargs):
         """
         Adds form_structure to context for cloning before survey
@@ -128,7 +115,7 @@ class ProfessionalEventWizard(SessionWizardView):
             elif after_data is not None and 'structure' in after_data: # Rebuild the form just in case there's an error
                 context.update({'form_structure':after_data['structure']})
         return context
-    
+
     def done(self, form_list, **kwargs):
         """
         This is where the forms will be saved! If there are surveys, associate
@@ -141,14 +128,14 @@ class ProfessionalEventWizard(SessionWizardView):
             event_data.update({'survey_before':self.process_survey(form_list[1])})
         if len(form_list) == 3: # If there's an after survey
             event_data.update({'survey_after':self.process_survey(form_list[2])})
-            
+
         event = EventForProfessionals.objects.create(**event_data)
-        return redirect('/professionals/event/%s' % (event.slug))            
-    
+        return redirect('/professionals/event/%s' % (event.slug))
+
     def process_survey(self, form):
         """
         Process each survey form and publishes them automatically.
-        
+
         This is an almost copy of the publish view found in formable.builder.views
         """
         data = form.cleaned_data
@@ -159,7 +146,7 @@ class ProfessionalEventWizard(SessionWizardView):
         form_struct = FormStructure.objects.create(**data)
         published = FormPublished(form_structure=form_struct, user=self.request.user)
         published.save()
-        
+
         # Create Questions based on structure
         struct = json.loads(form_struct.structure)
         for fieldset in struct["fieldset"]:
@@ -172,5 +159,5 @@ class ProfessionalEventWizard(SessionWizardView):
                     question = Question(question=field["label"], form_published=published, required=required)
                     question.save()
         # End Create Questions
-        
+
         return published

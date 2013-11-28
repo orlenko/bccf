@@ -24,5 +24,8 @@
 
 	{% if profile_user == request.user %}
 		{% forum_posts_for_moderation %}
+		{% membership_upgrade %}
+	{% else %}
+		Basic membership info: {% profile_user.profile.membership_product_variation }}}
 	{% endif %}
 {% endblock %}

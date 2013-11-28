@@ -147,3 +147,30 @@ def bccf_thumbnail(image_url, width, height, quality=95):
 def topics_for(record):
     return [topic_link.topic for topic_link in TopicLink.objects.filter(
         model_name=record._meta.db_table, entity_id=record.id)]
+
+
+@register.render_tag
+def membership_upgrade(context, token):
+    log.debug('Getting upgrade options...')
+    try:
+        user = context['request'].user
+        profile = user.profile
+        membership = profile.membership_product_variation
+        if membership:
+            categ = membership.product.category
+            upgrades = []
+            downgrades = []
+            for product in categ.products.all():
+                for variation in product.product_variations.all():
+                    if variation.pk != membership.pk:
+                        if variation.price < membership.price:
+                            downgrades.append(variation)
+                        else:
+                            upgrades.append(variation)
+        context['membership'] = membership
+        context['upgrades'] = upgrades
+        context['downgrades'] = downgrades
+    except:
+        log.debug('Failed to generate upgrade options', exc_info=1)
+    t = get_template('bccf/membership_upgrade.html')
+    return t.render(Context(context))

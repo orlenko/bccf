@@ -1,10 +1,11 @@
 
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-
 from mezzanine.core.views import direct_to_template
-from bccf.feeds import EventsForParentsFeed
+
+from bccf.feeds import EventsForParentsFeed, EventsForProfessionalsFeed
 from bccf.views.events import ProfessionalEventWizard, FORMS
+
 
 admin.autodiscover()
 
@@ -24,7 +25,7 @@ urlpatterns = patterns("",
 
     # Cartridge URLs.
     ("^shop/", include("cartridge.shop.urls")),
-    
+
     # Formable URLs
     url("formable/", include("formable.builder.urls")),
 
@@ -35,17 +36,19 @@ urlpatterns = patterns("",
         name="shop_order_history"),
 
     url(r'^member/profile/$', 'bccf.views.member.profile', name='member-profile'),
+    url(r'^member/membership/upgrade/(?P<product_id>.*)/$', 'bccf.views.member.membership_upgrade', name='member-membership-upgrade'),
     url(r'^member/membership/(?P<slug>.*)/$', 'bccf.views.member.membership', name='member-membership'),
 
     # Parents
     url(r'^parents/$', 'bccf.views.parents.parents_page', name='parents-page'),
     url(r'^parents/event/feed/', EventsForParentsFeed()),
     url(r'^parents/event/signup/(?P<slug>.*)/$', 'bccf.views.events.parents_event_signup', name='parents-event-signup'),
-    url(r'^parents/event/create/$', 'bccf.views.events.parents_event_create', name='parents-event-create'),
     url(r'^parents/event/(?P<slug>.*)/$', 'bccf.views.events.parents_event', name='parents-event'),
 
     # Professionals
     url(r'^professionals/$', 'bccf.views.professionals.professionals_page', name='professionals-page'),
+    url(r'^professionals/event/feed/', EventsForProfessionalsFeed()),
+    url(r'^professionals/event/signup/(?P<slug>.*)/$', 'bccf.views.events.professionals_event_signup', name='professionals-event-signup'),
     url(r'^professionals/event/create/$', ProfessionalEventWizard.as_view(FORMS), name='professionals-event-create'),
     url(r'^professionals/event/(?P<slug>.*)/$', 'bccf.views.events.professionals_event', name='professionals-event'),
 

@@ -3,6 +3,7 @@ from django.template.context import RequestContext
 from bccf.models import EventForProfessionals
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
+
 def professionals_page(request):
     user = request.user
     authenticated = user and not user.is_anonymous()

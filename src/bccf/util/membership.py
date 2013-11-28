@@ -12,6 +12,7 @@ from django.utils.encoding import force_str
 from django.utils.http import urlencode
 
 from bccf.models import Settings
+from cartridge.shop.models import ProductVariation
 
 
 log = logging.getLogger(__name__)
@@ -71,3 +72,35 @@ def require_professional(func):
     def _wrapper(request, *args, **kwargs):
         return require_member(Settings.get_setting('PROFESSIONAL_MEMBERSHIP_CATEGORY'), func, request, *args, **kwargs)
     return _wrapper
+
+
+
+def order_handler(request, order_form, order):
+    '''
+    General rules for membership handling:
+     - A parent will only have free or annually-paid membership.
+       Possible to upgrade to paid membership any time.
+       Possible to cancel paid subscription at any time, refund will be handled online or offline.
+
+     - A professional can upgrade from free to level B - monthly or level B - annual.
+       From level B to level C, annual subscription goes only to annual.
+       Monthly goes to monthly.
+       Remaining credit is applied as a discount when purchasing a different membership.
+       Membership cancellation refund will be handled offline or online.
+
+    This handler, however, does only one thing: it checks if the user who ordered the order
+    has a pre-existing membership, and if so, we delete the old membership.
+    '''
+    user = request.user
+    profile = user.profile
+    if profile.membership_product_variation:
+        for order_item in order.items.all():
+            variation = ProductVariation.objects.get(sku=order_item.sku)
+            for category in variation.product.categories.all():
+                if category.title.startswith('Membership'):
+                    new_memberships.append(variation)
+                    break
+        new_memberships = []
+        if new_memberships:
+            if len(new_memberships) != 1:
+                log.warn
