@@ -24,16 +24,6 @@ from mezzanine.utils.views import set_cookie
 
 def home(request):
     topics = Topic.objects.all();
-    news_list = NewsPost.objects.all();
-    paginator = Paginator(news_list, 5);
-    page = request.GET.get('page');
-    
-    try:
-        news_list = paginator.page(page)
-    except PageNotAnInteger:
-        news_list = paginator.page(1)
-    except EmptyPage:
-        news = paginator.page(paginator.num_pages)
     
     context = RequestContext(request, locals())
     return render_to_response('index.html', {}, context_instance=context);
