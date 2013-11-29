@@ -82,7 +82,7 @@ class ProfessionalEventWizard(SessionWizardView):
     def get_template_names(self):
         """
         Override of form wizard's `get_template_names`
-        
+
         Returns the proper template depending on step
         """
         return [TEMPLATES[self.steps.current]]
@@ -90,7 +90,7 @@ class ProfessionalEventWizard(SessionWizardView):
     def process_step(self, form):
         """
         Override of form wizard's `process_step`
-        
+
         Process a step when a form is submitted. The values in the form are clean and valid
         """
         if self.steps.current == 'event': # Event form?
@@ -110,7 +110,7 @@ class ProfessionalEventWizard(SessionWizardView):
     def get_context_data(self, form, **kwargs):
         """
         Override of form wizard's `get_context_data`
-        
+
         Adds form_structure to context for cloning before survey
         """
         context = super(ProfessionalEventWizard, self).get_context_data(form=form, **kwargs)
@@ -131,7 +131,7 @@ class ProfessionalEventWizard(SessionWizardView):
         """
         This is where the forms will be saved! If there are surveys, associate
         them with the Event. Form structures will be automatically published.
-        
+
         REQUIRED by form wizard
         """
         event_data = form_list[0].cleaned_data
@@ -169,19 +169,19 @@ class ProfessionalEventWizard(SessionWizardView):
                         required = 0
                     else:
                         required = 1
-                        
-                    num_answers = 0                       
-                        
-                    if field['class'] == 'multiselect-field' or field['class'] == 'checkbox-field':
-                        num_answers = len(field["options"])           
 
-                    question = Question(question=field["label"], 
+                    num_answers = 0
+
+                    if field['class'] == 'multiselect-field' or field['class'] == 'checkbox-field':
+                        num_answers = len(field["options"])
+
+                    question = Question(question=field["label"],
                         form_published=published, required=required,
                         num_answers=num_answers)
                     question.save()
-        # End Create Questions        
+        # End Create Questions
         return published # FormPublished object
-        
+
 
 ######################################
 # Survey Report
@@ -191,23 +191,23 @@ def professional_survey_download_report(request, slug):
     """
     if not request.user.is_authenticated():
         return redirect('/')
-        
+
     try:
         event = EventForProfessionals.objects.get(slug=slug)
     except ObjectDoesNotExist:
-        raise Http404   
-        
+        raise Http404
+
     counter = 0
-    current = None  
-    
+    current = None
+
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="%s-%s-report.csv"' % (event.slug, time.strftime("%x"))
-    
+
     writer = csv.writer(response)
     writer.writerow(['Report for %s' % (event.title)])
-    
+
     rows = {'Name':[], 'Date':[]}
-    
+
     if event.survey_before is not None: # If there's a before Survey
         before_filled_forms = FormFilled.objects.filter(form_published=event.survey_before)
         questions = Question.objects.filter(form_published=event.survey_before)
@@ -216,43 +216,15 @@ def professional_survey_download_report(request, slug):
                 question_key = 'Q-%s-%s' % (question.question,str(question.num_answers))
                 if question_key not in rows:
                     rows.update({question_key:[]})
-            else:         
+            else:
                 for x in range(0, question.num_answers):
                     question_key = 'Q-%s-%s' % (question.question,str(x))
                     if question_key not in rows:
-                        rows.update({question_key:[]})               
+                        rows.update({question_key:[]})
         for form in before_filled_forms:
             rows['Name'].append(form.user.get_full_name() or form.user.username)
             rows['Date'].append(form.filled)
-            answers = FieldAnswer.objects.filter(form_filled=form)                     
-            for answer in answers:
-                if current is None or current != answer.question:
-                    counter = 0
-                    current = answer.question
-                elif current == answer.question:
-                    counter += 1     
-                rows['Q-%s-%s' % (current.question, str(counter))].append(answer.answer)                         
-            for row in rows:
-                if len(rows[row]) < len(rows['Name']):
-                    rows[row].append('')                
-            
-    if event.survey_after is not None: # If there's an after Survey
-        after_filled_forms = FormFilled.objects.filter(form_published=event.survey_after)
-        questions = Question.objects.filter(form_published=event.survey_after)
-        for question in questions:            
-            if question.num_answers == 0:
-                question_key = 'Q-%s-%s' % (question.question,str(question.num_answers))
-                if question_key not in rows:
-                    rows.update({question_key:['']*len(after_form_filled)})
-            else:         
-                for x in range(0, question.num_answers):
-                    question_key = 'Q-%s-%s' % (question.question,str(x))
-                    if question_key not in rows:
-                        rows.update({question_key:[' ']*len(rows['Name'])})                  
-        for form in after_filled_forms:
-            rows['Name'].append(form.user.get_full_name() or form.user.username)
-            rows['Date'].append(form.filled)
-            answers = FieldAnswer.objects.filter(form_filled=form)          
+            answers = FieldAnswer.objects.filter(form_filled=form)
             for answer in answers:
                 if current is None or current != answer.question:
                     counter = 0
@@ -262,7 +234,35 @@ def professional_survey_download_report(request, slug):
                 rows['Q-%s-%s' % (current.question, str(counter))].append(answer.answer)
             for row in rows:
                 if len(rows[row]) < len(rows['Name']):
-                    rows[row].append('') 
+                    rows[row].append('')
+
+    if event.survey_after is not None: # If there's an after Survey
+        after_filled_forms = FormFilled.objects.filter(form_published=event.survey_after)
+        questions = Question.objects.filter(form_published=event.survey_after)
+        for question in questions:
+            if question.num_answers == 0:
+                question_key = 'Q-%s-%s' % (question.question,str(question.num_answers))
+                if question_key not in rows:
+                    rows.update({question_key:['']*len(after_filled_forms)})
+            else:
+                for x in range(0, question.num_answers):
+                    question_key = 'Q-%s-%s' % (question.question,str(x))
+                    if question_key not in rows:
+                        rows.update({question_key:[' ']*len(rows['Name'])})
+        for form in after_filled_forms:
+            rows['Name'].append(form.user.get_full_name() or form.user.username)
+            rows['Date'].append(form.filled)
+            answers = FieldAnswer.objects.filter(form_filled=form)
+            for answer in answers:
+                if current is None or current != answer.question:
+                    counter = 0
+                    current = answer.question
+                elif current == answer.question:
+                    counter += 1
+                rows['Q-%s-%s' % (current.question, str(counter))].append(answer.answer)
+            for row in rows:
+                if len(rows[row]) < len(rows['Name']):
+                    rows[row].append('')
 
     rows['Name'].insert(0, 'Name')
     rows['Date'].insert(0, 'Date')
@@ -270,10 +270,10 @@ def professional_survey_download_report(request, slug):
     writer.writerow(rows['Date'])
     del rows['Name']
     del rows['Date']
-    
-    for key,val in reversed(rows.items()):        
+
+    for key,val in reversed(rows.items()):
         val.insert(0, key[:key.rfind('-')])
         writer.writerow(val)
     #pass
     return response
->>>>>>> 67e5a71e974a232cd251a82de16f7596330ed99d
+

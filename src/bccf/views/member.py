@@ -64,4 +64,4 @@ def membership_upgrade(request, product_id):
      - A downgrade to a lower-tier membership.
     '''
     variation = ProductVariation.objects.get(product_id)
-    current = //
+    #current =

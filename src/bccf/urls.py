@@ -34,8 +34,7 @@ urlpatterns = patterns("",
     # Podcasts
     #('^podcasts/', include('podcasting.urls')),
 
-    url("^account/orders/$", "cartridge.shop.views.order_history",
-        name="shop_order_history"),
+    url("^account/orders/$", "cartridge.shop.views.order_history", name="shop_order_history"),
 
     url(r'^member/profile/$', 'bccf.views.member.profile', name='member-profile'),
     url(r'^member/membership/upgrade/(?P<product_id>.*)/$', 'bccf.views.member.membership_upgrade', name='member-membership-upgrade'),
@@ -50,10 +49,7 @@ urlpatterns = patterns("",
 
     # Professionals
     url(r'^professionals/$', 'bccf.views.professionals.professionals_page', name='professionals-page'),
-<<<<<<< HEAD
     url(r'^professionals/event/feed/', EventsForProfessionalsFeed()),
-=======
->>>>>>> 35936689b51bd222727dc6c4055247c61f1e0d85
     url(r'^professionals/event/signup/(?P<slug>.*)/$', 'bccf.views.events.professionals_event_signup', name='professionals-event-signup'),
     url(r'^professionals/event/create/$', ProfessionalEventWizard.as_view(FORMS), name='professionals-event-create'),
     url(r'^professionals/event/report/(?P<slug>.*)/$', 'bccf.views.events.professional_survey_download_report', name='professional-download-report'),
