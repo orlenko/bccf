@@ -7,15 +7,23 @@ from django.template.context import RequestContext
 from bccf.forms import ProfileForm
 from cartridge.shop.utils import recalculate_cart
 from cartridge.shop import checkout
+import logging
+
+
+log = logging.getLogger(__name__)
 
 
 def profile(request):
-    user_profile = request.user.profile
+    user = request.user
+    user_profile = user.profile
     form = ProfileForm(request.POST, instance=user_profile)
     if request.method == 'POST' and form.is_valid():
         form.save()
         messages.info(request, 'Your Profile has been successfully updated.')
         return HttpResponseRedirect(request.GET.get('next', '/'))
+    order = user_profile.membership_order
+    variation = user_profile.membership_product_variation
+    expiration = user_profile.membership_expiration_datetime
     context = RequestContext(request, locals())
     return render_to_response('bccf/member_profile.html', {}, context_instance=context)
 
@@ -28,8 +36,8 @@ def membership(request, slug):
             the_category = categ
             break
     if not the_category:
-        messages.warning(request, 'Sorry, could not find membership types matching "%s"' % slug)
-        return HttpResponseRedirect()
+        log.debug('Sorry, could not find membership types matching "%s"' % slug)
+        return HttpResponseRedirect('/')
 
     if request.method == 'POST':
         variation_id = int(request.POST.get('variation_id'))
