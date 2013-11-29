@@ -97,7 +97,7 @@ urlpatterns = patterns("",
     # MEZZANINE URL OVERRIDES
     #------------------------
     # The patterns here will be used to override Mezzanine-specific urls.
-    url("^rating/$", "views.views.rating", name="rating"),
+    url("^rating/$", "bccf.views.views.rating", name="rating"),
 
     # MEZZANINE'S URLS
     # ----------------
