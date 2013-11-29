@@ -15,12 +15,12 @@ from mezzanine.utils.models import upload_to, AdminThumbMixin
 from bccf.fields import MyImageField
 from bccf.settings import (OPTION_SUBSCRIPTION_TERM, get_option_number,
     INSTALLED_APPS)
+from mezzanine.core.models import Slugged
 
 log = logging.getLogger(__name__)
 
 
-class Topic(models.Model):
-    name = models.CharField(max_length=255)
+class Topic(Slugged):
     star_blog_id = models.IntegerField(null=True, blank=True)
     star_survey_id = models.IntegerField(null=True, blank=True)
     star_forum_post_id = models.IntegerField(null=True, blank=True)
