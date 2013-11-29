@@ -15,7 +15,7 @@
    	            {% if topics %}
 	            <ul>
    	                {% for topic in topics %}
-   	                <li><a href="{{ topic.get_full_url }}">{{ topic.name }}</a></li>
+   	                <li><a href="{{ topic.get_full_url }}">{{ topic.title }}</a></li>
    	                {% endfor %}
                 </ul>
                 {% endif %}
@@ -54,8 +54,8 @@
     </div>
 
     <div class="hcal-tabs">
-    <div class="hcal-left-side">Find trainings for:</div>
-    <div class="hcal-right-side">
+    <div class="hcal-left-side mobile-full">Find trainings for:</div>
+    <div class="hcal-right-side mobile-full">
         <a href="#" id="training-families" class="selected training-button">Families</a>
         <a href="#" id="training-professionals" class="training-button">Professionals</a></div>
     </div>
@@ -228,9 +228,9 @@
 
           <div class="hnote-caption">
 
-              <p>Talk, Act & Get involved with other families and parents across the province. Adding more text for testing purposes.</p>
+              <p class="col six mobile-six">Talk, Act & Get involved with other families and parents across the province. Adding more text for testing purposes.</p>
 
-              <div class="hnote-buttons">
+              <div class="hnote-buttons col five mobile-five">
               <div class="dashed-button"><a href="#" target="_blank">Survey</a></div>
               <div class="dashed-button"><a href="#" target="_blank">join</a></div>
               </div>
@@ -242,9 +242,9 @@
 
           <div class="hnote-caption">
 
-              <p>Talk, Act & Get involved with other families and parents across the province. Adding more text for testing purposes.</p>
+              <p class="col six mobile-six">Talk, Act & Get involved with other families and parents across the province. Adding more text for testing purposes.</p>
 
-              <div class="hnote-buttons">
+              <div class="hnote-buttons col five mobile-five">
               <div class="dashed-button"><a href="#" target="_blank">Survey</a></div>
               <div class="dashed-button"><a href="#" target="_blank">join</a></div>
               </div>
@@ -263,9 +263,9 @@
 
               <div class="hpro-caption">
 
-              	<p>Looking for ways to communicate better with you tween? Want to help your baby develop early literacy skills? We have a programs for everyone!</p>
+              	<p class="col six mobile-six">Looking for ways to communicate better with you tween? Want to help your baby develop early literacy skills? We have a programs for everyone!</p>
 
-                  <div class="hpro-buttons">
+                  <div class="hpro-buttons col five mobile-five">
                   	<div class="dashed-button"><a href="#" target="_blank">LEARN MORE</a></div>
                   </div>
 
@@ -277,9 +277,9 @@
 
               <div class="hpro-caption">
 
-              	<p>Looking for ways to communicate better with you tween? Want to help your baby develop early literacy skills? We have a programs for everyone!</p>
+              	<p class="col six mobile-six">Looking for ways to communicate better with you tween? Want to help your baby develop early literacy skills? We have a programs for everyone!</p>
 
-                  <div class="hpro-buttons">
+                  <div class="hpro-buttons col five mobile-five">
                   	<div class="dashed-button"><a href="#" target="_blank">LEARN MORE</a></div>
                   </div>
 
@@ -290,30 +290,117 @@
 
   <div id="home-listings" class="twelve tablet-full mobile-full">
     <h2>Member Listing</h2>
-    <div id="member-container">
-        <a id="member-professionals" class="member-active member-button">Families</a>
-        <a id="member-organization" class="member-button">Professionals</a>
-        <div id="member-professionals-carousel">
-            <div>Member 1</div>
-            <div>Member 2</div>
-            <div>Member 3</div>
+    <div id="hlist-left-side" class="col five mobile-full">
+        
+        <p>Looking for a Family Life Education professional working in your area? Want to connect and network with other professional in your field?</p>
+          
+        <div class="hlist-buttons">
+              <div class="dashed-button"><a href="#" target="_blank">Directory</a></div>
+              <div class="dashed-button"><a href="#" target="_blank">join</a></div>
         </div>
-        <div id="member-organization-carousel">
-            <div>Organization 1</div>
-            <div>Organization 2</div>
-            <div>Organization 3</div>
+      
+  	</div><!-- End #hlist-left-side -->
+      
+      <div id="hlist-right-side" class="col seven mobile-full">
+            
+      	<div id="member-container" class="hlist-tabs">
+      	 <a href="#" id="member-professionals" class="selected member-button">Professionals</a>
+      	 <a href="#" id="member-organization" class="member-button">Organisations</a>
+      	</div>
+
+        
+      	<div class="hlist-outer twelve">
+  	     <div id="member-professionals-carousel">
+    		<div class="hlist-inner"> <!-- Use Innner for the slide -->
+            
+            	<img src="{% static 'img/member-filler-image.jpg' %}" alt="Place Name as alt ie: Karen Moss Photo">
+                <h6>Karen Moss</h6>
+                <p>Iditis quos et harcipsae doluptatio commolu ptatest eaque porem et volo dolum eiciisquis es endae core postor magniet abo. Et dus ommodi te sus.</p>
+                <a class="hlist-link" href="#">Profile</a>
+                
+            </div>
+            <div class="hlist-inner"> <!-- Use Innner for the slide -->
+            
+            	<img src="{% static 'img/member-filler-image.jpg' %}" alt="Place Name as alt ie: Karen Moss Photo">
+                <h6>Karen Moss</h6>
+                <p>Iditis quos et harcipsae doluptatio commolu ptatest eaque porem et volo dolum eiciisquis es endae core postor magniet abo. Et dus ommodi te sus.</p>
+                <a class="hlist-link" href="#">Profile</a>
+                
+            </div>
+            <div class="hlist-inner"> <!-- Use Innner for the slide -->
+            
+            	<img src="{% static 'img/member-filler-image.jpg' %}" alt="Place Name as alt ie: Karen Moss Photo">
+                <h6>Karen Moss</h6>
+                <p>Iditis quos et harcipsae doluptatio commolu ptatest eaque porem et volo dolum eiciisquis es endae core postor magniet abo. Et dus ommodi te sus.</p>
+                <a class="hlist-link" href="#">Profile</a>
+                
+            </div>
+         </div>
+         <div id="member-organization-carousel">
+    		<div class="hlist-inner"> <!-- Use Innner for the slide -->
+            
+            	<img src="{% static 'img/member-filler-image.jpg' %}" alt="Place Name as alt ie: Karen Moss Photo">
+                <h6>Karen Moss</h6>
+                <p>Iditis quos et harcipsae doluptatio commolu ptatest eaque porem et volo dolum eiciisquis es endae core postor magniet abo. Et dus ommodi te sus.</p>
+                <a class="hlist-link" href="#">Profile</a>
+                
+            </div>
+            <div class="hlist-inner"> <!-- Use Innner for the slide -->
+            
+            	<img src="{% static 'img/member-filler-image.jpg' %}" alt="Place Name as alt ie: Karen Moss Photo">
+                <h6>Karen Moss</h6>
+                <p>Iditis quos et harcipsae doluptatio commolu ptatest eaque porem et volo dolum eiciisquis es endae core postor magniet abo. Et dus ommodi te sus.</p>
+                <a class="hlist-link" href="#">Profile</a>
+                
+            </div>
+
+         </div>
         </div>
-    </div>
+     </div>
   </div>
 
   <div id="home-resources" class="twelve tablet-full mobile-full">
       <a class="button-prev button-prev-lgrey col one no-mobile"></a>
-      <div id="reosources-carousel-container" class="col ten mobile-full">
-        <div id="resources-carousel">
-            <div>Resource 1</div>
-            <div>Resource 2</div>
-            <div>Resource 3</div>
-            <div>Resource 4</div>
+      <div id="resources-carousel-container" class="col ten mobile-full">
+        <div id="carousel-resources">
+            <div class="hr-item">
+          	<div class="hr-images">
+          		<a href="#" title="Insert Resource Type ie: Video"><img class="hr-icon" src="../../static/img/header-colour-bg-yellow.gif" alt="type of resource"></a>	
+          		<a href="#" title="Insert Resource Title ie: Co-Parenting"><img src="../../static/img/resource-image-filler3.jpg" alt="Place Title here"></a>
+          	</div>
+            <div class="hr-text">
+            	<i>FEATURED VIDEO</i>
+                <h6>Co-Parenting</h6>
+                <p>Helpful strategies, tips and things to keep in mind.</p>
+            
+            </div>
+          </div>
+          
+          <div class="hr-item">
+          	<div class="hr-images">
+          		<a href="#" title="Insert Resource Type ie: PODCAST"><img class="hr-icon" src="../../static/img/header-colour-bg-dteal.gif" alt="type of resource"></a>	
+          		<a href="#" title="Insert Resource Title ie: Sheila Lindfield"><img src="../../static/img/resource-image-filler2.jpg" alt="Place Title here"></a>
+          	</div>
+            <div class="hr-text">
+            	<i>FEATURED PODCAST</i>
+                <h6>Sheila Lindfield</h6>
+                <p>Fostering Attachment through Parent Child Mother Goose.</p>
+            
+            </div>
+          </div>
+          
+          <div class="hr-item">
+          	<div class="hr-images">
+          		<a href="#" title="Insert Resource Type ie: DOCUMENT"><img class="hr-icon" src="../../static/img/header-colour-bg-lgreen.gif" alt="type of resource"></a>	
+          		<a href="#" title="Insert Resource Title ie: Co-Parenting"><img src="../../static/img/resource-image-filler.jpg" alt="Place Title here"></a>
+          	</div>
+            <div class="hr-text">
+            	<i>FEATURED DOCUMENT</i>
+                <h6>Rookie Dads</h6>
+                <p>10 things every new mom should know!</p>
+            
+            </div>
+          </div>
         </div>
       </div>
       <a class="button-next button-next-lteal col one no-mobile"></a>
