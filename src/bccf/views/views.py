@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from django.contrib.messages import error
 from django.core.urlresolvers import reverse
 from django.db.models import get_model, ObjectDoesNotExist
@@ -5,6 +7,7 @@ from django.http import HttpResponse
 from django.shortcuts import render_to_response, redirect
 from django.template.context import RequestContext
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.utils import timezone
 
 import logging
 log = logging.getLogger(__name__)
@@ -15,7 +18,7 @@ except ImportError:
     from django.utils.simplejson import dumps
 
 from bccf.forms import BCCFRatingForm
-from bccf.models import Topic
+from bccf.models import Topic, EventForParents, EventForProfessionals
 from news.models import NewsPost
 
 from mezzanine.conf import settings
@@ -24,6 +27,12 @@ from mezzanine.utils.views import set_cookie
 
 def home(request):
     topics = Topic.objects.all();
+    pastThirtyDays = timezone.now().date() + timedelta(days=30)
+    eventForParents = EventForParents.objects.filter(date_start__gte=timezone.now().date(), date_start__lte=pastThirtyDays)
+    eventForProfessionals = EventForProfessionals.objects.filter(date_start__gte=timezone.now().date(), date_start__lte=pastThirtyDays)
+    
+    log.info(pastThirtyDays)
+    log.info(eventForParents)
     
     context = RequestContext(request, locals())
     return render_to_response('index.html', {}, context_instance=context);

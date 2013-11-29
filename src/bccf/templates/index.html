@@ -68,96 +68,19 @@
             </div>
             <div id="hcal-families-carousel" class="col twelve mobile-full tablet-full">
                 <div>
-                    <div class="hcal-line">
-                        <ul>
-                        	<li>September 30</li>
-                            <li>Program Title</li>
-                            <li><a href="#">Learn More</a></li>
-                            <li><a href="#">Register</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="hcal-line">
-                        <ul>
-                        	<li>January 17</li>
-                            <li>Program Title</li>
-                            <li><a href="#">Learn More</a></li>
-                            <li><a href="#">Register</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="hcal-line">
-                        <ul>
-                        	<li>November 17</li>
-                            <li>Program Title</li>
-                            <li><a href="#">Learn More</a></li>
-                            <li><a href="#">Register</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="hcal-line">
-                        <ul>
-                        	<li>January 17</li>
-                            <li>Program Title</li>
-                            <li><a href="#">Learn More</a></li>
-                            <li><a href="#">Register</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="hcal-line">
-                        <ul>
-                        	<li>January 17</li>
-                            <li>Program Title</li>
-                            <li><a href="#">Learn More</a></li>
-                            <li><a href="#">Register</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div>
-                    <div class="hcal-line">
-                        <ul>
-                        	<li>September 30</li>
-                            <li>Program Title</li>
-                            <li><a href="#">Learn More</a></li>
-                            <li><a href="#">Register</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="hcal-line">
-                        <ul>
-                        	<li>January 17</li>
-                            <li>Program Title</li>
-                            <li><a href="#">Learn More</a></li>
-                            <li><a href="#">Register</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="hcal-line">
-                        <ul>
-                        	<li>November 17</li>
-                            <li>Program Title</li>
-                            <li><a href="#">Learn More</a></li>
-                            <li><a href="#">Register</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="hcal-line">
-                        <ul>
-                        	<li>January 17</li>
-                            <li>Program Title</li>
-                            <li><a href="#">Learn More</a></li>
-                            <li><a href="#">Register</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="hcal-line">
-                        <ul>
-                        	<li>January 17</li>
-                            <li>Program Title</li>
-                            <li><a href="#">Learn More</a></li>
-                            <li><a href="#">Register</a></li>
-                        </ul>
-                    </div>
+                    {% if eventForParents %}
+                        {% for event in eventForParents %}
+                        <div class="hcal-line">
+                            <ul>
+                                
+                            	<li>{{ event.date_start|date:"F d" }}</li>
+                                <li>{{ event.title }}</li>
+                                <li><a href="#">Learn More</a></li>
+                                <li><a href="#">Register</a></li>
+                            </ul>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
                 </div>
             </div>
         </div>
