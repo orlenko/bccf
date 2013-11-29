@@ -72,7 +72,7 @@
 		e.setAttribute("src", "http://browser-update.org/update.js");
 		document.body.appendChild(e);
 	}
-</script>   
+</script>
 <script src="http://modernizr.com/downloads/modernizr-latest.js"></script>
 
 
@@ -103,7 +103,7 @@
         <div id="bccftagline" class="col tablet-three five mobile-full">y<em><strong>our</strong></em> family.</div>
         <div id="bccflogin" class="col three mobile-full">
             {% if request.user.is_authenticated %}
-            <p>Welcome {{ request.user.get_full_name }}</p>
+            <p>Welcome <a href="/account/update/">{{ request.user.get_full_name }}</a></p>
             <p><a href="{% url "logout" %}">Logout</a></p>
             {% else %}
             <p><a href="{% url "login" %}">Login</a></p>
@@ -112,7 +112,7 @@
             <p><a href="#">Shopping Cart</a></p>
         </div>
     </header>
-    
+
     <nav id="main-top-nav" class="nav-mobile-container section">
         <span class="row no-desktop mobile-full">Menu</span>
         <ul class="col eight mobile-full">
@@ -123,8 +123,8 @@
             <li><a href="#">Blog</a></li>
             <li><a href="#">Donate</a></li>
         </ul>
-        
-        <div id="search-bar" class="col four mobile-full"> 
+
+        <div id="search-bar" class="col four mobile-full">
             <form method="get" id="searchform" action="/search/">
                 <input type="hidden" name="type" value="" />
                 <input type="submit" class="submit" name="submit" id="searchsubmit" value=""  />
@@ -132,11 +132,11 @@
             </form>
         </div>
     </nav>
-    
+
   {% block main %}{% endblock %}
       <!-- end of page content, start of website footer -->
   <footer>
-  
+
   <nav id="main-footer-nav" class="section row-two">
     <ul class="col twelve mobile-full">
       <li><a href="#">NEWS</a></li>
@@ -146,41 +146,41 @@
       <li><a href="#">CONTACT</a></li>
       <li><a href="#">SITEMAP</a></li>
       <li><a href="#">PRIVACY POLICY</a></li>
-      <li><a href="#">TERMS & CONDITIONS</a></li>                       
+      <li><a href="#">TERMS & CONDITIONS</a></li>
     </ul>
   </nav>
-  
+
   <section class="section row-one">
-  
+
     <aside id="newsfeed" class="col four mobile-full">
       {% news_list %}
     </aside>
-    
+
     <aside id="social" class="col four mobile-full">
-    
+
     <p>Follow us on:</p>
     <p>
-    <a href="https://www.facebook.com/BCFamilies" target="_blank"><img src="../../static/img/social-icons-FB.gif" alt="Facebook"/></a> 
+    <a href="https://www.facebook.com/BCFamilies" target="_blank"><img src="../../static/img/social-icons-FB.gif" alt="Facebook"/></a>
     <a href="https://twitter.com/BC_Families" target="_blank"><img src="../../static/img/social-icons-TW.gif" alt="Twitter"/></a>
     <a href="http://www.linkedin.com/company/bc-council-for-families" target="_blank"><img src="../../static/img/social-icons-LI.gif" alt="Linked In"/></a>
     <a href="http://www.youtube.com/user/FamiliesofBC" target="_blank"><img src="../../static/img/social-icons-YT.gif" alt="You Tube"/></a>
     </p>
-    
+
     </aside>
-    
+
     <aside id="newsletter" class="col four mobile-full">
-    
+
     <h5>Keep up-to-date!</h5>
     <p>Sign-up for our newsletter</p>
-    
+
     <div class="dashed-button"><a href="#" target="_blank">join</a></div>
-    
+
     </aside>
-    
+
     </section>
-  
+
   </footer>
-  
+
   <div id="copyright" class="section row-two">
   <p>BC Council for Families &copy; 2014, All rights reserved. | <a href="http://www.webteam.vcn.bc.ca/" target="_blank">Web Design &amp; Development by VCN webteam</a>.</p>
   </div>

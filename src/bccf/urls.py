@@ -25,7 +25,7 @@ urlpatterns = patterns("",
 
     # Cartridge URLs.
     ("^shop/", include("cartridge.shop.urls")),
-    
+
     # Formable URLs
     ("^formable/", include("formable.builder.urls")),
 
@@ -40,13 +40,14 @@ urlpatterns = patterns("",
 
     # Parents
     url(r'^parents/$', 'bccf.views.parents.parents_page', name='parents-page'),
-    url(r'^parents/(?P<slug>.*)/$', 'bccf.views.parents.parents_page', name='parents-ajax-page'),
     url(r'^parents/event/feed/', EventsForParentsFeed()),
     url(r'^parents/event/signup/(?P<slug>.*)/$', 'bccf.views.events.parents_event_signup', name='parents-event-signup'),
     url(r'^parents/event/(?P<slug>.*)/$', 'bccf.views.events.parents_event', name='parents-event'),
+    url(r'^parents/(?P<slug>.*)/$', 'bccf.views.parents.parents_page', name='parents-ajax-page'),
 
     # Professionals
     url(r'^professionals/$', 'bccf.views.professionals.professionals_page', name='professionals-page'),
+    url(r'^professionals/event/signup/(?P<slug>.*)/$', 'bccf.views.events.professionals_event_signup', name='professionals-event-signup'),
     url(r'^professionals/event/create/$', ProfessionalEventWizard.as_view(FORMS), name='professionals-event-create'),
     url(r'^professionals/event/report/(?P<slug>.*)/$', 'bccf.views.events.professional_survey_download_report', name='professional-download-report'),
     url(r'^professionals/event/(?P<slug>.*)/$', 'bccf.views.events.professionals_event', name='professionals-event'),

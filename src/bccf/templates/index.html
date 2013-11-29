@@ -6,7 +6,7 @@
 
 {% block main %}
 {% big_marquee_for %}
-<nav id="browse-by" class="section"> 
+<nav id="browse-by" class="section">
     <div class="browse">Browse By:</div>
     <div id="browse-by-nav" class="mobile-nav-container nav">
         <ul>
@@ -15,7 +15,7 @@
    	            {% if topics %}
 	            <ul>
    	                {% for topic in topics %}
-   	                <li><a href="#">{{ topic.name }}</a></li>
+   	                <li><a href="{{ topic.get_full_url }}">{{ topic.name }}</a></li>
    	                {% endfor %}
                 </ul>
                 {% endif %}
@@ -44,15 +44,15 @@
     </div>
 </nav>
 <section id="home-features" class="section">
-  
+
   <div id="home-calendar" class="col six tablet-full mobile-full">
     <h2>Training Calendar</h2>
-    
+
     <div class="hcal-text">
     <p>Join one of our many exciting and informative family life education programs.</p>
     <div class="dashed-button"><a href="#" target="_blank">view all</a></div>
     </div>
-    
+
     <div class="hcal-tabs">
     <div class="hcal-left-side">Find trainings for:</div>
     <div class="hcal-right-side">
@@ -67,7 +67,7 @@
                 </ul>
             </div>
             <div id="hcal-families-carousel" class="col twelve mobile-full tablet-full">
-                <div>                
+                <div>
                     <div class="hcal-line">
                         <ul>
                         	<li>September 30</li>
@@ -76,7 +76,7 @@
                             <li><a href="#">Register</a></li>
                         </ul>
                     </div>
-                    
+
                     <div class="hcal-line">
                         <ul>
                         	<li>January 17</li>
@@ -85,7 +85,7 @@
                             <li><a href="#">Register</a></li>
                         </ul>
                     </div>
-                    
+
                     <div class="hcal-line">
                         <ul>
                         	<li>November 17</li>
@@ -94,7 +94,7 @@
                             <li><a href="#">Register</a></li>
                         </ul>
                     </div>
-                    
+
                     <div class="hcal-line">
                         <ul>
                         	<li>January 17</li>
@@ -103,7 +103,7 @@
                             <li><a href="#">Register</a></li>
                         </ul>
                     </div>
-                    
+
                     <div class="hcal-line">
                         <ul>
                         	<li>January 17</li>
@@ -113,7 +113,7 @@
                         </ul>
                     </div>
                 </div>
-                <div>                
+                <div>
                     <div class="hcal-line">
                         <ul>
                         	<li>September 30</li>
@@ -122,7 +122,7 @@
                             <li><a href="#">Register</a></li>
                         </ul>
                     </div>
-                    
+
                     <div class="hcal-line">
                         <ul>
                         	<li>January 17</li>
@@ -131,7 +131,7 @@
                             <li><a href="#">Register</a></li>
                         </ul>
                     </div>
-                    
+
                     <div class="hcal-line">
                         <ul>
                         	<li>November 17</li>
@@ -140,7 +140,7 @@
                             <li><a href="#">Register</a></li>
                         </ul>
                     </div>
-                    
+
                     <div class="hcal-line">
                         <ul>
                         	<li>January 17</li>
@@ -149,7 +149,7 @@
                             <li><a href="#">Register</a></li>
                         </ul>
                     </div>
-                    
+
                     <div class="hcal-line">
                         <ul>
                         	<li>January 17</li>
@@ -168,7 +168,7 @@
                     <li>Program</li>
                 </ul>
             </div>
-            
+
             <div id="hcal-professionals-carousel" class="col twelve mobile-full tablet-full">
                 <div>
                     <div class="hcal-line">
@@ -179,7 +179,7 @@
                             <li><a href="#">Register</a></li>
                         </ul>
                     </div>
-                    
+
                     <div class="hcal-line">
                         <ul>
                         	<li>January 17</li>
@@ -188,7 +188,7 @@
                             <li><a href="#">Register</a></li>
                         </ul>
                     </div>
-                    
+
                     <div class="hcal-line">
                         <ul>
                         	<li>November 17</li>
@@ -197,7 +197,7 @@
                             <li><a href="#">Register</a></li>
                         </ul>
                     </div>
-                    
+
                     <div class="hcal-line">
                         <ul>
                         	<li>January 17</li>
@@ -206,7 +206,7 @@
                             <li><a href="#">Register</a></li>
                         </ul>
                     </div>
-                    
+
                     <div class="hcal-line">
                         <ul>
                         	<li>January 17</li>
@@ -219,75 +219,75 @@
             </div>
         </div>
     </div>
-  
+
   <div id="home-noteworthy" class="col six tablet-full mobile-full">
     <h2>Note-Worthy</h2>
     <div id="noteworthy-carousel">
   	   <div class="hnote-slide">
  		 <img src="{% static 'img/note-image-filler.jpg' %}" alt="Insert Slide Title here">
-  
+
           <div class="hnote-caption">
-          
+
               <p>Talk, Act & Get involved with other families and parents across the province. Adding more text for testing purposes.</p>
-              
+
               <div class="hnote-buttons">
               <div class="dashed-button"><a href="#" target="_blank">Survey</a></div>
               <div class="dashed-button"><a href="#" target="_blank">join</a></div>
               </div>
-          
+
           </div>
       	</div><!-- End .hnote-slide -->
       	<div class="hnote-slide">
  		 <img src="{% static 'img/note-image-filler.jpg' %}" alt="Insert Slide Title here">
-  
+
           <div class="hnote-caption">
-          
+
               <p>Talk, Act & Get involved with other families and parents across the province. Adding more text for testing purposes.</p>
-              
+
               <div class="hnote-buttons">
               <div class="dashed-button"><a href="#" target="_blank">Survey</a></div>
               <div class="dashed-button"><a href="#" target="_blank">join</a></div>
               </div>
-          
+
           </div>
       	</div><!-- End .hnote-slide -->
   	</div>
   </div>
-  
+
   <div id="home-programs" class="col six tablet-full mobile-full">
     <h2>Programs</h2>
     <div id="programs-carousel">
         <div class="hpro-slide">
-      
+
      		<img src="{% static 'img/pro-image-filler.jpg' %}" alt="Insert Slide Title here">
-      
+
               <div class="hpro-caption">
-              
+
               	<p>Looking for ways to communicate better with you tween? Want to help your baby develop early literacy skills? We have a programs for everyone!</p>
-              
+
                   <div class="hpro-buttons">
                   	<div class="dashed-button"><a href="#" target="_blank">LEARN MORE</a></div>
                   </div>
-              
-              </div>  
+
+              </div>
       	</div><!-- End .hpro-slide -->
       	<div class="hpro-slide">
-      
+
      		<img src="{% static 'img/pro-image-filler.jpg' %}" alt="Insert Slide Title here">
-      
+
               <div class="hpro-caption">
-              
+
               	<p>Looking for ways to communicate better with you tween? Want to help your baby develop early literacy skills? We have a programs for everyone!</p>
-              
+
                   <div class="hpro-buttons">
                   	<div class="dashed-button"><a href="#" target="_blank">LEARN MORE</a></div>
                   </div>
-              
-              </div>  
+
+              </div>
       	</div><!-- End .hpro-slide -->
     </div>
   </div>
-  
+
   <div id="home-listings" class="twelve tablet-full mobile-full">
     <h2>Member Listing</h2>
     <div id="member-container">
@@ -301,11 +301,11 @@
         <div id="member-organization-carousel">
             <div>Organization 1</div>
             <div>Organization 2</div>
-            <div>Organization 3</div>        
+            <div>Organization 3</div>
         </div>
     </div>
   </div>
-  
+
   <div id="home-resources" class="twelve tablet-full mobile-full">
       <a class="button-prev button-prev-lgrey col one no-mobile"></a>
       <div id="reosources-carousel-container" class="col ten mobile-full">
@@ -318,8 +318,8 @@
       </div>
       <a class="button-next button-next-lteal col one no-mobile"></a>
   </div>
-  
-  
+
+
   <div id="home-history" class="twelve tablet-full mobile-full">
       <a class="button-prev button-prev-dgreen col one no-mobile"></a>
       <div id="history-carousel-container" class="col ten mobile-full">
@@ -331,7 +331,7 @@
                   <p>At the 1976 BC Conference on the Family 94 recommendations for action were issued and it was resolved to establish the BC Council for the Family. In 1977 the BC Council for the Family is incorporated as a non-profit society and opens an office in Victoria.</p>
               </div>
           </div>
-          
+
           <div>
               <div class="history-image col six"><img src="{% static 'img/history-filler-image.png' %}" alt="History Filler Image"/></div>
               <div class="history-text col six">
@@ -339,7 +339,7 @@
                   <p>At the 1976 BC Conference on the Family 94 recommendations for action were issued and it was resolved to establish the BC Council for the Family. In 1977 the BC Council for the Family is incorporated as a non-profit society and opens an office in Victoria.</p>
               </div>
           </div>
-          
+
           <div>
               <div class="history-image col six"><img src="{% static 'img/history-filler-image.png' %}" alt="History Filler Image"/></div>
               <div class="history-text col six">
@@ -349,10 +349,10 @@
           </div>
         </div>
       </div>
-      <a class="button-next button-next-sgrey col one no-mobile"></a>  
+      <a class="button-next button-next-sgrey col one no-mobile"></a>
   </div>
-  
+
   </section>
-  
+
 <script src="{% static "js/index.min.js" %}"></script>
 {% endblock %}
