@@ -1,12 +1,4 @@
-/* ==========================================================================
-
-  Base Stylesheet - http://git.io/base
-  Author: Matthew Hartman - http://www.matthewhartman.com.au/
-  Version: 1.5 - Last Updated: 21st June, 2013
-
-========================================================================== */
-
-  @import "mixins"; // Import the base mixins
+@import "mixins"; // Import the base mixins
   
 .no-style-list {
   list-style: none;
@@ -35,27 +27,6 @@ $border: 1px solid #CCC;
 .icon {
     height: 22px;
     width: 22px;
-}
-
-// Your custom website styles for desktop go here...
-header {
-    border-bottom: 1px solid #CCC;
-    padding-left: ($padding10);
-    div {
-        padding-right: ($padding10);
-        text-align: right;
-        height: 50px;
-        line-height: 50px;
-        
-        a {
-            padding: ($padding10);
-            text-decoration: none;
-            
-            &:hover {
-                text-decoration: underline;
-            }
-        }
-    }
 }
 
 .section-head {

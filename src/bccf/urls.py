@@ -1,6 +1,8 @@
 
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
+from django.views.generic import TemplateView
+
 from mezzanine.core.views import direct_to_template
 
 from bccf.feeds import EventsForParentsFeed, EventsForProfessionalsFeed
@@ -27,7 +29,7 @@ urlpatterns = patterns("",
     ("^shop/", include("cartridge.shop.urls")),
 
     # Formable URLs
-    url("formable/", include("formable.builder.urls")),
+    ("^formable/", include("formable.builder.urls")),
 
     # Podcasts
     #('^podcasts/', include('podcasting.urls')),
@@ -41,6 +43,7 @@ urlpatterns = patterns("",
 
     # Parents
     url(r'^parents/$', 'bccf.views.parents.parents_page', name='parents-page'),
+    url(r'^parents/(?P<slug>.*)/$', 'bccf.views.parents.parents_page', name='parents-ajax-page'),
     url(r'^parents/event/feed/', EventsForParentsFeed()),
     url(r'^parents/event/signup/(?P<slug>.*)/$', 'bccf.views.events.parents_event_signup', name='parents-event-signup'),
     url(r'^parents/event/(?P<slug>.*)/$', 'bccf.views.events.parents_event', name='parents-event'),
@@ -50,7 +53,10 @@ urlpatterns = patterns("",
     url(r'^professionals/event/feed/', EventsForProfessionalsFeed()),
     url(r'^professionals/event/signup/(?P<slug>.*)/$', 'bccf.views.events.professionals_event_signup', name='professionals-event-signup'),
     url(r'^professionals/event/create/$', ProfessionalEventWizard.as_view(FORMS), name='professionals-event-create'),
+    url(r'^professionals/event/report/(?P<slug>.*)/$', 'bccf.views.events.professional_survey_download_report', name='professional-download-report'),
     url(r'^professionals/event/(?P<slug>.*)/$', 'bccf.views.events.professionals_event', name='professionals-event'),
+
+    url(r'^page_test/$', TemplateView.as_view(template_name="bccf/bccf_page.html")),
 
     # We don't want to presume how your homepage works, so here are a
     # few patterns you can use to set it up.
@@ -62,7 +68,7 @@ urlpatterns = patterns("",
     # one homepage pattern, so if you use a different one, comment this
     # one out.
 
-    url("^$", direct_to_template, {"template": "index.html"}, name="home"),
+    url("^$", 'bccf.views.views.home', name="home"),
 
     # HOMEPAGE AS AN EDITABLE PAGE IN THE PAGE TREE
     # ---------------------------------------------

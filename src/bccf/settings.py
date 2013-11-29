@@ -498,4 +498,4 @@ else:
 ##################
 ## OWN SETTINGS ##
 ##################
-#JQUERY_FILENAME = "js/jquery-1.8.3-min.js"
+#JQUERY_FILENAME = ""

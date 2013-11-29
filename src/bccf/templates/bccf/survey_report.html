@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block main %}
+<div>
+    <form action="{% url 'professionals-event-report' %}" method="POST">
+        {{ form }}
+    </form>
+</div>
+{% endblock %}
+

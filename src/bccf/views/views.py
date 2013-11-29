@@ -2,7 +2,9 @@ from django.contrib.messages import error
 from django.core.urlresolvers import reverse
 from django.db.models import get_model, ObjectDoesNotExist
 from django.http import HttpResponse
-from django.shortcuts import redirect
+from django.shortcuts import render_to_response, redirect
+from django.template.context import RequestContext
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 import logging
 log = logging.getLogger(__name__)
@@ -13,10 +15,29 @@ except ImportError:
     from django.utils.simplejson import dumps
 
 from bccf.forms import BCCFRatingForm
+from bccf.models import Topic
+from news.models import NewsPost
 
 from mezzanine.conf import settings
 from mezzanine.utils.cache import add_cache_bypass
 from mezzanine.utils.views import set_cookie
+
+def home(request):
+    topics = Topic.objects.all();
+    news_list = NewsPost.objects.all();
+    paginator = Paginator(news_list, 5);
+    page = request.GET.get('page');
+    
+    try:
+        news_list = paginator.page(page)
+    except PageNotAnInteger:
+        news_list = paginator.page(1)
+    except EmptyPage:
+        news = paginator.page(paginator.num_pages)
+    
+    context = RequestContext(request, locals())
+    return render_to_response('index.html', {}, context_instance=context);
+    pass
 
 def initial_validation(request, prefix):
     """

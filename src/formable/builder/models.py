@@ -86,6 +86,7 @@ class Question(models.Model):
     question = models.CharField(_("Question"), max_length=100)
     form_published = models.ForeignKey('FormPublished')
     required = models.BooleanField(_("Required"))
+    num_answers = models.IntegerField(_("Number of possible Answers"), default=0)
     date = models.DateTimeField(auto_now_add=True)
     
     class Meta:

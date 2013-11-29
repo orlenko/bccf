@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load bccf_tags %}
+{% load bccf_tags content_carousel_tags %}
 
 {% block main %}
 
@@ -29,5 +29,8 @@
 
 
 Events feed: <a href="/parents/event/feed/">Atom</a>.
+
+<!-- Content Carousel -->
+{% content_carousel_for %}
 
 {% endblock %}

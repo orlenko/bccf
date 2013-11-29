@@ -1,0 +1,29 @@
+{% load mezzanine_tags shop_tags i18n bccf_tags %}
+
+{% if membership %}
+	<h2>Your membership: {{ membership }}</h2>
+
+	{% if upgrades %}
+		<h3>Upgrade to:</h3>
+		<ul>
+			{% for upgrade in upgrades %}
+				<li><a href="{{ upgrade.upgrade_url }}">{{ upgrade }}</a></li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+
+	{% if downgrades %}
+		<h3>Downgrade to:</h3>
+		<ul>
+			{% for downgrade in downgrades %}
+				<li><a href="{{ downgrade.upgrade_url }}">{{ downgrade }}</a></li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+{% else %}
+	<p>To become a member, please select one of the following options:</p>
+	<ul>
+		<li><a href="/member/membership/membership-parents/">Parent Membership</a></li>
+		<li><a href="/member/membership/membership-professionals/">Professional Membership</a></li>
+	</ul>
+{% endif %}

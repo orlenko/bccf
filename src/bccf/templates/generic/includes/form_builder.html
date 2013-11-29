@@ -3,7 +3,27 @@
 {% load builder_tags %}
 
 {% block main %}
-    <h2>Create Event</h2>
-    <p>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</p>
-    {% builder %}
+<h2>Create Event</h2>
+<p>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</p>
+{% builder %}
+<script type="text/javascript" >
+    $(function() {
+        if($('#id_before-after_survey').is(':checked')) {
+            $('#form_submit').val('Next Step');
+            $('#id_before-clone').removeAttr('disabled');
+        } else {
+            $('#form_submit').val('Submit');
+            $('#id_before-clone').attr('disabled', true);
+        }
+    });
+    $('#id_before-after_survey').on('click', function() {
+        if($(this).is(':checked')) {
+            $('#form_submit').val('Next Step');
+            $('#id_before-clone').removeAttr('disabled');
+        } else {
+            $('#form_submit').val('Submit');
+            $('#id_before-clone').attr('disabled', true);
+        }
+	});
+</script>
 {% endblock %}

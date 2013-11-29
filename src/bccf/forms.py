@@ -86,7 +86,19 @@ class ParentEventForm(forms.ModelForm):
             'date_end': forms.DateTimeInput(attrs={'class':'vDatefield', 'placeholder':'YYYY-MM-DD HH:MM'})
         }
 
-# For Wizard       
+##################
+# For Reporting
+
+class ProfessionalSurveyReport(forms.Form):
+    """
+    Form for filtering the reports
+    """
+    filter_date1 = forms.CharField(label="Start Date", widget=forms.DateTimeInput)
+    filter_date2 = forms.CharField(label="End Date", widget=forms.DateTimeInput)
+
+##################
+# For Wizard
+
 class ProfessionalEventForm(forms.ModelForm):
     """
     Form for creating a Professional Event using the Wizard
@@ -114,7 +126,7 @@ class FormStructureSurveyFormOne(FormStructureForm):
     """
     after_survey = forms.BooleanField(label='Create After Survey?',
         widget=forms.CheckboxInput, required=False)
-    clone = forms.BooleanField(label='Clone this Structure?',
+    clone = forms.BooleanField(label='Use this Survey as template?',
         widget=forms.CheckboxInput, required=False)
        
 class FormStructureSurveyFormTwo(FormStructureForm):

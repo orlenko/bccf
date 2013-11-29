@@ -1,27 +1,89 @@
-{% overextends "base.html" %}
-{% load static %}
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}"{% if LANGUAGE_BIDI %} dir="rtl"{% endif %}>
+{% load pages_tags news_tags mezzanine_tags i18n future staticfiles %}
+<head>
 
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width">
+<meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
+<meta name="description" content="{% block meta_description %}{% endblock %}">
+<title>{% block meta_title %}{% endblock %}{% if settings.SITE_TITLE %} | {{ settings.SITE_TITLE }}{% endif %}</title>
+<link rel="shortcut icon" href="{% static "img/favicon.png" %}">
+<link rel="apple-touch-icon" sizes="57x57" href="{% static "img/apple-touch-icon.png" %}">
+<link rel="apple-touch-icon" sizes="72x72" href="{% static "img/apple-touch-icon-72x72.png" %}">
+<link rel="apple-touch-icon" sizes="114x114" href="{% static "img/apple-touch-icon-114x114.png" %}">
+<link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,700,300|PT+Sans:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+
+{% ifinstalled mezzanine.blog %}
+<link rel="alternate" type="application/rss+xml" title="RSS" href="{% url "blog_post_feed" "rss" %}">
+<link rel="alternate" type="application/atom+xml" title="Atom" href="{% url "blog_post_feed" "atom" %}">
+{% endifinstalled %}
+
+{% compress css %}
+<link rel="stylesheet" href="{% static "css/bccf-style.css" %}">
+{% if LANGUAGE_BIDI %}
+<link rel="stylesheet" href="{% static "css/rtl.css" %}">
+{% endif %}
+{% ifinstalled cartridge.shop %}
+<link rel="stylesheet" href="{% static "css/cartridge.css" %}">
+{% if LANGUAGE_BIDI %}
+<link rel="stylesheet" href="{% static "css/cartridge.rtl.css" %}">
+{% endif %}
+{% endifinstalled %}
 {% block extra_css %}
-<link rel="stylesheet" href="{% static "css/style.css" %}" />
+<link rel="stylesheet" href="{% static "css/slider.css" %}" />
 <link rel="stylesheet" href="{% static "css/vendor/owl.carousel.css" %}" />
 <link rel="stylesheet" href="{% static "css/vendor/owl.theme.css" %}" />
 <link rel="stylesheet" href="{% static "css/vendor/rating.css" %}" />
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 <link rel="stylesheet" href="{% static "css/formable_style.css" %}" />
 {% endblock %}
+{% endcompress %}
 
-{% block extra_js %}
-<script src="{% static "js/jquery-1.8.3.min.js" %}"></script>
-<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+{% compress js %}
+<script src="{% static "js/jquery-1.10.2.min.js" %}"></script>
+<script src="//code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 <script src="{% static "js/rating/jquery.MetaData.js" %}"></script>
 <script src="{% static "js/rating/jquery.rating.pack.js" %}"></script>
 <script src="{% static "js/base/default.js" %}"></script>
+<script src="{% static "js/flaunt_custom.js" %}"></script>
 <script src="{% static "js/owl.carousel.min.js" %}"></script>
 <script src="{% static "js/helpers.js" %}"></script>
-{% endblock %}
+<script type="text/javascript">
+	var $buoop = {
+		vs : {
+			i : 8,
+			f : 15,
+			o : 10.6,
+			s : 4,
+			n : 9
+		}
+	}
 
-{% block extra_head %}
-<!-- Google Analytics: change UA-XXXXX-X to your website's ID. -->
+	$buoop.ol = window.onload;
+	window.onload = function() {
+		try {
+			if ($buoop.ol)
+				$buoop.ol();
+		} catch (e) {
+		}
+		var e = document.createElement("script");
+		e.setAttribute("type", "text/javascript");
+		e.setAttribute("src", "http://browser-update.org/update.js");
+		document.body.appendChild(e);
+	}
+</script>   
+<script src="http://modernizr.com/downloads/modernizr-latest.js"></script>
+
+
+{% block extra_js %}
+{% endblock %}
+{% endcompress %}
+<!--[if lt IE 9]>
+<script src="{% static "js/html5shiv.js" %}"></script>
+<![endif]-->
+
+{% block extra_head %}{% endblock %}
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -31,4 +93,106 @@
   ga('create', 'UA-XXXXX-X', 'yoursite.com');
   ga('send', 'pageview');
 </script>
-{% endblock %}
+
+</head>
+<body id="{% block body_id %}body{% endblock %}">
+
+<div class="container">
+    <header class="section row-two">
+        <div id="bccflogo" class="col four tablet-six mobile-full"><a href="/"><img src="{% static "img/BCCF_logo_2013.png" %}" alt="BC Council for FAMILIES"/></a></div>
+        <div id="bccftagline" class="col tablet-three five mobile-full">y<em><strong>our</strong></em> family.</div>
+        <div id="bccflogin" class="col three mobile-full">
+            {% if request.user.is_authenticated %}
+            <p>Welcome {{ request.user.get_full_name }}</p>
+            <p><a href="{% url "logout" %}">Logout</a></p>
+            {% else %}
+            <p><a href="{% url "login" %}">Login</a></p>
+            <p><a href="{% url "signup" %}">Create Account</a></p>
+            {% endif %}
+            <p><a href="#">Shopping Cart</a></p>
+        </div>
+    </header>
+    
+    <nav id="main-top-nav" class="nav-mobile-container section">
+        <span class="row no-desktop mobile-full">Menu</span>
+        <ul class="col eight mobile-full">
+            <li><a href="#">Programs</a></li>
+            <li><a href="#">Trainings</a></li>
+            <li><a href="#">Tag</a></li>
+            <li><a href="#">Resources</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Donate</a></li>
+        </ul>
+        
+        <div id="search-bar" class="col four mobile-full"> 
+            <form method="get" id="searchform" action="/search/">
+                <input type="hidden" name="type" value="" />
+                <input type="submit" class="submit" name="submit" id="searchsubmit" value=""  />
+                <input type="text" class="field" name="q" id="q" placeholder="Search BCCF" />
+            </form>
+        </div>
+    </nav>
+    
+  {% block main %}{% endblock %}
+      <!-- end of page content, start of website footer -->
+  <footer>
+  
+  <nav id="main-footer-nav" class="section row-two">
+    <ul class="col twelve mobile-full">
+      <li><a href="#">NEWS</a></li>
+      <li><a href="#">DONATE</a></li>
+      <li><a href="#">MEMBERSHIP</a></li>
+      <li><a href="#">ABOUT</a></li>
+      <li><a href="#">CONTACT</a></li>
+      <li><a href="#">SITEMAP</a></li>
+      <li><a href="#">PRIVACY POLICY</a></li>
+      <li><a href="#">TERMS & CONDITIONS</a></li>                       
+    </ul>
+  </nav>
+  
+  <section class="section row-one">
+  
+    <aside id="newsfeed" class="col four mobile-full">
+      {% news_list %}
+    </aside>
+    
+    <aside id="social" class="col four mobile-full">
+    
+    <p>Follow us on:</p>
+    <p>
+    <a href="https://www.facebook.com/BCFamilies" target="_blank"><img src="../../static/img/social-icons-FB.gif" alt="Facebook"/></a> 
+    <a href="https://twitter.com/BC_Families" target="_blank"><img src="../../static/img/social-icons-TW.gif" alt="Twitter"/></a>
+    <a href="http://www.linkedin.com/company/bc-council-for-families" target="_blank"><img src="../../static/img/social-icons-LI.gif" alt="Linked In"/></a>
+    <a href="http://www.youtube.com/user/FamiliesofBC" target="_blank"><img src="../../static/img/social-icons-YT.gif" alt="You Tube"/></a>
+    </p>
+    
+    </aside>
+    
+    <aside id="newsletter" class="col four mobile-full">
+    
+    <h5>Keep up-to-date!</h5>
+    <p>Sign-up for our newsletter</p>
+    
+    <div class="dashed-button"><a href="#" target="_blank">join</a></div>
+    
+    </aside>
+    
+    </section>
+  
+  </footer>
+  
+  <div id="copyright" class="section row-two">
+  <p>BC Council for Families &copy; 2014, All rights reserved. | <a href="http://www.webteam.vcn.bc.ca/" target="_blank">Web Design &amp; Development by VCN webteam</a>.</p>
+  </div>
+</div>
+
+{% include "includes/footer_scripts.html" %}
+
+<script>
+    $(function() {
+        $('#main-top-nav').Flaunt();
+    });
+</script>
+
+</body>
+</html>

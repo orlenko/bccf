@@ -266,11 +266,11 @@ var export_form = function() {
                     field.options.push($(this).html());
                 });
             } else if($(this).hasClass("checkbox-field") || $(this).hasClass("radioset-field")) {
-                field.buttons = [];
+                field.options = [];
                 field.attr.name = $(this).find("input").attr("name");
                 field.attr.type = $(this).hasClass("checkbox-field") ? "checkbox" : "radio";
                 $.each($(this).find("input"), function() {
-                    field.buttons.push($(this).next().html());
+                    field.options.push($(this).next().html());
                 });
             }
             
@@ -311,8 +311,8 @@ var import_form = function(json) {
                 if(field.class === 'static-text-field' || field.class === 'static-section-field') {
                     lastli.children('span').html(field.attr.text);
                 } else if(field.class === "text-field" || field.class === "password-field") {
-                    lastli.children('label').html(field.attr.label);
-                    lastli.children('input').attr('type', field.attr.type);
+                    console.log(lastli.children('label'));
+                    lastli.children('label').html(field.label);
                     lastli.children('input').attr('name', field.attr.name);
                     if(field.attr.placeholder !== 'undefined') {
                         lastli.children('input').attr('placeholder', field.attr.placeholder);
@@ -345,7 +345,7 @@ var import_form = function(json) {
                 } else if(field.class === 'checkbox-field' || field.class === 'radioset-field') {
                     lastli.children('label').html(field.label);
                     var newbuttons = ''
-                    $(field.buttons).each(function(i, button) {
+                    $(field.options).each(function(i, button) {
                         newbuttons += '<input type="'+field.attr.type+'" name="'+field.attr.name+
                             '" value="'+button+'"/><span>'+button+'</span>';
                     });
