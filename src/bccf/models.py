@@ -8,6 +8,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import permalink
+from django.db.models import ObjectDoesNotExist
 from mezzanine.core.fields import FileField, RichTextField
 from mezzanine.core.models import Displayable, Ownable, RichText
 from mezzanine.utils.models import upload_to, AdminThumbMixin
@@ -26,7 +27,7 @@ class Topic(Slugged):
     star_forum_post_id = models.IntegerField(null=True, blank=True)
 
     def __unicode__(self):
-        return self.name
+        return self.title
 
 
 class TopicLink(models.Model):
@@ -201,7 +202,6 @@ class Settings(models.Model):
         cls.objects.create(name=name, value=retval)
         return retval
 
-
 class DocumentResource(Displayable, Ownable, RichText, AdminThumbMixin):
     attached_document = FileField('Downloadable Document',
         upload_to=upload_to("bccf.DocumentResource.attachment_file", "resource/document"),
@@ -247,3 +247,71 @@ class Video(Displayable, Ownable, RichText, AdminThumbMixin):
         blank=True,
         help_text='You can upload a video file. '
             'Acceptable file types: .avi, .flv, .mkv, .mov, .mp4, .ogg, .wmv.')
+
+class Marquee(models.Model):
+    """
+    Parent model for marquees (big marquee, footer)
+    """
+    title = models.CharField(max_length=255)
+    class Meta:
+        abstract = True
+        
+    def __unicode__(self):
+        return self.title
+            
+class HomeMarquee(Marquee):
+    active = models.BooleanField("Active", default=False,
+        help_text = "Checking this box makes this the default marquee in the home page"    
+    )
+    def save(self):
+        if self.active:
+            try:
+                temp = HomeMarquee.objects.get(home_active=True)
+                if self != temp:
+                    temp.active = False
+                    temp.save()
+            except ObjectDoesNotExist:
+                self.active = True
+        super(HomeMarquee, self).save()
+    
+class FooterMarquee(Marquee):
+    active = models.BooleanField("Active", default=False,
+        help_text = "Checking this will make this the default footer marquee"    
+    )
+    
+    def save(self):
+        if self.active:
+            try:
+                temp = FooterMarquee.objects.get(active=True)
+                if self != temp:
+                    temp.active = False
+                    temp.save()
+            except ObjectDoesNotExist:
+                self.active = True
+        super(FooterMarquee, self).save()
+    
+class MarqueeSlide(models.Model):
+    """
+    Parent model for slides in the marquee
+    """
+    caption = models.CharField("Caption", max_length=100, blank=True, default='', null=True)
+    title = models.CharField("Title", max_length=50, blank=True, default='', null=True)
+    image = FileField("Image",
+        upload_to = upload_to("bccf.MarqueeSlide.image_file", "marquee"),
+        extensions = ['.png', '.jpg', '.bmp', '.gif'],
+        max_length = 255,
+        null = True,
+        blank = True,
+        help_text = 'You can upload an image. '
+            'Acceptable file types: .png, .jpg, .bmp, .gif.')
+    active = models.BooleanField("Active", default=False)
+    class Meta:
+        abstract = True
+    def __unicode__(self):
+        return self.title
+           
+class HomeMarqueeSlide(MarqueeSlide):
+   marquee = models.ManyToManyField(HomeMarquee)
+    
+class FooterMarqueeSlide(MarqueeSlide):
+   marquee = models.ManyToManyField(FooterMarquee)

@@ -18,7 +18,7 @@ except ImportError:
     from django.utils.simplejson import dumps
 
 from bccf.forms import BCCFRatingForm
-from bccf.models import Topic, EventForParents, EventForProfessionals
+from bccf.models import EventForParents, EventForProfessionals, FooterMarquee, FooterMarqueeSlide
 from news.models import NewsPost
 
 from mezzanine.conf import settings
@@ -26,13 +26,23 @@ from mezzanine.utils.cache import add_cache_bypass
 from mezzanine.utils.views import set_cookie
 
 def home(request):
-    topics = Topic.objects.all();
-    pastThirtyDays = timezone.now().date() + timedelta(days=30)
-    eventForParents = EventForParents.objects.filter(date_start__gte=timezone.now().date(), date_start__lte=pastThirtyDays)
-    eventForProfessionals = EventForProfessionals.objects.filter(date_start__gte=timezone.now().date(), date_start__lte=pastThirtyDays)
+    """
+    View for the home page, this is where the necessary data is grabbed from the database and passed on to the view for rendering.
+    """
+    eventForParents = EventForParents.objects.filter(date_start__gte=timezone.now().date()).order_by('date_start')[:15]
+    eventForProfessionals = EventForProfessionals.objects.filter(date_start__gte=timezone.now().date()).order_by('date_start')[:15]
+    try:
+        footerMarquee = FooterMarquee.objects.get(active=True)
+        footerMarqueeSlides = FooterMarqueeSlide.objects.filter(marquee=footerMarquee, active=True)
+    except ObjectDoesNotExist:
+        pass
     
-    log.info(pastThirtyDays)
-    log.info(eventForParents)
+    #TODO:
+    # Grab resources
+    # Grab level B+ users and organizations
+    # Grab programs
+    # Grab noteworthy
+    # Grab footer
     
     context = RequestContext(request, locals())
     return render_to_response('index.html', {}, context_instance=context);

@@ -5,6 +5,7 @@ from django.views.generic import TemplateView
 
 from mezzanine.core.views import direct_to_template
 
+from bccf import settings
 from bccf.feeds import EventsForParentsFeed, EventsForProfessionalsFeed
 from bccf.views.events import ProfessionalEventWizard, FORMS
 
@@ -56,6 +57,11 @@ urlpatterns = patterns("",
     url(r'^professionals/event/(?P<slug>.*)/$', 'bccf.views.events.professionals_event', name='professionals-event'),
 
     url(r'^page_test/$', TemplateView.as_view(template_name="bccf/bccf_page.html")),
+    
+    #UPLOADS
+    url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
+        'document_root': settings.MEDIA_ROOT,
+    }),
 
     # We don't want to presume how your homepage works, so here are a
     # few patterns you can use to set it up.

@@ -3,127 +3,28 @@ import datetime
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
-from django.core.management import call_command
 
 
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding field 'EventForProfessionals.provider'
-        db.add_column(u'bccf_eventforprofessionals', 'provider',
-                      self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], null=True, blank=True),
+        # Adding field 'FooterMarquee.title'
+        db.add_column(u'bccf_footermarquee', 'title',
+                      self.gf('django.db.models.fields.CharField')(default=1, max_length=255),
                       keep_default=False)
 
-        # Adding field 'EventForProfessionals.location_city'
-        db.add_column(u'bccf_eventforprofessionals', 'location_city',
-                      self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True),
+        # Adding field 'BigMarquee.title'
+        db.add_column(u'bccf_bigmarquee', 'title',
+                      self.gf('django.db.models.fields.CharField')(default=1, max_length=255),
                       keep_default=False)
-
-        # Adding field 'EventForProfessionals.location_street'
-        db.add_column(u'bccf_eventforprofessionals', 'location_street',
-                      self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True),
-                      keep_default=False)
-
-        # Adding field 'EventForProfessionals.location_street2'
-        db.add_column(u'bccf_eventforprofessionals', 'location_street2',
-                      self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True),
-                      keep_default=False)
-
-        # Adding field 'EventForProfessionals.location_postal_code'
-        db.add_column(u'bccf_eventforprofessionals', 'location_postal_code',
-                      self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True),
-                      keep_default=False)
-
-        # Adding field 'EventForProfessionals.date_start'
-        db.add_column(u'bccf_eventforprofessionals', 'date_start',
-                      self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True),
-                      keep_default=False)
-
-        # Adding field 'EventForProfessionals.date_end'
-        db.add_column(u'bccf_eventforprofessionals', 'date_end',
-                      self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True),
-                      keep_default=False)
-
-        # Adding field 'EventForParents.provider'
-        db.add_column(u'bccf_eventforparents', 'provider',
-                      self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], null=True, blank=True),
-                      keep_default=False)
-
-        # Adding field 'EventForParents.location_city'
-        db.add_column(u'bccf_eventforparents', 'location_city',
-                      self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True),
-                      keep_default=False)
-
-        # Adding field 'EventForParents.location_street'
-        db.add_column(u'bccf_eventforparents', 'location_street',
-                      self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True),
-                      keep_default=False)
-
-        # Adding field 'EventForParents.location_street2'
-        db.add_column(u'bccf_eventforparents', 'location_street2',
-                      self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True),
-                      keep_default=False)
-
-        # Adding field 'EventForParents.location_postal_code'
-        db.add_column(u'bccf_eventforparents', 'location_postal_code',
-                      self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True),
-                      keep_default=False)
-
-        # Adding field 'EventForParents.date_start'
-        db.add_column(u'bccf_eventforparents', 'date_start',
-                      self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True),
-                      keep_default=False)
-
-        # Adding field 'EventForParents.date_end'
-        db.add_column(u'bccf_eventforparents', 'date_end',
-                      self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True),
-                      keep_default=False)
-        #db.execute('drop from django_content_type')
-        call_command('loaddata', 'testdata.json')
 
 
     def backwards(self, orm):
-        # Deleting field 'EventForProfessionals.provider'
-        db.delete_column(u'bccf_eventforprofessionals', 'provider_id')
+        # Deleting field 'FooterMarquee.title'
+        db.delete_column(u'bccf_footermarquee', 'title')
 
-        # Deleting field 'EventForProfessionals.location_city'
-        db.delete_column(u'bccf_eventforprofessionals', 'location_city')
-
-        # Deleting field 'EventForProfessionals.location_street'
-        db.delete_column(u'bccf_eventforprofessionals', 'location_street')
-
-        # Deleting field 'EventForProfessionals.location_street2'
-        db.delete_column(u'bccf_eventforprofessionals', 'location_street2')
-
-        # Deleting field 'EventForProfessionals.location_postal_code'
-        db.delete_column(u'bccf_eventforprofessionals', 'location_postal_code')
-
-        # Deleting field 'EventForProfessionals.date_start'
-        db.delete_column(u'bccf_eventforprofessionals', 'date_start')
-
-        # Deleting field 'EventForProfessionals.date_end'
-        db.delete_column(u'bccf_eventforprofessionals', 'date_end')
-
-        # Deleting field 'EventForParents.provider'
-        db.delete_column(u'bccf_eventforparents', 'provider_id')
-
-        # Deleting field 'EventForParents.location_city'
-        db.delete_column(u'bccf_eventforparents', 'location_city')
-
-        # Deleting field 'EventForParents.location_street'
-        db.delete_column(u'bccf_eventforparents', 'location_street')
-
-        # Deleting field 'EventForParents.location_street2'
-        db.delete_column(u'bccf_eventforparents', 'location_street2')
-
-        # Deleting field 'EventForParents.location_postal_code'
-        db.delete_column(u'bccf_eventforparents', 'location_postal_code')
-
-        # Deleting field 'EventForParents.date_start'
-        db.delete_column(u'bccf_eventforparents', 'date_start')
-
-        # Deleting field 'EventForParents.date_end'
-        db.delete_column(u'bccf_eventforparents', 'date_end')
+        # Deleting field 'BigMarquee.title'
+        db.delete_column(u'bccf_bigmarquee', 'title')
 
 
     models = {
@@ -155,6 +56,66 @@ class Migration(SchemaMigration):
             'password': ('django.db.models.fields.CharField', [], {'max_length': '128'}),
             'user_permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['auth.Permission']", 'symmetrical': 'False', 'blank': 'True'}),
             'username': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30'})
+        },
+        u'bccf.article': {
+            'Meta': {'object_name': 'Article'},
+            '_meta_title': ('django.db.models.fields.CharField', [], {'max_length': '500', 'null': 'True', 'blank': 'True'}),
+            'attached_document': ('mezzanine.core.fields.FileField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'content': ('mezzanine.core.fields.RichTextField', [], {}),
+            'created': ('django.db.models.fields.DateTimeField', [], {'null': 'True'}),
+            'description': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
+            'expiry_date': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
+            'gen_description': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'in_sitemap': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'keywords': ('mezzanine.generic.fields.KeywordsField', [], {'object_id_field': "'object_pk'", 'to': u"orm['generic.AssignedKeyword']", 'frozen_by_south': 'True'}),
+            'keywords_string': ('django.db.models.fields.CharField', [], {'max_length': '500', 'blank': 'True'}),
+            'publish_date': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
+            'short_url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
+            'site': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['sites.Site']"}),
+            'slug': ('django.db.models.fields.CharField', [], {'max_length': '2000', 'null': 'True', 'blank': 'True'}),
+            'status': ('django.db.models.fields.IntegerField', [], {'default': '2'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '500'}),
+            'updated': ('django.db.models.fields.DateTimeField', [], {'null': 'True'}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'articles'", 'to': u"orm['auth.User']"})
+        },
+        u'bccf.bigmarquee': {
+            'Meta': {'object_name': 'BigMarquee'},
+            'entity_id': ('django.db.models.fields.IntegerField', [], {'default': "''", 'null': 'True', 'blank': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'model_name': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '255'})
+        },
+        u'bccf.bigmarqueeslide': {
+            'Meta': {'object_name': 'BigMarqueeSlide'},
+            'active': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'caption': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '100', 'null': 'True', 'blank': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'image': ('mezzanine.core.fields.FileField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'marquee': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['bccf.BigMarquee']"}),
+            'title': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '50', 'null': 'True', 'blank': 'True'})
+        },
+        u'bccf.downloadableform': {
+            'Meta': {'object_name': 'DownloadableForm'},
+            '_meta_title': ('django.db.models.fields.CharField', [], {'max_length': '500', 'null': 'True', 'blank': 'True'}),
+            'attached_document': ('mezzanine.core.fields.FileField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'content': ('mezzanine.core.fields.RichTextField', [], {}),
+            'created': ('django.db.models.fields.DateTimeField', [], {'null': 'True'}),
+            'description': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
+            'expiry_date': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
+            'gen_description': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'in_sitemap': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'keywords': ('mezzanine.generic.fields.KeywordsField', [], {'object_id_field': "'object_pk'", 'to': u"orm['generic.AssignedKeyword']", 'frozen_by_south': 'True'}),
+            'keywords_string': ('django.db.models.fields.CharField', [], {'max_length': '500', 'blank': 'True'}),
+            'publish_date': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
+            'short_url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
+            'site': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['sites.Site']"}),
+            'slug': ('django.db.models.fields.CharField', [], {'max_length': '2000', 'null': 'True', 'blank': 'True'}),
+            'status': ('django.db.models.fields.IntegerField', [], {'default': '2'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '500'}),
+            'updated': ('django.db.models.fields.DateTimeField', [], {'null': 'True'}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'downloadableforms'", 'to': u"orm['auth.User']"})
         },
         u'bccf.eventforparents': {
             'Meta': {'object_name': 'EventForParents'},
@@ -209,8 +170,47 @@ class Migration(SchemaMigration):
             'site': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['sites.Site']"}),
             'slug': ('django.db.models.fields.CharField', [], {'max_length': '2000', 'null': 'True', 'blank': 'True'}),
             'status': ('django.db.models.fields.IntegerField', [], {'default': '2'}),
+            'survey_after': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'survey_after'", 'null': 'True', 'to': u"orm['builder.FormPublished']"}),
+            'survey_before': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'survey_before'", 'null': 'True', 'to': u"orm['builder.FormPublished']"}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '500'}),
             'updated': ('django.db.models.fields.DateTimeField', [], {'null': 'True'})
+        },
+        u'bccf.footermarquee': {
+            'Meta': {'object_name': 'FooterMarquee'},
+            'active': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '255'})
+        },
+        u'bccf.footermarqueeslide': {
+            'Meta': {'object_name': 'FooterMarqueeSlide'},
+            'active': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'caption': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '100', 'null': 'True', 'blank': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'image': ('mezzanine.core.fields.FileField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'marquee': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['bccf.FooterMarquee']"}),
+            'title': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '50', 'null': 'True', 'blank': 'True'})
+        },
+        u'bccf.magazine': {
+            'Meta': {'object_name': 'Magazine'},
+            '_meta_title': ('django.db.models.fields.CharField', [], {'max_length': '500', 'null': 'True', 'blank': 'True'}),
+            'attached_document': ('mezzanine.core.fields.FileField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'content': ('mezzanine.core.fields.RichTextField', [], {}),
+            'created': ('django.db.models.fields.DateTimeField', [], {'null': 'True'}),
+            'description': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
+            'expiry_date': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
+            'gen_description': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'in_sitemap': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'keywords': ('mezzanine.generic.fields.KeywordsField', [], {'object_id_field': "'object_pk'", 'to': u"orm['generic.AssignedKeyword']", 'frozen_by_south': 'True'}),
+            'keywords_string': ('django.db.models.fields.CharField', [], {'max_length': '500', 'blank': 'True'}),
+            'publish_date': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
+            'short_url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
+            'site': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['sites.Site']"}),
+            'slug': ('django.db.models.fields.CharField', [], {'max_length': '2000', 'null': 'True', 'blank': 'True'}),
+            'status': ('django.db.models.fields.IntegerField', [], {'default': '2'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '500'}),
+            'updated': ('django.db.models.fields.DateTimeField', [], {'null': 'True'}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'magazines'", 'to': u"orm['auth.User']"})
         },
         u'bccf.settings': {
             'Meta': {'object_name': 'Settings'},
@@ -218,13 +218,37 @@ class Migration(SchemaMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'value': ('django.db.models.fields.CharField', [], {'max_length': '255'})
         },
+        u'bccf.tipsheet': {
+            'Meta': {'object_name': 'TipSheet'},
+            '_meta_title': ('django.db.models.fields.CharField', [], {'max_length': '500', 'null': 'True', 'blank': 'True'}),
+            'attached_document': ('mezzanine.core.fields.FileField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'content': ('mezzanine.core.fields.RichTextField', [], {}),
+            'created': ('django.db.models.fields.DateTimeField', [], {'null': 'True'}),
+            'description': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
+            'expiry_date': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
+            'gen_description': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'in_sitemap': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'keywords': ('mezzanine.generic.fields.KeywordsField', [], {'object_id_field': "'object_pk'", 'to': u"orm['generic.AssignedKeyword']", 'frozen_by_south': 'True'}),
+            'keywords_string': ('django.db.models.fields.CharField', [], {'max_length': '500', 'blank': 'True'}),
+            'publish_date': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
+            'short_url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
+            'site': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['sites.Site']"}),
+            'slug': ('django.db.models.fields.CharField', [], {'max_length': '2000', 'null': 'True', 'blank': 'True'}),
+            'status': ('django.db.models.fields.IntegerField', [], {'default': '2'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '500'}),
+            'updated': ('django.db.models.fields.DateTimeField', [], {'null': 'True'}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'tipsheets'", 'to': u"orm['auth.User']"})
+        },
         u'bccf.topic': {
             'Meta': {'object_name': 'Topic'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
+            'site': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['sites.Site']"}),
+            'slug': ('django.db.models.fields.CharField', [], {'max_length': '2000', 'null': 'True', 'blank': 'True'}),
             'star_blog_id': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             'star_forum_post_id': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'star_survey_id': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'})
+            'star_survey_id': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '500'})
         },
         u'bccf.topiclink': {
             'Meta': {'object_name': 'TopicLink'},
@@ -236,9 +260,50 @@ class Migration(SchemaMigration):
         u'bccf.userprofile': {
             'Meta': {'object_name': 'UserProfile'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'is_forum_moderator': ('django.db.models.fields.NullBooleanField', [], {'default': 'False', 'null': 'True', 'blank': 'True'}),
             'membership_order': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['shop.Order']", 'null': 'True', 'blank': 'True'}),
             'photo': ('bccf.fields.MyImageField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.OneToOneField', [], {'related_name': "'profile'", 'unique': 'True', 'to': u"orm['auth.User']"})
+        },
+        u'bccf.video': {
+            'Meta': {'object_name': 'Video'},
+            '_meta_title': ('django.db.models.fields.CharField', [], {'max_length': '500', 'null': 'True', 'blank': 'True'}),
+            'content': ('mezzanine.core.fields.RichTextField', [], {}),
+            'created': ('django.db.models.fields.DateTimeField', [], {'null': 'True'}),
+            'description': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
+            'expiry_date': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
+            'gen_description': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'in_sitemap': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'keywords': ('mezzanine.generic.fields.KeywordsField', [], {'object_id_field': "'object_pk'", 'to': u"orm['generic.AssignedKeyword']", 'frozen_by_south': 'True'}),
+            'keywords_string': ('django.db.models.fields.CharField', [], {'max_length': '500', 'blank': 'True'}),
+            'link_url': ('django.db.models.fields.URLField', [], {'default': "''", 'max_length': '1024', 'null': 'True', 'blank': 'True'}),
+            'publish_date': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
+            'short_url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
+            'site': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['sites.Site']"}),
+            'slug': ('django.db.models.fields.CharField', [], {'max_length': '2000', 'null': 'True', 'blank': 'True'}),
+            'status': ('django.db.models.fields.IntegerField', [], {'default': '2'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '500'}),
+            'updated': ('django.db.models.fields.DateTimeField', [], {'null': 'True'}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'videos'", 'to': u"orm['auth.User']"}),
+            'video_file': ('mezzanine.core.fields.FileField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'video_url': ('django.db.models.fields.URLField', [], {'default': "''", 'max_length': '1024', 'null': 'True', 'blank': 'True'})
+        },
+        u'builder.formpublished': {
+            'Meta': {'object_name': 'FormPublished'},
+            'form_structure': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['builder.FormStructure']"}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'published': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
+        },
+        u'builder.formstructure': {
+            'Meta': {'object_name': 'FormStructure'},
+            'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'structure': ('django.db.models.fields.TextField', [], {}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'type': ('django.db.models.fields.CharField', [], {'max_length': '4'})
         },
         u'contenttypes.contenttype': {
             'Meta': {'ordering': "('name',)", 'unique_together': "(('app_label', 'model'),)", 'object_name': 'ContentType', 'db_table': "'django_content_type'"},

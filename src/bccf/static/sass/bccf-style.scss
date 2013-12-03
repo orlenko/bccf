@@ -715,7 +715,7 @@ textarea {
 
 #home-calendar {
 	background:$grey-stripes repeat;
-	min-height:510px;
+	height:510px;
 	margin-bottom:10px;
 	
 	h2{
@@ -862,6 +862,7 @@ textarea {
 		left:0;
 		
 			p{
+				width:54%;
 				float:left;
 				margin:10px 12px;
 				color:#000000;
@@ -870,6 +871,7 @@ textarea {
 		}
 	.hnote-buttons {
 		float:right;
+		width:40%;
 		text-align:right;
 		margin:14px 5px 0 0;
 		
@@ -928,12 +930,16 @@ textarea {
 		left:0;
 		
 			p{
+				width:54%;
+				float:left;
 				margin:10px 12px;
 				color:#000000;
 
 			}
 		}
 	.hpro-buttons {
+		float:right;
+		width:40%;
 		text-align:right;
 		margin:14px 5px 0 0;
 		
@@ -1149,6 +1155,7 @@ textarea {
         height: 285px;  
 	}
 }
+
 #page-header {
 	background-color:$sgrey;
 	article {
@@ -1226,9 +1233,129 @@ textarea {
 
 
 #tag-widget {
-	min-height:500px;
+
 	background:$grey-stripes repeat;
-}
+	
+	#tag-logo {
+		a, p{padding:0;
+		margin:0;}
+		}
+	.tag-container {
+		width:80%;
+		margin:20px 10%;
+		float:left;
+		text-align:center;
+		}
+	.tag-box {
+		width:100%;
+		background-color:$sgrey;
+		border-top:2px solid $lgrey;
+		float:left;
+		text-align:left;
+		
+		.tag-top {
+		width:100%;
+		clear:both;
+		text-align:left;
+		float:left;
+		margin-bottom:16px;
+			}
+		
+		em {
+			color:#FFFFFF;
+			text-transform:uppercase;
+			font-weight:bold;
+			padding:3px 12px;
+			float:left;
+			font-size:12px;
+			font-style:normal;
+			}
+		i{
+			font-size:12px;
+			float:right;
+			padding:3px 12px;}
+		img{
+			float:left;
+			margin:3px 10px 50px;}
+			
+		h6 {font-size:12px;
+		color:#000;
+		padding:0;
+		margin:0;}
+		p {
+			font-size:12px;
+			padding:0 20px 0 0;
+		margin:0;}
+		
+		.dashed-button {
+			float:right;
+			margin: 10px;
+		}
+		
+		}
+	
+	
+	#tag-talk {
+		em {background-color:$dgreen;}		
+		}
+	#tag-act {
+		em {background-color:$steal;}
+		}
+	#tag-get {
+		em {background-color:$yellow;}
+		}
+	
+	
+} /* end #tag-widget */
+
+
+
+#side-resources {
+	background:$grey-stripes repeat;
+	margin:40px 0;
+	
+	.res-container {
+		width:80%;
+		margin:20px 10%;
+		float:left;
+		text-align:center;
+		}
+	.res-box {
+		width:100%;
+		background-color:$sgrey;
+		float:left;
+		text-align:left;
+		background: url(../img/note-image-filler.jpg) top left no-repeat;
+	}
+	em {
+		background:$lyellow url(../img/header-colour-bg-yellow.gif) repeat-y -25px 0;
+		font-weight:300;
+		font-size:14px;
+		font-family:$roboto;
+		padding: 4px 25px 4px 40px;
+		font-style:normal;
+		display: table-cell;
+
+			}
+	h6{
+		padding:20px 20px 0px;
+		margin:0;
+		}
+	p {
+		padding:0 20px 20px;
+		margin:0;
+		}
+		
+		.dashed-button {
+			float:right;
+			margin: 10px;
+		}		
+	
+} /* end #side-resource */
+
+
+
+
 footer {
 	background-color:$sgrey;
 
@@ -1328,6 +1455,7 @@ footer {
 			min-width:80px;
 			min-height:40px;
 			float:left;
+			text-align: center;
 
 			a {
 			font-weight:bold;	
@@ -1565,6 +1693,41 @@ footer {
 
 		margin:40px 45px;}
 }
+
+#tag-widget {
+
+	
+	#tag-logo {}
+		
+	.tag-container {}
+
+	.tag-box {
+		
+		.tag-top {}
+		
+		em {}
+		i{ font-size: 10px;
+    padding: 3px 6px;}
+		img{
+
+			margin:3px 10px 10px;}
+			
+		h6 {}
+		p {
+			padding:0 10px;
+}
+		
+		.dashed-button {
+			margin: 10px;
+
+		}
+		
+		}
+	
+	
+} /* end #tag-widget */
+
+
 
 footer {
 
@@ -1908,6 +2071,42 @@ table td {
 
 		margin:40px 20px;}
 }
+
+
+#tag-widget {
+
+	
+	#tag-logo {}
+	.tag-container {
+
+		}
+	.tag-box {
+
+		
+			em {}
+		i{ font-size: 10px;
+    padding: 3px 6px;}
+		img{
+
+			margin:3px 10px 10px;}
+			
+		h6 {}
+		p {
+			padding:0 10px;
+}
+		
+		.dashed-button {
+			margin: 10px;
+
+		}
+	}
+	
+	
+} /* end #tag-widget */
+
+
+
+
 
 footer {
 
