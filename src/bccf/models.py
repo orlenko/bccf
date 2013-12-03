@@ -21,10 +21,14 @@ from mezzanine.core.models import Slugged
 log = logging.getLogger(__name__)
 
 
-class Topic(Slugged):
+class Topic(Slugged, RichText, AdminThumbMixin):
     star_blog_id = models.IntegerField(null=True, blank=True)
     star_survey_id = models.IntegerField(null=True, blank=True)
     star_forum_post_id = models.IntegerField(null=True, blank=True)
+    featured_image = MyImageField(verbose_name="Featured Image",
+        upload_to=upload_to("images", "uploads/images"),
+        format="Image", max_length=255, null=True, blank=True)
+    admin_thumb_field = "featured_image"
 
     def __unicode__(self):
         return self.title
