@@ -18,6 +18,11 @@ admin.autodiscover()
 
 urlpatterns = patterns("",
 
+    #UPLOADS
+    url(r'media/(?P<path>.*)$', 'django.views.static.serve', {
+        'document_root': settings.MEDIA_ROOT,
+    }),
+
     # Change the admin prefix here to use an alternate URL for the
     # admin interface, which would be marginally more secure.
     ("^admin/", include(admin.site.urls)),
@@ -55,13 +60,15 @@ urlpatterns = patterns("",
     url(r'^professionals/event/create/$', ProfessionalEventWizard.as_view(FORMS), name='professionals-event-create'),
     url(r'^professionals/event/report/(?P<slug>.*)/$', 'bccf.views.events.professional_survey_download_report', name='professional-download-report'),
     url(r'^professionals/event/(?P<slug>.*)/$', 'bccf.views.events.professionals_event', name='professionals-event'),
+    
+    #Resources
+    url(r'^resources/$', 'bccf.views.resources.resources_page', name='resources-page'),
+    url(r'^resources/(?P<type>[a-z]+)/', 'bccf.views.resources.resources_page', name='resources-type'),
 
     url(r'^page_test/$', TemplateView.as_view(template_name="bccf/bccf_page.html")),
     
-    #UPLOADS
-    url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
-        'document_root': settings.MEDIA_ROOT,
-    }),
+    #AJAX Calls
+    url(r'^get/(?P<parent>[a-zA-Z-0-9]+)/(?P<type>[a-zA-Z-0-9]+)/(?P<page>[a-zA-Z-0-9]+)/$', 'bccf.views.ajax.get', name='ajax-page'),
 
     # We don't want to presume how your homepage works, so here are a
     # few patterns you can use to set it up.

@@ -1,9 +1,15 @@
+import logging
+
+from django.shortcuts import render_to_response
+from django.template.context import RequestContext
+from django.db.models import get_model, ObjectDoesNotExist
+
+log = logging.getLogger(__name__)
+
 # File containing all views that are called via AJAX
-def get_subpage(request, slug=None, sub_slug=None):
-    pass
-    
-def get_fancy_slide(request, type=None, slug=None):
-    pass
-    
-def get_tag_slide(request, type=None):
-    pass
+def get(request, parent, type, page):
+    log.info(parent)
+    model = get_model('bccf', type)
+    obj = model.objects.get(slug=page)
+    context = RequestContext(request, locals())        
+    return render_to_response('generic/%s_page_box.html' % (parent.lower()), {}, context_instance=context);

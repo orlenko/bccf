@@ -1,6 +1,6 @@
 from django.db.models import ObjectDoesNotExist
 from mezzanine import template
-from bccf.models import Topic, HomeMarquee, HomeMarqueeSlide
+from bccf.models import Topic, HomeMarquee, HomeMarqueeSlide, PageMarqueeSlide
 
 import logging
 
@@ -23,5 +23,9 @@ def big_marquee_for(context, obj=None):
             pass
     else: # For other pages
         context['show_tag'] = False
-        #process object
+        if obj.marquee:
+            try:
+                context['slides'] = PageMarqueeSlide.objects.filter(marquee=obj.marquee)
+            except ObjectDoesNotExist:
+                pass
     return context

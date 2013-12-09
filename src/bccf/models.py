@@ -12,6 +12,7 @@ from django.db.models import ObjectDoesNotExist
 from mezzanine.core.fields import FileField, RichTextField
 from mezzanine.core.models import Displayable, Ownable, RichText
 from mezzanine.utils.models import upload_to, AdminThumbMixin
+from mezzanine.pages.models import RichTextPage
 
 from bccf.fields import MyImageField
 from bccf.settings import (OPTION_SUBSCRIPTION_TERM, get_option_number,
@@ -251,12 +252,14 @@ class Video(Displayable, Ownable, RichText, AdminThumbMixin):
         blank=True,
         help_text='You can upload a video file. '
             'Acceptable file types: .avi, .flv, .mkv, .mov, .mp4, .ogg, .wmv.')
-
+            
 class Marquee(models.Model):
     """
     Parent model for marquees (big marquee, footer)
     """
     title = models.CharField(max_length=255)
+    modified = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
     class Meta:
         abstract = True
         
@@ -270,7 +273,7 @@ class HomeMarquee(Marquee):
     def save(self):
         if self.active:
             try:
-                temp = HomeMarquee.objects.get(home_active=True)
+                temp = HomeMarquee.objects.get(active=True)
                 if self != temp:
                     temp.active = False
                     temp.save()
@@ -293,7 +296,10 @@ class FooterMarquee(Marquee):
             except ObjectDoesNotExist:
                 self.active = True
         super(FooterMarquee, self).save()
-    
+        
+class PageMarquee(Marquee):
+    pass
+
 class MarqueeSlide(models.Model):
     """
     Parent model for slides in the marquee
@@ -308,14 +314,33 @@ class MarqueeSlide(models.Model):
         blank = True,
         help_text = 'You can upload an image. '
             'Acceptable file types: .png, .jpg, .bmp, .gif.')
-    active = models.BooleanField("Active", default=False)
+    modified = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
     class Meta:
         abstract = True
     def __unicode__(self):
         return self.title
            
 class HomeMarqueeSlide(MarqueeSlide):
-   marquee = models.ManyToManyField(HomeMarquee)
+    marquee = models.ManyToManyField(HomeMarquee)
+    url = models.URLField("Link", blank=True, default='', null=True)
+    linkLabel = models.CharField("Link Label", max_length=10, blank=True, default='', null=True)
     
 class FooterMarqueeSlide(MarqueeSlide):
-   marquee = models.ManyToManyField(FooterMarquee)
+    marquee = models.ManyToManyField(FooterMarquee)
+    
+class PageMarqueeSlide(MarqueeSlide):
+    marquee = models.ManyToManyField(PageMarquee)
+    url = models.URLField("Link", blank=True, default='', null=True)
+    linkLabel = models.CharField("Link Label", max_length=10, blank=True, default='', null=True)
+    
+#Pages
+class Page(RichTextPage):
+    COLORS = (
+        ('dgreen-list', 'Dark Green'),
+        ('green-list', 'Green'),
+        ('teal-list', 'Teal'),
+        ('yellow-list', 'Yellow'),       
+    )
+    marquee = models.ForeignKey(PageMarquee)
+    carouselColor = models.CharField(max_length=11, default='dgreen-list', choices=COLORS)

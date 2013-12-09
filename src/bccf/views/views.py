@@ -33,7 +33,7 @@ def home(request):
     eventForProfessionals = EventForProfessionals.objects.filter(date_start__gte=timezone.now().date()).order_by('date_start')[:15]
     try:
         footerMarquee = FooterMarquee.objects.get(active=True)
-        footerMarqueeSlides = FooterMarqueeSlide.objects.filter(marquee=footerMarquee, active=True)
+        footerMarqueeSlides = FooterMarqueeSlide.objects.filter(marquee=footerMarquee)
     except ObjectDoesNotExist:
         pass
     
@@ -46,7 +46,6 @@ def home(request):
     
     context = RequestContext(request, locals())
     return render_to_response('index.html', {}, context_instance=context);
-    pass
 
 def initial_validation(request, prefix):
     """

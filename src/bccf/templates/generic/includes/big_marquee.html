@@ -8,7 +8,7 @@
                 <span class="lightbox-title col mobile-nine">{{ slide.title }}</span>
                 <p class="no-mobile">{{ slide.caption }}</p>
                 <div class="a-wrapper col mobile-three">
-                    <a href="#">Join Us</a>
+                    <a href="{{ slide.url }}">{{ slide.linkLabel }}</a>
                 </div>
             </div>
         </div>
@@ -52,14 +52,14 @@
                 {% endif %}
             </li>
             <li>
-                <a href="#">Resources</a>
-                {% if resources %}
+                <a href="{% url 'resources-page' %}">Resources</a>
                 <ul>
-   	                {% for resource in resources %}
-   	                <li><a href="#">{{ resource.name }}</a></li>
-   	                {% endfor %}
+   	                <li><a href="{% url 'resources-type' 'article' %}">Article</a></li>
+   	                <li><a href="{% url 'resources-type' 'form' %}">Downloadable Form</a></li>
+   	                <li><a href="{% url 'resources-type' 'magazine' %}">Magazine</a></li>
+   	                <li><a href="{% url 'resources-type' 'tipsheet' %}">Tip Sheet</a></li>
+   	                <li><a href="{% url 'resources-type' 'video' %}">Video</a></li>
                 </ul>
-                {% endif %}
             </li>
             <li>
                 <a href="#">Program</a>

@@ -5,7 +5,8 @@ from mezzanine.core.admin import DisplayableAdmin
 
 from bccf.models import (Topic, TopicLink, Settings, EventForProfessionals,
     EventForParents, Article, Magazine, TipSheet, DownloadableForm, Video,
-    HomeMarquee, FooterMarquee, HomeMarqueeSlide, FooterMarqueeSlide)
+    HomeMarquee, FooterMarquee, HomeMarqueeSlide, FooterMarqueeSlide,
+    PageMarquee, PageMarqueeSlide, Page)
 
 
 class SettingsAdmin(admin.ModelAdmin):
@@ -55,7 +56,6 @@ class ProfessionalsEventAdmin(DisplayableAdmin):
             for fieldname in ['provider', 'date_start', 'date_end', 'price']:
                 self.list_display.insert(-1, fieldname)
 
-
 admin.site.register(Topic)
 admin.site.register(TopicLink)
 admin.site.register(Settings, SettingsAdmin)
@@ -66,7 +66,33 @@ admin.site.register(Magazine)
 admin.site.register(TipSheet)
 admin.site.register(DownloadableForm)
 admin.site.register(Video)
-admin.site.register(HomeMarquee)
-admin.site.register(FooterMarquee)
+admin.site.register(Page)
+
+#Inline
+class HomeMarqueeSlideInline(admin.TabularInline):
+    model = HomeMarqueeSlide.marquee.through
+
+class FooterMarqueeSlideInline(admin.TabularInline):
+    model = FooterMarqueeSlide.marquee.through
+    
+class PageMarqueeSlideInline(admin.TabularInline):
+    model = PageMarqueeSlide.marquee.through
+
+#Marquees
+class HomeMarqueeAdmin(admin.ModelAdmin):
+    list_display = ['title', 'active']
+    inlines = [HomeMarqueeSlideInline]
+    
+class FooterMarqueeAdmin(admin.ModelAdmin):
+    list_display = ['title', 'active']
+    inlines = [FooterMarqueeSlideInline]
+    
+class PageMarqueeAdmin(admin.ModelAdmin):
+    inlines = [PageMarqueeSlideInline]
+
 admin.site.register(HomeMarqueeSlide)
 admin.site.register(FooterMarqueeSlide)
+admin.site.register(PageMarqueeSlide)
+admin.site.register(HomeMarquee, HomeMarqueeAdmin)
+admin.site.register(FooterMarquee, FooterMarqueeAdmin)
+admin.site.register(PageMarquee, PageMarqueeAdmin)

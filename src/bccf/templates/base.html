@@ -115,14 +115,15 @@
 
     <nav id="main-top-nav" class="nav-mobile-container section">
         <span class="row no-desktop mobile-full">Menu</span>
-        <ul class="col eight mobile-full">
+        {% page_menu "pages/menus/dropdown.html" %}
+        <!-- <ul class="col eight mobile-full">
             <li><a href="#">Programs</a></li>
             <li><a href="#">Trainings</a></li>
             <li><a href="#">Tag</a></li>
             <li><a href="#">Resources</a></li>
             <li><a href="#">Blog</a></li>
             <li><a href="#">Donate</a></li>
-        </ul>
+        </ul> -->
 
         <div id="search-bar" class="col four mobile-full">
             <form method="get" id="searchform" action="/search/">
@@ -160,10 +161,10 @@
 
     <p>Follow us on:</p>
     <p>
-    <a href="https://www.facebook.com/BCFamilies" target="_blank"><img src="../../static/img/social-icons-FB.gif" alt="Facebook"/></a>
-    <a href="https://twitter.com/BC_Families" target="_blank"><img src="../../static/img/social-icons-TW.gif" alt="Twitter"/></a>
-    <a href="http://www.linkedin.com/company/bc-council-for-families" target="_blank"><img src="../../static/img/social-icons-LI.gif" alt="Linked In"/></a>
-    <a href="http://www.youtube.com/user/FamiliesofBC" target="_blank"><img src="../../static/img/social-icons-YT.gif" alt="You Tube"/></a>
+    <a href="https://www.facebook.com/BCFamilies" target="_blank"><img src="{% static 'img/social-icons-FB.gif' %}" alt="Facebook"/></a>
+    <a href="https://twitter.com/BC_Families" target="_blank"><img src="{% static 'img/social-icons-TW.gif' %}" alt="Twitter"/></a>
+    <a href="http://www.linkedin.com/company/bc-council-for-families" target="_blank"><img src="{% static 'img/social-icons-LI.gif' %}" alt="Linked In"/></a>
+    <a href="http://www.youtube.com/user/FamiliesofBC" target="_blank"><img src="{% static 'img/social-icons-YT.gif' %}" alt="You Tube"/></a>
     </p>
 
     </aside>
