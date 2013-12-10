@@ -28,8 +28,9 @@ urlpatterns = patterns("",
     ("^admin/", include(admin.site.urls)),
 
     (r'^forum/', include('pybb.urls', namespace='pybb')),
-
+    
     url(r'^news/(?P<news>.*)/$', 'bccf.views.newsposts.newspost', {}, name='news-post'),
+    url(r'^news/', 'bccf.views.newsposts.newspost', name='news-post'),
 
     # Cartridge URLs.
     ("^shop/", include("cartridge.shop.urls")),
@@ -60,18 +61,19 @@ urlpatterns = patterns("",
     url(r'^professionals/event/create/$', ProfessionalEventWizard.as_view(FORMS), name='professionals-event-create'),
     url(r'^professionals/event/report/(?P<slug>.*)/$', 'bccf.views.events.professional_survey_download_report', name='professional-download-report'),
     url(r'^professionals/event/(?P<slug>.*)/$', 'bccf.views.events.professionals_event', name='professionals-event'),
-    
+        
     #Resources
     url(r'^resources/$', 'bccf.views.resources.resources_page', name='resources-page'),
     url(r'^resources/(?P<type>[a-z]+)/', 'bccf.views.resources.resources_page', name='resources-type'),
     
     #Programs
     url(r'^programs/$', 'bccf.views.programs.programs_page', name='programs-page'),
-
-    url(r'^page_test/$', TemplateView.as_view(template_name="bccf/bccf_page.html")),
+    
+    #Blog
+    url(r'^blog/', 'bccf.views.blog.blog_page', name='blog-page'),    
     
     #AJAX Calls
-    url(r'^get/(?P<parent>[a-zA-Z-0-9]+)/(?P<type>[a-zA-Z-0-9]+)/(?P<page>[a-zA-Z-0-9]+)/$', 'bccf.views.ajax.get', name='ajax-page'),
+    url(r'^get/(?P<parent>.+)/(?P<type>.+)/(?P<page>.+)/$', 'bccf.views.ajax.get', name='ajax-page'),
     url(r'^get/(?P<offset>[0-9]+)/(?P<model>[a-zA-Z]+)', 'bccf.views.ajax.add', name='ajax-add'),
 
     # We don't want to presume how your homepage works, so here are a

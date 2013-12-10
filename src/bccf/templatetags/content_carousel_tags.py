@@ -23,27 +23,47 @@ def content_carousel_for(context, obj, type=None):
     
     context['filter'] = False
     if type == 'families' or type == 'professionals':
-        pass
+        if obj.title == 'Programs':
+            pass
+        elif obj.title == 'Events':
+            pass
+        else: # Topic
+            pass
     else:
-        if obj.title == 'Resources':
-            model = get_model('bccf', type)
-            try:
-                if params is not None and type == params[1]:
-                    context['slides'] = [model.objects.get(slug=params[2])]
-                    context['slides'].extend(model.objects.filter(~Q(slug=params[2])))
-                    context['open'] = True
-                else:
-                    context['slides'] = model.objects.all()[:12]
-            except ObjectDoesNotExist:
-                log.error('Object Does not exist')
-                return
-            context['carouselTitle'] = type
-            context['carouselID'] = "%s_id" % (type.replace(' ', '_').lower())
-        elif obj.title == 'Tag':
-            context['filter'] = True
-        elif obj.title == 'News':
-            pass
-        elif obj.title == 'Blog':
-            pass
+        try:
+            if obj.title == 'Resources':
+                model = get_model('bccf', type)
+                context['slides'], context['open'] = content_helper(model, params, type)
+                context['carouselTitle'] = type
+                context['carouselID'] = "%s_id" % (type.replace(' ', '_').lower())
+            elif obj.title == 'Tag':
+                context['filter'] = True
+            elif obj.title == 'News':
+                model = get_model('news', 'NewsPost')
+                context['slides'], context['open'] = content_helper(model, params, 'News')
+                context['carouselTitle'] = 'News'
+                context['carouselID'] = 'news'
+            elif obj.title == 'Blog':
+                from mezzanine.blog.models import BlogPost
+                #model = get_model('Mezzanine.blog', 'BlogPost')
+                context['slides'], context['open'] = content_helper(BlogPost, params, 'Blog')
+                context['carouselTitle'] = 'Blog'
+                context['carouselID'] = 'blog'
+        except:
+            return
     context['carouselColor'] = obj.carouselColor
     return context
+    
+def content_helper(model, params, type = None):
+    try:
+        if params is not None and type == params[1]:
+            slides = [model.objects.get(slug=params[2])]
+            slides.extend(model.objects.filter(~Q(slug=params[2])).order_by('-created')[:11])
+            open = True
+            return (slides, open)
+        else:
+            slides = model.objects.all().order_by('-created')[:12]
+            return (slides, False)
+    except ObjectDoesNotExist:
+        log.error('Object Does not exist')
+        return ([], False)

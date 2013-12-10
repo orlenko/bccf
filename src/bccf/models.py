@@ -342,5 +342,16 @@ class Page(RichTextPage):
         ('teal-list', 'Teal'),
         ('yellow-list', 'Yellow'),       
     )
-    marquee = models.ForeignKey(PageMarquee)
+    marquee = models.ForeignKey(PageMarquee, blank=True, null=True)
     carouselColor = models.CharField(max_length=11, default='dgreen-list', choices=COLORS)
+    
+#Child Page
+class ChildPage(RichTextPage):
+    image = FileField("Image",
+        upload_to = upload_to("bccf.ChildPage.image_file", "childpage"),
+        extensions = ['.png', '.jpg', '.bmp', '.gif'],
+        max_length = 255,
+        null = True,
+        blank = True,
+        help_text = 'You can upload an image. '
+            'Acceptable file types: .png, .jpg, .bmp, .gif.')

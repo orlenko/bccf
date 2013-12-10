@@ -652,6 +652,9 @@ textarea {
 			color:$dgrey;} 
 		}
 	}
+	.active > a {
+       background:url(../img/menu-triangle.png) top center no-repeat;
+	}
 	#search-bar {
 		padding:9px 0 0;
 		float:left; 
