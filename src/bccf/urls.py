@@ -64,11 +64,15 @@ urlpatterns = patterns("",
     #Resources
     url(r'^resources/$', 'bccf.views.resources.resources_page', name='resources-page'),
     url(r'^resources/(?P<type>[a-z]+)/', 'bccf.views.resources.resources_page', name='resources-type'),
+    
+    #Programs
+    url(r'^programs/$', 'bccf.views.programs.programs_page', name='programs-page'),
 
     url(r'^page_test/$', TemplateView.as_view(template_name="bccf/bccf_page.html")),
     
     #AJAX Calls
     url(r'^get/(?P<parent>[a-zA-Z-0-9]+)/(?P<type>[a-zA-Z-0-9]+)/(?P<page>[a-zA-Z-0-9]+)/$', 'bccf.views.ajax.get', name='ajax-page'),
+    url(r'^get/(?P<offset>[0-9]+)/(?P<model>[a-zA-Z]+)', 'bccf.views.ajax.add', name='ajax-add'),
 
     # We don't want to presume how your homepage works, so here are a
     # few patterns you can use to set it up.

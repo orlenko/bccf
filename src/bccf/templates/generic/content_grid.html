@@ -1,0 +1,23 @@
+{% for slide in slides %}
+    {% if forloop.counter|divisibleby:"13" or forloop.first %} <!-- If the first box of the slide -->
+    <div>
+        <ul class="page-container-inner">
+    {% endif %}
+        <li class="page-box grid-box col four">
+            <img src="http://placehold.it/350x75&text=Image{{ slide.img }}" alt="{{ slide.title }}" />
+            <div>
+                <a href="{% url 'ajax-page' parent=page.title type=carouselTitle page=slide.slug  %}">
+                    <h2>{{ slide.title }}</h2>
+                </a>
+                <p class="no-tablet">{{ slide.description|truncatechars:25 }}</p>
+            </div>
+        </li>
+        {% if forloop.counter|divisibleby:"3" or forloop.last %}
+        <li class="grid-content reset col twelve"></li>                  
+        {% endif %}
+    {% if forloop.counter|divisibleby:"12" or forloop.last %}
+        </ul>
+    </div>
+    {% endif %}
+    <!-- GRID END -->
+{% endfor %}

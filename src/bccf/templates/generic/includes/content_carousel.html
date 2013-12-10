@@ -2,20 +2,20 @@
 
 {% if slides %}
 <section id="{{ carouselID }}" class="section content-pages {{ carouselColor }}">
-    <div id="top-control-container" class="section row">
-        {% if filter %}
-        <div id="filter-container" class="col four">
-            <form>
-                <input type="text" name="sub-page-filter" placeholder="Filter" />
-            </form>
-        </div>
-        {% else %}
-        {% endif %}
+    <div class="section row top-control-container">
         <div class="col four carousel-title-container">
             <h2>{{ carouselTitle }}</h2>
         </div>
-        <div id="{{ carouselID }}-control" class="col four no-mobile">
-            <a href="#" class="show-type-control to-grid">Grid</a> | 
+        <div id="filter-container" class="col four">
+            {% if filter %}
+            <form>
+                <input type="text" name="sub-page-filter" placeholder="Filter" />
+            </form>
+            {% endif %}
+            &nbsp;
+        </div>
+        <div id="{{ carouselID }}-control" class="col four no-mobile control-buttons">
+            <a href="#" class="show-type-control to-grid">Grid</a>
             <a href="#" class="show-type-control to-slide">Slide</a>
         </div>
     </div>
@@ -75,14 +75,16 @@
         </div>
         <a class="button-next-lgreen col one button-next no-mobile no-tablet"></a>
     </div>
+    <div id="{{ carouselID }}-mobile-content-container" class="no-desktop no-tablet mobile-content-container">
+        <a class="close-btn" href="#">CLOSE</a>
+        <div class="mobile-content"></div>
+    </div>
 </section>
-<div id="{{ carouselID }}-mobile-content-container" class="no-desktop no-tablet mobile-content-container">
-    <a class="close-btn" href="#">CLOSE</a>
-    <div class="mobile-content"></div>
-</div>
 
 <script>
+    var {{ carouselID }}_offset = 0;
     $(function() {
+        {{ carouselID }}_offset = {{ slides|length }};
         // Create new Owl Carousel
         $('#{{ carouselID }}-carousel').owlCarousel({
             'singleItem': true,
@@ -125,10 +127,16 @@
     
     $('#{{ carouselID }}').on('click', 'a[class^="button"]', function(e) {
         e.preventDefault();
+        var carousel = $(this).siblings('div.page-container-outer').children('div[class^="carousel"]:visible');
         if($(this).hasClass('button-prev')) {
-            $(this).siblings('div.page-container-outer').children('div[class^="carousel"]:visible').trigger('owl.prev');
+            carousel.trigger('owl.prev');
         } else {
-            $(this).siblings('div.page-container-outer').children('div[class^="carousel"]:visible').trigger('owl.next');
+            if(carousel.find('.active').is(':last-child')) {
+                $.ajax({
+                    url: '/get/'+{{ carouselID }}_offset+'/{{ carouselTitle }}',
+                });          
+            }
+            carousel.trigger('owl.next');
         }
     })
     
@@ -162,10 +170,9 @@
             success: function (data) {
                 container.html(data);
                 
-                $(document.body).animate({
+                $('body, html').animate({
                     'scrollTop':   container.offset().top-160
                 }, 500);
-                //$('.ajax-loader').hide()
             }
         });
         if (pageUrl+pageParams != window.location) {

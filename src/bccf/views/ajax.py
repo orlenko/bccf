@@ -13,3 +13,7 @@ def get(request, parent, type, page):
     obj = model.objects.get(slug=page)
     context = RequestContext(request, locals())        
     return render_to_response('generic/%s_page_box.html' % (parent.lower()), {}, context_instance=context);
+    
+def add(request, offset, model):
+    log.info(offset);
+    return 'test';
