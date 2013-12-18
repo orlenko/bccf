@@ -10,6 +10,7 @@ from django.template.loader import get_template
 from mezzanine import template
 from mezzanine.conf import settings
 from bccf.models import TopicLink
+from django.core.urlresolvers import reverse
 
 # Try to import PIL in either of the two ways it can end up installed.
 try:
@@ -151,19 +152,18 @@ def topics_for(record):
 
 @register.render_tag
 def membership_upgrade(context, token):
-    log.debug('Getting upgrade options...')
     try:
         user = context['request'].user
         profile = user.profile
         membership = profile.membership_product_variation
         if membership:
-            categ = membership.product.category
+            categ = membership.product.categories.all()[0]
             upgrades = []
             downgrades = []
             for product in categ.products.all():
-                for variation in product.product_variations.all():
+                for variation in product.variations.all():
                     if variation.pk != membership.pk:
-                        if variation.price < membership.price:
+                        if variation.price() < membership.price():
                             downgrades.append(variation)
                         else:
                             upgrades.append(variation)
@@ -172,5 +172,15 @@ def membership_upgrade(context, token):
         context['downgrades'] = downgrades
     except:
         log.debug('Failed to generate upgrade options', exc_info=1)
-    t = get_template('bccf/membership_upgrade.html')
+    t = get_template('bccf/membership/upgrade.html')
     return t.render(Context(context))
+
+
+@register.filter
+def membership_upgrade_url(variation):
+    return reverse('member-membership-upgrade', kwargs={'variation_id': variation.pk})
+
+
+@register.filter
+def membership_renew_url(variation):
+    return reverse('member-membership-renew')

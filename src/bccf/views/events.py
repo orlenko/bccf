@@ -10,8 +10,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404, HttpResponse
 
 from bccf.models import EventForParents, EventForProfessionals
-from bccf.util.membership import require_parent, require_professional
-from bccf.forms import ProfessionalEventForm, ParentEventForm, FormStructureSurveyFormOne, FormStructureSurveyFormTwo, ProfessionalSurveyReport
+from bccf.util.memberutil import require_parent, require_professional
+from bccf.forms import ProfessionalEventForm, FormStructureSurveyFormOne, FormStructureSurveyFormTwo, ProfessionalSurveyReport
 from django.views.decorators.cache import never_cache
 
 from formable.builder.models import FormStructure, FormPublished, FormFilled, FieldAnswer, Question

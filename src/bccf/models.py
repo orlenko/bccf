@@ -1,4 +1,6 @@
 import logging
+from datetime import datetime
+from decimal import Decimal
 
 from formable.builder.models import FormPublished
 from cartridge.shop.fields import MoneyField
@@ -16,9 +18,13 @@ from bccf.fields import MyImageField
 from bccf.settings import (OPTION_SUBSCRIPTION_TERM, get_option_number,
     INSTALLED_APPS)
 from mezzanine.core.models import Slugged
+from mezzanine.utils.email import send_mail_template
 
 log = logging.getLogger(__name__)
 
+# Order statuses
+ORDER_STATUS_COMPLETE = 2
+ORDER_STATUS_CANCELLED = 3
 
 class Topic(Slugged, RichText, AdminThumbMixin):
     star_blog_id = models.IntegerField(null=True, blank=True)
@@ -77,6 +83,7 @@ class UserProfile(models.Model):
         help_text='User photo')
     admin_thumb_field = "photo"
     membership_order = models.ForeignKey('shop.Order', null=True, blank=True)
+    requested_cancellation = models.NullBooleanField(null=True, blank=True, default=False)
     is_forum_moderator = models.NullBooleanField(null=True, blank=True, default=False)
 
     def __unicode__(self):
@@ -90,25 +97,63 @@ class UserProfile(models.Model):
         if not self.membership_order:
             # Special case: if this user has purchased anything at all, there might be a recent membership purchase
             # In this case, we assign the most recent membership purchase as the membership order for this user.
-            for order in Order.objects.filter(user_id=self.user_id).order_by('-time'):  # @UndefinedVariable
+            orders = Order.objects.filter(user_id=self.user_id)
+            orders = orders.exclude(status=ORDER_STATUS_CANCELLED).order_by('-time')
+            for order in orders:
                 for order_item in order.items.all():
-                    variation = ProductVariation.objects.get(sku=order_item.sku)
-                    for category in variation.product.categories.all():
-                        if category.title.startswith('Membership'):
-                            self.membership_order = order
-                            self.save()
-                            break
-                    if self.membership_order:
-                        break
-                if self.membership_order:
-                    break
-        if not self.membership_order:
+                    for variation in ProductVariation.objects.filter(sku=order_item.sku):
+                        for category in variation.product.categories.all():
+                            if category.title.startswith('Membership'):
+                                self.membership_order = order
+                                self.save()
+                                return variation
             return None
         for order_item in self.membership_order.items.all():
             variation = ProductVariation.objects.get(sku=order_item.sku)
             for category in variation.product.categories.all():
                 if category.title.startswith('Membership'):
                     return variation
+
+    def cancel_membership(self):
+        from bccf.util.memberutil import refund
+
+        if not self.membership_order:
+            return
+        membership_order = self.membership_order
+        membership_order.status = ORDER_STATUS_CANCELLED
+        membership_order.save()
+        self.membership_order = None
+        self.save()
+        while self.membership_product_variation:
+            old_order = self.membership_order
+            old_order.status = ORDER_STATUS_CANCELLED
+            old_order.save()
+            self.membership_order = None
+            self.save()
+        refund(self.user, membership_order) # Probably unnecessary - refunds will be handled offline
+
+    def request_membership_cancellation(self):
+        self.requested_cancellation = True
+        self.save()
+        user = self.user
+        membership_order = self.membership_order
+        membership_product_variation = self.membership_product_variation
+        send_mail_template('Membership cancellation requested: %s' % user.email,
+                           'bccf/email/membership_cancellation_request_admin',
+                           Settings.get_setting('SERVER_EMAIL'),
+                           Settings.get_setting('ADMIN_EMAIL'),
+                           context=locals(),
+                           attachments=None,
+                           fail_silently=settings.DEBUG,
+                           addr_bcc=None)
+        send_mail_template('Your BCCF membership cancellation request',
+                           'bccf/email/membership_cancellation_request',
+                           Settings.get_setting('SERVER_EMAIL'),
+                           user.email,
+                           context=locals(),
+                           attachments=None,
+                           fail_silently=settings.DEBUG,
+                           addr_bcc=None)
 
     @property
     def membership_expiration_datetime(self):
@@ -124,6 +169,15 @@ class UserProfile(models.Model):
             return d + relativedelta(months=+3)
         if subscription_term == 'Monthly':
             return d + relativedelta(months=+1)
+
+    @property
+    def remaining_balance(self):
+        membership = self.membership_product_variation
+        expiration_date = self.membership_expiration_datetime
+        purchase_date = self.membership_order.time
+        price = membership.unit_price
+        now = datetime.now()
+        return remaining_subscription_balance(purchase_date, expiration_date, now, price)
 
 
 class EventBase(Displayable):
@@ -251,3 +305,13 @@ class Video(Displayable, Ownable, RichText, AdminThumbMixin):
         blank=True,
         help_text='You can upload a video file. '
             'Acceptable file types: .avi, .flv, .mkv, .mov, .mp4, .ogg, .wmv.')
+
+
+def remaining_subscription_balance(purchase_date, expiration_date, to_date, paid):
+    if not expiration_date:
+        return paid
+    licensed_time = expiration_date - purchase_date
+    elapsed_time = to_date - purchase_date
+    used_fraction = elapsed_time.total_seconds() / licensed_time.total_seconds()
+    remaining = Decimal(str(float(paid) * (1 - used_fraction)))
+    return remaining

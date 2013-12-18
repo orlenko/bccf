@@ -96,8 +96,17 @@
 
 </head>
 <body id="{% block body_id %}body{% endblock %}">
-
 <div class="container">
+
+	{% nevercache %}
+	{% for message in messages %}
+	<div class="alert alert-{{ message.tags }}" data-alert="alert">
+	    <a class="close" href="#" onclick="$(this).parent().fadeOut('fast'); return false;">×</a>{{ message }}
+	</div>
+	{% endfor %}
+	{% endnevercache %}
+
+
     <header class="section row-two">
         <div id="bccflogo" class="col four tablet-six mobile-full"><a href="/"><img src="{% static "img/BCCF_logo_2013.png" %}" alt="BC Council for FAMILIES"/></a></div>
         <div id="bccftagline" class="col tablet-three five mobile-full">y<em><strong>our</strong></em> family.</div>

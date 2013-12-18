@@ -37,8 +37,11 @@ urlpatterns = patterns("",
     url("^account/orders/$", "cartridge.shop.views.order_history", name="shop_order_history"),
 
     url(r'^member/profile/$', 'bccf.views.member.profile', name='member-profile'),
-    url(r'^member/membership/upgrade/(?P<product_id>.*)/$', 'bccf.views.member.membership_upgrade', name='member-membership-upgrade'),
-    url(r'^member/membership/(?P<slug>.*)/$', 'bccf.views.member.membership', name='member-membership'),
+    url(r'^member/upgrade/(?P<variation_id>.*)/$', 'bccf.views.member.membership_upgrade', name='member-membership-upgrade'),
+    url(r'^member/renew/$', 'bccf.views.member.membership_renew', name='member-membership-renew'),
+    url(r'^member/select/$', 'bccf.views.member.membership_select', name='member-membership-select'),
+    url(r'^member/cancel/$', 'bccf.views.member.membership_cancel', name='member-membership-cancel'),
+    url(r'^member/(?P<slug>.*)/$', 'bccf.views.member.membership', name='member-membership'),
 
     # Parents
     url(r'^parents/$', 'bccf.views.parents.parents_page', name='parents-page'),
