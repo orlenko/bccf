@@ -6,43 +6,7 @@
 
 {% block main %}
 {% big_marquee_for %}
-<nav id="browse-by" class="section">
-    <div class="browse">Browse By:</div>
-    <div id="browse-by-nav" class="mobile-nav-container nav">
-        <ul>
-            <li>
-                <a href="#">Topic</a>
-   	            {% if topics %}
-	            <ul>
-   	                {% for topic in topics %}
-   	                <li><a href="{{ topic.get_full_url }}">{{ topic.title }}</a></li>
-   	                {% endfor %}
-                </ul>
-                {% endif %}
-            </li>
-            <li>
-                <a href="#">Resources</a>
-                {% if resources %}
-                <ul>
-   	                {% for resource in resources %}
-   	                <li><a href="#">{{ resource.name }}</a></li>
-   	                {% endfor %}
-                </ul>
-                {% endif %}
-            </li>
-            <li>
-                <a href="#">Program</a>
-                {% if programs %}
-                <ul>
-   	                {% for program in programs %}
-   	                <li><a href="#">{{ program.name }}</a></li>
-   	                {% endfor %}
-                </ul>
-                {% endif %}
-            </li>
-        </ul>
-    </div>
-</nav>
+
 <section id="home-features" class="section">
 
   <div id="home-calendar" class="col six tablet-full mobile-full">
@@ -67,9 +31,12 @@
                 </ul>
             </div>
             <div id="hcal-families-carousel" class="col twelve mobile-full tablet-full">
+                {% for event in eventForParents %}
+                
+                {% if forloop.counter|divisibleby:"6" or forloop.first %}
                 <div>
-                    {% if eventForParents %}
-                        {% for event in eventForParents %}
+                {% endif %}
+                
                         <div class="hcal-line">
                             <ul>
                                 
@@ -79,9 +46,20 @@
                                 <li><a href="#">Register</a></li>
                             </ul>
                         </div>
-                        {% endfor %}
-                    {% endif %}
+                
+                {% if forloop.counter|divisibleby:"5" or forloop.last %}
                 </div>
+                {% endif %}
+                
+                {% empty %}
+                
+                <div>
+                    <div class="hcal-line">
+                        No Upcoming Events               
+                    </div>                
+                </div>
+                
+                {% endfor %}                
             </div>
         </div>
         <div id="hcal-professionals" class="hcal-inner">
@@ -93,52 +71,35 @@
             </div>
 
             <div id="hcal-professionals-carousel" class="col twelve mobile-full tablet-full">
+                {% for event in eventForProfessionals %}
+                
+                {% if forloop.counter|divisibleby:"6" or forloop.first %}
+                <div>
+                {% endif %}
+                
+                        <div class="hcal-line">
+                            <ul>
+                                
+                            	<li>{{ event.date_start|date:"F d" }}</li>
+                                <li>{{ event.title }}</li>
+                                <li><a href="#">Learn More</a></li>
+                                <li><a href="#">Register</a></li>
+                            </ul>
+                        </div>
+                
+                {% if forloop.counter|divisibleby:"5" or forloop.last %}
+                </div>
+                {% endif %}
+                
+                {% empty %}
+                
                 <div>
                     <div class="hcal-line">
-                        <ul>
-                        	<li>September 30</li>
-                            <li>Program Title</li>
-                            <li><a href="#">Learn More</a></li>
-                            <li><a href="#">Register</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="hcal-line">
-                        <ul>
-                        	<li>January 17</li>
-                            <li>Program Title</li>
-                            <li><a href="#">Learn More</a></li>
-                            <li><a href="#">Register</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="hcal-line">
-                        <ul>
-                        	<li>November 17</li>
-                            <li>Program Title</li>
-                            <li><a href="#">Learn More</a></li>
-                            <li><a href="#">Register</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="hcal-line">
-                        <ul>
-                        	<li>January 17</li>
-                            <li>Program Title</li>
-                            <li><a href="#">Learn More</a></li>
-                            <li><a href="#">Register</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="hcal-line">
-                        <ul>
-                        	<li>January 17</li>
-                            <li>Program Title</li>
-                            <li><a href="#">Learn More</a></li>
-                            <li><a href="#">Register</a></li>
-                        </ul>
-                    </div>
+                        No Upcoming Events               
+                    </div>                
                 </div>
+
+                {% endfor %}                    
             </div>
         </div>
     </div>
@@ -334,29 +295,15 @@
       <a class="button-prev button-prev-dgreen col one no-mobile"></a>
       <div id="history-carousel-container" class="col ten mobile-full">
         <div id="history-carousel">
+          {% for slide in footerMarqueeSlides %}
           <div>
-              <div class="history-image col six"><img src="{% static 'img/history-filler-image.png' %}" alt="History Filler Image"/></div>
+              <div class="history-image col six"><img src="media/{{ slide.image }}" alt="History Filler Image"/></div>
               <div class="history-text col six">
-                  <h3>It all started in 1976</h3>
-                  <p>At the 1976 BC Conference on the Family 94 recommendations for action were issued and it was resolved to establish the BC Council for the Family. In 1977 the BC Council for the Family is incorporated as a non-profit society and opens an office in Victoria.</p>
+                  <h3>{{ slide.title }}</h3>
+                  <p>{{ slide.caption }}</p>
               </div>
           </div>
-
-          <div>
-              <div class="history-image col six"><img src="{% static 'img/history-filler-image.png' %}" alt="History Filler Image"/></div>
-              <div class="history-text col six">
-                  <h3>Slide 2 Test</h3>
-                  <p>At the 1976 BC Conference on the Family 94 recommendations for action were issued and it was resolved to establish the BC Council for the Family. In 1977 the BC Council for the Family is incorporated as a non-profit society and opens an office in Victoria.</p>
-              </div>
-          </div>
-
-          <div>
-              <div class="history-image col six"><img src="{% static 'img/history-filler-image.png' %}" alt="History Filler Image"/></div>
-              <div class="history-text col six">
-                  <h3>Slide 3 Test</h3>
-                  <p>At the 1976 BC Conference on the Family 94 recommendations for action were issued and it was resolved to establish the BC Council for the Family. In 1977 the BC Council for the Family is incorporated as a non-profit society and opens an office in Victoria.</p>
-              </div>
-          </div>
+          {% endfor %}
         </div>
       </div>
       <a class="button-next button-next-sgrey col one no-mobile"></a>

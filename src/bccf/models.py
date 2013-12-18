@@ -10,9 +10,11 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import permalink
+from django.db.models import ObjectDoesNotExist
 from mezzanine.core.fields import FileField, RichTextField
 from mezzanine.core.models import Displayable, Ownable, RichText
 from mezzanine.utils.models import upload_to, AdminThumbMixin
+from mezzanine.pages.models import RichTextPage
 
 from bccf.fields import MyImageField
 from bccf.settings import (OPTION_SUBSCRIPTION_TERM, get_option_number,
@@ -36,7 +38,7 @@ class Topic(Slugged, RichText, AdminThumbMixin):
     admin_thumb_field = "featured_image"
 
     def __unicode__(self):
-        return self.name
+        return self.title
 
 
 class TopicLink(models.Model):
@@ -259,7 +261,6 @@ class Settings(models.Model):
         cls.objects.create(name=name, value=retval)
         return retval
 
-
 class DocumentResource(Displayable, Ownable, RichText, AdminThumbMixin):
     attached_document = FileField('Downloadable Document',
         upload_to=upload_to("bccf.DocumentResource.attachment_file", "resource/document"),
@@ -315,3 +316,107 @@ def remaining_subscription_balance(purchase_date, expiration_date, to_date, paid
     used_fraction = elapsed_time.total_seconds() / licensed_time.total_seconds()
     remaining = Decimal(str(float(paid) * (1 - used_fraction)))
     return remaining
+
+
+class Marquee(models.Model):
+    """
+    Parent model for marquees (big marquee, footer)
+    """
+    title = models.CharField(max_length=255)
+    modified = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
+    class Meta:
+        abstract = True
+
+    def __unicode__(self):
+        return self.title
+
+class HomeMarquee(Marquee):
+    active = models.BooleanField("Active", default=False,
+        help_text = "Checking this box makes this the default marquee in the home page"
+    )
+    def save(self):
+        if self.active:
+            try:
+                temp = HomeMarquee.objects.get(active=True)
+                if self != temp:
+                    temp.active = False
+                    temp.save()
+            except ObjectDoesNotExist:
+                self.active = True
+        super(HomeMarquee, self).save()
+
+class FooterMarquee(Marquee):
+    active = models.BooleanField("Active", default=False,
+        help_text = "Checking this will make this the default footer marquee"
+    )
+
+    def save(self):
+        if self.active:
+            try:
+                temp = FooterMarquee.objects.get(active=True)
+                if self != temp:
+                    temp.active = False
+                    temp.save()
+            except ObjectDoesNotExist:
+                self.active = True
+        super(FooterMarquee, self).save()
+
+class PageMarquee(Marquee):
+    pass
+
+class MarqueeSlide(models.Model):
+    """
+    Parent model for slides in the marquee
+    """
+    caption = models.CharField("Caption", max_length=100, blank=True, default='', null=True)
+    title = models.CharField("Title", max_length=50, blank=True, default='', null=True)
+    image = FileField("Image",
+        upload_to = upload_to("bccf.MarqueeSlide.image_file", "marquee"),
+        extensions = ['.png', '.jpg', '.bmp', '.gif'],
+        max_length = 255,
+        null = True,
+        blank = True,
+        help_text = 'You can upload an image. '
+            'Acceptable file types: .png, .jpg, .bmp, .gif.')
+    modified = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
+    class Meta:
+        abstract = True
+    def __unicode__(self):
+        return self.title
+
+class HomeMarqueeSlide(MarqueeSlide):
+    marquee = models.ManyToManyField(HomeMarquee)
+    url = models.URLField("Link", blank=True, default='', null=True)
+    linkLabel = models.CharField("Link Label", max_length=10, blank=True, default='', null=True)
+
+class FooterMarqueeSlide(MarqueeSlide):
+    marquee = models.ManyToManyField(FooterMarquee)
+
+class PageMarqueeSlide(MarqueeSlide):
+    marquee = models.ManyToManyField(PageMarquee)
+    url = models.URLField("Link", blank=True, default='', null=True)
+    linkLabel = models.CharField("Link Label", max_length=10, blank=True, default='', null=True)
+
+#Pages
+class Page(RichTextPage):
+    COLORS = (
+        ('dgreen-list', 'Dark Green'),
+        ('green-list', 'Green'),
+        ('teal-list', 'Teal'),
+        ('yellow-list', 'Yellow'),
+    )
+    marquee = models.ForeignKey(PageMarquee, blank=True, null=True)
+    carouselColor = models.CharField(max_length=11, default='dgreen-list', choices=COLORS)
+
+#Child Page
+class ChildPage(RichTextPage):
+    image = FileField("Image",
+        upload_to = upload_to("bccf.ChildPage.image_file", "childpage"),
+        extensions = ['.png', '.jpg', '.bmp', '.gif'],
+        max_length = 255,
+        null = True,
+        blank = True,
+        help_text = 'You can upload an image. '
+            'Acceptable file types: .png, .jpg, .bmp, .gif.')

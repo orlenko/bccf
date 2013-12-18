@@ -1,19 +1,18 @@
 {% load static %}
 <div id="big-marquee" class="section clear"> 
     <div id="slide-container">
+        {% for slide in slides %}
         <div>
-            <img src="{% static "img/marquee-home-filler.jpg" %}" alt="Marquee Filler"/>
+            <img src="media/{{ slide.image }}" alt="Marquee Filler"/>
             <div class="lightbox mobile-full">
-                <span class="lightbox-title col mobile-nine">TAG Your Family &amp; Friends</span>
-                <p class="no-mobile">
-                    You have a voice and your opinions can make a difference for your family and the families of BC! Join us and together
-                    we can make BC a better place for families.                
-                </p>
+                <span class="lightbox-title col mobile-nine">{{ slide.title }}</span>
+                <p class="no-mobile">{{ slide.caption }}</p>
                 <div class="a-wrapper col mobile-three">
-                    <a href="#">Join Us</a>
+                    <a href="{{ slide.url }}">{{ slide.linkLabel }}</a>
                 </div>
             </div>
         </div>
+        {% endfor %}
     </div>
     {% if show_tag %}
     <div id="tag-container">
@@ -38,3 +37,40 @@
     </div>
     {% endif %}
 </div>
+<nav id="browse-by" class="section">
+    <div class="browse">Browse By:</div>
+    <div id="browse-by-nav" class="mobile-nav-container nav">
+        <ul>
+            <li>
+                <a href="#">Topic</a>
+   	            {% if topics %}
+	            <ul>
+   	                {% for topic in topics %}
+   	                <li><a href="{{ topic.get_full_url }}">{{ topic.title }}</a></li>
+   	                {% endfor %}
+                </ul>
+                {% endif %}
+            </li>
+            <li>
+                <a href="{% url 'resources-page' %}">Resources</a>
+                <ul>
+   	                <li><a href="{% url 'resources-type' 'article' %}">Article</a></li>
+   	                <li><a href="{% url 'resources-type' 'form' %}">Downloadable Form</a></li>
+   	                <li><a href="{% url 'resources-type' 'magazine' %}">Magazine</a></li>
+   	                <li><a href="{% url 'resources-type' 'tipsheet' %}">Tip Sheet</a></li>
+   	                <li><a href="{% url 'resources-type' 'video' %}">Video</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="{% url 'programs-page' %}">Program</a>
+                {% if programs %}
+                <ul>
+   	                {% for program in programs %}
+   	                <li><a href="#">{{ program.name }}</a></li>
+   	                {% endfor %}
+                </ul>
+                {% endif %}
+            </li>
+        </ul>
+    </div>
+</nav>

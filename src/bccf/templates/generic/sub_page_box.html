@@ -1,8 +1,13 @@
-<div>
-    <div id="box-current-image" class="section row row-one"></div>
-    <div class="section row row-one">
-        <div class="col four">Box 1</div>
-        <div class="col four">Box 2</div>
-        <div class="col four">Box 3</div>
+{% load static %}
+<section id={{ parent.title }} class="subpage">
+    <div class="subpage-content section row">
+        <h3>{{ obj.title }}</h3>
+        <p>{{ obj.description }}</p>
+    </div>    
+    <div class="subpage-tabs section row">
+        <ul class="no-style-list">
+        {% block tabs %}{% endblock %}
+            <li class="col three"><a href="#">Resources</a></li>
+        </ul>
     </div>
-</div>
+</section>

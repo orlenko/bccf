@@ -5,6 +5,7 @@ from django.views.generic import TemplateView
 
 from mezzanine.core.views import direct_to_template
 
+from bccf import settings
 from bccf.feeds import EventsForParentsFeed, EventsForProfessionalsFeed
 from bccf.views.events import ProfessionalEventWizard, FORMS
 
@@ -17,13 +18,19 @@ admin.autodiscover()
 
 urlpatterns = patterns("",
 
+    #UPLOADS
+    url(r'media/(?P<path>.*)$', 'django.views.static.serve', {
+        'document_root': settings.MEDIA_ROOT,
+    }),
+
     # Change the admin prefix here to use an alternate URL for the
     # admin interface, which would be marginally more secure.
     ("^admin/", include(admin.site.urls)),
 
     (r'^forum/', include('pybb.urls', namespace='pybb')),
-
+    
     url(r'^news/(?P<news>.*)/$', 'bccf.views.newsposts.newspost', {}, name='news-post'),
+    url(r'^news/', 'bccf.views.newsposts.newspost', name='news-post'),
 
     # Cartridge URLs.
     ("^shop/", include("cartridge.shop.urls")),
@@ -57,8 +64,20 @@ urlpatterns = patterns("",
     url(r'^professionals/event/create/$', ProfessionalEventWizard.as_view(FORMS), name='professionals-event-create'),
     url(r'^professionals/event/report/(?P<slug>.*)/$', 'bccf.views.events.professional_survey_download_report', name='professional-download-report'),
     url(r'^professionals/event/(?P<slug>.*)/$', 'bccf.views.events.professionals_event', name='professionals-event'),
-
-    url(r'^page_test/$', TemplateView.as_view(template_name="bccf/bccf_page.html")),
+        
+    #Resources
+    url(r'^resources/$', 'bccf.views.resources.resources_page', name='resources-page'),
+    url(r'^resources/(?P<type>[a-z]+)/', 'bccf.views.resources.resources_page', name='resources-type'),
+    
+    #Programs
+    url(r'^programs/$', 'bccf.views.programs.programs_page', name='programs-page'),
+    
+    #Blog
+    url(r'^blog/', 'bccf.views.blog.blog_page', name='blog-page'),    
+    
+    #AJAX Calls
+    url(r'^get/(?P<parent>.+)/(?P<type>.+)/(?P<page>.+)/$', 'bccf.views.ajax.get', name='ajax-page'),
+    url(r'^get/(?P<offset>[0-9]+)/(?P<model>[a-zA-Z]+)', 'bccf.views.ajax.add', name='ajax-add'),
 
     # We don't want to presume how your homepage works, so here are a
     # few patterns you can use to set it up.

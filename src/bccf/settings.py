@@ -327,7 +327,6 @@ INSTALLED_APPS = (
     "django.contrib.sites",
     "django.contrib.sitemaps",
     "django.contrib.staticfiles",
-    "cartridge.shop",
     "mezzanine.boot",
     "mezzanine.conf",
     "mezzanine.core",
@@ -342,6 +341,7 @@ INSTALLED_APPS = (
     'news',
     'pybb',
     'bccf',
+    "cartridge.shop",
     'formable.builder',
     # install via pip or easy_install django-form-utils
     'form_utils', # required by builder to call template tags

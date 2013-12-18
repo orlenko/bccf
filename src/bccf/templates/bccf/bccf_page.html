@@ -1,123 +1,111 @@
 {% extends 'base.html' %}
-{% load static bccf_rating_tags content_carousel_tags bccf_big_marquee_tags %}
+{% load static bccf_rating_tags content_carousel_tags bccf_big_marquee_tags mezzanine_tags %}
 
 {% block main %}
 <div id="content-page-wrapper" class="section"> <!-- Main Wrapper -->
   
   
   <section id="main-content-side" class="col eight mobile-full"><!-- Left Side -->
-  {% big_marquee_for %}
-  
-<nav id="browse-by" class="section"> 
-    <div class="browse">Browse By:</div>
-    <div id="browse-by-nav" class="mobile-nav-container nav">
-        <ul>
-            <li>
-                <a href="#">Topic</a>
-	            <ul>
-   	                <li><a href="#">Test Sub Menu1</a></li>
-                    <li><a href="#">Test Sub Menu2</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="#">Resources</a>
-                <ul>
-   	                <li><a href="#">Test Sub Menu1</a></li>
-                    <li><a href="#">Test Sub Menu2</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="#">Program</a>
-                <ul>
-   	                <li><a href="#">Test Sub Menu1</a></li>
-                    <li><a href="#">Test Sub Menu2</a></li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-</nav>
-  
+  {% block marquee %}
+  {% big_marquee_for page %}
+  {% endblock %}
   <section id="page-header" class="section">
   
   <article class="col twelve">
   
-  <h1>Parenting programs and family service advocacy.</h1>
-  <p>Expand your abilities to work with families and children.  Positively influence parents' skills, knowledge, and confidence with our certified parenting programs for families with children ages zero through twelve.</p>
-  <p>When you join our growing networks of family professionals, you're part of a community of fellow facilitators, parent educators, and trainers.  You'll have access to our increasing array of tools and resources to support your work with parents and families. And you'll get ongoing professional support and information.</p>
+  <h1>{% editable page.title %}{{ page.title }}{% endeditable %}</h1>
+  {% editable page.content %}{{ page.content|safe }}{% endeditable %}
   
   </article>
   
   </section> 
-  
-  {% content_carousel_for %}
-
-  <section class="content-carousel green-list section">
-      <ul>
-      <h2>For Families</h2>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-      </ul>
+  {% block carousels %}
+    {% content_carousel_for page 'Family' %}
+    {% content_carousel_for page 'Professionals' %}  
+  {% endblock %}
   </section>
-  
-  <section class="content-carousel teal-list section">
-      <ul>
-      <h2>For Professionals</h2>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-      </ul>
-  </section>
-  
-  <section class="content-carousel yellow-list section">
-      <ul>
-      <h2>For Professionals</h2>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-      </ul>
-  </section>
-  
-  <section class="content-carousel dgreen-list section">
-      <ul>
-      <h2>For Professionals</h2>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-      </ul>
-  </section>
-  
- </section> <!-- #main-content-side "Left Side" -->
+<!-- #main-content-side "Left Side" -->
  
  
  
  <aside id="sidebar" class="col four mobile-full"> <!-- Right Side -->
  
- <div id="tag-widget" class="section">
+     <div id="tag-widget" class="section">
+     	
+        <div class="tag-container">
+            <div id="tag-logo"> 
+            
+                <a href="#"><img src="{% static 'img/tag-logo.png' %}" alt="BCCF's TAG Logo"></a>
+                <p>TALK&nbsp;&nbsp;ACT&nbsp;&nbsp;GET&nbsp;INVOLVED</p>
+                
+            </div>
+        </div>
+     
+     	<div class="tag-container">
+            <div id="tag-talk" class="tag-box">
+            	
+                <div class="tag-top">
+                    <em>Talk</em>
+                    <i>share your story</i>
+                </div>
+               
+               <img src="{% static 'img/sidebar-image-filler.gif' %}" alt="Add Title">
+               <h6>Family Time</h6>
+               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec dapibus felis. Aliquam eleifend cursus leo, nec pulvinar lorem interdum quis.</p> 
+               <div class="dashed-button"><a href="#" target="_blank">more</a></div>
+                
+            </div>
+        </div>
+        
+        <div class="tag-container">
+            <div id="tag-act" class="tag-box">
+            
+                <div class="tag-top">
+                    <em>Act</em>
+                    <i>take a survey</i>
+                </div>
+               
+               <img src="{% static 'img/sidebar-image-filler.gif' %}" alt="Add Title">
+               <h6>Pressure Cooker!</h6>
+               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec dapibus felis. Aliquam eleifend cursus leo, nec pulvinar lorem interdum quis.</p> 
+               <div class="dashed-button"><a href="#" target="_blank">take the survey</a></div>
+            
+            </div>
+        </div>
+        
+        <div class="tag-container">
+            <div id="tag-get" class="tag-box">
+            
+                <div class="tag-top">
+                    <em>Get Involved</em>
+                    <i>join a campaign</i>
+                </div>
+               
+               <img src="{% static 'img/sidebar-image-filler.gif' %}" alt="Add Title">
+               <h6>$10 a day Childcare</h6>
+               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec dapibus felis. Aliquam eleifend cursus leo, nec pulvinar lorem interdum quis.</p> 
+               <div class="dashed-button"><a href="#" target="_blank">more</a></div>
+            
+            
+            </div>
+        </div>
+     
+     
+     </div><!-- end of #tag-widget -->
+     
+     <div id="side-resources" class="section">
+     	<div class="res-container">
+            <div class="res-box">
+                    
+                    	<em>SUGGESTED RESOURCES</em>
+                        <h6>Rookie Dads</h6>
+                        <p>10 things every mom should know. Adding some extra text to make more lines.</p>
+                        <div class="dashed-button"><a href="#" target="_blank">more</a></div>
+
+            </div>
+       </div>
+     </div> <!-- end of #side-resources -->    
  
- </div>
- 
- </aside><!-- #sidebar "Right Side" -->
  
  
   
@@ -132,6 +120,15 @@ $(function(){
         'autoPlay': 5000,
         'autoHeight': true,
         'theme': "big-marquee",
+    });
+    $(window).on('popstate', function(e) {
+        $.ajax({
+            url: location.pathname,
+            context:  document.body,
+            success: function(data){
+                $(this).html(data);
+            }
+        });
     });
 });
 </script>
