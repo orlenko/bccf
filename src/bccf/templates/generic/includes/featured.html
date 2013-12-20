@@ -1,0 +1,16 @@
+{% load static %}
+
+{% for slide in slides %}
+<div class="hpro-slide">
+    <img src="{{ slide.image }}" alt="{{ slide.title }}" />
+    <div class="hpro-caption">
+        <div class="col seven mobile-seven">
+            <h4>{{ slide.title }}</h4>
+            <p>{{ slide.content|safe|striptags|truncatechars:50 }}<p>
+        </div>
+        <div class="hpro-buttons col four mobile-four">
+            <div class="dashed-button"><a href="{{ slide.get_absolute_url }}" target="_blank">LEARN MORE</a></div>
+        </div>
+    </div>
+</div><!-- End .hpro-slide -->
+{% endfor %}

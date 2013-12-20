@@ -1,0 +1,19 @@
+{% for slide in slides %}
+    {% if forloop.counter|divisibleby:"4" or forloop.first%}
+    <div>
+        <ul class="page-container-inner">
+    {% endif %}
+            <li class="page-box carousel-box col four">
+                <img src="{{ slide.image }}" alt="{{ slide.title }}" />
+                <div>
+                    <a href="{{ slide.get_absolute_url }}">
+                        <h2>{{ slide.title }}</h2>
+                    </a>
+                    <p class="no-tablet">{{ slide.description|truncatechars:30 }}</p>
+                </div>
+            </li>
+    {% if forloop.counter|divisibleby:"3" or forloop.last %}
+        </ul>
+    </div>
+    {% endif %}
+{% endfor %}

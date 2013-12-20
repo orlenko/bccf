@@ -109,7 +109,10 @@ ADMIN_MENU_ORDER = (
        "generic.ThreadedComment", ("Media Library", "fb_browse"),)),
     ("Site", ("sites.Site", "redirects.Redirect", "conf.Setting")),
     ("Users", ("auth.User", "auth.Group",)),
-    ("BCCF", ("news.NewsPost", "bccf.EventForParents", "bccf.EventForProfessionals", "bccf.Settings", "bccf.Topic", "bccf.TopicLink", "bccf.UserProfile",))
+    ("BCCF", ("news.NewsPost", "bccf.EventForParents", "bccf.EventForProfessionals", "bccf.Settings", "bccf.Topic", "bccf.TopicLink", "bccf.UserProfile",)),
+    ("Marquees", ("bccf.HomeMarquee", "bccf.HomeMarqueeSlide", "bccf.FooterMarquee", "bccf.FooterMarqueeSlide", "bccf.PageMarquee", "bccf.PageMarqueeSlide")),
+    ("Resources", ("bccf.Article", "bccf.DownloadableForm", "bccf.Magazine", "bccf.TipSheet", "bccf.Video")),
+    ("Events", ("bccf.EventForParents", "bccf.EventForProfessionals")),
 )
 
 # A three item sequence, each containing a sequence of template tags
@@ -499,3 +502,4 @@ else:
 ## OWN SETTINGS ##
 ##################
 #JQUERY_FILENAME = ""
+BCCF_PAGES = '(resources|blog|trainings|tag|news|programs)'

@@ -1,0 +1,88 @@
+{% load static %}
+<div id="tag-widget" class="section">
+             
+    <div class="tag-container">
+        <div id="tag-logo"> 
+        
+            <a href="#"><img src="{% static 'img/tag-logo.png' %}" alt="BCCF's TAG Logo"></a>
+            <p>TALK&nbsp;&nbsp;ACT&nbsp;&nbsp;GET&nbsp;INVOLVED</p>
+            
+        </div>
+    </div>
+ 
+    <div class="tag-container">
+        <div id="tag-talk" class="tag-box">
+                
+            <div class="tag-top section">
+                <em>Talk</em>
+                <i>share your story</i>
+            </div>
+           <div class="tag-carousel">
+               {% for talk in talks %}
+               <div>
+                   <img src="{{ talk.image }}" alt="{{ talk.title }}">
+                   <h6>{{ talk.title }}</h6>
+                   <p>{{ talk.description }}</p> 
+                   <div class="dashed-button"><a href="{{ talk.get_absolute_url }}" target="_blank">more</a></div>
+               </div>
+               {% endfor %}
+           </div>
+        </div>
+    </div>
+    
+    <div class="tag-container">
+        <div id="tag-act" class="tag-box">
+        
+            <div class="tag-top section">
+                <em>Act</em>
+                <i>take a survey</i>
+            </div>
+           
+           <div class="tag-carousel">
+               {% for act in acts %}
+               <div>
+                   <img src="{{ act.image }}" alt="{{ act.title }}">
+                   <h6>{{ act.title }}</h6>
+                   <p>{{ act.description }}</p> 
+                   <div class="dashed-button"><a href="{{ act.get_absolute_url }}" target="_blank">more</a></div>
+               </div>
+               {% endfor %}
+           </div>
+        
+        </div>
+    </div>
+    
+    <div class="tag-container">
+        <div id="tag-get" class="tag-box">
+        
+            <div class="tag-top section">
+                <em>Get Involved</em>
+                <i>join a campaign</i>
+            </div>
+           
+           <div class="tag-carousel">
+               {% for get in gets %}
+               <div>
+                   <img src="{{ get.image }}" alt="{{ get.title }}">
+                   <h6>{{ get.title }}</h6>
+                   <p>{{ get.description }}</p> 
+                   <div class="dashed-button"><a href="{{ get.get_absolute_url }}" target="_blank">more</a></div>
+               </div>
+               {% endfor %}
+           </div>
+        
+        
+        </div>
+    </div>
+ 
+ 
+ </div><!-- end of #tag-widget -->
+<script type="text/javascript" >
+    $(function() {
+        $('.tag-carousel').owlCarousel({
+            singleItem: true,
+            autoPlay: 5000,
+            pagination: false,        
+        });
+    });
+</script>

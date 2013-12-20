@@ -40,7 +40,6 @@ var edit_field = function(obj) {
     } else if(obj.hasClass('text-field') || obj.hasClass('password-field')) { // Text Fields
         title += 'Editing: '+obj.children('label').html();
         form += get_text_field('Label', obj.children('label').html(), 'label');
-        form += get_text_field('Name', obj.children('input').attr('name'), 'name');
         if(!obj.hasClass('password-field')) {
             form += get_text_field('Placeholder', obj.children('input').attr('placeholder'), 'placeholder');
         }
@@ -63,7 +62,6 @@ var edit_field = function(obj) {
     } else if(obj.hasClass('textarea-field')) {
         title += 'Editing: '+obj.children('label').html();
         form += get_text_field('Label', obj.children('label').html(), 'label');
-        form += get_text_field('Name', obj.children('textarea').attr('name'), 'name');
         form += get_text_field('Columns', obj.children('textarea').attr('cols'), 'cols');
         form += get_text_field('Rows', obj.children('textarea').attr('rows'), 'rows');
         form += get_check_field('Required', obj.children('textarea').attr('required') !== 'required' ? '' : 'checked', 'required');
@@ -85,13 +83,11 @@ var edit_field = function(obj) {
         });
         title += 'Editing: '+obj.children('label').html();
         form += get_text_field('Label', obj.children('label').html(), 'label');
-        form += get_text_field('Name', obj.children('select').attr('name'), 'name');
         form += get_textarea_field('Options', options, 'options');
         form += get_check_field('Required', obj.children('select').attr('required') !== 'required' ? '' : 'checked', 'required');
         update = function() {
             var newoptions = '';
             obj.children('label').html($("#label").val());
-            obj.children('select').attr('name', $("#name").val())
             $.each($("#options").val().split('\n'), function(index, value) {
                 if(value !== '') {
                     newoptions += '<option>'+value+'</option>';
@@ -112,14 +108,12 @@ var edit_field = function(obj) {
         });
         title += 'Editing: '+obj.children('label').html();
         form += get_text_field('Label', obj.children('label').html(), 'label');
-        form += get_text_field('Name', obj.find('input').attr('name'), 'name');
         form += get_textarea_field('Buttons', buttons, 'buttons');
         update = function() {
             var newbuttons = '';
             $.each($("#buttons").val().split('\n'), function(index, value) {
                 if(value !== '') {
-                    newbuttons += '<input type="'+type+'" name="'+$("#name").val()+
-                    '" value="'+value+'"/><span>'+value+'</span>';
+                    newbuttons += '<input type="'+type+' value="'+value+'"/><span>'+value+'</span>';
                 }
             });
             obj.children('label').html($("#label").val());
@@ -292,17 +286,12 @@ var export_form = function() {
  * Creates a form based off of a JSON string
  */
 var import_form = function(json) {
-    var obj = $.parseJSON(json);
     var formbody = $("#form-body");
     formbody.html("");
     
-    if(obj === null) {
-        obj = json
-    }
+    $("#form-title").val(json.title);
     
-    $("#form-title").val(obj.title);
-    
-    $(obj).each(function(i, form) {
+    $(json).each(function(i, form) {
         $(form.fieldset).each(function(i, fieldset) {
             create_fieldset("#form-body", fieldset.title);
             $(fieldset.fields).each(function(i, field) {

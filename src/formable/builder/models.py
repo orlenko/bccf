@@ -1,9 +1,12 @@
 import logging
 from datetime import datetime
 
+from django.core.urlresolvers import reverse
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext, ugettext_lazy as _
+
+from bccf.models import BCCFChildPage
 
 log = logging.getLogger(__name__)
 
@@ -21,7 +24,7 @@ class FormStructure(models.Model):
 
     title = models.CharField(_("Form Title"), max_length=100)
     structure = models.TextField(_("Form Sturcture"))
-    type = models.CharField(_("Form Type"), max_length=4, choices=FORM_TYPE)
+    type = models.CharField(_("Form Type"), max_length=4, default='JSON', choices=FORM_TYPE)
     created = models.DateTimeField(auto_now_add=True)
     
     class Meta:
@@ -31,29 +34,22 @@ class FormStructure(models.Model):
     def __unicode__(self):
         return self.title
         
-class FormPublished(models.Model):
+class FormPublished(BCCFChildPage):
     """
     Model for a published form structure.
     """
-    title = models.CharField(_('Title'), max_length=100)
     form_structure = models.ForeignKey('FormStructure', editable=False)
     user = models.ForeignKey(User)
-    published = models.DateTimeField(_("Published"), auto_now_add=True)
     
     class Meta:
         verbose_name = _("Published Form")
-        verbose_name_plural = _("Published Forms")
-        
-    def __unicode__(self):
-        return self.title
+        verbose_name_plural = _("Published Forms")        
         
     def save(self):
         if self.pk is None:
             self.published = datetime.now()
-            self.title = 'Published: %s - %s - %s' % (self.form_structure.title,
-                self.user.get_full_name() or self.user.username, 
-                self.published.__str__())
-        super(FormPublished, self).save()
+            self.title = self.form_structure.title
+        super(FormPublished, self).save()   
 
 class FormFilled(models.Model):
     """

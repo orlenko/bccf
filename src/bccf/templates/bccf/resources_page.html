@@ -1,0 +1,15 @@
+{% extends "bccf/bccf_page.html" %}
+
+{% load static bccf_big_marquee_tags content_carousel_tags %}
+
+{% block marquee %}
+{% big_marquee_for page %}
+{% endblock %}
+
+{% block carousels %}
+{% content_carousel_for page 'Article' child 'article' %}
+{% content_carousel_for page 'Downloadable Form' child 'downloadable' %}
+{% content_carousel_for page 'Magazine' child 'magazine' %}
+{% content_carousel_for page 'Tip Sheet' child 'tipsheet' %}
+{% content_carousel_for page 'Video' child 'video' %}
+{% endblock %}

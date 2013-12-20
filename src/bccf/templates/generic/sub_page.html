@@ -1,0 +1,15 @@
+{% load static %}
+<section id={{ child.title }} class="subpage">
+    <div class="subpage-content section row">
+        <h3>{{ child.title }}</h3>
+        <p>{{ child.description }}</p>
+    </div>    
+    <div class="subpage-tabs section row">
+        <ul class="no-style-list">
+            {% for baby in babies %}
+            <li class="col three"><a href="{{ baby.get_content_model.get_absolute_url }}">{{ baby.title }}</a></li>  
+            {% endfor %}
+            <li class="col three"><a href="{% url 'bccf-baby' child.gparent.slug child.slug 'resources' %}">Resources</a></li>
+        </ul>
+    </div>
+</section>

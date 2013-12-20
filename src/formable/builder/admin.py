@@ -1,4 +1,7 @@
+from copy import deepcopy
+
 from django.contrib import admin
+from mezzanine.core.admin import DisplayableAdmin
 from formable.builder.models import FormStructure, FormPublished, FormFilled, Question, FieldAnswer
 
 class FormFilledLine(admin.TabularInline):
@@ -41,21 +44,17 @@ class FormStructureAdmin(admin.ModelAdmin):
     list_filter = ['type', 'created']
     search_fields = ['title', 'id', 'type']
     
-class FormPublishedAdmin(admin.ModelAdmin):
-    """
-    Admin for FormPublished
-    """
-    readonly_fields = ('form_structure', 'published',)
-    fieldsets = [
-        ('Published Form Details', {'fields':['title', 'user', 'form_structure']}),
-        ('Meta', {'fields':['published']})
-    ]
-    inlines = [
-        QuestionLine
-    ]
-    list_display = ('title', 'form_structure', 'id', 'user', 'published')
-    list_filter = ['form_structure', 'user', 'published']
-    search_fields = ['title', 'form_structure', 'id', 'user']
+class FormPublishedAdmin(DisplayableAdmin):
+    def __init__(self, *args, **kwargs):
+        super(FormPublishedAdmin, self).__init__(*args, **kwargs)
+        if self.fieldsets == DisplayableAdmin.fieldsets:
+            self.fieldsets = deepcopy(self.fieldsets)
+            for field in reversed(['title',
+                                    'gparent',
+                                    'image',]):
+                self.fieldsets[0][1]['fields'].insert(3, field)
+        if self.list_display == DisplayableAdmin.list_display:
+            self.list_display = list(deepcopy(self.list_display))
     
 class FormFilledAdmin(admin.ModelAdmin):
     """

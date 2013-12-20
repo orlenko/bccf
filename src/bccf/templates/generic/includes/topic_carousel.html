@@ -1,0 +1,140 @@
+{% load static %}
+
+{% if slides %}
+<section id="{{ carousel_name }}_id" class="section content-pages {{ carousel_color }}">
+    <div class="section row top-control-container">
+        <div class="col nine carousel-title-container">
+            <h2>{{ carousel_title|title }}</h2>
+        </div>
+        <div id="{{ carousel_name }}_id-control" class="col three no-mobile control-buttons">
+            <a href="#" class="show-type-control to-grid">Grid</a>
+            <a href="#" class="show-type-control to-slide">Slide</a>
+        </div>
+    </div>
+    <div id="{{ carousel_name }}_id-outer">
+        <a class="button-prev-lgrey col one button-prev no-mobile no-tablet"></a>
+        <div class="page-container-outer col ten mobile-twelve tablet-twelve">
+            <div id="{{ carousel_name }}_id-carousel" class="carousel-slider">
+                <!-- SLIDER -->
+                {% for slide in slides %}
+                    {% if forloop.counter|divisibleby:"4" or forloop.first%}
+                    <div>
+                        <ul class="page-container-inner">
+                    {% endif %}
+                            <li class="page-box carousel-box col four">
+                                <img src="{{ slide.image }}" alt="{{ slide.title }}" />
+                                <div>
+                                    <a href="{{ slide.get_absolute_url }}" target="_blank">
+                                        <h2>{{ slide.title }}</h2>
+                                    </a>
+                                    <p class="no-tablet">{{ slide.description|truncatechars:30 }}</p>
+                                </div>
+                            </li>
+                    {% if forloop.counter|divisibleby:"3" or forloop.last %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+                <!-- SLIDER END -->
+                <!-- GRID -->
+            <div id="{{ carousel_name }}_id-grid" class="carousel-grid">
+                {% for slide in slides %}
+                    {% if forloop.counter|divisibleby:"13" or forloop.first %} <!-- If the first box of the slide -->
+                    <div>
+                        <ul class="page-container-inner">
+                    {% endif %}
+                        <li class="page-box grid-box col four">
+                            <img src="{{ slide.image }}" alt="{{ slide.title }}" />
+                            <div>
+                                <a href="{{ slide.get_absolute_url }}" target="_blank">
+                                    <h2>{{ slide.title }}</h2>
+                                </a>
+                                <p class="no-tablet">{{ slide.description|truncatechars:30 }}</p>
+                            </div>
+                        </li>
+                    {% if forloop.counter|divisibleby:"12" or forloop.last %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                    <!-- GRID END -->
+                {% endfor %}
+            </div>
+        </div>
+        <a class="button-next-lgreen col one button-next no-mobile no-tablet"></a>
+    </div>
+</section>
+
+<script>
+    var {{ carousel_name }}_id_offset = 0;
+    $(function() {
+        {{ carousel_name }}_id_offset = {{ slides|length }};
+        // Create new Owl Carousel
+        $('#{{ carousel_name }}_id-carousel').owlCarousel({
+            'singleItem': true,
+            'pagination': false,
+            'addClassActive': true,
+        });
+              
+        $('#{{ carousel_name }}_id-grid').owlCarousel({
+            'singleItem': true,
+            'pagination': false,
+            'addClassActive': true,       
+        }).hide();
+        
+        if('{{ carousel_name }}_id' === '{{ type }}_id' && $(window).width() >= 725) {
+            $('#{{ carousel_name }}_id-control .to-grid').trigger('click');
+        }
+        
+        $(window).on('resize', function(e) {
+            if($(window).width() <= 724) {
+                $('.to-slide').trigger('click');
+            }
+        });
+    });
+    
+    $('#{{ carousel_name }}_id').on('click', 'a[class^="button"]', function(e) {
+        e.preventDefault();
+        var carousel = $(this).siblings('div.page-container-outer').children('div[class^="carousel"]:visible');
+        if($(this).hasClass('button-prev')) {
+            carousel.trigger('owl.prev');
+        } else {
+            if(carousel.find('.active').is(':last-child')) {
+                var offset = carousel.find('.owl-item .page-box').length;
+                $.ajax({
+                    url: '/next/topic/{{ page.slug }}/{{ carousel_name }}/'+offset+'/',
+                    success: function(data) {
+                        json = $.parseJSON(data);
+                        if(json.length > 0) {                    
+                            {{ carousel_name }}_id_add_slide(json);
+                            {{ carousel_name }}_id_add_grid(json);
+                            if($('#{{ carousel_name }}_id-carousel').is(':visible')) {
+                                $('#{{ carousel_name }}_id-grid').hide();                       
+                            } else {
+                                $('#{{ carousel_name }}_id-carousel').hide();
+                            }
+                        }
+                        carousel.trigger('owl.next');
+                    },
+                });          
+            } else {
+                carousel.trigger('owl.next');
+            }     
+        }
+    })
+    $('#{{ carousel_name }}_id .page-box').on('click', function(e) {
+        window.location.href = $(this).find('a').attr('href');
+        e.preventDefault();
+    });
+    $('#{{ carousel_name }}_id-control').on('click', 'a', function(e) {
+        e.preventDefault();
+        if($(this).hasClass('to-grid')) {
+            $('#{{ carousel_name }}_id-carousel').hide();
+            $('#{{ carousel_name }}_id-grid').show();
+        } else {
+            $('#{{ carousel_name }}_id-grid').hide();
+            $('#{{ carousel_name }}_id-carousel').show();
+        }
+    });
+</script>
+{% endif %}

@@ -25,7 +25,6 @@ log = logging.getLogger(__name__)
 
 register = template.Library()
 
-
 @register.render_tag
 def bccf_pagination(context, token):
     parts = token.split_contents()[1:]

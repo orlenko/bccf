@@ -26,11 +26,10 @@ urlpatterns = patterns("",
     # Change the admin prefix here to use an alternate URL for the
     # admin interface, which would be marginally more secure.
     ("^admin/", include(admin.site.urls)),
+    
+    #For Showing Pages
 
     (r'^forum/', include('pybb.urls', namespace='pybb')),
-    
-    url(r'^news/(?P<news>.*)/$', 'bccf.views.newsposts.newspost', {}, name='news-post'),
-    url(r'^news/', 'bccf.views.newsposts.newspost', name='news-post'),
 
     # Cartridge URLs.
     ("^shop/", include("cartridge.shop.urls")),
@@ -62,19 +61,13 @@ urlpatterns = patterns("",
     url(r'^professionals/event/report/(?P<slug>.*)/$', 'bccf.views.events.professional_survey_download_report', name='professional-download-report'),
     url(r'^professionals/event/(?P<slug>.*)/$', 'bccf.views.events.professionals_event', name='professionals-event'),
         
-    #Resources
-    url(r'^resources/$', 'bccf.views.resources.resources_page', name='resources-page'),
-    url(r'^resources/(?P<type>[a-z]+)/', 'bccf.views.resources.resources_page', name='resources-type'),
-    
-    #Programs
-    url(r'^programs/$', 'bccf.views.programs.programs_page', name='programs-page'),
-    
-    #Blog
-    url(r'^blog/', 'bccf.views.blog.blog_page', name='blog-page'),    
-    
-    #AJAX Calls
-    url(r'^get/(?P<parent>.+)/(?P<type>.+)/(?P<page>.+)/$', 'bccf.views.ajax.get', name='ajax-page'),
-    url(r'^get/(?P<offset>[0-9]+)/(?P<model>[a-zA-Z]+)', 'bccf.views.ajax.add', name='ajax-add'),
+    #Pages
+    url(r'^next/topic/(?P<topic>.+)/(?P<which>.*)/(?P<offset>\d+)/$', 'bccf.views.page.topic_next', name='topic-next'),
+    url(r'^next/(?P<parent>.+)/(?P<which>.*)/(?P<offset>\d+)/$', 'bccf.views.page.next', name='bccf-next'),
+    url(r'^topic/(?P<topic>.+)/$', 'bccf.views.page.topic_page', name='topic-page'),
+    url(r'^(?P<parent>%s)/(?P<child>.+)/(?P<baby>.+)/$' % (settings.BCCF_PAGES), 'bccf.views.page.page', name='bccf-baby'),
+    url(r'^(?P<parent>%s)/(?P<child>.+)/$' % (settings.BCCF_PAGES), 'bccf.views.page.page', name='bccf-child'),
+    url(r'^(?P<parent>%s)/$' % (settings.BCCF_PAGES), 'bccf.views.page.page', name='bccf-page'),
 
     # We don't want to presume how your homepage works, so here are a
     # few patterns you can use to set it up.

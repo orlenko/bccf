@@ -1,17 +1,20 @@
-{% extends "base.html" %}
+{% extends "bccf/bccf_page.html" %}
 
 {% load form_utils %}
 
-{% block main %}
+{% block marquee %}{% endblock %}
 
+{% block content %}
 <div id="form_view" class="section row">
-    <form action="{% url 'submit-form' %}" method="POST">
-        <h2>{{ form_title }}</h2>
+    <form action="{% url 'formable-submit-form' %}" method="POST">
         {{ form|render }}
         <input type="hidden" name="publish_id" value="{{ publish_id }}"/>
         {% csrf_token %}
         <input type="Submit" />
     </form>
 </div>
+{% endblock %}
+
+{% block carousels %}
 
 {% endblock %}

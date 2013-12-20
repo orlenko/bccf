@@ -10,19 +10,26 @@ log = logging.getLogger(__name__)
 def get(request, parent, type, page):
     log.info(parent)
     log.info(type)
-    if parent == 'News':
-        model = get_model('news', 'NewsPost')
+    log.info(page)
+    try:
+        if parent == 'News' or parent == 'Blog':
+            model = get_model(parent.lower(), '%sPost' % (parent))
+            obj = model.objects.get(slug=page)
+            context = RequestContext(request, locals())
+            return render_to_response('generic/sub_page_box.html', {}, context_instance=context);
+        elif parent == 'Programs/Professionals' or parent == 'Programs/Parents':
+            model = get_model('bccf', 'Program')
+            childModel = get_model('bccf', 'ProgramChild')
+            obj = model.objects.get(slug='%s/%s' % (type, page))
+            children = childModel.objects.filter(parent=obj)
+            context = RequestContext(request, locals())
+            return render_to_response('generic/programs_page_box.html', {}, context_instance=context);
+        else:
+            model = get_model('bccf', type)
         obj = model.objects.get(slug=page)
-        context = RequestContext(request, locals())
-        return render_to_response('generic/sub_page_box.html', {}, context_instance=context);
-    elif parent == 'Blog':
-        from mezzanine.blog.models import BlogPost
-        obj = BlogPost.objects.get(slug=page)
-        context = RequestContext(request, locals())
-        return render_to_response('generic/sub_page_box.html', {}, context_instance=context);
-    else:
-        model = get_model('bccf', type)
-    obj = model.objects.get(slug=page)
+    except ObjectDoesNotExist, e:
+        log.info('Object Does Not Exist')
+        log.error(e)
     context = RequestContext(request, locals())
     return render_to_response('generic/%s_page_box.html' % (parent.lower()), {}, context_instance=context);
     

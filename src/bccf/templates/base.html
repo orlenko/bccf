@@ -115,7 +115,7 @@
 
     <nav id="main-top-nav" class="nav-mobile-container section">
         <span class="row no-desktop mobile-full">Menu</span>
-        {% page_menu "pages/menus/dropdown.html" %}
+        {% page_menu 'pages/menus/dropdown.html' %}
         <!-- <ul class="col eight mobile-full">
             <li><a href="#">Programs</a></li>
             <li><a href="#">Trainings</a></li>
@@ -139,16 +139,7 @@
   <footer>
 
   <nav id="main-footer-nav" class="section row-two">
-    <ul class="col twelve mobile-full">
-      <li><a href="#">NEWS</a></li>
-      <li><a href="#">DONATE</a></li>
-      <li><a href="#">MEMBERSHIP</a></li>
-      <li><a href="#">ABOUT</a></li>
-      <li><a href="#">CONTACT</a></li>
-      <li><a href="#">SITEMAP</a></li>
-      <li><a href="#">PRIVACY POLICY</a></li>
-      <li><a href="#">TERMS & CONDITIONS</a></li>
-    </ul>
+    {% page_menu 'pages/menus/footer.html' %}
   </nav>
 
   <section class="section row-one">

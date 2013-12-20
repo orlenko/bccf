@@ -1,6 +1,6 @@
 from django.db.models import ObjectDoesNotExist
 from mezzanine import template
-from bccf.models import Topic, HomeMarquee, HomeMarqueeSlide, PageMarqueeSlide
+from bccf.models import BCCFTopic, HomeMarquee, HomeMarqueeSlide, PageMarqueeSlide
 
 import logging
 
@@ -13,9 +13,9 @@ def big_marquee_for(context, obj=None):
     """
     Provides generic content variable for the big marquee.
     """
+    context['topics'] = BCCFTopic.objects.all()
     if obj is None: # For index
         context['show_tag'] = True
-        context['topics'] = Topic.objects.all()
         try:
             homeMarquee = HomeMarquee.objects.get(active=True)
             context['slides'] = HomeMarqueeSlide.objects.filter(marquee=homeMarquee)

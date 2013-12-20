@@ -9,14 +9,22 @@ from django.contrib.formtools.wizard.views import SessionWizardView
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404, HttpResponse
 
-from bccf.models import EventForParents, EventForProfessionals
+from bccf.models import EventForParents, EventForProfessionals, BCCFPage
 from bccf.util.membership import require_parent, require_professional
-from bccf.forms import ProfessionalEventForm, ParentEventForm, FormStructureSurveyFormOne, FormStructureSurveyFormTwo, ProfessionalSurveyReport
+from bccf.forms import ProfessionalEventForm, ParentEventForm, FormStructureSurveyFormOne, FormStructureSurveyFormTwo
 from django.views.decorators.cache import never_cache
 
 from formable.builder.models import FormStructure, FormPublished, FormFilled, FieldAnswer, Question
 
 log = logging.getLogger(__name__)
+
+##################
+# Generic Stuff
+def event_page(request):
+    page = BCCFPage.objects.get(slug='trainings')
+    context = RequestContext(request, locals())
+    return render_to_response('bccf/events_page.html', {}, context_instance=context)
+
 
 ##################
 # Parent Stuff
@@ -71,7 +79,6 @@ FORMS = [('event', ProfessionalEventForm), # Main Form
 TEMPLATES = {'event': 'bccf/wizard_event_create.html',
              'before': 'generic/includes/form_builder.html',
              'after': 'generic/includes/form_builder.html'}
-
 
 class ProfessionalEventWizard(SessionWizardView):
     """
@@ -137,13 +144,17 @@ class ProfessionalEventWizard(SessionWizardView):
         event_data = form_list[0].cleaned_data
         if 'survey' in event_data: # check and remove the survey key-value pair
             del event_data['survey']
+        event = EventForProfessionals(**event_data)
+        log.info(len(form_list))
         if len(form_list) >= 2: # If there's a before survey
-            event_data.update({'survey_before':self.process_survey(form_list[1])})
+            event.survey_before = self.process_survey(form_list[1])
         if len(form_list) == 3: # If there's an after survey
-            event_data.update({'survey_after':self.process_survey(form_list[2])})
+            log.info('After Survey')
+            event.survey_after= self.process_survey(form_list[2])
 
-        event = EventForProfessionals.objects.create(**event_data)
-        return redirect('/professionals/event/%s' % (event.slug))
+        event.save()
+
+        return redirect(event.get_absolute_url())
 
     def process_survey(self, form):
         """
@@ -156,8 +167,9 @@ class ProfessionalEventWizard(SessionWizardView):
             del data['clone']
         if 'after_survey' in data: # check and remove the after_survey key-value pair
             del data['after_survey']
-        form_struct = FormStructure.objects.create(**data)
-        published = FormPublished(form_structure=form_struct, user=self.request.user)
+        form_struct = FormStructure(**data)
+        form_struct.save()
+        published = FormPublished(form_structure=form_struct, user=self.request.user, page_for='professional')
         published.save()
 
         # Create Questions based on structure

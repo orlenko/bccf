@@ -14,13 +14,12 @@
   <article class="col twelve">
   
   <h1>{% editable page.title %}{{ page.title }}{% endeditable %}</h1>
-  {% editable page.content %}{{ page.content|safe }}{% endeditable %}
-  
+  {% block content %}{% editable page.content %}{{ page.content|safe }}{% endeditable %}{% endblock %}
   </article>
   
   </section> 
   {% block carousels %}
-    {% content_carousel_for page 'Family' %}
+    {% content_carousel_for page 'Parents' %}
     {% content_carousel_for page 'Professionals' %}  
   {% endblock %}
   </section>
@@ -29,70 +28,7 @@
  
  
  <aside id="sidebar" class="col four mobile-full"> <!-- Right Side -->
- 
-     <div id="tag-widget" class="section">
-     	
-        <div class="tag-container">
-            <div id="tag-logo"> 
-            
-                <a href="#"><img src="{% static 'img/tag-logo.png' %}" alt="BCCF's TAG Logo"></a>
-                <p>TALK&nbsp;&nbsp;ACT&nbsp;&nbsp;GET&nbsp;INVOLVED</p>
-                
-            </div>
-        </div>
-     
-     	<div class="tag-container">
-            <div id="tag-talk" class="tag-box">
-            	
-                <div class="tag-top">
-                    <em>Talk</em>
-                    <i>share your story</i>
-                </div>
-               
-               <img src="{% static 'img/sidebar-image-filler.gif' %}" alt="Add Title">
-               <h6>Family Time</h6>
-               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec dapibus felis. Aliquam eleifend cursus leo, nec pulvinar lorem interdum quis.</p> 
-               <div class="dashed-button"><a href="#" target="_blank">more</a></div>
-                
-            </div>
-        </div>
-        
-        <div class="tag-container">
-            <div id="tag-act" class="tag-box">
-            
-                <div class="tag-top">
-                    <em>Act</em>
-                    <i>take a survey</i>
-                </div>
-               
-               <img src="{% static 'img/sidebar-image-filler.gif' %}" alt="Add Title">
-               <h6>Pressure Cooker!</h6>
-               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec dapibus felis. Aliquam eleifend cursus leo, nec pulvinar lorem interdum quis.</p> 
-               <div class="dashed-button"><a href="#" target="_blank">take the survey</a></div>
-            
-            </div>
-        </div>
-        
-        <div class="tag-container">
-            <div id="tag-get" class="tag-box">
-            
-                <div class="tag-top">
-                    <em>Get Involved</em>
-                    <i>join a campaign</i>
-                </div>
-               
-               <img src="{% static 'img/sidebar-image-filler.gif' %}" alt="Add Title">
-               <h6>$10 a day Childcare</h6>
-               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec dapibus felis. Aliquam eleifend cursus leo, nec pulvinar lorem interdum quis.</p> 
-               <div class="dashed-button"><a href="#" target="_blank">more</a></div>
-            
-            
-            </div>
-        </div>
-     
-     
-     </div><!-- end of #tag-widget -->
-     
+    {% content_carousel_for_tag %}
      <div id="side-resources" class="section">
      	<div class="res-container">
             <div class="res-box">
@@ -122,13 +58,7 @@ $(function(){
         'theme': "big-marquee",
     });
     $(window).on('popstate', function(e) {
-        $.ajax({
-            url: location.pathname,
-            context:  document.body,
-            success: function(data){
-                $(this).html(data);
-            }
-        });
+        window.location.href = location.pathname
     });
 });
 </script>
