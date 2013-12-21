@@ -18,11 +18,12 @@
 
 # If True, the checkout process is split into separate
 # billing/shipping and payment steps.
-# SHOP_CHECKOUT_STEPS_SPLIT = True
+SHOP_CHECKOUT_STEPS_SPLIT = False
 
 # If True, the checkout process has a final confirmation step before
 # completion.
-# SHOP_CHECKOUT_STEPS_CONFIRMATION = True
+SHOP_CHECKOUT_STEPS_CONFIRMATION = False
+SHOP_DISCOUNT_FIELD_IN_CHECKOUT = True
 
 # Controls the formatting of monetary values accord to the locale
 # module in the python standard library. If an empty string is
@@ -40,7 +41,7 @@
 # is called once an order is successful and all of the order
 # object's data has been created. This is where any custom order
 # processing should be implemented.
-SHOP_HANDLER_ORDER = "bccf.util.membership.order_handler"
+SHOP_HANDLER_ORDER = "bccf.util.memberutil.order_handler"
 
 # Dotted package path and class name of the function that
 # is called on submit of the payment checkout step. This is where
@@ -48,10 +49,11 @@ SHOP_HANDLER_ORDER = "bccf.util.membership.order_handler"
 # SHOP_HANDLER_PAYMENT = "cartridge.shop.checkout.default_payment_handler"
 
 # Sequence of value/name pairs for order statuses.
-# SHOP_ORDER_STATUS_CHOICES = (
-#     (1, "Unprocessed"),
-#     (2, "Processed"),
-# )
+SHOP_ORDER_STATUS_CHOICES = (
+    (1, "Unprocessed"),
+    (2, "Processed"),
+    (3, "Cancelled"),
+)
 
 # Sequence of value/name pairs for types of product options,
 # eg Size, Colour.
@@ -466,6 +468,13 @@ ORGANIZATION_MEMBERSHIP_CATEGORY = 'membership-organizations'
 CORPORATE_MEMBERSHIP_CATEGORY = 'membership-corporate'
 EMPLOYEE_MEMBERSHIP_CATEGORY = 'membership-corporate-employee'
 
+
+########################
+# Server email         #
+########################
+
+SERVER_EMAIL = 'staging_bccf@bjola.ca'
+ADMIN_EMAIL = 'admin_bccf@bjola.ca'
 
 
 ##################

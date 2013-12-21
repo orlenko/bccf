@@ -113,7 +113,7 @@ def initial_order_data(request, form_class=None):
         if len(remembered) == 2 and remembered[0] == sign(remembered[1]):
             lookup["key"] = remembered[1]
         if lookup:
-            previous = Order.objects.filter(**lookup).values()[:1]
+            previous = Order.objects.filter(**lookup).values()[:1]  # @UndefinedVariable PyDev is crazy
             if len(previous) > 0:
                 initial.update(previous[0])
     if not initial and request.user.is_authenticated():
