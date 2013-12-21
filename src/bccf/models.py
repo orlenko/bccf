@@ -215,8 +215,6 @@ class BCCFChildPage(BCCFBasePage, RichText, AdminThumbMixin):
         URL for a page
         """
         slug = self.slug
-        if self.content_model == 'topic':
-            return reverse('pybb:topic', kwargs={'pk': self.get_content_model().pk })
         if self.gparent:
             parent = self.gparent.slug
         else:
