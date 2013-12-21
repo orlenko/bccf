@@ -30,18 +30,11 @@ from mezzanine.utils.email import send_mail_template
 
 log = logging.getLogger(__name__)
 
-<<<<<<< HEAD
-#### Marquee Stuff ####
-# Order statuses
-ORDER_STATUS_COMPLETE = 2
-ORDER_STATUS_CANCELLED = 3
-=======
 # Order statuses
 ORDER_STATUS_COMPLETE = 2
 ORDER_STATUS_CANCELLED = 3
 
 #### Marquee Stuff ####
->>>>>>> 1c3cdc32313e8609147e183d92e861abff07babf
 
 class Marquee(models.Model):
     """
@@ -613,14 +606,7 @@ class UserProfile(models.Model):
             return d + relativedelta(months=+3)
         if subscription_term == 'Monthly':
             return d + relativedelta(months=+1)
-            
-<<<<<<< HEAD
-=======
-#### USER STUFF END ####
 
-class EventBase(BCCFChildPage):
-    """
->>>>>>> 1c3cdc32313e8609147e183d92e861abff07babf
     @property
     def remaining_balance(self):
         membership = self.membership_product_variation
@@ -629,11 +615,10 @@ class EventBase(BCCFChildPage):
         price = membership.unit_price
         now = datetime.now()
         return remaining_subscription_balance(purchase_date, expiration_date, now, price)
-<<<<<<< HEAD
-            
 #### USER STUFF END ####
-=======
-    """
+
+class EventBase(BCCFChildPage):
+
     provider = models.ForeignKey(User, blank=True, null=True)
 
     price = MoneyField()
@@ -696,7 +681,6 @@ class EventForProfessionals(EventBase):
     class Meta:
         verbose_name = 'Event for Professionals'
         verbose_name_plural = 'Events for Professionals'
->>>>>>> 1c3cdc32313e8609147e183d92e861abff07babf
 
 class Settings(models.Model):
     name = models.CharField(max_length=255)
@@ -715,9 +699,6 @@ class Settings(models.Model):
             return rec.value
         retval = getattr(settings, name, default_value or '-')
         cls.objects.create(name=name, value=retval)
-<<<<<<< HEAD
-        return retval
-=======
         return retval
 
 def remaining_subscription_balance(purchase_date, expiration_date, to_date, paid):
@@ -728,4 +709,3 @@ def remaining_subscription_balance(purchase_date, expiration_date, to_date, paid
     used_fraction = elapsed_time.total_seconds() / licensed_time.total_seconds()
     remaining = Decimal(str(float(paid) * (1 - used_fraction)))
     return remaining
->>>>>>> 1c3cdc32313e8609147e183d92e861abff07babf
