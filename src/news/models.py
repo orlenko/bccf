@@ -20,6 +20,6 @@ class NewsPost(BCCFChildPage):
         verbose_name_plural = 'News Posts'
         
     def save(self, **kwargs):
-        page = BCCFPage.objects.filter(slug='news')
+        page = BCCFPage.objects.get(slug='news')
         self.gparent = page
         super(NewsPost, self).save(**kwargs);

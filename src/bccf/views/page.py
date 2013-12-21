@@ -17,10 +17,12 @@ def page(request, parent, child=None, baby=None):
         template = 'bccf/%s_page.html' % (parent)
     else: 
         baby_obj = None
+        log.info('TEST')
         if baby and baby != 'resources':
             baby_obj = BCCFBabyPage.objects.get(slug=('%s/%s') % (child, baby))
-        elif baby == 'resources':
+        elif baby and baby == 'resources':
             baby_obj = 'resources'
+        log.info('TEST 2')
         child_obj = BCCFChildPage.objects.get(slug=child)
         babies = (BCCFChildPage.objects.filter(parent=child_obj))
         template = 'generic/sub_page.html'
