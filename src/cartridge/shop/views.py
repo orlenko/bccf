@@ -22,6 +22,10 @@ from cartridge.shop.models import Product, ProductVariation, Order, OrderItem
 from cartridge.shop.models import DiscountCode
 from cartridge.shop.utils import recalculate_cart, sign
 
+import logging
+
+log = logging.getLogger(__name__)
+
 
 # Set up checkout handlers.
 handler = lambda s: import_dotted_path(s) if s else lambda *args: None
@@ -122,7 +126,7 @@ def wishlist(request, template="shop/wishlist.html"):
     # Remove skus from the cookie that no longer exist.
     published_products = Product.objects.published(for_user=request.user)
     f = {"product__in": published_products, "sku__in": skus}
-    wishlist = ProductVariation.objects.filter(**f).select_related(depth=1)
+    wishlist = ProductVariation.objects.filter(**f).select_related(depth=1)  # @UndefinedVariable - PyDev is wrongly freaking out over select_related
     wishlist = sorted(wishlist, key=lambda v: skus.index(v.sku))
     context = {"wishlist_items": wishlist, "error": error}
     response = render(request, template, context)
@@ -203,6 +207,7 @@ def checkout_steps(request):
     form = form_class(request, step, initial=initial)
     data = request.POST
     checkout_errors = []
+    log.debug('Checkout step %s' % step)
 
     if request.POST.get("back") is not None:
         # Back button in the form was pressed - load the order form
@@ -231,6 +236,7 @@ def checkout_steps(request):
                     tax_handler(request, form)
                 except checkout.CheckoutError, e:
                     checkout_errors.append(e)
+                log.debug('Setting discount')
                 form.set_discount()
 
             # FINAL CHECKOUT STEP - handle payment and process order.

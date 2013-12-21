@@ -20,6 +20,9 @@ from cartridge.shop import checkout
 from cartridge.shop.models import Product, ProductOption, ProductVariation
 from cartridge.shop.models import Cart, CartItem, Order, DiscountCode
 from cartridge.shop.utils import make_choices, set_locale, set_shipping
+import logging
+
+log = logging.getLogger(__name__)
 
 
 ADD_PRODUCT_ERRORS = {
@@ -253,14 +256,18 @@ class DiscountForm(forms.ModelForm):
         # discounts when running tests.
         testing = getattr(settings, "TESTING", False)
         if "discount_code" in self._request.session and not testing:
+            log.debug('Discount code already applied: %s!' % self._request.session['discount_code'])
             # Already applied
             return ""
         code = self.cleaned_data.get("discount_code", "")
         cart = self._request.cart
+        log.debug('Discount code: %s' % code)
         if code:
             try:
+                log.debug('Getting valid discount for code %s' % code)
                 discount = DiscountCode.objects.get_valid(code=code, cart=cart)
                 self._discount = discount
+                log.debug('Valid discount: %s' % discount)
             except DiscountCode.DoesNotExist:
                 error = _("The discount code entered is invalid.")
                 raise forms.ValidationError(error)
@@ -271,11 +278,13 @@ class DiscountForm(forms.ModelForm):
         Assigns the session variables for the discount.
         """
         discount = getattr(self, "_discount", None)
+        log.debug('Setting discount: %s' % discount)
         if discount is not None:
             total = self._request.cart.calculate_discount(discount)
             if discount.free_shipping:
                 set_shipping(self._request, _("Free shipping"), 0)
             self._request.session["free_shipping"] = discount.free_shipping
+            log.debug('Setting session discount code: %s' % discount.code)
             self._request.session["discount_code"] = discount.code
             self._request.session["discount_total"] = total
 
@@ -346,9 +355,12 @@ class OrderForm(FormsetForm, DiscountForm):
         no_discounts = not DiscountCode.objects.active().exists()
         discount_applied = "discount_code" in getattr(request, "session", {})
         discount_in_checkout = settings.SHOP_DISCOUNT_FIELD_IN_CHECKOUT
-        if discount_applied or no_discounts or not discount_in_checkout:
+        force_discount = request.session.get('force_discount')
+        if force_discount or discount_applied or no_discounts or not discount_in_checkout:
             self.fields["discount_code"].widget = forms.HiddenInput()
-
+        if force_discount:
+            self.initial['discount_code'] = force_discount
+            del request.session['force_discount']
         # Determine which sets of fields to hide for each checkout step.
         # A ``hidden_filter`` function is defined that's used for
         # filtering out the fields to hide.
