@@ -50,7 +50,10 @@ class FormPublishedAdmin(DisplayableAdmin):
         if self.fieldsets == DisplayableAdmin.fieldsets:
             self.fieldsets = deepcopy(self.fieldsets)
             for field in reversed(['title',
-                                    'gparent',
+                                    'content',
+                                    'page_for',
+                                    'bccf_topic',
+                                    'featured',
                                     'image',]):
                 self.fieldsets[0][1]['fields'].insert(3, field)
         if self.list_display == DisplayableAdmin.list_display:

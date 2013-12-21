@@ -24,16 +24,17 @@ def save_structure(request):
     Saves a form structure to be cloned later. The any request that is not post
     will be redirected to the form builder. If all goes well, the user will be
     redirected to view the form as HTML.
-    """   
-    form_structure_form = FormStructureForm(request.POST)
-
-    if form_structure_form.is_valid():
-        form_structure = form_structure_form.save()
-    else:
-        log.info(form_structure_form.errors)
+    """
+    form_structure = FormStructure(structure=request.POST.get('structure'), title=request.POST.get('title'))
+    form_structure.save()
         
     form_published = FormPublished(form_structure=form_structure, user=request.user)
     form_published.save()
+    page = BCCFChildPage.objects.get(slug=form_published.slug)
+    page.content=request.POST.get('content')
+    page.page_for=request.POST.get('page_for')
+    page.bccf_topic=request.POST.get('bccf_topic')
+    page.save()
 
     # Create Questions based on structure
     struct = json.loads(form_structure.structure)

@@ -30,10 +30,18 @@ from mezzanine.utils.email import send_mail_template
 
 log = logging.getLogger(__name__)
 
+<<<<<<< HEAD
 #### Marquee Stuff ####
 # Order statuses
 ORDER_STATUS_COMPLETE = 2
 ORDER_STATUS_CANCELLED = 3
+=======
+# Order statuses
+ORDER_STATUS_COMPLETE = 2
+ORDER_STATUS_CANCELLED = 3
+
+#### Marquee Stuff ####
+>>>>>>> 1c3cdc32313e8609147e183d92e861abff07babf
 
 class Marquee(models.Model):
     """
@@ -184,6 +192,7 @@ class BCCFChildPage(BCCFBasePage, RichText, AdminThumbMixin):
     login_required = models.BooleanField("Login required", default=False,
         help_text="If checked, only logged in users can view this page")
     rating = RatingField()
+    in_menus = MenusField("Show in menus", blank=True, null=True)
     page_for = models.CharField('Type', max_length=13, default='Parents', blank=True, null=True, choices=TYPES)
     image = FileField("Image",
         upload_to = upload_to("bccf.ChildPage.image_file", "childpage"),
@@ -213,8 +222,6 @@ class BCCFChildPage(BCCFBasePage, RichText, AdminThumbMixin):
         URL for a page
         """
         slug = self.slug
-        if self.content_model == 'formpublished':
-            return reverse('formable-view', kwargs={'slug':slug})
         if self.content_model == 'topic':
             return reverse('pybb:topic', kwargs={'pk': self.get_content_model().pk })
         if self.gparent:
@@ -432,7 +439,7 @@ class BCCFBabyPage(BCCFChildPage):
         return reverse('bccf-baby', kwargs={"parent": gparent, "child": parent, "baby": slug[1]})
        
 #Article
-class DocuementResourceBase(BCCFChildPage):
+class DocumentResourceBase(BCCFChildPage):
     #Document Fields
     attached_document = FileField('Downloadable Document',
         upload_to = upload_to("bccf.DocumentResource.attachment_file", "resource/document"),
@@ -444,22 +451,22 @@ class DocuementResourceBase(BCCFChildPage):
             'Acceptable file types: .doc, .pdf, .rtf, .txt, .odf, .docx, .xls, .xlsx, .ppt, .pptx.')
     def save(self, **kwargs):
         self.gparent = BCCFPage.objects.get(slug='resources')
-        super(DocumentResourcePage, self).save(**kwargs)
+        super(DocumentResourceBase, self).save(**kwargs)
     class Meta:
         abstract = True
 
-class Article(DocuementResourceBase):
+class Article(DocumentResourceBase):
     pass
 
-class DownloadableForm(DocuementResourceBase):
+class DownloadableForm(DocumentResourceBase):
     class Meta:
         verbose_name = 'Downloadable Form'
         verbose_name_plural = 'Downloadable Forms'
     
-class Magazine(DownloadableForm):
+class Magazine(DocumentResourceBase):
     pass
     
-class TipSheet(DownloadableForm):
+class TipSheet(DocumentResourceBase):
     class Meta:
         verbose_name = 'Tip Sheet'
         verbose_name_plural = 'Tip Sheets'
@@ -607,6 +614,13 @@ class UserProfile(models.Model):
         if subscription_term == 'Monthly':
             return d + relativedelta(months=+1)
             
+<<<<<<< HEAD
+=======
+#### USER STUFF END ####
+
+class EventBase(BCCFChildPage):
+    """
+>>>>>>> 1c3cdc32313e8609147e183d92e861abff07babf
     @property
     def remaining_balance(self):
         membership = self.membership_product_variation
@@ -615,8 +629,74 @@ class UserProfile(models.Model):
         price = membership.unit_price
         now = datetime.now()
         return remaining_subscription_balance(purchase_date, expiration_date, now, price)
+<<<<<<< HEAD
             
 #### USER STUFF END ####
+=======
+    """
+    provider = models.ForeignKey(User, blank=True, null=True)
+
+    price = MoneyField()
+
+    location_city = models.CharField('City', max_length=255, blank=True, null=True)
+    location_street = models.CharField('Street', max_length=255, blank=True, null=True)
+    location_street2 = models.CharField('Street (line2)', max_length=255, blank=True, null=True)
+    location_postal_code = models.CharField('Postal Code', max_length=255, blank=True, null=True)
+
+    date_start = models.DateTimeField('Event Start', blank=True, null=True)
+    date_end = models.DateTimeField('Event End', blank=True, null=True)
+
+    class Meta:
+        abstract = True
+
+class EventForParents(EventBase):
+    
+    def save(self, **kwargs):
+        self.gparent = BCCFPage.objects.get(slug='trainings')
+        self.page_for = 'parent'
+        super(EventForParents, self).save(**kwargs)
+
+    @permalink
+    def signup_url(self):
+        return ('parents-event-signup', (), {'slug': self.slug})
+
+    @permalink
+    def create_url(self):
+        return('parents-event-create', (), {})
+
+    class Meta:
+        verbose_name = 'Event for Parents'
+        verbose_name_plural = 'Events for Parents'
+
+class EventForProfessionals(EventBase):
+    survey_before = models.ForeignKey('builder.FormPublished', null=True, blank=True, related_name='survey_before')
+    survey_after = models.ForeignKey('builder.FormPublished', null=True, blank=True, related_name='survey_after')
+
+    def save(self, **kwargs):
+        self.gparent = BCCFPage.objects.get(slug='trainings')
+        self.page_for = 'professional'
+        super(EventForProfessionals, self).save(**kwargs)
+        
+        # For Surveys
+        if self.survey_before:
+            self.survey_before.parent = self
+            self.survey_before.save()
+        if self.survey_after:
+            self.survey_after.parent = self
+            self.survey_after.save()
+
+    @permalink
+    def signup_url(self):
+        return ('professionals-event-signup', (), {'slug': self.slug})
+
+    @permalink
+    def create_url(self):
+        return('professionals-event-create', (), {})
+
+    class Meta:
+        verbose_name = 'Event for Professionals'
+        verbose_name_plural = 'Events for Professionals'
+>>>>>>> 1c3cdc32313e8609147e183d92e861abff07babf
 
 class Settings(models.Model):
     name = models.CharField(max_length=255)
@@ -635,4 +715,17 @@ class Settings(models.Model):
             return rec.value
         retval = getattr(settings, name, default_value or '-')
         cls.objects.create(name=name, value=retval)
+<<<<<<< HEAD
         return retval
+=======
+        return retval
+
+def remaining_subscription_balance(purchase_date, expiration_date, to_date, paid):
+    if not expiration_date:
+        return paid
+    licensed_time = expiration_date - purchase_date
+    elapsed_time = to_date - purchase_date
+    used_fraction = elapsed_time.total_seconds() / licensed_time.total_seconds()
+    remaining = Decimal(str(float(paid) * (1 - used_fraction)))
+    return remaining
+>>>>>>> 1c3cdc32313e8609147e183d92e861abff07babf

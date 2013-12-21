@@ -5,7 +5,7 @@
   		<a href="#" title="Insert Resource Title ie: Co-Parenting"><img src="../../static/img/resource-image-filler3.jpg" alt="Place Title here"></a>
   	</div>
     <div class="hr-text">
-    	<i>FEATURED {{ slide.get_content_model.resource_type|title }}</i>
+    	<i>FEATURED {{ slide.get_content_model|title }}</i>
         <h6>{{ slide.title }}</h6>
         <p>{{ slide.content|safe|striptags|truncatechars:50 }}</p>
     </div>

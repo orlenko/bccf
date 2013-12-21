@@ -12,6 +12,10 @@ from django.http import Http404, HttpResponse
 from bccf.models import EventForParents, EventForProfessionals, BCCFPage
 from bccf.util.membership import require_parent, require_professional
 from bccf.forms import ProfessionalEventForm, ParentEventForm, FormStructureSurveyFormOne, FormStructureSurveyFormTwo
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1c3cdc32313e8609147e183d92e861abff07babf
 from django.views.decorators.cache import never_cache
 
 from formable.builder.models import FormStructure, FormPublished, FormFilled, FieldAnswer, Question

@@ -15,10 +15,16 @@ def page(request, parent, child=None, baby=None):
     if(not request.is_ajax()):
         page = BCCFPage.objects.get(slug=parent)
         template = 'bccf/%s_page.html' % (parent)
-    else:
-        child = BCCFChildPage.objects.get(slug=child)
-        babies = (BCCFChildPage.objects.filter(parent=child))
+    else: 
+        baby_obj = None
+        if baby and baby != 'resources':
+            baby_obj = BCCFBabyPage.objects.get(slug=('%s/%s') % (child, baby))
+        elif baby == 'resources':
+            baby_obj = 'resources'
+        child_obj = BCCFChildPage.objects.get(slug=child)
+        babies = (BCCFChildPage.objects.filter(parent=child_obj))
         template = 'generic/sub_page.html'
+        log.info(baby_obj)
         #Related resources
     context = RequestContext(request, locals())
     return render_to_response(template, {}, context_instance=context)

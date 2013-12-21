@@ -3,6 +3,7 @@ from copy import deepcopy
 from django.contrib import admin
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
+from django.core.urlresolvers import NoReverseMatch
 
 from mezzanine.core.admin import DisplayableAdmin, DisplayableAdminForm
 from mezzanine.utils.urls import admin_url
@@ -33,7 +34,6 @@ class ParentsEventAdmin(DisplayableAdmin):
                                     'location_street2',
                                     'location_postal_code',
                                     'price',
-                                    'gparent',
                                     'bccf_topic',
                                     'image']):
                 self.fieldsets[0][1]['fields'].insert(3, field)
@@ -56,7 +56,6 @@ class ProfessionalsEventAdmin(DisplayableAdmin):
                                     'location_street2',
                                     'location_postal_code',
                                     'price',
-                                    'gparent',
                                     'image',
                                     'survey_before',
                                     'bccf_topic',
