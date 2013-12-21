@@ -606,19 +606,21 @@ class UserProfile(models.Model):
             return d + relativedelta(months=+3)
         if subscription_term == 'Monthly':
             return d + relativedelta(months=+1)
-            
-#### USER STUFF END ####
-
-class EventBase(BCCFChildPage):
-    """
-    @property
+        
+    @property    
     def remaining_balance(self):
         membership = self.membership_product_variation
         expiration_date = self.membership_expiration_datetime
         purchase_date = self.membership_order.time
         price = membership.unit_price
         now = datetime.now()
-        return remaining_subscription_balance(purchase_date, expiration_date, now, price)
+        return remaining_subscription_balance(purchase_date, expiration_date, now, price)            
+            
+#### USER STUFF END ####
+
+class EventBase(BCCFChildPage):
+    """
+    Super class for events
     """
     provider = models.ForeignKey(User, blank=True, null=True)
 
