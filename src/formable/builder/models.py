@@ -6,7 +6,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext, ugettext_lazy as _
 
-from bccf.models import BCCFChildPage
+from bccf.models import BCCFChildPage, BCCFPage
 
 log = logging.getLogger(__name__)
 
@@ -23,7 +23,7 @@ class FormStructure(models.Model):
     )
 
     title = models.CharField(_("Form Title"), max_length=100)
-    structure = models.TextField(_("Form Sturcture"))
+    structure = models.TextField(_("Form Structure"))
     type = models.CharField(_("Form Type"), max_length=4, default='JSON', choices=FORM_TYPE)
     created = models.DateTimeField(auto_now_add=True)
     
@@ -47,9 +47,13 @@ class FormPublished(BCCFChildPage):
         
     def save(self):
         if self.pk is None:
+            self.gparent = BCCFPage.objects.get(slug='tag')
             self.published = datetime.now()
             self.title = self.form_structure.title
-        super(FormPublished, self).save()   
+        super(FormPublished, self).save() 
+    def get_absolute_url(self):
+        slug = self.slug        
+        return reverse('formable-view', kwargs={'slug':slug})  
 
 class FormFilled(models.Model):
     """

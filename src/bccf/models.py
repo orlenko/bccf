@@ -178,6 +178,7 @@ class BCCFChildPage(BCCFBasePage, RichText, AdminThumbMixin):
     login_required = models.BooleanField("Login required", default=False,
         help_text="If checked, only logged in users can view this page")
     rating = RatingField()
+    in_menus = MenusField("Show in menus", blank=True, null=True)
     page_for = models.CharField('Type', max_length=13, default='Parents', blank=True, null=True, choices=TYPES)
     image = FileField("Image",
         upload_to = upload_to("bccf.ChildPage.image_file", "childpage"),
@@ -207,8 +208,6 @@ class BCCFChildPage(BCCFBasePage, RichText, AdminThumbMixin):
         URL for a page
         """
         slug = self.slug
-        if self.content_model == 'formpublished':
-            return reverse('formable-view', kwargs={'slug':slug})
         if self.content_model == 'topic':
             return reverse('pybb:topic', kwargs={'pk': self.get_content_model().pk })
         if self.gparent:
@@ -426,7 +425,7 @@ class BCCFBabyPage(BCCFChildPage):
         return reverse('bccf-baby', kwargs={"parent": gparent, "child": parent, "baby": slug[1]})
        
 #Article
-class DocuementResourceBase(BCCFChildPage):
+class DocumentResourceBase(BCCFChildPage):
     #Document Fields
     attached_document = FileField('Downloadable Document',
         upload_to = upload_to("bccf.DocumentResource.attachment_file", "resource/document"),
@@ -438,22 +437,22 @@ class DocuementResourceBase(BCCFChildPage):
             'Acceptable file types: .doc, .pdf, .rtf, .txt, .odf, .docx, .xls, .xlsx, .ppt, .pptx.')
     def save(self, **kwargs):
         self.gparent = BCCFPage.objects.get(slug='resources')
-        super(DocumentResourcePage, self).save(**kwargs)
+        super(DocumentResourceBase, self).save(**kwargs)
     class Meta:
         abstract = True
 
-class Article(DocuementResourceBase):
+class Article(DocumentResourceBase):
     pass
 
-class DownloadableForm(DocuementResourceBase):
+class DownloadableForm(DocumentResourceBase):
     class Meta:
         verbose_name = 'Downloadable Form'
         verbose_name_plural = 'Downloadable Forms'
     
-class Magazine(DownloadableForm):
+class Magazine(DocumentResourceBase):
     pass
     
-class TipSheet(DownloadableForm):
+class TipSheet(DocumentResourceBase):
     class Meta:
         verbose_name = 'Tip Sheet'
         verbose_name_plural = 'Tip Sheets'

@@ -7,6 +7,8 @@ from form_utils.forms import BetterForm
 
 from formable.builder.models import FormStructure
 
+from bccf.models import BCCFTopic
+
 log = logging.getLogger(__name__)
 
 
@@ -14,9 +16,16 @@ class FormStructureForm(forms.ModelForm):
     """
     Form for creating a new form structure.
     """
+    PAGE_FOR = (
+        ('parent', 'Parents'),
+        ('professional', 'Professionals')    
+    )    
     title = forms.CharField(widget=forms.HiddenInput(attrs={'id': 'form_structure_title'}))
     structure = forms.CharField(widget=forms.HiddenInput(attrs={'id': 'form_structure_data'}))
     type = forms.CharField(widget=forms.HiddenInput(attrs={'id': 'form_structure_type'}))
+    content = forms.CharField(widget=forms.Textarea)
+    page_for = forms.ChoiceField(choices=PAGE_FOR)
+    bccf_topic = forms.ModelMultipleChoiceField(queryset=BCCFTopic.objects.all().order_by('title'))
 
     class Meta:
         model = FormStructure

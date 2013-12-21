@@ -91,10 +91,10 @@ class BCCFTopicAdmin(DisplayableAdmin):
                                     'user',
                                     'poll_type',
                                     'closed',
+                                    'content',
                                     'bccf_topic',
                                     'featured',
-                                    'page_for',
-                                    'user',]):
+                                    'page_for']):
                 self.fieldsets[0][1]['fields'].insert(3, field)
     inlines = [PollAnswerAdmin, ]
 

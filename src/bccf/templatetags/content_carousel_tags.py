@@ -66,6 +66,9 @@ def content_carousel_for(context, obj, title, child=None, which=None):
 
 @register.inclusion_tag("generic/includes/topic_carousel.html", takes_context=True)
 def content_carousel_for_topic(context, topic, type):
+    """
+    The same a the content carousel_for but this focuses on all pages that are related to a Topic
+    """
     try:
         context['slides'] = BCCFChildPage.objects.filter(bccf_topic=topic, page_for=type).order_by('-created')[:12]
         log.info(context['slides'])
@@ -91,5 +94,12 @@ def content_carousel_for_tag(context, topic=None):
         context['talks'] = BCCFChildPage.objects.filter(gparent=gparent, content_model='topic').order_by('-created')[:10]
         context['acts'] = BCCFChildPage.objects.filter(gparent=gparent, content_model='formpublished').order_by('-created')[:10]
         context['gets'] = BCCFChildPage.objects.filter(gparent=gparent, content_model='campaign').order_by('-created')[:10]
-    log.info(context)
+    return context
+    
+@register.inclusion_tag("generic/includes/resource_carousel.html", takes_context=True)
+def content_carousel_for_resources(context, topic=None):
+    if topic:
+        context['slides'] = BCCFChildPage.objects.filter(Q(content_model='article', topic=topic) | Q(content_model='downloadableform', topic=topic) | Q(content_model='magazine', topic=topic) | Q(content_model='tipsheet', topic=topic) | Q(content_model='video', topic=topic)).order_by('-created')
+    else:
+        context['slides'] = BCCFChildPage.objects.filter(Q(content_model='article') | Q(content_model='downloadableform') | Q(content_model='magazine') | Q(content_model='tipsheet') | Q(content_model='video')).order_by('-created')[:10]
     return context

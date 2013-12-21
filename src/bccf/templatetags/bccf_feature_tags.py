@@ -16,17 +16,26 @@ def featured_programs(context):
     Provides a generic context variable name for the object that carousels are
     being rendered for.
     """
+    context['class'] = 'hpro'
     context['slides'] = BCCFChildPage.objects.filter(content_model='program', featured=True).order_by('-created')
     return context
     
-def featured_tag(context):
-    pass
+@register.inclusion_tag('generic/includes/featured.html', takes_context=True)
+def featured_tags(context):
+    """
+    Provides a generic context variable name for the TAGs to be shown on the front page
+    """
+    context['class'] = 'hnote'
+    context['slides'] = BCCFChildPage.objects.filter(Q(content_model='formpublished', featured=True) | Q(content_model='topic', featured=True) | Q(content_model='campaign', featured=True))
+    return context
     
 @register.inclusion_tag('generic/includes/featured_resources.html', takes_context=True)
 def featured_resources(context):
+    """
+    Provides a generic context variable name for the featured resources to be shown on the front page
+    """
     context['slides'] = BCCFChildPage.objects.filter(Q(content_model='article', featured=True) | Q(content_model='downloadableform', featured=True) | Q(content_model='magazine', featured=True) | Q(content_model='tipsheet', featured=True) | Q(content_model='video', featured=True)).order_by('-created')
-    log.info(context['slides'])
-    return context;
+    return context
     
 def resources_for(context, topic=None):
     pass
