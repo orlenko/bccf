@@ -87,16 +87,6 @@ class ParentEventForm(forms.ModelForm):
         }
 
 ##################
-# For Reporting
-
-class ProfessionalSurveyReport(forms.Form):
-    """
-    Form for filtering the reports
-    """
-    filter_date1 = forms.CharField(label="Start Date", widget=forms.DateTimeInput)
-    filter_date2 = forms.CharField(label="End Date", widget=forms.DateTimeInput)
-
-##################
 # For Wizard
 
 class ProfessionalEventForm(forms.ModelForm):
@@ -107,7 +97,7 @@ class ProfessionalEventForm(forms.ModelForm):
         model = EventForProfessionals
         fields = ('title', 'content', 'provider', 'price', 'location_city',
             'location_street', 'location_street2', 'location_postal_code',
-            'date_start', 'date_end')
+            'date_start', 'date_end', 'image', 'bccf_topic')
         widgets = {
             'date_start': forms.DateTimeInput(attrs={'class':'vDatefield', 'placeholder':'YYYY-MM-DD HH:MM'}),
             'date_end': forms.DateTimeInput(attrs={'class':'vDatefield', 'placeholder':'YYYY-MM-DD HH:MM'})

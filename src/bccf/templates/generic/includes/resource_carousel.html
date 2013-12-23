@@ -1,0 +1,18 @@
+<div id="side-resource-carousel">
+    {% for slide in slides %}
+    <div>
+        <h6>{{ slide.title }}</h6>
+        <p>{{ slide.description|truncatechars:20 }}</p>
+        <div class="dashed-button"><a href="{{ slide.get_absolute_url }}" target="_blank">more</a></div>
+    </div>
+    {% endfor %}
+</div>
+<script type="text/javascript" >
+    $(function() {
+        $('#side-resource-carousel').owlCarousel({
+            singleItem: true,
+            pagination: false,
+            autoPlay: 3000,        
+        });
+    });
+</script>

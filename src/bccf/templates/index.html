@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n static bccf_big_marquee_tags %}
+{% load i18n static bccf_big_marquee_tags bccf_feature_tags %}
 
 {% block meta_title %}{% trans "Home" %}{% endblock %}
 {% block title %}{% trans "Home" %}{% endblock %}
@@ -42,7 +42,7 @@
                                 
                             	<li>{{ event.date_start|date:"F d" }}</li>
                                 <li>{{ event.title }}</li>
-                                <li><a href="#">Learn More</a></li>
+                                <li><a href="{{ event.get_absolute_url }}">Learn More</a></li>
                                 <li><a href="#">Register</a></li>
                             </ul>
                         </div>
@@ -82,7 +82,7 @@
                                 
                             	<li>{{ event.date_start|date:"F d" }}</li>
                                 <li>{{ event.title }}</li>
-                                <li><a href="#">Learn More</a></li>
+                                <li><a href="{{ event.get_absolute_url }}">Learn More</a></li>
                                 <li><a href="#">Register</a></li>
                             </ul>
                         </div>
@@ -107,68 +107,14 @@
   <div id="home-noteworthy" class="col six tablet-full mobile-full">
     <h2>Note-Worthy</h2>
     <div id="noteworthy-carousel">
-  	   <div class="hnote-slide">
- 		 <img src="{% static 'img/note-image-filler.jpg' %}" alt="Insert Slide Title here">
-
-          <div class="hnote-caption">
-
-              <p class="col six mobile-six">Talk, Act & Get involved with other families and parents across the province. Adding more text for testing purposes.</p>
-
-              <div class="hnote-buttons col five mobile-five">
-              <div class="dashed-button"><a href="#" target="_blank">Survey</a></div>
-              <div class="dashed-button"><a href="#" target="_blank">join</a></div>
-              </div>
-
-          </div>
-      	</div><!-- End .hnote-slide -->
-      	<div class="hnote-slide">
- 		 <img src="{% static 'img/note-image-filler.jpg' %}" alt="Insert Slide Title here">
-
-          <div class="hnote-caption">
-
-              <p class="col six mobile-six">Talk, Act & Get involved with other families and parents across the province. Adding more text for testing purposes.</p>
-
-              <div class="hnote-buttons col five mobile-five">
-              <div class="dashed-button"><a href="#" target="_blank">Survey</a></div>
-              <div class="dashed-button"><a href="#" target="_blank">join</a></div>
-              </div>
-
-          </div>
-      	</div><!-- End .hnote-slide -->
+  	   {% featured_tags %}
   	</div>
   </div>
 
   <div id="home-programs" class="col six tablet-full mobile-full">
     <h2>Programs</h2>
     <div id="programs-carousel">
-        <div class="hpro-slide">
-
-     		<img src="{% static 'img/pro-image-filler.jpg' %}" alt="Insert Slide Title here">
-
-              <div class="hpro-caption">
-
-              	<p class="col six mobile-six">Looking for ways to communicate better with you tween? Want to help your baby develop early literacy skills? We have a programs for everyone!</p>
-
-                  <div class="hpro-buttons col five mobile-five">
-                  	<div class="dashed-button"><a href="#" target="_blank">LEARN MORE</a></div>
-                  </div>
-
-              </div>
-      	</div><!-- End .hpro-slide -->
-      	<div class="hpro-slide">
-
-     		<img src="{% static 'img/pro-image-filler.jpg' %}" alt="Insert Slide Title here">
-
-              <div class="hpro-caption">
-
-              	<p class="col six mobile-six">Looking for ways to communicate better with you tween? Want to help your baby develop early literacy skills? We have a programs for everyone!</p>
-
-                  <div class="hpro-buttons col five mobile-five">
-                  	<div class="dashed-button"><a href="#" target="_blank">LEARN MORE</a></div>
-                  </div>
-
-              </div>
-      	</div><!-- End .hpro-slide -->
+        {% featured_programs %}
     </div>
   </div>
 
@@ -247,44 +193,7 @@
       <a class="button-prev button-prev-lgrey col one no-mobile"></a>
       <div id="resources-carousel-container" class="col ten mobile-full">
         <div id="carousel-resources">
-            <div class="hr-item">
-          	<div class="hr-images">
-          		<a href="#" title="Insert Resource Type ie: Video"><img class="hr-icon" src="../../static/img/header-colour-bg-yellow.gif" alt="type of resource"></a>	
-          		<a href="#" title="Insert Resource Title ie: Co-Parenting"><img src="../../static/img/resource-image-filler3.jpg" alt="Place Title here"></a>
-          	</div>
-            <div class="hr-text">
-            	<i>FEATURED VIDEO</i>
-                <h6>Co-Parenting</h6>
-                <p>Helpful strategies, tips and things to keep in mind.</p>
-            
-            </div>
-          </div>
-          
-          <div class="hr-item">
-          	<div class="hr-images">
-          		<a href="#" title="Insert Resource Type ie: PODCAST"><img class="hr-icon" src="../../static/img/header-colour-bg-dteal.gif" alt="type of resource"></a>	
-          		<a href="#" title="Insert Resource Title ie: Sheila Lindfield"><img src="../../static/img/resource-image-filler2.jpg" alt="Place Title here"></a>
-          	</div>
-            <div class="hr-text">
-            	<i>FEATURED PODCAST</i>
-                <h6>Sheila Lindfield</h6>
-                <p>Fostering Attachment through Parent Child Mother Goose.</p>
-            
-            </div>
-          </div>
-          
-          <div class="hr-item">
-          	<div class="hr-images">
-          		<a href="#" title="Insert Resource Type ie: DOCUMENT"><img class="hr-icon" src="../../static/img/header-colour-bg-lgreen.gif" alt="type of resource"></a>	
-          		<a href="#" title="Insert Resource Title ie: Co-Parenting"><img src="../../static/img/resource-image-filler.jpg" alt="Place Title here"></a>
-          	</div>
-            <div class="hr-text">
-            	<i>FEATURED DOCUMENT</i>
-                <h6>Rookie Dads</h6>
-                <p>10 things every new mom should know!</p>
-            
-            </div>
-          </div>
+            {% featured_resources %}
         </div>
       </div>
       <a class="button-next button-next-lteal col one no-mobile"></a>

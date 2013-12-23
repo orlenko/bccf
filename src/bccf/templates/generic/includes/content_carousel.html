@@ -1,10 +1,10 @@
 {% load static %}
 
 {% if slides %}
-<section id="{{ carouselID }}" class="section content-pages {{ carouselColor }}">
+<section id="{{ carousel_name }}_id" class="section content-pages {{ carousel_color }}">
     <div class="section row top-control-container">
-        <div class="col four carousel-title-container">
-            <h2>{{ carouselTitle }}</h2>
+        <div class="col five carousel-title-container">
+            <h2>{{ carousel_title|title }}</h2>
         </div>
         <div id="filter-container" class="col four">
             {% if filter %}
@@ -14,141 +14,184 @@
             {% endif %}
             &nbsp;
         </div>
-        <div id="{{ carouselID }}-control" class="col four no-mobile control-buttons">
+        <div id="{{ carousel_name }}_id-control" class="col three no-mobile control-buttons">
             <a href="#" class="show-type-control to-grid">Grid</a>
             <a href="#" class="show-type-control to-slide">Slide</a>
         </div>
     </div>
-    <div id="{{ carouselID }}-outer">
+    <div id="{{ carousel_name }}_id-outer">
         <a class="button-prev-lgrey col one button-prev no-mobile no-tablet"></a>
-        <div class="page-container-outer col ten mobile-twelve tablet-twelve">
-            <div id="{{ carouselID }}-carousel" class="carousel-slider">
-                <!-- SLIDER -->
-                {% for slide in slides %}
-                    {% if forloop.counter|divisibleby:"4" or forloop.first%}
-                    <div>
-                        <ul class="page-container-inner">
-                    {% endif %}
-                            <li class="page-box carousel-box col four">
-                                <img src="http://placehold.it/350x75&text=Image{{ slide.img }}" alt="{{ slide.title }}" />
-                                <div>
-                                    <a href="{% url 'ajax-page' parent=page.title type=carouselTitle page=slide.slug  %}">
-                                        <h2>{{ slide.title }}</h2>
-                                    </a>
-                                    <p class="no-tablet">{{ slide.description|truncatechars:25 }}</p>
-                                </div>
-                            </li>
-                    {% if forloop.counter|divisibleby:"3" or forloop.last %}
-                        </ul>
-                    </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
-            <div class="reset section slide-content twelve"></div>
-                <!-- SLIDER END -->
-                <!-- GRID -->
-            <div id="{{ carouselID }}-grid" class="carousel-grid">
-                {% for slide in slides %}
-                    {% if forloop.counter|divisibleby:"13" or forloop.first %} <!-- If the first box of the slide -->
-                    <div>
-                        <ul class="page-container-inner">
-                    {% endif %}
-                        <li class="page-box grid-box col four">
-                            <img src="http://placehold.it/350x75&text=Image{{ slide.img }}" alt="{{ slide.title }}" />
-                            <div>
-                                <a href="{% url 'ajax-page' parent=page.title type=carouselTitle page=slide.slug  %}">
-                                    <h2>{{ slide.title }}</h2>
-                                </a>
-                                <p class="no-tablet">{{ slide.description|truncatechars:25 }}</p>
-                            </div>
-                        </li>
-                        {% if forloop.counter|divisibleby:"3" or forloop.last %}
-                        <li class="grid-content reset col twelve"></li>                  
-                        {% endif %}
-                    {% if forloop.counter|divisibleby:"12" or forloop.last %}
-                        </ul>
-                    </div>
-                    {% endif %}
-                    <!-- GRID END -->
-                {% endfor %}
-            </div>
-        </div>
+        {% include 'generic/content_slides.html' %}
         <a class="button-next-lgreen col one button-next no-mobile no-tablet"></a>
     </div>
-    <div id="{{ carouselID }}-mobile-content-container" class="no-desktop no-tablet mobile-content-container">
+    <div id="{{ carousel_name }}_id-mobile-content-container" class="no-desktop no-tablet mobile-content-container">
         <a class="close-btn" href="#">CLOSE</a>
         <div class="mobile-content"></div>
     </div>
 </section>
 
 <script>
-    var {{ carouselID }}_offset = 0;
+    var {{ carousel_name }}_id_load_open;
     $(function() {
-        {{ carouselID }}_offset = {{ slides|length }};
+        {{ carousel_name }}_id_load_open
         // Create new Owl Carousel
-        $('#{{ carouselID }}-carousel').owlCarousel({
+        $('#{{ carousel_name }}_id-carousel').owlCarousel({
             'singleItem': true,
             'pagination': false,
             'addClassActive': true,
-            'startDragging': function(){ {{ carouselID }}_reset(); },
-            'beforeMove': function() { {{ carouselID }}_reset(); },
+            'startDragging': function(){ {{ carousel_name }}_id_reset(); },
+            'beforeMove': function() { {{ carousel_name }}_id_reset(); },
         });
               
-        $('#{{ carouselID }}-grid').owlCarousel({
+        $('#{{ carousel_name }}_id-grid').owlCarousel({
             'singleItem': true,
             'pagination': false,
             'addClassActive': true,
 
-            'startDragging': function(){ {{ carouselID }}_reset(); },
-            'beforeMove': function() { {{ carouselID }}_reset(); },        
+            'startDragging': function(){ {{ carousel_name }}_id_reset(); },
+            'beforeMove': function() { {{ carousel_name }}_id_reset(); },        
         }).hide();
         
-        {{ carouselID }}_reset();
+        {{ carousel_name }}_id_reset();
         
-        if('{{ carouselID }}' === '{{ type }}_id' && $(window).width() >= 725) {
-            $('#{{ carouselID }}-control .to-grid').trigger('click');
+        if('{{ carousel_name }}_id' === '{{ type }}_id' && $(window).width() >= 725) {
+            $('#{{ carousel_name }}_id-control .to-grid').trigger('click');
         }
         
         $(window).on('resize', function(e) {
-            {{ carouselID }}_reset();
+            {{ carousel_name }}_id_reset();
             if($(window).width() <= 724) {
                 $('.to-slide').trigger('click');
             }
-        });
-        
+        });        
+
         {% if open %}
-        if($('#{{ carouselID }}-carousel').is(':visible')) {
-            $('#{{ carouselID }}-carousel .active .page-box:first-of-type').trigger('click');
-        } else if($('#{{ carouselID }}-grid').is(':visible')) {
-            $('#{{ carouselID }}-grid .page-box:first-of-type').trigger('click');
+            {% if baby %}        
+                {{ carousel_name }}_id_load_open = true;
+            {% endif %}
+        if($('#{{ carousel_name }}_id-carousel').is(':visible')) {
+            $('#{{ carousel_name }}_id-carousel .active .page-box:first-of-type').trigger('click');
+        } else if($('#{{ carousel_name }}_id-grid').is(':visible')) {
+            $('#{{ carousel_name }}_id-grid .page-box:first-of-type').trigger('click');
         }
         {% endif %}
     });
     
-    $('#{{ carouselID }}').on('click', 'a[class^="button"]', function(e) {
+    $('#{{ carousel_name }}_id').on('click', 'a[class^="button"]', function(e) {
         e.preventDefault();
         var carousel = $(this).siblings('div.page-container-outer').children('div[class^="carousel"]:visible');
         if($(this).hasClass('button-prev')) {
             carousel.trigger('owl.prev');
         } else {
             if(carousel.find('.active').is(':last-child')) {
+                var offset = carousel.find('.owl-item .page-box').length;
                 $.ajax({
-                    url: '/get/'+{{ carouselID }}_offset+'/{{ carouselTitle }}',
+                    url: '/next/{{ page.slug }}/{{ carousel_name }}/'+offset+'/',
+                    success: function(data) {
+                        json = $.parseJSON(data);
+                        if(json.length > 0) {                    
+                            {{ carousel_name }}_id_add_slide(json);
+                            {{ carousel_name }}_id_add_grid(json);
+                            if($('#{{ carousel_name }}_id-carousel').is(':visible')) {
+                                $('#{{ carousel_name }}_id-grid').hide();                       
+                            } else {
+                                $('#{{ carousel_name }}_id-carousel').hide();
+                            }
+                        }
+                        carousel.trigger('owl.next');
+                    },
                 });          
-            }
-            carousel.trigger('owl.next');
+            } else {
+                carousel.trigger('owl.next');
+            }            
         }
-    })
+    });
+    
+    var {{ carousel_name }}_id_add_slide = function(data) {
+        var new_slide = $('<div>');
+        var new_list = $('<ul>', {
+            class:'page-container-inner',        
+        });
+        var carousel = $('#{{ carousel_name }}_id-carousel');
+        new_slide.append(new_list);
+        carousel.data('owlCarousel').addItem(new_slide);
+        for(var i=0; i < data.length; i++) {
+            if(i !== 0 && i%4===0) {
+                new_slide = $('<div>');
+                var new_list = $('<ul>', {
+                    class:'page-container-inner',        
+                });
+                new_slide.append(new_list);
+                carousel.data('owlCarousel').addItem(new_slide);
+            }
+            var new_page = $('<li>', {
+                class: 'page-box carousel-box col four'
+            });
+            new_page.append($('<img>', {
+                //src: '/media/'+data[i].fields.image,
+                alt: data[i].fields.title
+            }));
+            var new_info = $('<div>');
+            var new_link = $('<a>', {
+                'href': '/{{ page.title }}/'+data[i].fields.slug
+            });
+            new_link.append('<h2>'+data[i].fields.title+'</h2>');
+            new_info.append(new_link);
+            new_info.append('<p class="no-tablet">'+data[i].fields.description.substr(0,30)+'</p>');
+            new_page.append(new_info);
+            new_list.append(new_page);
+        }
+    };
+    
+    var {{ carousel_name }}_id_add_grid = function(data) {
+        var new_slide = $('<div>');
+        var new_list = $('<ul>', {
+            class:'page-container-inner',        
+        });
+        var carousel = $('#{{ carousel_name }}_id-grid');
+        new_slide.append(new_list);
+        carousel.data('owlCarousel').addItem(new_slide);
+        for(var i=0; i < data.length; i++) {
+            if(i !== 0 && i%3===0) {
+                new_list.append('<li class="grid-content reset col twelve"></li>');
+                continue;
+            }
+            if(i !== 0 && i%13===0) {
+                new_slide = $('<div>');
+                var new_list = $('<ul>', {
+                    class:'page-container-inner',        
+                });
+                new_slide.append(new_list);
+                carousel.data('owlCarousel').addItem(new_slide);
+            }
+            var new_page = $('<li>', {
+                class: 'page-box carousel-box col four'
+            });
+            new_page.append($('<img>', {
+                //src: '/media/'+data[i].fields.image,
+                alt: data[i].fields.title
+            }));
+            var new_info = $('<div>');
+            var new_link = $('<a>', {
+                'href': '/{{ page.title }}/'+data[i].fields.slug
+            });
+            new_link.append('<h2>'+data[i].fields.title+'</h2>');
+            new_info.append(new_link);
+            new_info.append('<p class="no-tablet">'+data[i].fields.description.substr(0,30)+'</p>');
+            new_page.append(new_info);
+            new_list.append(new_page);
+        }
+    };   
     
     // Closes the content container, empties it, and resets the classes
-    var {{ carouselID }}_reset = function() {
-        $('#{{ carouselID }} .reset').hide().html('');
-        $('#{{ carouselID }}-mobile-content-container').hide()
-        $('#{{ carouselID }}-mobile-content-container .mobile-container').html('');
-        $('#{{ carouselID }} .page-box-active').removeClass('page-box-active');
+    var {{ carousel_name }}_id_reset = function() {
+        $('#{{ carousel_name }}_id .reset').hide().html('');
+        $('#{{ carousel_name }}_id-mobile-content-container').hide()
+        $('#{{ carousel_name }}_id-mobile-content-container .mobile-container').html('');
+        $('#{{ carousel_name }}_id .page-box-active').removeClass('page-box-active');
         $('body').css({overflow: 'auto', height: 'auto'});
     };
-    var {{ carouselID }}_loadContent = function() {
+    var {{ carousel_name }}_id_loadContent = function() {
         var container = null;
         var loader =  $('<img>', {
             src: '{% static "img/bccf-loader.gif" %}',
@@ -157,54 +200,60 @@
         });
         if($(window).width() <= 724) {
             $('body').css({overflow: 'hidden', height: '100%'});
-            $('#{{ carouselID }}-mobile-content-container').show();
-            container = $('#{{ carouselID }}-mobile-content-container .mobile-content');
-        } else if($('#{{ carouselID }}-carousel').is(':visible')) {
-            container = $('#{{ carouselID }} .slide-content');
-        } else if($('#{{ carouselID }}-grid').is(':visible')) {
-            container = $('#{{ carouselID }} .page-box-active').nextAll('.grid-content').first();
+            $('#{{ carousel_name }}_id-mobile-content-container').show();
+            container = $('#{{ carousel_name }}_id-mobile-content-container .mobile-content');
+        } else if($('#{{ carousel_name }}_id-carousel').is(':visible')) {
+            container = $('#{{ carousel_name }}_id .slide-content');
+        } else if($('#{{ carousel_name }}_id-grid').is(':visible')) {
+            container = $('#{{ carousel_name }}_id .page-box-active').nextAll('.grid-content').first();
         }
         container.html(loader).show();
         $.ajax({
-            url: pageParams,
-            success: function (data) {
+            url: pageURL+'?type=ajax',
+            success: function(data) {
                 container.html(data);
                 
-                $('body, html').animate({
-                    'scrollTop':   container.offset().top-160
-                }, 500);
+                if($(window).width() >= 724) {
+                    $('body, html').animate({
+                        'scrollTop':   container.offset().top-160
+                    }, 500);
+                }
             }
         });
-        if (pageUrl+pageParams != window.location) {
-            window.history.pushState({ path: pageUrl+pageParams }, '', pageUrl+pageParams);
+        
+        if (pageURL != window.location) {
+            window.history.pushState({ path: pageURL }, '', pageURL);
         }
     };
-    $('#{{ carouselID }} .page-box').on('click', function(e) {
+    $('#{{ carousel_name }}_id .page-box').on('click', function(e) {
         if(!$(this).hasClass('page-box-active')) { // was the active one clicked?
-            {{ carouselID }}_reset();
-            pageUrl = "{{ request.path }}".split(/\/$|\/get/)[0];
-            pageParams = $(this).find('a').attr('href');
+            {{ carousel_name }}_id_reset();
+            pageURL = $(this).find('a').attr('href');
+            if({{ carousel_name }}_id_load_open) {
+                pageURL = pageURL+'{{ baby }}';
+                {{ carousel_name }}_id_load_open = false;          
+            }
             $(this).addClass('page-box-active');
-            {{ carouselID }}_loadContent();
+            {{ carousel_name }}_id_loadContent();
         } else {
-            {{ carouselID }}_reset();
+            {{ carousel_name }}_id_reset();
         }
         e.preventDefault();
     });
-    $('#{{ carouselID }}-control').on('click', 'a', function(e) {
+    $('#{{ carousel_name }}_id-control').on('click', 'a', function(e) {
         e.preventDefault();
-        {{ carouselID }}_reset();
+        {{ carousel_name }}_id_reset();
         if($(this).hasClass('to-grid')) {
-            $('#{{ carouselID }}-carousel').hide();
-            $('#{{ carouselID }}-grid').show();
+            $('#{{ carousel_name }}_id-carousel').hide();
+            $('#{{ carousel_name }}_id-grid').show();
         } else {
-            $('#{{ carouselID }}-grid').hide();
-            $('#{{ carouselID }}-carousel').show();
+            $('#{{ carousel_name }}_id-grid').hide();
+            $('#{{ carousel_name }}_id-carousel').show();
         }
     });
-    $('#{{ carouselID }}-mobile-content-container').on('click', '.close-btn', function(e) {
+    $('#{{ carousel_name }}_id-mobile-content-container').on('click', '.close-btn', function(e) {
         e.preventDefault();
-        {{ carouselID }}_reset();
+        {{ carousel_name }}_id_reset();
     });
 </script>
 {% endif %}

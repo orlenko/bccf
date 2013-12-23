@@ -1,0 +1,7 @@
+{% extends 'generic/sub_page_box.html' %}
+{% load static %}
+{% block tabs %}
+    {% for child in children %}
+    <li class="col three"><a id="{{ child.slug }}" href="#">{{ child.title }}</a></li>
+    {% endfor %}
+{% endblock %}

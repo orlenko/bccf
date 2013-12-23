@@ -8,232 +8,6 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'Topic'
-        db.create_table(u'bccf_topic', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('site', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['sites.Site'])),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=500)),
-            ('slug', self.gf('django.db.models.fields.CharField')(max_length=2000, null=True, blank=True)),
-            ('content', self.gf('mezzanine.core.fields.RichTextField')()),
-            ('star_blog_id', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('star_survey_id', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('star_forum_post_id', self.gf('django.db.models.fields.IntegerField')(null=True, blank=True)),
-            ('featured_image', self.gf('bccf.fields.MyImageField')(max_length=255, null=True, blank=True)),
-        ))
-        db.send_create_signal(u'bccf', ['Topic'])
-
-        # Adding model 'TopicLink'
-        db.create_table(u'bccf_topiclink', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('topic', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['bccf.Topic'])),
-            ('model_name', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('entity_id', self.gf('django.db.models.fields.IntegerField')()),
-        ))
-        db.send_create_signal(u'bccf', ['TopicLink'])
-
-        # Adding model 'UserProfile'
-        db.create_table(u'bccf_userprofile', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('user', self.gf('django.db.models.fields.related.OneToOneField')(related_name='profile', unique=True, to=orm['auth.User'])),
-            ('photo', self.gf('bccf.fields.MyImageField')(max_length=255, null=True, blank=True)),
-            ('membership_order', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['shop.Order'], null=True, blank=True)),
-            ('requested_cancellation', self.gf('django.db.models.fields.NullBooleanField')(default=False, null=True, blank=True)),
-            ('is_forum_moderator', self.gf('django.db.models.fields.NullBooleanField')(default=False, null=True, blank=True)),
-        ))
-        db.send_create_signal(u'bccf', ['UserProfile'])
-
-        # Adding model 'EventForParents'
-        db.create_table(u'bccf_eventforparents', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('keywords_string', self.gf('django.db.models.fields.CharField')(max_length=500, blank=True)),
-            ('site', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['sites.Site'])),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=500)),
-            ('slug', self.gf('django.db.models.fields.CharField')(max_length=2000, null=True, blank=True)),
-            ('_meta_title', self.gf('django.db.models.fields.CharField')(max_length=500, null=True, blank=True)),
-            ('description', self.gf('django.db.models.fields.TextField')(blank=True)),
-            ('gen_description', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('created', self.gf('django.db.models.fields.DateTimeField')(null=True)),
-            ('updated', self.gf('django.db.models.fields.DateTimeField')(null=True)),
-            ('status', self.gf('django.db.models.fields.IntegerField')(default=2)),
-            ('publish_date', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
-            ('expiry_date', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
-            ('short_url', self.gf('django.db.models.fields.URLField')(max_length=200, null=True, blank=True)),
-            ('in_sitemap', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('content', self.gf('mezzanine.core.fields.RichTextField')()),
-            ('provider', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], null=True, blank=True)),
-            ('price', self.gf('cartridge.shop.fields.MoneyField')(null=True, max_digits=10, decimal_places=2, blank=True)),
-            ('location_city', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
-            ('location_street', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
-            ('location_street2', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
-            ('location_postal_code', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
-            ('date_start', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
-            ('date_end', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
-            ('keywords', self.gf('mezzanine.generic.fields.KeywordsField')(object_id_field='object_pk', to=orm['generic.AssignedKeyword'], frozen_by_south=True)),
-        ))
-        db.send_create_signal(u'bccf', ['EventForParents'])
-
-        # Adding model 'EventForProfessionals'
-        db.create_table(u'bccf_eventforprofessionals', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('keywords_string', self.gf('django.db.models.fields.CharField')(max_length=500, blank=True)),
-            ('site', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['sites.Site'])),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=500)),
-            ('slug', self.gf('django.db.models.fields.CharField')(max_length=2000, null=True, blank=True)),
-            ('_meta_title', self.gf('django.db.models.fields.CharField')(max_length=500, null=True, blank=True)),
-            ('description', self.gf('django.db.models.fields.TextField')(blank=True)),
-            ('gen_description', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('created', self.gf('django.db.models.fields.DateTimeField')(null=True)),
-            ('updated', self.gf('django.db.models.fields.DateTimeField')(null=True)),
-            ('status', self.gf('django.db.models.fields.IntegerField')(default=2)),
-            ('publish_date', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
-            ('expiry_date', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
-            ('short_url', self.gf('django.db.models.fields.URLField')(max_length=200, null=True, blank=True)),
-            ('in_sitemap', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('content', self.gf('mezzanine.core.fields.RichTextField')()),
-            ('provider', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], null=True, blank=True)),
-            ('price', self.gf('cartridge.shop.fields.MoneyField')(null=True, max_digits=10, decimal_places=2, blank=True)),
-            ('location_city', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
-            ('location_street', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
-            ('location_street2', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
-            ('location_postal_code', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
-            ('date_start', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
-            ('date_end', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
-            ('survey_before', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='survey_before', null=True, to=orm['builder.FormPublished'])),
-            ('survey_after', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='survey_after', null=True, to=orm['builder.FormPublished'])),
-            ('keywords', self.gf('mezzanine.generic.fields.KeywordsField')(object_id_field='object_pk', to=orm['generic.AssignedKeyword'], frozen_by_south=True)),
-        ))
-        db.send_create_signal(u'bccf', ['EventForProfessionals'])
-
-        # Adding model 'Settings'
-        db.create_table(u'bccf_settings', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('value', self.gf('django.db.models.fields.CharField')(max_length=255)),
-        ))
-        db.send_create_signal(u'bccf', ['Settings'])
-
-        # Adding model 'Magazine'
-        db.create_table(u'bccf_magazine', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('keywords_string', self.gf('django.db.models.fields.CharField')(max_length=500, blank=True)),
-            ('site', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['sites.Site'])),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=500)),
-            ('slug', self.gf('django.db.models.fields.CharField')(max_length=2000, null=True, blank=True)),
-            ('_meta_title', self.gf('django.db.models.fields.CharField')(max_length=500, null=True, blank=True)),
-            ('description', self.gf('django.db.models.fields.TextField')(blank=True)),
-            ('gen_description', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('created', self.gf('django.db.models.fields.DateTimeField')(null=True)),
-            ('updated', self.gf('django.db.models.fields.DateTimeField')(null=True)),
-            ('status', self.gf('django.db.models.fields.IntegerField')(default=2)),
-            ('publish_date', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
-            ('expiry_date', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
-            ('short_url', self.gf('django.db.models.fields.URLField')(max_length=200, null=True, blank=True)),
-            ('in_sitemap', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('content', self.gf('mezzanine.core.fields.RichTextField')()),
-            ('user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='magazines', to=orm['auth.User'])),
-            ('attached_document', self.gf('mezzanine.core.fields.FileField')(max_length=255, null=True, blank=True)),
-            ('keywords', self.gf('mezzanine.generic.fields.KeywordsField')(object_id_field='object_pk', to=orm['generic.AssignedKeyword'], frozen_by_south=True)),
-        ))
-        db.send_create_signal(u'bccf', ['Magazine'])
-
-        # Adding model 'Article'
-        db.create_table(u'bccf_article', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('keywords_string', self.gf('django.db.models.fields.CharField')(max_length=500, blank=True)),
-            ('site', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['sites.Site'])),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=500)),
-            ('slug', self.gf('django.db.models.fields.CharField')(max_length=2000, null=True, blank=True)),
-            ('_meta_title', self.gf('django.db.models.fields.CharField')(max_length=500, null=True, blank=True)),
-            ('description', self.gf('django.db.models.fields.TextField')(blank=True)),
-            ('gen_description', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('created', self.gf('django.db.models.fields.DateTimeField')(null=True)),
-            ('updated', self.gf('django.db.models.fields.DateTimeField')(null=True)),
-            ('status', self.gf('django.db.models.fields.IntegerField')(default=2)),
-            ('publish_date', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
-            ('expiry_date', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
-            ('short_url', self.gf('django.db.models.fields.URLField')(max_length=200, null=True, blank=True)),
-            ('in_sitemap', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('content', self.gf('mezzanine.core.fields.RichTextField')()),
-            ('user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='articles', to=orm['auth.User'])),
-            ('attached_document', self.gf('mezzanine.core.fields.FileField')(max_length=255, null=True, blank=True)),
-            ('keywords', self.gf('mezzanine.generic.fields.KeywordsField')(object_id_field='object_pk', to=orm['generic.AssignedKeyword'], frozen_by_south=True)),
-        ))
-        db.send_create_signal(u'bccf', ['Article'])
-
-        # Adding model 'TipSheet'
-        db.create_table(u'bccf_tipsheet', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('keywords_string', self.gf('django.db.models.fields.CharField')(max_length=500, blank=True)),
-            ('site', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['sites.Site'])),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=500)),
-            ('slug', self.gf('django.db.models.fields.CharField')(max_length=2000, null=True, blank=True)),
-            ('_meta_title', self.gf('django.db.models.fields.CharField')(max_length=500, null=True, blank=True)),
-            ('description', self.gf('django.db.models.fields.TextField')(blank=True)),
-            ('gen_description', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('created', self.gf('django.db.models.fields.DateTimeField')(null=True)),
-            ('updated', self.gf('django.db.models.fields.DateTimeField')(null=True)),
-            ('status', self.gf('django.db.models.fields.IntegerField')(default=2)),
-            ('publish_date', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
-            ('expiry_date', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
-            ('short_url', self.gf('django.db.models.fields.URLField')(max_length=200, null=True, blank=True)),
-            ('in_sitemap', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('content', self.gf('mezzanine.core.fields.RichTextField')()),
-            ('user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='tipsheets', to=orm['auth.User'])),
-            ('attached_document', self.gf('mezzanine.core.fields.FileField')(max_length=255, null=True, blank=True)),
-            ('keywords', self.gf('mezzanine.generic.fields.KeywordsField')(object_id_field='object_pk', to=orm['generic.AssignedKeyword'], frozen_by_south=True)),
-        ))
-        db.send_create_signal(u'bccf', ['TipSheet'])
-
-        # Adding model 'DownloadableForm'
-        db.create_table(u'bccf_downloadableform', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('keywords_string', self.gf('django.db.models.fields.CharField')(max_length=500, blank=True)),
-            ('site', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['sites.Site'])),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=500)),
-            ('slug', self.gf('django.db.models.fields.CharField')(max_length=2000, null=True, blank=True)),
-            ('_meta_title', self.gf('django.db.models.fields.CharField')(max_length=500, null=True, blank=True)),
-            ('description', self.gf('django.db.models.fields.TextField')(blank=True)),
-            ('gen_description', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('created', self.gf('django.db.models.fields.DateTimeField')(null=True)),
-            ('updated', self.gf('django.db.models.fields.DateTimeField')(null=True)),
-            ('status', self.gf('django.db.models.fields.IntegerField')(default=2)),
-            ('publish_date', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
-            ('expiry_date', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
-            ('short_url', self.gf('django.db.models.fields.URLField')(max_length=200, null=True, blank=True)),
-            ('in_sitemap', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('content', self.gf('mezzanine.core.fields.RichTextField')()),
-            ('user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='downloadableforms', to=orm['auth.User'])),
-            ('attached_document', self.gf('mezzanine.core.fields.FileField')(max_length=255, null=True, blank=True)),
-            ('keywords', self.gf('mezzanine.generic.fields.KeywordsField')(object_id_field='object_pk', to=orm['generic.AssignedKeyword'], frozen_by_south=True)),
-        ))
-        db.send_create_signal(u'bccf', ['DownloadableForm'])
-
-        # Adding model 'Video'
-        db.create_table(u'bccf_video', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('keywords_string', self.gf('django.db.models.fields.CharField')(max_length=500, blank=True)),
-            ('site', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['sites.Site'])),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=500)),
-            ('slug', self.gf('django.db.models.fields.CharField')(max_length=2000, null=True, blank=True)),
-            ('_meta_title', self.gf('django.db.models.fields.CharField')(max_length=500, null=True, blank=True)),
-            ('description', self.gf('django.db.models.fields.TextField')(blank=True)),
-            ('gen_description', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('created', self.gf('django.db.models.fields.DateTimeField')(null=True)),
-            ('updated', self.gf('django.db.models.fields.DateTimeField')(null=True)),
-            ('status', self.gf('django.db.models.fields.IntegerField')(default=2)),
-            ('publish_date', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
-            ('expiry_date', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
-            ('short_url', self.gf('django.db.models.fields.URLField')(max_length=200, null=True, blank=True)),
-            ('in_sitemap', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('content', self.gf('mezzanine.core.fields.RichTextField')()),
-            ('user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='videos', to=orm['auth.User'])),
-            ('video_url', self.gf('django.db.models.fields.URLField')(default='', max_length=1024, null=True, blank=True)),
-            ('link_url', self.gf('django.db.models.fields.URLField')(default='', max_length=1024, null=True, blank=True)),
-            ('video_file', self.gf('mezzanine.core.fields.FileField')(max_length=255, null=True, blank=True)),
-            ('keywords', self.gf('mezzanine.generic.fields.KeywordsField')(object_id_field='object_pk', to=orm['generic.AssignedKeyword'], frozen_by_south=True)),
-        ))
-        db.send_create_signal(u'bccf', ['Video'])
-
         # Adding model 'HomeMarquee'
         db.create_table(u'bccf_homemarquee', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -327,56 +101,194 @@ class Migration(SchemaMigration):
         ))
         db.create_unique(m2m_table_name, ['pagemarqueeslide_id', 'pagemarquee_id'])
 
-        # Adding model 'Page'
-        db.create_table(u'bccf_page', (
-            (u'richtextpage_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['pages.RichTextPage'], unique=True, primary_key=True)),
+        # Adding model 'BCCFPage'
+        db.create_table(u'bccf_bccfpage', (
+            (u'page_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['pages.Page'], unique=True, primary_key=True)),
+            ('content', self.gf('mezzanine.core.fields.RichTextField')()),
             ('marquee', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['bccf.PageMarquee'], null=True, blank=True)),
-            ('carouselColor', self.gf('django.db.models.fields.CharField')(default='dgreen-list', max_length=11)),
+            ('carousel_color', self.gf('django.db.models.fields.CharField')(default='dgreen-list', max_length=11)),
         ))
-        db.send_create_signal(u'bccf', ['Page'])
+        db.send_create_signal(u'bccf', ['BCCFPage'])
 
-        # Adding model 'ChildPage'
-        db.create_table(u'bccf_childpage', (
-            (u'richtextpage_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['pages.RichTextPage'], unique=True, primary_key=True)),
-            ('image', self.gf('mezzanine.core.fields.FileField')(max_length=255, null=True, blank=True)),
+        # Adding model 'BCCFTopic'
+        db.create_table(u'bccf_bccftopic', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('keywords_string', self.gf('django.db.models.fields.CharField')(max_length=500, blank=True)),
+            ('site', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['sites.Site'])),
+            ('title', self.gf('django.db.models.fields.CharField')(max_length=500)),
+            ('slug', self.gf('django.db.models.fields.CharField')(max_length=2000, null=True, blank=True)),
+            ('_meta_title', self.gf('django.db.models.fields.CharField')(max_length=500, null=True, blank=True)),
+            ('description', self.gf('django.db.models.fields.TextField')(blank=True)),
+            ('gen_description', self.gf('django.db.models.fields.BooleanField')(default=True)),
+            ('created', self.gf('django.db.models.fields.DateTimeField')(null=True)),
+            ('updated', self.gf('django.db.models.fields.DateTimeField')(null=True)),
+            ('status', self.gf('django.db.models.fields.IntegerField')(default=2)),
+            ('publish_date', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
+            ('expiry_date', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
+            ('short_url', self.gf('django.db.models.fields.URLField')(max_length=200, null=True, blank=True)),
+            ('in_sitemap', self.gf('django.db.models.fields.BooleanField')(default=True)),
+            ('content', self.gf('mezzanine.core.fields.RichTextField')()),
+            ('marquee', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['bccf.PageMarquee'], null=True, blank=True)),
+            ('carousel_color', self.gf('django.db.models.fields.CharField')(default='dgreen-list', max_length=11)),
+            ('keywords', self.gf('mezzanine.generic.fields.KeywordsField')(object_id_field='object_pk', to=orm['generic.AssignedKeyword'], frozen_by_south=True)),
         ))
-        db.send_create_signal(u'bccf', ['ChildPage'])
+        db.send_create_signal(u'bccf', ['BCCFTopic'])
+
+        # Adding model 'BCCFChildPage'
+        db.create_table(u'bccf_bccfchildpage', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('keywords_string', self.gf('django.db.models.fields.CharField')(max_length=500, blank=True)),
+            ('rating_count', self.gf('django.db.models.fields.IntegerField')(default=0)),
+            ('rating_sum', self.gf('django.db.models.fields.IntegerField')(default=0)),
+            ('rating_average', self.gf('django.db.models.fields.FloatField')(default=0)),
+            ('site', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['sites.Site'])),
+            ('title', self.gf('django.db.models.fields.CharField')(max_length=500)),
+            ('slug', self.gf('django.db.models.fields.CharField')(max_length=2000, null=True, blank=True)),
+            ('_meta_title', self.gf('django.db.models.fields.CharField')(max_length=500, null=True, blank=True)),
+            ('description', self.gf('django.db.models.fields.TextField')(blank=True)),
+            ('gen_description', self.gf('django.db.models.fields.BooleanField')(default=True)),
+            ('created', self.gf('django.db.models.fields.DateTimeField')(null=True)),
+            ('updated', self.gf('django.db.models.fields.DateTimeField')(null=True)),
+            ('status', self.gf('django.db.models.fields.IntegerField')(default=2)),
+            ('publish_date', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
+            ('expiry_date', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
+            ('short_url', self.gf('django.db.models.fields.URLField')(max_length=200, null=True, blank=True)),
+            ('in_sitemap', self.gf('django.db.models.fields.BooleanField')(default=True)),
+            ('content', self.gf('mezzanine.core.fields.RichTextField')()),
+            ('_order', self.gf('django.db.models.fields.IntegerField')(null=True)),
+            ('parent', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['bccf.BCCFChildPage'], null=True, blank=True)),
+            ('gparent', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['bccf.BCCFPage'], null=True, blank=True)),
+            ('featured', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('titles', self.gf('django.db.models.fields.CharField')(max_length=1000, null=True)),
+            ('content_model', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
+            ('login_required', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('page_for', self.gf('django.db.models.fields.CharField')(default='Parents', max_length=13, null=True, blank=True)),
+            ('image', self.gf('mezzanine.core.fields.FileField')(max_length=255, null=True, blank=True)),
+            ('keywords', self.gf('mezzanine.generic.fields.KeywordsField')(object_id_field='object_pk', to=orm['generic.AssignedKeyword'], frozen_by_south=True)),
+            ('rating', self.gf('mezzanine.generic.fields.RatingField')(object_id_field='object_pk', to=orm['generic.Rating'], frozen_by_south=True)),
+        ))
+        db.send_create_signal(u'bccf', ['BCCFChildPage'])
+
+        # Adding M2M table for field bccf_topic on 'BCCFChildPage'
+        m2m_table_name = db.shorten_name(u'bccf_bccfchildpage_bccf_topic')
+        db.create_table(m2m_table_name, (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('bccfchildpage', models.ForeignKey(orm[u'bccf.bccfchildpage'], null=False)),
+            ('bccftopic', models.ForeignKey(orm[u'bccf.bccftopic'], null=False))
+        ))
+        db.create_unique(m2m_table_name, ['bccfchildpage_id', 'bccftopic_id'])
+
+        # Adding model 'BCCFBabyPage'
+        db.create_table(u'bccf_bccfbabypage', (
+            (u'bccfchildpage_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['bccf.BCCFChildPage'], unique=True, primary_key=True)),
+        ))
+        db.send_create_signal(u'bccf', ['BCCFBabyPage'])
+
+        # Adding model 'Article'
+        db.create_table(u'bccf_article', (
+            (u'bccfchildpage_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['bccf.BCCFChildPage'], unique=True, primary_key=True)),
+            ('attached_document', self.gf('mezzanine.core.fields.FileField')(max_length=255, null=True, blank=True)),
+        ))
+        db.send_create_signal(u'bccf', ['Article'])
+
+        # Adding model 'DownloadableForm'
+        db.create_table(u'bccf_downloadableform', (
+            (u'bccfchildpage_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['bccf.BCCFChildPage'], unique=True, primary_key=True)),
+            ('attached_document', self.gf('mezzanine.core.fields.FileField')(max_length=255, null=True, blank=True)),
+        ))
+        db.send_create_signal(u'bccf', ['DownloadableForm'])
+
+        # Adding model 'Magazine'
+        db.create_table(u'bccf_magazine', (
+            (u'bccfchildpage_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['bccf.BCCFChildPage'], unique=True, primary_key=True)),
+            ('attached_document', self.gf('mezzanine.core.fields.FileField')(max_length=255, null=True, blank=True)),
+        ))
+        db.send_create_signal(u'bccf', ['Magazine'])
+
+        # Adding model 'TipSheet'
+        db.create_table(u'bccf_tipsheet', (
+            (u'bccfchildpage_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['bccf.BCCFChildPage'], unique=True, primary_key=True)),
+            ('attached_document', self.gf('mezzanine.core.fields.FileField')(max_length=255, null=True, blank=True)),
+        ))
+        db.send_create_signal(u'bccf', ['TipSheet'])
+
+        # Adding model 'Video'
+        db.create_table(u'bccf_video', (
+            (u'bccfchildpage_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['bccf.BCCFChildPage'], unique=True, primary_key=True)),
+            ('video_url', self.gf('django.db.models.fields.URLField')(default='', max_length=1024, null=True, blank=True)),
+            ('link_url', self.gf('django.db.models.fields.URLField')(default='', max_length=1024, null=True, blank=True)),
+            ('video_file', self.gf('mezzanine.core.fields.FileField')(max_length=255, null=True, blank=True)),
+        ))
+        db.send_create_signal(u'bccf', ['Video'])
+
+        # Adding model 'Program'
+        db.create_table(u'bccf_program', (
+            (u'bccfchildpage_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['bccf.BCCFChildPage'], unique=True, primary_key=True)),
+        ))
+        db.send_create_signal(u'bccf', ['Program'])
+
+        # Adding model 'Blog'
+        db.create_table(u'bccf_blog', (
+            (u'bccfchildpage_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['bccf.BCCFChildPage'], unique=True, primary_key=True)),
+        ))
+        db.send_create_signal(u'bccf', ['Blog'])
+
+        # Adding model 'Campaign'
+        db.create_table(u'bccf_campaign', (
+            (u'bccfchildpage_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['bccf.BCCFChildPage'], unique=True, primary_key=True)),
+        ))
+        db.send_create_signal(u'bccf', ['Campaign'])
+
+        # Adding model 'UserProfile'
+        db.create_table(u'bccf_userprofile', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('user', self.gf('django.db.models.fields.related.OneToOneField')(related_name='profile', unique=True, to=orm['auth.User'])),
+            ('photo', self.gf('bccf.fields.MyImageField')(max_length=255, null=True, blank=True)),
+            ('membership_order', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['shop.Order'], null=True, blank=True)),
+            ('is_forum_moderator', self.gf('django.db.models.fields.NullBooleanField')(default=False, null=True, blank=True)),
+        ))
+        db.send_create_signal(u'bccf', ['UserProfile'])
+
+        # Adding model 'EventForParents'
+        db.create_table(u'bccf_eventforparents', (
+            (u'bccfchildpage_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['bccf.BCCFChildPage'], unique=True, primary_key=True)),
+            ('provider', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], null=True, blank=True)),
+            ('price', self.gf('cartridge.shop.fields.MoneyField')(null=True, max_digits=10, decimal_places=2, blank=True)),
+            ('location_city', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
+            ('location_street', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
+            ('location_street2', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
+            ('location_postal_code', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
+            ('date_start', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
+            ('date_end', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
+        ))
+        db.send_create_signal(u'bccf', ['EventForParents'])
+
+        # Adding model 'EventForProfessionals'
+        db.create_table(u'bccf_eventforprofessionals', (
+            (u'bccfchildpage_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['bccf.BCCFChildPage'], unique=True, primary_key=True)),
+            ('provider', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], null=True, blank=True)),
+            ('price', self.gf('cartridge.shop.fields.MoneyField')(null=True, max_digits=10, decimal_places=2, blank=True)),
+            ('location_city', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
+            ('location_street', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
+            ('location_street2', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
+            ('location_postal_code', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
+            ('date_start', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
+            ('date_end', self.gf('django.db.models.fields.DateTimeField')(null=True, blank=True)),
+            ('survey_before', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='survey_before', null=True, to=orm['builder.FormPublished'])),
+            ('survey_after', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='survey_after', null=True, to=orm['builder.FormPublished'])),
+        ))
+        db.send_create_signal(u'bccf', ['EventForProfessionals'])
+
+        # Adding model 'Settings'
+        db.create_table(u'bccf_settings', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=255)),
+            ('value', self.gf('django.db.models.fields.CharField')(max_length=255)),
+        ))
+        db.send_create_signal(u'bccf', ['Settings'])
 
 
     def backwards(self, orm):
-        # Deleting model 'Topic'
-        db.delete_table(u'bccf_topic')
-
-        # Deleting model 'TopicLink'
-        db.delete_table(u'bccf_topiclink')
-
-        # Deleting model 'UserProfile'
-        db.delete_table(u'bccf_userprofile')
-
-        # Deleting model 'EventForParents'
-        db.delete_table(u'bccf_eventforparents')
-
-        # Deleting model 'EventForProfessionals'
-        db.delete_table(u'bccf_eventforprofessionals')
-
-        # Deleting model 'Settings'
-        db.delete_table(u'bccf_settings')
-
-        # Deleting model 'Magazine'
-        db.delete_table(u'bccf_magazine')
-
-        # Deleting model 'Article'
-        db.delete_table(u'bccf_article')
-
-        # Deleting model 'TipSheet'
-        db.delete_table(u'bccf_tipsheet')
-
-        # Deleting model 'DownloadableForm'
-        db.delete_table(u'bccf_downloadableform')
-
-        # Deleting model 'Video'
-        db.delete_table(u'bccf_video')
-
         # Deleting model 'HomeMarquee'
         db.delete_table(u'bccf_homemarquee')
 
@@ -404,11 +316,56 @@ class Migration(SchemaMigration):
         # Removing M2M table for field marquee on 'PageMarqueeSlide'
         db.delete_table(db.shorten_name(u'bccf_pagemarqueeslide_marquee'))
 
-        # Deleting model 'Page'
-        db.delete_table(u'bccf_page')
+        # Deleting model 'BCCFPage'
+        db.delete_table(u'bccf_bccfpage')
 
-        # Deleting model 'ChildPage'
-        db.delete_table(u'bccf_childpage')
+        # Deleting model 'BCCFTopic'
+        db.delete_table(u'bccf_bccftopic')
+
+        # Deleting model 'BCCFChildPage'
+        db.delete_table(u'bccf_bccfchildpage')
+
+        # Removing M2M table for field bccf_topic on 'BCCFChildPage'
+        db.delete_table(db.shorten_name(u'bccf_bccfchildpage_bccf_topic'))
+
+        # Deleting model 'BCCFBabyPage'
+        db.delete_table(u'bccf_bccfbabypage')
+
+        # Deleting model 'Article'
+        db.delete_table(u'bccf_article')
+
+        # Deleting model 'DownloadableForm'
+        db.delete_table(u'bccf_downloadableform')
+
+        # Deleting model 'Magazine'
+        db.delete_table(u'bccf_magazine')
+
+        # Deleting model 'TipSheet'
+        db.delete_table(u'bccf_tipsheet')
+
+        # Deleting model 'Video'
+        db.delete_table(u'bccf_video')
+
+        # Deleting model 'Program'
+        db.delete_table(u'bccf_program')
+
+        # Deleting model 'Blog'
+        db.delete_table(u'bccf_blog')
+
+        # Deleting model 'Campaign'
+        db.delete_table(u'bccf_campaign')
+
+        # Deleting model 'UserProfile'
+        db.delete_table(u'bccf_userprofile')
+
+        # Deleting model 'EventForParents'
+        db.delete_table(u'bccf_eventforparents')
+
+        # Deleting model 'EventForProfessionals'
+        db.delete_table(u'bccf_eventforprofessionals')
+
+        # Deleting model 'Settings'
+        db.delete_table(u'bccf_settings')
 
 
     models = {
@@ -442,9 +399,59 @@ class Migration(SchemaMigration):
             'username': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30'})
         },
         u'bccf.article': {
-            'Meta': {'object_name': 'Article'},
-            '_meta_title': ('django.db.models.fields.CharField', [], {'max_length': '500', 'null': 'True', 'blank': 'True'}),
+            'Meta': {'ordering': "('_order',)", 'object_name': 'Article'},
             'attached_document': ('mezzanine.core.fields.FileField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            u'bccfchildpage_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['bccf.BCCFChildPage']", 'unique': 'True', 'primary_key': 'True'})
+        },
+        u'bccf.bccfbabypage': {
+            'Meta': {'ordering': "('_order',)", 'object_name': 'BCCFBabyPage', '_ormbases': [u'bccf.BCCFChildPage']},
+            u'bccfchildpage_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['bccf.BCCFChildPage']", 'unique': 'True', 'primary_key': 'True'})
+        },
+        u'bccf.bccfchildpage': {
+            'Meta': {'ordering': "('titles',)", 'object_name': 'BCCFChildPage'},
+            '_meta_title': ('django.db.models.fields.CharField', [], {'max_length': '500', 'null': 'True', 'blank': 'True'}),
+            '_order': ('django.db.models.fields.IntegerField', [], {'null': 'True'}),
+            'bccf_topic': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'to': u"orm['bccf.BCCFTopic']", 'null': 'True', 'blank': 'True'}),
+            'content': ('mezzanine.core.fields.RichTextField', [], {}),
+            'content_model': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
+            'created': ('django.db.models.fields.DateTimeField', [], {'null': 'True'}),
+            'description': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
+            'expiry_date': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
+            'featured': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'gen_description': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'gparent': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['bccf.BCCFPage']", 'null': 'True', 'blank': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'image': ('mezzanine.core.fields.FileField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'in_sitemap': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'keywords': ('mezzanine.generic.fields.KeywordsField', [], {'object_id_field': "'object_pk'", 'to': u"orm['generic.AssignedKeyword']", 'frozen_by_south': 'True'}),
+            'keywords_string': ('django.db.models.fields.CharField', [], {'max_length': '500', 'blank': 'True'}),
+            'login_required': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'page_for': ('django.db.models.fields.CharField', [], {'default': "'Parents'", 'max_length': '13', 'null': 'True', 'blank': 'True'}),
+            'parent': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['bccf.BCCFChildPage']", 'null': 'True', 'blank': 'True'}),
+            'publish_date': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
+            'rating': ('mezzanine.generic.fields.RatingField', [], {'object_id_field': "'object_pk'", 'to': u"orm['generic.Rating']", 'frozen_by_south': 'True'}),
+            'rating_average': ('django.db.models.fields.FloatField', [], {'default': '0'}),
+            'rating_count': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'rating_sum': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'short_url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
+            'site': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['sites.Site']"}),
+            'slug': ('django.db.models.fields.CharField', [], {'max_length': '2000', 'null': 'True', 'blank': 'True'}),
+            'status': ('django.db.models.fields.IntegerField', [], {'default': '2'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '500'}),
+            'titles': ('django.db.models.fields.CharField', [], {'max_length': '1000', 'null': 'True'}),
+            'updated': ('django.db.models.fields.DateTimeField', [], {'null': 'True'})
+        },
+        u'bccf.bccfpage': {
+            'Meta': {'ordering': "('_order',)", 'object_name': 'BCCFPage', '_ormbases': [u'pages.Page']},
+            'carousel_color': ('django.db.models.fields.CharField', [], {'default': "'dgreen-list'", 'max_length': '11'}),
+            'content': ('mezzanine.core.fields.RichTextField', [], {}),
+            'marquee': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['bccf.PageMarquee']", 'null': 'True', 'blank': 'True'}),
+            u'page_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['pages.Page']", 'unique': 'True', 'primary_key': 'True'})
+        },
+        u'bccf.bccftopic': {
+            'Meta': {'object_name': 'BCCFTopic'},
+            '_meta_title': ('django.db.models.fields.CharField', [], {'max_length': '500', 'null': 'True', 'blank': 'True'}),
+            'carousel_color': ('django.db.models.fields.CharField', [], {'default': "'dgreen-list'", 'max_length': '11'}),
             'content': ('mezzanine.core.fields.RichTextField', [], {}),
             'created': ('django.db.models.fields.DateTimeField', [], {'null': 'True'}),
             'description': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
@@ -454,99 +461,53 @@ class Migration(SchemaMigration):
             'in_sitemap': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
             'keywords': ('mezzanine.generic.fields.KeywordsField', [], {'object_id_field': "'object_pk'", 'to': u"orm['generic.AssignedKeyword']", 'frozen_by_south': 'True'}),
             'keywords_string': ('django.db.models.fields.CharField', [], {'max_length': '500', 'blank': 'True'}),
+            'marquee': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['bccf.PageMarquee']", 'null': 'True', 'blank': 'True'}),
             'publish_date': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'short_url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
             'site': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['sites.Site']"}),
             'slug': ('django.db.models.fields.CharField', [], {'max_length': '2000', 'null': 'True', 'blank': 'True'}),
             'status': ('django.db.models.fields.IntegerField', [], {'default': '2'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '500'}),
-            'updated': ('django.db.models.fields.DateTimeField', [], {'null': 'True'}),
-            'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'articles'", 'to': u"orm['auth.User']"})
+            'updated': ('django.db.models.fields.DateTimeField', [], {'null': 'True'})
         },
-        u'bccf.childpage': {
-            'Meta': {'ordering': "('_order',)", 'object_name': 'ChildPage', '_ormbases': [u'pages.RichTextPage']},
-            'image': ('mezzanine.core.fields.FileField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
-            u'richtextpage_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['pages.RichTextPage']", 'unique': 'True', 'primary_key': 'True'})
+        u'bccf.blog': {
+            'Meta': {'ordering': "('_order',)", 'object_name': 'Blog', '_ormbases': [u'bccf.BCCFChildPage']},
+            u'bccfchildpage_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['bccf.BCCFChildPage']", 'unique': 'True', 'primary_key': 'True'})
+        },
+        u'bccf.campaign': {
+            'Meta': {'ordering': "('_order',)", 'object_name': 'Campaign', '_ormbases': [u'bccf.BCCFChildPage']},
+            u'bccfchildpage_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['bccf.BCCFChildPage']", 'unique': 'True', 'primary_key': 'True'})
         },
         u'bccf.downloadableform': {
-            'Meta': {'object_name': 'DownloadableForm'},
-            '_meta_title': ('django.db.models.fields.CharField', [], {'max_length': '500', 'null': 'True', 'blank': 'True'}),
+            'Meta': {'ordering': "('_order',)", 'object_name': 'DownloadableForm'},
             'attached_document': ('mezzanine.core.fields.FileField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
-            'content': ('mezzanine.core.fields.RichTextField', [], {}),
-            'created': ('django.db.models.fields.DateTimeField', [], {'null': 'True'}),
-            'description': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            'expiry_date': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
-            'gen_description': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'in_sitemap': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'keywords': ('mezzanine.generic.fields.KeywordsField', [], {'object_id_field': "'object_pk'", 'to': u"orm['generic.AssignedKeyword']", 'frozen_by_south': 'True'}),
-            'keywords_string': ('django.db.models.fields.CharField', [], {'max_length': '500', 'blank': 'True'}),
-            'publish_date': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
-            'short_url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'site': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['sites.Site']"}),
-            'slug': ('django.db.models.fields.CharField', [], {'max_length': '2000', 'null': 'True', 'blank': 'True'}),
-            'status': ('django.db.models.fields.IntegerField', [], {'default': '2'}),
-            'title': ('django.db.models.fields.CharField', [], {'max_length': '500'}),
-            'updated': ('django.db.models.fields.DateTimeField', [], {'null': 'True'}),
-            'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'downloadableforms'", 'to': u"orm['auth.User']"})
+            u'bccfchildpage_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['bccf.BCCFChildPage']", 'unique': 'True', 'primary_key': 'True'})
         },
         u'bccf.eventforparents': {
-            'Meta': {'object_name': 'EventForParents'},
-            '_meta_title': ('django.db.models.fields.CharField', [], {'max_length': '500', 'null': 'True', 'blank': 'True'}),
-            'content': ('mezzanine.core.fields.RichTextField', [], {}),
-            'created': ('django.db.models.fields.DateTimeField', [], {'null': 'True'}),
+            'Meta': {'ordering': "('_order',)", 'object_name': 'EventForParents'},
+            u'bccfchildpage_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['bccf.BCCFChildPage']", 'unique': 'True', 'primary_key': 'True'}),
             'date_end': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'date_start': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
-            'description': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            'expiry_date': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
-            'gen_description': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'in_sitemap': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'keywords': ('mezzanine.generic.fields.KeywordsField', [], {'object_id_field': "'object_pk'", 'to': u"orm['generic.AssignedKeyword']", 'frozen_by_south': 'True'}),
-            'keywords_string': ('django.db.models.fields.CharField', [], {'max_length': '500', 'blank': 'True'}),
             'location_city': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'location_postal_code': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'location_street': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'location_street2': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'price': ('cartridge.shop.fields.MoneyField', [], {'null': 'True', 'max_digits': '10', 'decimal_places': '2', 'blank': 'True'}),
-            'provider': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']", 'null': 'True', 'blank': 'True'}),
-            'publish_date': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
-            'short_url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'site': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['sites.Site']"}),
-            'slug': ('django.db.models.fields.CharField', [], {'max_length': '2000', 'null': 'True', 'blank': 'True'}),
-            'status': ('django.db.models.fields.IntegerField', [], {'default': '2'}),
-            'title': ('django.db.models.fields.CharField', [], {'max_length': '500'}),
-            'updated': ('django.db.models.fields.DateTimeField', [], {'null': 'True'})
+            'provider': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']", 'null': 'True', 'blank': 'True'})
         },
         u'bccf.eventforprofessionals': {
-            'Meta': {'object_name': 'EventForProfessionals'},
-            '_meta_title': ('django.db.models.fields.CharField', [], {'max_length': '500', 'null': 'True', 'blank': 'True'}),
-            'content': ('mezzanine.core.fields.RichTextField', [], {}),
-            'created': ('django.db.models.fields.DateTimeField', [], {'null': 'True'}),
+            'Meta': {'ordering': "('_order',)", 'object_name': 'EventForProfessionals'},
+            u'bccfchildpage_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['bccf.BCCFChildPage']", 'unique': 'True', 'primary_key': 'True'}),
             'date_end': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'date_start': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
-            'description': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            'expiry_date': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
-            'gen_description': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'in_sitemap': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'keywords': ('mezzanine.generic.fields.KeywordsField', [], {'object_id_field': "'object_pk'", 'to': u"orm['generic.AssignedKeyword']", 'frozen_by_south': 'True'}),
-            'keywords_string': ('django.db.models.fields.CharField', [], {'max_length': '500', 'blank': 'True'}),
             'location_city': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'location_postal_code': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'location_street': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'location_street2': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'price': ('cartridge.shop.fields.MoneyField', [], {'null': 'True', 'max_digits': '10', 'decimal_places': '2', 'blank': 'True'}),
             'provider': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']", 'null': 'True', 'blank': 'True'}),
-            'publish_date': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
-            'short_url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'site': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['sites.Site']"}),
-            'slug': ('django.db.models.fields.CharField', [], {'max_length': '2000', 'null': 'True', 'blank': 'True'}),
-            'status': ('django.db.models.fields.IntegerField', [], {'default': '2'}),
             'survey_after': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'survey_after'", 'null': 'True', 'to': u"orm['builder.FormPublished']"}),
-            'survey_before': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'survey_before'", 'null': 'True', 'to': u"orm['builder.FormPublished']"}),
-            'title': ('django.db.models.fields.CharField', [], {'max_length': '500'}),
-            'updated': ('django.db.models.fields.DateTimeField', [], {'null': 'True'})
+            'survey_before': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'survey_before'", 'null': 'True', 'to': u"orm['builder.FormPublished']"})
         },
         u'bccf.footermarquee': {
             'Meta': {'object_name': 'FooterMarquee'},
@@ -587,32 +548,9 @@ class Migration(SchemaMigration):
             'url': ('django.db.models.fields.URLField', [], {'default': "''", 'max_length': '200', 'null': 'True', 'blank': 'True'})
         },
         u'bccf.magazine': {
-            'Meta': {'object_name': 'Magazine'},
-            '_meta_title': ('django.db.models.fields.CharField', [], {'max_length': '500', 'null': 'True', 'blank': 'True'}),
+            'Meta': {'ordering': "('_order',)", 'object_name': 'Magazine'},
             'attached_document': ('mezzanine.core.fields.FileField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
-            'content': ('mezzanine.core.fields.RichTextField', [], {}),
-            'created': ('django.db.models.fields.DateTimeField', [], {'null': 'True'}),
-            'description': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            'expiry_date': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
-            'gen_description': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'in_sitemap': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'keywords': ('mezzanine.generic.fields.KeywordsField', [], {'object_id_field': "'object_pk'", 'to': u"orm['generic.AssignedKeyword']", 'frozen_by_south': 'True'}),
-            'keywords_string': ('django.db.models.fields.CharField', [], {'max_length': '500', 'blank': 'True'}),
-            'publish_date': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
-            'short_url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'site': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['sites.Site']"}),
-            'slug': ('django.db.models.fields.CharField', [], {'max_length': '2000', 'null': 'True', 'blank': 'True'}),
-            'status': ('django.db.models.fields.IntegerField', [], {'default': '2'}),
-            'title': ('django.db.models.fields.CharField', [], {'max_length': '500'}),
-            'updated': ('django.db.models.fields.DateTimeField', [], {'null': 'True'}),
-            'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'magazines'", 'to': u"orm['auth.User']"})
-        },
-        u'bccf.page': {
-            'Meta': {'ordering': "('_order',)", 'object_name': 'Page', '_ormbases': [u'pages.RichTextPage']},
-            'carouselColor': ('django.db.models.fields.CharField', [], {'default': "'dgreen-list'", 'max_length': '11'}),
-            'marquee': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['bccf.PageMarquee']", 'null': 'True', 'blank': 'True'}),
-            u'richtextpage_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['pages.RichTextPage']", 'unique': 'True', 'primary_key': 'True'})
+            u'bccfchildpage_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['bccf.BCCFChildPage']", 'unique': 'True', 'primary_key': 'True'})
         },
         u'bccf.pagemarquee': {
             'Meta': {'object_name': 'PageMarquee'},
@@ -633,6 +571,10 @@ class Migration(SchemaMigration):
             'title': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '50', 'null': 'True', 'blank': 'True'}),
             'url': ('django.db.models.fields.URLField', [], {'default': "''", 'max_length': '200', 'null': 'True', 'blank': 'True'})
         },
+        u'bccf.program': {
+            'Meta': {'ordering': "('_order',)", 'object_name': 'Program', '_ormbases': [u'bccf.BCCFChildPage']},
+            u'bccfchildpage_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['bccf.BCCFChildPage']", 'unique': 'True', 'primary_key': 'True'})
+        },
         u'bccf.settings': {
             'Meta': {'object_name': 'Settings'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
@@ -640,45 +582,38 @@ class Migration(SchemaMigration):
             'value': ('django.db.models.fields.CharField', [], {'max_length': '255'})
         },
         u'bccf.tipsheet': {
-            'Meta': {'object_name': 'TipSheet'},
-            '_meta_title': ('django.db.models.fields.CharField', [], {'max_length': '500', 'null': 'True', 'blank': 'True'}),
+            'Meta': {'ordering': "('_order',)", 'object_name': 'TipSheet'},
             'attached_document': ('mezzanine.core.fields.FileField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
-            'content': ('mezzanine.core.fields.RichTextField', [], {}),
-            'created': ('django.db.models.fields.DateTimeField', [], {'null': 'True'}),
-            'description': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            'expiry_date': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
-            'gen_description': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'in_sitemap': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'keywords': ('mezzanine.generic.fields.KeywordsField', [], {'object_id_field': "'object_pk'", 'to': u"orm['generic.AssignedKeyword']", 'frozen_by_south': 'True'}),
-            'keywords_string': ('django.db.models.fields.CharField', [], {'max_length': '500', 'blank': 'True'}),
-            'publish_date': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
-            'short_url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'site': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['sites.Site']"}),
-            'slug': ('django.db.models.fields.CharField', [], {'max_length': '2000', 'null': 'True', 'blank': 'True'}),
-            'status': ('django.db.models.fields.IntegerField', [], {'default': '2'}),
-            'title': ('django.db.models.fields.CharField', [], {'max_length': '500'}),
-            'updated': ('django.db.models.fields.DateTimeField', [], {'null': 'True'}),
-            'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'tipsheets'", 'to': u"orm['auth.User']"})
+            u'bccfchildpage_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['bccf.BCCFChildPage']", 'unique': 'True', 'primary_key': 'True'})
         },
-        u'bccf.topic': {
-            'Meta': {'object_name': 'Topic'},
-            'content': ('mezzanine.core.fields.RichTextField', [], {}),
-            'featured_image': ('bccf.fields.MyImageField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+        u'bccf.userprofile': {
+            'Meta': {'object_name': 'UserProfile'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'site': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['sites.Site']"}),
-            'slug': ('django.db.models.fields.CharField', [], {'max_length': '2000', 'null': 'True', 'blank': 'True'}),
-            'star_blog_id': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'star_forum_post_id': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'star_survey_id': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
-            'title': ('django.db.models.fields.CharField', [], {'max_length': '500'})
+            'is_forum_moderator': ('django.db.models.fields.NullBooleanField', [], {'default': 'False', 'null': 'True', 'blank': 'True'}),
+            'membership_order': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['shop.Order']", 'null': 'True', 'blank': 'True'}),
+            'photo': ('bccf.fields.MyImageField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'user': ('django.db.models.fields.related.OneToOneField', [], {'related_name': "'profile'", 'unique': 'True', 'to': u"orm['auth.User']"})
         },
-        u'bccf.topiclink': {
-            'Meta': {'object_name': 'TopicLink'},
-            'entity_id': ('django.db.models.fields.IntegerField', [], {}),
+        u'bccf.video': {
+            'Meta': {'ordering': "('_order',)", 'object_name': 'Video', '_ormbases': [u'bccf.BCCFChildPage']},
+            u'bccfchildpage_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['bccf.BCCFChildPage']", 'unique': 'True', 'primary_key': 'True'}),
+            'link_url': ('django.db.models.fields.URLField', [], {'default': "''", 'max_length': '1024', 'null': 'True', 'blank': 'True'}),
+            'video_file': ('mezzanine.core.fields.FileField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'video_url': ('django.db.models.fields.URLField', [], {'default': "''", 'max_length': '1024', 'null': 'True', 'blank': 'True'})
+        },
+        u'builder.formpublished': {
+            'Meta': {'ordering': "('_order',)", 'object_name': 'FormPublished', '_ormbases': [u'bccf.BCCFChildPage']},
+            u'bccfchildpage_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['bccf.BCCFChildPage']", 'unique': 'True', 'primary_key': 'True'}),
+            'form_structure': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['builder.FormStructure']"}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
+        },
+        u'builder.formstructure': {
+            'Meta': {'object_name': 'FormStructure'},
+            'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'model_name': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
-            'topic': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['bccf.Topic']"})
+            'structure': ('django.db.models.fields.TextField', [], {}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'type': ('django.db.models.fields.CharField', [], {'default': "'JSON'", 'max_length': '4'})
         },
         u'bccf.userprofile': {
             'Meta': {'object_name': 'UserProfile'},
@@ -751,6 +686,15 @@ class Migration(SchemaMigration):
             'slug': ('django.db.models.fields.CharField', [], {'max_length': '2000', 'null': 'True', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '500'})
         },
+        u'generic.rating': {
+            'Meta': {'object_name': 'Rating'},
+            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['contenttypes.ContentType']"}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'object_pk': ('django.db.models.fields.IntegerField', [], {}),
+            'rating_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'null': 'True', 'blank': 'True'}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'ratings'", 'null': 'True', 'to': u"orm['auth.User']"}),
+            'value': ('django.db.models.fields.IntegerField', [], {})
+        },
         u'pages.page': {
             'Meta': {'ordering': "('titles',)", 'object_name': 'Page'},
             '_meta_title': ('django.db.models.fields.CharField', [], {'max_length': '500', 'null': 'True', 'blank': 'True'}),
@@ -775,11 +719,6 @@ class Migration(SchemaMigration):
             'title': ('django.db.models.fields.CharField', [], {'max_length': '500'}),
             'titles': ('django.db.models.fields.CharField', [], {'max_length': '1000', 'null': 'True'}),
             'updated': ('django.db.models.fields.DateTimeField', [], {'null': 'True'})
-        },
-        u'pages.richtextpage': {
-            'Meta': {'ordering': "('_order',)", 'object_name': 'RichTextPage', '_ormbases': [u'pages.Page']},
-            'content': ('mezzanine.core.fields.RichTextField', [], {}),
-            u'page_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['pages.Page']", 'unique': 'True', 'primary_key': 'True'})
         },
         u'shop.order': {
             'Meta': {'ordering': "('-id',)", 'object_name': 'Order'},
