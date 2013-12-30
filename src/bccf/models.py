@@ -215,8 +215,6 @@ class BCCFChildPage(BCCFBasePage, RichText, AdminThumbMixin):
         URL for a page
         """
         slug = self.slug
-        if self.content_model == 'topic':
-            return reverse('pybb:topic', kwargs={'pk': self.get_content_model().pk })
         if self.gparent:
             parent = self.gparent.slug
         else:
@@ -606,8 +604,8 @@ class UserProfile(models.Model):
             return d + relativedelta(months=+3)
         if subscription_term == 'Monthly':
             return d + relativedelta(months=+1)
-        
-    @property    
+            
+    @property
     def remaining_balance(self):
         membership = self.membership_product_variation
         expiration_date = self.membership_expiration_datetime
@@ -619,9 +617,6 @@ class UserProfile(models.Model):
 #### USER STUFF END ####
 
 class EventBase(BCCFChildPage):
-    """
-    Super class for events
-    """
     provider = models.ForeignKey(User, blank=True, null=True)
 
     price = MoneyField()
