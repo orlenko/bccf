@@ -418,7 +418,7 @@ class BCCFChildPage(BCCFBasePage, RichText, AdminThumbMixin):
 class BCCFBabyPage(BCCFChildPage):
     class Meta:
         verbose_name = 'BCCF Baby Page'
-        verbose_name_plural = 'BCCF Baby Pages' 
+        verbose_name_plural = 'BCCF Baby Pages'
         
     def get_absolute_url(self):
         """
