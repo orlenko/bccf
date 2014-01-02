@@ -66,6 +66,11 @@ urlpatterns = patterns("",
     url(r'^professionals/event/report/(?P<slug>.*)/$', 'bccf.views.events.professional_survey_download_report', name='professional-download-report'),
     url(r'^professionals/event/(?P<slug>.*)/$', 'bccf.views.events.professionals_event', name='professionals-event'),
         
+    # MEZZANINE URL OVERRIDES
+    #------------------------
+    # The patterns here will be used to override Mezzanine-specific urls.
+    #url("^rating/$", "bccf.views.views.rating", name="rating"),        
+        
     #Pages
     url(r'^next/topic/(?P<topic>.+)/(?P<which>.*)/(?P<offset>\d+)/$', 'bccf.views.page.topic_next', name='topic-next'),
     url(r'^next/(?P<parent>.+)/(?P<which>.*)/(?P<offset>\d+)/$', 'bccf.views.page.next', name='bccf-next'),
@@ -110,11 +115,6 @@ urlpatterns = patterns("",
     # page tree in the admin if it was installed.
 
     # url("^$", "mezzanine.blog.views.blog_post_list", name="home"),
-
-    # MEZZANINE URL OVERRIDES
-    #------------------------
-    # The patterns here will be used to override Mezzanine-specific urls.
-    url("^rating/$", "bccf.views.views.rating", name="rating"),
 
     # MEZZANINE'S URLS
     # ----------------

@@ -1,6 +1,6 @@
 from django.shortcuts import render_to_response, render
 from django.template.context import RequestContext
-from django.db.models import ObjectDoesNotExist
+from django.db.models import ObjectDoesNotExist, Q
 from django.http import HttpResponse
 from django.core import serializers
 from django.contrib.admin.views.decorators import staff_member_required
@@ -47,17 +47,21 @@ def page(request, parent, child=None, baby=None):
         template = 'bccf/%s_page.html' % (parent)
     else: 
         baby_obj = None
-        log.info('TEST')
         if baby and baby != 'resources':
             baby_obj = BCCFBabyPage.objects.get(slug=('%s/%s') % (child, baby))
         elif baby and baby == 'resources':
             baby_obj = 'resources'
-        log.info('TEST 2')
         child_obj = BCCFChildPage.objects.get(slug=child)
         babies = BCCFChildPage.objects.filter(parent=child_obj).order_by('_order')
         template = 'generic/sub_page.html'
-        log.info(baby_obj)
+
         #Related resources
+        q = Q()
+        for topic in child_obj.bccf_topic.all():        
+            q = q | Q(bccf_topic = topic) 
+        resources_pre = BCCFChildPage.objects.filter(Q(content_model='article') | Q(content_model='downloadableform') | Q(content_model='magazine') | Q(content_model='tipsheet') | Q(content_model='video'))     
+        resources = resources_pre.filter(q, ~Q(slug=child)).order_by('-created')[:10]      
+        
     context = RequestContext(request, locals())
     return render_to_response(template, {}, context_instance=context)
     

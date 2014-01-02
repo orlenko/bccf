@@ -184,7 +184,7 @@ class BCCFChildPage(BCCFBasePage, RichText, AdminThumbMixin):
     content_model = models.CharField(editable=False, max_length=50, null=True, blank=True)
     login_required = models.BooleanField("Login required", default=False,
         help_text="If checked, only logged in users can view this page")
-    rating = RatingField()
+    rating = RatingField(verbose_name='Rating')
     in_menus = MenusField("Show in menus", blank=True, null=True)
     page_for = models.CharField('Type', max_length=13, default='Parents', blank=True, null=True, choices=TYPES)
     image = FileField("Image",
@@ -504,7 +504,7 @@ class Blog(BCCFChildPage):
 class Campaign(BCCFChildPage):
     def save(self, **kwargs):
         self.gparent = BCCFPage.objects.get(slug='tag')
-        super(Blog, self).save(**kwargs)
+        super(Campaign, self).save(**kwargs)
 
 #### PAGE STUFF END ####
 
