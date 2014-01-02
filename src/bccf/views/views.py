@@ -100,7 +100,7 @@ def rating(request):
         return response
     obj, post_data = response
     url = add_cache_bypass(obj.get_absolute_url().split("#")[0])
-    response = redirect(url + "#rating-%s" % obj.id)
+    response = redirect(url)
     rating_form = BCCFRatingForm(request, obj, post_data)
     log.debug('===============================')
     log.debug('before is_valid')
@@ -114,9 +114,6 @@ def rating(request):
         log.debug('after save')
         log.debug('===============================')
         if request.is_ajax():
-            log.debug('===============================')
-            log.debug('inside is_ajax')
-            log.debug('===============================')
             # Reload the object and return the rating fields as json.
             obj = obj.__class__.objects.get(id=obj.id)
             log.debug(obj)

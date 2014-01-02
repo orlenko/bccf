@@ -1,4 +1,5 @@
 from django import forms
+from django.db.models import Sum
 from django.forms.widgets import RadioFieldRenderer
 from django.utils.encoding import force_unicode
 from django.utils.safestring import mark_safe
@@ -66,9 +67,15 @@ class BCCFRatingForm(CommentSecurityForm):
                     rating_instance.save()
         else:
             rating_instance = Rating(value=rating_value)
-            rating_manager.add(rating_instance)
+            rating_manager.add(rating_instance)    
+            # edits
+            self.target_object.rating_count = self.target_object.rating_count + 1
+        
+        sum = Rating.objects.aggregate(Sum('value'))
+        self.target_object.rating_sum = int(sum['value__sum'])
+        self.target_object.rating_average = self.target_object.rating_sum / self.target_object.rating_count
+        self.target_object.save()
         return rating_instance
-
 
 class ProfileForm(forms.ModelForm):
     class Meta:
