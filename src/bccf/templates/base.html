@@ -126,21 +126,8 @@
     <nav id="main-top-nav" class="nav-mobile-container section">
         <span class="row no-desktop mobile-full">Menu</span>
         {% page_menu 'pages/menus/dropdown.html' %}
-        <!-- <ul class="col eight mobile-full">
-            <li><a href="#">Programs</a></li>
-            <li><a href="#">Trainings</a></li>
-            <li><a href="#">Tag</a></li>
-            <li><a href="#">Resources</a></li>
-            <li><a href="#">Blog</a></li>
-            <li><a href="#">Donate</a></li>
-        </ul> -->
-
         <div id="search-bar" class="col four mobile-full">
-            <form method="get" id="searchform" action="/search/">
-                <input type="hidden" name="type" value="" />
-                <input type="submit" class="submit" name="submit" id="searchsubmit" value=""  />
-                <input type="text" class="field" name="q" id="q" placeholder="Search BCCF" />
-            </form>
+            {% search_form %}
         </div>
     </nav>
 

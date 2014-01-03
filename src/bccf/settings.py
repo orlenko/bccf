@@ -512,3 +512,8 @@ else:
 ##################
 #JQUERY_FILENAME = ""
 BCCF_PAGES = '(resources|blog|trainings|tag|news|programs)'
+SEARCH_MODEL_CHOICES = (
+    'bccf.BCCFChildPage',
+    'bccf.BCCFTopic',
+    'bccf.BCCFPage',
+)
