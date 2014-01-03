@@ -61,6 +61,7 @@ class BCCFRatingForm(CommentSecurityForm):
             except Rating.DoesNotExist:
                 rating_instance = Rating(user=user, value=rating_value)
                 rating_manager.add(rating_instance)
+                self.target_object.rating_count = self.target_object.rating_count + 1
             else:
                 if rating_instance.value != int(rating_value):
                     rating_instance.value = rating_value
@@ -69,9 +70,8 @@ class BCCFRatingForm(CommentSecurityForm):
             rating_instance = Rating(value=rating_value)
             rating_manager.add(rating_instance)    
             # edits
-            self.target_object.rating_count = self.target_object.rating_count + 1
         
-        sum = Rating.objects.aggregate(Sum('value'))
+        sum = Rating.objects.filter(object_pk=self.target_object.pk).aggregate(Sum('value'))
         self.target_object.rating_sum = int(sum['value__sum'])
         self.target_object.rating_average = self.target_object.rating_sum / self.target_object.rating_count
         self.target_object.save()
