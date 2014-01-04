@@ -171,6 +171,10 @@ class BCCFTopic(Displayable, RichText):
 
 #BCCF Child Class Pages
 class BCCFChildPage(BCCFBasePage, RichText, AdminThumbMixin):
+    """
+    This is the page that shows up in the fancy carousels. A copy of the Page model from Mezzanine in order to create
+    its own tree-like sorting structure.
+    """
     TYPES = (
         ('parent', 'Parents'),
         ('professional', 'Professionals'),    
