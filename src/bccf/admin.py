@@ -12,7 +12,7 @@ from mezzanine.pages.admin import PageAdmin
 
 from bccf.models import (BCCFTopic, Settings, EventForProfessionals,
     EventForParents, HomeMarquee, FooterMarquee, HomeMarqueeSlide, FooterMarqueeSlide,
-    PageMarquee, PageMarqueeSlide, BCCFPage, BCCFChildPage, BCCFBabyPage, 
+    PageMarquee, PageMarqueeSlide, BCCFPage, BCCFChildPage, BCCFBabyPage,
     Blog, Program, Article, Magazine, Video, TipSheet, DownloadableForm)
 
 
@@ -41,7 +41,7 @@ class ParentsEventAdmin(DisplayableAdmin):
             self.list_display = list(deepcopy(self.list_display))
             for fieldname in ['provider', 'date_start', 'date_end', 'price']:
                 self.list_display.insert(-1, fieldname)
-                
+
 class ProfessionalsEventAdmin(DisplayableAdmin):
     def __init__(self, *args, **kwargs):
         super(ProfessionalsEventAdmin, self).__init__(*args, **kwargs)
@@ -275,7 +275,7 @@ class BCCFChildAdmin(DisplayableAdmin):
                                     'page_for',
                                     'image']):
                 self.fieldsets[0][1]['fields'].insert(3, field)
-                
+
 class BCCFResourceAdmin(DisplayableAdmin):
     def __init__(self, *args, **kwargs):
         super(BCCFResourceAdmin, self).__init__(*args, **kwargs)
@@ -302,23 +302,23 @@ admin.site.register(Video, BCCFResourceAdmin)
 
 #Inline
 class HomeMarqueeSlideInline(admin.TabularInline):
-    model = HomeMarqueeSlide.marquee.through
+    model = HomeMarqueeSlide.marquee.through  # @UndefinedVariable - PyDev is blind
 
 class FooterMarqueeSlideInline(admin.TabularInline):
-    model = FooterMarqueeSlide.marquee.through
-    
+    model = FooterMarqueeSlide.marquee.through  # @UndefinedVariable - PyDev is blind
+
 class PageMarqueeSlideInline(admin.TabularInline):
-    model = PageMarqueeSlide.marquee.through
+    model = PageMarqueeSlide.marquee.through  # @UndefinedVariable - PyDev is blind
 
 #Marquees
 class HomeMarqueeAdmin(admin.ModelAdmin):
     list_display = ['title', 'active']
     inlines = [HomeMarqueeSlideInline]
-    
+
 class FooterMarqueeAdmin(admin.ModelAdmin):
     list_display = ['title', 'active']
     inlines = [FooterMarqueeSlideInline]
-    
+
 class PageMarqueeAdmin(admin.ModelAdmin):
     inlines = [PageMarqueeSlideInline]
 
