@@ -171,6 +171,10 @@ class BCCFTopic(Displayable, RichText):
 
 #BCCF Child Class Pages
 class BCCFChildPage(BCCFBasePage, RichText, AdminThumbMixin):
+    """
+    This is the page that shows up in the fancy carousels. A copy of the Page model from Mezzanine in order to create
+    its own tree-like sorting structure.
+    """
     TYPES = (
         ('parent', 'Parents'),
         ('professional', 'Professionals'),
@@ -184,7 +188,7 @@ class BCCFChildPage(BCCFBasePage, RichText, AdminThumbMixin):
     content_model = models.CharField(editable=False, max_length=50, null=True, blank=True)
     login_required = models.BooleanField("Login required", default=False,
         help_text="If checked, only logged in users can view this page")
-    rating = RatingField()
+    rating = RatingField(verbose_name='Rating')
     in_menus = MenusField("Show in menus", blank=True, null=True)
     page_for = models.CharField('Type', max_length=13, default='Parents', blank=True, null=True, choices=TYPES)
     image = FileField("Image",
@@ -504,7 +508,7 @@ class Blog(BCCFChildPage):
 class Campaign(BCCFChildPage):
     def save(self, **kwargs):
         self.gparent = BCCFPage.objects.get(slug='tag')
-        super(Blog, self).save(**kwargs)
+        super(Campaign, self).save(**kwargs)
 
 #### PAGE STUFF END ####
 
@@ -613,10 +617,10 @@ class UserProfile(models.Model):
         price = membership.unit_price
         now = datetime.now()
         return remaining_subscription_balance(purchase_date, expiration_date, now, price)
+
 #### USER STUFF END ####
 
 class EventBase(BCCFChildPage):
-
     provider = models.ForeignKey(User, blank=True, null=True)
 
     price = MoneyField()

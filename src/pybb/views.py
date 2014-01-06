@@ -18,6 +18,9 @@ from django.views.generic.edit import ModelFormMixin
 from django.views.decorators.csrf import csrf_protect
 from django.views import generic
 
+import logging
+log = logging.getLogger(__name__)
+
 try:
     from pure_pagination import Paginator
 except ImportError:
@@ -226,7 +229,7 @@ class TopicView(RedirectToLoginMixin, generic.ListView):
             forum_mark = ForumReadTracker.objects.get(forum=topic.forum, user=request.user)
         except ObjectDoesNotExist:
             forum_mark = None
-        if (forum_mark is None) or (forum_mark.time_stamp < topic.updated):
+        if forum_mark is None: #or (forum_mark.time_stamp < topic.updated):
             # Mark topic as readed
             topic_mark, new = TopicReadTracker.objects.get_or_create_tracker(topic=topic, user=request.user)
             if not new:

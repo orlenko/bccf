@@ -13,7 +13,8 @@ from mezzanine.pages.admin import PageAdmin
 from bccf.models import (BCCFTopic, Settings, EventForProfessionals,
     EventForParents, HomeMarquee, FooterMarquee, HomeMarqueeSlide, FooterMarqueeSlide,
     PageMarquee, PageMarqueeSlide, BCCFPage, BCCFChildPage, BCCFBabyPage,
-    Blog, Program, Article, Magazine, Video, TipSheet, DownloadableForm)
+    Blog, Program, Article, Magazine, Video, TipSheet, DownloadableForm, Campaign)
+from django.core.exceptions import PermissionDenied
 
 
 class SettingsAdmin(admin.ModelAdmin):
@@ -112,7 +113,7 @@ class BCCFPageAdmin(DisplayableAdmin):
             # Insert each field between the publishing fields and nav
             # fields. Do so in reverse order to retain the order of
             # the model's fields.
-            exclude_fields = BCCFChildPage._meta.get_all_field_names() + ['bccfchildpage_ptr']
+            exclude_fields = BCCFChildPage._meta.get_all_field_names() + ['bccfchildpage_ptr']  # @UndefinedVariable - PyDev quirks
             try:
                 exclude_fields.extend(self.exclude)
             except (AttributeError, TypeError):
@@ -294,6 +295,7 @@ admin.site.register(BCCFChildPage, BCCFPageAdmin)
 admin.site.register(BCCFBabyPage, BCCFPageAdmin)
 admin.site.register(Blog, BCCFChildAdmin)
 admin.site.register(Program, BCCFChildAdmin)
+admin.site.register(Campaign, BCCFChildAdmin)
 admin.site.register(Article, BCCFResourceAdmin)
 admin.site.register(DownloadableForm, BCCFResourceAdmin)
 admin.site.register(Magazine, BCCFResourceAdmin)

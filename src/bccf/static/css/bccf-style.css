@@ -3197,4 +3197,88 @@ footer #newsletter .dashed-button a:hover {
     display: block;
   }
 }
-/*@import "../mixins/messages";*/
+/*
+	Styles for message boxes
+*/
+/* line 6, ../mixins/messages.scss */
+.alert {
+  margin-top: 15px;
+  padding: 8px 35px 8px 14px;
+  margin-bottom: 20px;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  background-color: #fcf8e3;
+  border: 1px solid #fbeed5;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  color: #c09853;
+}
+/* line 18, ../mixins/messages.scss */
+.alert h4 {
+  color: #c09853;
+  margin: 0;
+}
+/* line 22, ../mixins/messages.scss */
+.alert .close {
+  position: relative;
+  top: -2px;
+  right: -21px;
+  line-height: 20px;
+  float: right;
+  font-size: 20px;
+  font-weight: bold;
+  color: #000000;
+  text-shadow: 0 1px 0 #ffffff;
+  opacity: 0.2;
+  filter: alpha(opacity=20);
+  text-decoration: none;
+}
+
+/* line 38, ../mixins/messages.scss */
+.alert-success {
+  color: #468847;
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+}
+/* line 42, ../mixins/messages.scss */
+.alert-success h4 {
+  color: #468847;
+}
+
+/* line 49, ../mixins/messages.scss */
+.alert-danger,
+.alert-error {
+  color: #b94a48;
+  background-color: #f2dede;
+  border-color: #eed3d7;
+}
+/* line 53, ../mixins/messages.scss */
+.alert-danger h4,
+.alert-error h4 {
+  color: #b94a48;
+}
+
+/* line 59, ../mixins/messages.scss */
+.alert-info {
+  color: #3a87ad;
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+}
+/* line 63, ../mixins/messages.scss */
+.alert-info h4 {
+  color: #3a87ad;
+}
+
+/* line 68, ../mixins/messages.scss */
+.alert-block {
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+/* line 71, ../mixins/messages.scss */
+.alert-block > p, .alert-block > ul {
+  margin-bottom: 0;
+}
+/* line 74, ../mixins/messages.scss */
+.alert-block p + p {
+  margin-top: 5px;
+}

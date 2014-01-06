@@ -39,6 +39,8 @@ urlpatterns = patterns("",
 
     # Podcasts
     #('^podcasts/', include('podcasting.urls')),
+    
+    url('^bccf_admin_page_ordering/$', 'bccf.views.page.bccf_admin_page_ordering', name='bccf-admin-page-ordering'),
 
     url("^account/orders/$", "cartridge.shop.views.order_history", name="shop_order_history"),
 
@@ -63,6 +65,11 @@ urlpatterns = patterns("",
     url(r'^professionals/event/create/$', ProfessionalEventWizard.as_view(FORMS), name='professionals-event-create'),
     url(r'^professionals/event/report/(?P<slug>.*)/$', 'bccf.views.events.professional_survey_download_report', name='professional-download-report'),
     url(r'^professionals/event/(?P<slug>.*)/$', 'bccf.views.events.professionals_event', name='professionals-event'),
+        
+    # MEZZANINE URL OVERRIDES
+    #------------------------
+    # The patterns here will be used to override Mezzanine-specific urls.
+    url("^rating/$", "bccf.views.views.rating", name="rating"),        
         
     #Pages
     url(r'^next/topic/(?P<topic>.+)/(?P<which>.*)/(?P<offset>\d+)/$', 'bccf.views.page.topic_next', name='topic-next'),
@@ -108,11 +115,6 @@ urlpatterns = patterns("",
     # page tree in the admin if it was installed.
 
     # url("^$", "mezzanine.blog.views.blog_post_list", name="home"),
-
-    # MEZZANINE URL OVERRIDES
-    #------------------------
-    # The patterns here will be used to override Mezzanine-specific urls.
-    url("^rating/$", "bccf.views.views.rating", name="rating"),
 
     # MEZZANINE'S URLS
     # ----------------
