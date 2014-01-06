@@ -1,0 +1,8 @@
+Hello Admin,
+
+	User {{ user.get_full_name }} ({{ user.email }}) has requested to cancel his BCCF membership.
+
+	Current membership information: {{ membership_product_variation }}
+
+
+- BCCF Team

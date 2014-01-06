@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block main %}
+	<p>Are you sure you would like to cancel your membership?</p>
+
+	<form method="post" action=".">
+		{% csrf_token %}
+		<input type="hidden" name="foo" value="bar"/>
+		<input type="submit" value="Yes, I am sure"/>
+		<input type="button" value="Nah, just kidding, I'll stay" onclick="location.href='/';"/>
+	</form>
+
+{% endblock %}
