@@ -9,7 +9,6 @@ from django.template.context import Context
 from django.template.loader import get_template
 from mezzanine import template
 from mezzanine.conf import settings
-from bccf.models import TopicLink
 from django.core.urlresolvers import reverse
 
 # Try to import PIL in either of the two ways it can end up installed.
@@ -89,7 +88,7 @@ def bccf_thumbnail(image_url, width, height, quality=95):
 
     f = default_storage.open(image_url)
     try:
-        image = Image.open(f)
+        image = Image.open(f)  # @UndefinedVariable - PyDev does not get Image
     except:
         # Invalid image format
         return image_url
@@ -122,7 +121,7 @@ def bccf_thumbnail(image_url, width, height, quality=95):
     # Required for progressive jpgs.
     ImageFile.MAXBLOCK = image.size[0] * image.size[1]
     try:
-        image = ImageOps.fit(image, (width, height), Image.ANTIALIAS)
+        image = ImageOps.fit(image, (width, height), Image.ANTIALIAS)  # @UndefinedVariable - PyDev does not get Image
         image = image.save(thumb_path, filetype, quality=quality, **image_info)
         # Push a remote copy of the thumbnail if MEDIA_URL is
         # absolute.
@@ -141,12 +140,6 @@ def bccf_thumbnail(image_url, width, height, quality=95):
             pass
         return image_url
     return thumb_url
-
-
-@register.assignment_tag
-def topics_for(record):
-    return [topic_link.topic for topic_link in TopicLink.objects.filter(
-        model_name=record._meta.db_table, entity_id=record.id)]
 
 
 @register.render_tag

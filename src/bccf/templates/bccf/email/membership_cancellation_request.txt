@@ -1,0 +1,7 @@
+Hello {{ user.get_full_name }} ({{ user.email }}),
+
+	Your request to cancel BCCF membership has been received.
+
+	Your current membership information: {{ membership_product_variation }}
+
+- BCCF Team
