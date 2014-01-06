@@ -186,6 +186,9 @@ var load_content = function(box) {
             }
         }
     });
+    if (pageURL != window.location) {
+        window.history.pushState({ path: pageURL }, '', pageURL);
+    }
 }
 
 var add_slide = function(data, parent) {
