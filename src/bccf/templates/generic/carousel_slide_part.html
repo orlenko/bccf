@@ -3,7 +3,7 @@
     <div>
         <ul class="page-container-inner">
     {% endif %}
-            <li class="page-box carousel-box col four">
+            <li id="{{ slide.slug }}" class="page-box carousel-box col four">
                 <img src="{{ slide.image }}" alt="{{ slide.title }}" />
                 <div>
                     <a href="{{ slide.get_absolute_url }}">
