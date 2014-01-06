@@ -1,10 +1,11 @@
+{% load static bccf_tags %}
 {% for slide in slides %}
     {% if forloop.counter|divisibleby:"13" or forloop.first %} <!-- If the first box of the slide -->
     <div>
         <ul class="page-container-inner">
     {% endif %}
             <li id="{{ slide.slug }}" class="page-box grid-box col four">
-                <img src="{{ slide.image }}" alt="{{ slide.title }}" />
+                <img src="{{ MEDIA_URL }}{% bccf_thumbnail slide.image 195 75 %}" alt="{{ slide.title }}" />
                 <div>
                     <a href="{{ slide.get_absolute_url }}">
                         <h2>{{ slide.title }}</h2>
