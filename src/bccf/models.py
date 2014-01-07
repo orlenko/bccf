@@ -53,7 +53,7 @@ class HomeMarquee(Marquee):
     active = models.BooleanField("Active", default=False,
         help_text = "Checking this box makes this the default marquee in the home page"
     )
-    def save(self):
+    def save(self, **kwargs):
         if self.active:
             try:
                 temp = HomeMarquee.objects.get(active=True)
@@ -62,13 +62,13 @@ class HomeMarquee(Marquee):
                     temp.save()
             except ObjectDoesNotExist:
                 self.active = True
-        super(HomeMarquee, self).save()
+        super(HomeMarquee, self).save(**kwargs)
 
 class FooterMarquee(Marquee):
     active = models.BooleanField("Active", default=False,
         help_text = "Checking this will make this the default footer marquee"
     )
-    def save(self):
+    def save(self, **kwargs):
         if self.active:
             try:
                 temp = FooterMarquee.objects.get(active=True)
@@ -77,7 +77,7 @@ class FooterMarquee(Marquee):
                     temp.save()
             except ObjectDoesNotExist:
                 self.active = True
-        super(FooterMarquee, self).save()
+        super(FooterMarquee, self).save(**kwargs)
 
 class PageMarquee(Marquee):
     pass
@@ -190,7 +190,7 @@ class BCCFChildPage(BCCFBasePage, RichText, AdminThumbMixin):
         help_text="If checked, only logged in users can view this page")
     rating = RatingField(verbose_name='Rating')
     in_menus = MenusField("Show in menus", blank=True, null=True)
-    page_for = models.CharField('Type', max_length=13, default='Parents', blank=True, null=True, choices=TYPES)
+    page_for = models.CharField('Type', max_length=13, default='parent', blank=True, null=True, choices=TYPES)
     image = FileField("Image",
         upload_to = upload_to("bccf.ChildPage.image_file", "childpage"),
         extensions = ['.png', '.jpg', '.bmp', '.gif'],
