@@ -99,7 +99,8 @@ def bccf_thumbnail(image_url, width, height, quality=95):
 
     # If already right size, don't do anything.
     if width == image.size[0] or height == image.size[1]:
-        return image_url
+        return image_url  
+    
     # Set dimensions.
     if width and height:
         #print 'Both dimensions of %s are specified' % image_url

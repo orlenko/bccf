@@ -72,7 +72,7 @@ def topic_page(request, topic):
     
 def next(request, parent, which, offset):
     obj = BCCFPage.objects.get(slug=parent)
-    if obj.title == 'Reources' or obj.title == 'TAG':
+    if obj.title == 'Resources' or obj.title == 'TAG':
         slides = BCCFChildPage.objects.filter(gparent=obj.pk, content_model=which).order_by('-created')[offset:12]
     elif which == 'parent' or which == 'professional':
         slides = BCCFChildPage.objects.filter(gparent=obj.pk, page_for=which).order_by('-created')[offset:12]

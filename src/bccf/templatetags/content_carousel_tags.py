@@ -23,8 +23,11 @@ def content_carousel_for(context, obj, title, child=None, which=None):
     context['filter'] = False
     context['carousel_color'] = obj.carousel_color
     context['carousel_title'] = title
-    context['carousel_name'] = title.replace(' ', '_').lower()
+    context['carousel_name'] = which
     context['slides'] = None    
+    
+    if title == 'Talk':
+        context['filter'] = True    
     
     try:
         if child is None:
