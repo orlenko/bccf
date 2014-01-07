@@ -515,6 +515,13 @@ class Campaign(BCCFChildPage):
 #### USER STUFF ####
 
 class UserProfile(models.Model):
+    MEMBERSHIP_TYPES = [
+            ('parent', 'Parent'),
+            ('professional', 'Professional'),
+            ('organization', 'Organization'),
+            ('corporate', 'Corporate'),
+    ]
+
     user = models.OneToOneField(User, related_name='profile')
     photo = MyImageField(verbose_name="Photo",
         upload_to=upload_to("bccf.Profile.photo", "uploads/profile-photos"),
@@ -524,12 +531,25 @@ class UserProfile(models.Model):
     membership_order = models.ForeignKey('shop.Order', null=True, blank=True)
     requested_cancellation = models.NullBooleanField(null=True, blank=True, default=False)
     is_forum_moderator = models.NullBooleanField(null=True, blank=True, default=False)
+    membership_type = models.CharField('Membership Type', max_length=128, null=True, blank=True, choices=MEMBERSHIP_TYPES)
+    membership_level = models.IntegerField(default=0, null=True, blank=True)
 
     def __unicode__(self):
         return 'Profile of %s' % (self.user.get_full_name() or self.user.username)
 
     def can_post_on_forum(self, post):
         return self.is_forum_moderator
+
+    def set_membership_order(self, order):
+        self.membership_order = order
+        # Update membership type and level
+        variation = self.membership_product_variation
+        categ_name = variation.product.categories.all()[0].lower()
+        self.membership_level = variation.total_price
+        self.membership_type = None
+        for label, _descr in self.MEMBERSHIP_TYPES:
+            if label in categ_name:
+                self.membership_type = label
 
     @property
     def membership_product_variation(self):
@@ -543,7 +563,7 @@ class UserProfile(models.Model):
                     for variation in ProductVariation.objects.filter(sku=order_item.sku):
                         for category in variation.product.categories.all():
                             if category.title.startswith('Membership'):
-                                self.membership_order = order
+                                self.set_membership_order(order)
                                 self.save()
                                 return variation
             return None
@@ -711,3 +731,4 @@ def remaining_subscription_balance(purchase_date, expiration_date, to_date, paid
     used_fraction = elapsed_time.total_seconds() / licensed_time.total_seconds()
     remaining = Decimal(str(float(paid) * (1 - used_fraction)))
     return remaining
+

@@ -56,7 +56,7 @@ def membership(request, slug):
             order = Order.objects.create()
             order.setup(request)
             order.complete(request)
-            request.user.profile.membership_order = order
+            request.user.profile.set_membership_order(order)
             request.user.profile.save()
             checkout.send_order_email(request, order)
             return redirect("shop_complete")
