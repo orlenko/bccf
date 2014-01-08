@@ -1,0 +1,107 @@
+.mnav-menu {
+    margin: 0;
+    display: block;
+    padding-left: 0;
+    list-style-image: none;
+    list-style-type: none;
+}
+
+.mnav-menu-item {
+    display: inline-block;
+}
+
+.mnav-menu-item a {
+    display: block;
+    padding: 10px 10px;
+}
+
+.mnav-submenu {
+    position: absolute;
+    padding-left: 0;
+    z-index: 9999;
+    display: none;
+    list-style-image: none;
+}
+
+.mnav-submenu-item {
+    display: inline;
+}
+
+.mnav-submenu-item a {
+    padding-left: 20px;
+}
+
+.mnav-mobile-btn {
+    height: 30px;
+    width: 30px;
+    padding: 5px;
+    display: none;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    background-image: url('../img/mobile-nav-icon.svg');
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-color: #000;
+}
+
+.mnav-open-close {
+    display: none;
+    float: right;
+}
+
+.mnav-mobile-arrow {
+    height: 30px;
+    width: 30px;
+    padding: 5px;
+    display: block;
+    cursor: pointer;
+    background-image: url('../img/mobile-arrow-icon.svg');
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-color: #ccc;
+}
+
+.mnav-mobile-arrow-mirror {
+    -webkit-transform:rotate(180deg);
+	-moz-transform:rotate(180deg);
+	-ms-transform:rotate(180deg);
+	-o-transform:rotate(180deg);
+	transform:rotate(180deg);
+}
+
+@media only screen and (max-width: 739px) { /* Set to width according to BASE */
+#nav-demo {
+  padding-top: 40px;
+}
+
+.mnav-mobile-btn {
+    display: block;
+}
+
+.mnav-menu {
+    display: none;
+    padding: 0;
+}
+
+.mnav-menu-item {
+    float: none;
+    position: relative;
+    display: block;
+    width: 100%;
+}
+
+.mnav-open-close {
+    display: block;
+}
+
+.mnav-submenu {
+    width: 100%;
+    position: relative;
+}
+
+.mnav-submenu-item a {
+    display: block;
+}
+
+}

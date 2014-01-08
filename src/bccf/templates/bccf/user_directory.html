@@ -2,6 +2,7 @@
 
 {% block content %}
 <h1>Member Directory</h1>
+
 {% for user in recordlist %}
 <div class="section row">
     <h3>{{ user.user.get_full_name }}</h3>

@@ -35,7 +35,6 @@ var history_mobile = {
 }
 $(function(){
     history_height = $('#history-carousel').find('.history-image:first-child').height();
-    $('#browse-by-nav').Flaunt();
     $('#slide-container').owlCarousel({
         'singleItem': true,
         'autoPlay': true,
