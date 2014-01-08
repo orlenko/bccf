@@ -1,6 +1,6 @@
-{% load static bccf_tags %}
+{% load static bccf_tags bccf_filters %}
 {% for slide in slides %}
-    {% if forloop.counter|divisibleby:"4" or forloop.first%}
+    {% if  forloop.counter|add:2|divisibleby:"3" or forloop.first %}
     <div>
         <ul class="page-container-inner">
     {% endif %}

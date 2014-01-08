@@ -1,4 +1,7 @@
-import unittest
+import logging
+log = logging.getLogger(__name__)
+
+from django.test import TestCase
 
 #
 # Test Cases for the different models used in BCCF
@@ -10,7 +13,7 @@ import unittest
 from bccf.models import HomeMarquee, FooterMarquee, PageMarquee
 
 # Home Marquee
-class HomeMarqueeTestCase(unittest.TestCase):
+class HomeMarqueeTestCase(TestCase):
     def setUp(self):
         "Creates a new Home Marquee Object with a title of `Home Marquee Test 1`"
         self.marquee = HomeMarquee.objects.create(title='Home Marquee Test 1')
@@ -20,7 +23,7 @@ class HomeMarqueeTestCase(unittest.TestCase):
         self.assertEqual(self.marquee.active, False)
 
 # Footer Marquee
-class FooterMarqueeTestCase(unittest.TestCase):
+class FooterMarqueeTestCase(TestCase):
     def setUp(self):
         "Creates a new Footer Marquee Pbject with a title of `Footer Marquee Test 1`"
         self.marquee = FooterMarquee.objects.create(title='Footer Marquee Test 1')
@@ -29,7 +32,7 @@ class FooterMarqueeTestCase(unittest.TestCase):
         self.assertEqual(self.marquee.active, False)
 
 # Page Marquee
-class PageMarqueeTestCase(unittest.TestCase):
+class PageMarqueeTestCase(TestCase):
     def setUp(self):
         "Creates a new Home Marquee Object with a title of `Home Marquee Test 1`"
         self.marquee = PageMarquee.objects.create(title='Page Marquee Test 1')
@@ -128,7 +131,7 @@ class BCCFTopicTestCase(PageMarqueeTestCase):
         self.assertEqual(self.page.carousel_color, 'dgreen-list')
 
 # BCCF Child Page
-class BCCFChildPageTestCase(unittest.TestCase):
+class BCCFChildPageTestCase(TestCase):
     def setUp(self):
         "Creates a new Topic Page"
         self.page = BCCFPage.objects.create(title='Test Page', content='Test Content')
@@ -180,7 +183,7 @@ class BCCFChildPageTestCasePageForParent(BCCFChildPageTestCase):
         "Test to get child page via page for rule"
         children = BCCFChildPage.objects.filter(page_for='parent')
         self.failIf(self.child not in children)
-
+        
 class BCCFChildPageTestCasePageForProfessional(BCCFChildPageTestCase):
     def setUp(self):
         "Sets page for professional"
@@ -192,9 +195,38 @@ class BCCFChildPageTestCasePageForProfessional(BCCFChildPageTestCase):
         "Test to get child page via page for rule"
         children = BCCFChildPage.objects.filter(page_for='professional')
         self.failIf(self.child not in children)
+
+class BCCFChildPageTestCaseTopic(BCCFChildPageTestCase):
+    def setUp(self):
+        "Sets page to have topic"
+        super(BCCFChildPageTestCaseTopic, self).setUp()
+        self.topic1 = BCCFTopic.objects.create(title='Topic 1', content='Test Content')
+        self.topic2 = BCCFTopic.objects.create(title='Topic 2', content='Test Content')
+        
+class BCCFChildPageTestTopicGet1(BCCFChildPageTestCaseTopic):
+    def setUp(self):
+        "Set Topic to Topic 1"
+        super(BCCFChildPageTestTopicGet1, self).setUp();        
+        self.child.bccf_topic.add(self.topic1)
+        self.child.save()
+    def testGetChildViaTopic(self):
+        "Get the child page via the topic rule"
+        children = BCCFChildPage.objects.filter(bccf_topic=self.topic1)
+        self.failIf(self.child not in children)
+        
+class BCCFChildPageTestTopicGet2(BCCFChildPageTestCaseTopic):
+    def setUp(self):
+        "Set Topic to Topic 2"
+        super(BCCFChildPageTestTopicGet2, self).setUp();        
+        self.child.bccf_topic.add(self.topic2)
+        self.child.save()
+    def testGetChildViaTopic(self):
+        "Get the child page via the topic rule"
+        children = BCCFChildPage.objects.filter(bccf_topic=self.topic2)
+        self.failIf(self.child not in children)
         
 # Baby Page
-class BCCFBabyPageTestCase(unittest.TestCase):
+class BCCFBabyPageTestCase(TestCase):
     def setUp(self):
         "Creates new BCCF Baby Page"
         self.child = BCCFChildPage.objects.create(title='Test Child', content='Test Content')
@@ -211,7 +243,178 @@ class BCCFBabyPageTestCaseParent(BCCFBabyPageTestCase):
         babies = BCCFBabyPage.objects.filter(parent=self.child)
         self.failIf(self.baby not in babies)
         
-# Article
-class ArticleTestCase(unittest.TestCase):
+# Resource
+class ResourcesTestCase(TestCase):
     def setUp(self):
+        "Create new Resource Page"
+        self.page, created = BCCFPage.objects.get_or_create(title='Resources', content='Test Content')
+
+# Article       
+class ArticleResourceTestCaseGetViaGparent(ResourcesTestCase):
+    def setUp(self):
+        "Create new Article"
+        super(ArticleResourceTestCaseGetViaGparent, self).setUp()
+        self.child = Article.objects.create(title='Test Article', content='Test Content')
+    def testGetArticleViaGparent(self):
+        "Get the Article via the Gparent rule"
+        children = Article.objects.filter(gparent=self.page)
+        self.failIf(self.child not in children)
+
+# Downloadable Form     
+class DownloadableFormResourceTestCaseGetViaGparent(ResourcesTestCase):
+    def setUp(self):
+        "Create new Downloadable Form"
+        super(DownloadableFormResourceTestCaseGetViaGparent, self).setUp()
+        self.child = DownloadableForm.objects.create(title='Test Downloadable Form', content='Test Content')
+    def testGetDownloadableFormViaGparent(self):
+        "Get the Downloadable Form via the Gparent rule"
+        children = DownloadableForm.objects.filter(gparent=self.page)
+        self.failIf(self.child not in children)
+
+# Magazine
+class MagazineResourceTestCaseGetViaGparent(ResourcesTestCase):
+    def setUp(self):
+        "Create new Magazine"
+        super(MagazineResourceTestCaseGetViaGparent, self).setUp()
+        self.child = Magazine.objects.create(title='Test Magazine', content='Test Content')
+    def testGetMagazineViaGparent(self):
+        "Get the Magazine via the Gparent rule"
+        children = Magazine.objects.filter(gparent=self.page)
+        self.failIf(self.child not in children)
+        
+# Tip Sheet
+class TipSheetResourceTestCaseGetViaGparent(ResourcesTestCase):
+    def setUp(self):
+        "Create new Tip Sheet"
+        super(TipSheetResourceTestCaseGetViaGparent, self).setUp()
+        self.child = TipSheet.objects.create(title='Test Tip Sheet', content='Test Content')
+    def testGetTipSheetViaGparent(self):
+        "Get the Tip Sheet via the Gparent rule"
+        children = TipSheet.objects.filter(gparent=self.page)
+        self.failIf(self.child not in children)
+        
+# Video
+class VideoResourceTestCaseGetViaGparent(ResourcesTestCase):
+    def setUp(self):
+        "Create new Tip Sheet"
+        super(VideoResourceTestCaseGetViaGparent, self).setUp()
+        self.child = Video.objects.create(title='Test Video', content='Test Content')
+    def testGetVideoViaGparent(self):
+        "Get the Video via the Gparent rule"
+        children = Video.objects.filter(gparent=self.page)
+        self.failIf(self.child not in children)
+        
+# Program
+class ProgramTestCaseGetViaGparent(TestCase):
+    def setUp(self):
+        "Create new Page for Program"
+        self.page, created = BCCFPage.objects.get_or_create(title='Programs', content='Test Content')
+        self.child = Program.objects.create(title='Test Program', content='Test Content')
+    def testGetProgramViaGparent(self):
+        "Get the Program via the Gparent Rule"
+        children = Program.objects.filter(gparent=self.page)
+        self.failIf(self.child not in children)
+        
+# Blog
+class BlogTestCaseGetViaGparent(TestCase):
+    def setUp(self):
+        "Create new Page for Blog"
+        self.page, created = BCCFPage.objects.get_or_create(title='Blog', content='Test Content')
+        self.child = Blog.objects.create(title='Test Blog', content='Test Content')
+    def testGetBlogViaGparent(self):
+        "Get the Blog via the Gparent Rule"
+        children = Blog.objects.filter(gparent=self.page)
+        self.failIf(self.child not in children)
+        
+# Campaign
+class CampaignTestCaseGetViaGparent(TestCase):
+    def setUp(self):
+        "Create new Page for Campaign"
+        self.page, created = BCCFPage.objects.get_or_create(title='TAG', content='Test Content')
+        self.child = Campaign.objects.create(title='Test Blog', content='Test Content')
+    def testGetCampaignViaGparent(self):
+        "Get the Campaign via the Gparent Rule"
+        children = Campaign.objects.filter(gparent=self.page)
+        self.failIf(self.child not in children)
+        
+####
+## Events
+####
+from bccf.models import EventForParents, EventForProfessionals
+from django.contrib.auth.models import User
+
+class EventTestCase(TestCase):
+    def setUp(self):
+        "Create new Page for events"
+        self.page, created = BCCFPage.objects.get_or_create(title='Trainings', content='Test Content')
+        self.user, created = User.objects.get_or_create(username='user1', password='password1')    
+    
+# Event for Parents    
+class EventForParentsTestCase(EventTestCase):
+    def setUp(self):
+        "Create new Event for parent"
+        super(EventForParentsTestCase, self).setUp()
+        self.child = EventForParents.objects.create(title='Test Event for Parent', content='Test Content',
+            price=500, provider=self.user)
+
+class EventforParentsTestCaseGetViaGparent(EventForParentsTestCase):
+    def testGetEventForParentViaGparent(self):
+        "Get Event for Parent via the Gparent Rule"
+        children = EventForParents.objects.filter(gparent=self.page)
+        self.failIf(self.child not in children)
+
+class EventforParentsTestCaseGetViaUser(EventForParentsTestCase):
+    def testGetEventForParentViaUser(self):
+        "Get Event for Parent via the User Rule"
+        children = EventForParents.objects.filter(provider=self.user)
+        self.failIf(self.child not in children)
+        
+# Event for Professionals
+class EventForProfessionalsTestCase(EventTestCase):
+    def setUp(self):
+        "Create new event for professionals"
+        super(EventForProfessionalsTestCase, self).setUp()
+        self.child = EventForProfessionals.objects.create(title='Test Event for Professionals', content='Test Content',
+            price=500, provider=self.user)
+
+class EventforProfessionalsTestCaseGetViaGparent(EventForProfessionalsTestCase):
+    def testGetEventForParentViaGparent(self):
+        "Get Event for Parent via the Gparent Rule"
+        children = EventForProfessionals.objects.filter(gparent=self.page)
+        self.failIf(self.child not in children)
+
+class EventforProfessionalsTestCaseGetViaUser(EventForProfessionalsTestCase):
+    def testGetEventForParentViaUser(self):
+        "Get Event for Parent via the User Rule"
+        children = EventForProfessionals.objects.filter(provider=self.user)
+        self.failIf(self.child not in children)
+        
+####
+## Form builder
+####
+from formable.builder.models import FormStructure, FormPublished, FormFilled, Question, FieldAnswer
+
+class FormStructureTestCase(TestCase):
+    def setUp(self):
+        "Create new form structure"
+        self.structure = FormStructure.objects.get_or_create(title='Test Structure', structure='{"title":"aassa","fieldset":[{"title":"tests","fields":[{"class":"text-field","label":"Text","attr":{"type":"text","name":"text-field"}},{"class":"select-field","label":"Select","attr":{"name":"select-field","type":"select"},"options":["Option 1","Option 2","Option 3"]},{"class":"multiselect-field","label":"Multiselect","attr":{"name":"multiselect-field","type":"select","multiple":"multiple"},"options":["Option 1","Option 2","Option 3"]},{"class":"checkbox-field","label":"Checkbox","attr":{"name":"checkbox-field","type":"checkbox"},"options":["Checkbox 1","Checkbox 2","Checkbox 3"]},{"class":"radioset-field","label":"Radioset","attr":{"name":"radioset-field","type":"radio"},"options":["Radio 1","Radio 2","Radio 3"]}]}]}')
+
+class FormBuilderViewTestCase(TestCase):
+    def testOpenBuilderNotLoggedIn(self):
+        "Test going to creator while not logged in"
+        response = self.client.get('/formable/create/', follow=True)
+        self.assertRedirects(response, 'accounts/login/?next=/formable/create/')
+        response = self.client.post('/formable/create/', follow=True)
+        self.assertRedirects(response, 'accounts/login/?next=/formable/create/')
+    def testOpenBuilderLoggedIn(self):
+        self.client.login(username='admin', password='admin')
+        response = self.client.get('/formable/create/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'builder_page.html')
+    def testSaveStructureNotLoggedIn(self):    
         pass
+    def testSaveStructureLoggedIn(self):
+        pass
+        
+class FormPublishedTestCase(FormStructureTestCase):
+    pass

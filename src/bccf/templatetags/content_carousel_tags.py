@@ -67,7 +67,7 @@ def content_carousel_for(context, obj, title, child=None, which=None):
         return
     return context
 
-@register.inclusion_tag("generic/includes/topic_carousel.html", takes_context=True)
+@register.inclusion_tag("generic/includes/content_carousel.html", takes_context=True)
 def content_carousel_for_topic(context, topic, type):
     """
     The same a the content carousel_for but this focuses on all pages that are related to a Topic

@@ -731,4 +731,3 @@ def remaining_subscription_balance(purchase_date, expiration_date, to_date, paid
     used_fraction = elapsed_time.total_seconds() / licensed_time.total_seconds()
     remaining = Decimal(str(float(paid) * (1 - used_fraction)))
     return remaining
-
