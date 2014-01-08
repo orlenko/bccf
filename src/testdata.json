@@ -4868,35 +4868,6 @@
         }
     }, {
         "pk": 1,
-        "model": "blog.blogpost",
-        "fields": {
-            "related_posts": [],
-            "short_url": null,
-            "site": 1,
-            "keywords_string": "",
-            "in_sitemap": true,
-            "featured_image": null,
-            "title": "Test Blog Post",
-            "content": "<p>blah blah blah</p>",
-            "rating_sum": 4,
-            "rating_count": 1,
-            "categories": [],
-            "publish_date": "2013-10-21T19:12:33.139",
-            "status": 2,
-            "updated": "2013-10-21T19:13:16.615",
-            "description": "blah blah blah",
-            "rating_average": 4.0,
-            "expiry_date": null,
-            "user": 1,
-            "slug": "test-blog-post",
-            "gen_description": true,
-            "allow_comments": true,
-            "created": "2013-10-21T19:12:33.141",
-            "_meta_title": "",
-            "comments_count": 0
-        }
-    }, {
-        "pk": 1,
         "model": "bccf.userprofile",
         "fields": {
             "is_forum_moderator": false,

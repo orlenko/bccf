@@ -44,6 +44,7 @@ urlpatterns = patterns("",
 
     url("^account/orders/$", "cartridge.shop.views.order_history", name="shop_order_history"),
 
+    url(r'^member/list/', 'bccf.views.page.user_list', name='member-list'),
     url(r'^member/profile/$', 'bccf.views.member.profile', name='member-profile'),
     url(r'^member/upgrade/(?P<variation_id>.*)/$', 'bccf.views.member.membership_upgrade', name='member-membership-upgrade'),
     url(r'^member/renew/$', 'bccf.views.member.membership_renew', name='member-membership-renew'),

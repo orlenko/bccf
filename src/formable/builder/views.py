@@ -1,6 +1,7 @@
 import json
 import logging
 
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, Http404
 from django.template import RequestContext, loader
 from django.shortcuts import redirect
@@ -17,6 +18,7 @@ from bccf.models import BCCFChildPage
 
 log = logging.getLogger(__name__)
     
+@login_required
 @never_cache
 @require_http_methods(["POST"])
 def save_structure(request):
@@ -142,16 +144,20 @@ def publish_form(request):
     else:
         return redirect('/')
     
+@login_required
 @never_cache
+@require_http_methods(["GET"])
 def create_survey(request):
     structure_form = FormStructureForm()
     context = RequestContext(request, locals())
     return render_to_response('builder_page.html', {}, context_instance=context)
-    
+
+@login_required    
 @never_cache
 def clone_structure(request):
     pass
     
+@login_required
 @never_cache
 @require_http_methods(["GET"])
 def view(request, slug=None):

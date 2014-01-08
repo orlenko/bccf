@@ -3,10 +3,11 @@ from django.template.context import RequestContext
 from django.db.models import ObjectDoesNotExist, Q
 from django.http import HttpResponse
 from django.core import serializers
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import get_object_or_404
 
-from bccf.models import BCCFPage, BCCFChildPage, BCCFBabyPage, BCCFTopic
+from bccf.models import BCCFPage, BCCFChildPage, BCCFBabyPage, BCCFTopic, UserProfile
 
 import logging
 import json
@@ -70,8 +71,33 @@ def topic_page(request, topic):
     context = RequestContext(request, locals())
     return render_to_response('bccf/topic_page.html', {}, context_instance=context)
 
-def user_page(request, page):
-    pass
+def user_list(request):
+    p = request.GET.get('page')
+    f = request.GET.get('filter')
+
+    log.info('-------------------')    
+    log.info(f)
+    log.info('-------------------')    
+    
+    if f:
+        users_list = UserProfile.objects.filter(user__last_name__startswith=f).order_by('user__last_name', 'user__first_name')
+    else:
+        users_list = UserProfile.objects.all().order_by('user__last_name', 'user__first_name')
+
+    log.info('-------------------')    
+    log.info(users_list)
+    log.info('-------------------')            
+        
+    paginator = Paginator(users_list, 10)
+    
+    try:
+        recordlist = paginator.page(p)
+    except PageNotAnInteger:
+        recordlist = paginator.page(1)
+    except EmptyPage:
+        recordlist = paginator.page(paginator.num_pages)
+    context = RequestContext(request, locals())
+    return render_to_response('bccf/user_directory.html', {}, context_instance=context)    
     
 def next(request, parent, which, offset):
     obj = BCCFPage.objects.get(slug=parent)
