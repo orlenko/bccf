@@ -69,6 +69,9 @@ def topic_page(request, topic):
     page = get_object_or_404(BCCFTopic, slug=topic)
     context = RequestContext(request, locals())
     return render_to_response('bccf/topic_page.html', {}, context_instance=context)
+
+def user_page(request, page):
+    pass
     
 def next(request, parent, which, offset):
     obj = BCCFPage.objects.get(slug=parent)

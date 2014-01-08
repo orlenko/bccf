@@ -523,6 +523,7 @@ class UserProfile(models.Model):
     ]
 
     user = models.OneToOneField(User, related_name='profile')
+    description = models.TextField('Description', null=True, blank=True)
     photo = MyImageField(verbose_name="Photo",
         upload_to=upload_to("bccf.Profile.photo", "uploads/profile-photos"),
         format="Image", max_length=255, null=True, blank=True,
