@@ -125,6 +125,11 @@ class FormStructureSurveyFormOne(FormStructureForm):
         widget=forms.CheckboxInput, required=False)
     clone = forms.BooleanField(label='Use this Survey as template?',
         widget=forms.CheckboxInput, required=False)
+    def __init__(self, *args, **kwargs):
+        super(FormStructureSurveyFormOne, self).__init__(*args, **kwargs)
+        del self.fields['content']
+        del self.fields['page_for']
+        del self.fields['bccf_topic']
        
 class FormStructureSurveyFormTwo(FormStructureForm):
     """
@@ -132,3 +137,8 @@ class FormStructureSurveyFormTwo(FormStructureForm):
     
     It is a child class of FormStructureForm found in formable.builder.forms
     """
+    def __init__(self, *args, **kwargs):
+        super(FormStructureSurveyFormTwo, self).__init__(*args, **kwargs)
+        del self.fields['content']
+        del self.fields['page_for']
+        del self.fields['bccf_topic']

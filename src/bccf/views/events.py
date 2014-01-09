@@ -102,16 +102,16 @@ class ProfessionalEventWizard(SessionWizardView):
         """
         if self.steps.current == 'event': # Event form?
             if 'event-survey' in form.data and len(self.form_list) == 1: # Put back the deleted surveys if deleted before
-                self.form_list['before'] = FORMS['before']
-                self.form_list['after'] = FORMS['after']
+                self.form_list['1'] = FORMS['before']
+                self.form_list['2'] = FORMS['after']
             elif 'event-survey' not in form.data and len(self.form_list) == 3: # No Surveys delete the survey forms
-                del self.form_list['before']
-                del self.form_list['after']
+                del self.form_list['1']
+                del self.form_list['2']
         elif self.steps.current == 'before': # Before Survey form?
             if 'before-after_survey' in form.data and len(self.form_list) == 2: # After survey
-                self.form_list['after'] = FORMS['after']
+                self.form_list['2'] = FORMS['after']
             elif 'before-after_survey' not in form.data and len(self.form_list) == 3: # No After Survey
-                del self.form_list['after']
+                del self.form_list['2']
         return self.get_form_step_data(form)
 
     def get_context_data(self, form, **kwargs):
@@ -152,9 +152,12 @@ class ProfessionalEventWizard(SessionWizardView):
         event = EventForProfessionals(**event_data)
         if len(form_list) >= 2: # If there's a before survey
             event.survey_before = self.process_survey(form_list[1])
+            event.survey_before.gparent = None
+            event.survey_before.save()
         if len(form_list) == 3: # If there's an after survey
-            log.info('After Survey')
-            event.survey_after= self.process_survey(form_list[2])
+            event.survey_after = self.process_survey(form_list[2])
+            event.survey_after.gparent = None
+            event.survey_after.save()
 
         event.save()
         for topic in bccf_topics:

@@ -53,7 +53,7 @@ class FormPublished(BCCFChildPage):
         super(FormPublished, self).save() 
     def get_absolute_url(self):
         slug = self.slug        
-        return reverse('formable-view', kwargs={'slug':slug})  
+        return reverse('formable-view', kwargs={'slug':slug})
 
 class FormFilled(models.Model):
     """

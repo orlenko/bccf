@@ -30,10 +30,12 @@
             {% if child_obj.content_model == 'topic' %}
             <li class="col three mobile-full"><a href="{{ child_obj.get_content_model.get_absolute_url }}" target="_blank">Talk</a></li>
             {% endif %}
+            
+            {% if resources %}
             <li class="col three mobile-full" id="resources">
                 <a href="{% url 'bccf-baby' child_obj.gparent.slug child_obj.slug 'resources' %}" class="baby-content-btn resources">Resources</a>
                 <div class="baby-content">
-                <h3>Top {{ resources|length }} Most Related Resources</h3>
+                <h3>Top {{ resources|length }} Most Related Resource{{ resources|length|pluralize }}</h3>
                 {% if resources %}  
                 <ul>
                     {% for resource in resources%}
@@ -43,6 +45,7 @@
                 {% endif %}  
                 </div>
             </li>
+            {% endif %}
         </ul>
     </div>
 </section>

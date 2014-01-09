@@ -1,11 +1,13 @@
-{% extends "base.html" %}
+{% extends "bccf/bccf_page.html" %}
 
 {% load builder_tags %}
 
-{% block main %}
+{% block content %}
 <h2>Create Event</h2>
 <p>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</p>
 {% builder %}
+
+{% block page_script %}
 <script type="text/javascript" >
     $(function() {
         if($('#id_before-after_survey').is(':checked')) {
@@ -26,4 +28,6 @@
         }
 	});
 </script>
+{% endblock %}
+
 {% endblock %}
