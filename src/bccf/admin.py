@@ -57,9 +57,9 @@ class ProfessionalsEventAdmin(DisplayableAdmin):
                                     'location_street2',
                                     'location_postal_code',
                                     'price',
+                                    'bccf_topic',
                                     'image',
                                     'survey_before',
-                                    'bccf_topic',
                                     'survey_after']):
                 self.fieldsets[0][1]['fields'].insert(3, field)
         if self.list_display == DisplayableAdmin.list_display:
@@ -283,6 +283,22 @@ class BCCFResourceAdmin(DisplayableAdmin):
         if self.fieldsets == DisplayableAdmin.fieldsets:
             self.fieldsets = deepcopy(self.fieldsets)
             for field in reversed(['content',
+                                    'attached_document',
+                                    'bccf_topic',
+                                    'featured',
+                                    'page_for',
+                                    'image']):
+                self.fieldsets[0][1]['fields'].insert(3, field)
+
+class BCCFVideoResourceAdmin(DisplayableAdmin):
+    def __init__(self, *args, **kwargs):
+        super(BCCFVideoResourceAdmin, self).__init__(*args, **kwargs)
+        if self.fieldsets == DisplayableAdmin.fieldsets:
+            self.fieldsets = deepcopy(self.fieldsets)
+            for field in reversed(['content',
+                                    'video_url',
+                                    'link_url',
+                                    'video_file',
                                     'bccf_topic',
                                     'featured',
                                     'page_for',
@@ -300,7 +316,7 @@ admin.site.register(Article, BCCFResourceAdmin)
 admin.site.register(DownloadableForm, BCCFResourceAdmin)
 admin.site.register(Magazine, BCCFResourceAdmin)
 admin.site.register(TipSheet, BCCFResourceAdmin)
-admin.site.register(Video, BCCFResourceAdmin)
+admin.site.register(Video, BCCFVideoResourceAdmin)
 
 #Inline
 class HomeMarqueeSlideInline(admin.TabularInline):
