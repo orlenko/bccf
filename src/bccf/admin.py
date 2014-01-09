@@ -319,30 +319,32 @@ admin.site.register(TipSheet, BCCFResourceAdmin)
 admin.site.register(Video, BCCFVideoResourceAdmin)
 
 #Inline
-class HomeMarqueeSlideInline(admin.TabularInline):
-    model = HomeMarqueeSlide.marquee.through  # @UndefinedVariable - PyDev is blind
+class HomeMarqueeInline(admin.TabularInline):
+    model = HomeMarqueeSlide.marquee.through
 
-class FooterMarqueeSlideInline(admin.TabularInline):
-    model = FooterMarqueeSlide.marquee.through  # @UndefinedVariable - PyDev is blind
+class FooterMarqueeInline(admin.TabularInline):
+    model = FooterMarqueeSlide.marquee.through
 
-class PageMarqueeSlideInline(admin.TabularInline):
-    model = PageMarqueeSlide.marquee.through  # @UndefinedVariable - PyDev is blind
+class PageMarqueeInline(admin.TabularInline):
+    model = PageMarqueeSlide.marquee.through
 
 #Marquees
-class HomeMarqueeAdmin(admin.ModelAdmin):
-    list_display = ['title', 'active']
-    inlines = [HomeMarqueeSlideInline]
+class MarqueeSlideAdmin(admin.ModelAdmin):
+    fields = ('title', 'caption', 'url', 'linkLabel')    
+    list_display = ['title']
 
-class FooterMarqueeAdmin(admin.ModelAdmin):
-    list_display = ['title', 'active']
-    inlines = [FooterMarqueeSlideInline]
+class HomeMarqueeSlideAdmin(MarqueeSlideAdmin):
+    inlines = [HomeMarqueeInline]
 
-class PageMarqueeAdmin(admin.ModelAdmin):
-    inlines = [PageMarqueeSlideInline]
+class FooterMarqueeSlideAdmin(admin.ModelAdmin):
+    inlines = [FooterMarqueeInline]
 
-admin.site.register(HomeMarqueeSlide)
-admin.site.register(FooterMarqueeSlide)
-admin.site.register(PageMarqueeSlide)
-admin.site.register(HomeMarquee, HomeMarqueeAdmin)
-admin.site.register(FooterMarquee, FooterMarqueeAdmin)
-admin.site.register(PageMarquee, PageMarqueeAdmin)
+class PageMarqueeSlideAdmin(MarqueeSlideAdmin):
+    inlines = [FooterMarqueeInline]
+
+admin.site.register(HomeMarqueeSlide, HomeMarqueeSlideAdmin)
+admin.site.register(FooterMarqueeSlide, FooterMarqueeSlideAdmin)
+admin.site.register(PageMarqueeSlide, PageMarqueeSlideAdmin)
+admin.site.register(HomeMarquee)
+admin.site.register(FooterMarquee)
+admin.site.register(PageMarquee)
