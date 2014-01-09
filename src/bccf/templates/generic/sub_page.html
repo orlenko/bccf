@@ -33,7 +33,7 @@
             <li class="col three mobile-full" id="resources">
                 <a href="{% url 'bccf-baby' child_obj.gparent.slug child_obj.slug 'resources' %}" class="baby-content-btn resources">Resources</a>
                 <div class="baby-content">
-                <h3>Resources</h3>
+                <h3>Top {{ resources|length }} Most Related Resources</h3>
                 {% if resources %}  
                 <ul>
                     {% for resource in resources%}

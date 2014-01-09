@@ -60,8 +60,8 @@ def page(request, parent, child=None, baby=None):
         q = Q()
         for topic in child_obj.bccf_topic.all():        
             q = q | Q(bccf_topic = topic) 
-        resources_pre = BCCFChildPage.objects.filter(Q(content_model='article') | Q(content_model='downloadableform') | Q(content_model='magazine') | Q(content_model='tipsheet') | Q(content_model='video'))     
-        resources = resources_pre.filter(q, ~Q(slug=child)).order_by('-created')[:10]      
+        resources_pre = BCCFChildPage.objects.filter(Q(content_model='article') | Q(content_model='downloadableform') | Q(content_model='magazine') | Q(content_model='tipsheet') | Q(content_model='video')).distinct()    
+        resources = resources_pre.filter(q, ~Q(slug=child)).order_by('?')[:10]
         
     context = RequestContext(request, locals())
     return render_to_response(template, {}, context_instance=context)

@@ -265,6 +265,16 @@ class BCCFPageAdmin(DisplayableAdmin):
                 return (unordered, page.meta_verbose_name)
         return sorted(models, key=sort_key)
 
+class BCCFTopicAdmin(DisplayableAdmin):
+    def __init__(self, *args, **kwargs):
+        super(BCCFTopicAdmin, self).__init__(*args, **kwargs)
+        if self.fieldsets == DisplayableAdmin.fieldsets:
+            self.fieldsets = deepcopy(self.fieldsets)
+            for field in reversed(['content',
+                                    'marquee',
+                                    'carousel_color']):
+                self.fieldsets[0][1]['fields'].insert(3, field)
+
 class BCCFChildAdmin(DisplayableAdmin):
     def __init__(self, *args, **kwargs):
         super(BCCFChildAdmin, self).__init__(*args, **kwargs)
@@ -306,7 +316,7 @@ class BCCFVideoResourceAdmin(DisplayableAdmin):
                 self.fieldsets[0][1]['fields'].insert(3, field)
 
 admin.site.register(BCCFPage, PageAdmin)
-admin.site.register(BCCFTopic)
+admin.site.register(BCCFTopic, BCCFTopicAdmin)
 admin.site.register(BCCFChildPage, BCCFPageAdmin)
 admin.site.register(BCCFBabyPage, BCCFPageAdmin)
 admin.site.register(Blog, BCCFChildAdmin)
@@ -330,14 +340,15 @@ class PageMarqueeInline(admin.TabularInline):
 
 #Marquees
 class MarqueeSlideAdmin(admin.ModelAdmin):
-    fields = ('title', 'caption', 'url', 'linkLabel')    
-    list_display = ['title']
+    fields = ('title', 'caption', 'url', 'linkLabel')  
+    list_display = ['title', 'caption', 'url']
 
 class HomeMarqueeSlideAdmin(MarqueeSlideAdmin):
     inlines = [HomeMarqueeInline]
 
 class FooterMarqueeSlideAdmin(admin.ModelAdmin):
     inlines = [FooterMarqueeInline]
+    list_display = ['title', 'caption']
 
 class PageMarqueeSlideAdmin(MarqueeSlideAdmin):
     inlines = [FooterMarqueeInline]

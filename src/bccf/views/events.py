@@ -142,10 +142,14 @@ class ProfessionalEventWizard(SessionWizardView):
         REQUIRED by form wizard
         """
         event_data = form_list[0].cleaned_data
+        
         if 'survey' in event_data: # check and remove the survey key-value pair
             del event_data['survey']
+        if 'bccf_topic' in event_data:
+            bccf_topics = event_data['bccf_topic'] # Grab the topics and add them manually
+            del event_data['bccf_topic']
+
         event = EventForProfessionals(**event_data)
-        log.info(len(form_list))
         if len(form_list) >= 2: # If there's a before survey
             event.survey_before = self.process_survey(form_list[1])
         if len(form_list) == 3: # If there's an after survey
@@ -153,6 +157,8 @@ class ProfessionalEventWizard(SessionWizardView):
             event.survey_after= self.process_survey(form_list[2])
 
         event.save()
+        for topic in bccf_topics:
+            event.bccf_topic.add(topic)
 
         return redirect(event.get_absolute_url())
 
