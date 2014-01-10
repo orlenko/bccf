@@ -69,6 +69,7 @@ $(function() {
         'theme': "big-marquee",
     });
     $(window).on('popstate', function(e) {
+        e.preventDefault();
     	console.log('woulda reload the page to ' + location.pathname + ' here, but won\'t');
         //window.location.href = location.pathname
     });

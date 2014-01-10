@@ -247,7 +247,7 @@ class BCCFBabyPageTestCaseParent(BCCFBabyPageTestCase):
 class ResourcesTestCase(TestCase):
     def setUp(self):
         "Create new Resource Page"
-        self.page, created = BCCFPage.objects.get_or_create(title='Resources', content='Test Content')
+        self.page = BCCFPage.objects.get(slug='resources')
 
 # Article       
 class ArticleResourceTestCaseGetViaGparent(ResourcesTestCase):
@@ -308,7 +308,7 @@ class VideoResourceTestCaseGetViaGparent(ResourcesTestCase):
 class ProgramTestCaseGetViaGparent(TestCase):
     def setUp(self):
         "Create new Page for Program"
-        self.page, created = BCCFPage.objects.get_or_create(title='Programs', content='Test Content')
+        self.page = BCCFPage.objects.get(slug='programs')
         self.child = Program.objects.create(title='Test Program', content='Test Content')
     def testGetProgramViaGparent(self):
         "Get the Program via the Gparent Rule"
@@ -319,7 +319,7 @@ class ProgramTestCaseGetViaGparent(TestCase):
 class BlogTestCaseGetViaGparent(TestCase):
     def setUp(self):
         "Create new Page for Blog"
-        self.page, created = BCCFPage.objects.get_or_create(title='Blog', content='Test Content')
+        self.page = BCCFPage.objects.get(slug='blog')
         self.child = Blog.objects.create(title='Test Blog', content='Test Content')
     def testGetBlogViaGparent(self):
         "Get the Blog via the Gparent Rule"
@@ -330,7 +330,7 @@ class BlogTestCaseGetViaGparent(TestCase):
 class CampaignTestCaseGetViaGparent(TestCase):
     def setUp(self):
         "Create new Page for Campaign"
-        self.page, created = BCCFPage.objects.get_or_create(title='TAG', content='Test Content')
+        self.page = BCCFPage.objects.get(slug='tag')
         self.child = Campaign.objects.create(title='Test Blog', content='Test Content')
     def testGetCampaignViaGparent(self):
         "Get the Campaign via the Gparent Rule"
@@ -346,8 +346,8 @@ from django.contrib.auth.models import User
 class EventTestCase(TestCase):
     def setUp(self):
         "Create new Page for events"
-        self.page, created = BCCFPage.objects.get_or_create(title='Trainings', content='Test Content')
-        self.user, created = User.objects.get_or_create(username='user1', password='password1')    
+        self.page = BCCFPage.objects.get(slug='trainings')
+        self.user = User.objects.get(username='admin')    
     
 # Event for Parents    
 class EventForParentsTestCase(EventTestCase):
@@ -394,27 +394,45 @@ class EventforProfessionalsTestCaseGetViaUser(EventForProfessionalsTestCase):
 ####
 from formable.builder.models import FormStructure, FormPublished, FormFilled, Question, FieldAnswer
 
-class FormStructureTestCase(TestCase):
-    def setUp(self):
-        "Create new form structure"
-        self.structure = FormStructure.objects.get_or_create(title='Test Structure', structure='{"title":"aassa","fieldset":[{"title":"tests","fields":[{"class":"text-field","label":"Text","attr":{"type":"text","name":"text-field"}},{"class":"select-field","label":"Select","attr":{"name":"select-field","type":"select"},"options":["Option 1","Option 2","Option 3"]},{"class":"multiselect-field","label":"Multiselect","attr":{"name":"multiselect-field","type":"select","multiple":"multiple"},"options":["Option 1","Option 2","Option 3"]},{"class":"checkbox-field","label":"Checkbox","attr":{"name":"checkbox-field","type":"checkbox"},"options":["Checkbox 1","Checkbox 2","Checkbox 3"]},{"class":"radioset-field","label":"Radioset","attr":{"name":"radioset-field","type":"radio"},"options":["Radio 1","Radio 2","Radio 3"]}]}]}')
-
 class FormBuilderViewTestCase(TestCase):
     def testOpenBuilderNotLoggedIn(self):
         "Test going to creator while not logged in"
         response = self.client.get('/formable/create/', follow=True)
         self.assertRedirects(response, 'accounts/login/?next=/formable/create/')
+    def testOpenBuilderViaPost(self):
         response = self.client.post('/formable/create/', follow=True)
-        self.assertRedirects(response, 'accounts/login/?next=/formable/create/')
+        self.assertEqual(response.status_code, 405)
     def testOpenBuilderLoggedIn(self):
         self.client.login(username='admin', password='admin')
         response = self.client.get('/formable/create/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'builder_page.html')
-    def testSaveStructureNotLoggedIn(self):    
-        pass
+    def testSaveStructViaGet(self):
+        response = self.client.get('/formable/save/', follow=True)
+        self.assertEqual(response.status_code, 405)
+    def testSaveStructureNotLoggedIn(self):
+        topic = BCCFTopic.objects.get(slug='topic-1')
+        response = self.client.post('/formable/save/', {'bccf_topic':topic.pk, 'title':'Test Form', 'structure':'{"title":"Test","fieldset":[{"title":"Stuff","fields":[{"class":"text-field","label":"Text","attr":{"type":"text","name":"text-field"}}]}]}', 'content':'Test Content', 'page_for':'professionals'}, follow=True)
+        self.assertRedirects(response, 'accounts/login/?next=/formable/save/')
     def testSaveStructureLoggedIn(self):
-        pass
-        
-class FormPublishedTestCase(FormStructureTestCase):
-    pass
+        self.client.login(username='admin', password='admin')
+        topic = BCCFTopic.objects.get(slug='topic-1')
+        response = self.client.post('/formable/save/', {'bccf_topic':topic.pk, 'title':'Test Form', 'structure':'{"title":"Test","fieldset":[{"title":"Stuff","fields":[{"class":"text-field","label":"Text","attr":{"type":"text","name":"text-field"}}]}]}', 'content':'Test Content', 'page_for':'professionals'}, follow=True)
+        self.assertRedirects(response, '/formable/view/test-form/')
+    def testViewFormNotLoggedIn(self):
+        response = self.client.get('/formable/view/test-form/', follow=True)
+        self.assertRedirects(response, 'accounts/login/?next=/formable/view/test-form/')
+    def testViewFormLoggedIn(self):
+        self.client.login(username='admin', password='admin')
+        topic = BCCFTopic.objects.get(slug='topic-1')
+        self.client.post('/formable/save/', {'bccf_topic':topic.pk, 'title':'Test Form', 'structure':'{"title":"Test","fieldset":[{"title":"Stuff","fields":[{"class":"text-field","label":"Text","attr":{"type":"text","name":"text-field"}}]}]}', 'content':'Test Content', 'page_for':'professionals'}, follow=True)
+        response = self.client.get('/formable/view/test-form/', follow=True)
+        self.assertTemplateUsed(response, 'view_form.html')
+    def testViewFormViaPost(self):
+        topic = BCCFTopic.objects.get(slug='topic-1')
+        self.client.post('/formable/save/', {'bccf_topic':topic.pk, 'title':'Test Form', 'structure':'{"title":"Test","fieldset":[{"title":"Stuff","fields":[{"class":"text-field","label":"Text","attr":{"type":"text","name":"text-field"}}]}]}', 'content':'Test Content', 'page_for':'professionals'}, follow=True)
+        response = self.client.post('/formable/view/test-form/', follow=True)
+        self.assertEqual(response.status_code, 405)
+    def testSubmitFormViaPost(self):
+        response = self.client.post('/formable/view/test-form/', follow=True)
+        #self.client.post('/formable/submit_form')

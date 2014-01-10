@@ -206,8 +206,7 @@ class Topic(BCCFChildPage):
     def save(self, *args, **kwargs):
         if self.id is None:
             self.created = tznow()
-
-        self.title = self.name
+            
         self.gparent = BCCFPage.objects.get(slug='tag')
         forum_changed = False
         old_topic = None

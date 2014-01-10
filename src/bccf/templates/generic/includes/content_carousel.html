@@ -8,10 +8,9 @@
         </div>
         <div id="filter-container" class="col four">
             {% if filter %}
-            {% search_form "pybb.Topic" %}
-            <!--<form>
-                <input type="text" name="sub-page-filter" placeholder="Filter" />
-            </form>-->
+            <form>
+                <input type="text" name="filter" placeholder="Filter" class="filter" />
+            </form>
             {% endif %}
             &nbsp;
         </div>
@@ -26,5 +25,24 @@
         <a class="button-next-lgreen col one button-next no-mobile no-tablet"></a>
     </div>
 </section>
+
+{% if filter %}
+<script type="text/javascript" >
+$('.filter').on('keyup', function() {
+    var parent = $(this).parents('.content-pages');
+    $.ajax({
+        url: '/filter/'+$(this).val(),
+        success: function(data) {
+            json = $.parseJSON(data);
+            // Delete all the slides
+            // count = 
+            add_slide(json, parent);
+            add_grid(json, parent);
+            parent.find('.to-grid').trigger('click');
+        },
+    });
+});
+</script>
+{% endif %}
 
 {% endif %}

@@ -73,6 +73,7 @@ urlpatterns = patterns("",
     url("^rating/$", "bccf.views.views.rating", name="rating"),        
         
     #Pages
+    url(r'^filter/(?P<query>.*)/$', 'bccf.views.page.filter', name='filter'),
     url(r'^next/topic/(?P<topic>.+)/(?P<which>.*)/(?P<offset>\d+)/$', 'bccf.views.page.topic_next', name='topic-next'),
     url(r'^next/(?P<parent>.+)/(?P<which>.*)/(?P<offset>\d+)/$', 'bccf.views.page.next', name='bccf-next'),
     url(r'^topic/(?P<topic>.+)/$', 'bccf.views.page.topic_page', name='topic-page'),

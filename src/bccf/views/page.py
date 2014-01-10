@@ -8,6 +8,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import get_object_or_404
 
 from bccf.models import BCCFPage, BCCFChildPage, BCCFBabyPage, BCCFTopic, UserProfile
+from pybb.models import Topic
 
 import logging
 import json
@@ -53,7 +54,10 @@ def page(request, parent, child=None, baby=None):
         elif baby and baby == 'resources':
             baby_obj = 'resources'
         child_obj = BCCFChildPage.objects.get(slug=child)
-        babies = BCCFChildPage.objects.filter(parent=child_obj).order_by('_order')
+        if child_obj.content_model == 'eventforprofessionals':
+            babies = BCCFChildPage.objects.filter(~Q(content_model='formpublished'), parent=child_obj).order_by('_order')        
+        else:
+            babies = BCCFChildPage.objects.filter(parent=child_obj).order_by('_order')
         template = 'generic/sub_page.html'
 
         #Related resources
@@ -97,7 +101,7 @@ def user_list(request):
     except EmptyPage:
         recordlist = paginator.page(paginator.num_pages)
     context = RequestContext(request, locals())
-    return render_to_response('bccf/user_directory.html', {}, context_instance=context)    
+    return render_to_response('bccf/user_directory.html', {}, context_instance=context)  
     
 def next(request, parent, which, offset):
     obj = BCCFPage.objects.get(slug=parent)
@@ -113,4 +117,13 @@ def next(request, parent, which, offset):
 def topic_next(request, topic, which, offset):
     topic = BCCFTopic.objects.get(slug=topic)    
     json_data = serializers.serialize('json', BCCFChildPage.objects.filter(topic=topic, page_for=which).order_by('-created')[offset:12])
+    return HttpResponse(json.dumps(json_data), content_type="application/json")
+    
+def filter(request, query=None):
+    topics = BCCFTopic.objects.filter(Q(title__contains=query))
+    if len(topics) > 0:
+       forums = Topic.objects.filter(Q(title__contains=query) | Q(content__contains=query) | Q(name__contains=query) | Q(bccf_topic=topics), content_model='topic')
+    else:
+       forums = Topic.objects.filter(Q(title__contains=query) | Q(content__contains=query) | Q(name__contains=query), content_model='topic')
+    json_data = serializers.serialize('json', forums)
     return HttpResponse(json.dumps(json_data), content_type="application/json")

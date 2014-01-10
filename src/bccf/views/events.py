@@ -153,10 +153,12 @@ class ProfessionalEventWizard(SessionWizardView):
         if len(form_list) >= 2: # If there's a before survey
             event.survey_before = self.process_survey(form_list[1])
             event.survey_before.gparent = None
+            event.survey_before.parent = None
             event.survey_before.save()
         if len(form_list) == 3: # If there's an after survey
             event.survey_after = self.process_survey(form_list[2])
             event.survey_after.gparent = None
+            event.survey_after.parent = None
             event.survey_after.save()
 
         event.save()

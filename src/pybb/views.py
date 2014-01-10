@@ -666,3 +666,6 @@ def block_user(request, username):
     msg = _('User successfuly blocked')
     messages.success(request, msg, fail_silently=True)
     return redirect('pybb:index')
+
+def filter_topics(request, query):
+    pass

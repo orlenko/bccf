@@ -45,12 +45,12 @@ class FormPublished(BCCFChildPage):
         verbose_name = _("Published Form")
         verbose_name_plural = _("Published Forms")        
         
-    def save(self):
+    def save(self, **kwargs):
         if self.pk is None:
             self.gparent = BCCFPage.objects.get(slug='tag')
             self.published = datetime.now()
             self.title = self.form_structure.title
-        super(FormPublished, self).save() 
+        super(FormPublished, self).save(**kwargs)
     def get_absolute_url(self):
         slug = self.slug        
         return reverse('formable-view', kwargs={'slug':slug})
