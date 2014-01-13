@@ -1,5 +1,5 @@
 {% load static bccf_rating_tags %}
-<section id={{ child_obj.slug }} class="subpage">
+<section id={{ child_obj.slug }} class="subpage {{ child_obj.gparent.carousel_color }}">
     <div class="section">
         {% bccf_rating_for child_obj %}
     </div>
@@ -9,7 +9,7 @@
     </div>    
     <div class="subpage-tabs section row">
         <ul class="no-style-list">
-            <li class="col three mobile-full">
+            <li class="col three no-mobile">
                 <a href="{% url 'bccf-baby' child_obj.gparent.slug child_obj.slug 'child-home' %}" id="child-home" class="baby-content-btn">Home</a>
                 <div class="baby-content">
                     <h3>{{ child_obj.title }}</h3>
@@ -59,12 +59,11 @@
 <script type="text/javascript" >
     $(function() {
         $('.subpage .baby-content').hide();
-        
         $('.subpage .baby-content-btn').on('click', function(e) {
             e.preventDefault();
             var url = $(this).attr('href');
-            $('.subpage .baby-content').hide();
-            if($(window).width() <= 724) {
+            if($('.mnav-mobile-btn').is(':visible')) {
+                $('.subpage .baby-content').hide();
                 $(this).siblings('.baby-content').slideToggle('500');
             } else {
                 $('.subpage .subpage-content').html($(this).siblings('.baby-content').html());
