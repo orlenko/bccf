@@ -224,6 +224,9 @@ class BCCFChildPageTestTopicGet2(BCCFChildPageTestCaseTopic):
         "Get the child page via the topic rule"
         children = BCCFChildPage.objects.filter(bccf_topic=self.topic2)
         self.failIf(self.child not in children)
+
+class BCCFChildPageViewsTestCase(TestCase):
+    pass
         
 # Baby Page
 class BCCFBabyPageTestCase(TestCase):
@@ -400,39 +403,55 @@ class FormBuilderViewTestCase(TestCase):
         response = self.client.get('/formable/create/', follow=True)
         self.assertRedirects(response, 'accounts/login/?next=/formable/create/')
     def testOpenBuilderViaPost(self):
+        "Test Open builder via post"
         response = self.client.post('/formable/create/', follow=True)
         self.assertEqual(response.status_code, 405)
     def testOpenBuilderLoggedIn(self):
+        "Test Open builder when logged in"
         self.client.login(username='admin', password='admin')
         response = self.client.get('/formable/create/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'builder_page.html')
     def testSaveStructViaGet(self):
+        "Test save form structure when via get"
         response = self.client.get('/formable/save/', follow=True)
         self.assertEqual(response.status_code, 405)
     def testSaveStructureNotLoggedIn(self):
+        "Test save structure when not logged in"
         topic = BCCFTopic.objects.get(slug='topic-1')
         response = self.client.post('/formable/save/', {'bccf_topic':topic.pk, 'title':'Test Form', 'structure':'{"title":"Test","fieldset":[{"title":"Stuff","fields":[{"class":"text-field","label":"Text","attr":{"type":"text","name":"text-field"}}]}]}', 'content':'Test Content', 'page_for':'professionals'}, follow=True)
         self.assertRedirects(response, 'accounts/login/?next=/formable/save/')
     def testSaveStructureLoggedIn(self):
+        "Test save structuere when logged in and via post"
         self.client.login(username='admin', password='admin')
         topic = BCCFTopic.objects.get(slug='topic-1')
         response = self.client.post('/formable/save/', {'bccf_topic':topic.pk, 'title':'Test Form', 'structure':'{"title":"Test","fieldset":[{"title":"Stuff","fields":[{"class":"text-field","label":"Text","attr":{"type":"text","name":"text-field"}}]}]}', 'content':'Test Content', 'page_for':'professionals'}, follow=True)
         self.assertRedirects(response, '/formable/view/test-form/')
     def testViewFormNotLoggedIn(self):
+        "Test view form when not logged in"
         response = self.client.get('/formable/view/test-form/', follow=True)
         self.assertRedirects(response, 'accounts/login/?next=/formable/view/test-form/')
     def testViewFormLoggedIn(self):
+        "Test view form logged in"
         self.client.login(username='admin', password='admin')
         topic = BCCFTopic.objects.get(slug='topic-1')
         self.client.post('/formable/save/', {'bccf_topic':topic.pk, 'title':'Test Form', 'structure':'{"title":"Test","fieldset":[{"title":"Stuff","fields":[{"class":"text-field","label":"Text","attr":{"type":"text","name":"text-field"}}]}]}', 'content':'Test Content', 'page_for':'professionals'}, follow=True)
         response = self.client.get('/formable/view/test-form/', follow=True)
         self.assertTemplateUsed(response, 'view_form.html')
     def testViewFormViaPost(self):
+        "Test view form via post"
         topic = BCCFTopic.objects.get(slug='topic-1')
         self.client.post('/formable/save/', {'bccf_topic':topic.pk, 'title':'Test Form', 'structure':'{"title":"Test","fieldset":[{"title":"Stuff","fields":[{"class":"text-field","label":"Text","attr":{"type":"text","name":"text-field"}}]}]}', 'content':'Test Content', 'page_for':'professionals'}, follow=True)
         response = self.client.post('/formable/view/test-form/', follow=True)
         self.assertEqual(response.status_code, 405)
+    def testSubmitFormNotLoggedIn(self):
+        response = self.client.post('/formable/submit/', follow=True)
+        self.assertRedirects(response, 'accounts/login/?next=/formable/submit/')
+    def testSubmitFormViaGet(self):
+        response = self.client.get('/formable/submit/', follow=True)
+        self.assertEqual(response.status_code, 405)
     def testSubmitFormViaPost(self):
-        response = self.client.post('/formable/view/test-form/', follow=True)
-        #self.client.post('/formable/submit_form')
+        "Test submit form via post"
+        self.client.login(username='admin', password='admin')
+        response = self.client.post('/formable/submit/', {'publish_id':21, '1.test_field': 'Help'}, follow=True)
+        self.assertRedirects(response, '/formable/success/')

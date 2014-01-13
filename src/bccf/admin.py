@@ -16,6 +16,9 @@ from bccf.models import (BCCFTopic, Settings, EventForProfessionals,
     Blog, Program, Article, Magazine, Video, TipSheet, DownloadableForm, Campaign)
 from django.core.exceptions import PermissionDenied
 
+import logging
+log = logging.getLogger(__name__)
+
 
 class SettingsAdmin(admin.ModelAdmin):
     list_display = ['name', 'value']
@@ -113,7 +116,7 @@ class BCCFPageAdmin(DisplayableAdmin):
             # Insert each field between the publishing fields and nav
             # fields. Do so in reverse order to retain the order of
             # the model's fields.
-            exclude_fields = BCCFChildPage._meta.get_all_field_names() + ['bccfchildpage_ptr']  # @UndefinedVariable - PyDev quirks
+            exclude_fields = BCCFChildPage._meta.get_all_field_names() + ['bccfchildpage_ptr'] # @UndefinedVariable - PyDev quirks
             try:
                 exclude_fields.extend(self.exclude)
             except (AttributeError, TypeError):
@@ -175,8 +178,8 @@ class BCCFPageAdmin(DisplayableAdmin):
         """
         Enforce custom delete permissions for the page instance.
         """
-        page = get_object_or_404(BCCFPage, pk=object_id)
-        content_model = BCCFPage.get_content_model()
+        page = get_object_or_404(BCCFChildPage, pk=object_id)
+        content_model = page.get_content_model()
         self._check_permission(request, content_model, "delete")
         return super(BCCFPageAdmin, self).delete_view(request, object_id, **kwargs)
 

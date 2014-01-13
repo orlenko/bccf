@@ -6,6 +6,7 @@ from django.core import serializers
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import get_object_or_404
+from django.utils.text import slugify
 
 from bccf.models import BCCFPage, BCCFChildPage, BCCFBabyPage, BCCFTopic, UserProfile
 from pybb.models import Topic
@@ -49,10 +50,11 @@ def page(request, parent, child=None, baby=None):
         template = 'bccf/%s_page.html' % (parent)
     else: 
         baby_obj = None
-        if baby and baby != 'resources':
-            baby_obj = BCCFBabyPage.objects.get(slug=('%s/%s') % (child, baby))
-        elif baby and baby == 'resources':
-            baby_obj = 'resources'
+        if baby and baby != 'baby-resources' and baby != 'child-home':
+            baby_temp = BCCFBabyPage.objects.get(slug=('%s/%s') % (child, baby))
+            baby_obj = slugify(baby_temp.title)
+        elif baby:
+            baby_obj = baby
         child_obj = BCCFChildPage.objects.get(slug=child)
         if child_obj.content_model == 'eventforprofessionals':
             babies = BCCFChildPage.objects.filter(~Q(content_model='formpublished'), parent=child_obj).order_by('_order')        

@@ -1373,6 +1373,9 @@ textarea {
                     padding: 20px 0;
                     text-align: center;
                 }
+                &.col.three:nth-child(5n) {
+                    margin-left: 0;
+                }
             }
         }
     }

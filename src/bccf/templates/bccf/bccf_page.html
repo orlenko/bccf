@@ -70,8 +70,11 @@ $(function() {
     });
     $(window).on('popstate', function(e) {
         e.preventDefault();
-    	console.log('woulda reload the page to ' + location.pathname + ' here, but won\'t');
-        //window.location.href = location.pathname
+    	//console.log('woulda reload the page to ' + location.pathname + ' here, but won\'t');
+        //window.location = location.pathname;
+    });
+    $(window).on('beforeunload', function() {
+        console.log('before Unload: '+location.pathname);
     });
     $(window).on('resize', function(e) {
         reset();
