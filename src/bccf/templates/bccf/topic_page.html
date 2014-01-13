@@ -36,9 +36,14 @@ $(function() {
 });
 
 /** EVENT LISTENTERS **/
-$('.page-box').on('click', function(e) {
+$('.content-pages').on('click', '.page-box', function(e) {
     e.preventDefault();
-    window.location.href = $(this).find('a').attr('href');
+    if($(e.target).hasClass('page-box')) {
+        clicked = $(e.target);
+    } else {
+        clicked = $(e.target).parents('.page-box');
+    }
+    window.location.href = clicked.find('a').attr('href');
 });
 
 $('.control-buttons').on('click', 'a', function(e) {
@@ -65,16 +70,13 @@ $('.content-pages').on('click', 'a[class^="button"]', function(e) {
             if(offset % 1 === 0) {
                 $.ajax({
                     url: '/next/{{ page.slug }}/'+parent.attr('id')+'/'+offset+'/',
-                    success: function(data) {
-                        json = $.parseJSON(data);
-                        if(json.length > 0) {                    
-                            add_slide(json, parent);
-                            add_grid(json, parent);
-                            if(carousel.hasClass('carousel-slide')) {
-                                parent.find('.carousel-grid').hide();                     
-                            } else {
-                                parent.find('.carousel-slide').hide();
-                            }
+                    success: function(data) {                    
+                        parent.find('.carousel-slide').data('owlCarousel').addItem(data.slide);
+                        parent.find('.carousel-grid').data('owlCarousel').addItem(data.grid);
+                        if(carousel.hasClass('carousel-slide')) {
+                            parent.find('.carousel-grid').hide();                     
+                        } else {
+                            parent.find('.carousel-slide').hide();
                         }
                         carousel.trigger('owl.next');
                     },
@@ -85,82 +87,6 @@ $('.content-pages').on('click', 'a[class^="button"]', function(e) {
         }            
     }
 });
-
-var add_slide = function(data, parent) {
-    var new_slide = $('<div>');
-    var new_list = $('<ul>', {
-        class:'page-container-inner',        
-    });
-    var carousel = parent.find('.carousel-slide');
-    new_slide.append(new_list);
-    carousel.data('owlCarousel').addItem(new_slide);
-    for(var i=0; i < data.length; i++) {
-        if(i !== 0 && i%4===0) {
-            new_slide = $('<div>');
-            var new_list = $('<ul>', {
-                class:'page-container-inner',        
-            });
-            new_slide.append(new_list);
-            carousel.data('owlCarousel').addItem(new_slide);
-        }
-        var new_page = $('<li>', {
-            class: 'page-box carousel-box col four'
-        });
-        new_page.append($('<img>', {
-            //src: '/media/'+data[i].fields.image,
-            alt: data[i].fields.title
-        }));
-        var new_info = $('<div>');
-        var new_link = $('<a>', {
-            'href': '/{{ page.title }}/'+data[i].fields.slug
-        });
-        new_link.append('<h2>'+data[i].fields.title+'</h2>');
-        new_info.append(new_link);
-        new_info.append('<p class="no-tablet">'+data[i].fields.description.substr(0,30)+'</p>');
-        new_page.append(new_info);
-        new_list.append(new_page);
-    }
-};
-
-var add_grid = function(data, parent) {
-    var new_slide = $('<div>');
-    var new_list = $('<ul>', {
-        class:'page-container-inner',        
-    });
-    var carousel = parent.find('.carousel-grid');
-    new_slide.append(new_list);
-    carousel.data('owlCarousel').addItem(new_slide);
-    for(var i=0; i < data.length; i++) {
-        if(i !== 0 && i%3===0) {
-            new_list.append('<li class="grid-content reset col twelve"></li>');
-            continue;
-        }
-        if(i !== 0 && i%13===0) {
-            new_slide = $('<div>');
-            var new_list = $('<ul>', {
-                class:'page-container-inner',        
-            });
-            new_slide.append(new_list);
-            carousel.data('owlCarousel').addItem(new_slide);
-        }
-        var new_page = $('<li>', {
-            class: 'page-box carousel-box col four'
-        });
-        new_page.append($('<img>', {
-            //src: '/media/'+data[i].fields.image,
-            alt: data[i].fields.title
-        }));
-        var new_info = $('<div>');
-        var new_link = $('<a>', {
-            'href': '/{{ page.title }}/'+data[i].fields.slug
-        });
-        new_link.append('<h2>'+data[i].fields.title+'</h2>');
-        new_info.append(new_link);
-        new_info.append('<p class="no-tablet">'+data[i].fields.description.substr(0,30)+'</p>');
-        new_page.append(new_info);
-        new_list.append(new_page);
-    }
-};   
 
 </script>
 {% endblock %}

@@ -30,14 +30,29 @@
 <script type="text/javascript" >
 $('.filter').on('keyup', function() {
     var parent = $(this).parents('.content-pages');
+    reset();
     $.ajax({
-        url: '/filter/'+$(this).val(),
+        url: '/filter/'+$(this).val()+'/slide/',
         success: function(data) {
-            json = $.parseJSON(data);
+            console.log(data);
+            //var json = $.parseJSON(data);
+            var slide = $('#{{ carousel_name }}_id-carousel');
+            var grid = $('#{{ carousel_name }}_id-grid');
             // Delete all the slides
-            // count = 
-            add_slide(json, parent);
-            add_grid(json, parent);
+            // For slide view
+            var count = parent.find('.carousel-slide').find('.owl-item').length;            
+            while(count > 0) {
+                slide.data('owlCarousel').removeItem();
+                count--;
+            }
+            // For grid view
+            count = parent.find('.carousel-grid').find('.owl-item').length;
+            while(count > 0) {
+                grid.data('owlCarousel').removeItem();
+                count--;
+            }
+            slide.data('owlCarousel').addItem(data.slide);
+            grid.data('owlCarousel').addItem(data.grid);
             parent.find('.to-grid').trigger('click');
         },
     });

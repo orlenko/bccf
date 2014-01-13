@@ -1,5 +1,6 @@
-from django.shortcuts import render_to_response, render
+from django.shortcuts import render_to_response
 from django.template.context import RequestContext
+from django.template.loader import render_to_string
 from django.db.models import ObjectDoesNotExist, Q
 from django.http import HttpResponse
 from django.core import serializers
@@ -59,7 +60,7 @@ def page(request, parent, child=None, baby=None):
         if child_obj.content_model == 'eventforprofessionals':
             babies = BCCFChildPage.objects.filter(~Q(content_model='formpublished'), parent=child_obj).order_by('_order')        
         else:
-            babies = BCCFChildPage.objects.filter(parent=child_obj).order_by('_order')
+            babies = BCCFChildPage.objects.filter(parent=child_obj, status=2).order_by('_order')
         template = 'generic/sub_page.html'
 
         #Related resources
@@ -106,26 +107,41 @@ def user_list(request):
     return render_to_response('bccf/user_directory.html', {}, context_instance=context)  
     
 def next(request, parent, which, offset):
-    obj = BCCFPage.objects.get(slug=parent)
-    if obj.title == 'Resources' or obj.title == 'TAG':
-        slides = BCCFChildPage.objects.filter(gparent=obj.pk, content_model=which).order_by('-created')[offset:12]
-    elif which == 'parent' or which == 'professional':
-        slides = BCCFChildPage.objects.filter(gparent=obj.pk, page_for=which).order_by('-created')[offset:12]
+    if request.is_ajax():
+        obj = BCCFPage.objects.get(slug=parent)
+        if obj.title == 'Resources' or obj.title == 'TAG':
+            slides = BCCFChildPage.objects.filter(gparent=obj.pk, content_model=which, status=2).order_by('-created')[offset:12]
+        elif which == 'parent' or which == 'professional':
+            slides = BCCFChildPage.objects.filter(gparent=obj.pk, page_for=which, status=2).order_by('-created')[offset:12]
+        else:
+            slides = BCCFChildPage.objects.filter(gparent=obj.pk, status=2).order_by('-created')[offset:12]
+        parts = {
+            'slide': render_to_string('generic/carousel_slide_part.html', {'slides':slides}),
+            'grid': render_to_string('generic/carousel_slide_part.html', {'slides':slides})
+        }    
+        return HttpResponse(json.dumps(parts), content_type="application/json")
     else:
-        slides = BCCFChildPage.objects.filter(gparent=obj.pk).order_by('-created')[offset:12]
-    data = serializers.serialize('json', slides)
-    return HttpResponse(json.dumps(data), content_type="application/json")   
+        return HttpResponse('No')
 
 def topic_next(request, topic, which, offset):
     topic = BCCFTopic.objects.get(slug=topic)    
-    json_data = serializers.serialize('json', BCCFChildPage.objects.filter(topic=topic, page_for=which).order_by('-created')[offset:12])
-    return HttpResponse(json.dumps(json_data), content_type="application/json")
+    slides = BCCFChildPage.objects.filter(topic=topic, page_for=which, status=2).order_by('-created')[offset:12]
+    parts = {
+        'slide': render_to_string('generic/carousel_slide_part.html', {'slides':slides}),
+    }    
+    return HttpResponse(json.dumps(parts), content_type="application/json")
     
-def filter(request, query=None):
-    topics = BCCFTopic.objects.filter(Q(title__contains=query))
-    if len(topics) > 0:
-       forums = Topic.objects.filter(Q(title__contains=query) | Q(content__contains=query) | Q(name__contains=query) | Q(bccf_topic=topics), content_model='topic')
+def filter(request, query=None, type='slide'):
+    if request.is_ajax():
+        if query != '':    
+            topics = BCCFTopic.objects.filter(Q(title__contains=query))
+            slides = BCCFChildPage.objects.filter(Q(title__contains=query) | Q(content__contains=query) | Q(bccf_topic=topics), content_model='topic', status=2).distinct()
+        else:
+            slides = BCCFChildPage.objects.filter(content_model='topic', status=2).order_by('-created')[:12]
+        parts = {
+            'slide': render_to_string('generic/carousel_slide_part.html', {'slides':slides}),
+            'grid': render_to_string('generic/carousel_slide_part.html', {'slides':slides})
+        }
+        return HttpResponse(json.dumps(parts), content_type="application/json")
     else:
-       forums = Topic.objects.filter(Q(title__contains=query) | Q(content__contains=query) | Q(name__contains=query), content_model='topic')
-    json_data = serializers.serialize('json', forums)
-    return HttpResponse(json.dumps(json_data), content_type="application/json")
+        return HttpResponse('No')
