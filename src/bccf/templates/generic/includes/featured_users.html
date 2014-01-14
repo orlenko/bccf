@@ -2,7 +2,7 @@
 
 {% for user in users %}
 <div class="hlist-inner"> <!-- Use Innner for the slide -->
-	<img src="{% bccf_thumbnail user.photo 75 75 %}" alt="{{ user.user.get_full_name }}">
+	<img src="{{ MEDIA_URL }}{% bccf_thumbnail user.photo 75 75 %}" alt="{{ user.user.get_full_name }}">
     <h6>{{ user.user.get_full_name }}</h6>
     {{ user.description|safe }}
     <a class="hlist-link" href="#">Profile</a>

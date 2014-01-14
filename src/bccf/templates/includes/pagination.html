@@ -1,18 +1,18 @@
 <div id="pagination">
     <ul>
 
-        {% for num in recordlist.paginator.page_range %}
+        {% for num in current_page.visible_page_range %}
 
 			<li>
 
-			{% if num == recordlist.number %}
+			{% if num == current_page.number %}
 	        <span class="current">
-	            {{ recordlist.number }}
+	            {{ current_page.number }}
 	        </span>
 	        {% endif %}
 
-	        {% if num != recordlist.number %}
-	        	<a href="?page={{num}}">{{num}}</a>
+	        {% if num != current_page.number %}
+	        	<a href="?{{ page_var }}={{num}}{% if querystring %}&{{ querystring }}{% endif %}">{{num}}</a>
 	        {% endif %}
 
 			</li>

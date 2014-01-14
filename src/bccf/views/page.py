@@ -79,21 +79,13 @@ def topic_page(request, topic):
     return render_to_response('bccf/topic_page.html', {}, context_instance=context)
 
 def user_list(request):
-    p = request.GET.get('page')
+    p = request.GET.get('page_var')
     f = request.GET.get('filter')
 
-    log.info('-------------------')    
-    log.info(f)
-    log.info('-------------------')    
-    
     if f:
         users_list = UserProfile.objects.filter(user__last_name__startswith=f).order_by('user__last_name', 'user__first_name')
     else:
-        users_list = UserProfile.objects.all().order_by('user__last_name', 'user__first_name')
-
-    log.info('-------------------')    
-    log.info(users_list)
-    log.info('-------------------')            
+        users_list = UserProfile.objects.all().order_by('user__last_name', 'user__first_name')       
         
     paginator = Paginator(users_list, 10)
     

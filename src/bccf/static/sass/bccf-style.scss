@@ -721,14 +721,10 @@ textarea {
 	margin: 0 0 -5px;
 	padding:0;
 
-	a {
-	margin:0;
-	padding:0;
-		}
 	img {
 		margin:0;
-	padding:0;
-		}
+	    padding:0;
+    }
 }
 
 #browse-by {
@@ -1112,6 +1108,7 @@ textarea {
 		float:left;
 		margin:4px;
 		padding:4px;
+		width: 99%;
 
 			img {
 				float:left;
@@ -1917,7 +1914,7 @@ footer {
 
 			}
 		.hlist-inner {
-
+            width: 98%;
 
 			img {
 
@@ -1984,13 +1981,22 @@ footer {
 }
 
 .content-pages {
-    .carousel-title-container {
-        margin-left: 1%;
-        h2 {
-        	color:#fff;
-        	padding: 6px;
-        	font-size:16px;
-	    }
+    .top-control-container {
+        .carousel-title-container {
+            margin-left: 1%;
+            padding-left: 0;
+            h2 {
+            	color:#fff;
+            	padding: 6px;
+            	font-size:16px;
+    	    }
+    	}
+    	.control-buttons {
+    	   padding-right: 0;  
+    	}
+    	.control-buttons.six {
+    	   margin-left: 0;      
+    	}
 	}
     .page-container-outer {
         .page-container-inner {
@@ -2456,14 +2462,23 @@ table td {
 		}
 }
 .content-pages {
-    .carousel-title-container {
-        margin-left: 1%;
-        h2 {
-        	color:#fff;
-        	padding: 6px;
-        	font-size:16px;
-	    }
-	}
+    .top-control-container {
+        .carousel-title-container {
+            margin-left: 1%;
+            padding-left: 0;
+            h2 {
+            	color:#fff;
+            	padding: 6px;
+            	font-size:16px;
+    	    }
+    	}
+    	.control-buttons {
+    	   padding-right: 0; 
+    	}
+    	#filter-container {
+    	   text-align: center;    
+    	}
+    }
 	.page-container-outer { /* Container */
     	.page-box-active {
     	   border-bottom: none;

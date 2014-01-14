@@ -1,5 +1,7 @@
 {% extends 'bccf/bccf_page.html' %}
 
+{% load mezzanine_tags %}
+
 {% block content %}
 <h1>Member Directory</h1>
 
@@ -10,6 +12,6 @@
 </div>
 {% endfor %}
 
-{% include 'includes/pagination.html' %}
+{% pagination_for recordlist %}
 
 {% endblock %}

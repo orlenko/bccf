@@ -53,18 +53,18 @@
     }
     
     .a-wrapper {
-        padding: 5px;
         background-color: $dgreen;
         float: right;
         text-align: center;
-        width: 145px;
         a {
+            margin: 2px;
             color: #FFF;
             font-weight: bold;
             display: block;
-            width: 100%;
-            border: 1px dashed #FFF; 
             text-decoration: none;
+            &:hover {
+                color: #000;            
+            }
         }
     }     
 }
@@ -76,7 +76,6 @@
     .a-wrapper {
         font-size: 15px;            
         margin-right: 25px;
-        padding: 5px;
         display: inline-block;
         zoom: 1;
         *display: inline;/*IE7 life-saver */
@@ -84,10 +83,10 @@
         width: 170px;
         
         .tag-box {
-            display: block;       
+            display: block;
+            width: 98%; 
             text-decoration: none;
-            padding: 5px 10px;
-            border: 1px dashed #FFF;      
+            padding: 5px 10px;     
             .tag-title {
                 font-weight: bold;
                 display: block;
@@ -118,7 +117,10 @@
     .a-wrapper {
         width: 100%;
         display: block;
-        margin: 0;      
+        margin: 0;
+        .tag-box {
+            width: 99%;        
+        }      
     }    
 }
 
@@ -130,7 +132,7 @@
     right: 0;
     
     .a-wrapper {
-        width: 100px;        
+        float: right;       
     }  
 }
 
