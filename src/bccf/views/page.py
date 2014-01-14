@@ -134,8 +134,8 @@ def topic_next(request, topic, which, offset):
 def filter(request, query=None, type='slide'):
     if request.is_ajax():
         if query != '':    
-            topics = BCCFTopic.objects.filter(Q(title__contains=query))
-            slides = BCCFChildPage.objects.filter(Q(title__contains=query) | Q(content__contains=query) | Q(bccf_topic=topics), content_model='topic', status=2).distinct()
+            topics = BCCFTopic.objects.filter(Q(title__icontains=query))
+            slides = BCCFChildPage.objects.filter(Q(title__icontains=query) | Q(content__icontains=query) | Q(bccf_topic=topics), content_model='topic', status=2).distinct()
         else:
             slides = BCCFChildPage.objects.filter(content_model='topic', status=2).order_by('-created')[:12]
         parts = {
