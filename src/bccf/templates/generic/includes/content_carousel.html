@@ -50,8 +50,13 @@ $('.filter').on('keyup', function() {
                 grid.data('owlCarousel').removeItem();
                 count--;
             }
-            slide.data('owlCarousel').addItem(data.slide);
-            grid.data('owlCarousel').addItem(data.grid);
+            if(data.slide.length > 1 && data.grid.length > 1) {
+                slide.data('owlCarousel').addItem(data.slide);
+                grid.data('owlCarousel').addItem(data.grid);
+            } else {
+                slide.data('owlCarousel').addItem('<div>No Result for filter: '+$(this).val()+'</div>');
+                grid.data('owlCarousel').addItem('<div>No Result for filter: '+$(this).val()+'</div>');
+            }
             parent.find('.to-grid').trigger('click');
         },
     });

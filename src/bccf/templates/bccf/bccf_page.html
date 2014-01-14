@@ -7,10 +7,12 @@
       {% block marquee %}{% endblock %}
       <section id="page-header" class="section">
           {% block content %}
+          {% editable page.title page.content %}
           <article class="col twelve">
-            <h1>{% editable page.title %}{{ page.title }}{% endeditable %}</h1>
-            {% editable page.content %}{{ page.content|safe }}{% endeditable %}
+            <h1>{{ page.title }}</h1>
+            {{ page.content|safe }}
           </article>
+          {% endeditable %}
           {% endblock %}
       </section>
       {% block carousels %}{% endblock %}
@@ -137,18 +139,23 @@ $('.content-pages').on('click', 'a[class^="button"]', function(e) {
             if(offset % 1 === 0 && (parent.find('.filter') != 'undefined' && parent.find('.filter').val() == '')) {
                 $.ajax({
                     url: '/next/{{ page.slug }}/'+parent.attr('id')+'/'+offset+'/',
-                    success: function(data) {                 
-                        parent.find('.carousel-slide').data('owlCarousel').addItem(data.slide);
-                        parent.find('.carousel-grid').data('owlCarousel').addItem(data.grid);
-                        if(carousel.hasClass('carousel-slide')) {
-                            parent.find('.carousel-grid').hide();                     
-                        } else {
-                            parent.find('.carousel-slide').hide();
+                    context: parent,
+                    success: function(data) {                        
+                        if(data.slide.length > 1 && data.grid.length > 1) {
+                            $(this).find('.carousel-slide').data('owlCarousel').addItem(data.slide);
+                            $(this).find('.carousel-grid').data('owlCarousel').addItem(data.grid);
+                            if(carousel.hasClass('carousel-slide')) {
+                                $(this).find('.carousel-grid').hide();                     
+                            } else {
+                                $(this).find('.carousel-slide').hide();
+                            }
                         }
                         carousel.trigger('owl.next');
                     },
                 });
-            }        
+            } else {
+                carousel.trigger('owl.next');
+            }      
         } else {
             carousel.trigger('owl.next');
         }            
@@ -182,15 +189,18 @@ var load_content = function(box) {
     }
     container.html(loader).show();
     $.ajax({
-        url: pageURL+'?type=ajax',
+        url: pageURL,
+        context: container,
         success: function(data) {
-            container.html(data);
-            
+            $(this).html(data);
             if(!$('.mnav-mobile-btn').is(':visible')) {
                 $('body, html').animate({
-                    'scrollTop':   container.offset().top-160
+                    'scrollTop':   $(this).offset().top-160
                 }, 500);
             }
+        },
+        error: function() {
+            $(this).html('<h3>Error Loading Page</h3>');        
         }
     });
     if (pageURL != window.location) {

@@ -34,7 +34,7 @@ def content_carousel_for(context, obj, title, child=None, which=None):
             if which is None:
                 context['slides'] = BCCFChildPage.objects.filter(gparent=obj.pk, status=2).order_by('-created')[:12]
             else:
-                if obj.title == 'Resources' or obj.title == 'TAG':
+                if obj.slug == 'resources' or obj.slug == 'tag':
                     context['slides'] = BCCFChildPage.objects.filter(gparent=obj.pk, content_model=which, status=2).order_by('-created')[:12]
                 else:
                     context['slides'] = BCCFChildPage.objects.filter(gparent=obj.pk, page_for=which, status=2).order_by('-created')[:12]
@@ -42,7 +42,7 @@ def content_carousel_for(context, obj, title, child=None, which=None):
             context['open'] = True
             context['slides'] = [BCCFChildPage.objects.get(slug=child)]
             context['slides'].extend(BCCFChildPage.objects.filter(~Q(slug=child), gparent=obj.pk, status=2).order_by('-created')[:11])
-        elif obj.title == 'Resources' or obj.title == 'TAG': #Multiple
+        elif obj.slug == 'resources' or obj.slug == 'tag': #Multiple
             temp = BCCFChildPage.objects.get(slug=child)
             if temp.content_model == which: #For different content models
                 context['open'] = True

@@ -101,7 +101,7 @@ def user_list(request):
 def next(request, parent, which, offset):
     if request.is_ajax():
         obj = BCCFPage.objects.get(slug=parent)
-        if obj.title == 'Resources' or obj.title == 'TAG':
+        if obj.slug == 'resources' or obj.slug == 'tag':
             slides = BCCFChildPage.objects.filter(gparent=obj.pk, content_model=which, status=2).order_by('-created')[offset:12]
         elif which == 'parent' or which == 'professional':
             slides = BCCFChildPage.objects.filter(gparent=obj.pk, page_for=which, status=2).order_by('-created')[offset:12]
