@@ -343,18 +343,19 @@ class PageMarqueeInline(admin.TabularInline):
 
 #Marquees
 class MarqueeSlideAdmin(admin.ModelAdmin):
-    fields = ('title', 'caption', 'url', 'linkLabel')  
+    fields = ('title', 'caption', 'url', 'linkLabel', 'image')  
     list_display = ['title', 'caption', 'url']
 
 class HomeMarqueeSlideAdmin(MarqueeSlideAdmin):
     inlines = [HomeMarqueeInline]
 
 class FooterMarqueeSlideAdmin(admin.ModelAdmin):
+    fields = ('title', 'caption', 'image')
     inlines = [FooterMarqueeInline]
     list_display = ['title', 'caption']
 
 class PageMarqueeSlideAdmin(MarqueeSlideAdmin):
-    inlines = [FooterMarqueeInline]
+    inlines = [PageMarqueeInline]
 
 admin.site.register(HomeMarqueeSlide, HomeMarqueeSlideAdmin)
 admin.site.register(FooterMarqueeSlide, FooterMarqueeSlideAdmin)
