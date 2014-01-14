@@ -1,4 +1,3 @@
-var history_height = null;
 var prep_history_carousel = function(elem) {
     history_height = elem.find('.history-image:first-child').height();
     elem.find('.history-image:first-child').css({top:0});
@@ -34,7 +33,6 @@ var history_mobile = {
     'afterUpdate': function(elem) { prep_history_carousel(elem); },
 }
 $(function(){
-    history_height = $('#history-carousel').find('.history-image:first-child').height();
     $('#slide-container').owlCarousel({
         'singleItem': true,
         'autoPlay': true,
@@ -46,21 +44,24 @@ $(function(){
         'singleItem': true,
         'autoPlay': 20000,
         'stopOnHover': true,
-        'theme': "med-marquee"
+        'theme': "med-marquee",
+        'autoHeight': true,
     });
     $('#noteworthy-carousel').owlCarousel({
         'singleItem': true,
         'autoPlay': 15000,
         'stopOnHover': true,
-        'theme': "med-marquee"
+        'theme': "med-marquee",
+        'autoHeight': true,
     });
-    $('#resources-carousel').owlCarousel({
+    $('#carousel-resources').owlCarousel({
         'items': 3,
         'pagination': false,
-        'stopOnHover': true,
-        'theme': 'history-theme',
+        'addClassActive': true,
+        'itemsDesktopSmall': [1120, 2],
+        'itemsMobile': [600, 1],
     });
-    if($('.nav-mobile').is(':visible')) {
+    if($('.mnav-mobile-btn').is(':visible')) {
         $('#history-carousel').owlCarousel(history_mobile);
     } else {
         $('#history-carousel').owlCarousel(history_not_mobile);  
@@ -68,16 +69,16 @@ $(function(){
     $('#member-professionals-carousel').owlCarousel({
         'singleItem': true,
         'autoPlay': 5000,
-        'pagination': false,
+        'pagination': true,
         'stopOnHover': true,
-        'theme': 'members-theme',
+        'theme': 'normal-marquee',
     });
     $('#member-organization-carousel').owlCarousel({
         'singleItem': true,
         'autoPlay': 5000,
-        'pagination': false,
+        'pagination': true,
         'stopOnHover': true,
-        'theme': 'members-theme',
+        'theme': 'normal-marquee',
     }).hide()
         .data('owlCarousel').stop();
     $('#hcal-professionals-carousel').owlCarousel({
@@ -93,9 +94,9 @@ $(function(){
 });
 $('#home-resources').on('click', 'a[class^="button"]', function() {
     if($(this).hasClass('button-prev')) {
-        $('#resources-carousel').trigger('owl.prev');
+        $('#carousel-resources').trigger('owl.prev');
     } else {
-        $('#resources-carousel').trigger('owl.next');
+        $('#carousel-resources').trigger('owl.next');
     }
 });
 $('#home-history').on('click', 'a[class^="button"]', function() {
@@ -120,17 +121,16 @@ $('.training-button').on('click', function(e) {
     }
 });
 
-$('.member-button').on('click', function() {
+$('.member-button').on('click', function(e) {
+    e.preventDefault();
+    $('#home-listings .selected').removeClass('selected');
+    $(this).addClass('selected');
     if($(this).attr('id') === 'member-professionals') {
-        $('.member-active').removeClass('member-active');
-        $(this).addClass('training-active');
         $('#member-professionals-carousel').show()
             .data('owlCarousel').play();
         $('#member-organization-carousel').hide()
             .data('owlCarousel').stop();
     } else {
-        $('.member-active').removeClass('member-active');
-        $(this).addClass('training-active');
         $('#member-organization-carousel').show()
             .data('owlCarousel').play();
         $('#member-professionals-carousel').hide()
@@ -152,7 +152,7 @@ function slideDownImage(elem, direction) {
     })
     .delay(100)
     .animate({
-        top: history_height+60
+        top: $(this).height()
     }, {
         duration: 200,
         step: function(now, fx) {
@@ -171,7 +171,7 @@ function slideUpImage(elem) {
     var $revealMe = elem.find('.active .history-image');
     $revealMe.css({
         position: "relative",
-        top: history_height+60,           
+        top: $(this).height(),           
     }).delay(800).show().animate({
         top: -20,
     }, {
