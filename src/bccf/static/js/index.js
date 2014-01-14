@@ -1,7 +1,7 @@
 var prep_history_carousel = function(elem) {
     history_height = elem.find('.history-image:first-child').height();
     elem.find('.history-image:first-child').css({top:0});
-    if($('.nav-mobile').is(':visible')) {
+    if($('.mnav-mobile-btn').is(':visible')) {
         elem.data('owlCarousel').reinit(history_mobile);
     } else {
         elem.data('owlCarousel').reinit(history_not_mobile);
