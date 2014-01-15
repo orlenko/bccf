@@ -74,7 +74,6 @@ def content_carousel_for_topic(context, topic, type):
     """
     try:
         context['slides'] = BCCFChildPage.objects.filter(bccf_topic=topic, page_for=type, status=2).order_by('-created')[:12]
-        log.info(context['slides'])
         context['carousel_color'] = topic.carousel_color
         context['carousel_title'] = type
         context['carousel_name'] = type.replace(' ', '_').lower()

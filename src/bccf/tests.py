@@ -1,10 +1,13 @@
 import logging
+import json
 log = logging.getLogger(__name__)
 
 from django.test import TestCase
+from django.template.loader import render_to_string
+from django.shortcuts import render_template
 
 #
-# Test Cases for the different models used in BCCF
+# Test Cases for the different models and views used in BCCF
 #
 
 ####
@@ -103,6 +106,7 @@ class PageMarqueeSlideTestCaseAddToMarquee(PageMarqueeSlideTestCase):
 ## Pages
 ####
 from bccf.models import BCCFPage, BCCFTopic, BCCFChildPage, BCCFBabyPage, Article, DownloadableForm, Magazine, TipSheet, Video, Program, Blog, Campaign
+from pybb.models import Topic
 
 # BCCF Page
 class BCCFPageTestCase(PageMarqueeTestCase):
@@ -129,6 +133,25 @@ class BCCFTopicTestCase(PageMarqueeTestCase):
         self.assertEqual(self.page.content, 'Test Content')
         self.assertEqual(self.page.marquee, self.marquee)
         self.assertEqual(self.page.carousel_color, 'dgreen-list')
+
+class BCCTopicViewTestCase(TestCase):
+    def testGetTopicPage(self):
+        "Gets the topic page"
+        response = self.client.get('/topic/topic-1', follow=True)
+        self.assertTemplateUsed(response, 'bccf/topic_page.html')
+    def testTopicNext(self):
+        "Gets the next set of pages based on topic"
+        slides = []
+        response = self.client.get('/next/topic/topic-1/parent/12', follow=True, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        data = json.loads(response.content)
+        slide = render_to_string('generic/carousel_slide_part.html', {'slides':slides})
+        grid = render_to_string('generic/carousel_grid_part.html', {'slides':slides})
+        self.assertEqual(data['slide'], slide)
+        self.assertEqual(data['grid'], grid)
+    def testTopicNextNotAjax(self):
+        "Gets the next set of pages based on topic without using ajax"
+        response = self.client.get('/next/topic/topic-1/parent/12', follow=True)
+        self.assertEqual(response.content, 'No')
 
 # BCCF Child Page
 class BCCFChildPageTestCase(TestCase):
@@ -226,7 +249,60 @@ class BCCFChildPageTestTopicGet2(BCCFChildPageTestCaseTopic):
         self.failIf(self.child not in children)
 
 class BCCFChildPageViewsTestCase(TestCase):
-    pass
+    def testGetPage(self):
+        "Get the Gparent page"
+        response = self.client.get('/resources/', follow=True)
+        self.assertTemplateUsed('bccf/resources_page.html')
+        response = self.client.get('/blog/', follow=True)
+        self.assertTemplateUsed('bccf/blog_page.html')
+        response = self.client.get('/news/', follow=True)
+        self.assertTemplateUsed('bccf/news_page.html')
+        response = self.client.get('/tag/', follow=True)
+        self.assertTemplateUsed('bccf/tag_page.html')
+        response = self.client.get('/programs/', follow=True)
+        self.assertTemplateUsed('bccf/programs_page.html')
+        response = self.client.get('/trainings/', follow=True)
+        self.assertTemplateUsed('bccf/trainings_page.html')
+    def testGetChildPage(self):
+        "Get Child Page"
+        response = self.client.get('/resources/article/', follow=True, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertTemplateUsed('generic/sub_page.html')
+    def testGetNext(self):
+        "Get Next set of pages"
+        slides = []
+        response = self.client.get('/next/resources/article/12', follow=True, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        data = json.loads(response.content)
+        slide = render_to_string('generic/carousel_slide_part.html', {'slides':slides})
+        grid = render_to_string('generic/carousel_grid_part.html', {'slides':slides})
+        self.assertEqual(data['slide'], slide)
+        self.assertEqual(data['grid'], grid)
+    def testGetNextNotAjax(self):
+        "Get Next set of pages without ajax"
+        response = self.client.get('/next/resources/article/12', follow=True)
+        self.assertEqual(response.content, 'No')
+    def testFilter(self):
+        "Test Forum Topic Filtering"
+        slides = Topic.objects.filter(slug='stuff-3')
+        response = self.client.get('/filter/example', follow=True, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        data = json.loads(response.content)
+        slide = render_to_string('generic/carousel_slide_part.html', {'slides':slides})
+        grid = render_to_string('generic/carousel_grid_part.html', {'slides':slides})
+        self.assertEqual(data['slide'], slide)
+        self.assertEqual(data['grid'], grid)
+    def testFilterEmpty(self):
+        "Test Forum Topic Filtering with empty query"
+        gparent = BCCFPage.objects.get(slug='tag')
+        slides = BCCFChildPage.objects.filter(gparent=gparent.pk, content_model='topic', status=2).order_by('-created')[:12]
+        response = self.client.get('/filter//', follow=True, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        data = json.loads(response.content)
+        slide = render_to_string('generic/carousel_slide_part.html', {'slides':slides})
+        grid = render_to_string('generic/carousel_grid_part.html', {'slides':slides})
+        self.assertEqual(data['slide'], slide)
+        self.assertEqual(data['grid'], grid)
+    def testFilterNotAjax(self):
+        "Test forum topic filtering without ajax"
+        response = self.client.get('/filter//', follow=True)
+        self.assertEqual(response.content, 'No')
         
 # Baby Page
 class BCCFBabyPageTestCase(TestCase):
@@ -455,3 +531,11 @@ class FormBuilderViewTestCase(TestCase):
         self.client.login(username='admin', password='admin')
         response = self.client.post('/formable/submit/', {'publish_id':21, '1.test_field': 'Help'}, follow=True)
         self.assertRedirects(response, '/formable/success/')
+
+####
+## Template Tags
+####
+class ContentCarouselTestCase(TestCase):
+    def testContentCarosuelFor(self):
+        "Test Content Carousel Creation"
+        

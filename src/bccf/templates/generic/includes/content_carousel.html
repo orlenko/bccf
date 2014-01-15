@@ -31,7 +31,7 @@ $('.filter').on('keyup', function() {
     var parent = $(this).parents('.content-pages');
     reset();
     $.ajax({
-        url: '/filter/'+$(this).val()+'/slide/',
+        url: '/filter/'+$(this).val(),
         success: function(data) {
             console.log(data);
             //var json = $.parseJSON(data);
