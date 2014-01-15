@@ -4,7 +4,6 @@ log = logging.getLogger(__name__)
 
 from django.test import TestCase
 from django.template.loader import render_to_string
-from django.shortcuts import render_template
 
 #
 # Test Cases for the different models and views used in BCCF
@@ -152,6 +151,10 @@ class BCCTopicViewTestCase(TestCase):
         "Gets the next set of pages based on topic without using ajax"
         response = self.client.get('/next/topic/topic-1/parent/12', follow=True)
         self.assertEqual(response.content, 'No')
+    def testTopicErrors(self):
+        "Tests errors"
+        response = self.client.get('/topic/no-topic', follow=True)
+        self.assertEqual(response.status_code, 404)
 
 # BCCF Child Page
 class BCCFChildPageTestCase(TestCase):
@@ -302,7 +305,7 @@ class BCCFChildPageViewsTestCase(TestCase):
     def testFilterNotAjax(self):
         "Test forum topic filtering without ajax"
         response = self.client.get('/filter//', follow=True)
-        self.assertEqual(response.content, 'No')
+        self.assertEqual(response.content, 'No')       
         
 # Baby Page
 class BCCFBabyPageTestCase(TestCase):
@@ -467,6 +470,15 @@ class EventforProfessionalsTestCaseGetViaUser(EventForProfessionalsTestCase):
         "Get Event for Parent via the User Rule"
         children = EventForProfessionals.objects.filter(provider=self.user)
         self.failIf(self.child not in children)
+        
+####
+## User Directory
+####        
+class UserDirectoryTestCase(TestCase):
+    def testUserDirectory(self):
+        "Test loading user directory"
+        response = self.client.get('/member/directory/', follow=True)
+        self.assertTemplateUsed('bccf/user_directory.html')
         
 ####
 ## Form builder

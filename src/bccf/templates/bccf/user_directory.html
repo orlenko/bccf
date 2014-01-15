@@ -1,17 +1,49 @@
 {% extends 'bccf/bccf_page.html' %}
-
 {% load mezzanine_tags %}
+
+{% block meta_title %}Member Directory{% endblock %}
 
 {% block content %}
 <h1>Member Directory</h1>
 
+<div class="row">
+    <nav>
+        <ul id="letter-filter"></ul>
+    </nav>
+</div>
+
 {% for user in recordlist %}
-<div class="section row">
+<div class="user-box section row">
     <h3>{{ user.user.get_full_name }}</h3>
     <p>Type: {{ user.membership_type|title }}</p>
+</div>
+{% empty %}
+<div class="user-box section row">
+    {% if f %}
+    <h6>No Members found using: {{ f }} Filter</h6>
+    {% else %}
+    <h2>No Members found</h2>
+    {% endif %}
 </div>
 {% endfor %}
 
 {% pagination_for recordlist %}
 
+{% endblock %}
+
+{% block page_script %}
+<script type="text/javascript" >
+$(function() {
+    var f = "{{ f }}";
+    for(var i=26; i<=51; i++) {
+        var letter = String.fromCharCode(i+(65-26));
+        if(f === letter) {
+            $('#letter-filter').append('<li><a href="?filter='+letter+'" class="current-filter">'+letter+'</a></li>');
+        } else {
+            $('#letter-filter').append('<li><a href="?filter='+letter+'">'+letter+'</a></li>');        
+        }
+    }
+    $('#letter-filter').append('<li><a href="?filter=all">All</a></li>');
+});
+</script>
 {% endblock %}

@@ -6,14 +6,14 @@
   <section id="main-content-side" class="col eight mobile-full"><!-- Left Side -->
       {% block marquee %}{% endblock %}
       <section id="page-header" class="section">
-          {% block content %}
-          {% editable page.title page.content %}
           <article class="col twelve">
+            {% block content %}
+            {% editable page.title page.content %}
             <h1>{{ page.title }}</h1>
             {{ page.content|safe }}
+            {% endeditable %}
+            {% endblock %}
           </article>
-          {% endeditable %}
-          {% endblock %}
       </section>
       {% block carousels %}{% endblock %}
   </section>

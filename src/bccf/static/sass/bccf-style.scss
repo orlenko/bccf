@@ -1648,6 +1648,28 @@ textarea {
 } /* end #side-resource */
 
 
+#letter-filter {
+    text-align: center;
+    border-top: 2px solid $dgreen;
+    border-bottom: 2px solid $dgreen;
+    li {
+        display: inline-block;    
+        a {
+            text-decoration: none;
+            display: block;
+            padding: 5px;
+            &:hover, &:active {
+                text-decoration: underline;    
+            }
+        }
+        .current-filter {
+            color: $dgreen;
+            font-weight: bold;
+            @include font-size(20);   
+        }    
+    }
+}
+
 footer {
 	background-color:$sgrey;
 
