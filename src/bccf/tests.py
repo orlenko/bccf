@@ -479,6 +479,10 @@ class UserDirectoryTestCase(TestCase):
         "Test loading user directory"
         response = self.client.get('/member/directory/', follow=True)
         self.assertTemplateUsed('bccf/user_directory.html')
+    def testUserDirectoryFilter(self):
+        "Test loading user directory with filter"
+        resposne = self.client.get('/member/directory/?filter=A', follow=True)
+        self.assertTemplateUsed('bccf/user_directory.html')
         
 ####
 ## Form builder

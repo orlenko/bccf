@@ -58,6 +58,7 @@ $(function(){
         'items': 3,
         'pagination': false,
         'addClassActive': true,
+        'itemsDesktop': false,
         'itemsDesktopSmall': [1120, 2],
         'itemsMobile': [600, 1],
     });
