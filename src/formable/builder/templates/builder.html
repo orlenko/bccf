@@ -59,7 +59,7 @@
         {% if wizard %}
             <form id="form_structure_form" action="" method="POST">
         {% else %}
-            <form id="form_structure_form" action="{% url 'formable-save-structure' %}" method="POST">
+            <form id="form_structure_form"  enctype="multipart/form-data" action="{% url 'formable-save-structure' %}" method="POST">
         {% endif %}
             {% csrf_token %}
             {% if wizard %}
@@ -67,10 +67,10 @@
                 {% if  wizard.forms.forms %}
                     {{ wizard.form.management.form }}
                     {% for form in wizard.form.forms %}
-                        {{ form }}
+                        {{ form.as_p }}
                     {% endfor %}
                 {% else %}
-                    {{ wizard.form }}
+                    {{ wizard.form.as_p}}
                 {% endif %}
                 <br/><br/>
                 {% if wizard.steps.prev %}
@@ -79,10 +79,10 @@
                     </button>
                 {% endif %}
             {% else %}
-                {{ structure_form }}
+                {{ structure_form.as_p }}
             {% endif %}
         <!-- end custom -->
-            <input id="form_submit" type="submit" value="{% trans 'submit' %}" class="export-btn" />
+            <input id="form_submit" type="submit" value="{% trans 'Submit' %}" class="export-btn" />
         </form>
     </div>
 </div>

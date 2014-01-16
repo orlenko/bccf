@@ -27,32 +27,11 @@ def save_structure(request):
     will be redirected to the form builder. If all goes well, the user will be
     redirected to view the form as HTML.
     """
-    form_structure = FormStructure.objects.create(structure=request.POST.get('structure'), title=request.POST.get('title'))
-    form_published = FormPublished.objects.create(form_structure=form_structure, user=request.user, content=request.POST.get('content'), page_for=request.POST.get('page_for'))
-    form_published.bccf_topic = bccf_topic=request.POST.get('bccf_topic')
-    form_published.save()
-
-    # Create Questions based on structure
-    struct = json.loads(form_structure.structure)
-    for fieldset in struct["fieldset"]:
-        for field in fieldset["fields"]:
-           if "label" in field: # don't save static text
-                if "required" in field["attr"]:
-                    required = 0
-                else:
-                    required = 1
-
-                num_answers = 0
-
-                if field['class'] == 'multiselect-field' or field['class'] == 'checkbox-field':
-                    num_answers = len(field["options"])
-
-                question = Question(question=field["label"],
-                    form_published=form_published, required=required,
-                    num_answers=num_answers)
-                question.save()
-    # End Create Questions
-            
+    form = FormStructureForm(request.POST, request.FILES)
+    if form.is_valid():
+        form_published = form.save(request.user)
+        form.handle_upload()
+    
     return redirect(form_published.get_absolute_url())
      
 @require_http_methods(["POST"])

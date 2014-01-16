@@ -22,7 +22,7 @@ class FormStructure(models.Model):
         #('4', 'XML'), # To be Implemented
     )
 
-    title = models.CharField(_("Form Title"), max_length=100)
+    title = models.CharField(_("Form Title"), default="Form Structure", max_length=100)
     structure = models.TextField(_("Form Structure"))
     type = models.CharField(_("Form Type"), max_length=4, default='JSON', choices=FORM_TYPE)
     created = models.DateTimeField(auto_now_add=True)
