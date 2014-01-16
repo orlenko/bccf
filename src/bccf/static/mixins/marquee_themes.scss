@@ -33,6 +33,7 @@
 }
 .big-marquee {
     @extend .normal-marquee;
+    @include font-size(13);
     .owl-controls {
         bottom: 5%;
         right: 2%;  
