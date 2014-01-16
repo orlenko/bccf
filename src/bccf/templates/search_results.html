@@ -1,6 +1,6 @@
 {% extends "bccf/bccf_page.html" %}
 
-{% load i18n future mezzanine_tags %}
+{% load i18n future mezzanine_tags bccf_tags %}
 
 {% block meta_title %}{% trans "Search Results" %}{% endblock %}
 {% block title %}{% trans "Search Results" %}{% endblock %}
@@ -14,8 +14,13 @@
 <div id="search-results">
     {% for result in results.object_list %}
     <a href="result.absolute_url" class="result-box row section">
-        <h5>{{ result.title }}</h5>
-        <p>{{ result.description|truncatewords_html:20|safe }}</p>
+        <div class="col three">
+            <img src="{{ MEDIA_URL }}{% bccf_thumbnail result.image 75 75 %}" alt="result.title"/>    
+        </div>
+        <div class="col nine">
+            <h5>{{ result.title }}</h5>
+            <p>{{ result.description|truncatewords_html:20|safe }}</p>
+        </div>
     </a>
     {% endfor %}
 </div>
