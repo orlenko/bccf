@@ -2989,18 +2989,13 @@ footer #newsletter .dashed-button a:hover {
   right: 2%;
 }
 
-/* line 34, ../mixins/marquee_themes.scss */
-.big-marquee {
-  font-size: 13px;
-  font-size: 0.8125rem;
-}
-/* line 37, ../mixins/marquee_themes.scss */
+/* line 36, ../mixins/marquee_themes.scss */
 .big-marquee .owl-controls {
   bottom: 5%;
   right: 2%;
 }
 
-/* line 43, ../mixins/marquee_themes.scss */
+/* line 42, ../mixins/marquee_themes.scss */
 .lightbox {
   position: absolute;
   bottom: 15%;
@@ -3010,17 +3005,17 @@ footer #newsletter .dashed-button a:hover {
   background: rgba(159, 206, 180, 0.8);
   z-index: 9999;
 }
-/* line 52, ../mixins/marquee_themes.scss */
+/* line 51, ../mixins/marquee_themes.scss */
 .lightbox .lightbox-title {
   font-size: 25px;
 }
-/* line 56, ../mixins/marquee_themes.scss */
+/* line 55, ../mixins/marquee_themes.scss */
 .lightbox .a-wrapper {
   background-color: #336442;
   float: right;
   text-align: center;
 }
-/* line 60, ../mixins/marquee_themes.scss */
+/* line 59, ../mixins/marquee_themes.scss */
 .lightbox .a-wrapper a {
   margin: 2px;
   color: #FFF;
@@ -3028,18 +3023,18 @@ footer #newsletter .dashed-button a:hover {
   display: block;
   text-decoration: none;
 }
-/* line 66, ../mixins/marquee_themes.scss */
+/* line 65, ../mixins/marquee_themes.scss */
 .lightbox .a-wrapper a:hover {
   color: #336442;
 }
 
-/* line 73, ../mixins/marquee_themes.scss */
+/* line 72, ../mixins/marquee_themes.scss */
 #tag-container {
   position: absolute;
   bottom: 25px;
   left: 25px;
 }
-/* line 77, ../mixins/marquee_themes.scss */
+/* line 76, ../mixins/marquee_themes.scss */
 #tag-container .a-wrapper {
   font-size: 15px;
   margin-right: 25px;
@@ -3050,26 +3045,32 @@ footer #newsletter .dashed-button a:hover {
   background-color: #fdcd26;
   width: 170px;
 }
-/* line 86, ../mixins/marquee_themes.scss */
+/* line 85, ../mixins/marquee_themes.scss */
 #tag-container .a-wrapper .tag-box {
   display: block;
   width: 98%;
   text-decoration: none;
   padding: 5px 10px;
 }
-/* line 91, ../mixins/marquee_themes.scss */
+/* line 90, ../mixins/marquee_themes.scss */
 #tag-container .a-wrapper .tag-box .tag-title {
   font-weight: bold;
   display: block;
   border-bottom: 1px solid black;
 }
-/* line 96, ../mixins/marquee_themes.scss */
+/* line 95, ../mixins/marquee_themes.scss */
 #tag-container .a-wrapper .tag-box span:last-child {
   font-size: 12px;
   font-style: italic;
 }
 
 @media only screen and (max-width: 739px) {
+  /* line 105, ../mixins/marquee_themes.scss */
+  .med-marquee,
+  .big-marquee {
+    font-size: 13px;
+    font-size: 0.8125rem;
+  }
   /* line 107, ../mixins/marquee_themes.scss */
   .med-marquee .owl-controls,
   .big-marquee .owl-controls {
