@@ -115,30 +115,22 @@ class ProfessionalEventForm(forms.ModelForm):
         self.fields['survey'] = forms.BooleanField(label='Create Surveys?',
             widget=forms.CheckboxInput, required=False)
             
-class FormStructureSurveyFormOne(FormStructureForm):
+class FormStructureSurveyFormOne(forms.Form):
     """
     Form for creating a before survey in the Professional Event creation Wizard
-    
-    It is a child class of FormStructureForm found in formable.builder.forms
     """
+    title = forms.CharField(widget=forms.HiddenInput(attrs={'id': 'form_structure_title'}))
+    structure = forms.CharField(widget=forms.HiddenInput(attrs={'id': 'form_structure_data'}))
+    type = forms.CharField(widget=forms.HiddenInput(attrs={'id': 'form_structure_type'}))
     after_survey = forms.BooleanField(label='Create After Survey?',
         widget=forms.CheckboxInput, required=False)
     clone = forms.BooleanField(label='Use this Survey as template?',
         widget=forms.CheckboxInput, required=False)
-    def __init__(self, *args, **kwargs):
-        super(FormStructureSurveyFormOne, self).__init__(*args, **kwargs)
-        del self.fields['content']
-        del self.fields['page_for']
-        del self.fields['bccf_topic']
-       
-class FormStructureSurveyFormTwo(FormStructureForm):
+
+class FormStructureSurveyFormTwo(forms.Form):
     """
     Form for creating an after survey in the Professional Event creation Wizard.
-    
-    It is a child class of FormStructureForm found in formable.builder.forms
     """
-    def __init__(self, *args, **kwargs):
-        super(FormStructureSurveyFormTwo, self).__init__(*args, **kwargs)
-        del self.fields['content']
-        del self.fields['page_for']
-        del self.fields['bccf_topic']
+    title = forms.CharField(widget=forms.HiddenInput(attrs={'id': 'form_structure_title'}))
+    structure = forms.CharField(widget=forms.HiddenInput(attrs={'id': 'form_structure_data'}))
+    type = forms.CharField(widget=forms.HiddenInput(attrs={'id': 'form_structure_type'}))
