@@ -451,20 +451,26 @@ class DocumentResourceBase(BCCFChildPage):
         abstract = True
 
 class Article(DocumentResourceBase):
-    pass
+    def get_resource_type(self):
+        return 'Article'
 
 class DownloadableForm(DocumentResourceBase):
     class Meta:
         verbose_name = 'Downloadable Form'
         verbose_name_plural = 'Downloadable Forms'
+    def get_resource_type(self):
+        return 'Downloadable Form'
 
 class Magazine(DocumentResourceBase):
-    pass
+    def get_resource_type(self):
+        return 'Magazine'
 
 class TipSheet(DocumentResourceBase):
     class Meta:
         verbose_name = 'Tip Sheet'
         verbose_name_plural = 'Tip Sheets'
+    def get_resource_type(self):
+        return 'Tip Sheet'
 
 class Video(BCCFChildPage):
     video_url = models.URLField("Video", max_length=1024, blank=True, default='', null=True,
@@ -485,6 +491,8 @@ class Video(BCCFChildPage):
     def save(self, **kwargs):
         self.gparent = BCCFPage.objects.get(slug='resources')
         super(Video, self).save(**kwargs)
+    def get_resource_type(self):
+        return 'Video'
 
 #Program Pages
 class Program(BCCFChildPage):
