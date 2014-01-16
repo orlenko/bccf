@@ -94,6 +94,7 @@ class BCCFTopicAdmin(DisplayableAdmin):
                                     'content',
                                     'bccf_topic',
                                     'featured',
+                                    'image',
                                     'page_for']):
                 self.fieldsets[0][1]['fields'].insert(3, field)
     inlines = [PollAnswerAdmin, ]
