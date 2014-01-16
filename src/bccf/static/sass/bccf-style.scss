@@ -1664,6 +1664,51 @@ textarea {
     }
 }
 
+.result-box,
+.user-box {
+    display: block;
+    padding: 10px;    
+}
+
+.result-box:nth-child(odd),
+.user-box:nth-child(odd) {
+    
+}
+
+.result-box:nth-child(even),
+.user-box:nth-child(even) {
+    background-color: $sgrey;
+}
+
+#builder-main {
+    .field-container-inner:hover {
+        background-color: $sgreen;    
+    }    
+}
+
+#form-main {
+    label {
+        width: 150px;
+        display: inline-block;    
+    }
+    textarea {
+        max-width: 100%;    
+    }
+}
+
+#form-aux {
+    background-color: $sgrey;
+    padding: 20px;
+    border-top: 2px solid $dgreen;
+    label {
+        width: 150px;
+        display: inline-block;    
+    }
+    textarea {
+        max-width: 100%;    
+    }
+}
+
 footer {
 	background-color:$sgrey;
 

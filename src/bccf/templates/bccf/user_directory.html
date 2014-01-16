@@ -1,11 +1,13 @@
 {% extends 'bccf/bccf_page.html' %}
-{% load mezzanine_tags %}
+{% load mezzanine_tags bccf_tags %}
 
 {% block meta_title %}Member Directory{% endblock %}
 
 {% block content %}
 <h1>Member Directory</h1>
+{% endblock %}
 
+{% block carousels %}
 <div class="row">
     <nav>
         <ul id="letter-filter"></ul>
@@ -13,10 +15,15 @@
 </div>
 
 {% for user in recordlist %}
-<div class="user-box section row">
-    <h3>{{ user.user.get_full_name }}</h3>
-    <p>Type: {{ user.membership_type|title }}</p>
-</div>
+<a class="user-box section row">
+    <div class="col three">
+        <img src="{{ MEDIA_URL }}{% bccf_thumbnail user.photo 75 75 %}" alt="{{ user.user.get_full_name }}"/>    
+    </div>
+    <div class="col nine">
+        <h3>{{ user.user.get_full_name }}</h3>
+        <p>Type: {{ user.membership_type|title }}</p>
+    </div>
+</a>
 {% empty %}
 <div class="user-box section row">
     {% if f %}

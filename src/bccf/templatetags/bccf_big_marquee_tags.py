@@ -13,9 +13,8 @@ def big_marquee_for(context, obj=None):
     """
     Provides generic content variable for the big marquee.
     """
-    page = BCCFPage.objects.get(slug='programs')
-    context['programs']  = BCCFChildPage.objects.filter(gparent=page)
-    context['topics'] = BCCFTopic.objects.all()
+    context['slides'] = []
+    context['show_tag'] = False
     if obj is None: # For index
         context['show_tag'] = True
         try:
@@ -30,4 +29,11 @@ def big_marquee_for(context, obj=None):
                 context['slides'] = PageMarqueeSlide.objects.filter(marquee=obj.marquee)
             except ObjectDoesNotExist:
                 pass
+    return context
+    
+@register.inclusion_tag("generic/includes/browse_by.html", takes_context=True)
+def browse_by(context):
+    page = BCCFPage.objects.get(slug='programs')
+    context['programs']  = BCCFChildPage.objects.filter(gparent=page)
+    context['topics'] = BCCFTopic.objects.all()
     return context

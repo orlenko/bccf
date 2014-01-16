@@ -10,23 +10,29 @@
 <div>
     <h2>Create Event</h2>
     <p>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</p>
+</div>
+{% endblock %}
+
+{% block carousels %}
+<div id="form-main" class="container">
     <form action="" method="POST">
         {% csrf_token %}
         {{ wizard.management_form }}
         {% if  wizard.forms.forms %}
             {{ wizard.form.management.form }}
             {% for form in wizard.form.forms %}
-                {{ form }}
+                {{ form.as_p }}
             {% endfor %}
         {% else %}
-            {{ wizard.form }}
+            {{ wizard.form.as_p }}
         {% endif %}
         <br/><br/>
         <input id="form_submit" type="submit" value="{% trans 'submit' %}" />
     </form>
 </div>
+{% endblock %}
 
-{% block page_scripts %}
+{% block page_script %}
 <script type="text/javascript" >
     $(function() {
         if($('#id_event-survey').is(':checked')) {
@@ -43,6 +49,4 @@
         }
     });
 </script>
-{% endblock %}
-
 {% endblock %}
