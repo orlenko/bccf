@@ -103,7 +103,7 @@
 @media only screen and (max-width: $mobile-breakpoint) {
 .med-marquee,
 .big-marquee {
-    @include font-size(13);
+    @include font-size(12);
     .owl-controls {
         right: 5%;
         top: 2%;

@@ -3068,8 +3068,8 @@ footer #newsletter .dashed-button a:hover {
   /* line 105, ../mixins/marquee_themes.scss */
   .med-marquee,
   .big-marquee {
-    font-size: 13px;
-    font-size: 0.8125rem;
+    font-size: 12px;
+    font-size: 0.75rem;
   }
   /* line 107, ../mixins/marquee_themes.scss */
   .med-marquee .owl-controls,
