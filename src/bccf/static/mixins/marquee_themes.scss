@@ -33,7 +33,6 @@
 }
 .big-marquee {
     @extend .normal-marquee;
-    @include font-size(13);
     .owl-controls {
         bottom: 5%;
         right: 2%;  
@@ -104,6 +103,7 @@
 @media only screen and (max-width: $mobile-breakpoint) {
 .med-marquee,
 .big-marquee {
+    @include font-size(13);
     .owl-controls {
         right: 5%;
         top: 2%;
