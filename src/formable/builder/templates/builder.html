@@ -92,7 +92,7 @@
 <!-- Dialog Box -->
 <div id="settings-box">
     <h3 id="settings-title"></h3>
-    <ul class="section col twelve"></ul>
+    <ul class="section col twelve no-style-list"></ul>
 </div>
 
 <script>
@@ -105,8 +105,14 @@
         $(".sortable").sortable().disableSelection();
         
         // Link Buttons
-        $("#add-row").on('click', function(){add_row();});
-        $(".export-btn").on('click', function(e){e.preventDefault();export_form();});
+        $("#add-row").on('click', function(e){
+            e.preventDefault();        
+            add_row();
+        });
+        $(".export-btn").on('click', function(e){
+            e.preventDefault();
+            export_form();
+        });
         
         {% if form_structure %}
         import_form({{ form_structure|safe }})

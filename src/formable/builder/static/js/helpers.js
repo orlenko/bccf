@@ -377,7 +377,7 @@ var del_row = function(obj) {
 var get_text_field = function(label, val, id) {
     val = typeof val !== 'undefined' ? val : '';
     
-    return '<li><label for="'+id+'">'+label+'</label>:<input name="'+id+'" id="'
+    return '<li><label for="'+id+'">'+label+':</label><input name="'+id+'" id="'
         +id+'" type="text" value="'+val+'"/></li>';   
 }
 
@@ -397,7 +397,7 @@ var get_text_field = function(label, val, id) {
 var get_check_field = function(label, checked, id) {
     checked = typeof checked !== 'undefined' ? checked : '';
     
-    return '<li><label for="'+id+'">'+label+'</label>:<input name="'+id+'" id="'
+    return '<li><label for="'+id+'">'+label+':</label><input name="'+id+'" id="'
         +id+'" type="checkbox" '+checked+'/></li>';
 }
 
@@ -417,7 +417,7 @@ var get_check_field = function(label, checked, id) {
 var get_textarea_field = function(label, val, id) {
     val = typeof val !== 'undefined' ? val : '';
     
-    return '<li><label for="'+id+'">'+label+'</label>:<textarea name="'+id+'" \
+    return '<li><label for="'+id+'">'+label+':</label><textarea name="'+id+'" \
     id="'+id+'" rows="10">'+val+'</textarea></li>';
 }
 
@@ -443,8 +443,14 @@ var create_fieldset = function(id, legend) {
         },
     })
     .find('ul').sortable();
-    icons.children(".del-icon").on('click', function(){del_row(lastli)});
-    icons.children(".edit-icon").on('click', function(){edit_row(lastli.find("legend"))});
+    icons.children(".del-icon").on('click', function(e){
+        e.preventDefault();        
+        del_row(lastli);
+    });
+    icons.children(".edit-icon").on('click', function(e){
+        e.preventDefault();        
+        edit_row(lastli.find("legend"))
+    });
 }
 
 var create_field = function(lastli, id) {
@@ -459,8 +465,14 @@ var create_field = function(lastli, id) {
     
     var fieldlastli = fieldul.children("li:last-child");
     var fieldicons = fieldlastli.find(".icon-container");
-    fieldicons.children(".del-icon").on('click', function(){del_row(fieldlastli)});
-    fieldicons.children(".edit-icon").on('click', function(){edit_field(fieldlastli)});
+    fieldicons.children(".del-icon").on('click', function(e){
+        e.preventDefault();
+        del_row(fieldlastli);
+    });
+    fieldicons.children(".edit-icon").on('click', function(e){
+        e.preventDefault();    
+        edit_field(fieldlastli);
+    });
     
     return fieldlastli;
 }

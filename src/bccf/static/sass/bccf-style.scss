@@ -1699,6 +1699,22 @@ textarea {
     }    
 }
 
+#settings-box {
+    li {
+        height: 50px;
+        line-height: 50px;    
+    }
+}
+
+.ui-dialog {
+    background: $sgrey !important;
+    font-family: inherit !important;
+    .ui-widget-header {
+        background: $lgreen;    
+    }    
+}
+
+#settings-box,
 #form-main {
     label {
         width: 150px;

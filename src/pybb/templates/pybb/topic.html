@@ -1,4 +1,4 @@
-{% extends 'pybb/base.html' %}
+{% extends 'bccf/bccf_page.html' %}
 
 {% load url from future %}
 
@@ -19,8 +19,11 @@
 {% endblock %}
 
 {% block content %}
+<h1>{{ topic.name }}</h1>
+{% endblock %}
+
+{% block carousels %}
     <div class="topic">
-        <h1>{{ topic.name }}</h1>
         {% with _('Posts') as label %}
             {% include "pybb/pagination.html" %}
         {% endwith %}
@@ -62,7 +65,7 @@
                     {% if perms.pybb.change_topic and user.is_staff %}
                         <a href="{% url 'admin:pybb_topic_change' topic.id %}">{% trans 'Admin' %}</a> /
                     {% endif %}
-                    {% comment %}
+            {% comment %}
             <a href="{% url 'pybb:merge_topics' %}?topic={{ topic.id }}">{% trans 'Merge topics' %}</a> /
             {% endcomment %}
                 {% endif %}
