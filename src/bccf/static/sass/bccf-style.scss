@@ -1704,6 +1704,9 @@ textarea {
         height: 50px;
         line-height: 50px;    
     }
+    #settings-title {
+        font-family: inherit !important;
+    }
 }
 
 .ui-dialog {
