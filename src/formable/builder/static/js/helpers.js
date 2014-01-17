@@ -372,7 +372,7 @@ var del_row = function(obj) {
  * id - id of the input name but will be as the name as well
  *
  * Notes:
- * Wraps the input field in a table row, change the wrapper as necessary.
+ * Wraps the input field in a list row, change the wrapper as necessary.
  */
 var get_text_field = function(label, val, id) {
     val = typeof val !== 'undefined' ? val : '';
@@ -392,7 +392,7 @@ var get_text_field = function(label, val, id) {
  * id - id of the input name but will be as the name as well
  *
  * Notes:
- * Wraps the input field in a table row, change the wrapper as necessary
+ * Wraps the input field in a list row, change the wrapper as necessary
  */
 var get_check_field = function(label, checked, id) {
     checked = typeof checked !== 'undefined' ? checked : '';
@@ -412,7 +412,7 @@ var get_check_field = function(label, checked, id) {
  * id - id of the input name but will be as the name as well
  *
  * Notes:
- * Wraps the input field in a table row, change the wrapper as necessary.
+ * Wraps the input field in a list row, change the wrapper as necessary.
  */
 var get_textarea_field = function(label, val, id) {
     val = typeof val !== 'undefined' ? val : '';
