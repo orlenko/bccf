@@ -30,7 +30,6 @@ def save_structure(request):
     form = FormStructureForm(request.POST, request.FILES)
     if form.is_valid():
         form_published = form.save(request.user)
-        form.handle_upload()
     
     return redirect(form_published.get_absolute_url())
      
