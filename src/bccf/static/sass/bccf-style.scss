@@ -2571,6 +2571,12 @@ table td {
 }
 
 
+#mobile-content-container {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling-y: touch;
+}
+
 #tag-widget {
 
 

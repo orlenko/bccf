@@ -2925,61 +2925,68 @@ footer #newsletter .dashed-button a:hover {
     border-bottom: none;
   }
 
-  /* line 2585, ../sass/bccf-style.scss */
+  /* line 2574, ../sass/bccf-style.scss */
+  #mobile-content-container {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling-y: touch;
+  }
+
+  /* line 2591, ../sass/bccf-style.scss */
   #tag-widget .tag-box i {
     font-size: 10px;
     padding: 3px 6px;
   }
-  /* line 2587, ../sass/bccf-style.scss */
+  /* line 2593, ../sass/bccf-style.scss */
   #tag-widget .tag-box img {
     margin: 3px 10px 10px;
   }
-  /* line 2591, ../sass/bccf-style.scss */
+  /* line 2597, ../sass/bccf-style.scss */
   #tag-widget .tag-box h6 {
     padding: 0 10px;
   }
-  /* line 2594, ../sass/bccf-style.scss */
+  /* line 2600, ../sass/bccf-style.scss */
   #tag-widget .tag-box p {
     padding: 0 10px;
   }
-  /* line 2598, ../sass/bccf-style.scss */
+  /* line 2604, ../sass/bccf-style.scss */
   #tag-widget .tag-box .dashed-button {
     margin: 10px;
   }
 
   /* end #tag-widget */
-  /* line 2613, ../sass/bccf-style.scss */
+  /* line 2619, ../sass/bccf-style.scss */
   footer #main-footer-nav {
     height: auto;
   }
-  /* line 2617, ../sass/bccf-style.scss */
+  /* line 2623, ../sass/bccf-style.scss */
   footer #main-footer-nav ul {
     height: auto;
   }
-  /* line 2621, ../sass/bccf-style.scss */
+  /* line 2627, ../sass/bccf-style.scss */
   footer #main-footer-nav li a {
     padding: 6px 10px;
   }
-  /* line 2630, ../sass/bccf-style.scss */
+  /* line 2636, ../sass/bccf-style.scss */
   footer aside {
     margin: 0 0 30px;
     min-height: 75px;
   }
-  /* line 2634, ../sass/bccf-style.scss */
+  /* line 2640, ../sass/bccf-style.scss */
   footer #newsfeed {
     padding: 10px;
     border-right: none;
     font-size: 12px;
   }
-  /* line 2639, ../sass/bccf-style.scss */
+  /* line 2645, ../sass/bccf-style.scss */
   footer #newsfeed ul {
     list-style: none;
   }
-  /* line 2642, ../sass/bccf-style.scss */
+  /* line 2648, ../sass/bccf-style.scss */
   footer #newsfeed li {
     margin: 10px 0 20px;
   }
-  /* line 2645, ../sass/bccf-style.scss */
+  /* line 2651, ../sass/bccf-style.scss */
   footer #newsfeed h6 {
     font-size: 10px;
     color: #8fab3d;
@@ -2987,47 +2994,47 @@ footer #newsletter .dashed-button a:hover {
     margin: 0;
     padding: 0;
   }
-  /* line 2653, ../sass/bccf-style.scss */
+  /* line 2659, ../sass/bccf-style.scss */
   footer #newsfeed p {
     margin: 2px 0;
     padding: 0;
   }
-  /* line 2658, ../sass/bccf-style.scss */
+  /* line 2664, ../sass/bccf-style.scss */
   footer #newsfeed a {
     color: #414042;
   }
-  /* line 2664, ../sass/bccf-style.scss */
+  /* line 2670, ../sass/bccf-style.scss */
   footer #social {
     padding: 6px 70px;
     border-right: none;
   }
-  /* line 2674, ../sass/bccf-style.scss */
+  /* line 2680, ../sass/bccf-style.scss */
   footer #newsletter {
     padding: 10px 30px;
   }
-  /* line 2677, ../sass/bccf-style.scss */
+  /* line 2683, ../sass/bccf-style.scss */
   footer #newsletter h5 {
     margin: 2px 0;
     padding: 0;
     font-weight: bold;
   }
-  /* line 2683, ../sass/bccf-style.scss */
+  /* line 2689, ../sass/bccf-style.scss */
   footer #newsletter p {
     margin: 2px 0;
     padding: 0;
   }
-  /* line 2687, ../sass/bccf-style.scss */
+  /* line 2693, ../sass/bccf-style.scss */
   footer #newsletter div {
     margin: 30px 0;
   }
-  /* line 2689, ../sass/bccf-style.scss */
+  /* line 2695, ../sass/bccf-style.scss */
   footer #newsletter .dashed-button {
     background-color: #8fab3d;
     min-width: 80px;
     min-height: 40px;
     float: left;
   }
-  /* line 2695, ../sass/bccf-style.scss */
+  /* line 2701, ../sass/bccf-style.scss */
   footer #newsletter .dashed-button a {
     font-weight: bold;
     color: #fff;
@@ -3038,7 +3045,7 @@ footer #newsletter .dashed-button a:hover {
     text-transform: uppercase;
     border: 1px dashed #fff;
   }
-  /* line 2705, ../sass/bccf-style.scss */
+  /* line 2711, ../sass/bccf-style.scss */
   footer #newsletter .dashed-button a:hover {
     color: #336442;
     text-decoration: none;
