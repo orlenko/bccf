@@ -662,7 +662,20 @@ textarea {
 	}
 	li{
 	    ul {
+	       border-top: 2px solid $lgreen;
+	       border-bottom: 2px solid $lgreen;
 	       display: none;
+	       margin: 0;
+   	       background: $sgrey;  
+	       li {
+	           display: inline; 
+	           a {  
+                   &:hover {
+                      background: $lgrey;
+                      color: $sgrey;   
+                   }	           
+	           }
+	       }
 	    }
 		display:inline;
 
@@ -1756,7 +1769,9 @@ footer {
 			margin:3px 0 0;}
 		li{
 			display:inline;
-
+            ul {
+                display: inline;    
+            }
 
 			a {
 			float:left;

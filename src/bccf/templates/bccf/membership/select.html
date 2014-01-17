@@ -1,10 +1,16 @@
-{% extends "base.html" %}
+{% extends "bccf/bccf_page.html" %}
 
-{% block main %}
+{% block content %}
+<h1>Membership</h1>
+{% endblock %}
+
+{% block carousels %}
+<div class="container">
 	<p>To become a member, please select one of the following options:</p>
 	<ul>
 		<li><a href="/member/membership-parents/">Parent Membership</a></li>
 		<li><a href="/member/membership-professionals/">Professional Membership</a></li>
 		<li><a href="/member/membership-organizations/">Organization Membership</a></li>
 	</ul>
+</div>
 {% endblock %}

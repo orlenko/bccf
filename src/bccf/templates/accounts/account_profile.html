@@ -10,7 +10,11 @@
 	<li>{{ profile_user|username_or:"get_full_name" }}</li>
 {% endblock %}
 
-{% block main %}
+{% blocck content %}
+<h1>{{ profile_user.get_full_name }}</h1>
+{% endblock %}
+
+{% block carousel %}
 	<div style="float:right;">
 		<img style="margin:0 0 20px 10px;" src="{% gravatar_url profile_user.email 128 %}">
 		{% if profile_user == request.user %}
