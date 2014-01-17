@@ -1994,7 +1994,7 @@ footer {
 
 			}
 		.hlist-tabs {
-
+            
 			a {
 
 				&:hover {}
@@ -2396,19 +2396,12 @@ table td {
                 padding:0 20px;
 
                 }
-        .hcal-tabs{
-
-
-                .hcal-left-side{
-
-
-                        }
-                .hcal-right-side{
-
-
-
-                        }
-                }
+        .hcal-tabs {
+            .hcal-left-side {}
+            .hcal-right-side {
+                text-align: center;
+            }
+        }
 
         .hcal-outer {
 
@@ -2466,7 +2459,7 @@ table td {
 
 			}
 		.hlist-tabs {
-
+            text-align: center;
 			a {
 
 
