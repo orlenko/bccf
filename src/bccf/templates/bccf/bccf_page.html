@@ -182,7 +182,7 @@ var load_content = function(box) {
     });
     if($('.mnav-mobile-btn').is(':visible')) { // For mobiles
         $('body').css({overflow: 'hidden', height: '100%'});
-        $(window).on('touchmove', function(e) {
+        $('body').on('touchmove', function(e) {
             if(!$(e.target).attr('id') === 'mobile-content-container') {
                 e.preventDefault();
             }
