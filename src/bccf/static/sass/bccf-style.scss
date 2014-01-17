@@ -1709,6 +1709,39 @@ textarea {
     }
 }
 
+#pagination {
+    ul{
+        text-align: right;
+        padding-left: 0;
+        li {
+            font-weight: bold;
+            @include font-size(15);
+            display: inline;
+            a {
+                padding: 0 5px;
+                text-decoration: none;
+                @include font-size(15);
+                &:hover {
+                    color: $dgreen;    
+                } 
+            }
+            .current {
+                @include font-size(20);    
+            }
+        } 
+        .next-btn {
+            border-left: 2px solid $dgreen;
+            padding-left: 5px;
+            margin-left: 5px;    
+        } 
+        .prev-btn {
+            border-right: 2px solid $dgreen;
+            padding-right: 5px;
+            margin-right: 5px; 
+        }
+    }  
+}
+
 footer {
 	background-color:$sgrey;
 
