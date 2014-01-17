@@ -1,4 +1,4 @@
-<nav id="pagination">
+<nav class="pagination">
     <ul>
         {% if current_page.has_previous %}
         <li class="prev-btn"><a href="?{{ page_var }}={{ current_page.previous_page_number }}{% if querystring %}&{{ querystring }}{% endif %}">Prev</a></li>

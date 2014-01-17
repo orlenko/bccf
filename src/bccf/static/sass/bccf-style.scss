@@ -1531,9 +1531,6 @@ textarea {
     }
 }
 
-
-
-
 #tag-widget {
 
 	background:$grey-stripes repeat;
@@ -1675,7 +1672,9 @@ textarea {
             @include font-size(20);   
         }    
     }
-}
+} /* End of Directory Letter Filter */
+
+/* Results (Member directory and search) */
 
 .result-box,
 .user-box {
@@ -1691,8 +1690,11 @@ textarea {
 .result-box:nth-child(even),
 .user-box:nth-child(even) {
     background-color: $sgrey;
-}
+} /* End of member and search results */
 
+/**
+ * Form builder
+ **/
 #builder-main {
     .field-container-inner:hover {
         background-color: $sgreen;    
@@ -1728,6 +1730,25 @@ textarea {
     }
 }
 
+/* End form builder */
+
+/* Forum */
+.topic {
+    .controls {
+        a {
+            text-decoration: none;    
+            &:hover {
+                font-weight: bold;
+                color: $dgreen;    
+            }        
+        }
+    }    
+}
+
+/* Forum End */
+
+/* Generic Above Footer */
+
 #form-aux {
     background-color: $sgrey;
     padding: 20px;
@@ -1741,7 +1762,7 @@ textarea {
     }
 }
 
-#pagination {
+.pagination {
     ul{
         text-align: right;
         padding-left: 0;
@@ -1773,6 +1794,8 @@ textarea {
         }
     }  
 }
+
+/* End Generic */
 
 footer {
 	background-color:$sgrey;
