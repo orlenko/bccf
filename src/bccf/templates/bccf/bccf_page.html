@@ -170,6 +170,7 @@ var reset = function() {
     $('#mobile-content-container .mobile-container').html('');
     $('.page-box-active').removeClass('page-box-active');
     $('body').css({overflow: 'auto', height: 'auto'});
+    $(window).off('touchmove');
 };
 
 var load_content = function(box) {
@@ -181,6 +182,11 @@ var load_content = function(box) {
     });
     if($('.mnav-mobile-btn').is(':visible')) { // For mobiles
         $('body').css({overflow: 'hidden', height: '100%'});
+        $(window).on('touchmove', function(e) {
+            if(!$(e.target).attr('id') === 'mobile-content-container') {
+                e.preventDefault();
+            }
+        });
         $('#mobile-content-container').show();
         container = $('#mobile-content-container .mobile-content');
     } else if(box.parents('.carousel-slide').length) {
