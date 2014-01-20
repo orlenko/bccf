@@ -1,4 +1,4 @@
-// Fields that will be created when the name is dropped
+// Fields that will be created :)
 var fields = {
     'text-field': '<label for="text-field">Text</label>: <input type="text" name="text-field"/>',
     'textarea-field': '<label for="textarea-field">Multiline</label>: <textarea name="textarea-field" rows="4" cols="5"></textarea>',
