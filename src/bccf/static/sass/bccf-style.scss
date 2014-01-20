@@ -1366,9 +1366,9 @@ textarea {
     padding: 10px;
 
     .subpage-tabs {
-        ul {
-            li {
-                a {
+        > ul {
+            > li {
+               > a {
                     text-transform: uppercase;
                     text-decoration: none;
                     color: #FFF;
@@ -1377,7 +1377,7 @@ textarea {
                     padding: 20px 0;
                     text-align: center;
                 }
-                &.col.three:nth-child(5n) {
+                > &.col.three:nth-child(5n) {
                     margin-left: 0;
                 }
             }
@@ -1413,9 +1413,9 @@ textarea {
 	}
 	.subpage-tabs {
         border-top: 2px solid $lgreen;
-        ul {
-            li {
-                a {
+        > ul {
+            > li {
+                > a {
                     background-color: $lgreen;
                     &:hover, &:focus {
         	        background-color: $lgreen*1.1;
@@ -1448,9 +1448,9 @@ textarea {
 	}
 	.subpage-tabs {
         border-top: 2px solid $dgreen;
-        ul {
-            li {
-                a {
+        > ul {
+            > li {
+                > a {
                     background-color: $dgreen;
                     &:hover, &:focus {
     	           background-color: $dgreen*1.1;
@@ -1483,9 +1483,9 @@ textarea {
 	}
 	.subpage-tabs {
         border-top: 2px solid $lteal;
-        ul {
-            li {
-                a {
+        > ul {
+            > li {
+                > a {
                     background-color: $lteal;
                     &:hover, &:focus {
         	           background-color: $lteal*1.1;
@@ -1518,9 +1518,9 @@ textarea {
 	}
 	.subpage-tabs {
         border-top: 2px solid $yellow;
-        ul {
-            li {
-                a {
+        > ul {
+            > li {
+                > a {
                     background-color: $yellow;
                     &:hover, &:focus {
         	           background-color: $yellow*1.1;
@@ -1795,6 +1795,29 @@ textarea {
     }  
 }
 
+#comments {
+    .comment {
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+    .comment .comment {
+        margin: 10px 0 10px 20px;
+    }
+    .comment:nth-child(odd) {
+        background-color: $sgreen;
+    }
+}
+
+.baby-content,
+.subpage-content {
+    a {
+        text-decoration: none;
+        &:hover, &:active {
+            font-weight: bold;
+        }
+    }
+}
+
 /* End Generic */
 
 footer {
@@ -1808,7 +1831,8 @@ footer {
 			list-style:none;
 			display:block;
 			height:50px;
-			margin:3px 0 0;}
+			margin:3px 0 0;
+	    }
 		li{
 			display:inline;
             ul {

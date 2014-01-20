@@ -522,3 +522,4 @@ SEARCH_MODEL_CHOICES = (
     'bccf.BCCFTopic',
     'bccf.BCCFPage',
 )
+COMMENTS_USE_RATINGS = False

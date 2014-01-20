@@ -13,7 +13,7 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import resolve, reverse
 
 from mezzanine.conf import settings as mezzanine_settings
-from mezzanine.generic.fields import RatingField
+from mezzanine.generic.fields import RatingField, CommentsField
 from mezzanine.core.fields import FileField
 from mezzanine.core.models import Displayable, Orderable, RichText
 from mezzanine.pages.fields import MenusField
@@ -189,6 +189,7 @@ class BCCFChildPage(BCCFBasePage, RichText, AdminThumbMixin):
     login_required = models.BooleanField("Login required", default=False,
         help_text="If checked, only logged in users can view this page")
     rating = RatingField(verbose_name='Rating')
+    comments = CommentsField()
     in_menus = MenusField("Show in menus", blank=True, null=True)
     page_for = models.CharField('Type', max_length=13, default='parent', blank=True, null=True, choices=TYPES)
     image = FileField("Image",

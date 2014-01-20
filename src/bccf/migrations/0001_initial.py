@@ -137,6 +137,7 @@ class Migration(SchemaMigration):
         # Adding model 'BCCFChildPage'
         db.create_table(u'bccf_bccfchildpage', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('comments_count', self.gf('django.db.models.fields.IntegerField')(default=0)),
             ('keywords_string', self.gf('django.db.models.fields.CharField')(max_length=500, blank=True)),
             ('rating_count', self.gf('django.db.models.fields.IntegerField')(default=0)),
             ('rating_sum', self.gf('django.db.models.fields.IntegerField')(default=0)),
@@ -163,10 +164,11 @@ class Migration(SchemaMigration):
             ('content_model', self.gf('django.db.models.fields.CharField')(max_length=50, null=True, blank=True)),
             ('login_required', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('in_menus', self.gf('mezzanine.pages.fields.MenusField')(default=(1, 2, 3), max_length=100, null=True, blank=True)),
-            ('page_for', self.gf('django.db.models.fields.CharField')(default='Parents', max_length=13, null=True, blank=True)),
+            ('page_for', self.gf('django.db.models.fields.CharField')(default='parent', max_length=13, null=True, blank=True)),
             ('image', self.gf('mezzanine.core.fields.FileField')(max_length=255, null=True, blank=True)),
             ('keywords', self.gf('mezzanine.generic.fields.KeywordsField')(object_id_field='object_pk', to=orm['generic.AssignedKeyword'], frozen_by_south=True)),
             ('rating', self.gf('mezzanine.generic.fields.RatingField')(object_id_field='object_pk', to=orm['generic.Rating'], frozen_by_south=True)),
+            ('comments', self.gf('mezzanine.generic.fields.CommentsField')(object_id_field='object_pk', to=orm['generic.ThreadedComment'], frozen_by_south=True)),
         ))
         db.send_create_signal(u'bccf', ['BCCFChildPage'])
 
@@ -244,10 +246,13 @@ class Migration(SchemaMigration):
         db.create_table(u'bccf_userprofile', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('user', self.gf('django.db.models.fields.related.OneToOneField')(related_name='profile', unique=True, to=orm['auth.User'])),
+            ('description', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
             ('photo', self.gf('bccf.fields.MyImageField')(max_length=255, null=True, blank=True)),
             ('membership_order', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['shop.Order'], null=True, blank=True)),
             ('requested_cancellation', self.gf('django.db.models.fields.NullBooleanField')(default=False, null=True, blank=True)),
             ('is_forum_moderator', self.gf('django.db.models.fields.NullBooleanField')(default=False, null=True, blank=True)),
+            ('membership_type', self.gf('django.db.models.fields.CharField')(max_length=128, null=True, blank=True)),
+            ('membership_level', self.gf('django.db.models.fields.IntegerField')(default=0, null=True, blank=True)),
         ))
         db.send_create_signal(u'bccf', ['UserProfile'])
 
@@ -414,6 +419,8 @@ class Migration(SchemaMigration):
             '_meta_title': ('django.db.models.fields.CharField', [], {'max_length': '500', 'null': 'True', 'blank': 'True'}),
             '_order': ('django.db.models.fields.IntegerField', [], {'null': 'True'}),
             'bccf_topic': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'to': u"orm['bccf.BCCFTopic']", 'null': 'True', 'blank': 'True'}),
+            'comments': ('mezzanine.generic.fields.CommentsField', [], {'object_id_field': "'object_pk'", 'to': u"orm['generic.ThreadedComment']", 'frozen_by_south': 'True'}),
+            'comments_count': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
             'content': ('mezzanine.core.fields.RichTextField', [], {}),
             'content_model': ('django.db.models.fields.CharField', [], {'max_length': '50', 'null': 'True', 'blank': 'True'}),
             'created': ('django.db.models.fields.DateTimeField', [], {'null': 'True'}),
@@ -429,7 +436,7 @@ class Migration(SchemaMigration):
             'keywords': ('mezzanine.generic.fields.KeywordsField', [], {'object_id_field': "'object_pk'", 'to': u"orm['generic.AssignedKeyword']", 'frozen_by_south': 'True'}),
             'keywords_string': ('django.db.models.fields.CharField', [], {'max_length': '500', 'blank': 'True'}),
             'login_required': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'page_for': ('django.db.models.fields.CharField', [], {'default': "'Parents'", 'max_length': '13', 'null': 'True', 'blank': 'True'}),
+            'page_for': ('django.db.models.fields.CharField', [], {'default': "'parent'", 'max_length': '13', 'null': 'True', 'blank': 'True'}),
             'parent': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['bccf.BCCFChildPage']", 'null': 'True', 'blank': 'True'}),
             'publish_date': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
             'rating': ('mezzanine.generic.fields.RatingField', [], {'object_id_field': "'object_pk'", 'to': u"orm['generic.Rating']", 'frozen_by_south': 'True'}),
@@ -591,9 +598,12 @@ class Migration(SchemaMigration):
         },
         u'bccf.userprofile': {
             'Meta': {'object_name': 'UserProfile'},
+            'description': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'is_forum_moderator': ('django.db.models.fields.NullBooleanField', [], {'default': 'False', 'null': 'True', 'blank': 'True'}),
+            'membership_level': ('django.db.models.fields.IntegerField', [], {'default': '0', 'null': 'True', 'blank': 'True'}),
             'membership_order': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['shop.Order']", 'null': 'True', 'blank': 'True'}),
+            'membership_type': ('django.db.models.fields.CharField', [], {'max_length': '128', 'null': 'True', 'blank': 'True'}),
             'photo': ('bccf.fields.MyImageField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'requested_cancellation': ('django.db.models.fields.NullBooleanField', [], {'default': 'False', 'null': 'True', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.OneToOneField', [], {'related_name': "'profile'", 'unique': 'True', 'to': u"orm['auth.User']"})
@@ -616,8 +626,24 @@ class Migration(SchemaMigration):
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'structure': ('django.db.models.fields.TextField', [], {}),
-            'title': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'title': ('django.db.models.fields.CharField', [], {'default': "'Form Structure'", 'max_length': '100'}),
             'type': ('django.db.models.fields.CharField', [], {'default': "'JSON'", 'max_length': '4'})
+        },
+        u'comments.comment': {
+            'Meta': {'ordering': "('submit_date',)", 'object_name': 'Comment', 'db_table': "'django_comments'"},
+            'comment': ('django.db.models.fields.TextField', [], {'max_length': '3000'}),
+            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'content_type_set_for_comment'", 'to': u"orm['contenttypes.ContentType']"}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'ip_address': ('django.db.models.fields.IPAddressField', [], {'max_length': '15', 'null': 'True', 'blank': 'True'}),
+            'is_public': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'is_removed': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'object_pk': ('django.db.models.fields.TextField', [], {}),
+            'site': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['sites.Site']"}),
+            'submit_date': ('django.db.models.fields.DateTimeField', [], {'default': 'None'}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'comment_comments'", 'null': 'True', 'to': u"orm['auth.User']"}),
+            'user_email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'blank': 'True'}),
+            'user_name': ('django.db.models.fields.CharField', [], {'max_length': '50', 'blank': 'True'}),
+            'user_url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'blank': 'True'})
         },
         u'contenttypes.contenttype': {
             'Meta': {'ordering': "('name',)", 'unique_together': "(('app_label', 'model'),)", 'object_name': 'ContentType', 'db_table': "'django_content_type'"},
@@ -649,6 +675,16 @@ class Migration(SchemaMigration):
             'rating_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'null': 'True', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'ratings'", 'null': 'True', 'to': u"orm['auth.User']"}),
             'value': ('django.db.models.fields.IntegerField', [], {})
+        },
+        u'generic.threadedcomment': {
+            'Meta': {'ordering': "('submit_date',)", 'object_name': 'ThreadedComment', '_ormbases': [u'comments.Comment']},
+            'by_author': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            u'comment_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['comments.Comment']", 'unique': 'True', 'primary_key': 'True'}),
+            'rating': ('mezzanine.generic.fields.RatingField', [], {'object_id_field': "'object_pk'", 'to': u"orm['generic.Rating']", 'frozen_by_south': 'True'}),
+            'rating_average': ('django.db.models.fields.FloatField', [], {'default': '0'}),
+            'rating_count': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'rating_sum': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
+            'replied_to': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'comments'", 'null': 'True', 'to': u"orm['generic.ThreadedComment']"})
         },
         u'pages.page': {
             'Meta': {'ordering': "('titles',)", 'object_name': 'Page'},
