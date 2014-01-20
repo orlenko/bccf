@@ -9,8 +9,10 @@ from mezzanine.conf import settings
 from mezzanine.generic.models import Rating
 
 import logging
+import json
 from bccf.models import UserProfile, EventForParents, EventForProfessionals
 from formable.builder.forms import FormStructureForm
+from formable.builder.models import FormStructure, FormPublished, Question
 log = logging.getLogger(__name__)
 
 class RatingRenderer(RadioFieldRenderer):
@@ -100,6 +102,7 @@ class ProfessionalEventForm(forms.ModelForm):
     """
     Form for creating a Professional Event using the Wizard
     """
+    #image = forms.ImageField();
     class Meta:
         model = EventForProfessionals
         fields = ('title', 'content', 'provider', 'price', 'location_city',
@@ -114,8 +117,55 @@ class ProfessionalEventForm(forms.ModelForm):
         super(ProfessionalEventForm, self).__init__(*args, **kwargs)
         self.fields['survey'] = forms.BooleanField(label='Create Surveys?',
             widget=forms.CheckboxInput, required=False)
+    def save(self, **kwargs):
+        data = self.cleaned_data
+        if 'survey' in data: # check and remove the survey key-value pair
+            del data['survey']
+        if 'bccf_topic' in data:
+            topics = data['bccf_topic']
+            del data['bccf_topic']
+        event = EventForProfessionals(**data)
+        event.save()
+        for topic in topics:
+            event.bccf_topic.add(topic)
+        return event
+        
             
-class FormStructureSurveyFormOne(forms.Form):
+class FormStructureSurveyBase(forms.Form):
+    class Meta:
+        abstract = True            
+    def save(self, user):    
+        data = self.cleaned_data
+        if 'clone' in data: # check and remove the clone key-value pair
+            del data['clone']
+        if 'after_survey' in data: # check and remove the after_survey key-value pair
+            del data['after_survey']
+        form_struct = FormStructure.objects.create(structure=data['structure'], title=data['title'])
+        published = FormPublished.objects.create(form_structure=form_struct, user=user)
+
+        # Create Questions based on structure
+        struct = json.loads(form_struct.structure)
+        for fieldset in struct["fieldset"]:
+            for field in fieldset["fields"]:
+                if "label" in field: # don't save static text
+                    if "required" in field["attr"]:
+                        required = 0
+                    else:
+                        required = 1
+
+                    num_answers = 0
+
+                    if field['class'] == 'multiselect-field' or field['class'] == 'checkbox-field':
+                        num_answers = len(field["options"])
+
+                    question = Question(question=field["label"],
+                        form_published=published, required=required,
+                        num_answers=num_answers)
+                    question.save()
+        # End Create Questions
+        return published # FormPublished object            
+            
+class FormStructureSurveyFormOne(FormStructureSurveyBase):
     """
     Form for creating a before survey in the Professional Event creation Wizard
     """
@@ -127,7 +177,7 @@ class FormStructureSurveyFormOne(forms.Form):
     clone = forms.BooleanField(label='Use this Survey as template?',
         widget=forms.CheckboxInput, required=False)
 
-class FormStructureSurveyFormTwo(forms.Form):
+class FormStructureSurveyFormTwo(FormStructureSurveyBase):
     """
     Form for creating an after survey in the Professional Event creation Wizard.
     """

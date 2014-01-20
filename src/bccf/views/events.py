@@ -102,16 +102,16 @@ class ProfessionalEventWizard(SessionWizardView):
         """
         if self.steps.current == 'event': # Event form?
             if 'event-survey' in form.data and len(self.form_list) == 1: # Put back the deleted surveys if deleted before
-                self.form_list['1'] = FORMS['before']
-                self.form_list['2'] = FORMS['after']
+                self.form_list['before'] = FORMS['before']
+                self.form_list['after'] = FORMS['after']
             elif 'event-survey' not in form.data and len(self.form_list) == 3: # No Surveys delete the survey forms
-                del self.form_list['1']
-                del self.form_list['2']
+                del self.form_list['before']
+                del self.form_list['after']
         elif self.steps.current == 'before': # Before Survey form?
             if 'before-after_survey' in form.data and len(self.form_list) == 2: # After survey
-                self.form_list['2'] = FORMS['after']
+                self.form_list['after'] = FORMS['after']
             elif 'before-after_survey' not in form.data and len(self.form_list) == 3: # No After Survey
-                del self.form_list['2']
+                del self.form_list['after']
         return self.get_form_step_data(form)
 
     def get_context_data(self, form, **kwargs):
@@ -141,70 +141,22 @@ class ProfessionalEventWizard(SessionWizardView):
 
         REQUIRED by form wizard
         """
-        event_data = form_list[0].cleaned_data
-        
-        if 'survey' in event_data: # check and remove the survey key-value pair
-            del event_data['survey']
-        if 'bccf_topic' in event_data:
-            bccf_topics = event_data['bccf_topic'] # Grab the topics and add them manually
-            del event_data['bccf_topic']
-
-        event = EventForProfessionals(**event_data)
+        log.info(form_list)
+        event = form_list[0].save()
         if len(form_list) >= 2: # If there's a before survey
-            event.survey_before = self.process_survey(form_list[1])
+            event.survey_before = form_list[1].save(self.request.user)
             event.survey_before.gparent = None
             event.survey_before.parent = None
             event.survey_before.save()
         if len(form_list) == 3: # If there's an after survey
-            event.survey_after = self.process_survey(form_list[2])
+            event.survey_after = form_list[2].save(self.request.user)
             event.survey_after.gparent = None
             event.survey_after.parent = None
             event.survey_after.save()
 
         event.save()
-        for topic in bccf_topics:
-            event.bccf_topic.add(topic)
 
         return redirect(event.get_absolute_url())
-
-    def process_survey(self, form):
-        """
-        Process each survey form and publishes them automatically.
-
-        This is an almost copy of the publish view found in formable.builder.views
-        """
-        data = form.cleaned_data
-        if 'clone' in data: # check and remove the clone key-value pair
-            del data['clone']
-        if 'after_survey' in data: # check and remove the after_survey key-value pair
-            del data['after_survey']
-        form_struct = FormStructure(**data)
-        form_struct.save()
-        published = FormPublished(form_structure=form_struct, user=self.request.user, page_for='professional')
-        published.save()
-
-        # Create Questions based on structure
-        struct = json.loads(form_struct.structure)
-        for fieldset in struct["fieldset"]:
-            for field in fieldset["fields"]:
-                if "label" in field: # don't save static text
-                    if "required" in field["attr"]:
-                        required = 0
-                    else:
-                        required = 1
-
-                    num_answers = 0
-
-                    if field['class'] == 'multiselect-field' or field['class'] == 'checkbox-field':
-                        num_answers = len(field["options"])
-
-                    question = Question(question=field["label"],
-                        form_published=published, required=required,
-                        num_answers=num_answers)
-                    question.save()
-        # End Create Questions
-        return published # FormPublished object
-
 
 ######################################
 # Survey Report
