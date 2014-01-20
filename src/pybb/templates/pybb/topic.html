@@ -19,7 +19,8 @@
 {% endblock %}
 
 {% block content %}
-<h1>{{ topic.name }}</h1>
+<h1>{{ topic.title|title }}</h1>
+{{ topic.content|safe }}
 {% endblock %}
 
 {% block carousels %}
