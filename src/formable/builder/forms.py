@@ -38,7 +38,7 @@ class FormStructureForm(forms.Form):
         if not self.data['content']:
             return False
         return True
-    
+        
     def handle_upload(self):
         image_path = 'uploads/childpage/'+self.files['image'].name
         destination = open(MEDIA_ROOT+'/'+image_path, 'wb+')
@@ -46,7 +46,7 @@ class FormStructureForm(forms.Form):
             destination.write(chunk)
         destination.close()
         return image_path
-        
+
     def save(self, user, **kwargs):
         form_structure = FormStructure.objects.create(structure=self.data['structure'], title=self.data['title'])
         form_published = FormPublished.objects.create(form_structure=form_structure, user=user, content=self.data['content'], 

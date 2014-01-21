@@ -137,7 +137,7 @@ $('.content-pages').on('click', 'a[class^="button"]', function(e) {
         var parent = $(this).parents('.content-pages');
         if(carousel.find('.active').is(':last-child')) {
             var offset = carousel.find('.owl-item .page-box').length;
-            if(offset % 1 === 0 && (parent.find('.filter') != 'undefined' && parent.find('.filter').val() == '')) {
+            if(offset % 1 === 0 {% if filter %} && parent.find('.filter').val() == '' {% endif %}) {
                 $.ajax({
                     url: '/next/{{ page.slug }}/'+parent.attr('id')+'/'+offset+'/',
                     context: parent,

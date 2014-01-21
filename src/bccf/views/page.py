@@ -98,12 +98,13 @@ def user_list(request):
 def next(request, parent, which, offset):
     if request.is_ajax():
         obj = BCCFPage.objects.get(slug=parent)
+        limit = int(offset)+12
         if obj.slug == 'resources' or obj.slug == 'tag':
-            slides = BCCFChildPage.objects.filter(gparent=obj.pk, content_model=which, status=2).order_by('-created')[offset:12]
+            slides = BCCFChildPage.objects.filter(gparent=obj.pk, content_model=which, status=2).order_by('-created')[offset:limit]
         elif which == 'parent' or which == 'professional':
-            slides = BCCFChildPage.objects.filter(gparent=obj.pk, page_for=which, status=2).order_by('-created')[offset:12]
+            slides = BCCFChildPage.objects.filter(gparent=obj.pk, page_for=which, status=2).order_by('-created')[offset:limit]
         else:
-            slides = BCCFChildPage.objects.filter(gparent=obj.pk, status=2).order_by('-created')[offset:12]
+            slides = BCCFChildPage.objects.filter(gparent=obj.pk, status=2).order_by('-created')[offset:limit]
         parts = {
             'slide': render_to_string('generic/carousel_slide_part.html', {'slides':slides}),
             'grid': render_to_string('generic/carousel_grid_part.html', {'slides':slides})
@@ -114,8 +115,9 @@ def next(request, parent, which, offset):
 
 def topic_next(request, topic, which, offset):
     if request.is_ajax():
+        limit = int(offset)+12
         topic = BCCFTopic.objects.get(slug=topic)    
-        slides = BCCFChildPage.objects.filter(topic=topic, page_for=which, status=2).order_by('-created')[offset:12]
+        slides = BCCFChildPage.objects.filter(topic=topic, page_for=which, status=2).order_by('-created')[offset:limit]
         parts = {
             'slide': render_to_string('generic/carousel_slide_part.html', {'slides':slides}),
             'grid': render_to_string('generic/carousel_grid_part.html', {'slides':slides}),

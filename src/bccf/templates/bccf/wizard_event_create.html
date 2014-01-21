@@ -15,7 +15,7 @@
 
 {% block carousels %}
 <div id="form-main" class="container">
-    <form action="" method="POST">
+    <form action="" enctype="multipart/form-data"  method="POST">
         {% csrf_token %}
         {{ wizard.management_form }}
         {% if  wizard.forms.forms %}
@@ -27,26 +27,14 @@
             {{ wizard.form.as_p }}
         {% endif %}
         <br/><br/>
-        <input id="form_submit" type="submit" value="{% trans 'submit' %}" />
+        {% if wizard.steps.prev %}
+        <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}">
+            {% trans "Prev Step" %} 
+        </button>
+        {% endif %}
+        <input id="form_submit" type="submit" value="{% trans 'Next Step' %}" />
     </form>
 </div>
 {% endblock %}
 
-{% block page_script %}
-<script type="text/javascript" >
-    $(function() {
-        if($('#id_event-survey').is(':checked')) {
-            $('#form_submit').val('Next Step');
-        } else {
-            $('#form_submit').val('Submit');
-        }
-    });
-    $('#id_event-survey').on('click', function() {
-        if($(this).is(':checked')) {
-            $('#form_submit').val('Next Step');
-        } else {
-            $('#form_submit').val('Submit');
-        }
-    });
-</script>
-{% endblock %}
+{% block page_script %}{% endblock %}

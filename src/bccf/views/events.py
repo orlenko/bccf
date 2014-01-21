@@ -2,17 +2,20 @@ import logging
 import json
 import csv
 import time
+import os
 
 from django.shortcuts import render_to_response, redirect
 from django.template.context import RequestContext
 from django.contrib.formtools.wizard.views import SessionWizardView
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404, HttpResponse
+from django.core.files.storage import FileSystemStorage
+from django.views.decorators.cache import never_cache
 
+from bccf import settings
 from bccf.models import EventForParents, EventForProfessionals, BCCFPage
 from bccf.util.memberutil import require_parent, require_professional
 from bccf.forms import ProfessionalEventForm, FormStructureSurveyFormOne, FormStructureSurveyFormTwo
-from django.views.decorators.cache import never_cache
 
 from formable.builder.models import FormStructure, FormPublished, FormFilled, FieldAnswer, Question
 
@@ -72,13 +75,14 @@ def professionals_event_signup(request, slug):
     return render_to_response('bccf/event_signup.html', {}, context_instance=context)
 
 # For Professional Event Wizard
-FORMS = [('event', ProfessionalEventForm), # Main Form
-         ('before', FormStructureSurveyFormOne), # Before Survey
-         ('after', FormStructureSurveyFormTwo)] # After Survey
+FORMS = [('0', ProfessionalEventForm), # Main Form
+         ('1', FormStructureSurveyFormOne), # Before Survey
+         ('2', FormStructureSurveyFormTwo)]
+         
 # Custom templates for each step
-TEMPLATES = {'event': 'bccf/wizard_event_create.html',
-             'before': 'generic/includes/form_builder.html',
-             'after': 'generic/includes/form_builder.html'}
+TEMPLATES = {'0': 'bccf/wizard_event_create.html',
+             '1': 'generic/includes/form_builder.html',
+             '2': 'generic/includes/form_builder.html'}
 
 class ProfessionalEventWizard(SessionWizardView):
     """
@@ -86,6 +90,8 @@ class ProfessionalEventWizard(SessionWizardView):
 
     Steps: Event Details -> Before Survey (Optional) -> After Survey (Optional)
     """
+    file_storage = FileSystemStorage(location=settings.MEDIA_ROOT+'/uploads/temp')
+    
     def get_template_names(self):
         """
         Override of form wizard's `get_template_names`
@@ -100,18 +106,18 @@ class ProfessionalEventWizard(SessionWizardView):
 
         Process a step when a form is submitted. The values in the form are clean and valid
         """
-        if self.steps.current == 'event': # Event form?
-            if 'event-survey' in form.data and len(self.form_list) == 1: # Put back the deleted surveys if deleted before
-                self.form_list['before'] = FORMS['before']
-                self.form_list['after'] = FORMS['after']
-            elif 'event-survey' not in form.data and len(self.form_list) == 3: # No Surveys delete the survey forms
-                del self.form_list['before']
-                del self.form_list['after']
-        elif self.steps.current == 'before': # Before Survey form?
-            if 'before-after_survey' in form.data and len(self.form_list) == 2: # After survey
-                self.form_list['after'] = FORMS['after']
-            elif 'before-after_survey' not in form.data and len(self.form_list) == 3: # No After Survey
-                del self.form_list['after']
+        if self.steps.current == '0': # Event form?
+            if '0-survey' in form.data and len(self.form_list) == 1: # Put back the deleted surveys if deleted before
+                self.form_list['1'] = FORMS['1']
+                self.form_list['2'] = FORMS['2']
+            elif '0-survey' not in form.data and len(self.form_list) == 3: # No Surveys delete the survey forms
+                del self.form_list['1']
+                del self.form_list['2']
+        elif self.steps.current == '1': # Before Survey form?
+            if '1-after_survey' in form.data and len(self.form_list) == 2: # After survey
+                self.form_list['2'] = FORMS['2']
+            elif '1-after_survey' not in form.data and len(self.form_list) == 3: # No After Survey
+                del self.form_list['2']
         return self.get_form_step_data(form)
 
     def get_context_data(self, form, **kwargs):
@@ -121,13 +127,13 @@ class ProfessionalEventWizard(SessionWizardView):
         Adds form_structure to context for cloning before survey
         """
         context = super(ProfessionalEventWizard, self).get_context_data(form=form, **kwargs)
-        if self.steps.current == 'before': # Rebuild the form just in case the user goes back a step
+        if self.steps.current == '1': # Rebuild the form just in case the user goes back a step
             before_data = self.get_cleaned_data_for_step(step=self.steps.current)
             if before_data is not None and 'structure' in before_data:
                 context.update({'form_structure':before_data['structure']})
-        elif self.steps.current == 'after':
-            before_data = self.get_cleaned_data_for_step(step='before')
-            after_data = self.get_cleaned_data_for_step(step='after')
+        elif self.steps.current == '2':
+            before_data = self.get_cleaned_data_for_step(step='1')
+            after_data = self.get_cleaned_data_for_step(step='2')
             if before_data['clone']: # Clone the before form?
                 context.update({'form_structure':before_data['structure']})
             elif after_data is not None and 'structure' in after_data: # Rebuild the form just in case there's an error
@@ -141,8 +147,8 @@ class ProfessionalEventWizard(SessionWizardView):
 
         REQUIRED by form wizard
         """
-        log.info(form_list)
         event = form_list[0].save()
+        self.file_storage.delete(form_list[0].files['0-image'].name)
         if len(form_list) >= 2: # If there's a before survey
             event.survey_before = form_list[1].save(self.request.user)
             event.survey_before.gparent = None
@@ -153,9 +159,8 @@ class ProfessionalEventWizard(SessionWizardView):
             event.survey_after.gparent = None
             event.survey_after.parent = None
             event.survey_after.save()
-
+        
         event.save()
-
         return redirect(event.get_absolute_url())
 
 ######################################

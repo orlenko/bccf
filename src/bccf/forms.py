@@ -1,3 +1,6 @@
+import logging
+import json
+
 from django import forms
 from django.db.models import Sum
 from django.forms.widgets import RadioFieldRenderer
@@ -8,10 +11,9 @@ from django.contrib.comments.forms import CommentSecurityForm
 from mezzanine.conf import settings
 from mezzanine.generic.models import Rating
 
-import logging
-import json
 from bccf.models import UserProfile, EventForParents, EventForProfessionals
-from formable.builder.forms import FormStructureForm
+from bccf.settings import MEDIA_ROOT
+
 from formable.builder.models import FormStructure, FormPublished, Question
 log = logging.getLogger(__name__)
 
@@ -102,12 +104,12 @@ class ProfessionalEventForm(forms.ModelForm):
     """
     Form for creating a Professional Event using the Wizard
     """
-    #image = forms.ImageField();
+    image = forms.ImageField()
     class Meta:
         model = EventForProfessionals
         fields = ('title', 'content', 'provider', 'price', 'location_city',
             'location_street', 'location_street2', 'location_postal_code',
-            'date_start', 'date_end', 'image', 'bccf_topic')
+            'date_start', 'date_end', 'bccf_topic')
         widgets = {
             'date_start': forms.DateTimeInput(attrs={'class':'vDatefield', 'placeholder':'YYYY-MM-DD HH:MM'}),
             'date_end': forms.DateTimeInput(attrs={'class':'vDatefield', 'placeholder':'YYYY-MM-DD HH:MM'})
@@ -117,6 +119,16 @@ class ProfessionalEventForm(forms.ModelForm):
         super(ProfessionalEventForm, self).__init__(*args, **kwargs)
         self.fields['survey'] = forms.BooleanField(label='Create Surveys?',
             widget=forms.CheckboxInput, required=False)
+            
+    
+    def handle_upload(self):
+        image_path = 'uploads/childpage/'+self.files['0-image'].name
+        destination = open(MEDIA_ROOT+'/'+image_path, 'wb+')
+        for chunk in self.files['0-image'].chunks():
+            destination.write(chunk)
+        destination.close()
+        return image_path
+
     def save(self, **kwargs):
         data = self.cleaned_data
         if 'survey' in data: # check and remove the survey key-value pair
@@ -124,7 +136,12 @@ class ProfessionalEventForm(forms.ModelForm):
         if 'bccf_topic' in data:
             topics = data['bccf_topic']
             del data['bccf_topic']
+        if 'image' in data:
+            del data['image']
         event = EventForProfessionals(**data)
+        if '0-image' in self.files:
+            event.image = self.handle_upload()
+            
         event.save()
         for topic in topics:
             event.bccf_topic.add(topic)
@@ -132,8 +149,11 @@ class ProfessionalEventForm(forms.ModelForm):
         
             
 class FormStructureSurveyBase(forms.Form):
+    """
+    Superclass that creates a generic save function for the wizard forms.
+    """
     class Meta:
-        abstract = True            
+        abstract = True        
     def save(self, user):    
         data = self.cleaned_data
         if 'clone' in data: # check and remove the clone key-value pair
@@ -152,12 +172,9 @@ class FormStructureSurveyBase(forms.Form):
                         required = 0
                     else:
                         required = 1
-
                     num_answers = 0
-
                     if field['class'] == 'multiselect-field' or field['class'] == 'checkbox-field':
                         num_answers = len(field["options"])
-
                     question = Question(question=field["label"],
                         form_published=published, required=required,
                         num_answers=num_answers)
