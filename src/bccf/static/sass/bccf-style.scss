@@ -1186,7 +1186,12 @@ textarea {
 				position:relative;
 				border-bottom:2px solid $lgreen;
 				height:152PX;
-
+                a:nth-of-type(2) {
+                    img {
+                        height: 100%;
+                        width: 100%; 
+                    }    
+                }
 				img { padding:0;
 				margin:0;
 				}
