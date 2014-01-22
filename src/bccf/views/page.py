@@ -10,6 +10,7 @@ from django.shortcuts import get_object_or_404
 from django.utils.text import slugify
 
 from bccf.models import BCCFPage, BCCFChildPage, BCCFBabyPage, BCCFTopic, UserProfile
+from bccf.settings import MEDIA_URL
 from pybb.models import Topic
 
 import logging
@@ -106,9 +107,9 @@ def next(request, parent, which, offset):
         else:
             slides = BCCFChildPage.objects.filter(gparent=obj.pk, status=2).order_by('-created')[offset:limit]
         parts = {
-            'slide': render_to_string('generic/carousel_slide_part.html', {'slides':slides}),
-            'grid': render_to_string('generic/carousel_grid_part.html', {'slides':slides})
-        }    
+            'slide': render_to_string('generic/carousel_slide_part.html', {'slides':slides, 'MEDIA_URL':MEDIA_URL}),
+            'grid': render_to_string('generic/carousel_grid_part.html', {'slides':slides, 'MEDIA_URL':MEDIA_URL})
+        }  
         return HttpResponse(json.dumps(parts), content_type="application/json")
     else:
         return HttpResponse('No')
@@ -119,8 +120,8 @@ def topic_next(request, topic, which, offset):
         topic = BCCFTopic.objects.get(slug=topic)    
         slides = BCCFChildPage.objects.filter(topic=topic, page_for=which, status=2).order_by('-created')[offset:limit]
         parts = {
-            'slide': render_to_string('generic/carousel_slide_part.html', {'slides':slides}),
-            'grid': render_to_string('generic/carousel_grid_part.html', {'slides':slides}),
+            'slide': render_to_string('generic/carousel_slide_part.html', {'slides':slides, 'MEDIA_URL':MEDIA_URL}),
+            'grid': render_to_string('generic/carousel_grid_part.html', {'slides':slides, 'MEDIA_URL':MEDIA_URL}),
         }    
         return HttpResponse(json.dumps(parts), content_type="application/json")
     else:
@@ -134,8 +135,8 @@ def filter(request, query=None, type='slide'):
         else:
             slides = BCCFChildPage.objects.filter(content_model='topic', status=2).order_by('-created')[:12]
         parts = {
-            'slide': render_to_string('generic/carousel_slide_part.html', {'slides':slides}),
-            'grid': render_to_string('generic/carousel_grid_part.html', {'slides':slides})
+            'slide': render_to_string('generic/carousel_slide_part.html', {'slides':slides, 'MEDIA_URL':MEDIA_URL}),
+            'grid': render_to_string('generic/carousel_grid_part.html', {'slides':slides, 'MEDIA_URL':MEDIA_URL})
         }
         return HttpResponse(json.dumps(parts), content_type="application/json")
     else:
