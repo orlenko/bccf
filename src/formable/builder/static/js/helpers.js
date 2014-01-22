@@ -125,12 +125,11 @@ var edit_field = function(obj) {
     }
     
     settings.children("#settings-title").html(title);
-    settings.children("ul").html(form);
+    settings.children("#settings-form").html(form);
     
     // Generic dialog box
     settings.dialog({
         height: 'auto',
-        width: 500,
         modal: true,
         buttons: {
             'Update': function() {
@@ -164,7 +163,7 @@ var edit_field = function(obj) {
  * To be used only for fieldsets or rows
  */
 var edit_row = function(obj) {    
-    $("#settings-box").children("ul").html(get_text_field('Fieldset Name', obj.html(), 'name'));
+    $("#settings-box").children("#settings-form").html(get_text_field('Fieldset Name', obj.html(), 'name'));
     $("#settings-box").children('#settings-title').html('Editig Fieldset: '+obj.html());
     $("#settings-box").dialog({
         height: 'auto',
@@ -193,7 +192,7 @@ var edit_row = function(obj) {
  * can be empty.
  */
 var add_row = function() {
-    $("#settings-box").children("ul").html(get_text_field('Fieldset Name', '', 'name'));
+    $("#settings-box").children("#settings-form").html(get_text_field('Fieldset Name', '', 'name'));
     $("#settings-box").children('#settings-title').html('Add Fieldset');
     $("#settings-box").dialog({
         height: 'auto',
@@ -377,8 +376,8 @@ var del_row = function(obj) {
 var get_text_field = function(label, val, id) {
     val = typeof val !== 'undefined' ? val : '';
     
-    return '<li><label for="'+id+'">'+label+':</label><input name="'+id+'" id="'
-        +id+'" type="text" value="'+val+'"/></li>';   
+    return '<label for="'+id+'" class="col twelve">'+label+':</label><input name="'+id+'" id="'
+        +id+'" type="text" value="'+val+'" class="col twelve"/>';   
 }
 
 /*
@@ -397,8 +396,8 @@ var get_text_field = function(label, val, id) {
 var get_check_field = function(label, checked, id) {
     checked = typeof checked !== 'undefined' ? checked : '';
     
-    return '<li><label for="'+id+'">'+label+':</label><input name="'+id+'" id="'
-        +id+'" type="checkbox" '+checked+'/></li>';
+    return '<label for="'+id+'" class="col twelve">'+label+':</label><input name="'+id+'" id="'
+        +id+'" type="checkbox" '+checked+' class="col twelve"/>';
 }
 
 /*
@@ -417,8 +416,8 @@ var get_check_field = function(label, checked, id) {
 var get_textarea_field = function(label, val, id) {
     val = typeof val !== 'undefined' ? val : '';
     
-    return '<li><label for="'+id+'">'+label+':</label><textarea name="'+id+'" \
-    id="'+id+'" rows="10">'+val+'</textarea></li>';
+    return '<label for="'+id+'" class="col twelve">'+label+':</label><textarea name="'+id+'" \
+    id="'+id+'" rows="10" class="col twelve">'+val+'</textarea>';
 }
 
 var create_fieldset = function(id, legend) {

@@ -2,7 +2,7 @@
 <div class="alert-info">
 <h4>All fields should have a different name/question.</h4>
 </div>
-<div id="builder-main" class="section container row">
+<div id="builder-main" class="col twelve">
     <div class="col three mobile-full">
         <!-- Common Fields -->
         <div class="section twelve row section-head">
@@ -59,7 +59,7 @@
         <ul id="form-body" class="section row-one twelve no-style-list sortable"></ul>
     </div>
 </div>
-<div id="form-aux" class="container">
+<div id="form-aux" class="col twelve">
     <!-- custom for BCCF -->
     {% if wizard %}
     <form id="form_structure_form" action="" method="POST">
@@ -93,8 +93,8 @@
 
 <!-- Dialog Box -->
 <div id="settings-box">
-    <h3 id="settings-title"></h3>
-    <ul class="section col twelve no-style-list"></ul>
+    <h3 id="settings-title" class="col twelve"></h3>
+    <div id="settings-form" class="section col twelve no-style-list"></div>
 </div>
 
 <script>
