@@ -137,7 +137,7 @@ class ProfileAdmin(admin.ModelAdmin):
     search_fields = ['user__%s' % username_field]
     fieldsets = (
         (None, {
-                'fields': ('time_zone', 'language')
+                'fields': ('user', 'time_zone', 'language')
                 }
          ),
         (_('Additional options'), {

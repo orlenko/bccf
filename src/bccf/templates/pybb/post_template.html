@@ -4,7 +4,7 @@
 {% pybb_get_profile user=post.user as post_user_profile %}
 {% pybb_get_profile user=user as user_profile %}
 
-<a name="post-{{ post.id }}">{{ post.id }}</a> {# may be remove this string? #}
+<a name="post-{{ post.id }}"></a> {# may be remove this string? #}
 <table class="table table-bordered post {% if post.on_moderation %}on-moderation{% endif %}" id="post-{{ post.id }}">
     <thead class="post-header">
     <tr>
@@ -34,12 +34,12 @@
             {% endif %}
 
             <div class="post-controls">
-            	<div class="bccf-topics">
+            	<!--<div class="bccf-topics">
             		Tags:
 	            	{% for bccf_topic in bccf_topics %}
 	            		<div class="bccf-topic">{{ bccf_topic }}</div>
 	            	{% endfor %}
-            	</div>
+            	</div>-->
                 {% if user.is_moderator or post|pybb_posted_by:user %}
                     <a href="{% url 'pybb:edit_post' pk=post.id %}">{% trans "Edit" %}</a>
                 {% endif %}

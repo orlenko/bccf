@@ -1745,6 +1745,14 @@ textarea {
     }    
 }
 
+.post-header th {
+    background-color: $sgreen;
+    color: $dgreen;
+    a {
+        color: inherit;
+    }    
+}
+
 /* Forum End */
 
 /* Generic Above Footer */
