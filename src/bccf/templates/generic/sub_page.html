@@ -3,10 +3,7 @@
     <div class="section">
         {% bccf_rating_for child_obj %}
     </div>
-    <div class="subpage-content section row">
-        <h3>{{ child_obj.title }}</h3>
-        {{ child_obj.content|safe }}
-    </div>    
+    <div class="subpage-content section row"></div>    
     <div class="subpage-tabs section row">
         <ul class="no-style-list">
             <li class="col three no-mobile">
@@ -14,7 +11,7 @@
                 <div class="baby-content">
                     <h3>{{ child_obj.title }}</h3>
                     {{ child_obj.content|safe }}
-                </div>          
+                </div>
             </li>
             {% for baby in babies %}
             <li class="col three mobile-full">
@@ -25,8 +22,44 @@
                 </div>            
             </li>
             {% endfor %}
-            {% if child_obj.content_model == 'article' or child_obj.content_model == 'downloadableform' or child_obj.content_model == 'magazine' or child_obj.content_model == 'tipsheet' %}
-            <li class="col three mobile-full"><a href="media/{{ child_obj.get_content_model.attached_document }}" target="_blank">Download</a></li>
+            {% if child_obj.gparent.slug == 'trainings' %}
+            <li class="col three mobile-full">
+                <a href="{% url 'bccf-baby' child_obj.gparent.slug child_obj.slug 'child-info' %}" id="child-info" class="baby-content-btn">Information</a>
+                <div class="baby-content">
+                    <h3>Event Information</h3>
+                    <table>
+                        <tr>
+                            <th>Price:</th>
+                            <td>{{ child_obj.get_content_model.price }}</td>                        
+                        </tr>
+                        <tr>
+                            <th>When:</th>
+                            <td>{{ child_obj.get_content_model.date_start }} {% if child_obj.get_content_model.date_end %} to {{ child_obj.get_content_model.date_end }} {% endif %}</td>                        
+                        </tr>
+                        <tr>
+                            <th>Address:</th>
+                            <td>{{ child_obj.get_content_model.location_street }}</td>                       
+                        </tr>                    
+                        {% if child_obj.get_content_model.location_street2 %}
+                        <tr>
+                            <th>Address 2:</th>
+                            <td>{{ child_obj.get_content_model.location_street2 }}</td>                        
+                        </tr>
+                        {% endif %}
+                        <tr>
+                            <th>City:</th>
+                            <td>{{ child_obj.get_content_model.location_city }}</td>                        
+                        </tr>
+                        <tr>
+                            <th>Postal Code:</th>
+                            <td>{{ child_obj.get_content_model.location_postal_code }}</td>                        
+                        </tr>
+                    </table>               
+                </div>            
+            </li>
+            {% endif %}
+            {% if child_obj.gparent.slug == 'resources' %}
+            <li class="col three mobile-full"><a href="{{ MEDIA_URL }}{{ child_obj.get_content_model.attached_document }}" target="_blank">Download</a></li>
             {% endif %}
             {% if child_obj.content_model == 'video' %}
             <li class="col three mobile-full"><a href="#" target="_blank">View</a></li>
@@ -80,6 +113,8 @@
         
         {% if baby_obj %}
             $('#{{ baby_obj }}').trigger('click');
+        {% else %}
+            $('#child-home').trigger('click');
         {% endif %}
     });
 </script>

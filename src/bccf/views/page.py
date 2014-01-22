@@ -52,7 +52,7 @@ def page(request, parent, child=None, baby=None):
         template = 'bccf/%s_page.html' % (parent)
     else: 
         baby_obj = None
-        if baby and baby != 'baby-resources' and baby != 'child-home' and baby != 'child-comments':
+        if baby and baby != 'baby-resources' and baby != 'child-home' and baby != 'child-comments' and baby != 'child-info':
             baby_temp = BCCFBabyPage.objects.get(slug=('%s/%s') % (child, baby))
             baby_obj = slugify(baby_temp.title)
         elif baby:

@@ -1829,6 +1829,14 @@ textarea {
             font-weight: bold;
         }
     }
+    table {
+        th {
+            width: 150px;
+        }
+        tr:nth-of-type(odd) {
+            background-color: $sgreen;            
+        }
+    }
 }
 
 /* End Generic */
