@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block carousels %}
-<div class="container">
+<div class="col twelve">
 {% if request.user.is_authenticated %}
     <p>{% trans "You're already logged in." %}</p>
 {% else %}
