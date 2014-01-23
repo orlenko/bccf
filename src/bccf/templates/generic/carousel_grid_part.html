@@ -10,7 +10,7 @@
                     <a href="{{ slide.get_absolute_url }}">
                         <h2>{{ slide.title }}</h2>
                     </a>
-                    <p class="no-tablet">{{ slide.description|truncatechars:30 }}</p>
+                    <p class="no-tablet">{{ slide.description|truncatechars:20 }}</p>
                 </div>
             </li>
         {% if forloop.counter|divisibleby:"3" or forloop.last %}

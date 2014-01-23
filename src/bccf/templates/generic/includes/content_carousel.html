@@ -3,11 +3,11 @@
 {% if slides %}
 <section id="{{ carousel_name }}" class="section content-pages {{ carousel_color }}">
     <div class="section row top-control-container">
-        <div class="col {% if filter %} five tablet-two {% else %} six {% endif %} mobile-full carousel-title-container">
+        <div class="col {% if filter %} four tablet-two {% else %} six {% endif %} mobile-full carousel-title-container">
             <h2>{{ carousel_title|title }}</h2>
         </div>
         {% if filter %}
-        <div id="filter-container" class="col four mobile-full tablet-six">            
+        <div id="filter-container" class="col five mobile-full tablet-six">            
             <input type="text" name="filter" placeholder="Filter" class="filter" />
         </div>
         {% endif %}

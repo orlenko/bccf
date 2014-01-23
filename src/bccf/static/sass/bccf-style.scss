@@ -1352,6 +1352,10 @@ textarea {
 	}
 }
 
+#filter-container > input {
+    margin-top: -5px;    
+}
+
 .mobile-content-container {
    position: fixed;
    top: 0;
@@ -1372,6 +1376,7 @@ textarea {
 
     .subpage-tabs {
         > ul {
+            padding-left: 1.5%;
             > li {
                > a {
                     text-transform: uppercase;
@@ -2675,9 +2680,6 @@ table td {
     	.control-buttons {
     	   padding-right: 0; 
     	}
-    	#filter-container {
-    	   text-align: left;    
-    	}
     }
 	.page-container-outer { /* Container */
     	.page-box-active {
@@ -2686,6 +2688,13 @@ table td {
     }
 }
 
+#filter-container {
+   text-align: left;
+   > input {
+       margin-top: 0;
+       margin-left: 5px;
+   }
+}
 
 #mobile-content-container {
     overflow-y: scroll;

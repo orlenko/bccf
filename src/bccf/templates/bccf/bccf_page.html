@@ -51,7 +51,8 @@ $(function() {
         'singleItem': true,
         'pagination': false,
         'addClassActive': true,
-        'startDragging': function(){ reset(); },
+        'startDragging': function() { reset(); },
+        'afterMove': function() { get_next($(this.owl.baseElement[0])); },
         'beforeMove': function() { reset(); },
     });
     $('.carousel-grid').hide();
@@ -136,36 +137,37 @@ $('.content-pages').on('click', 'a[class^="button"]', function(e) {
     if($(this).hasClass('button-prev')) {
         carousel.trigger('owl.prev');
     } else {
-        var parent = $(this).parents('.content-pages');
-        if(carousel.find('.active').is(':last-child')) {
-            var offset = carousel.find('.owl-item .page-box').length;
-            if(offset % 1 === 0 {% if filter %} && parent.find('.filter').val() == '' {% endif %}) {
-                $.ajax({
-                    url: '/next/{{ page.slug }}/'+parent.attr('id')+'/'+offset+'/',
-                    context: parent,
-                    success: function(data) {                        
-                        if(data.slide.length > 1 && data.grid.length > 1) {
-                            $(this).find('.carousel-slide').data('owlCarousel').addItem(data.slide);
-                            $(this).find('.carousel-grid').data('owlCarousel').addItem(data.grid);
-                            if(carousel.hasClass('carousel-slide')) {
-                                $(this).find('.carousel-grid').hide();                     
-                            } else {
-                                $(this).find('.carousel-slide').hide();
-                            }
-                        }
-                        carousel.trigger('owl.next');
-                    },
-                });
-            } else {
-                carousel.trigger('owl.next');
-            }      
-        } else {
-            carousel.trigger('owl.next');
-        }            
+        carousel.trigger('owl.next');    
     }
 });
 
 /** HELPER FUNCTIONS **/
+var get_next = function(carousel) {
+    var parent = carousel.parents('.content-pages');
+    if(carousel.find('.active').is(':last-child')) {
+        var offset = carousel.find('.owl-item .page-box').length;
+        if(offset % 1 === 0 {% if filter %} && parent.find('.filter').val() == '' {% endif %}) {
+            $.ajax({
+                url: '/next/{{ page.slug }}/'+parent.attr('id')+'/'+offset+'/',
+                context: parent,
+                success: function(data) {                        
+                    if(data.slide.length > 1 && data.grid.length > 1) {
+                        parent.find('.carousel-slide').data('owlCarousel').addItem(data.slide);
+                        parent.find('.carousel-grid').data('owlCarousel').addItem(data.grid);
+                        if(carousel.hasClass('carousel-slide')) {
+                            parent.find('.carousel-grid').hide();                     
+                        } else {
+                            parent.find('.carousel-slide').hide();
+                        }
+                        carousel.trigger('owl.next');
+                    }
+                },
+            });
+        }   
+    }
+    return true;
+}
+
 var reset = function() {
     $('.reset').hide().html('');
     $('#mobile-content-container').hide()
