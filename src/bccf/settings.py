@@ -121,6 +121,7 @@ ADMIN_MENU_ORDER = (
     ("Marquees", ("bccf.HomeMarquee", "bccf.HomeMarqueeSlide", "bccf.FooterMarquee", "bccf.FooterMarqueeSlide", "bccf.PageMarquee", "bccf.PageMarqueeSlide")),
     ("Resources", ("bccf.Article", "bccf.DownloadableForm", "bccf.Magazine", "bccf.TipSheet", "bccf.Video")),
     ("Events", ("bccf.EventForParents", "bccf.EventForProfessionals")),
+    ("Forum", ("pybb.Topic", "pybb.Post", "pybb.Profile")),
 )
 
 # A three item sequence, each containing a sequence of template tags
@@ -350,6 +351,7 @@ INSTALLED_APPS = (
     'pybb',
     'bccf',
     "cartridge.shop",
+    'tinymce',
     'formable.builder',
     # install via pip or easy_install django-form-utils
     'form_utils', # required by builder to call template tags
@@ -524,3 +526,12 @@ SEARCH_MODEL_CHOICES = (
 )
 COMMENTS_USE_RATINGS = False
 COMMENTS_ACCOUNT_REQUIRED = True
+
+TINYMCE_DEFAULT_CONFIG = {
+    'plugins': "table,spellchecker,paste,searchreplace",
+    'theme': "advanced",
+    'cleanup_on_startup': True,
+    'custom_undo_redo_levels': 10,
+}
+TINYMCE_SPELLCHECKER = True
+TINYMCE_COMPRESSOR = True

@@ -709,6 +709,9 @@ class EventForProfessionals(EventBase):
     @permalink
     def create_url(self):
         return('professionals-event-create', (), {})
+        
+    def get_report_url(self):
+        return reverse('event-survey-report', kwargs={'slug': self.slug})
 
     class Meta:
         verbose_name = 'Event for Professionals'

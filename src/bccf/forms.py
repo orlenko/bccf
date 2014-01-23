@@ -8,6 +8,8 @@ from django.utils.encoding import force_unicode
 from django.utils.safestring import mark_safe
 from django.contrib.comments.forms import CommentSecurityForm
 
+from tinymce.widgets import TinyMCE
+
 from mezzanine.conf import settings
 from mezzanine.generic.models import Rating
 
@@ -105,6 +107,7 @@ class ProfessionalEventForm(forms.ModelForm):
     Form for creating a Professional Event using the Wizard
     """
     image = forms.ImageField()
+    content = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 15}))
     class Meta:
         model = EventForProfessionals
         fields = ('title', 'content', 'provider', 'price', 'location_city',

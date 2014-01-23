@@ -27,8 +27,7 @@ urlpatterns = patterns("",
     # admin interface, which would be marginally more secure.
     ("^admin/", include(admin.site.urls)),
     
-    #For Showing Pages
-
+    # FORUM URLs
     (r'^forum/', include('pybb.urls', namespace='pybb')),
 
     # Cartridge URLs.
@@ -36,6 +35,9 @@ urlpatterns = patterns("",
 
     # Formable URLs
     ("^formable/", include("formable.builder.urls")),
+
+    # TinyMCE URLs
+    (r'^tinymce/', include('tinymce.urls')),
 
     # Podcasts
     #('^podcasts/', include('podcasting.urls')),
@@ -64,13 +66,16 @@ urlpatterns = patterns("",
     url(r'^professionals/event/feed/', EventsForProfessionalsFeed()),
     url(r'^professionals/event/signup/(?P<slug>.*)/$', 'bccf.views.events.professionals_event_signup', name='professionals-event-signup'),
     url(r'^professionals/event/create/$', ProfessionalEventWizard.as_view(FORMS), name='professionals-event-create'),
-    url(r'^professionals/event/report/(?P<slug>.*)/$', 'bccf.views.events.professional_survey_download_report', name='professional-download-report'),
     url(r'^professionals/event/(?P<slug>.*)/$', 'bccf.views.events.professionals_event', name='professionals-event'),
         
     # MEZZANINE URL OVERRIDES
     #------------------------
     # The patterns here will be used to override Mezzanine-specific urls.
     url("^rating/$", "bccf.views.views.rating", name="rating"),        
+        
+    # Reports
+    url(r'^report/survey/event/(?P<slug>.+)/$', 'bccf.views.report.event_survey_report', name='event-survey-report'),
+    url(r'^report/survey/(?P<slug>.+)/$', 'bccf.views.report.survey_report', name='survey-report'),        
         
     #Pages
     url(r'^filter/(?P<query>.*)/$', 'bccf.views.page.filter', name='filter'),

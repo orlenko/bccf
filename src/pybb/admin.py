@@ -75,7 +75,6 @@ class TopicAdmin(admin.ModelAdmin):
     inlines = [PollAnswerAdmin, ]
     
 class BCCFTopicAdmin(DisplayableAdmin):
-    list_display = ['title', 'status', 'forum', 'created', 'head', 'post_count', 'poll_type']
     list_per_page = 20
     raw_id_fields = ['user', 'subscribers']
     ordering = ['-created']
@@ -97,6 +96,15 @@ class BCCFTopicAdmin(DisplayableAdmin):
                                     'image',
                                     'page_for']):
                 self.fieldsets[0][1]['fields'].insert(3, field)
+        if self.list_display == DisplayableAdmin.list_display:
+            self.list_display = list(deepcopy(self.list_display))
+            for fieldname in ['head', 'post_count', 'featured']:
+                self.list_display.insert(-1, fieldname)
+        if self.list_filter == DisplayableAdmin.list_filter:
+            self.list_filter = list(deepcopy(self.list_filter))
+            for fieldname in ['featured']:
+                self.list_filter.insert(-1, fieldname)
+            
     inlines = [PollAnswerAdmin, ]
 
 class TopicReadTrackerAdmin(admin.ModelAdmin):

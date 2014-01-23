@@ -54,6 +54,9 @@ class FormPublished(BCCFChildPage):
     def get_absolute_url(self):
         slug = self.slug        
         return reverse('formable-view', kwargs={'slug':slug})
+    def get_report_url(self):
+        if self.slug:
+            return reverse('survey-report', kwargs={'slug': self.slug})
 
 class FormFilled(models.Model):
     """
