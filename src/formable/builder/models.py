@@ -51,7 +51,7 @@ class FormPublished(BCCFChildPage):
             self.published = datetime.now()
             self.title = self.form_structure.title
         super(FormPublished, self).save(**kwargs)
-    def get_absolute_url(self):
+    def get_survey_url(self):
         slug = self.slug        
         return reverse('formable-view', kwargs={'slug':slug})
     def get_report_url(self):
