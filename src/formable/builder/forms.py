@@ -51,14 +51,17 @@ class FormStructureForm(forms.Form):
 
     def save(self, user, **kwargs):
         form_structure = FormStructure.objects.create(structure=self.data['structure'], title=self.data['title'])
-        form_published = FormPublished.objects.create(form_structure=form_structure, user=user, content=self.data['content'], 
-            page_for=self.data['page_for'], featured=self.data['featured'])
+        form_published = FormPublished.objects.create(form_structure=form_structure, user=user, content=self.data['content'])
+        if 'page_for' in self.data:
+            form_published.page_for = self.data['page_for']
+        if 'featured' in self.data:
+            form_published.featured = self.data['featured']
         if 'bccf_topic' in self.data:
             form_published.bccf_topic = bccf_topic=self.data['bccf_topic']
-            form_published.save()
         if 'image' in self.files:
             form_published.image = self.handle_upload()
-            form_published.save()
+            
+        form_published.save()
     
         # Create Questions based on structure
         struct = json.loads(form_structure.structure)
