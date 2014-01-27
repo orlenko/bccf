@@ -62,7 +62,7 @@ class FormPublishedAdmin(DisplayableAdmin):
                 self.list_display.insert(-1, fieldname)
         if self.list_filter == DisplayableAdmin.list_filter:
             self.list_filter = list(deepcopy(self.list_filter))
-            for fieldname in ['featured']:
+            for fieldname in ['featured', 'gparent']:
                 self.list_filter.insert(-1, fieldname)
             
     def report_link(self, obj):

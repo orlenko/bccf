@@ -186,7 +186,7 @@ var load_content = function(box) {
     });
     if($('.mnav-mobile-btn').is(':visible')) { // For mobiles
         $('body').css({overflow: 'hidden', height: '100%'});
-        $('body').on('touchmove', function(e) {
+        $(document).on('touchmove', function(e) {
             if(!$(e.target).attr('id') === 'mobile-content-container') {
                 e.preventDefault();
             }
