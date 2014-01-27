@@ -49,7 +49,7 @@
         </div>
         <div class="twelve field-container">
             <div class="section twelve row field-container-inner">
-                <a id="add-row" href="#">Add Fieldset</a>
+                <a id="formable-add-row" href="#">Add Fieldset</a>
             </div>
         </div>
         {% endblock %}
@@ -107,7 +107,7 @@
         $(".sortable").sortable().disableSelection();
         
         // Link Buttons
-        $("#add-row").on('click', function(e){
+        $("#formable-add-row").on('click', function(e){
             e.preventDefault();        
             add_row();
         });

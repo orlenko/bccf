@@ -1,4 +1,4 @@
-// Fields that will be created :)
+// Fields that will be created
 var fields = {
     'text-field': '<label for="text-field">Text</label>: <input type="text" name="text-field"/>',
     'textarea-field': '<label for="textarea-field">Multiline</label>: <textarea name="textarea-field" rows="4" cols="5"></textarea>',
@@ -130,7 +130,7 @@ var edit_field = function(obj) {
     // Generic dialog box
     settings.dialog({
         height: 'auto',
-        modal: true,
+        modal: false,
         buttons: {
             'Update': function() {
                 update();
@@ -168,7 +168,7 @@ var edit_row = function(obj) {
     $("#settings-box").dialog({
         height: 'auto',
         width: 500,
-        modal: true,
+        modal: false,
         buttons: {
             'Update': function() {
                 obj.html($("#name").val());
@@ -197,7 +197,7 @@ var add_row = function() {
     $("#settings-box").dialog({
         height: 'auto',
         width: 500,
-        modal: true,
+        modal: false,
         buttons: {
             'Add': function() {
                 $("#form-body").append(create_fieldset("#form-body", $("#name").val()));
