@@ -4,6 +4,7 @@
         text-align: right;
         bottom: -30px;
         right: 0;
+        height: 10px;
     }
     .owl-page {
         height: 10px;
@@ -28,7 +29,7 @@
     @extend .normal-marquee;
     .owl-controls {
         bottom: 5%;
-        right: 2%;  
+        right: 2%;
     }
 }
 .big-marquee {

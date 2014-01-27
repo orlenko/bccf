@@ -351,7 +351,7 @@ INSTALLED_APPS = (
     'pybb',
     'bccf',
     "cartridge.shop",
-    'tinymce',
+    'ckeditor',
     'formable.builder',
     # install via pip or easy_install django-form-utils
     'form_utils', # required by builder to call template tags
@@ -527,11 +527,12 @@ SEARCH_MODEL_CHOICES = (
 COMMENTS_USE_RATINGS = False
 COMMENTS_ACCOUNT_REQUIRED = True
 
-TINYMCE_DEFAULT_CONFIG = {
-    'plugins': "table,spellchecker,paste,searchreplace",
-    'theme': "advanced",
-    'cleanup_on_startup': True,
-    'custom_undo_redo_levels': 10,
+CKEDITOR_UPLOAD_PATH = MEDIA_ROOT+"/uploads/ckeditor"
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Full',
+        'height': 300,
+        'width': '100%',
+    },
 }
-TINYMCE_SPELLCHECKER = True
-TINYMCE_COMPRESSOR = True
