@@ -1,0 +1,134 @@
+@import "mixins"; // Import the base mixins
+  
+.no-style-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+// ==========================================================================
+// -- Custom Website Styles for Desktop
+// ==========================================================================
+
+// Sizes
+$padding10: 10px;
+$margin10: 10px;
+$height10: 10px;
+$width10: 10px;
+
+// Colors
+$gray: #CCC;
+$lightblue: lightblue;
+$lightgreen: lightgreen;
+
+// Defaults
+$border: 1px solid #CCC;
+
+.icon {
+    height: 22px;
+    width: 22px;
+}
+
+.section-head {
+    @include font-size(20);
+}
+
+.field-container {
+    border: $border;
+    padding: 0;
+    
+    .field-container-inner {
+        padding: $padding10;
+        
+        .field {
+            cursor: move;
+            z-index: 99 !important
+        }
+        
+        &:hover {
+            background-color: $lightblue
+        }
+    }
+    
+    a {
+        display: block;
+    }
+}
+
+#form-body {
+    //border: $border;
+    
+    .form_row {
+        
+        fieldset {
+            border: $border;
+            min-height: ($height10*2.5);
+            
+            li {
+                min-height: 30px;
+                line-height: 30px;
+            }
+            
+            .icon-container {
+                float: right;
+                               
+                b {
+                    margin:($margin10/2);
+                    float: right;
+                    display: block;
+                }
+                
+                .sort-icon {
+                    @extend .icon;
+                    cursor: move;
+                    background-image: url('../images/sort_icon.png');
+                    
+                    &:hover {
+                        background-image: url('../images/sort_icon_hover.png');
+                    }
+                }
+                
+                .edit-icon {
+                    @extend .icon;
+                    cursor: pointer;
+                    background-image: url('../images/edit_icon.png');
+                }
+                
+                .del-icon {
+                    @extend .icon;
+                    cursor: pointer;
+                    background-image: url('../images/del_icon.png');
+                }
+            }
+        }
+    }
+    
+    .row-active {
+        background-color: ($lightgreen);
+    }
+}
+
+#form_view {
+    fieldset {
+        border: 1px solid #ccc;
+        
+        legend {
+            margin-left: ($margin10);
+        }
+    }
+    ul {
+        label {
+            width: ($width10*10);
+            display: inline-block;
+        }
+        li {
+            margin: ($margin10);
+        }
+        ul {
+            @extend .no-style-list;
+            li {
+                display: inline;
+            }
+        }
+    }
+}
