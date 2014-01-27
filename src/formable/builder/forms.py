@@ -3,7 +3,8 @@ import json
 
 from django import forms
 from django.contrib.contenttypes.models import ContentType
-from ckeditor.widgets import CKEditorWidget
+#from ckeditor.widgets import CKEditorWidget
+from tinymce.widgets import TinyMCE
 from mezzanine.utils.models import upload_to
 
 from form_utils.forms import BetterForm
@@ -25,7 +26,7 @@ class FormStructureForm(forms.Form):
     title = forms.CharField(widget=forms.HiddenInput(attrs={'id': 'form_structure_title'}))
     structure = forms.CharField(widget=forms.HiddenInput(attrs={'id': 'form_structure_data'}))
     type = forms.CharField(widget=forms.HiddenInput(attrs={'id': 'form_structure_type'}))
-    content = forms.CharField(widget=CKEditorWidget())
+    content = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 30}))#CKEditorWidget())
     page_for = forms.ChoiceField(choices=PAGE_FOR)
     bccf_topic = forms.ModelMultipleChoiceField(queryset=BCCFTopic.objects.all().order_by('title'))
     image = forms.ImageField()

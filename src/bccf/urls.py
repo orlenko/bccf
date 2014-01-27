@@ -36,8 +36,11 @@ urlpatterns = patterns("",
     # Formable URLs
     ("^formable/", include("formable.builder.urls")),
 
+    #TinyMCE
+    (r'^tinymce/', include('tinymce.urls')),
+
     # CKEDITOR 
-    (r'^ckeditor/', include('ckeditor.urls')),
+    #(r'^ckeditor/', include('ckeditor.urls')),
 
     # Podcasts
     #('^podcasts/', include('podcasting.urls')),
