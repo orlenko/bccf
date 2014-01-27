@@ -141,6 +141,17 @@ $('.content-pages').on('click', 'a[class^="button"]', function(e) {
     }
 });
 
+/*
+$(document).on('touchmove', function(e) {
+    if($(e.target).attr('id') === 'mobile-content-container') {
+        var c = $(e.target);
+        if(c.scrollTop()+c.innerHeight >= c[0].scrollHeight()) {
+                    
+        }
+    }
+});
+*/
+
 /** HELPER FUNCTIONS **/
 var get_next = function(carousel) {
     var parent = carousel.parents('.content-pages');
@@ -186,12 +197,6 @@ var load_content = function(box) {
     });
     if($('.mnav-mobile-btn').is(':visible')) { // For mobiles
         $('body').css({overflow: 'hidden', height: '100%'});
-        $(document).on('touchmove', function(e) {
-            e.preventDefault();
-            if(!$(e.target).attr('id') === 'mobile-content-container') {
-                var c = $(e.target);
-            }
-        });
         $('#mobile-content-container').show();
         container = $('#mobile-content-container .mobile-content');
     } else if(box.parents('.carousel-slide').length) {
