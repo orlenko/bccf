@@ -3227,17 +3227,19 @@ footer #newsletter .dashed-button a:hover {
 .med-marquee .owl-controls {
   bottom: 5%;
   right: 2%;
-  height: 10px;
 }
 
+/* line 35, ../mixins/marquee_themes.scss */
+.big-marquee {
+  min-height: 410px;
+}
 /* line 38, ../mixins/marquee_themes.scss */
 .big-marquee .owl-controls {
   bottom: 5%;
   right: 2%;
-  height: 10px;
 }
 
-/* line 45, ../mixins/marquee_themes.scss */
+/* line 44, ../mixins/marquee_themes.scss */
 .lightbox {
   position: absolute;
   bottom: 15%;
@@ -3247,17 +3249,17 @@ footer #newsletter .dashed-button a:hover {
   background: rgba(159, 206, 180, 0.8);
   z-index: 9999;
 }
-/* line 54, ../mixins/marquee_themes.scss */
+/* line 53, ../mixins/marquee_themes.scss */
 .lightbox .lightbox-title {
   font-size: 25px;
 }
-/* line 58, ../mixins/marquee_themes.scss */
+/* line 57, ../mixins/marquee_themes.scss */
 .lightbox .a-wrapper {
   background-color: #336442;
   float: right;
   text-align: center;
 }
-/* line 62, ../mixins/marquee_themes.scss */
+/* line 61, ../mixins/marquee_themes.scss */
 .lightbox .a-wrapper a {
   margin: 2px;
   color: #FFF;
@@ -3265,18 +3267,18 @@ footer #newsletter .dashed-button a:hover {
   display: block;
   text-decoration: none;
 }
-/* line 68, ../mixins/marquee_themes.scss */
+/* line 67, ../mixins/marquee_themes.scss */
 .lightbox .a-wrapper a:hover {
   color: #336442;
 }
 
-/* line 75, ../mixins/marquee_themes.scss */
+/* line 74, ../mixins/marquee_themes.scss */
 #tag-container {
   position: absolute;
   bottom: 25px;
   left: 25px;
 }
-/* line 79, ../mixins/marquee_themes.scss */
+/* line 78, ../mixins/marquee_themes.scss */
 #tag-container .a-wrapper {
   font-size: 15px;
   margin-right: 25px;
@@ -3287,33 +3289,33 @@ footer #newsletter .dashed-button a:hover {
   background-color: #fdcd26;
   width: 170px;
 }
-/* line 88, ../mixins/marquee_themes.scss */
+/* line 87, ../mixins/marquee_themes.scss */
 #tag-container .a-wrapper .tag-box {
   display: block;
   width: 98%;
   text-decoration: none;
   padding: 5px 10px;
 }
-/* line 93, ../mixins/marquee_themes.scss */
+/* line 92, ../mixins/marquee_themes.scss */
 #tag-container .a-wrapper .tag-box .tag-title {
   font-weight: bold;
   display: block;
   border-bottom: 1px solid black;
 }
-/* line 98, ../mixins/marquee_themes.scss */
+/* line 97, ../mixins/marquee_themes.scss */
 #tag-container .a-wrapper .tag-box span:last-child {
   font-size: 12px;
   font-style: italic;
 }
 
 @media only screen and (max-width: 739px) {
-  /* line 108, ../mixins/marquee_themes.scss */
+  /* line 107, ../mixins/marquee_themes.scss */
   .med-marquee,
   .big-marquee {
     font-size: 12px;
     font-size: 0.75rem;
   }
-  /* line 110, ../mixins/marquee_themes.scss */
+  /* line 109, ../mixins/marquee_themes.scss */
   .med-marquee .owl-controls,
   .big-marquee .owl-controls {
     right: 5%;
@@ -3321,24 +3323,24 @@ footer #newsletter .dashed-button a:hover {
     bottom: 0;
   }
 
-  /* line 117, ../mixins/marquee_themes.scss */
+  /* line 116, ../mixins/marquee_themes.scss */
   #tag-container {
     position: static;
     width: 100%;
     font-size: 20px;
   }
-  /* line 121, ../mixins/marquee_themes.scss */
+  /* line 120, ../mixins/marquee_themes.scss */
   #tag-container .a-wrapper {
     width: 100%;
     display: block;
     margin: 0;
   }
-  /* line 125, ../mixins/marquee_themes.scss */
+  /* line 124, ../mixins/marquee_themes.scss */
   #tag-container .a-wrapper .tag-box {
     width: 99%;
   }
 
-  /* line 131, ../mixins/marquee_themes.scss */
+  /* line 130, ../mixins/marquee_themes.scss */
   .lightbox {
     position: absolute;
     width: 100%;
@@ -3346,18 +3348,18 @@ footer #newsletter .dashed-button a:hover {
     bottom: 0;
     right: 0;
   }
-  /* line 138, ../mixins/marquee_themes.scss */
+  /* line 137, ../mixins/marquee_themes.scss */
   .lightbox .a-wrapper {
     float: right;
   }
 
-  /* line 144, ../mixins/marquee_themes.scss */
+  /* line 143, ../mixins/marquee_themes.scss */
   #home-listings .owl-controls {
     position: static;
     margin-right: 2%;
   }
 
-  /* line 151, ../mixins/marquee_themes.scss */
+  /* line 150, ../mixins/marquee_themes.scss */
   #carousel-resources .owl-item.active:last-child {
     margin-right: -2%;
   }
@@ -3365,120 +3367,120 @@ footer #newsletter .dashed-button a:hover {
 /******************************************
 -- Resource Theme
 *******************************************/
-/* line 161, ../mixins/marquee_themes.scss */
+/* line 160, ../mixins/marquee_themes.scss */
 .button-slide, .button-prev-dgreen, .button-prev-dgrey, .button-prev-dteal, .button-prev-lgreen, .button-prev-lgrey, .button-prev-lteal, .button-prev-lyellow, .button-prev-sgreen, .button-prev-sgrey, .button-next-steal, .button-prev-yellow, .button-next-dgreen, .button-next-dgrey, .button-next-dteal, .button-next-lgreen, .button-next-lgrey, .button-next-lteal, .button-next-lyellow, .button-next-sgreen, .button-next-sgrey, .button-next-yellow {
   background-repeat: no-repeat;
   background-position: 50% 50%;
 }
 
 /** Prev Buttons **/
-/* line 167, ../mixins/marquee_themes.scss */
+/* line 166, ../mixins/marquee_themes.scss */
 .button-prev-dgreen {
   background-image: url("../img/arrow-left-dgreen.png");
 }
 
-/* line 171, ../mixins/marquee_themes.scss */
+/* line 170, ../mixins/marquee_themes.scss */
 .button-prev-dgrey {
   background-image: url("../img/arrow-left-dgrey.png");
 }
 
-/* line 175, ../mixins/marquee_themes.scss */
+/* line 174, ../mixins/marquee_themes.scss */
 .button-prev-dteal {
   background-image: url("../img/arrow-left-dteal.png");
 }
 
-/* line 179, ../mixins/marquee_themes.scss */
+/* line 178, ../mixins/marquee_themes.scss */
 .button-prev-lgreen {
   background-image: url("../img/arrow-left-lgreen.png");
 }
 
-/* line 183, ../mixins/marquee_themes.scss */
+/* line 182, ../mixins/marquee_themes.scss */
 .button-prev-lgrey {
   background-image: url("../img/arrow-left-lgrey.png");
 }
 
-/* line 187, ../mixins/marquee_themes.scss */
+/* line 186, ../mixins/marquee_themes.scss */
 .button-prev-lteal {
   background-image: url("../img/arrow-left-lteal.png");
 }
 
-/* line 191, ../mixins/marquee_themes.scss */
+/* line 190, ../mixins/marquee_themes.scss */
 .button-prev-lyellow {
   background-image: url("../img/arrow-left-lyellow.png");
 }
 
-/* line 195, ../mixins/marquee_themes.scss */
+/* line 194, ../mixins/marquee_themes.scss */
 .button-prev-sgreen {
   background-image: url("../img/arrow-left-sgreen.png");
 }
 
-/* line 199, ../mixins/marquee_themes.scss */
+/* line 198, ../mixins/marquee_themes.scss */
 .button-prev-sgrey {
   background-image: url("../img/arrow-left-sgrey.png");
 }
 
-/* line 203, ../mixins/marquee_themes.scss */
+/* line 202, ../mixins/marquee_themes.scss */
 .button-next-steal {
   background-image: url("../img/arrow-left-steal.png");
 }
 
-/* line 207, ../mixins/marquee_themes.scss */
+/* line 206, ../mixins/marquee_themes.scss */
 .button-prev-yellow {
   background-image: url("../img/arrow-left-yellow.png");
 }
 
 /** Next Buttons **/
-/* line 213, ../mixins/marquee_themes.scss */
+/* line 212, ../mixins/marquee_themes.scss */
 .button-next-dgreen {
   background-image: url("../img/arrow-right-dgreen.png");
 }
 
-/* line 217, ../mixins/marquee_themes.scss */
+/* line 216, ../mixins/marquee_themes.scss */
 .button-next-dgrey {
   background-image: url("../img/arrow-right-dgrey.png");
 }
 
-/* line 221, ../mixins/marquee_themes.scss */
+/* line 220, ../mixins/marquee_themes.scss */
 .button-next-dteal {
   background-image: url("../img/arrow-right-dteal.png");
 }
 
-/* line 225, ../mixins/marquee_themes.scss */
+/* line 224, ../mixins/marquee_themes.scss */
 .button-next-lgreen {
   background-image: url("../img/arrow-right-lgreen.png");
 }
 
-/* line 229, ../mixins/marquee_themes.scss */
+/* line 228, ../mixins/marquee_themes.scss */
 .button-next-lgrey {
   background-image: url("../img/arrow-right-lgrey.png");
 }
 
-/* line 233, ../mixins/marquee_themes.scss */
+/* line 232, ../mixins/marquee_themes.scss */
 .button-next-lteal {
   background-image: url("../img/arrow-right-lteal.png");
 }
 
-/* line 237, ../mixins/marquee_themes.scss */
+/* line 236, ../mixins/marquee_themes.scss */
 .button-next-lyellow {
   background-image: url("../img/arrow-right-lyellow.png");
 }
 
-/* line 241, ../mixins/marquee_themes.scss */
+/* line 240, ../mixins/marquee_themes.scss */
 .button-next-sgreen {
   background-image: url("../img/arrow-right-sgreen.png");
 }
 
-/* line 245, ../mixins/marquee_themes.scss */
+/* line 244, ../mixins/marquee_themes.scss */
 .button-next-sgrey {
   background-image: url("../img/arrow-right-sgrey.png");
 }
 
-/* line 249, ../mixins/marquee_themes.scss */
+/* line 248, ../mixins/marquee_themes.scss */
 .button-next-steal {
   background-image: url("../img/arrow-right-steal.png");
 }
 
-/* line 253, ../mixins/marquee_themes.scss */
+/* line 252, ../mixins/marquee_themes.scss */
 .button-next-yellow {
   background-image: url("../img/arrow-right-yellow.png");
 }

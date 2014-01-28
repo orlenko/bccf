@@ -36,7 +36,6 @@ $(function(){
     $('#slide-container').owlCarousel({
         'singleItem': true,
         'autoPlay': true,
-        'autoHeight': true,
         'stopOnHover': true,
         'theme': "big-marquee",
     });

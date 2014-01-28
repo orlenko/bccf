@@ -89,13 +89,13 @@ def content_carousel_for_topic(context, topic, type):
 def content_carousel_for_tag(context, topic=None):
     gparent = BCCFPage.objects.get(slug='tag')
     if topic:
-        context['talks'] = BCCFChildPage.objects.filter(gparent=gparent, content_model='topic', bccf_topic=topic, status=2).order_by('-created')[:10]
-        context['acts'] = BCCFChildPage.objects.filter(gparent=gparent, content_model='formpublished', bccf_topic=topic, status=2).order_by('-created')[:10]
-        context['gets'] = BCCFChildPage.objects.filter(gparent=gparent, content_model='campaign', bccf_topic=topic, status=2).order_by('-created')[:10]
+        context['talks'] = BCCFChildPage.objects.filter(gparent=gparent, content_model='topic', featured=True, bccf_topic=topic, status=2).order_by('-created')[:10]
+        context['acts'] = BCCFChildPage.objects.filter(gparent=gparent, content_model='formpublished', featured=True, bccf_topic=topic, status=2).order_by('-created')[:10]
+        context['gets'] = BCCFChildPage.objects.filter(gparent=gparent, content_model='campaign', featured=True, bccf_topic=topic, status=2).order_by('-created')[:10]
     else:
-        context['talks'] = BCCFChildPage.objects.filter(gparent=gparent, content_model='topic', status=2).order_by('-created')[:10]
-        context['acts'] = BCCFChildPage.objects.filter(gparent=gparent, content_model='formpublished', status=2).order_by('-created')[:10]
-        context['gets'] = BCCFChildPage.objects.filter(gparent=gparent, content_model='campaign', status=2).order_by('-created')[:10]
+        context['talks'] = BCCFChildPage.objects.filter(gparent=gparent, content_model='topic', featured=True, status=2).order_by('-created')[:10]
+        context['acts'] = BCCFChildPage.objects.filter(gparent=gparent, content_model='formpublished', featured=True, status=2).order_by('-created')[:10]
+        context['gets'] = BCCFChildPage.objects.filter(gparent=gparent, content_model='campaign', featured=True, status=2).order_by('-created')[:10]
     return context
     
 @register.inclusion_tag("generic/includes/resource_carousel.html", takes_context=True)
