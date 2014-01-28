@@ -37,25 +37,29 @@ def survey_report(request, slug):
     questions = Question.objects.filter(form_published=published)
     for question in questions:
         if question.num_answers == 0:
-            question_key = 'Q-%s-%s' % (question.question,str(question.num_answers))
+            question_key = 'Q-%s-%d' % (question.question.replace(' ', '-'), question.num_answers)
             if question_key not in rows:
                 rows.update({question_key:[]})
         else:
             for x in range(0, question.num_answers):
-                question_key = 'Q-%s-%s' % (question.question,str(x))
+                question_key = 'Q-%s-%d' % (question.question.replace(' ', '-'), x)
                 if question_key not in rows:
                     rows.update({question_key:[]})
     for form in before_filled_forms:
         rows['Name'].append(form.user.get_full_name() or form.user.username)
         rows['Date'].append(form.filled)
         answers = FieldAnswer.objects.filter(form_filled=form)
+        current = None
         for answer in answers:
-            if current is None or current != answer.question:
+            if not current or current != answer.question:
                 counter = 0
                 current = answer.question
+                log.debug('not same: %s' % answer.question)
             elif current == answer.question:
                 counter += 1
-            rows['Q-%s-%s' % (current.question, str(counter))].append(answer.answer)
+                log.debug('same: %s' % answer.question)
+            log.debug(rows)
+            rows['Q-%s-%d' % (current.question.replace(' ', '-'), counter)].append(answer.answer)
         for row in rows:
             if len(rows[row]) < len(rows['Name']):
                 rows[row].append('')
@@ -105,25 +109,26 @@ def event_survey_report(request, slug):
         questions = Question.objects.filter(form_published=event.survey_before)
         for question in questions:
             if question.num_answers == 0:
-                question_key = 'Q-%s-%s' % (question.question,str(question.num_answers))
+                question_key = 'Q-%s-%d' % (question.question.replace(' ', '-'), question.num_answers)
                 if question_key not in rows:
                     rows.update({question_key:[]})
             else:
                 for x in range(0, question.num_answers):
-                    question_key = 'Q-%s-%s' % (question.question,str(x))
+                    question_key = 'Q-%s-%d' % (question.question.replace(' ', '-'), x)
                     if question_key not in rows:
                         rows.update({question_key:[]})
         for form in before_filled_forms:
             rows['Name'].append(form.user.get_full_name() or form.user.username)
             rows['Date'].append(form.filled)
             answers = FieldAnswer.objects.filter(form_filled=form)
+            current = None
             for answer in answers:
                 if current is None or current != answer.question:
                     counter = 0
                     current = answer.question
                 elif current == answer.question:
                     counter += 1
-                rows['Q-%s-%s' % (current.question, str(counter))].append(answer.answer)
+                rows['Q-%s-%d' % (current.question.replace(' ', '-'), counter)].append(answer.answer)
             for row in rows:
                 if len(rows[row]) < len(rows['Name']):
                     rows[row].append('')
@@ -133,25 +138,26 @@ def event_survey_report(request, slug):
         questions = Question.objects.filter(form_published=event.survey_after)
         for question in questions:
             if question.num_answers == 0:
-                question_key = 'Q-%s-%s' % (question.question,str(question.num_answers))
+                question_key = 'Q-%s-%d' % (question.question.replace(' ', '-'), question.num_answers)
                 if question_key not in rows:
                     rows.update({question_key:['']*len(after_filled_forms)})
             else:
                 for x in range(0, question.num_answers):
-                    question_key = 'Q-%s-%s' % (question.question,str(x))
+                    question_key = 'Q-%s-%d' % (question.question.replace(' ', '-'), x)
                     if question_key not in rows:
                         rows.update({question_key:[' ']*len(rows['Name'])})
         for form in after_filled_forms:
             rows['Name'].append(form.user.get_full_name() or form.user.username)
             rows['Date'].append(form.filled)
             answers = FieldAnswer.objects.filter(form_filled=form)
+            current = None
             for answer in answers:
                 if current is None or current != answer.question:
                     counter = 0
                     current = answer.question
                 elif current == answer.question:
                     counter += 1
-                rows['Q-%s-%s' % (current.question, str(counter))].append(answer.answer)
+                rows['Q-%s-%d' % (current.question.replace(' ', '-'), counter)].append(answer.answer)
             for row in rows:
                 if len(rows[row]) < len(rows['Name']):
                     rows[row].append('')
