@@ -350,6 +350,7 @@ INSTALLED_APPS = (
     'news',
     'pybb',
     'bccf',
+    'tinymce',
     "cartridge.shop",
     'formable.builder',
     # install via pip or easy_install django-form-utils
@@ -419,9 +420,6 @@ OPTIONAL_APPS = (
     "debug_toolbar",
     "django_extensions",
     "compressor",
-    #'ckeditor',
-    'tinymce',
-    #'filebrowser',
     PACKAGE_NAME_FILEBROWSER,
     PACKAGE_NAME_GRAPPELLI,
 )
@@ -538,13 +536,3 @@ TINYMCE_DEFAULT_CONFIG = {
     'cleanup_on_startup': True,
     'custom_undo_redo_levels': 10,
 }
-
-#CKEDITOR
-#CKEDITOR_UPLOAD_PATH = MEDIA_ROOT+"/uploads/ckeditor"
-#CKEDITOR_CONFIGS = {
-#    'default': {
-#        'toolbar': 'Full',
-#        'height': 300,
-#        'width': '100%',
-#    },
-#}
