@@ -2556,7 +2556,6 @@ table td {
 
 
 #home-listings{
-
 		.seven {
 			margin: 0 1%;
     		width: 98%;
@@ -2593,32 +2592,30 @@ table td {
 			}
 			}
 		.hlist-outer {
-
-			}
+		    height: 140px;
+	    }
 		.hlist-inner {
-
-
+            
+            height: 100%;
 			img {
-
+                height: 75px;
+                width: 75px;
 			}
 			h6 {
 }
 			p {
-
+                height: 70px;
 				}
 
-		.hlist-link {
-
-			}
+	       .hlist-link {
+                float: right;
+                margin: 0; 
+	       }
 
 		} /* End #hlist-right-side */
 		.hlist-pagination {
-		margin-bottom:20px;
+		  margin-bottom:20px;
 		}
-		.owl-controls {
-		  position: relative !important;    
-		}
-
 } /* End #home-listings */
 
 
