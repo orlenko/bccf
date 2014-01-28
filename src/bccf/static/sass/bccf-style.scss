@@ -2556,11 +2556,6 @@ table td {
 
 
 #home-listings{
-    
-        #member-professionals-carousel {
-            max-height: 115px;   
-        }
-
 		.seven {
 			margin: 0 1%;
     		width: 98%;
@@ -2597,11 +2592,11 @@ table td {
 			}
 			}
 		.hlist-outer {
-
-			}
+		    height: 140px;
+	    }
 		.hlist-inner {
             
-
+            height: 100%;
 			img {
                 height: 75px;
                 width: 75px;
@@ -2609,18 +2604,18 @@ table td {
 			h6 {
 }
 			p {
-
+                height: 70px;
 				}
 
-		.hlist-link {
-
-			}
+	       .hlist-link {
+                float: right;
+                margin: 0; 
+	       }
 
 		} /* End #hlist-right-side */
 		.hlist-pagination {
 		  margin-bottom:20px;
 		}
-
 } /* End #home-listings */
 
 
