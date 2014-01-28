@@ -1414,9 +1414,12 @@ textarea {
   float: left;
   margin: 4px;
   padding: 4px;
-  width: 98.5% img;
-  width-float: left;
-  width-margin: 10px;
+  width: 98.5%;
+}
+/* line 1120, ../sass/bccf-style.scss */
+#home-listings .hlist-inner img {
+  float: left;
+  margin: 10px;
 }
 /* line 1124, ../sass/bccf-style.scss */
 #home-listings .hlist-inner h6 {
