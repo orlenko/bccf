@@ -3325,23 +3325,28 @@ footer #newsletter .dashed-button a:hover {
   }
 
   /* line 116, ../mixins/marquee_themes.scss */
+  .big-marquee {
+    min-height: 0;
+  }
+
+  /* line 120, ../mixins/marquee_themes.scss */
   #tag-container {
     position: static;
     width: 100%;
     font-size: 20px;
   }
-  /* line 120, ../mixins/marquee_themes.scss */
+  /* line 124, ../mixins/marquee_themes.scss */
   #tag-container .a-wrapper {
     width: 100%;
     display: block;
     margin: 0;
   }
-  /* line 124, ../mixins/marquee_themes.scss */
+  /* line 128, ../mixins/marquee_themes.scss */
   #tag-container .a-wrapper .tag-box {
     width: 99%;
   }
 
-  /* line 130, ../mixins/marquee_themes.scss */
+  /* line 134, ../mixins/marquee_themes.scss */
   .lightbox {
     position: absolute;
     width: 100%;
@@ -3349,18 +3354,18 @@ footer #newsletter .dashed-button a:hover {
     bottom: 0;
     right: 0;
   }
-  /* line 137, ../mixins/marquee_themes.scss */
+  /* line 141, ../mixins/marquee_themes.scss */
   .lightbox .a-wrapper {
     float: right;
   }
 
-  /* line 143, ../mixins/marquee_themes.scss */
+  /* line 147, ../mixins/marquee_themes.scss */
   #home-listings .owl-controls {
     position: static;
     margin-right: 2%;
   }
 
-  /* line 150, ../mixins/marquee_themes.scss */
+  /* line 154, ../mixins/marquee_themes.scss */
   #carousel-resources .owl-item.active:last-child {
     margin-right: -2%;
   }
@@ -3368,120 +3373,120 @@ footer #newsletter .dashed-button a:hover {
 /******************************************
 -- Resource Theme
 *******************************************/
-/* line 160, ../mixins/marquee_themes.scss */
+/* line 164, ../mixins/marquee_themes.scss */
 .button-slide, .button-prev-dgreen, .button-prev-dgrey, .button-prev-dteal, .button-prev-lgreen, .button-prev-lgrey, .button-prev-lteal, .button-prev-lyellow, .button-prev-sgreen, .button-prev-sgrey, .button-next-steal, .button-prev-yellow, .button-next-dgreen, .button-next-dgrey, .button-next-dteal, .button-next-lgreen, .button-next-lgrey, .button-next-lteal, .button-next-lyellow, .button-next-sgreen, .button-next-sgrey, .button-next-yellow {
   background-repeat: no-repeat;
   background-position: 50% 50%;
 }
 
 /** Prev Buttons **/
-/* line 166, ../mixins/marquee_themes.scss */
+/* line 170, ../mixins/marquee_themes.scss */
 .button-prev-dgreen {
   background-image: url("../img/arrow-left-dgreen.png");
 }
 
-/* line 170, ../mixins/marquee_themes.scss */
+/* line 174, ../mixins/marquee_themes.scss */
 .button-prev-dgrey {
   background-image: url("../img/arrow-left-dgrey.png");
 }
 
-/* line 174, ../mixins/marquee_themes.scss */
+/* line 178, ../mixins/marquee_themes.scss */
 .button-prev-dteal {
   background-image: url("../img/arrow-left-dteal.png");
 }
 
-/* line 178, ../mixins/marquee_themes.scss */
+/* line 182, ../mixins/marquee_themes.scss */
 .button-prev-lgreen {
   background-image: url("../img/arrow-left-lgreen.png");
 }
 
-/* line 182, ../mixins/marquee_themes.scss */
+/* line 186, ../mixins/marquee_themes.scss */
 .button-prev-lgrey {
   background-image: url("../img/arrow-left-lgrey.png");
 }
 
-/* line 186, ../mixins/marquee_themes.scss */
+/* line 190, ../mixins/marquee_themes.scss */
 .button-prev-lteal {
   background-image: url("../img/arrow-left-lteal.png");
 }
 
-/* line 190, ../mixins/marquee_themes.scss */
+/* line 194, ../mixins/marquee_themes.scss */
 .button-prev-lyellow {
   background-image: url("../img/arrow-left-lyellow.png");
 }
 
-/* line 194, ../mixins/marquee_themes.scss */
+/* line 198, ../mixins/marquee_themes.scss */
 .button-prev-sgreen {
   background-image: url("../img/arrow-left-sgreen.png");
 }
 
-/* line 198, ../mixins/marquee_themes.scss */
+/* line 202, ../mixins/marquee_themes.scss */
 .button-prev-sgrey {
   background-image: url("../img/arrow-left-sgrey.png");
 }
 
-/* line 202, ../mixins/marquee_themes.scss */
+/* line 206, ../mixins/marquee_themes.scss */
 .button-next-steal {
   background-image: url("../img/arrow-left-steal.png");
 }
 
-/* line 206, ../mixins/marquee_themes.scss */
+/* line 210, ../mixins/marquee_themes.scss */
 .button-prev-yellow {
   background-image: url("../img/arrow-left-yellow.png");
 }
 
 /** Next Buttons **/
-/* line 212, ../mixins/marquee_themes.scss */
+/* line 216, ../mixins/marquee_themes.scss */
 .button-next-dgreen {
   background-image: url("../img/arrow-right-dgreen.png");
 }
 
-/* line 216, ../mixins/marquee_themes.scss */
+/* line 220, ../mixins/marquee_themes.scss */
 .button-next-dgrey {
   background-image: url("../img/arrow-right-dgrey.png");
 }
 
-/* line 220, ../mixins/marquee_themes.scss */
+/* line 224, ../mixins/marquee_themes.scss */
 .button-next-dteal {
   background-image: url("../img/arrow-right-dteal.png");
 }
 
-/* line 224, ../mixins/marquee_themes.scss */
+/* line 228, ../mixins/marquee_themes.scss */
 .button-next-lgreen {
   background-image: url("../img/arrow-right-lgreen.png");
 }
 
-/* line 228, ../mixins/marquee_themes.scss */
+/* line 232, ../mixins/marquee_themes.scss */
 .button-next-lgrey {
   background-image: url("../img/arrow-right-lgrey.png");
 }
 
-/* line 232, ../mixins/marquee_themes.scss */
+/* line 236, ../mixins/marquee_themes.scss */
 .button-next-lteal {
   background-image: url("../img/arrow-right-lteal.png");
 }
 
-/* line 236, ../mixins/marquee_themes.scss */
+/* line 240, ../mixins/marquee_themes.scss */
 .button-next-lyellow {
   background-image: url("../img/arrow-right-lyellow.png");
 }
 
-/* line 240, ../mixins/marquee_themes.scss */
+/* line 244, ../mixins/marquee_themes.scss */
 .button-next-sgreen {
   background-image: url("../img/arrow-right-sgreen.png");
 }
 
-/* line 244, ../mixins/marquee_themes.scss */
+/* line 248, ../mixins/marquee_themes.scss */
 .button-next-sgrey {
   background-image: url("../img/arrow-right-sgrey.png");
 }
 
-/* line 248, ../mixins/marquee_themes.scss */
+/* line 252, ../mixins/marquee_themes.scss */
 .button-next-steal {
   background-image: url("../img/arrow-right-steal.png");
 }
 
-/* line 252, ../mixins/marquee_themes.scss */
+/* line 256, ../mixins/marquee_themes.scss */
 .button-next-yellow {
   background-image: url("../img/arrow-right-yellow.png");
 }
