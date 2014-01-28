@@ -554,8 +554,8 @@ class UserProfile(models.Model):
         self.membership_order = order
         # Update membership type and level
         variation = self.membership_product_variation
-        categ_name = variation.product.categories.all()[0].lower()
-        self.membership_level = variation.total_price
+        categ_name = variation.product.categories.all()[0].title.lower()
+        self.membership_level = variation.unit_price
         self.membership_type = None
         for label, _descr in self.MEMBERSHIP_TYPES:
             if label in categ_name:
@@ -709,7 +709,7 @@ class EventForProfessionals(EventBase):
     @permalink
     def create_url(self):
         return('professionals-event-create', (), {})
-        
+
     def get_report_url(self):
         return reverse('event-survey-report', kwargs={'slug': self.slug})
 
