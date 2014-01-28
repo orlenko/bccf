@@ -1115,7 +1115,7 @@ textarea {
 		float:left;
 		margin:4px;
 		padding:4px;
-		width: 99%;
+		width: 98.5%
 
 			img {
 				float:left;
@@ -2614,6 +2614,9 @@ table td {
 		} /* End #hlist-right-side */
 		.hlist-pagination {
 		margin-bottom:20px;
+		}
+		.owl-controls {
+		  position: relative !important;    
 		}
 
 } /* End #home-listings */
