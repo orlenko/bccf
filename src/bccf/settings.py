@@ -419,9 +419,9 @@ OPTIONAL_APPS = (
     "debug_toolbar",
     "django_extensions",
     "compressor",
-    #'ckeditor',
+    'ckeditor',
     'tinymce',
-    'filebrowser',
+    #'filebrowser',
     PACKAGE_NAME_FILEBROWSER,
     PACKAGE_NAME_GRAPPELLI,
 )
