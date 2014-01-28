@@ -5,8 +5,6 @@ from django.views.generic import TemplateView
 
 from mezzanine.core.views import direct_to_template
 
-from filebrowser.sites import site
-
 from bccf import settings
 from bccf.feeds import EventsForParentsFeed, EventsForProfessionalsFeed
 from bccf.views.events import ProfessionalEventWizard, FORMS
@@ -19,10 +17,6 @@ admin.autodiscover()
 # to the project's homepage.
 
 urlpatterns = patterns("",
-
-    #File Browser
-    (r'^admin/filebrowser/', include(site.urls)),
-
     #UPLOADS
     url(r'media/(?P<path>.*)$', 'django.views.static.serve', {
         'document_root': settings.MEDIA_ROOT,
@@ -43,9 +37,6 @@ urlpatterns = patterns("",
 
     #TinyMCE
     (r'^tinymce/', include('tinymce.urls')),
-
-    # CKEDITOR 
-    #(r'^ckeditor/', include('ckeditor.urls')),
 
     # Podcasts
     #('^podcasts/', include('podcasting.urls')),
