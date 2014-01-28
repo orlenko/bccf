@@ -94,7 +94,7 @@
 }
 /* line 120, sass/formable_style.scss */
 #form_view ul label {
-  width: 100px;
+  width: 150px;
   display: inline-block;
 }
 /* line 124, sass/formable_style.scss */
@@ -104,4 +104,10 @@
 /* line 129, sass/formable_style.scss */
 #form_view ul ul li {
   display: inline;
+}
+/* line 133, sass/formable_style.scss */
+#form_view ul textarea {
+  width: 100%;
+  height: 300px;
+  resize: vertical;
 }
