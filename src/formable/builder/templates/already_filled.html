@@ -1,13 +1,16 @@
-{% extends "bccf/bccf_page.html" %}
+{% extends "pages/bccfpage.html" %}
+
+{% load content_carousel_tags %}
 
 {% block content%}
 <div class="container">
-    <h2>Already Filled</h2>
+    <h2>{{ page.title|title }}</h2>
+    <h4>You have already filled this survey.</h4>
 </div>
 {% endblock %}
 
 {% block carousels %}
-<h4 class="container">You have already filled this survey.</h4>
+<div class="section row row-two">
+    {% content_carousel_for page.gparent 'Other Surveys' None 'formpublished' %}
+</div>
 {% endblock %}
-
-{% block page_script %}{% endblock %}

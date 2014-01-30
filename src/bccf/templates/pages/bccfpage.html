@@ -9,15 +9,21 @@
       <section id="page-header" class="section">
           <article class="col twelve">
             {% block content %}
-            {% editable page.title page.content %}
+            {% editable page.title page.get_content_model.content %}
             <h1>{{ page.title }}</h1>
-            {{ page.content|safe }}
+            {{ page.get_content_model.content|safe }}
             {% endeditable %}
             {% endblock %}
           </article>
       </section>
       <section class="section">
-      {% block carousels %}{% endblock %}
+      {% block carousels %}
+        {% if child %}
+            {% content_carousel_for page page.title child %}
+        {% else %}
+            {% content_carousel_for page page.title %}
+        {% endif %}
+    {% endblock %}
       </section>
   </section>
 
@@ -99,6 +105,12 @@ $('.content-pages').on('click', '.page-box', function(e) {
     } else {
         clicked = $(e.target).parents('.page-box');
     }
+    console.log(clicked);
+    if(clicked.hasClass('go-blank')) {
+        window.open(clicked.find('a').attr('href'), '_blank');
+        return;     
+    }    
+    
     if(!clicked.hasClass('page-box-active')) { // was the active one clicked?
         pageURL = clicked.find('a').attr('href');
         if(open_baby) {
@@ -223,8 +235,7 @@ var load_content = function(box) {
     if (pageURL != window.location) {
         window.history.pushState({ path: pageURL }, '', pageURL);
     }
-} 
-
+}
 </script>
 {% endblock %}
 

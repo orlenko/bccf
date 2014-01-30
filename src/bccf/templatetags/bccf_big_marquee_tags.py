@@ -22,11 +22,16 @@ def big_marquee_for(context, obj=None):
             context['slides'] = HomeMarqueeSlide.objects.filter(marquee=homeMarquee)
         except ObjectDoesNotExist:
             pass
-    else: # For other pages
-        context['show_tag'] = False
+    elif obj.__class__.__name__ == 'BCCFTopic':
         if obj.marquee:
             try:
                 context['slides'] = PageMarqueeSlide.objects.filter(marquee=obj.marquee)
+            except ObjectDoesNotExist:
+                pass
+    else: # For other pages
+        if obj.get_content_model().marquee:
+            try:
+                context['slides'] = PageMarqueeSlide.objects.filter(marquee=obj.get_content_model().marquee)
             except ObjectDoesNotExist:
                 pass
     return context

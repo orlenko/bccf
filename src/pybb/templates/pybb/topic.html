@@ -1,8 +1,8 @@
-{% extends 'bccf/bccf_page.html' %}
+{% extends 'pages/bccfpage.html' %}
 
 {% load url from future %}
 
-{% load pybb_tags i18n %}
+{% load pybb_tags i18n content_carousel_tags bccf_feature_tags %}
 
 {% block title %}{{ topic }}{% endblock %}
 
@@ -103,4 +103,37 @@
             </div>
         {% endif %}
     </div>
+    <div class="section row row-two">
+        {% content_carousel_for topic.gparent 'Continue Talking' None 'topic' %}
+    </div>
+    <div id="related-resource-container" class="section row row-two">
+        <h3>Related Resources</h3>
+        {% related_resources_for topic 'article' 'Articles' %}
+        {% related_resources_for topic 'downloadableform' 'Downloadable Forms' %}
+        {% related_resources_for topic 'magazine' 'Magazines' %}
+        {% related_resources_for topic 'tipsheet' 'Tip Sheets' %}
+        {% related_resources_for topic 'video' 'Videos' %}
+    </div>
+
+{% endblock %}
+
+{% block page_script %}
+{{ block.super }}
+<script type="text/javascript" >
+$(function() {
+    var height = 0;
+    var highest = 0;
+    $('#related-resource-container > .related-resource').each(function() {
+        var h = $(this).height();
+        if(h > height) {
+            height = h;
+            console.log(h);
+            highest = $(this).height();  
+        }
+    });
+    $('#related-resource-container > .related-resource').each(function() {
+        $(this).css('height', highest);
+    });
+});
+</script>
 {% endblock %}

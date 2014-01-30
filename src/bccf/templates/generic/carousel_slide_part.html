@@ -4,10 +4,14 @@
     <div>
         <ul class="page-container-inner">
     {% endif %}
-            <li id="{{ slide.slug }}" class="page-box carousel-box col four">
+            <li id="{{ slide.slug }}" class="page-box {% if slide.content_model == 'topic' or slide.content_model == 'formpublished' %} go-blank {% endif %} carousel-box col four">   
                 <img src="{{ MEDIA_URL }}{% bccf_thumbnail slide.image 195 75 %}" alt="{{ slide.title }}" />
                 <div>
+                    {% if slide.content_model == 'topic' or slide.content_model == 'formpublished' %}
+                    <a href="{{ slide.get_content_model.get_absolute_url }}">
+                    {% else %}
                     <a href="{{ slide.get_absolute_url }}">
+                    {% endif %}
                         <h2>{{ slide.title }}</h2>
                     </a>
                     <p class="no-tablet no-mobile">{{ slide.description|truncatechars:20 }}</p>

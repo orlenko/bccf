@@ -43,6 +43,7 @@ urlpatterns = patterns("",
     
     url('^bccf_admin_page_ordering/$', 'bccf.views.page.bccf_admin_page_ordering', name='bccf-admin-page-ordering'),
 
+    
     url("^account/orders/$", "cartridge.shop.views.order_history", name="shop_order_history"),
 
     url(r'^member/directory/', 'bccf.views.page.user_list', name='member-directory'),
@@ -81,9 +82,9 @@ urlpatterns = patterns("",
     url(r'^next/topic/(?P<topic>.+)/(?P<which>.*)/(?P<offset>\d+)/$', 'bccf.views.page.topic_next', name='topic-next'),
     url(r'^next/(?P<parent>.+)/(?P<which>.*)/(?P<offset>\d+)/$', 'bccf.views.page.next', name='bccf-next'),
     url(r'^topic/(?P<topic>.+)/$', 'bccf.views.page.topic_page', name='topic-page'),
-    url(r'^(?P<parent>%s)/(?P<child>.+)/(?P<baby>.+)/$' % (settings.BCCF_PAGES), 'bccf.views.page.page', name='bccf-baby'),
-    url(r'^(?P<parent>%s)/(?P<child>.+)/$' % (settings.BCCF_PAGES), 'bccf.views.page.page', name='bccf-child'),
-    url(r'^(?P<parent>%s)/$' % (settings.BCCF_PAGES), 'bccf.views.page.page', name='bccf-page'),
+    url(r'^resources/(?P<type>%s)/$' % settings.BCCF_RESOURCE_TYPES, 'bccf.views.page.resource_type_page', name='resource-type'),
+    url(r'^bccf/(?P<parent>.+)/(?P<child>.+)/(?P<baby>.+)/$', 'bccf.views.page.page', name='bccf-baby'),
+    url(r'^bccf/(?P<parent>.+)/(?P<child>.+)/$', 'bccf.views.page.page', name='bccf-child'),
 
     # We don't want to presume how your homepage works, so here are a
     # few patterns you can use to set it up.

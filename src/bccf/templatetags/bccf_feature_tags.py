@@ -41,3 +41,15 @@ def featured_resources(context):
 def featured_users(context, type): # 0 - level 1; 50 - level 2; 100 - level 3
     context['users'] = UserProfile.objects.filter(membership_type=type, membership_level=100).order_by('?')
     return context
+    
+@register.inclusion_tag('generic/related_resources.html', takes_context=True)
+def related_resources_for(context, obj, type, title):
+    context['resource_type'] = title
+    #Related resources
+    q = Q()
+    for topic in obj.bccf_topic.all():        
+        q = q | Q(bccf_topic = topic)
+        
+    resource_pre = BCCFChildPage.objects.filter(Q(content_model=type)).distinct()
+    context['resources'] = resource_pre.filter(q, ~Q(slug=obj)).order_by('?')[:10]
+    return context

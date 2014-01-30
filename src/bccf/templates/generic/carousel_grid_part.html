@@ -4,17 +4,23 @@
     <div>
         <ul class="page-container-inner">
     {% endif %}
-            <li id="{{ slide.slug }}" class="page-box grid-box col four">
+            <li id="{{ slide.slug }}" class="page-box {% if slide.content_model == 'topic' and slide.content_model == 'formpublished' %} go-blank {% endif %} grid-box col four">
                 <img src="{{ MEDIA_URL }}{% bccf_thumbnail slide.image 195 75 %}" alt="{{ slide.title }}" />
                 <div>
+                    {% if slide.content_model == 'topic' or slide.content_model == 'formpublished' %}
+                    <a href="{{ slide.get_content_model.get_absolute_url }}">
+                    {% else %}
                     <a href="{{ slide.get_absolute_url }}">
+                    {% endif %}
                         <h2>{{ slide.title }}</h2>
                     </a>
                     <p class="no-tablet">{{ slide.description|truncatechars:20 }}</p>
                 </div>
             </li>
-        {% if forloop.counter|divisibleby:"3" or forloop.last %}
-            <li class="grid-content reset col twelve"></li>                  
+        {% if slide.content_model != 'topic' and slige.content_model != 'formpublished' %}
+            {% if forloop.counter|divisibleby:"3" or forloop.last %}
+            <li class="grid-content reset col twelve"></li>
+            {% endif %}           
         {% endif %}
     {% if forloop.counter|divisibleby:"12" or forloop.last %}
         </ul>

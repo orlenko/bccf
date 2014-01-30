@@ -21,7 +21,7 @@ def content_carousel_for(context, obj, title, child=None, which=None):
     params = None
     context['open'] = False
     context['filter'] = False
-    context['carousel_color'] = obj.carousel_color
+    context['carousel_color'] = obj.get_content_model().carousel_color
     context['carousel_title'] = title
     context['carousel_name'] = which
     context['slides'] = None    
@@ -29,8 +29,12 @@ def content_carousel_for(context, obj, title, child=None, which=None):
     if title == 'Talk':
         context['filter'] = True    
     
+    log.info(which)
+    log.info(child)
+
     try:
         if child is None:
+            log.info('HERE 2')
             if which is None:
                 context['slides'] = BCCFChildPage.objects.filter(gparent=obj.pk, status=2).order_by('-created')[:12]
             else:
@@ -39,11 +43,13 @@ def content_carousel_for(context, obj, title, child=None, which=None):
                 else:
                     context['slides'] = BCCFChildPage.objects.filter(gparent=obj.pk, page_for=which, status=2).order_by('-created')[:12]
         elif which is None:
+            log.info('HERE 3')
             context['open'] = True
             context['slides'] = [BCCFChildPage.objects.get(slug=child)]
             context['slides'].extend(BCCFChildPage.objects.filter(~Q(slug=child), gparent=obj.pk, status=2).order_by('-created')[:11])
         elif obj.slug == 'resources' or obj.slug == 'tag': #Multiple
             temp = BCCFChildPage.objects.get(slug=child)
+            log.info('HERE')
             if temp.content_model == which: #For different content models
                 context['open'] = True
                 context['slides'] = [temp]
@@ -52,6 +58,7 @@ def content_carousel_for(context, obj, title, child=None, which=None):
                 context['slides'] = BCCFChildPage.objects.filter(gparent=obj.pk, content_model=which, status=2).order_by('-created')[:12]
         else:
             temp = BCCFChildPage.objects.get(slug=child)
+            log.info('NOT HERE')
             if temp.page_for == which: #For parent or professional
                 context['open'] = True
                 context['slides'] = [temp]

@@ -3,17 +3,19 @@
     <div>
         <ul class="page-container-inner">
     {% endif %}
-        <li class="page-box grid-box col four">
+        <li class="{% if slide.content_model != 'topic' and slide.content_model != 'formpublished' %} page-box {% endif %} grid-box col four">
             <img src="http://placehold.it/350x75&text=Image{{ slide.img }}" alt="{{ slide.title }}" />
             <div>
-                <a href="{% url 'ajax-page' parent=page.title type=carouselTitle page=slide.slug  %}">
+                <a href="{% url 'ajax-page' parent=page.title type=carouselTitle page=slide.slug  %}" {% if slide.content_model != 'topic' and slide.content_model != 'formpublished' %} target="_blank" {% endif %}>
                     <h2>{{ slide.title }}</h2>
                 </a>
                 <p class="no-tablet">{{ slide.description|truncatechars:25 }}</p>
             </div>
         </li>
-        {% if forloop.counter|divisibleby:"3" or forloop.last %}
-        <li class="grid-content reset col twelve"></li>                  
+        {% if slide.content_model != 'topic' and slige.content_model != 'formpublished' %}
+            {% if forloop.counter|divisibleby:"3" or forloop.last %}
+                <li class="grid-content reset col twelve"></li>
+            {% endif %}      
         {% endif %}
     {% if forloop.counter|divisibleby:"12" or forloop.last %}
         </ul>

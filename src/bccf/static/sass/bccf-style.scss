@@ -1371,29 +1371,60 @@ textarea {
    }
 }
 
-.subpage {
-    padding: 10px;
+.subpage {}
+
+    .related-resource {
+        width: 33.33%;
+        margin: 0;
+        h4 {
+            @include font-size(15);     
+        }
+        a:hover {
+            font-weight: 400 !important; 
+        }
+    }
+
+    .home-content,
+    .subpage-content {
+        padding: 10px;
+        margin: 0; 
+    }
+
+    .baby-content {
+        display: none;    
+    }
+
+    .subpage {
+        a {
+            text-decoration: none;
+            &:hover, &:active {
+                text-decoration: underline;
+            }    
+        }    
+    }
 
     .subpage-tabs {
         > ul {
-            padding-left: 1.5%;
             > li {
+                margin: 0;
                > a {
+                    @include font-size(12);
+                    padding: 10px 0;
                     text-transform: uppercase;
                     text-decoration: none;
                     color: #FFF;
-                    font-weight: 700;
                     display: block;
-                    padding: 20px 0;
                     text-align: center;
+                    &:hover, &:active {
+                        text-decoration: none;    
+                    }
                 }
-                > &.col.three:nth-child(5n) {
-                    margin-left: 0;
+                #child-home {
+                    color: $dgrey;                
                 }
             }
         }
     }
-}
 
 .ajax-loader {
     display: block;
@@ -1421,16 +1452,26 @@ textarea {
 		  background-color:$lgreen;
 		}
 	}
+    .subpage-content {
+	   background-color: $lgreen;
+	   color: #FFF;
+	   a {
+	       color: #FFF;
+	       text-decoration: underline;     
+	   }
+	}
 	.subpage-tabs {
-        border-top: 2px solid $lgreen;
         > ul {
             > li {
-                > a {
+                > a:not(#child-home) {
                     background-color: $lgreen;
                     &:hover, &:focus {
-        	        background-color: $lgreen*1.1;
-        	       }
+        	           background-color: $lgreen*1.1;
+        	        }
                 }
+            }
+            > li.active {
+                border-bottom: 10px solid $lgreen;
             }
         }
     }
@@ -1456,16 +1497,26 @@ textarea {
 		  background-color:$dgreen;
 		}
 	}
+	.subpage-content {
+	   background-color: $dgreen;
+	   color: #FFF;
+	   a {
+	       color: #FFF;
+	       text-decoration: underline;     
+	   }
+	}
 	.subpage-tabs {
-        border-top: 2px solid $dgreen;
         > ul {
             > li {
-                > a {
-                    background-color: $dgreen;
-                    &:hover, &:focus {
-    	           background-color: $dgreen*1.1;
-    	       }
+                > a:not(#child-home) {
+                   background-color: $dgreen;
+                   &:hover, &:focus {
+    	               background-color: $dgreen*1.1;
+    	           }
                 }
+            }
+            > li.active {
+                border-bottom: 10px solid $dgreen;
             }
         }
     }
@@ -1491,16 +1542,26 @@ textarea {
 		  background-color:$lteal;
 		}
 	}
+	.subpage-content {
+	   background-color: $lteal;
+	   color: #FFF;
+	   a {
+	       color: #FFF;
+	       text-decoration: underline;     
+	   }
+	}
 	.subpage-tabs {
-        border-top: 2px solid $lteal;
         > ul {
             > li {
-                > a {
-                    background-color: $lteal;
-                    &:hover, &:focus {
-        	           background-color: $lteal*1.1;
-        	       }
+                > a:not(#child-home) {
+                   background-color: $lteal;
+                   &:hover, &:focus {
+    	               background-color: $lteal*1.1;
+    	           }
                 }
+            }
+            > li.active {
+                border-bottom: 10px solid $lteal;
             }
         }
     }
@@ -2210,6 +2271,10 @@ footer {
         }
     }
 }
+
+    .related-resource {
+        width: 50%;
+    }
 
 #tag-widget {
 
