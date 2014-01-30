@@ -22,7 +22,7 @@
 
 $(document).ready(function(){
 
-  // Other initiations go here within the document ready...
+  $('.accordion').accordion();
 
 
 }); // end document ready

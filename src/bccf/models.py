@@ -571,17 +571,15 @@ class UserProfile(models.Model):
             for order in orders:
                 for order_item in order.items.all():
                     for variation in ProductVariation.objects.filter(sku=order_item.sku):
-                        for category in variation.product.categories.all():
-                            if category.title.startswith('Membership'):
-                                self.set_membership_order(order)
-                                self.save()
-                                return variation
+                        if is_product_variation_categ(variation, 'Membership'):
+                            self.set_membership_order(order)
+                            self.save()
+                            return variation
             return None
         for order_item in self.membership_order.items.all():
             variation = ProductVariation.objects.get(sku=order_item.sku)
-            for category in variation.product.categories.all():
-                if category.title.startswith('Membership'):
-                    return variation
+            if is_product_variation_categ(variation, 'Membership'):
+                return variation
 
     def cancel_membership(self):
         from bccf.util.memberutil import refund
@@ -647,6 +645,12 @@ class UserProfile(models.Model):
         price = membership.unit_price
         now = datetime.now()
         return remaining_subscription_balance(purchase_date, expiration_date, now, price)
+
+
+def is_product_variation_categ(variation, categ):
+    for category in variation.product.categories.all():
+        if category.title.startswith(categ):
+            return True
 
 #### USER STUFF END ####
 

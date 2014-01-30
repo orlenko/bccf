@@ -1,6 +1,7 @@
 {% extends "bccf/bccf_page.html" %}
 
 {% load bccf_tags %}
+{% load bccf_filters %}
 
 {% block content %}
 <h1>Hello {{ user }}!</h1>
@@ -9,34 +10,50 @@
 {% block carousels %}
 <div class="container">
 {% if membership %}
-	<h2>Current Membership Info</h2>
+	<div class="accordion">
+		<h2>Your Membership</h2>
+		<div class="groupcontent">
+			{% if user.profile.requested_cancellation %}
+				<p class="message cancellation" style="color:red; font-weight: bold;">
+					You have requested a cancellation of your membership.
+					We are processing your request, and will contact you soon.
+				</p>
+			{% else %}
+				<p>Membership: {{ membership }}</p>
+				<p>Expires: {{ expiration }}</p>
 
-	{% if user.profile.requested_cancellation %}
-		<p class="message cancellation" style="color:red; font-weight: bold;">
-			You have requested a cancellation of your membership.
-			We are processing your request, and will contact you soon.
-		</p>
-	{% else %}
-		<p>Membership: {{ membership }}</p>
-		<p>Expires: {{ expiration }}</p>
+				<p>
+					To extend your current membership, <a href="{{ membership|membership_renew_url }}">click here</a>.
+				</p>
 
-		<p>
-			To extend your current membership, <a href="{{ membership|membership_renew_url }}">click here</a>.
-		</p>
+				{% if upgrades %}
+					<h3>Upgrade to:</h3>
+					<ul>
+						{% for upgrade in upgrades %}
+							<li><a href="{{ upgrade|membership_upgrade_url }}">{{ upgrade }}</a></li>
+						{% endfor %}
+					</ul>
+				{% endif %}
 
-		{% if upgrades %}
-			<h3>Upgrade to:</h3>
-			<ul>
-				{% for upgrade in upgrades %}
-					<li><a href="{{ upgrade|membership_upgrade_url }}">{{ upgrade }}</a></li>
-				{% endfor %}
-			</ul>
+				<p>
+					To cancel your membership, <a href="{% url 'member-membership-cancel' %}">click here</a>
+				</p>
+			{% endif %}
+		</div>
+		{% if membership|has_feature:'people' %}
+			<h2>People</h2>
+			<div class="groupcontent">
+				Manage people here
+			</div>
 		{% endif %}
 
-		<p>
-			To cancel your membership, <a href="{% url 'member-membership-cancel' %}">click here</a>
-		</p>
-	{% endif %}
+		{% if membership|has_feature:'events' %}
+			<h2>Events</h2>
+			<div class="groupcontent">
+				Manage events here
+			</div>
+		{% endif %}
+	</div>
 
 {% else %}
 	<p>To become a member, please select one of the following options:</p>

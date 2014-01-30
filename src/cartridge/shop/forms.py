@@ -237,6 +237,9 @@ class DiscountForm(forms.ModelForm):
     class Meta:
         model = Order
         fields = ("discount_code",)
+        widgets = {
+            'discount_code': forms.HiddenInput()
+        }
 
     def __init__(self, request, data=None, initial=None):
         """
@@ -319,6 +322,9 @@ class OrderForm(FormsetForm, DiscountForm):
                    f.name.startswith("billing_detail") or
                    f.name.startswith("shipping_detail")] +
                    ["additional_instructions", "discount_code"])
+        widgets = {
+            'discount_code': forms.HiddenInput()
+        }
 
     def __init__(self, request, step, data=None, initial=None, errors=None):
         """
