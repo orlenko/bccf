@@ -24,6 +24,7 @@ class SettingsAdmin(admin.ModelAdmin):
     list_display = ['name', 'value']
     list_editable = ['value']
 
+
 class ParentsEventAdmin(DisplayableAdmin):
     def __init__(self, *args, **kwargs):
         super(ParentsEventAdmin, self).__init__(*args, **kwargs)
@@ -46,7 +47,7 @@ class ParentsEventAdmin(DisplayableAdmin):
             for fieldname in ['provider', 'date_start', 'date_end', 'price']:
                 self.list_display.insert(-1, fieldname)
 
-class ProfessionalsEventAdmin(DisplayableAdmin):   
+class ProfessionalsEventAdmin(DisplayableAdmin):
     def __init__(self, *args, **kwargs):
         super(ProfessionalsEventAdmin, self).__init__(*args, **kwargs)
         if self.fieldsets == DisplayableAdmin.fieldsets:
@@ -68,11 +69,11 @@ class ProfessionalsEventAdmin(DisplayableAdmin):
         if self.list_display == DisplayableAdmin.list_display:
             self.list_display = list(deepcopy(self.list_display))
             for fieldname in ['provider', 'date_start', 'date_end', 'price', 'report_link']:
-                self.list_display.insert(-1, fieldname)   
-        
+                self.list_display.insert(-1, fieldname)
+
     def report_link(self, obj):
         return '<a href="%s">Download Report</a>' % obj.get_report_url()
-    report_link.allow_tags = True 
+    report_link.allow_tags = True
 
 admin.site.register(Settings, SettingsAdmin)
 admin.site.register(EventForParents, ParentsEventAdmin)
@@ -349,11 +350,11 @@ class BCCFTagAdmin(DisplayableAdmin):
         if self.list_display == DisplayableAdmin.list_display:
             self.list_display = list(deepcopy(self.list_display))
             for fieldname in ['featured']:
-                self.list_display.insert(-1, fieldname) 
+                self.list_display.insert(-1, fieldname)
         if self.list_filter == DisplayableAdmin.list_filter:
             self.list_filter = list(deepcopy(self.list_filter))
             for fieldname in ['featured']:
-                self.list_filter.insert(-1, fieldname)  
+                self.list_filter.insert(-1, fieldname)
 
 admin.site.register(BCCFPage, PageAdmin)
 admin.site.register(BCCFTopic, BCCFTopicAdmin)
@@ -381,7 +382,7 @@ class PageMarqueeInline(admin.TabularInline):
 
 #Marquees
 class MarqueeSlideAdmin(admin.ModelAdmin):
-    fields = ('title', 'caption', 'url', 'linkLabel', 'image')  
+    fields = ('title', 'caption', 'url', 'linkLabel', 'image')
     list_display = ['title', 'caption', 'url']
 
 class HomeMarqueeSlideAdmin(MarqueeSlideAdmin):
@@ -394,7 +395,7 @@ class FooterMarqueeSlideAdmin(admin.ModelAdmin):
 
 class PageMarqueeSlideAdmin(MarqueeSlideAdmin):
     inlines = [PageMarqueeInline]
-    
+
 class MarqueeAdmin(admin.ModelAdmin):
     list_display = ('title', 'active')
     list_filter = ('active',)

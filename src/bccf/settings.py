@@ -456,6 +456,9 @@ AUTH_PROFILE_MODULE = 'bccf.UserProfile'
 ACCOUNTS_PROFILE_FORM_EXCLUDE_FIELDS = [
     'membership_order',
     'is_forum_moderator',
+    'membership_type',
+    'membership_level',
+    'requested_cancellation',
 ]
 ACCOUNTS_PROFILE_VIEWS_ENABLED = True
 
