@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% load bccf_tags %}
+
+
+{% block main %}
+
+<p>
+	Hello {{ user }}!
+</p>
+
+{% if membership %}
+	<h2>Current Membership Info</h2>
+
+	{% if user.profile.requested_cancellation %}
+		<p class="message cancellation" style="color:red; font-weight: bold;">
+			You have requested a cancellation of your membership.
+			We are processing your request, and will contact you soon.
+		</p>
+	{% else %}
+		<p>Membership: {{ membership }}</p>
+		<p>Expires: {{ expiration }}</p>
+
+		<p>
+			To extend your current membership, <a href="{{ membership|membership_renew_url }}">click here</a>.
+		</p>
+
+		{% if upgrades %}
+			<h3>Upgrade to:</h3>
+			<ul>
+				{% for upgrade in upgrades %}
+					<li><a href="{{ upgrade|membership_upgrade_url }}">{{ upgrade }}</a></li>
+				{% endfor %}
+			</ul>
+		{% endif %}
+
+		<p>
+			To cancel your membership, <a href="{% url 'member-membership-cancel' %}">click here</a>
+		</p>
+	{% endif %}
+
+{% else %}
+	<p>To become a member, please select one of the following options:</p>
+	<ul>
+		<li><a href="/member/membership-parents/">Parent Membership</a></li>
+		<li><a href="/member/membership-professionals/">Professional Membership</a></li>
+		<li><a href="/member/membership-organizations/">Organization Membership</a></li>
+	</ul>
+{% endif %}
+
+<p>
+	To manage your personal profile, please <a href="/account/update/">click here</a>.
+</p>
+{% endblock %}
