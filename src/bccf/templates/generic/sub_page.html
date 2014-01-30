@@ -1,16 +1,15 @@
-{% load static bccf_rating_tags comment_tags %}
+{% load bccf_feature_tags static bccf_rating_tags comment_tags %}
 <section id={{ child_obj.slug }} class="subpage {{ child_obj.gparent.carousel_color }}">
-    <div class="section">
-        {% bccf_rating_for child_obj %}
-    </div>
-    <div class="subpage-content section row"></div>    
-    <div class="subpage-tabs section row">
+        <div class="subpage-tabs section">
         <ul class="no-style-list">
-            <li class="col three mobile-full">
+            <li class="col two mobile-full">
                 <a href="{% url 'bccf-baby' child_obj.gparent.slug child_obj.slug 'child-home' %}" id="child-home" class="baby-content-btn">Home</a>
                 <div class="baby-content">
+                    <div class="section">
+                        {% bccf_rating_for child_obj %}
+                    </div>
                     <h3>{{ child_obj.title }}</h3>
-                    {{ child_obj.content|safe }}
+                    {{ child_obj.content|safe }}                 
                 </div>
             </li>
             {% for baby in babies %}
@@ -19,11 +18,11 @@
                 <div class="baby-content">
                     <h3>{{ baby.title }}</h3>
                     {{ baby.content|safe }}
-                </div>            
+                </div>
             </li>
             {% endfor %}
             {% if child_obj.gparent.slug == 'trainings' %}
-            <li class="col three mobile-full">
+            <li class="col two mobile-full">
                 <a href="{% url 'bccf-baby' child_obj.gparent.slug child_obj.slug 'child-info' %}" id="child-info" class="baby-content-btn">Information</a>
                 <div class="baby-content">
                     <h3>Event Information</h3>
@@ -59,34 +58,30 @@
             </li>
             {% endif %}
             {% if child_obj.gparent.slug == 'resources' %}
-            <li class="col three mobile-full"><a href="{{ MEDIA_URL }}{{ child_obj.get_content_model.attached_document }}" target="_blank">Download</a></li>
+            <li class="col two mobile-full"><a href="{{ MEDIA_URL }}{{ child_obj.get_content_model.attached_document }}" target="_blank">Download</a></li>
             {% endif %}
             {% if child_obj.content_model == 'video' %}
-            <li class="col three mobile-full"><a href="#" target="_blank">View</a></li>
+            <li class="col two mobile-full"><a href="#" target="_blank">View</a></li>
             {% endif %}
             {% if child_obj.content_model == 'formpublished' %}
-            <li class="col three mobile-full"><a href="{{ child_obj.get_content_model.get_survey_url }}" target="_blank">Act</a></li>
+            <li class="col two mobile-full"><a href="{{ child_obj.get_content_model.get_survey_url }}" target="_blank">Act</a></li>
             {% endif %}
             {% if child_obj.content_model == 'topic' %}
-            <li class="col three mobile-full"><a href="{{ child_obj.get_content_model.get_absolute_url }}" target="_blank">Talk</a></li>
+            <li class="col two mobile-full"><a href="{{ child_obj.get_content_model.get_absolute_url }}" target="_blank">Talk</a></li>
             {% endif %}
-            
-            {% if resources %}
-            <li class="col three mobile-full" id="resources">
+
+            <li class="col two mobile-full" id="resources">
                 <a href="{% url 'bccf-baby' child_obj.gparent.slug child_obj.slug 'baby-resources' %}" id="baby-resources" class="baby-content-btn">Resources</a>
                 <div class="baby-content">
-                <h3>Top {{ resources|length }} Most Related Resource{{ resources|length|pluralize }}</h3>
-                    {% if resources %}  
-                    <ul>
-                        {% for resource in resources%}
-                        <li><a href="{{ resource.get_absolute_url }}">{{ resource.title }}</a></li>
-                        {% endfor %}          
-                    </ul>
-                    {% endif %}  
+                {% related_resources_for child_obj 'article' 'Articles' %}
+                {% related_resources_for child_obj 'downloadableform' 'Downloadable Forms' %}
+                {% related_resources_for child_obj 'magazine' 'Magazines' %}
+                {% related_resources_for child_obj 'tipsheet' 'Tip Sheets' %}
+                {% related_resources_for child_obj 'video' 'Videos' %}
                 </div>
             </li>
-            {% endif %}
-            <li class="col three mobile-full" id="comments">
+            
+            <li class="col two mobile-full" id="comments">
                 <a href="{% url 'bccf-baby' child_obj.gparent.slug child_obj.slug 'child-comments' %}" id="child-comments" class="baby-content-btn">Comments</a>
                 <div class="baby-content">
                 {% comments_for child_obj %}                
@@ -94,27 +89,65 @@
             </li>
         </ul>
     </div>
+    <div class="subpage-content section row"></div>
+    <div class="home-content section row no-mobile">
+        <div class="section">
+            {% bccf_rating_for child_obj %}
+        </div>
+        <h3>{{ child_obj.title }}</h3>
+        {{ child_obj.content|safe }}    
+    </div>
 </section>
 <script type="text/javascript" >
-    $(function() {
-        $('.subpage .baby-content').hide();
-        $('.subpage .baby-content-btn').on('click', function(e) {
-            e.preventDefault();
-            var url = $(this).attr('href');
-            if($('.mnav-mobile-btn').is(':visible')) {
-                $('.subpage .baby-content').hide();
-                $(this).siblings('.baby-content').slideToggle('500');
-            } else {
-                $('.subpage .subpage-content').html($(this).siblings('.baby-content').html());
-            }
-            window.history.pushState({ path: url }, '', url);
-        });
-        
-        
-        {% if baby_obj %}
-            $('#{{ baby_obj }}').trigger('click');
-        {% else %}
-            $('#child-home').trigger('click');
-        {% endif %}
+var sync_height = function() {
+    var height = 0;
+    var highest = 0;
+    $('.subpage-content > .related-resource').each(function() {
+        var h = $(this).height();
+        if(h > height) {
+            height = h;
+            console.log(h);
+            highest = $(this).height();  
+        }
     });
+    $('.subpage-content > .related-resource').each(function() {
+        $(this).css('height', highest);
+    });
+};
+
+$('.baby-content-btn').on('click', function(e) {
+    e.preventDefault();
+    var url = $(this).attr('href');
+    window.history.pushState({ path: url }, '', url);
+     
+    if(!$('.mnav-mobile-btn').is(':visible')) {
+        $('li.active').removeClass('active');           
+        $('.subpage-content').hide();
+        $('.home-content').hide();
+        
+        if($(this).attr('id') === 'child-home') {
+            $('.home-content').show();  
+            return;
+        }
+        $(this).parent('li').addClass('active');
+        $('.subpage-content').show();
+    }
+    if($('.mnav-mobile-btn').is(':visible')) {
+        $('.subpage .baby-content').hide();
+        $(this).siblings('.baby-content').slideToggle('500');
+    } else {
+        $('.subpage .subpage-content').html($(this).siblings('.baby-content').html());
+        if($(this).attr('id') === 'baby-resources') {
+            sync_height();            
+        }
+    }
+});
+
+$(function() { 
+    {% if baby_obj %}
+        $('#{{ baby_obj }}').trigger('click');
+    {% else %}
+        $('#child-home').trigger('click');
+    {% endif %}
+});
 </script>

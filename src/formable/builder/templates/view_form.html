@@ -1,11 +1,12 @@
-{% extends "bccf/bccf_page.html" %}
+{% extends "pages/bccfpage.html" %}
 
-{% load form_utils %}
+{% load form_utils content_carousel_tags bccf_feature_tags %}
 
 {% block marquee %}{% endblock %}
 
 {% block content %}
 <h1>{{ page.title|title }}</h1>
+{{ page.content|safe }}
 {% endblock %}
 
 {% block carousels %}
@@ -17,6 +18,38 @@
         <input type="Submit" />
     </form>
 </div>
+<div class="section row row-two">
+    {% content_carousel_for page.gparent 'Other Surveys' None 'formpublished' %}
+</div>
+
+<div id="related-resource-container" class="section row row-two">
+    <h3>Related Resources</h3>
+    {% related_resources_for page 'article' 'Articles' %}
+    {% related_resources_for page 'downloadableform' 'Downloadable Forms' %}
+    {% related_resources_for page 'magazine' 'Magazines' %}
+    {% related_resources_for page 'tipsheet' 'Tip Sheets' %}
+    {% related_resources_for page 'video' 'Videos' %}
+</div>
+
 {% endblock %}
 
-{% block page_script %}{% endblock %}
+{% block page_script %}
+{{ block.super }}
+<script type="text/javascript" >
+$(function() {
+    var height = 0;
+    var highest = 0;
+    $('#related-resource-container > .related-resource').each(function() {
+        var h = $(this).height();
+        if(h > height) {
+            height = h;
+            console.log(h);
+            highest = $(this).height();  
+        }
+    });
+    $('#related-resource-container > .related-resource').each(function() {
+        $(this).css('height', highest);
+    });
+});
+</script>
+{% endblock %}

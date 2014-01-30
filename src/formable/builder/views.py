@@ -137,11 +137,11 @@ def view(request, slug=None):
     """
     if slug == None:
         raise Http404
-    #page = BCCFChildPage.objects.get(slug=slug)
     page = FormPublished.objects.get(slug=slug)
     filled = FormFilled.objects.filter(form_published=page, user=request.user)
     if len(filled) != 0:
-        return render_to_response('already_filled.html', {page:page})
+        context = RequestContext(request, locals())
+        return render_to_response('already_filled.html', {}, context_instance=context)
     form_structure = FormStructure.objects.get(pk=page.form_structure.pk)
     fieldset, field = parse(form_structure.structure, page.pk)
     form = ViewFormForm(fieldset, field)

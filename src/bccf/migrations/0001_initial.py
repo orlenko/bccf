@@ -181,6 +181,12 @@ class Migration(SchemaMigration):
         ))
         db.create_unique(m2m_table_name, ['bccfchildpage_id', 'bccftopic_id'])
 
+        # Adding model 'BCCFGenericPage'
+        db.create_table(u'bccf_bccfgenericpage', (
+            (u'bccfchildpage_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['bccf.BCCFChildPage'], unique=True, primary_key=True)),
+        ))
+        db.send_create_signal(u'bccf', ['BCCFGenericPage'])
+
         # Adding model 'BCCFBabyPage'
         db.create_table(u'bccf_bccfbabypage', (
             (u'bccfchildpage_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['bccf.BCCFChildPage'], unique=True, primary_key=True)),
@@ -335,6 +341,9 @@ class Migration(SchemaMigration):
         # Removing M2M table for field bccf_topic on 'BCCFChildPage'
         db.delete_table(db.shorten_name(u'bccf_bccfchildpage_bccf_topic'))
 
+        # Deleting model 'BCCFGenericPage'
+        db.delete_table(u'bccf_bccfgenericpage')
+
         # Deleting model 'BCCFBabyPage'
         db.delete_table(u'bccf_bccfbabypage')
 
@@ -450,6 +459,10 @@ class Migration(SchemaMigration):
             'title': ('django.db.models.fields.CharField', [], {'max_length': '500'}),
             'titles': ('django.db.models.fields.CharField', [], {'max_length': '1000', 'null': 'True'}),
             'updated': ('django.db.models.fields.DateTimeField', [], {'null': 'True'})
+        },
+        u'bccf.bccfgenericpage': {
+            'Meta': {'ordering': "('_order',)", 'object_name': 'BCCFGenericPage', '_ormbases': [u'bccf.BCCFChildPage']},
+            u'bccfchildpage_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['bccf.BCCFChildPage']", 'unique': 'True', 'primary_key': 'True'})
         },
         u'bccf.bccfpage': {
             'Meta': {'ordering': "('_order',)", 'object_name': 'BCCFPage', '_ormbases': [u'pages.Page']},

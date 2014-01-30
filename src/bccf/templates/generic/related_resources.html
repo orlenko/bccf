@@ -1,0 +1,10 @@
+{% if resources %}
+<div class="col mobile-full related-resource">
+    <h4 class="{{ resource_type|slugify }}-class">{{ resource_type|title }}</h4>
+    <ul>
+    {% for resource in resources %}
+        <li><a href="{{ resource.get_absolute_url }}">{{ resource.title|truncatechars:20 }}</a></li>
+    {% endfor %}
+    </ul>
+</div>
+{% endif %}

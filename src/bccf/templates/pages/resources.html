@@ -1,4 +1,4 @@
-{% extends "bccf/bccf_page.html" %}
+{% extends "pages/bccfpage.html" %}
 
 {% load static bccf_big_marquee_tags content_carousel_tags %}
 
@@ -12,4 +12,18 @@
 {% content_carousel_for page 'Magazine' child 'magazine' %}
 {% content_carousel_for page 'Tip Sheet' child 'tipsheet' %}
 {% content_carousel_for page 'Video' child 'video' %}
+{% endblock %}
+
+{% block page_script %}
+{{ block.super }}
+
+{% if type %}
+<script>
+    $(function() {
+        $('#{{ type }}').scrollTop();
+        $('#{{ type }} .to-grid').trigger('click');
+    });
+</script>
+{% endif %}
+
 {% endblock %}

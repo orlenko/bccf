@@ -1,0 +1,17 @@
+{% extends "pages/bccfpage.html" %}
+
+{% load static bccf_big_marquee_tags content_carousel_tags %}
+
+{% block marquee %}
+{% big_marquee_for page %}
+{% endblock %}
+
+{% block carousels %}
+{% if child %}
+    {% content_carousel_for page 'parent' child 'parent' %}
+    {% content_carousel_for page 'professional' child 'professional' %}
+{% else %}
+    {% content_carousel_for page 'parent' None 'parent' %}
+    {% content_carousel_for page 'professional' None 'professional' %}
+{% endif %}
+{% endblock %}

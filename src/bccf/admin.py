@@ -12,7 +12,7 @@ from mezzanine.pages.admin import PageAdmin
 
 from bccf.models import (BCCFTopic, Settings, EventForProfessionals,
     EventForParents, HomeMarquee, FooterMarquee, HomeMarqueeSlide, FooterMarqueeSlide,
-    PageMarquee, PageMarqueeSlide, BCCFPage, BCCFChildPage, BCCFBabyPage,
+    PageMarquee, PageMarqueeSlide, BCCFPage, BCCFChildPage, BCCFBabyPage, BCCFGenericPage,
     Blog, Program, Article, Magazine, Video, TipSheet, DownloadableForm, Campaign)
 from django.core.exceptions import PermissionDenied
 
@@ -282,6 +282,19 @@ class BCCFTopicAdmin(DisplayableAdmin):
                                     'carousel_color']):
                 self.fieldsets[0][1]['fields'].insert(3, field)
 
+class BCCFGenericAdmin(DisplayableAdmin):
+    def __init__(self, *args, **kwargs):
+        super(BCCFGenericAdmin, self).__init__(*args, **kwargs)
+        if self.fieldsets == DisplayableAdmin.fieldsets:
+            self.fieldsets = deepcopy(self.fieldsets)
+            for field in reversed(['content',
+                                    'bccf_topic',
+                                    'gparent',
+                                    'page_for',
+                                    'image']):
+                self.fieldsets[0][1]['fields'].insert(3, field)
+
+
 class BCCFChildAdmin(DisplayableAdmin):
     def __init__(self, *args, **kwargs):
         super(BCCFChildAdmin, self).__init__(*args, **kwargs)
@@ -345,7 +358,8 @@ class BCCFTagAdmin(DisplayableAdmin):
 admin.site.register(BCCFPage, PageAdmin)
 admin.site.register(BCCFTopic, BCCFTopicAdmin)
 admin.site.register(BCCFChildPage, BCCFPageAdmin)
-admin.site.register(BCCFBabyPage, BCCFPageAdmin)
+admin.site.register(BCCFBabyPage, BCCFChildAdmin)
+admin.site.register(BCCFGenericPage, BCCFGenericAdmin)
 admin.site.register(Blog, BCCFChildAdmin)
 admin.site.register(Program, BCCFChildAdmin)
 admin.site.register(Campaign, BCCFTagAdmin)

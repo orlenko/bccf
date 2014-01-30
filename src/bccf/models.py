@@ -420,6 +420,11 @@ class BCCFChildPage(BCCFBasePage, RichText, AdminThumbMixin):
                     return False
         return True
 
+class BCCFGenericPage(BCCFChildPage):
+    class Meta:
+        verbose_name = 'BCCF Generic Page'
+        verbose_name_plural = 'BCCF Generic Pages'
+
 class BCCFBabyPage(BCCFChildPage):
     class Meta:
         verbose_name = 'BCCF Baby Page'

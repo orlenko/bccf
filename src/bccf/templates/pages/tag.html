@@ -1,0 +1,21 @@
+{% extends "pages/bccfpage.html" %}
+
+{% load static bccf_big_marquee_tags content_carousel_tags %}
+
+{% block marquee %}
+{% big_marquee_for page %}
+{% endblock %}
+
+{% block carousels %}
+
+{% if child %}
+    {% content_carousel_for page 'Talk' child 'topic' %}
+    {% content_carousel_for page 'Act' child 'formpublished' %}
+    {% content_carousel_for page 'Get Involved' child 'campaign' %}
+{% else %}
+    {% content_carousel_for page 'Talk' None 'topic' %}
+    {% content_carousel_for page 'Act' None 'formpublished' %}
+    {% content_carousel_for page 'Get Involved' None 'campaign' %}
+{% endif %}
+
+{% endblock %}

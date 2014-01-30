@@ -518,7 +518,8 @@ else:
 ## OWN SETTINGS ##
 ##################
 #JQUERY_FILENAME = ""
-BCCF_PAGES = '(resources|blog|trainings|tag|news|programs)'
+BCCF_RESOURCE_TYPES = '(article|downloadableform|magazine|tipsheet|video)'
+BCCF_CORE_PAGES = ['trainings','blog','resources','tag','programs','news']
 SEARCH_MODEL_CHOICES = (
     'bccf.BCCFChildPage',
     'bccf.BCCFTopic',

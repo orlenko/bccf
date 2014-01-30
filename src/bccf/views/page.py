@@ -10,7 +10,7 @@ from django.shortcuts import get_object_or_404
 from django.utils.text import slugify
 
 from bccf.models import BCCFPage, BCCFChildPage, BCCFBabyPage, BCCFTopic, UserProfile
-from bccf.settings import MEDIA_URL
+from bccf.settings import MEDIA_URL, BCCF_RESOURCE_TYPES, BCCF_CORE_PAGES
 from pybb.models import Topic
 
 import logging
@@ -49,7 +49,10 @@ def bccf_admin_page_ordering(request):
 def page(request, parent, child=None, baby=None):
     if(not request.is_ajax()):
         page = get_object_or_404(BCCFPage, slug=parent)
-        template = 'bccf/%s_page.html' % (parent)
+        if parent in BCCF_CORE_PAGES:
+            template = u"pages/%s.html" % parent
+        else:
+            template = u"pages/bccfpage.html"
     else: 
         baby_obj = None
         if baby and baby != 'baby-resources' and baby != 'child-home' and baby != 'child-comments' and baby != 'child-info':
@@ -63,21 +66,20 @@ def page(request, parent, child=None, baby=None):
         else:
             babies = BCCFChildPage.objects.filter(parent=child_obj, status=2).order_by('_order')
         template = 'generic/sub_page.html'
-
-        #Related resources
-        q = Q()
-        for topic in child_obj.bccf_topic.all():        
-            q = q | Q(bccf_topic = topic) 
-        resources_pre = BCCFChildPage.objects.filter(Q(content_model='article') | Q(content_model='downloadableform') | Q(content_model='magazine') | Q(content_model='tipsheet') | Q(content_model='video')).distinct()    
-        resources = resources_pre.filter(q, ~Q(slug=child)).order_by('?')[:10]
         
     context = RequestContext(request, locals())
     return render_to_response(template, {}, context_instance=context)
     
+def resource_type_page(request, type):
+    page = get_object_or_404(BCCFPage, slug='resources')
+    child = None
+    context = RequestContext(request, locals())
+    return render_to_response('pages/resources.html', {}, context_instance=context)
+    
 def topic_page(request, topic):
     page = get_object_or_404(BCCFTopic, slug=topic)
     context = RequestContext(request, locals())
-    return render_to_response('bccf/topic_page.html', {}, context_instance=context)
+    return render_to_response('pages/bccftopic.html', {}, context_instance=context)
 
 def user_list(request):
     p = request.GET.get('page_var')

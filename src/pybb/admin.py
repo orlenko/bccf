@@ -116,7 +116,7 @@ class ForumReadTrackerAdmin(admin.ModelAdmin):
     search_fields = ['user__%s' % username_field]
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ['topic', 'user', 'created', 'updated', 'summary']
+    list_display = ['topic', 'user', 'created', 'updated', 'on_moderation', 'summary']
     list_per_page = 20
     raw_id_fields = ['user', 'topic']
     ordering = ['-created']
@@ -133,7 +133,7 @@ class PostAdmin(admin.ModelAdmin):
                 }
          ),
         (_('Message'), {
-                'fields': ('body', 'body_html', 'body_text')
+                'fields': ('body', 'body_html', 'body_text', 'on_moderation')
                 }
          ),
         )
