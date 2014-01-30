@@ -1,0 +1,10 @@
+{% load bccf_tags %}
+
+{% for user in users %}
+<div class="hlist-inner"> <!-- Use Innner for the slide -->
+	<img src="{{ MEDIA_URL }}{% bccf_thumbnail user.photo 75 75 %}" alt="{{ user.user.get_full_name }}">
+    <h6>{{ user.user.get_full_name }}</h6>
+    <p>{{ user.description|truncatechars:100 }}</p>
+    <a class="hlist-link" href="#">Profile</a>
+</div>
+{% endfor %}

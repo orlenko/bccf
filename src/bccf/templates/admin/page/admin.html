@@ -11,7 +11,7 @@
             </a>
             {% set_page_permissions page %}
             {% if page.perms.delete %}
-            <a href="{% url "admin:pages_page_delete" page.id %}?fromtree" class="delete"></a>
+            <a href="{{ page.id }}/delete/?fromtree" class="delete"></a>
             {% else %}
             <span class="delete" style="background:none;"></span>
             {% endif %}

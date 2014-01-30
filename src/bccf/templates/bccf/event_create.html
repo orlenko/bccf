@@ -4,10 +4,10 @@
 
 {% block main %}
 <h2>Create Event</h2>
-<form action="{% url 'parents-event-create' %}" method="POST">
+<form action="{% url 'parents-event-create' %}"  method="POST">
     {% csrf_token %}
     {{ form }}
     <br/><br/>
-    <input type="submit" value="{% trans 'submit' %}" />
+    <input type="submit" value="{% trans 'Next Step' %}" />
 </form>
 {% endblock %}

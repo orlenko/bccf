@@ -1,4 +1,4 @@
-{% extends 'pybb/base.html' %}
+{% extends 'bccf/bccf_page.html' %}
 
 {% load url from future %}
 
@@ -19,8 +19,12 @@
 {% endblock %}
 
 {% block content %}
+<h1>{{ topic.title|title }}</h1>
+{{ topic.content|safe }}
+{% endblock %}
+
+{% block carousels %}
     <div class="topic">
-        <h1>{{ topic.name }}</h1>
         {% with _('Posts') as label %}
             {% include "pybb/pagination.html" %}
         {% endwith %}
@@ -49,21 +53,21 @@
             <div class="controls">
                 {% if user.is_moderator %}
                     {% if topic.sticky %}
-                        <a href="{% url 'pybb:unstick_topic' topic.id %}">{% trans "Unstick topic" %}</a> /
+                        <a href="{% url 'pybb:unstick_topic' topic.id %}">{% trans "Unstick topic" %}</a> |
                     {% else %}
-                        <a href="{% url 'pybb:stick_topic' topic.id %}">{% trans "Stick topic" %}</a> /
+                        <a href="{% url 'pybb:stick_topic' topic.id %}">{% trans "Stick topic" %}</a> |
                     {% endif %}
 
                     {% if topic.closed %}
-                        <a href="{% url 'pybb:open_topic' topic.id %}">{% trans "Open topic" %}</a> /
+                        <a href="{% url 'pybb:open_topic' topic.id %}">{% trans "Open topic" %}</a> |
                     {% else %}
-                        <a href="{% url 'pybb:close_topic' topic.id %}">{% trans "Close topic" %}</a> /
+                        <a href="{% url 'pybb:close_topic' topic.id %}">{% trans "Close topic" %}</a> |
                     {% endif %}
                     {% if perms.pybb.change_topic and user.is_staff %}
-                        <a href="{% url 'admin:pybb_topic_change' topic.id %}">{% trans 'Admin' %}</a> /
+                        <a href="{% url 'admin:pybb_topic_change' topic.id %}">{% trans 'Admin' %}</a> |
                     {% endif %}
-                    {% comment %}
-            <a href="{% url 'pybb:merge_topics' %}?topic={{ topic.id }}">{% trans 'Merge topics' %}</a> /
+            {% comment %}
+            <a href="{% url 'pybb:merge_topics' %}?topic={{ topic.id }}">{% trans 'Merge topics' %}</a> |
             {% endcomment %}
                 {% endif %}
 
@@ -75,7 +79,9 @@
             </div>
         {% endif %}
 
+        <div id="form-aux">
         {% if user.is_authenticated or PYBB_ENABLE_ANONYMOUS_POST %}
+            
             {% pybb_get_profile user=user as user_profile %}
 
             {% if not user_profile.is_banned %}
@@ -86,6 +92,7 @@
         {% else %}
             {% include 'pybb/_need_to_login_message.html' %}
         {% endif %}
+        </div>
 
         {% if user.is_staff %}
             <div class="subscriber-list">

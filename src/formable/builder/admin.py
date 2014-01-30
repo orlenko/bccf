@@ -58,14 +58,24 @@ class FormPublishedAdmin(DisplayableAdmin):
                 self.fieldsets[0][1]['fields'].insert(3, field)
         if self.list_display == DisplayableAdmin.list_display:
             self.list_display = list(deepcopy(self.list_display))
+            for fieldname in ['featured', 'report_link']:
+                self.list_display.insert(-1, fieldname)
+        if self.list_filter == DisplayableAdmin.list_filter:
+            self.list_filter = list(deepcopy(self.list_filter))
+            for fieldname in ['featured', 'gparent']:
+                self.list_filter.insert(-1, fieldname)
+            
+    def report_link(self, obj):
+        return '<a href="%s">Download Report</a>' % obj.get_report_url()
+    report_link.allow_tags = True 
     
 class FormFilledAdmin(admin.ModelAdmin):
     """
     Admin for FormFilled
     """
-    readonly_fields = ('filled',)
+    readonly_fields = ('filled', 'title', 'form_published',)
     fieldsets = [
-        ('Form Details', {'fields':['title', 'form_published', 'user']}),
+        ('Form Details', {'fields':['user', 'title', 'form_published']}),
         ('Meta', {'fields':['filled']})
     ]
     inlines = [

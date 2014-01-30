@@ -1,259 +1,65 @@
-{% load static %}
+{% load static mezzanine_tags %}
 
 {% if slides %}
-<section id="{{ carousel_name }}_id" class="section content-pages {{ carousel_color }}">
+<section id="{{ carousel_name }}" class="section content-pages {{ carousel_color }}">
     <div class="section row top-control-container">
-        <div class="col five carousel-title-container">
+        <div class="col {% if filter %} four tablet-two {% else %} six {% endif %} mobile-full carousel-title-container">
             <h2>{{ carousel_title|title }}</h2>
         </div>
-        <div id="filter-container" class="col four">
-            {% if filter %}
-            <form>
-                <input type="text" name="sub-page-filter" placeholder="Filter" />
-            </form>
-            {% endif %}
-            &nbsp;
+        {% if filter %}
+        <div id="filter-container" class="col five mobile-full tablet-six">            
+            <input type="text" name="filter" placeholder="Filter" class="filter" />
         </div>
-        <div id="{{ carousel_name }}_id-control" class="col three no-mobile control-buttons">
+        {% endif %}
+        <div class="col {% if filter %} three tablet-four {% else %} six {% endif %} no-mobile control-buttons">
             <a href="#" class="show-type-control to-grid">Grid</a>
             <a href="#" class="show-type-control to-slide">Slide</a>
         </div>
     </div>
-    <div id="{{ carousel_name }}_id-outer">
+    <div id="{{ carousel_name }}-inner">
         <a class="button-prev-lgrey col one button-prev no-mobile no-tablet"></a>
         {% include 'generic/content_slides.html' %}
         <a class="button-next-lgreen col one button-next no-mobile no-tablet"></a>
     </div>
-    <div id="{{ carousel_name }}_id-mobile-content-container" class="no-desktop no-tablet mobile-content-container">
-        <a class="close-btn" href="#">CLOSE</a>
-        <div class="mobile-content"></div>
-    </div>
 </section>
 
-<script>
-    var {{ carousel_name }}_id_load_open;
-    $(function() {
-        {{ carousel_name }}_id_load_open
-        // Create new Owl Carousel
-        $('#{{ carousel_name }}_id-carousel').owlCarousel({
-            'singleItem': true,
-            'pagination': false,
-            'addClassActive': true,
-            'startDragging': function(){ {{ carousel_name }}_id_reset(); },
-            'beforeMove': function() { {{ carousel_name }}_id_reset(); },
-        });
-              
-        $('#{{ carousel_name }}_id-grid').owlCarousel({
-            'singleItem': true,
-            'pagination': false,
-            'addClassActive': true,
-
-            'startDragging': function(){ {{ carousel_name }}_id_reset(); },
-            'beforeMove': function() { {{ carousel_name }}_id_reset(); },        
-        }).hide();
-        
-        {{ carousel_name }}_id_reset();
-        
-        if('{{ carousel_name }}_id' === '{{ type }}_id' && $(window).width() >= 725) {
-            $('#{{ carousel_name }}_id-control .to-grid').trigger('click');
-        }
-        
-        $(window).on('resize', function(e) {
-            {{ carousel_name }}_id_reset();
-            if($(window).width() <= 724) {
-                $('.to-slide').trigger('click');
+{% if filter %}
+<script type="text/javascript" >
+$('.filter').on('keyup', function() {
+    var parent = $(this).parents('.content-pages');
+    reset();
+    $.ajax({
+        url: '/filter/'+$(this).val(),
+        success: function(data) {
+            console.log(data);
+            //var json = $.parseJSON(data);
+            var slide = $('#{{ carousel_name }}_id-carousel');
+            var grid = $('#{{ carousel_name }}_id-grid');
+            // Delete all the slides
+            // For slide view
+            var count = parent.find('.carousel-slide').find('.owl-item').length;            
+            while(count > 0) {
+                slide.data('owlCarousel').removeItem();
+                count--;
             }
-        });        
-
-        {% if open %}
-            {% if baby %}        
-                {{ carousel_name }}_id_load_open = true;
-            {% endif %}
-        if($('#{{ carousel_name }}_id-carousel').is(':visible')) {
-            $('#{{ carousel_name }}_id-carousel .active .page-box:first-of-type').trigger('click');
-        } else if($('#{{ carousel_name }}_id-grid').is(':visible')) {
-            $('#{{ carousel_name }}_id-grid .page-box:first-of-type').trigger('click');
-        }
-        {% endif %}
-    });
-    
-    $('#{{ carousel_name }}_id').on('click', 'a[class^="button"]', function(e) {
-        e.preventDefault();
-        var carousel = $(this).siblings('div.page-container-outer').children('div[class^="carousel"]:visible');
-        if($(this).hasClass('button-prev')) {
-            carousel.trigger('owl.prev');
-        } else {
-            if(carousel.find('.active').is(':last-child')) {
-                var offset = carousel.find('.owl-item .page-box').length;
-                $.ajax({
-                    url: '/next/{{ page.slug }}/{{ carousel_name }}/'+offset+'/',
-                    success: function(data) {
-                        json = $.parseJSON(data);
-                        if(json.length > 0) {                    
-                            {{ carousel_name }}_id_add_slide(json);
-                            {{ carousel_name }}_id_add_grid(json);
-                            if($('#{{ carousel_name }}_id-carousel').is(':visible')) {
-                                $('#{{ carousel_name }}_id-grid').hide();                       
-                            } else {
-                                $('#{{ carousel_name }}_id-carousel').hide();
-                            }
-                        }
-                        carousel.trigger('owl.next');
-                    },
-                });          
+            // For grid view
+            count = parent.find('.carousel-grid').find('.owl-item').length;
+            while(count > 0) {
+                grid.data('owlCarousel').removeItem();
+                count--;
+            }
+            if(data.slide.length > 1 && data.grid.length > 1) {
+                slide.data('owlCarousel').addItem(data.slide);
+                grid.data('owlCarousel').addItem(data.grid);
             } else {
-                carousel.trigger('owl.next');
-            }            
-        }
+                slide.data('owlCarousel').addItem('<div>No Result for filter: '+$(this).val()+'</div>');
+                grid.data('owlCarousel').addItem('<div>No Result for filter: '+$(this).val()+'</div>');
+            }
+            parent.find('.to-grid').trigger('click');
+        },
     });
-    
-    var {{ carousel_name }}_id_add_slide = function(data) {
-        var new_slide = $('<div>');
-        var new_list = $('<ul>', {
-            class:'page-container-inner',        
-        });
-        var carousel = $('#{{ carousel_name }}_id-carousel');
-        new_slide.append(new_list);
-        carousel.data('owlCarousel').addItem(new_slide);
-        for(var i=0; i < data.length; i++) {
-            if(i !== 0 && i%4===0) {
-                new_slide = $('<div>');
-                var new_list = $('<ul>', {
-                    class:'page-container-inner',        
-                });
-                new_slide.append(new_list);
-                carousel.data('owlCarousel').addItem(new_slide);
-            }
-            var new_page = $('<li>', {
-                class: 'page-box carousel-box col four'
-            });
-            new_page.append($('<img>', {
-                //src: '/media/'+data[i].fields.image,
-                alt: data[i].fields.title
-            }));
-            var new_info = $('<div>');
-            var new_link = $('<a>', {
-                'href': '/{{ page.title }}/'+data[i].fields.slug
-            });
-            new_link.append('<h2>'+data[i].fields.title+'</h2>');
-            new_info.append(new_link);
-            new_info.append('<p class="no-tablet">'+data[i].fields.description.substr(0,30)+'</p>');
-            new_page.append(new_info);
-            new_list.append(new_page);
-        }
-    };
-    
-    var {{ carousel_name }}_id_add_grid = function(data) {
-        var new_slide = $('<div>');
-        var new_list = $('<ul>', {
-            class:'page-container-inner',        
-        });
-        var carousel = $('#{{ carousel_name }}_id-grid');
-        new_slide.append(new_list);
-        carousel.data('owlCarousel').addItem(new_slide);
-        for(var i=0; i < data.length; i++) {
-            if(i !== 0 && i%3===0) {
-                new_list.append('<li class="grid-content reset col twelve"></li>');
-                continue;
-            }
-            if(i !== 0 && i%13===0) {
-                new_slide = $('<div>');
-                var new_list = $('<ul>', {
-                    class:'page-container-inner',        
-                });
-                new_slide.append(new_list);
-                carousel.data('owlCarousel').addItem(new_slide);
-            }
-            var new_page = $('<li>', {
-                class: 'page-box carousel-box col four'
-            });
-            new_page.append($('<img>', {
-                //src: '/media/'+data[i].fields.image,
-                alt: data[i].fields.title
-            }));
-            var new_info = $('<div>');
-            var new_link = $('<a>', {
-                'href': '/{{ page.title }}/'+data[i].fields.slug
-            });
-            new_link.append('<h2>'+data[i].fields.title+'</h2>');
-            new_info.append(new_link);
-            new_info.append('<p class="no-tablet">'+data[i].fields.description.substr(0,30)+'</p>');
-            new_page.append(new_info);
-            new_list.append(new_page);
-        }
-    };   
-    
-    // Closes the content container, empties it, and resets the classes
-    var {{ carousel_name }}_id_reset = function() {
-        $('#{{ carousel_name }}_id .reset').hide().html('');
-        $('#{{ carousel_name }}_id-mobile-content-container').hide()
-        $('#{{ carousel_name }}_id-mobile-content-container .mobile-container').html('');
-        $('#{{ carousel_name }}_id .page-box-active').removeClass('page-box-active');
-        $('body').css({overflow: 'auto', height: 'auto'});
-    };
-    var {{ carousel_name }}_id_loadContent = function() {
-        var container = null;
-        var loader =  $('<img>', {
-            src: '{% static "img/bccf-loader.gif" %}',
-            alt: 'Loader',
-            class: 'ajax-loader',
-        });
-        if($(window).width() <= 724) {
-            $('body').css({overflow: 'hidden', height: '100%'});
-            $('#{{ carousel_name }}_id-mobile-content-container').show();
-            container = $('#{{ carousel_name }}_id-mobile-content-container .mobile-content');
-        } else if($('#{{ carousel_name }}_id-carousel').is(':visible')) {
-            container = $('#{{ carousel_name }}_id .slide-content');
-        } else if($('#{{ carousel_name }}_id-grid').is(':visible')) {
-            container = $('#{{ carousel_name }}_id .page-box-active').nextAll('.grid-content').first();
-        }
-        container.html(loader).show();
-        $.ajax({
-            url: pageURL+'?type=ajax',
-            success: function(data) {
-                container.html(data);
-                
-                if($(window).width() >= 724) {
-                    $('body, html').animate({
-                        'scrollTop':   container.offset().top-160
-                    }, 500);
-                }
-            }
-        });
-        
-        if (pageURL != window.location) {
-            window.history.pushState({ path: pageURL }, '', pageURL);
-        }
-    };
-    $('#{{ carousel_name }}_id .page-box').on('click', function(e) {
-        if(!$(this).hasClass('page-box-active')) { // was the active one clicked?
-            {{ carousel_name }}_id_reset();
-            pageURL = $(this).find('a').attr('href');
-            if({{ carousel_name }}_id_load_open) {
-                pageURL = pageURL+'{{ baby }}';
-                {{ carousel_name }}_id_load_open = false;          
-            }
-            $(this).addClass('page-box-active');
-            {{ carousel_name }}_id_loadContent();
-        } else {
-            {{ carousel_name }}_id_reset();
-        }
-        e.preventDefault();
-    });
-    $('#{{ carousel_name }}_id-control').on('click', 'a', function(e) {
-        e.preventDefault();
-        {{ carousel_name }}_id_reset();
-        if($(this).hasClass('to-grid')) {
-            $('#{{ carousel_name }}_id-carousel').hide();
-            $('#{{ carousel_name }}_id-grid').show();
-        } else {
-            $('#{{ carousel_name }}_id-grid').hide();
-            $('#{{ carousel_name }}_id-carousel').show();
-        }
-    });
-    $('#{{ carousel_name }}_id-mobile-content-container').on('click', '.close-btn', function(e) {
-        e.preventDefault();
-        {{ carousel_name }}_id_reset();
-    });
+});
 </script>
+{% endif %}
+
 {% endif %}

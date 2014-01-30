@@ -5,6 +5,10 @@
 {% block marquee %}{% endblock %}
 
 {% block content %}
+<h1>{{ page.title|title }}</h1>
+{% endblock %}
+
+{% block carousels %}
 <div id="form_view" class="section row">
     <form action="{% url 'formable-submit-form' %}" method="POST">
         {{ form|render }}
@@ -15,6 +19,4 @@
 </div>
 {% endblock %}
 
-{% block carousels %}
-
-{% endblock %}
+{% block page_script %}{% endblock %}

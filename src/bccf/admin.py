@@ -12,8 +12,12 @@ from mezzanine.pages.admin import PageAdmin
 
 from bccf.models import (BCCFTopic, Settings, EventForProfessionals,
     EventForParents, HomeMarquee, FooterMarquee, HomeMarqueeSlide, FooterMarqueeSlide,
-    PageMarquee, PageMarqueeSlide, BCCFPage, BCCFChildPage, BCCFBabyPage, 
-    Blog, Program, Article, Magazine, Video, TipSheet, DownloadableForm)
+    PageMarquee, PageMarqueeSlide, BCCFPage, BCCFChildPage, BCCFBabyPage,
+    Blog, Program, Article, Magazine, Video, TipSheet, DownloadableForm, Campaign)
+from django.core.exceptions import PermissionDenied
+
+import logging
+log = logging.getLogger(__name__)
 
 
 class SettingsAdmin(admin.ModelAdmin):
@@ -41,8 +45,8 @@ class ParentsEventAdmin(DisplayableAdmin):
             self.list_display = list(deepcopy(self.list_display))
             for fieldname in ['provider', 'date_start', 'date_end', 'price']:
                 self.list_display.insert(-1, fieldname)
-                
-class ProfessionalsEventAdmin(DisplayableAdmin):
+
+class ProfessionalsEventAdmin(DisplayableAdmin):   
     def __init__(self, *args, **kwargs):
         super(ProfessionalsEventAdmin, self).__init__(*args, **kwargs)
         if self.fieldsets == DisplayableAdmin.fieldsets:
@@ -56,15 +60,19 @@ class ProfessionalsEventAdmin(DisplayableAdmin):
                                     'location_street2',
                                     'location_postal_code',
                                     'price',
+                                    'bccf_topic',
                                     'image',
                                     'survey_before',
-                                    'bccf_topic',
                                     'survey_after']):
                 self.fieldsets[0][1]['fields'].insert(3, field)
         if self.list_display == DisplayableAdmin.list_display:
             self.list_display = list(deepcopy(self.list_display))
-            for fieldname in ['provider', 'date_start', 'date_end', 'price']:
-                self.list_display.insert(-1, fieldname)
+            for fieldname in ['provider', 'date_start', 'date_end', 'price', 'report_link']:
+                self.list_display.insert(-1, fieldname)   
+        
+    def report_link(self, obj):
+        return '<a href="%s">Download Report</a>' % obj.get_report_url()
+    report_link.allow_tags = True 
 
 admin.site.register(Settings, SettingsAdmin)
 admin.site.register(EventForParents, ParentsEventAdmin)
@@ -112,7 +120,7 @@ class BCCFPageAdmin(DisplayableAdmin):
             # Insert each field between the publishing fields and nav
             # fields. Do so in reverse order to retain the order of
             # the model's fields.
-            exclude_fields = BCCFChildPage._meta.get_all_field_names() + ['bccfchildpage_ptr']
+            exclude_fields = BCCFChildPage._meta.get_all_field_names() + ['bccfchildpage_ptr'] # @UndefinedVariable - PyDev quirks
             try:
                 exclude_fields.extend(self.exclude)
             except (AttributeError, TypeError):
@@ -174,8 +182,8 @@ class BCCFPageAdmin(DisplayableAdmin):
         """
         Enforce custom delete permissions for the page instance.
         """
-        page = get_object_or_404(BCCFPage, pk=object_id)
-        content_model = BCCFPage.get_content_model()
+        page = get_object_or_404(BCCFChildPage, pk=object_id)
+        content_model = page.get_content_model()
         self._check_permission(request, content_model, "delete")
         return super(BCCFPageAdmin, self).delete_view(request, object_id, **kwargs)
 
@@ -264,6 +272,16 @@ class BCCFPageAdmin(DisplayableAdmin):
                 return (unordered, page.meta_verbose_name)
         return sorted(models, key=sort_key)
 
+class BCCFTopicAdmin(DisplayableAdmin):
+    def __init__(self, *args, **kwargs):
+        super(BCCFTopicAdmin, self).__init__(*args, **kwargs)
+        if self.fieldsets == DisplayableAdmin.fieldsets:
+            self.fieldsets = deepcopy(self.fieldsets)
+            for field in reversed(['content',
+                                    'marquee',
+                                    'carousel_color']):
+                self.fieldsets[0][1]['fields'].insert(3, field)
+
 class BCCFChildAdmin(DisplayableAdmin):
     def __init__(self, *args, **kwargs):
         super(BCCFChildAdmin, self).__init__(*args, **kwargs)
@@ -275,10 +293,38 @@ class BCCFChildAdmin(DisplayableAdmin):
                                     'page_for',
                                     'image']):
                 self.fieldsets[0][1]['fields'].insert(3, field)
-                
+
 class BCCFResourceAdmin(DisplayableAdmin):
     def __init__(self, *args, **kwargs):
         super(BCCFResourceAdmin, self).__init__(*args, **kwargs)
+        if self.fieldsets == DisplayableAdmin.fieldsets:
+            self.fieldsets = deepcopy(self.fieldsets)
+            for field in reversed(['content',
+                                    'attached_document',
+                                    'bccf_topic',
+                                    'featured',
+                                    'page_for',
+                                    'image']):
+                self.fieldsets[0][1]['fields'].insert(3, field)
+
+class BCCFVideoResourceAdmin(DisplayableAdmin):
+    def __init__(self, *args, **kwargs):
+        super(BCCFVideoResourceAdmin, self).__init__(*args, **kwargs)
+        if self.fieldsets == DisplayableAdmin.fieldsets:
+            self.fieldsets = deepcopy(self.fieldsets)
+            for field in reversed(['content',
+                                    'video_url',
+                                    'link_url',
+                                    'video_file',
+                                    'bccf_topic',
+                                    'featured',
+                                    'page_for',
+                                    'image']):
+                self.fieldsets[0][1]['fields'].insert(3, field)
+
+class BCCFTagAdmin(DisplayableAdmin):
+    def __init__(self, *args, **kwargs):
+        super(BCCFTagAdmin, self).__init__(*args, **kwargs)
         if self.fieldsets == DisplayableAdmin.fieldsets:
             self.fieldsets = deepcopy(self.fieldsets)
             for field in reversed(['content',
@@ -287,44 +333,61 @@ class BCCFResourceAdmin(DisplayableAdmin):
                                     'page_for',
                                     'image']):
                 self.fieldsets[0][1]['fields'].insert(3, field)
+        if self.list_display == DisplayableAdmin.list_display:
+            self.list_display = list(deepcopy(self.list_display))
+            for fieldname in ['featured']:
+                self.list_display.insert(-1, fieldname) 
+        if self.list_filter == DisplayableAdmin.list_filter:
+            self.list_filter = list(deepcopy(self.list_filter))
+            for fieldname in ['featured']:
+                self.list_filter.insert(-1, fieldname)  
 
 admin.site.register(BCCFPage, PageAdmin)
-admin.site.register(BCCFTopic)
+admin.site.register(BCCFTopic, BCCFTopicAdmin)
 admin.site.register(BCCFChildPage, BCCFPageAdmin)
 admin.site.register(BCCFBabyPage, BCCFPageAdmin)
 admin.site.register(Blog, BCCFChildAdmin)
 admin.site.register(Program, BCCFChildAdmin)
+admin.site.register(Campaign, BCCFTagAdmin)
 admin.site.register(Article, BCCFResourceAdmin)
 admin.site.register(DownloadableForm, BCCFResourceAdmin)
 admin.site.register(Magazine, BCCFResourceAdmin)
 admin.site.register(TipSheet, BCCFResourceAdmin)
-admin.site.register(Video, BCCFResourceAdmin)
+admin.site.register(Video, BCCFVideoResourceAdmin)
 
 #Inline
-class HomeMarqueeSlideInline(admin.TabularInline):
+class HomeMarqueeInline(admin.TabularInline):
     model = HomeMarqueeSlide.marquee.through
 
-class FooterMarqueeSlideInline(admin.TabularInline):
+class FooterMarqueeInline(admin.TabularInline):
     model = FooterMarqueeSlide.marquee.through
-    
-class PageMarqueeSlideInline(admin.TabularInline):
+
+class PageMarqueeInline(admin.TabularInline):
     model = PageMarqueeSlide.marquee.through
 
 #Marquees
-class HomeMarqueeAdmin(admin.ModelAdmin):
-    list_display = ['title', 'active']
-    inlines = [HomeMarqueeSlideInline]
-    
-class FooterMarqueeAdmin(admin.ModelAdmin):
-    list_display = ['title', 'active']
-    inlines = [FooterMarqueeSlideInline]
-    
-class PageMarqueeAdmin(admin.ModelAdmin):
-    inlines = [PageMarqueeSlideInline]
+class MarqueeSlideAdmin(admin.ModelAdmin):
+    fields = ('title', 'caption', 'url', 'linkLabel', 'image')  
+    list_display = ['title', 'caption', 'url']
 
-admin.site.register(HomeMarqueeSlide)
-admin.site.register(FooterMarqueeSlide)
-admin.site.register(PageMarqueeSlide)
-admin.site.register(HomeMarquee, HomeMarqueeAdmin)
-admin.site.register(FooterMarquee, FooterMarqueeAdmin)
-admin.site.register(PageMarquee, PageMarqueeAdmin)
+class HomeMarqueeSlideAdmin(MarqueeSlideAdmin):
+    inlines = [HomeMarqueeInline]
+
+class FooterMarqueeSlideAdmin(admin.ModelAdmin):
+    fields = ('title', 'caption', 'image')
+    inlines = [FooterMarqueeInline]
+    list_display = ['title', 'caption']
+
+class PageMarqueeSlideAdmin(MarqueeSlideAdmin):
+    inlines = [PageMarqueeInline]
+    
+class MarqueeAdmin(admin.ModelAdmin):
+    list_display = ('title', 'active')
+    list_filter = ('active',)
+
+admin.site.register(HomeMarqueeSlide, HomeMarqueeSlideAdmin)
+admin.site.register(FooterMarqueeSlide, FooterMarqueeSlideAdmin)
+admin.site.register(PageMarqueeSlide, PageMarqueeSlideAdmin)
+admin.site.register(HomeMarquee, MarqueeAdmin)
+admin.site.register(FooterMarquee, MarqueeAdmin)
+admin.site.register(PageMarquee)

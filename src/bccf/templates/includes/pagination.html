@@ -1,22 +1,26 @@
-<div id="pagination">
+<nav class="pagination">
     <ul>
-
-        {% for num in recordlist.paginator.page_range %}
+        {% if current_page.has_previous %}
+        <li class="prev-btn"><a href="?{{ page_var }}={{ current_page.previous_page_number }}{% if querystring %}&{{ querystring }}{% endif %}">Prev</a></li>
+        {% endif %}
+        {% for num in current_page.visible_page_range %}
 
 			<li>
 
-			{% if num == recordlist.number %}
+			{% if num == current_page.number %}
 	        <span class="current">
-	            {{ recordlist.number }}
+	            {{ current_page.number }}
 	        </span>
 	        {% endif %}
 
-	        {% if num != recordlist.number %}
-	        	<a href="?page={{num}}">{{num}}</a>
+	        {% if num != current_page.number %}
+	        	<a href="?{{ page_var }}={{num}}{% if querystring %}&{{ querystring }}{% endif %}">{{num}}</a>
 	        {% endif %}
 
 			</li>
         {% endfor %}
-
+        {% if current_page.has_next %}
+        <li class="next-btn"><a href="?{{ page_var }}={{ current_page.next_page_number }}{% if querystring %}&{{ querystring }}{% endif %}">Next</a></li>
+        {% endif %}
     </ul>
-</div>
+</nav>

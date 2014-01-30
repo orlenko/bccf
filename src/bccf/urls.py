@@ -17,7 +17,6 @@ admin.autodiscover()
 # to the project's homepage.
 
 urlpatterns = patterns("",
-
     #UPLOADS
     url(r'media/(?P<path>.*)$', 'django.views.static.serve', {
         'document_root': settings.MEDIA_ROOT,
@@ -27,8 +26,7 @@ urlpatterns = patterns("",
     # admin interface, which would be marginally more secure.
     ("^admin/", include(admin.site.urls)),
     
-    #For Showing Pages
-
+    # FORUM URLs
     (r'^forum/', include('pybb.urls', namespace='pybb')),
 
     # Cartridge URLs.
@@ -37,11 +35,17 @@ urlpatterns = patterns("",
     # Formable URLs
     ("^formable/", include("formable.builder.urls")),
 
+    #TinyMCE
+    (r'^tinymce/', include('tinymce.urls')),
+
     # Podcasts
     #('^podcasts/', include('podcasting.urls')),
+    
+    url('^bccf_admin_page_ordering/$', 'bccf.views.page.bccf_admin_page_ordering', name='bccf-admin-page-ordering'),
 
     url("^account/orders/$", "cartridge.shop.views.order_history", name="shop_order_history"),
 
+    url(r'^member/directory/', 'bccf.views.page.user_list', name='member-directory'),
     url(r'^member/profile/$', 'bccf.views.member.profile', name='member-profile'),
     url(r'^member/upgrade/(?P<variation_id>.*)/$', 'bccf.views.member.membership_upgrade', name='member-membership-upgrade'),
     url(r'^member/renew/$', 'bccf.views.member.membership_renew', name='member-membership-renew'),
@@ -61,10 +65,19 @@ urlpatterns = patterns("",
     url(r'^professionals/event/feed/', EventsForProfessionalsFeed()),
     url(r'^professionals/event/signup/(?P<slug>.*)/$', 'bccf.views.events.professionals_event_signup', name='professionals-event-signup'),
     url(r'^professionals/event/create/$', ProfessionalEventWizard.as_view(FORMS), name='professionals-event-create'),
-    url(r'^professionals/event/report/(?P<slug>.*)/$', 'bccf.views.events.professional_survey_download_report', name='professional-download-report'),
     url(r'^professionals/event/(?P<slug>.*)/$', 'bccf.views.events.professionals_event', name='professionals-event'),
         
+    # MEZZANINE URL OVERRIDES
+    #------------------------
+    # The patterns here will be used to override Mezzanine-specific urls.
+    url("^rating/$", "bccf.views.views.rating", name="rating"),        
+        
+    # Reports
+    url(r'^report/survey/event/(?P<slug>.+)/$', 'bccf.views.report.event_survey_report', name='event-survey-report'),
+    url(r'^report/survey/(?P<slug>.+)/$', 'bccf.views.report.survey_report', name='survey-report'),        
+        
     #Pages
+    url(r'^filter/(?P<query>.*)/$', 'bccf.views.page.filter', name='filter'),
     url(r'^next/topic/(?P<topic>.+)/(?P<which>.*)/(?P<offset>\d+)/$', 'bccf.views.page.topic_next', name='topic-next'),
     url(r'^next/(?P<parent>.+)/(?P<which>.*)/(?P<offset>\d+)/$', 'bccf.views.page.next', name='bccf-next'),
     url(r'^topic/(?P<topic>.+)/$', 'bccf.views.page.topic_page', name='topic-page'),
@@ -108,11 +121,6 @@ urlpatterns = patterns("",
     # page tree in the admin if it was installed.
 
     # url("^$", "mezzanine.blog.views.blog_post_list", name="home"),
-
-    # MEZZANINE URL OVERRIDES
-    #------------------------
-    # The patterns here will be used to override Mezzanine-specific urls.
-    url("^rating/$", "bccf.views.views.rating", name="rating"),
 
     # MEZZANINE'S URLS
     # ----------------

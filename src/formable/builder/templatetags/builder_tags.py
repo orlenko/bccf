@@ -22,7 +22,4 @@ def form_list_for_publish(context):
     Provides a generic context variable to render a form struct list.
     """
     context["list_form"] = ListForPublishForm()
-    log.info("=================================")
-    log.info(context["list_form"])
-    log.info("=================================")
     return context

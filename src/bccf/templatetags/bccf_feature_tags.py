@@ -1,7 +1,7 @@
 from django.db.models import get_model, ObjectDoesNotExist, Q
 from mezzanine import template
 
-from bccf.models import BCCFChildPage
+from bccf.models import BCCFChildPage, UserProfile
 
 import logging
 import re
@@ -37,5 +37,7 @@ def featured_resources(context):
     context['slides'] = BCCFChildPage.objects.filter(Q(content_model='article', featured=True) | Q(content_model='downloadableform', featured=True) | Q(content_model='magazine', featured=True) | Q(content_model='tipsheet', featured=True) | Q(content_model='video', featured=True)).order_by('-created')
     return context
     
-def resources_for(context, topic=None):
-    pass
+@register.inclusion_tag('generic/includes/featured_users.html', takes_context=True)
+def featured_users(context, type): # 0 - level 1; 50 - level 2; 100 - level 3
+    context['users'] = UserProfile.objects.filter(membership_type=type, membership_level=100).order_by('?')
+    return context

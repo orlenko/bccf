@@ -1,8 +1,8 @@
 {% extends "accounts/account_form.html" %}
 {% load i18n %}
 
-{% block main %}
-
+{% block carousels %}
+<div class="col twelve">
 {% if request.user.is_authenticated %}
     <p>{% trans "You're already logged in. If you'd like to create a new account, you'll need to log out first." %}</p>
 {% else %}
@@ -11,5 +11,6 @@
     <p>{% trans "After signing up, you'll receive an email with a link you need to click, in order to activate your account." %}</p>
     {% endif %}
 {% endif %}
+</div>
 
 {% endblock %}

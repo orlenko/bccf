@@ -111,10 +111,17 @@ ADMIN_MENU_ORDER = (
        "generic.ThreadedComment", ("Media Library", "fb_browse"),)),
     ("Site", ("sites.Site", "redirects.Redirect", "conf.Setting")),
     ("Users", ("auth.User", "auth.Group",)),
-    ("BCCF", ("news.NewsPost", "bccf.EventForParents", "bccf.EventForProfessionals", "bccf.Settings", "bccf.Topic", "bccf.TopicLink", "bccf.UserProfile",)),
+    ("BCCF", ("news.NewsPost",
+              "bccf.EventForParents",
+              "bccf.EventForProfessionals",
+              "bccf.Settings",
+              "bccf.Topic",
+              "bccf.TopicLink",
+              "bccf.UserProfile",)),
     ("Marquees", ("bccf.HomeMarquee", "bccf.HomeMarqueeSlide", "bccf.FooterMarquee", "bccf.FooterMarqueeSlide", "bccf.PageMarquee", "bccf.PageMarqueeSlide")),
     ("Resources", ("bccf.Article", "bccf.DownloadableForm", "bccf.Magazine", "bccf.TipSheet", "bccf.Video")),
     ("Events", ("bccf.EventForParents", "bccf.EventForProfessionals")),
+    ("Forum", ("pybb.Topic", "pybb.Post", "pybb.Profile")),
 )
 
 # A three item sequence, each containing a sequence of template tags
@@ -334,7 +341,6 @@ INSTALLED_APPS = (
     "mezzanine.conf",
     "mezzanine.core",
     "mezzanine.generic",
-    "mezzanine.blog",
     "mezzanine.forms",
     "mezzanine.pages",
     "mezzanine.galleries",
@@ -344,6 +350,7 @@ INSTALLED_APPS = (
     'news',
     'pybb',
     'bccf',
+    'tinymce',
     "cartridge.shop",
     'formable.builder',
     # install via pip or easy_install django-form-utils
@@ -512,3 +519,20 @@ else:
 ##################
 #JQUERY_FILENAME = ""
 BCCF_PAGES = '(resources|blog|trainings|tag|news|programs)'
+SEARCH_MODEL_CHOICES = (
+    'bccf.BCCFChildPage',
+    'bccf.BCCFTopic',
+    'bccf.BCCFPage',
+)
+COMMENTS_USE_RATINGS = False
+COMMENTS_ACCOUNT_REQUIRED = True
+
+#TINYMCE
+TINYMCE_SPELLCHECKER = True
+TINYMCE_COMPRESSOR = True
+TINYMCE_DEFAULT_CONFIG = {
+    'plugins': "table,spellchecker,paste,searchreplace",
+    'theme': "advanced",
+    'cleanup_on_startup': True,
+    'custom_undo_redo_levels': 10,
+}

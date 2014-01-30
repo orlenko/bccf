@@ -5,10 +5,12 @@
         <div>
             <img src="media/{{ slide.image }}" alt="Marquee Filler"/>
             <div class="lightbox mobile-full">
-                <span class="lightbox-title col mobile-nine">{{ slide.title }}</span>
+                <span class="lightbox-title col twelve mobile-twelve">{{ slide.title }}</span>
                 <p class="no-mobile">{{ slide.caption }}</p>
-                <div class="a-wrapper col mobile-three">
-                    <a href="{{ slide.url }}">{{ slide.linkLabel }}</a>
+                <div class="col twelve mobile-full">
+                    <div class="a-wrapper dashed-button">
+                        <a href="{{ slide.url }}">{{ slide.linkLabel }}</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -16,20 +18,20 @@
     </div>
     {% if show_tag %}
     <div id="tag-container">
-        <div class="a-wrapper">
-            <a href="#" class="tag-box mobile-full">
+        <div class="a-wrapper dashed-button">
+            <a href="tag/" class="tag-box mobile-full">
                 <span class="tag-title">Talk</span> 
                 <span>Share your story</span>   
             </a>
         </div>
-        <div class="a-wrapper">
-            <a href="#" class="tag-box mobile-full">
+        <div class="a-wrapper dashed-button">
+            <a href="tag/" class="tag-box mobile-full">
                 <span class="tag-title">Act</span>  
                 <span>Take a survey</span>     
             </a>
         </div>
-        <div class="a-wrapper">
-            <a href="#" class="tag-box mobile-full">
+        <div class="a-wrapper dashed-button">
+            <a href="tag/" class="tag-box mobile-full">
                 <span class="tag-title">Get Involved</span>
                 <span>Make change happen</span>
             </a>
@@ -37,40 +39,3 @@
     </div>
     {% endif %}
 </div>
-<nav id="browse-by" class="section">
-    <div class="browse">Browse By:</div>
-    <div id="browse-by-nav" class="mobile-nav-container nav">
-        <ul>
-            <li>
-                <a>Topic</a>
-   	            {% if topics %}
-	            <ul>
-   	                {% for topic in topics %}
-   	                <li><a href="{{ topic.get_absolute_url }}">{{ topic.title }}</a></li>
-   	                {% endfor %}
-                </ul>
-                {% endif %}
-            </li>
-            <li>
-                <a href="{% url 'bccf-page' 'resources' %}">Resources</a>
-                <ul>
-   	                <li><a href="{% url 'bccf-page' 'resources' %}">Article</a></li>
-   	                <li><a href="{% url 'bccf-page' 'resources' %}">Downloadable Form</a></li>
-   	                <li><a href="{% url 'bccf-page' 'resources' %}">Magazine</a></li>
-   	                <li><a href="{% url 'bccf-page' 'resources' %}">Tip Sheet</a></li>
-   	                <li><a href="{% url 'bccf-page' 'resources' %}">Video</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="{% url 'bccf-page' 'programs' %}">Program</a>
-                {% if programs %}
-                <ul>
-   	                {% for program in programs %}
-   	                <li><a href="{{ program.get_absolute_url }}">{{ program.title }}</a></li>
-   	                {% endfor %}
-                </ul>
-                {% endif %}
-            </li>
-        </ul>
-    </div>
-</nav>

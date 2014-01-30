@@ -1,0 +1,41 @@
+{% extends "bccf/bccf_page.html" %}
+
+{% load i18n future mezzanine_tags bccf_tags %}
+
+{% block meta_title %}{% trans "Search Results" %}{% endblock %}
+{% block title %}{% trans "Search Results" %}{% endblock %}
+
+{% block content %}
+<h1>Search Results</h1>
+<h2>For: {{ query }}</h2>
+{% endblock %}
+
+{% block carousels %}
+<div id="search-results">
+    {% for result in results.object_list %}
+    <a href="{{ result.get_absolute_url }}" class="result-box row section">
+        <div class="col three">
+            <img src="{{ MEDIA_URL }}{% bccf_thumbnail result.image 75 75 %}" alt="result.title"/>    
+        </div>
+        <div class="col nine">
+            <h5>{{ result.title }}</h5>
+            <p>{{ result.description|truncatewords_html:20|safe }}</p>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+
+{% if results.paginator.count == 0 %}
+{% blocktrans %}
+<h3>No results were found matching your query: {{ query }}</h3>
+{% endblocktrans %}
+{% else %}
+{% blocktrans with start=results.start_index end=results.end_index total=results.paginator.count %}
+Showing {{ start }} to {{ end }} of {{ total }} results of: {{ query }}
+{% endblocktrans %}
+{% pagination_for results %}
+{% endif %}
+
+{% endblock %}
+
+{% block page_script %}{% endblock %}

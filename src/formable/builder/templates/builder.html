@@ -1,7 +1,9 @@
 {% load i18n %}
-
-<div class="section container row">
-    <div class="col three">
+<div class="alert-info">
+<h4>All fields should have a different name/question.</h4>
+</div>
+<div id="builder-main" class="col twelve">
+    <div class="col three mobile-full">
         <!-- Common Fields -->
         <div class="section twelve row section-head">
             <span>Common Fields</span>
@@ -10,9 +12,9 @@
             <div class="section twelve row field-container-inner">
                 <span id="text-field"  class="field draggable">Text Field</span>
             </div>
-            <!-- <div class="section twelve row field-container-inner">
+            <div class="section twelve row field-container-inner">
                 <span id="textarea-field" class="field draggable">Multiline Text Field</span>
-            </div> -->
+            </div>
             <div class="section twelve row field-container-inner">
                 <span id="select-field" class="field draggable">Select Field</span>
             </div>
@@ -47,50 +49,52 @@
         </div>
         <div class="twelve field-container">
             <div class="section twelve row field-container-inner">
-                <a id="add-row" href="#">Add Fieldset</a>
+                <a id="formable-add-row" href="#">Add Fieldset</a>
             </div>
         </div>
         {% endblock %}
     </div>
-    <div id="form-container" class="col nine">
+    <div id="form-container" class="col nine mobile-full">
         <input type="text" id="form-title" class="form-title section twelve" placeholder="Form Title" required />
         <ul id="form-body" class="section row-one twelve no-style-list sortable"></ul>
-        <!-- custom for BCCF -->
-        {% if wizard %}
-            <form id="form_structure_form" action="" method="POST">
-        {% else %}
-            <form id="form_structure_form" action="{% url 'formable-save-structure' %}" method="POST">
-        {% endif %}
-            {% csrf_token %}
-            {% if wizard %}
-                {{ wizard.management_form }}
-                {% if  wizard.forms.forms %}
-                    {{ wizard.form.management.form }}
-                    {% for form in wizard.form.forms %}
-                        {{ form }}
-                    {% endfor %}
-                {% else %}
-                    {{ wizard.form }}
-                {% endif %}
-                <br/><br/>
-                {% if wizard.steps.prev %}
-                    <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}">
-                        {% trans "prev step" %} 
-                    </button>
-                {% endif %}
-            {% else %}
-                {{ structure_form }}
-            {% endif %}
-        <!-- end custom -->
-            <input id="form_submit" type="submit" value="{% trans 'submit' %}" class="export-btn" />
-        </form>
     </div>
+</div>
+<div id="form-aux" class="col twelve">
+    <!-- custom for BCCF -->
+    {% if wizard %}
+    <form id="form_structure_form" action="" method="POST">
+    {% else %}
+    <form id="form_structure_form" enctype="multipart/form-data" action="{% url 'formable-save-structure' %}" method="POST">
+    {% endif %}
+        {% csrf_token %}
+        {% if wizard %}
+            {{ wizard.management_form }}
+            {% if  wizard.forms.forms %}
+                {{ wizard.form.management.form }}
+                {% for form in wizard.form.forms %}
+                    {{ form.as_p }}
+                {% endfor %}
+            {% else %}
+                {{ wizard.form.as_p}}
+            {% endif %}
+            <br/><br/>
+            {% if wizard.steps.prev %}
+                <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}">
+                    {% trans "prev step" %} 
+                </button>
+            {% endif %}
+        {% else %}
+            {{ structure_form.as_p }}
+        {% endif %}
+    <!-- end custom -->
+        <input id="form_submit" type="submit" value="{% trans 'Submit' %}" class="export-btn" />
+    </form>
 </div>
 
 <!-- Dialog Box -->
 <div id="settings-box">
-    <h3 id="settings-title"></h3>
-    <table></table>
+    <h3 id="settings-title" class="col twelve"></h3>
+    <div id="settings-form" class="section col twelve no-style-list"></div>
 </div>
 
 <script>
@@ -103,8 +107,14 @@
         $(".sortable").sortable().disableSelection();
         
         // Link Buttons
-        $("#add-row").on('click', function(){add_row();});
-        $(".export-btn").on('click', function(e){e.preventDefault();export_form();});
+        $("#formable-add-row").on('click', function(e){
+            e.preventDefault();        
+            add_row();
+        });
+        $(".export-btn").on('click', function(e){
+            e.preventDefault();
+            export_form();
+        });
         
         {% if form_structure %}
         import_form({{ form_structure|safe }})

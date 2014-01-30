@@ -1,7 +1,12 @@
 {% extends "accounts/account_form.html" %}
 
-{% block main %}
-	{{ block.super }}
+{% block content %}
+<h1>Update Profile</h1>
+{% endblock %}
 
+{% block carousels %}
+    <div class="col twelve">
+	{{ block.super }}
 	<p>To review and update your membership info, <a href="{% url 'member-profile' %}">click here</a>.</p>
+	</div>
 {% endblock %}

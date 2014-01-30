@@ -2,31 +2,27 @@
 {% load static bccf_rating_tags content_carousel_tags bccf_big_marquee_tags mezzanine_tags %}
 
 {% block main %}
-<div id="content-page-wrapper" class="section"> <!-- Main Wrapper -->
-  
-  
+<div id="content-page-wrapper" class="section">
   <section id="main-content-side" class="col eight mobile-full"><!-- Left Side -->
-  {% block marquee %}
-  {% big_marquee_for page %}
-  {% endblock %}
-  <section id="page-header" class="section">
-  
-  <article class="col twelve">
-  
-  <h1>{% editable page.title %}{{ page.title }}{% endeditable %}</h1>
-  {% block content %}{% editable page.content %}{{ page.content|safe }}{% endeditable %}{% endblock %}
-  </article>
-  
-  </section> 
-  {% block carousels %}
-    {% content_carousel_for page 'Parents' %}
-    {% content_carousel_for page 'Professionals' %}  
-  {% endblock %}
+      {% block marquee %}{% endblock %}
+      {% browse_by %}
+      <section id="page-header" class="section">
+          <article class="col twelve">
+            {% block content %}
+            {% editable page.title page.content %}
+            <h1>{{ page.title }}</h1>
+            {{ page.content|safe }}
+            {% endeditable %}
+            {% endblock %}
+          </article>
+      </section>
+      <section class="section">
+      {% block carousels %}{% endblock %}
+      </section>
   </section>
+
 <!-- #main-content-side "Left Side" -->
- 
- 
- 
+
  <aside id="sidebar" class="col four mobile-full"> <!-- Right Side -->
     {% content_carousel_for_tag %}
      <div id="side-resources" class="section">
@@ -36,17 +32,42 @@
                 {% content_carousel_for_resources %}
             </div>
        </div>
-     </div> <!-- end of #side-resources -->    
- 
- 
- 
-  
-  
-  </div> <!-- end of #content-page-wrapper --> 
-  
+     </div> <!-- end of #side-resources -->
+  </aside>
+</div> <!-- end of #content-page-wrapper -->
+
+{% block mobile_container %}
+<div id="mobile-content-container" class="no-desktop no-tablet mobile-content-container">
+    <a class="close-btn" href="#">CLOSE</a>
+    <div class="mobile-content"></div>
+</div>
+{% endblock %}
+
+{% block page_script %}
 <script type="text/javascript" >
-$(function(){
-    $('#browse-by-nav').Flaunt();
+var open_baby = false;
+$(function() {
+    $('.to-carousel').owlCarousel({
+        'singleItem': true,
+        'pagination': false,
+        'addClassActive': true,
+        'startDragging': function() { reset(); },
+        'afterMove': function() { get_next($(this.owl.baseElement[0])); },
+        'beforeMove': function() { reset(); },
+    });
+    $('.carousel-grid').hide();
+    reset();    
+    
+    {% if child %}
+    
+    {% if baby %}        
+    open_baby = true;
+    {% endif %}
+    
+    $('#{{ child }}:visible').trigger('click');
+    
+    {% endif %}    
+
     $('#slide-container').owlCarousel({
         'singleItem': true,
         'autoPlay': 5000,
@@ -54,8 +75,157 @@ $(function(){
         'theme': "big-marquee",
     });
     $(window).on('popstate', function(e) {
-        window.location.href = location.pathname
+        e.preventDefault();
+    	//console.log('woulda reload the page to ' + location.pathname + ' here, but won\'t');
+        //window.location = location.pathname;
     });
+    $(window).on('beforeunload', function() {
+        console.log('before Unload: '+location.pathname);
+    });
+    $(window).on('resize', function(e) {
+        reset();
+        if($('.mnav-mobile-btn').is(':visible')) {
+            $('.to-slide').trigger('click');
+        }
+    });  
 });
+
+/** EVENT LISTENTERS **/
+$('.content-pages').on('click', '.page-box', function(e) {
+    e.preventDefault();
+    reset();
+    if($(e.target).hasClass('page-box')) {
+        clicked = $(e.target);
+    } else {
+        clicked = $(e.target).parents('.page-box');
+    }
+    if(!clicked.hasClass('page-box-active')) { // was the active one clicked?
+        pageURL = clicked.find('a').attr('href');
+        if(open_baby) {
+            pageURL = pageURL+'{{ baby }}';
+            open_baby = false;          
+        }
+        $(document).find('.page-box-active').removeClass('page-box-active');
+        clicked.addClass('page-box-active');
+        load_content(clicked);
+    } else {
+        clicked.removeClass('page-box-active');    
+    }
+});
+
+$('.control-buttons').on('click', 'a', function(e) {
+    e.preventDefault();
+    reset();
+    parent = $(this).parents('.content-pages');
+    if($(this).hasClass('to-grid')) {
+        parent.find('.carousel-slide').hide();
+        parent.find('.carousel-grid').show();
+    } else {
+        parent.find('.carousel-grid').hide();
+        parent.find('.carousel-slide').show();
+    }
+});
+
+$('#mobile-content-container').on('click', '.close-btn', function(e) {
+    e.preventDefault();
+    reset();
+});
+
+$('.content-pages').on('click', 'a[class^="button"]', function(e) {
+    e.preventDefault();
+    var carousel = $(this).siblings('.page-container-outer').children('div[class^="carousel"]:visible');
+    if($(this).hasClass('button-prev')) {
+        carousel.trigger('owl.prev');
+    } else {
+        carousel.trigger('owl.next');    
+    }
+});
+
+/*
+$(document).on('touchmove', function(e) {
+    if($(e.target).attr('id') === 'mobile-content-container') {
+        var c = $(e.target);
+        if(c.scrollTop()+c.innerHeight >= c[0].scrollHeight()) {
+                    
+        }
+    }
+});
+*/
+
+/** HELPER FUNCTIONS **/
+var get_next = function(carousel) {
+    var parent = carousel.parents('.content-pages');
+    if(carousel.find('.active').is(':last-child')) {
+        var offset = carousel.find('.owl-item .page-box').length;
+        if(offset % 1 === 0 {% if filter %} && parent.find('.filter').val() == '' {% endif %}) {
+            $.ajax({
+                url: '/next/{{ page.slug }}/'+parent.attr('id')+'/'+offset+'/',
+                context: parent,
+                success: function(data) {                        
+                    if(data.slide.length > 1 && data.grid.length > 1) {
+                        parent.find('.carousel-slide').data('owlCarousel').addItem(data.slide);
+                        parent.find('.carousel-grid').data('owlCarousel').addItem(data.grid);
+                        if(carousel.hasClass('carousel-slide')) {
+                            parent.find('.carousel-grid').hide();                     
+                        } else {
+                            parent.find('.carousel-slide').hide();
+                        }
+                        carousel.trigger('owl.next');
+                    }
+                },
+            });
+        }   
+    }
+    return true;
+}
+
+var reset = function() {
+    $('.reset').hide().html('');
+    $('#mobile-content-container').hide()
+    $('#mobile-content-container .mobile-container').html('');
+    $('.page-box-active').removeClass('page-box-active');
+    $('body').css({overflow: 'auto', height: 'auto'});
+    $(window).off('touchmove');
+};
+
+var load_content = function(box) {
+    var container = null
+    var loader =  $('<img>', {
+        src: '{% static "img/bccf-loader.gif" %}',
+        alt: 'Loader',
+        class: 'ajax-loader',
+    });
+    if($('.mnav-mobile-btn').is(':visible')) { // For mobiles
+        $('body').css({overflow: 'hidden', height: '100%'});
+        $('#mobile-content-container').show();
+        container = $('#mobile-content-container .mobile-content');
+    } else if(box.parents('.carousel-slide').length) {
+        container = box.parents('.carousel-slide').siblings('.slide-content');
+    } else if(box.parents('.carousel-grid').length) {
+        container = box.nextAll('.grid-content').first();
+    }
+    container.html(loader).show();
+    $.ajax({
+        url: pageURL,
+        context: container,
+        success: function(data) {
+            $(this).html(data);
+            if(!$('.mnav-mobile-btn').is(':visible')) {
+                $('body, html').animate({
+                    'scrollTop':   $(this).offset().top-160
+                }, 500);
+            }
+        },
+        error: function() {
+            $(this).html('<h3>Error Loading Page</h3>');        
+        }
+    });
+    if (pageURL != window.location) {
+        window.history.pushState({ path: pageURL }, '', pageURL);
+    }
+} 
+
 </script>
+{% endblock %}
+
 {% endblock %}

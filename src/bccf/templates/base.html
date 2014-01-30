@@ -32,6 +32,8 @@
 {% endifinstalled %}
 {% block extra_css %}
 <link rel="stylesheet" href="{% static "css/slider.css" %}" />
+<link rel="stylesheet" href="{% static "css/mnav.css" %}" />
+<link rel="stylesheet" href="{% static "css/mnav-theme.css" %}" />
 <link rel="stylesheet" href="{% static "css/vendor/owl.carousel.css" %}" />
 <link rel="stylesheet" href="{% static "css/vendor/owl.theme.css" %}" />
 <link rel="stylesheet" href="{% static "css/vendor/rating.css" %}" />
@@ -42,13 +44,16 @@
 
 {% compress js %}
 <script src="{% static "js/jquery-1.10.2.min.js" %}"></script>
-<script src="//code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script src="{% static "js/jquery-touch-punch.min.js" %}"></script>
 <script src="{% static "js/rating/jquery.MetaData.js" %}"></script>
 <script src="{% static "js/rating/jquery.rating.pack.js" %}"></script>
 <script src="{% static "js/base/default.js" %}"></script>
-<script src="{% static "js/flaunt_custom.js" %}"></script>
+<script src="{% static "js/mnav.min.js" %}"></script>
 <script src="{% static "js/owl.carousel.min.js" %}"></script>
 <script src="{% static "js/helpers.js" %}"></script>
+<!--<script src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>-->
+<script src="{% static "tiny_mce/tiny_mce.js" %}"></script>
 <script type="text/javascript">
 	var $buoop = {
 		vs : {
@@ -96,6 +101,7 @@
 
 </head>
 <body id="{% block body_id %}body{% endblock %}">
+
 <div class="container">
 
 	{% nevercache %}
@@ -125,21 +131,8 @@
     <nav id="main-top-nav" class="nav-mobile-container section">
         <span class="row no-desktop mobile-full">Menu</span>
         {% page_menu 'pages/menus/dropdown.html' %}
-        <!-- <ul class="col eight mobile-full">
-            <li><a href="#">Programs</a></li>
-            <li><a href="#">Trainings</a></li>
-            <li><a href="#">Tag</a></li>
-            <li><a href="#">Resources</a></li>
-            <li><a href="#">Blog</a></li>
-            <li><a href="#">Donate</a></li>
-        </ul> -->
-
         <div id="search-bar" class="col four mobile-full">
-            <form method="get" id="searchform" action="/search/">
-                <input type="hidden" name="type" value="" />
-                <input type="submit" class="submit" name="submit" id="searchsubmit" value=""  />
-                <input type="text" class="field" name="q" id="q" placeholder="Search BCCF" />
-            </form>
+            {% search_form %}
         </div>
     </nav>
 
@@ -186,9 +179,11 @@
 
 <script>
     $(function() {
-        $('#main-top-nav').Flaunt();
+        $('#main-top-nav').Mnav({
+            'theme': 'main-bccf',
+            'subMenuSpeed': 0,        
+        });
     });
 </script>
-
 </body>
 </html>

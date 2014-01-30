@@ -22,7 +22,7 @@ class FormStructure(models.Model):
         #('4', 'XML'), # To be Implemented
     )
 
-    title = models.CharField(_("Form Title"), max_length=100)
+    title = models.CharField(_("Form Title"), default="Form Structure", max_length=100)
     structure = models.TextField(_("Form Structure"))
     type = models.CharField(_("Form Type"), max_length=4, default='JSON', choices=FORM_TYPE)
     created = models.DateTimeField(auto_now_add=True)
@@ -45,15 +45,27 @@ class FormPublished(BCCFChildPage):
         verbose_name = _("Published Form")
         verbose_name_plural = _("Published Forms")        
         
-    def save(self):
+    def save(self, **kwargs):
         if self.pk is None:
             self.gparent = BCCFPage.objects.get(slug='tag')
             self.published = datetime.now()
             self.title = self.form_structure.title
-        super(FormPublished, self).save() 
+        super(FormPublished, self).save(**kwargs)
     def get_absolute_url(self):
+        """
+        URL for a page
+        """
+        slug = self.slug
+        if self.parent:
+            return self.parent.get_absolute_url()
+        else:
+            return self.get_survey_url()
+    def get_survey_url(self):
         slug = self.slug        
-        return reverse('formable-view', kwargs={'slug':slug})  
+        return reverse('formable-view', kwargs={'slug':slug})
+    def get_report_url(self):
+        if self.slug:
+            return reverse('survey-report', kwargs={'slug': self.slug})
 
 class FormFilled(models.Model):
     """

@@ -13,9 +13,9 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import resolve, reverse
 
 from mezzanine.conf import settings as mezzanine_settings
-from mezzanine.generic.fields import RatingField
-from mezzanine.core.fields import FileField, RichTextField
-from mezzanine.core.models import Displayable, Orderable, Ownable, RichText
+from mezzanine.generic.fields import RatingField, CommentsField
+from mezzanine.core.fields import FileField
+from mezzanine.core.models import Displayable, Orderable, RichText
 from mezzanine.pages.fields import MenusField
 from mezzanine.pages.managers import PageManager
 from mezzanine.pages.models import Page
@@ -23,10 +23,10 @@ from mezzanine.utils.models import upload_to, AdminThumbMixin
 from mezzanine.utils.urls import path_to_slug, slugify
 
 from bccf.fields import MyImageField
-from bccf.settings import (OPTION_SUBSCRIPTION_TERM, get_option_number,
-    INSTALLED_APPS)
-from mezzanine.core.models import Slugged
+from bccf.settings import (OPTION_SUBSCRIPTION_TERM,
+                           get_option_number,)
 from mezzanine.utils.email import send_mail_template
+
 
 log = logging.getLogger(__name__)
 
@@ -45,15 +45,15 @@ class Marquee(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     class Meta:
         abstract = True
-        
+
     def __unicode__(self):
         return self.title
-            
+
 class HomeMarquee(Marquee):
     active = models.BooleanField("Active", default=False,
-        help_text = "Checking this box makes this the default marquee in the home page"    
+        help_text = "Checking this box makes this the default marquee in the home page"
     )
-    def save(self):
+    def save(self, **kwargs):
         if self.active:
             try:
                 temp = HomeMarquee.objects.get(active=True)
@@ -62,13 +62,13 @@ class HomeMarquee(Marquee):
                     temp.save()
             except ObjectDoesNotExist:
                 self.active = True
-        super(HomeMarquee, self).save()
-    
+        super(HomeMarquee, self).save(**kwargs)
+
 class FooterMarquee(Marquee):
     active = models.BooleanField("Active", default=False,
-        help_text = "Checking this will make this the default footer marquee"    
+        help_text = "Checking this will make this the default footer marquee"
     )
-    def save(self):
+    def save(self, **kwargs):
         if self.active:
             try:
                 temp = FooterMarquee.objects.get(active=True)
@@ -77,8 +77,8 @@ class FooterMarquee(Marquee):
                     temp.save()
             except ObjectDoesNotExist:
                 self.active = True
-        super(FooterMarquee, self).save()
-        
+        super(FooterMarquee, self).save(**kwargs)
+
 class PageMarquee(Marquee):
     pass
 
@@ -102,15 +102,15 @@ class MarqueeSlide(models.Model):
         abstract = True
     def __unicode__(self):
         return self.title
-           
+
 class HomeMarqueeSlide(MarqueeSlide):
     marquee = models.ManyToManyField(HomeMarquee)
     url = models.URLField("Link", blank=True, default='', null=True)
     linkLabel = models.CharField("Link Label", max_length=10, blank=True, default='', null=True)
-    
+
 class FooterMarqueeSlide(MarqueeSlide):
     marquee = models.ManyToManyField(FooterMarquee)
-    
+
 class PageMarqueeSlide(MarqueeSlide):
     marquee = models.ManyToManyField(PageMarquee)
     url = models.URLField("Link", blank=True, default='', null=True)
@@ -136,15 +136,15 @@ class BCCFPage(Page, RichText):
         ('dgreen-list', 'Dark Green'),
         ('green-list', 'Green'),
         ('teal-list', 'Teal'),
-        ('yellow-list', 'Yellow'),       
+        ('yellow-list', 'Yellow'),
     )
     marquee = models.ForeignKey(PageMarquee, blank=True, null=True)
-    carousel_color = models.CharField(max_length=11, default='dgreen-list', choices=COLORS) 
-        
+    carousel_color = models.CharField(max_length=11, default='dgreen-list', choices=COLORS)
+
     class Meta:
         verbose_name = 'BCCF Page'
         verbose_name_plural = 'BCCF Pages'
-        
+
 #Topic
 class BCCFTopic(Displayable, RichText):
     """
@@ -154,14 +154,14 @@ class BCCFTopic(Displayable, RichText):
         ('dgreen-list', 'Dark Green'),
         ('green-list', 'Green'),
         ('teal-list', 'Teal'),
-        ('yellow-list', 'Yellow'),       
+        ('yellow-list', 'Yellow'),
     )
     marquee = models.ForeignKey(PageMarquee, blank=True, null=True)
-    carousel_color = models.CharField(max_length=11, default='dgreen-list', choices=COLORS) 
+    carousel_color = models.CharField(max_length=11, default='dgreen-list', choices=COLORS)
     class Meta:
         verbose_name = 'Topic'
         verbose_name_plural = 'Topics'
-        
+
     def get_absolute_url(self):
         """
         URL for a page
@@ -171,11 +171,15 @@ class BCCFTopic(Displayable, RichText):
 
 #BCCF Child Class Pages
 class BCCFChildPage(BCCFBasePage, RichText, AdminThumbMixin):
+    """
+    This is the page that shows up in the fancy carousels. A copy of the Page model from Mezzanine in order to create
+    its own tree-like sorting structure.
+    """
     TYPES = (
         ('parent', 'Parents'),
-        ('professional', 'Professionals'),    
+        ('professional', 'Professionals'),
     )
-    
+
     parent = models.ForeignKey('BCCFChildPage', blank=True, null=True)
     gparent = models.ForeignKey('BCCFPage', blank=True, null=True)
     bccf_topic = models.ManyToManyField('BCCFTopic', blank=True, null=True)
@@ -184,9 +188,10 @@ class BCCFChildPage(BCCFBasePage, RichText, AdminThumbMixin):
     content_model = models.CharField(editable=False, max_length=50, null=True, blank=True)
     login_required = models.BooleanField("Login required", default=False,
         help_text="If checked, only logged in users can view this page")
-    rating = RatingField()
+    rating = RatingField(verbose_name='Rating')
+    comments = CommentsField()
     in_menus = MenusField("Show in menus", blank=True, null=True)
-    page_for = models.CharField('Type', max_length=13, default='Parents', blank=True, null=True, choices=TYPES)
+    page_for = models.CharField('Type', max_length=13, default='parent', blank=True, null=True, choices=TYPES)
     image = FileField("Image",
         upload_to = upload_to("bccf.ChildPage.image_file", "childpage"),
         extensions = ['.png', '.jpg', '.bmp', '.gif'],
@@ -195,21 +200,21 @@ class BCCFChildPage(BCCFBasePage, RichText, AdminThumbMixin):
         blank = True,
         help_text = 'You can upload an image. '
             'Acceptable file types: .png, .jpg, .bmp, .gif.')
-            
+
     class Meta:
         verbose_name = 'BCCF Child Page'
         verbose_name_plural = 'BCCF Child Pages'
         ordering = ("titles",)
         order_with_respect_to = "parent"
-        
+
     def __unicode__(self):
         if self.parent is None and self.gparent is not None:
             return '%s: %s' % (self.gparent.title, self.title)
         elif self.gparent is None and self.parent is not None:
             return '%s: %s' % (self.parent.title, self.title)
         else:
-            return self.title  
-        
+            return self.title
+
     def get_absolute_url(self):
         """
         URL for a page
@@ -220,7 +225,7 @@ class BCCFChildPage(BCCFBasePage, RichText, AdminThumbMixin):
         else:
             parent = self.parent.slug
         return reverse('bccf-child', kwargs={"parent": parent, "child": slug})
-            
+
     def save(self, *args, **kwargs):
         """
         Create the titles field using the titles up the parent chain
@@ -414,12 +419,12 @@ class BCCFChildPage(BCCFBasePage, RichText, AdminThumbMixin):
                 if not str(i) in self.in_menus and t == template_name:
                     return False
         return True
-        
+
 class BCCFBabyPage(BCCFChildPage):
     class Meta:
         verbose_name = 'BCCF Baby Page'
-        verbose_name_plural = 'BCCF Baby Pages' 
-        
+        verbose_name_plural = 'BCCF Baby Pages'
+
     def get_absolute_url(self):
         """
         URL for a page
@@ -428,7 +433,7 @@ class BCCFBabyPage(BCCFChildPage):
         parent = self.parent.slug
         gparent = self.parent.gparent.slug
         return reverse('bccf-baby', kwargs={"parent": gparent, "child": parent, "baby": slug[1]})
-       
+
 #Article
 class DocumentResourceBase(BCCFChildPage):
     #Document Fields
@@ -447,21 +452,27 @@ class DocumentResourceBase(BCCFChildPage):
         abstract = True
 
 class Article(DocumentResourceBase):
-    pass
+    def get_resource_type(self):
+        return 'Article'
 
 class DownloadableForm(DocumentResourceBase):
     class Meta:
         verbose_name = 'Downloadable Form'
         verbose_name_plural = 'Downloadable Forms'
-    
+    def get_resource_type(self):
+        return 'Downloadable Form'
+
 class Magazine(DocumentResourceBase):
-    pass
-    
+    def get_resource_type(self):
+        return 'Magazine'
+
 class TipSheet(DocumentResourceBase):
     class Meta:
         verbose_name = 'Tip Sheet'
         verbose_name_plural = 'Tip Sheets'
-    
+    def get_resource_type(self):
+        return 'Tip Sheet'
+
 class Video(BCCFChildPage):
     video_url = models.URLField("Video", max_length=1024, blank=True, default='', null=True,
     help_text='Paste a YouTube URL here. '
@@ -480,8 +491,10 @@ class Video(BCCFChildPage):
             'Acceptable file types: .avi, .flv, .mkv, .mov, .mp4, .ogg, .wmv.')
     def save(self, **kwargs):
         self.gparent = BCCFPage.objects.get(slug='resources')
-        super(DocumentResourcePage, self).save(**kwargs)
-        
+        super(Video, self).save(**kwargs)
+    def get_resource_type(self):
+        return 'Video'
+
 #Program Pages
 class Program(BCCFChildPage):
     def save(self, **kwargs):
@@ -499,19 +512,27 @@ class Blog(BCCFChildPage):
     class Meta:
         verbose_name = 'Blog Post'
         verbose_name_plural = 'Blog Posts'
-        
+
 #TAG
 class Campaign(BCCFChildPage):
     def save(self, **kwargs):
         self.gparent = BCCFPage.objects.get(slug='tag')
-        super(Blog, self).save(**kwargs)
+        super(Campaign, self).save(**kwargs)
 
 #### PAGE STUFF END ####
 
 #### USER STUFF ####
 
 class UserProfile(models.Model):
+    MEMBERSHIP_TYPES = [
+            ('parent', 'Parent'),
+            ('professional', 'Professional'),
+            ('organization', 'Organization'),
+            ('corporate', 'Corporate'),
+    ]
+
     user = models.OneToOneField(User, related_name='profile')
+    description = models.TextField('Description', null=True, blank=True)
     photo = MyImageField(verbose_name="Photo",
         upload_to=upload_to("bccf.Profile.photo", "uploads/profile-photos"),
         format="Image", max_length=255, null=True, blank=True,
@@ -520,12 +541,25 @@ class UserProfile(models.Model):
     membership_order = models.ForeignKey('shop.Order', null=True, blank=True)
     requested_cancellation = models.NullBooleanField(null=True, blank=True, default=False)
     is_forum_moderator = models.NullBooleanField(null=True, blank=True, default=False)
+    membership_type = models.CharField('Membership Type', max_length=128, null=True, blank=True, choices=MEMBERSHIP_TYPES)
+    membership_level = models.IntegerField(default=0, null=True, blank=True)
 
     def __unicode__(self):
         return 'Profile of %s' % (self.user.get_full_name() or self.user.username)
 
     def can_post_on_forum(self, post):
         return self.is_forum_moderator
+
+    def set_membership_order(self, order):
+        self.membership_order = order
+        # Update membership type and level
+        variation = self.membership_product_variation
+        categ_name = variation.product.categories.all()[0].title.lower()
+        self.membership_level = variation.unit_price
+        self.membership_type = None
+        for label, _descr in self.MEMBERSHIP_TYPES:
+            if label in categ_name:
+                self.membership_type = label
 
     @property
     def membership_product_variation(self):
@@ -539,7 +573,7 @@ class UserProfile(models.Model):
                     for variation in ProductVariation.objects.filter(sku=order_item.sku):
                         for category in variation.product.categories.all():
                             if category.title.startswith('Membership'):
-                                self.membership_order = order
+                                self.set_membership_order(order)
                                 self.save()
                                 return variation
             return None
@@ -613,10 +647,10 @@ class UserProfile(models.Model):
         price = membership.unit_price
         now = datetime.now()
         return remaining_subscription_balance(purchase_date, expiration_date, now, price)
+
 #### USER STUFF END ####
 
 class EventBase(BCCFChildPage):
-
     provider = models.ForeignKey(User, blank=True, null=True)
 
     price = MoneyField()
@@ -633,7 +667,7 @@ class EventBase(BCCFChildPage):
         abstract = True
 
 class EventForParents(EventBase):
-    
+
     def save(self, **kwargs):
         self.gparent = BCCFPage.objects.get(slug='trainings')
         self.page_for = 'parent'
@@ -659,7 +693,7 @@ class EventForProfessionals(EventBase):
         self.gparent = BCCFPage.objects.get(slug='trainings')
         self.page_for = 'professional'
         super(EventForProfessionals, self).save(**kwargs)
-        
+
         # For Surveys
         if self.survey_before:
             self.survey_before.parent = self
@@ -675,6 +709,9 @@ class EventForProfessionals(EventBase):
     @permalink
     def create_url(self):
         return('professionals-event-create', (), {})
+
+    def get_report_url(self):
+        return reverse('event-survey-report', kwargs={'slug': self.slug})
 
     class Meta:
         verbose_name = 'Event for Professionals'

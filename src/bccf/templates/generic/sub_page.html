@@ -1,36 +1,95 @@
-{% load static %}
-<section id={{ child_obj.slug }} class="subpage">
-    <div class="subpage-content section row">
-        <h3>{{ child_obj.title }}</h3>
-        <p>{{ child_obj.description }}</p>
-    </div>    
+{% load static bccf_rating_tags comment_tags %}
+<section id={{ child_obj.slug }} class="subpage {{ child_obj.gparent.carousel_color }}">
+    <div class="section">
+        {% bccf_rating_for child_obj %}
+    </div>
+    <div class="subpage-content section row"></div>    
     <div class="subpage-tabs section row">
         <ul class="no-style-list">
+            <li class="col three mobile-full">
+                <a href="{% url 'bccf-baby' child_obj.gparent.slug child_obj.slug 'child-home' %}" id="child-home" class="baby-content-btn">Home</a>
+                <div class="baby-content">
+                    <h3>{{ child_obj.title }}</h3>
+                    {{ child_obj.content|safe }}
+                </div>
+            </li>
             {% for baby in babies %}
             <li class="col three mobile-full">
-                <a href="{{ baby.get_content_model.get_absolute_url }}" id="{{ baby.title|slugify }}-btn" class="baby-content-btn">{{ baby.title }}</a>
+                <a href="{{ baby.get_content_model.get_absolute_url }}" id="{{ baby.title|slugify }}" class="baby-content-btn">{{ baby.title }}</a>
                 <div class="baby-content">
                     <h3>{{ baby.title }}</h3>
                     {{ baby.content|safe }}
                 </div>            
             </li>
             {% endfor %}
-            {% if child_obj.content_model == 'article' or child_obj.content_model == 'downloadableform' or child_obj.content_model == 'magazine' or child_obj.content_model == 'tipsheet' %}
-            <li class="col three mobile-full"><a href="media/{{ child_obj.get_content_model.attached_document }}" target="_blank">Download</a></li>
+            {% if child_obj.gparent.slug == 'trainings' %}
+            <li class="col three mobile-full">
+                <a href="{% url 'bccf-baby' child_obj.gparent.slug child_obj.slug 'child-info' %}" id="child-info" class="baby-content-btn">Information</a>
+                <div class="baby-content">
+                    <h3>Event Information</h3>
+                    <table>
+                        <tr>
+                            <th>Price:</th>
+                            <td>{{ child_obj.get_content_model.price }}</td>                        
+                        </tr>
+                        <tr>
+                            <th>When:</th>
+                            <td>{{ child_obj.get_content_model.date_start }} {% if child_obj.get_content_model.date_end %} to {{ child_obj.get_content_model.date_end }} {% endif %}</td>                        
+                        </tr>
+                        <tr>
+                            <th>Address:</th>
+                            <td>{{ child_obj.get_content_model.location_street }}</td>                       
+                        </tr>                    
+                        {% if child_obj.get_content_model.location_street2 %}
+                        <tr>
+                            <th>Address 2:</th>
+                            <td>{{ child_obj.get_content_model.location_street2 }}</td>                        
+                        </tr>
+                        {% endif %}
+                        <tr>
+                            <th>City:</th>
+                            <td>{{ child_obj.get_content_model.location_city }}</td>                        
+                        </tr>
+                        <tr>
+                            <th>Postal Code:</th>
+                            <td>{{ child_obj.get_content_model.location_postal_code }}</td>                        
+                        </tr>
+                    </table>               
+                </div>            
+            </li>
+            {% endif %}
+            {% if child_obj.gparent.slug == 'resources' %}
+            <li class="col three mobile-full"><a href="{{ MEDIA_URL }}{{ child_obj.get_content_model.attached_document }}" target="_blank">Download</a></li>
             {% endif %}
             {% if child_obj.content_model == 'video' %}
             <li class="col three mobile-full"><a href="#" target="_blank">View</a></li>
             {% endif %}
             {% if child_obj.content_model == 'formpublished' %}
-            <li class="col three mobile-full""><a href="{{ child_obj.get_content_model.get_absolute_url }}" target="_blank">Take</a></li>
+            <li class="col three mobile-full"><a href="{{ child_obj.get_content_model.get_survey_url }}" target="_blank">Act</a></li>
             {% endif %}
             {% if child_obj.content_model == 'topic' %}
             <li class="col three mobile-full"><a href="{{ child_obj.get_content_model.get_absolute_url }}" target="_blank">Talk</a></li>
             {% endif %}
+            
+            {% if resources %}
             <li class="col three mobile-full" id="resources">
-                <a href="{% url 'bccf-baby' child_obj.gparent.slug child_obj.slug 'resources' %}" class="baby-content-btn resources">Resources</a>
+                <a href="{% url 'bccf-baby' child_obj.gparent.slug child_obj.slug 'baby-resources' %}" id="baby-resources" class="baby-content-btn">Resources</a>
                 <div class="baby-content">
-                <h3>Resources</h3>                
+                <h3>Top {{ resources|length }} Most Related Resource{{ resources|length|pluralize }}</h3>
+                    {% if resources %}  
+                    <ul>
+                        {% for resource in resources%}
+                        <li><a href="{{ resource.get_absolute_url }}">{{ resource.title }}</a></li>
+                        {% endfor %}          
+                    </ul>
+                    {% endif %}  
+                </div>
+            </li>
+            {% endif %}
+            <li class="col three mobile-full" id="comments">
+                <a href="{% url 'bccf-baby' child_obj.gparent.slug child_obj.slug 'child-comments' %}" id="child-comments" class="baby-content-btn">Comments</a>
+                <div class="baby-content">
+                {% comments_for child_obj %}                
                 </div>
             </li>
         </ul>
@@ -38,25 +97,24 @@
 </section>
 <script type="text/javascript" >
     $(function() {
-        $('#{{ child_obj.slug }} .baby-content').hide();
-        
-        $('#{{ child_obj.slug }} .baby-content-btn').on('click', function(e) {
+        $('.subpage .baby-content').hide();
+        $('.subpage .baby-content-btn').on('click', function(e) {
             e.preventDefault();
             var url = $(this).attr('href');
-            $('#{{ child_obj.slug }} .baby-content').hide();
-            if($(window).width() <= 724) {
+            if($('.mnav-mobile-btn').is(':visible')) {
+                $('.subpage .baby-content').hide();
                 $(this).siblings('.baby-content').slideToggle('500');
             } else {
-                $('#{{ child_obj.slug }} .subpage-content').html($(this).siblings('.baby-content').html());
+                $('.subpage .subpage-content').html($(this).siblings('.baby-content').html());
             }
             window.history.pushState({ path: url }, '', url);
         });
         
-        {% if baby_obj and baby_obj != 'resources' %}
-        $('#{{ child_obj.slug }} #{{ baby_obj.title|slugify }}-btn').trigger('click');
-        {% endif %}
-        {% if baby_obj and baby_obj == 'resources' %}
-        $('#{{ child_obj.slug }} .{{ baby_obj }}').trigger('click');
+        
+        {% if baby_obj %}
+            $('#{{ baby_obj }}').trigger('click');
+        {% else %}
+            $('#child-home').trigger('click');
         {% endif %}
     });
 </script>

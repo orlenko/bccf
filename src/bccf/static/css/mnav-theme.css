@@ -1,0 +1,40 @@
+.mnav-theme {
+    background-color: #ccc;
+}
+
+.mnav-theme .mnav-menu-item a:hover {
+    background-color: #ddd;
+}
+
+.mnav-theme .mnav-submenu {
+    background-color: #ccc;
+}
+
+.mnav-theme .mnav-submenu-item a:hover {
+    background-color: #ddd;
+}
+
+.mnav-theme .mnav-mobile-btn:hover {
+    background-color: #555;
+}
+
+.mnav-theme .mnav-mobile-arrow:hover {
+    background-color: #555;
+}
+
+.mnav-theme .mnav-open-close {
+    border-left: 1px solid #aaa;
+    border-bottom: 1px solid #aaa;
+}
+
+@media only screen and (max-width: 740px) {
+
+.mnav-theme .mnav-menu-item {
+    border-bottom: 1px solid #aaa;
+}
+
+.mnav-theme .mnav-submenu-item {
+    border-bottom: 1px solid #aaa;
+}
+
+}

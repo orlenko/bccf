@@ -1,4 +1,4 @@
-// Fields that will be created when the name is dropped
+// Fields that will be created
 var fields = {
     'text-field': '<label for="text-field">Text</label>: <input type="text" name="text-field"/>',
     'textarea-field': '<label for="textarea-field">Multiline</label>: <textarea name="textarea-field" rows="4" cols="5"></textarea>',
@@ -43,7 +43,7 @@ var edit_field = function(obj) {
         if(!obj.hasClass('password-field')) {
             form += get_text_field('Placeholder', obj.children('input').attr('placeholder'), 'placeholder');
         }
-        form += get_check_field('Required', obj.children('input').attr('required') !== 'required' ? '' : 'checked', 'required');
+        //form += get_check_field('Required', obj.children('input').attr('required') !== 'required' ? '' : 'checked', 'required');
         update = function() {
             obj.children('label').html($("#label").val());
             obj.children('input').attr('name', $("#name").val());
@@ -52,29 +52,28 @@ var edit_field = function(obj) {
             } else {
                 obj.children('input').removeAttr('placeholder');
             }
-            if($('#required').is(':checked')) {
-                console.log('checked');
-                obj.children('input').attr('required', '');
-            } else {
-                obj.children('input').removeAttr('required');
-            }
+            //if($('#required').is(':checked')) {
+            //    obj.children('input').attr('required', '');
+            //} else {
+            //   obj.children('input').removeAttr('required');
+            //}
         };
     } else if(obj.hasClass('textarea-field')) {
         title += 'Editing: '+obj.children('label').html();
         form += get_text_field('Label', obj.children('label').html(), 'label');
-        form += get_text_field('Columns', obj.children('textarea').attr('cols'), 'cols');
-        form += get_text_field('Rows', obj.children('textarea').attr('rows'), 'rows');
-        form += get_check_field('Required', obj.children('textarea').attr('required') !== 'required' ? '' : 'checked', 'required');
+        //form += get_text_field('Columns', obj.children('textarea').attr('cols'), 'cols');
+        //form += get_text_field('Rows', obj.children('textarea').attr('rows'), 'rows');
+        //form += get_check_field('Required', obj.children('textarea').attr('required') !== 'required' ? '' : 'checked', 'required');
         update = function() {
             obj.children('label').html($("#label").val());
             obj.children('textarea').attr('name', $("#name").val());
             obj.children('textarea').attr('cols', $("#cols").val());
             obj.children('textarea').attr('rows', $("#rows").val());
-            if($('#required').is(':checked')) {
-                obj.children('textarea').attr('required', '');
-            } else {
-                obj.children('textarea').removeAttr('required');
-            }
+            //if($('#required').is(':checked')) {
+            //    obj.children('textarea').attr('required', '');
+            //} else {
+            //    obj.children('textarea').removeAttr('required');
+            //}
         }
     } else if(obj.hasClass('select-field') || obj.hasClass('multiselect-field')) {
         var options = '';
@@ -84,7 +83,7 @@ var edit_field = function(obj) {
         title += 'Editing: '+obj.children('label').html();
         form += get_text_field('Label', obj.children('label').html(), 'label');
         form += get_textarea_field('Options', options, 'options');
-        form += get_check_field('Required', obj.children('select').attr('required') !== 'required' ? '' : 'checked', 'required');
+        //form += get_check_field('Required', obj.children('select').attr('required') !== 'required' ? '' : 'checked', 'required');
         update = function() {
             var newoptions = '';
             obj.children('label').html($("#label").val());
@@ -94,11 +93,11 @@ var edit_field = function(obj) {
                 }
             });
             obj.children('select').html(newoptions);
-            if($('#required').is(':checked')) {
-                obj.children('select').attr('required', '');
-            } else {
-                obj.children('select').removeAttr('required');
-            }
+            //if($('#required').is(':checked')) {
+            //    obj.children('select').attr('required', '');
+            //} else {
+            //   obj.children('select').removeAttr('required');
+            //}
         }
     } else if(obj.hasClass('radioset-field') || obj.hasClass('checkbox-field')) {
         var buttons = '';
@@ -113,7 +112,7 @@ var edit_field = function(obj) {
             var newbuttons = '';
             $.each($("#buttons").val().split('\n'), function(index, value) {
                 if(value !== '') {
-                    newbuttons += '<input type="'+type+' value="'+value+'"/><span>'+value+'</span>';
+                    newbuttons += '<input type="'+type+'" value="'+value+'"/><span>'+value+'</span>';
                 }
             });
             obj.children('label').html($("#label").val());
@@ -126,13 +125,12 @@ var edit_field = function(obj) {
     }
     
     settings.children("#settings-title").html(title);
-    settings.children("table").html(form);
+    settings.children("#settings-form").html(form);
     
     // Generic dialog box
     settings.dialog({
         height: 'auto',
-        width: 500,
-        modal: true,
+        modal: false,
         buttons: {
             'Update': function() {
                 update();
@@ -165,12 +163,12 @@ var edit_field = function(obj) {
  * To be used only for fieldsets or rows
  */
 var edit_row = function(obj) {    
-    $("#settings-box").children("table").html(get_text_field('Fieldset Name', obj.html(), 'name'));
+    $("#settings-box").children("#settings-form").html(get_text_field('Fieldset Name', obj.html(), 'name'));
     $("#settings-box").children('#settings-title').html('Editig Fieldset: '+obj.html());
     $("#settings-box").dialog({
         height: 'auto',
         width: 500,
-        modal: true,
+        modal: false,
         buttons: {
             'Update': function() {
                 obj.html($("#name").val());
@@ -194,12 +192,12 @@ var edit_row = function(obj) {
  * can be empty.
  */
 var add_row = function() {
-    $("#settings-box").children("table").html(get_text_field('Fieldset Name', '', 'name'));
+    $("#settings-box").children("#settings-form").html(get_text_field('Fieldset Name', '', 'name'));
     $("#settings-box").children('#settings-title').html('Add Fieldset');
     $("#settings-box").dialog({
         height: 'auto',
         width: 500,
-        modal: true,
+        modal: false,
         buttons: {
             'Add': function() {
                 $("#form-body").append(create_fieldset("#form-body", $("#name").val()));
@@ -244,13 +242,13 @@ var export_form = function() {
                 field.attr.type = $(this).children("input").attr("type");
                 field.attr.name = $(this).children("input").attr("name");
                 field.attr.placeholder = $(this).children("input").attr("placeholder");
-                field.attr.required = $(this).children("input").attr("required");
+                //field.attr.required = $(this).children("input").attr("required");
             } else if($(this).hasClass("textarea-field")) {
                 field.attr.type = "textarea"
                 field.attr.name = $(this).children("textarea").attr("name");
                 field.attr.cols = $(this).children("textarea").attr("cols");
                 field.attr.rows = $(this).children("textarea").attr("rows");
-                field.attr.required = $(this).children("textarea").attr("required");
+                //field.attr.required = $(this).children("textarea").attr("required");
             } else if($(this).hasClass("select-field") || $(this).hasClass("multiselect-field")) {
                 field.options = [];
                 field.attr.name = $(this).children("select").attr("name");
@@ -306,17 +304,17 @@ var import_form = function(json) {
                     if(field.attr.placeholder !== 'undefined') {
                         lastli.children('input').attr('placeholder', field.attr.placeholder);
                     }
-                    if(field.attr.required !== 'undefined') {
-                        lastli.children('input').attr('required', '');
-                    }
+                    //if(field.attr.required !== 'undefined') {
+                    //    lastli.children('input').attr('required', '');
+                    //}
                 } else if(field.class === 'textarea-field') {
                     lastli.children('label').html(field.label);
                     lastli.children('textarea').attr('name', field.attr.name);
-                    lastli.children('textarea').attr('cols', field.attr.cols);
-                    lastli.children('textarea').attr('rows', field.attr.rows);
-                    if(field.required !== 'undefined') {
-                        lastli.children('textarea').attr('required', '');
-                    }
+                    //lastli.children('textarea').attr('cols', field.attr.cols);
+                    //lastli.children('textarea').attr('rows', field.attr.rows);
+                    //if(field.required !== 'undefined') {
+                    //    lastli.children('textarea').attr('required', '');
+                    //}
                 } else if(field.class === 'select-field' || field.class === 'multiselect-field') {
                     lastli.children('label').html(field.label);
                     lastli.children('select').attr('name', field.attr.name);
@@ -328,9 +326,9 @@ var import_form = function(json) {
                         newoptions += '<option>'+options+'</option>';
                     });
                     lastli.children('select').html(newoptions);
-                    if(field.attr.required !== 'undefined') {
-                        lastli.children('textarea').attr('required', '');
-                    }
+                    //if(field.attr.required !== 'undefined') {
+                    //    lastli.children('textarea').attr('required', '');
+                    //}
                 } else if(field.class === 'checkbox-field' || field.class === 'radioset-field') {
                     lastli.children('label').html(field.label);
                     var newbuttons = ''
@@ -373,13 +371,13 @@ var del_row = function(obj) {
  * id - id of the input name but will be as the name as well
  *
  * Notes:
- * Wraps the input field in a table row, change the wrapper as necessary.
+ * Wraps the input field in a list row, change the wrapper as necessary.
  */
 var get_text_field = function(label, val, id) {
     val = typeof val !== 'undefined' ? val : '';
     
-    return '<tr><th><label for="'+id+'">'+label+'</label>:</th><td><input name="'+id+'" id="'
-        +id+'" type="text" value="'+val+'"/></td></tr>';   
+    return '<label for="'+id+'" class="col twelve">'+label+':</label><input name="'+id+'" id="'
+        +id+'" type="text" value="'+val+'" class="col twelve"/>';   
 }
 
 /*
@@ -393,13 +391,13 @@ var get_text_field = function(label, val, id) {
  * id - id of the input name but will be as the name as well
  *
  * Notes:
- * Wraps the input field in a table row, change the wrapper as necessary
+ * Wraps the input field in a list row, change the wrapper as necessary
  */
 var get_check_field = function(label, checked, id) {
     checked = typeof checked !== 'undefined' ? checked : '';
     
-    return '<tr><th><label for="'+id+'">'+label+'</label>:</th><td><input name="'+id+'" id="'
-        +id+'" type="checkbox" '+checked+'/></td></tr>';
+    return '<label for="'+id+'" class="col twelve">'+label+':</label><input name="'+id+'" id="'
+        +id+'" type="checkbox" '+checked+' class="col twelve"/>';
 }
 
 /*
@@ -413,13 +411,13 @@ var get_check_field = function(label, checked, id) {
  * id - id of the input name but will be as the name as well
  *
  * Notes:
- * Wraps the input field in a table row, change the wrapper as necessary.
+ * Wraps the input field in a list row, change the wrapper as necessary.
  */
 var get_textarea_field = function(label, val, id) {
     val = typeof val !== 'undefined' ? val : '';
     
-    return '<tr><th><label for="'+id+'">'+label+'</label>:</th><td><textarea name="'+id+'" \
-    id="'+id+'" rows="10">'+val+'</textarea>';
+    return '<label for="'+id+'" class="col twelve">'+label+':</label><textarea name="'+id+'" \
+    id="'+id+'" rows="10" class="col twelve">'+val+'</textarea>';
 }
 
 var create_fieldset = function(id, legend) {
@@ -444,8 +442,14 @@ var create_fieldset = function(id, legend) {
         },
     })
     .find('ul').sortable();
-    icons.children(".del-icon").on('click', function(){del_row(lastli)});
-    icons.children(".edit-icon").on('click', function(){edit_row(lastli.find("legend"))});
+    icons.children(".del-icon").on('click', function(e){
+        e.preventDefault();        
+        del_row(lastli);
+    });
+    icons.children(".edit-icon").on('click', function(e){
+        e.preventDefault();        
+        edit_row(lastli.find("legend"))
+    });
 }
 
 var create_field = function(lastli, id) {
@@ -460,8 +464,14 @@ var create_field = function(lastli, id) {
     
     var fieldlastli = fieldul.children("li:last-child");
     var fieldicons = fieldlastli.find(".icon-container");
-    fieldicons.children(".del-icon").on('click', function(){del_row(fieldlastli)});
-    fieldicons.children(".edit-icon").on('click', function(){edit_field(fieldlastli)});
+    fieldicons.children(".del-icon").on('click', function(e){
+        e.preventDefault();
+        del_row(fieldlastli);
+    });
+    fieldicons.children(".edit-icon").on('click', function(e){
+        e.preventDefault();    
+        edit_field(fieldlastli);
+    });
     
     return fieldlastli;
 }

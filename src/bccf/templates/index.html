@@ -6,6 +6,7 @@
 
 {% block main %}
 {% big_marquee_for %}
+{% browse_by %}
 
 <section id="home-features" class="section">
 
@@ -13,8 +14,8 @@
     <h2>Training Calendar</h2>
 
     <div class="hcal-text">
-    <p>Join one of our many exciting and informative family life education programs.</p>
-    <div class="dashed-button"><a href="#" target="_blank">view all</a></div>
+    <p>Join one of our many exciting and informative family life education programs.</p>
+    <div class="dashed-button"><a href="/trainings" target="_blank">view all</a></div>
     </div>
 
     <div class="hcal-tabs">
@@ -125,15 +126,15 @@
         <p>Looking for a Family Life Education professional working in your area? Want to connect and network with other professional in your field?</p>
           
         <div class="hlist-buttons">
-              <div class="dashed-button"><a href="#" target="_blank">Directory</a></div>
+              <div class="dashed-button"><a href="{% url 'member-directory' %}" target="_blank">Directory</a></div>
               <div class="dashed-button"><a href="#" target="_blank">join</a></div>
         </div>
       
   	</div><!-- End #hlist-left-side -->
       
-      <div id="hlist-right-side" class="col seven mobile-full">
+      <div id="hlist-right-side" class="section col seven mobile-full">
             
-      	<div id="member-container" class="hlist-tabs">
+      	<div id="member-container" class="hlist-tabs mobile-full">
       	 <a href="#" id="member-professionals" class="selected member-button">Professionals</a>
       	 <a href="#" id="member-organization" class="member-button">Organisations</a>
       	</div>
@@ -141,49 +142,10 @@
         
       	<div class="hlist-outer twelve">
   	     <div id="member-professionals-carousel">
-    		<div class="hlist-inner"> <!-- Use Innner for the slide -->
-            
-            	<img src="{% static 'img/member-filler-image.jpg' %}" alt="Place Name as alt ie: Karen Moss Photo">
-                <h6>Karen Moss</h6>
-                <p>Iditis quos et harcipsae doluptatio commolu ptatest eaque porem et volo dolum eiciisquis es endae core postor magniet abo. Et dus ommodi te sus.</p>
-                <a class="hlist-link" href="#">Profile</a>
-                
-            </div>
-            <div class="hlist-inner"> <!-- Use Innner for the slide -->
-            
-            	<img src="{% static 'img/member-filler-image.jpg' %}" alt="Place Name as alt ie: Karen Moss Photo">
-                <h6>Karen Moss</h6>
-                <p>Iditis quos et harcipsae doluptatio commolu ptatest eaque porem et volo dolum eiciisquis es endae core postor magniet abo. Et dus ommodi te sus.</p>
-                <a class="hlist-link" href="#">Profile</a>
-                
-            </div>
-            <div class="hlist-inner"> <!-- Use Innner for the slide -->
-            
-            	<img src="{% static 'img/member-filler-image.jpg' %}" alt="Place Name as alt ie: Karen Moss Photo">
-                <h6>Karen Moss</h6>
-                <p>Iditis quos et harcipsae doluptatio commolu ptatest eaque porem et volo dolum eiciisquis es endae core postor magniet abo. Et dus ommodi te sus.</p>
-                <a class="hlist-link" href="#">Profile</a>
-                
-            </div>
+    		{% featured_users 'professional' %}
          </div>
          <div id="member-organization-carousel">
-    		<div class="hlist-inner"> <!-- Use Innner for the slide -->
-            
-            	<img src="{% static 'img/member-filler-image.jpg' %}" alt="Place Name as alt ie: Karen Moss Photo">
-                <h6>Karen Moss</h6>
-                <p>Iditis quos et harcipsae doluptatio commolu ptatest eaque porem et volo dolum eiciisquis es endae core postor magniet abo. Et dus ommodi te sus.</p>
-                <a class="hlist-link" href="#">Profile</a>
-                
-            </div>
-            <div class="hlist-inner"> <!-- Use Innner for the slide -->
-            
-            	<img src="{% static 'img/member-filler-image.jpg' %}" alt="Place Name as alt ie: Karen Moss Photo">
-                <h6>Karen Moss</h6>
-                <p>Iditis quos et harcipsae doluptatio commolu ptatest eaque porem et volo dolum eiciisquis es endae core postor magniet abo. Et dus ommodi te sus.</p>
-                <a class="hlist-link" href="#">Profile</a>
-                
-            </div>
-
+    		{% featured_users 'organization' %}
          </div>
         </div>
      </div>

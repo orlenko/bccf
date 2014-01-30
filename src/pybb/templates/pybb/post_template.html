@@ -18,8 +18,7 @@
     <tr>
         <td class="post-info">
             {% include "pybb/avatar.html" with user=post.user %}
-
-            <div class="post-author"><a href="{{ post_user_profile.get_absolute_url }}">{{ post.user.username }}</a></div>
+            <div class="post-author"><a href="{{ post_user_profile.get_absolute_url }}">{{ post.user.get_full_name }}</a></div>
             {% if post_user_profile.rank %}
                 <div class='rank'>
                     {% trans "Rank" %}: {{ post_user_profile.rank }}
