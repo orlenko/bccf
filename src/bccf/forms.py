@@ -330,7 +330,10 @@ class AddExistingUserForm(forms.Form):
         organization = self.initial.get('organization', self.data.get('organization'))
         self.fields['user'].choices=[
             (rec.pk, rec.get_full_name())
-            for rec in User.objects.filter(profile__organization=None).exclude(pk=organization)  # @UndefinedVariable PyDev does not get it
+            for rec in User.objects.filter(
+                profile__organization=None,
+                profile__membership_type='professional'
+            ).exclude(pk=organization)  # @UndefinedVariable PyDev does not get it
         ]
 
     def save(self, *args, **kwargs):
