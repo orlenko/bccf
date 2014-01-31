@@ -14,12 +14,13 @@ from formable.builder.models import FormPublished, FormFilled, Question, FieldAn
 @login_required
 def survey_report(request, slug):
     try:
-        page = BCCFChildPage.objects.get(slug=slug)
-        published = FormPublished.objects.get(bccfchildpage_ptr_id=page.pk)
+        published = FormPublished.objects.get(slug=slug)
     except ObjectDoesNotExist:
+        log.info('Object Does Not Exist')
         raise Http404
     
-    if not request.user.is_staff or  not published.user == request.user:
+    if not request.user.is_staff and not request.user.is_superuser and not published.user == request.user:
+        log.info('Not Staff or Publish User')
         raise Http404
     
     counter = 0
@@ -90,7 +91,7 @@ def event_survey_report(request, slug):
     except ObjectDoesNotExist:
         raise Http404
 
-    if not request.user.is_staff or (event.survey_before and not event.survey_before.user == request.user):
+    if not request.user.is_staff and (event.survey_before and not event.survey_before.user == request.user):
         raise Http404
 
     counter = 0

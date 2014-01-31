@@ -11,28 +11,13 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render_to_response
 
 from formable.builder.models import FormStructure, FormPublished, Question, FieldAnswer, FormFilled
-from formable.builder.forms import ViewFormForm, FormStructureForm
+from formable.builder.forms import ViewFormForm, FormStructureForm, CloneFormForm, FormPublishForm
 from formable.builder.utils import parse
 
 from bccf.models import BCCFChildPage
 
 log = logging.getLogger(__name__)
-    
-@require_http_methods(["POST"])
-@login_required
-@never_cache
-def save_structure(request):
-    """
-    Saves a form structure to be cloned later. The any request that is not post
-    will be redirected to the form builder. If all goes well, the user will be
-    redirected to view the form as HTML.
-    """
-    form = FormStructureForm(request.POST, request.FILES)
-    if form.is_valid():
-        form_published = form.save(request.user)
-    
-    return redirect(form_published.get_absolute_url())
-     
+
 @require_http_methods(["POST"])
 @login_required
 @never_cache
@@ -41,11 +26,11 @@ def submit_form(request):
     Submits a filled form. Every answer will its own separate row.
     """  
     try:
-        publish_obj = FormPublished.objects.get(id=request.POST.get("publish_id"))
+        page = FormPublished.objects.get(id=request.POST.get("publish_id"))
     except ObjectDoesNotExist:
         raise Http404
         
-    form_filled = FormFilled(form_published=publish_obj, user=request.user)
+    form_filled = FormFilled(form_published=page, user=request.user)
     form_filled.save()
     
     for id in request.POST:
@@ -66,11 +51,12 @@ def submit_form(request):
                     answer=request.POST.get(id))
                 answer.save()    
     
-    return redirect('/formable/success')
+    context = RequestContext(request, locals())
+    return render_to_response('success/submit_form.html', {}, context_instance=context)
     
-@require_http_methods(["POST"])
+@login_required
 @never_cache
-def publish_form(request):
+def publish_form(request, id):
     """
     Publishes a form so that it can be filledo out by users. A published form
     will be based on a form structure that was previously created.
@@ -78,54 +64,53 @@ def publish_form(request):
     When a form is published, the fields in the form structure will be stored in
     the Questions table referencing to the newly published form.
     """
-    if request.user.is_authenticated():
-        struct_id = request.POST.get('struct_id', '')
-        try:
-            if struct_id == '':
-                raise ObjectDoesNotExist
-                
-            struct_obj = FormStructure.objects.get(id=struct_id)
-        except ObjectDoesNotExist:
-            return redirect('/');
-            
-        form_published = FormPublished(form_structure=struct_obj, user=request.user)
-        form_published.save()
-
-        # Create Questions based on structure
-        struct = json.loads(struct_obj.structure)
-        for fieldset in struct["fieldset"]:
-            for field in fieldset["fields"]:
-                if "label" in field: # don't save static text
-                    if "required" in field["attr"]:
-                        required = 1
-                    else:
-                        required = 0
-                    
-                    if "options" in field:
-                        num_answers = len(field["options"])
-                        
-                    question = Question(question=field["label"], 
-                        form_published=form_published, required=required,
-                        num_answers=len(field["options"]) or '')
-                    question.save()
-        # End Create Questions
-            
-        return redirect('/formable/view/'+str(form_published.id))
+    try:
+        if not request.user.is_superuser:
+            struct = FormStructure.objects.get(user=request.user, pk=id)
+        else:
+            struct = FormStructure.objects.get(pk=id)
+    except ObjectDoesNotExist:
+        return redirect('/');
+        
+    if request.method == 'POST':
+        form = FormPublishForm(request.POST)
+        if form.is_valid():
+            published = form.save(struct)
+            return redirect(published.get_absolute_url())
     else:
-        return redirect('/')
-    
-@require_http_methods(["GET"])
+        form = FormPublishForm()
+        context = RequestContext(request, locals())
+        return render_to_response('publish_form.html', {}, context_instance=context)
+
 @login_required
 @never_cache
-def create_survey(request):
-    structure_form = FormStructureForm()
+def create_survey(request, type=None, id=None):
+    if request.method == 'POST':
+        form = FormStructureForm(request.POST)
+        structure = request.POST['structure']
+        if form.is_valid():
+            if type == 'edit' and id:
+                struct = FormStructure.objects.get(pk=id)
+                struct.structure = request.POST['structure']
+                struct.title = request.POST['title']
+            else:
+                struct = form.save(commit=False)
+                if not request.user.is_superuser:
+                    struct.user = request.user
+            struct.save()
+            context = RequestContext(request, locals())
+            return render_to_response('success/create_struct.html', {}, context_instance=context)
+    else:
+        if id:
+            struct = FormStructure.objects.get(pk=id)
+            if not request.user.is_superuser and type == 'edit':
+                if not struct.user or  struct.user != request.user:
+                    return redirect('/')
+            form = FormStructureForm(initial={'title':struct.title})
+        else:            
+            form = FormStructureForm()
     context = RequestContext(request, locals())
     return render_to_response('builder_page.html', {}, context_instance=context)
-
-@login_required    
-@never_cache
-def clone_structure(request):
-    pass
     
 @require_http_methods(["GET"])
 @login_required

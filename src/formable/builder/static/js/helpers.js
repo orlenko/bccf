@@ -272,9 +272,7 @@ var export_form = function() {
         obj.fieldset.push(fieldset);
     });
     
-    $("#form_structure_title").val(obj.title);
     $("#form_structure_data").val(JSON.stringify(obj));
-    $("#form_structure_type").val('JSON');
     $("#form_structure_form").submit();
 }
 

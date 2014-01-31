@@ -3,8 +3,10 @@ import json
 
 from django import forms
 from django.contrib.contenttypes.models import ContentType
+from django.db.models import Q
 #from ckeditor.widgets import CKEditorWidget
 from tinymce.widgets import TinyMCE
+
 from mezzanine.utils.models import upload_to
 
 from form_utils.forms import BetterForm
@@ -14,29 +16,34 @@ from bccf.settings import MEDIA_ROOT
 
 log = logging.getLogger(__name__)
 
+class FormStructureForm(forms.ModelForm):
+    """
+    Form form Creating from structures
+    """
+    structure = forms.CharField(widget=forms.HiddenInput(attrs={'id':'form_structure_data'}))
 
-class FormStructureForm(forms.Form):
+    class Meta:
+        model = FormStructure
+        fields = ['title', 'structure']
+        
+class FormPublishForm(forms.Form):
     """
     Form for creating a new form structure.
     """
     PAGE_FOR = (
         ('parent', 'Parents'),
         ('professional', 'Professionals')    
-    )    
-    title = forms.CharField(widget=forms.HiddenInput(attrs={'id': 'form_structure_title'}))
-    structure = forms.CharField(widget=forms.HiddenInput(attrs={'id': 'form_structure_data'}))
-    type = forms.CharField(widget=forms.HiddenInput(attrs={'id': 'form_structure_type'}))
-    content = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 30}))#CKEditorWidget())
+    )
+    title = forms.CharField()
+    content = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 30}))
     page_for = forms.ChoiceField(choices=PAGE_FOR)
     bccf_topic = forms.ModelMultipleChoiceField(queryset=BCCFTopic.objects.all().order_by('title'))
     image = forms.ImageField()
     featured = forms.BooleanField();
-
-    class Meta:
-        model = FormStructure
-        fields = ['title', 'structure', 'type']
         
-    def is_valid(self):        
+    def is_valid(self):
+        if not self.data['title']:
+            return False
         if not self.data['content']:
             return False
         return True
@@ -49,9 +56,8 @@ class FormStructureForm(forms.Form):
         destination.close()
         return image_path
 
-    def save(self, user, **kwargs):
-        form_structure = FormStructure.objects.create(structure=self.data['structure'], title=self.data['title'])
-        form_published = FormPublished.objects.create(form_structure=form_structure, user=user, content=self.data['content'])
+    def save(self, struct, **kwargs):
+        form_published = FormPublished.objects.create(form_structure=struct, user=struct.user, title=self.data['title'], content=self.data['content'])
         if 'page_for' in self.data:
             form_published.page_for = self.data['page_for']
         if 'featured' in self.data:
@@ -60,11 +66,10 @@ class FormStructureForm(forms.Form):
             form_published.bccf_topic = bccf_topic=self.data['bccf_topic']
         if 'image' in self.files:
             form_published.image = self.handle_upload()
-            
         form_published.save()
     
         # Create Questions based on structure
-        struct = json.loads(form_structure.structure)
+        struct = json.loads(struct.structure)
         for fieldset in struct["fieldset"]:
             for field in fieldset["fields"]:
                if "label" in field: # don't save static text
@@ -75,12 +80,11 @@ class FormStructureForm(forms.Form):
                     num_answers = 0
                     if field['class'] == 'multiselect-field' or field['class'] == 'checkbox-field':
                         num_answers = len(field["options"])
-    
                     question = Question(question=field["label"],
                         form_published=form_published, required=required,
                         num_answers=num_answers)
                     question.save()
-        return form_published
+        return form_published        
         
 class ListForPublishForm(forms.Form):
     """
@@ -96,9 +100,9 @@ class CloneFormForm(forms.Form):
     """
     Creates a dropdown containing the created form structures
     """
-    def __init__(self, *args, **kwargs):
+    def __init__(self, user, *args, **kwargs):
         super(CloneFormForm, self).__init__(*args, **kwargs)
-        self.form_structure = forms.ChoiceField(FormStructure.objects.all().values_list('id', 'title'))
+        self.form_structure = forms.ChoiceField(FormStructure.objects.filter(Q(user=None) | Q(user=user)).order_by('user').values_list('id', 'title'))
 
 
 class ViewFormForm(BetterForm):

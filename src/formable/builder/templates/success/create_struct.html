@@ -1,0 +1,17 @@
+{% extends "pages/bccfpage.html" %}
+
+{% block content%}
+<div class="container">
+    <h2>Successfully Created a Form Structure</h2>
+</div>
+{% endblock %}
+
+{% block carousels %}
+<h4 class="container">You have successfully created the <span class="form-title">{{ struct.title }}</span> form Structure</h4>
+<a href="{{ struct.get_publish_url }}">Publish</a>
+<a href="{{ struct.get_edit_url }}">Edit</a>
+<a href="{{ struct.get_clone_url }}">Clone</a>
+<a href="{% url 'formable-create-form' %}">Create another survey</a>
+{% endblock %}
+
+{% block page_script %}{% endblock %}

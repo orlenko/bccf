@@ -1431,6 +1431,11 @@ textarea {
     margin: 20px auto;
 }
 
+#related-resource-container {
+    background-color: $sgrey; 
+    padding: 20px;  
+}
+
 .green-list {
     .control-buttons {
 	   a {
@@ -1587,16 +1592,26 @@ textarea {
 		  background-color:$yellow;
 		}
 	}
+	.subpage-content {
+	   background-color: $yellow;
+	   color: #FFF;
+	   a {
+	       color: #FFF;
+	       text-decoration: underline;     
+	   }
+	}
 	.subpage-tabs {
-        border-top: 2px solid $yellow;
         > ul {
             > li {
-                > a {
+                > a:not(#child-home) {
                     background-color: $yellow;
                     &:hover, &:focus {
         	           background-color: $yellow*1.1;
-        	       }
+        	        }
                 }
+            }
+            > li.active {
+                border-bottom: 10px solid $yellow;
             }
         }
     }

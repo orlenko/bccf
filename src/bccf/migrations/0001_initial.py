@@ -259,6 +259,7 @@ class Migration(SchemaMigration):
             ('is_forum_moderator', self.gf('django.db.models.fields.NullBooleanField')(default=False, null=True, blank=True)),
             ('membership_type', self.gf('django.db.models.fields.CharField')(max_length=128, null=True, blank=True)),
             ('membership_level', self.gf('django.db.models.fields.IntegerField')(default=0, null=True, blank=True)),
+            ('organization', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['bccf.UserProfile'], null=True, blank=True)),
         ))
         db.send_create_signal(u'bccf', ['UserProfile'])
 
@@ -617,6 +618,7 @@ class Migration(SchemaMigration):
             'membership_level': ('django.db.models.fields.IntegerField', [], {'default': '0', 'null': 'True', 'blank': 'True'}),
             'membership_order': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['shop.Order']", 'null': 'True', 'blank': 'True'}),
             'membership_type': ('django.db.models.fields.CharField', [], {'max_length': '128', 'null': 'True', 'blank': 'True'}),
+            'organization': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['bccf.UserProfile']", 'null': 'True', 'blank': 'True'}),
             'photo': ('bccf.fields.MyImageField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
             'requested_cancellation': ('django.db.models.fields.NullBooleanField', [], {'default': 'False', 'null': 'True', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.OneToOneField', [], {'related_name': "'profile'", 'unique': 'True', 'to': u"orm['auth.User']"})

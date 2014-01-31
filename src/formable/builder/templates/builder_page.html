@@ -5,7 +5,11 @@
 {% block marquee %}{% endblock %}
 
 {% block content %}
+{% if type %}
+<h2>{{ type|title }}: {{ struct.title }}</h2>
+{% else %}
 <h2>Create Survey</h2>
+{% endif %}
 {% endblock %}
 {% block carousels %}
 {% include 'builder.html' %}

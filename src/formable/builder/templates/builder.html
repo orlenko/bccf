@@ -55,40 +55,13 @@
         {% endblock %}
     </div>
     <div id="form-container" class="col nine mobile-full">
-        <input type="text" id="form-title" class="form-title section twelve" placeholder="Form Title" required />
-        <ul id="form-body" class="section row-one twelve no-style-list sortable"></ul>
+        <form id="form_structure_form" action="{{ request.get_full_path }}" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <ul id="form-body" class="section row-one twelve no-style-list sortable"></ul>
+            <input id="form_submit" type="submit" value="{% trans 'Submit' %}" class="export-btn" />
+        </form>
     </div>
-</div>
-<div id="form-aux" class="col twelve">
-    <!-- custom for BCCF -->
-    {% if wizard %}
-    <form id="form_structure_form" action="" method="POST">
-    {% else %}
-    <form id="form_structure_form" enctype="multipart/form-data" action="{% url 'formable-save-structure' %}" method="POST">
-    {% endif %}
-        {% csrf_token %}
-        {% if wizard %}
-            {{ wizard.management_form }}
-            {% if  wizard.forms.forms %}
-                {{ wizard.form.management.form }}
-                {% for form in wizard.form.forms %}
-                    {{ form.as_p }}
-                {% endfor %}
-            {% else %}
-                {{ wizard.form.as_p}}
-            {% endif %}
-            <br/><br/>
-            {% if wizard.steps.prev %}
-                <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}">
-                    {% trans "prev step" %} 
-                </button>
-            {% endif %}
-        {% else %}
-            {{ structure_form.as_p }}
-        {% endif %}
-    <!-- end custom -->
-        <input id="form_submit" type="submit" value="{% trans 'Submit' %}" class="export-btn" />
-    </form>
 </div>
 
 <!-- Dialog Box -->
@@ -116,8 +89,8 @@
             export_form();
         });
         
-        {% if form_structure %}
-        import_form({{ form_structure|safe }})
+        {% if struct %}
+        import_form({{ struct.structure|safe }})
         {% endif %}
     });
 </script>
