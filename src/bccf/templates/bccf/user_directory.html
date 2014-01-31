@@ -1,4 +1,4 @@
-{% extends 'bccf/bccf_page.html' %}
+{% extends 'pages/bccfpage.html' %}
 {% load mezzanine_tags bccf_tags %}
 
 {% block meta_title %}Member Directory{% endblock %}
@@ -17,7 +17,7 @@
 {% for user in recordlist %}
 <a class="user-box section row">
     <div class="col three">
-        <img src="{{ MEDIA_URL }}{% bccf_thumbnail user.photo 75 75 %}" alt="{{ user.user.get_full_name }}"/>    
+        <img src="{{ MEDIA_URL }}{% bccf_thumbnail user.photo 75 75 %}" alt="{{ user.user.get_full_name }}"/>
     </div>
     <div class="col nine">
         <h3>{{ user.user.get_full_name }}</h3>
@@ -47,7 +47,7 @@ $(function() {
         if(f === letter) {
             $('#letter-filter').append('<li><a href="?filter='+letter+'" class="current-filter">'+letter+'</a></li>');
         } else {
-            $('#letter-filter').append('<li><a href="?filter='+letter+'">'+letter+'</a></li>');        
+            $('#letter-filter').append('<li><a href="?filter='+letter+'">'+letter+'</a></li>');
         }
     }
     $('#letter-filter').append('<li><a href="?filter=all">All</a></li>');
