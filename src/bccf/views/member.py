@@ -13,7 +13,7 @@ from django.shortcuts import render_to_response, redirect
 from django.template.context import RequestContext
 
 from bccf.util.memberutil import get_upgrades, require_any_membership
-from cartridge.shop.forms import OrderForm
+from bccf.forms import AddUserForm, AddExistingUserForm, DelMember
 
 
 log = logging.getLogger(__name__)
@@ -27,10 +27,13 @@ def profile(request):
     membership = user_profile.membership_product_variation
     expiration = user_profile.membership_expiration_datetime
     upgrades = get_upgrades(membership)
+    add_user_form = AddUserForm(initial=dict(organization=user.pk))
+    add_existing_user_form = AddExistingUserForm(initial=dict(organization=user.pk))
     context = RequestContext(request, locals())
     return render_to_response('bccf/membership/member_profile.html', {}, context_instance=context)
 
 
+@login_required
 def membership(request, slug):
     slugs = [slug, 'membership/%s' % slug]
     the_category = None
@@ -141,3 +144,39 @@ def membership_cancel(request):
         return HttpResponseRedirect('/')
     context = RequestContext(request, locals())
     return render_to_response('bccf/membership/cancel.html', {}, context_instance=context)
+
+
+def addmember(request):
+    form = AddUserForm(data=request.REQUEST)
+    if form.is_valid():
+        log.debug('Form is valid - saving %s', form.cleaned_data)
+        form.save()
+        messages.success(request, 'New member has been successfully created')
+    else:
+        log.debug('Form invalid: %s' % form)
+        messages.error(request, 'Failed to create user. Erros: %s' % form.errors)
+    return HttpResponseRedirect(reverse(profile))
+
+
+def addexistingmember(request):
+    form = AddExistingUserForm(data=request.REQUEST)
+    if form.is_valid():
+        log.debug('Form is valid - saving %s', form.cleaned_data)
+        form.save()
+        messages.success(request, 'New member has been successfully added')
+    else:
+        log.debug('Form invalid: %s' % form)
+        messages.error(request, 'Failed to create user. Erros: %s' % form.errors)
+    return HttpResponseRedirect(reverse(profile))
+
+
+def delmember(request):
+    form = DelMember(data=request.REQUEST)
+    if form.is_valid():
+        log.debug('Form is valid - removing %s', form.cleaned_data)
+        form.save()
+        messages.success(request, 'Member has been removed from the organization')
+    else:
+        log.debug('Form invalid: %s' % form)
+        messages.error(request, 'Failed to remove member. Erros: %s' % form.errors)
+    return HttpResponseRedirect(reverse(profile))

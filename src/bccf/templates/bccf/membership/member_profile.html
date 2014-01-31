@@ -43,7 +43,34 @@
 		{% if membership|has_feature:'people' %}
 			<h2>People</h2>
 			<div class="groupcontent">
-
+				<h3>Current members of your organization:</h3>
+				<ul>
+					{% for member in user.profile.members.all %}
+						<li>{{ member.user.get_full_name }} <a href="" class="member-delete">Remove</a>
+							<form method="post" action="{% url 'member-delete' %}" class="hidden">
+								{% csrf_token %}
+								<input type="hidden" name="user" value="{{ member.user.pk }}" />
+							</form>
+						</li>
+					{% endfor %}
+				</ul>
+				<button id="organization-add-member">Add Member</button>
+				<div class="hidden" id="organization-add-member-forms">
+					<div class="accordion-delayed">
+						<h3>Add existing user</h3>
+						<form method="post" action="{% url 'member-addexisting' %}">
+							{% csrf_token %}
+							{{ add_existing_user_form.as_p }}
+							<input type="submit" value="Add user to organization"/>
+						</form>
+						<h3>Create new user</h3>
+						<form method="post" action="{% url 'member-addmember' %}">
+							{% csrf_token %}
+							{{ add_user_form.as_p }}
+							<input type="submit" value="Create new user"/>
+						</form>
+					</div>
+				</div>
 			</div>
 		{% endif %}
 
