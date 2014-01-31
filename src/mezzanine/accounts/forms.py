@@ -9,6 +9,10 @@ from mezzanine.conf import settings
 from mezzanine.core.forms import Html5Mixin
 from mezzanine.utils.models import get_user_model
 from mezzanine.utils.urls import slugify, unique_slug
+import logging
+
+
+log = logging.getLogger(__name__)
 
 
 User = get_user_model()
@@ -23,6 +27,11 @@ if Profile is not None:
         class Meta:
             model = Profile
             exclude = (get_profile_user_fieldname(),) + _exclude_fields
+
+        # Customization / hack: we need to hide organization field for everyone except professional users
+        def __init__(self, *args, **kwargs):
+            log.debug('Initializing profile form with %s, %s' % (list(args), kwargs))
+            super(ProfileFieldsForm, self).__init__(*args, **kwargs)
 
 if settings.ACCOUNTS_NO_USERNAME:
     _exclude_fields += ("username",)
@@ -105,6 +114,14 @@ class ProfileForm(Html5Mixin, forms.ModelForm):
         self._has_profile = Profile is not None
         if self._has_profile:
             profile_fields = ProfileFieldsForm().fields
+            if self.instance.id and self.instance.profile.membership_type == 'professional':
+                profile_fields['organization'].choices = [(None, '[No Organization]')] + [
+                    (org.profile.pk, org.get_full_name())
+                    for org in User.objects.filter(profile__membership_type='organization')
+                ]
+            else:
+                profile_fields.pop('organization', '')
+
             self.fields.update(profile_fields)
             if not self._signup:
                 for field in profile_fields:
