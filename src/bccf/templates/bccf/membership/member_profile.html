@@ -56,20 +56,11 @@
 				</ul>
 				<button id="organization-add-member">Add Member</button>
 				<div class="hidden" id="organization-add-member-forms">
-					<div class="accordion-delayed">
-						<h3>Add existing user</h3>
-						<form method="post" action="{% url 'member-addexisting' %}">
-							{% csrf_token %}
-							{{ add_existing_user_form.as_p }}
-							<input type="submit" value="Add user to organization"/>
-						</form>
-						<h3>Create new user</h3>
-						<form method="post" action="{% url 'member-addmember' %}">
-							{% csrf_token %}
-							{{ add_user_form.as_p }}
-							<input type="submit" value="Create new user"/>
-						</form>
-					</div>
+					<form method="post" action="{% url 'member-addmember' %}">
+						{% csrf_token %}
+						{{ add_user_form.as_p }}
+						<input type="submit" value="Create new user"/>
+					</form>
 				</div>
 			</div>
 		{% endif %}

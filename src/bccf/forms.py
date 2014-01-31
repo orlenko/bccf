@@ -87,10 +87,12 @@ class BCCFRatingForm(CommentSecurityForm):
         self.target_object.save()
         return rating_instance
 
+
 class ProfileForm(forms.ModelForm):
     class Meta:
         exclude = ('membership_order',)
         model = UserProfile
+
 
 class ParentEventForm(forms.ModelForm):
     class Meta:
