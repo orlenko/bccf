@@ -22,7 +22,32 @@
 
 $(document).ready(function(){
 
-  $('.accordion').accordion();
+  $('.accordion').accordion({heightStyle: 'content'});
+
+  // Member management
+
+  $('#organization-add-member').click(function() {
+	  var button = $(this);
+	  if (button.html() == '&lt; Hide') {
+		  $('#organization-add-member-forms').hide();
+		  button.html('Add Member');
+	  } else {
+		  $('#organization-add-member-forms').show();
+		  $('#organization-add-member-forms .accordion-delayed').each(function() {
+			  var accordion = $(this);
+			  if (!accordion.data('accordion-delayed-initialized')) {
+				  accordion.data('accordion-delayed-initialized', true);
+				  accordion.accordion({heightStyle: 'content'});
+			  }
+		  });
+		  button.html('&lt; Hide');
+	  }
+  });
+
+  $('a.member-delete').click(function(){
+	  $(this).next().submit();
+	  return false;
+  });
 
 
 }); // end document ready

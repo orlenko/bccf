@@ -3686,3 +3686,8 @@ footer #newsletter .dashed-button a:hover {
 .alert-block p + p {
   margin-top: 5px;
 }
+
+/* line 1, ../sass/dev_styles.scss */
+.hidden {
+  display: none;
+}

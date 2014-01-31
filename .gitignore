@@ -8,7 +8,6 @@ local_settings.py
 *.log
 *~
 .sass-cache
-mezzanine
 django
 grappelli-safe
 askbot-devel

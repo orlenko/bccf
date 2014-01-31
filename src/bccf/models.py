@@ -548,7 +548,7 @@ class UserProfile(models.Model):
     is_forum_moderator = models.NullBooleanField(null=True, blank=True, default=False)
     membership_type = models.CharField('Membership Type', max_length=128, null=True, blank=True, choices=MEMBERSHIP_TYPES)
     membership_level = models.IntegerField(default=0, null=True, blank=True)
-    organization = models.ForeignKey('UserProfile', null=True, blank=True)
+    organization = models.ForeignKey('UserProfile', null=True, blank=True, related_name='members')
 
     def __unicode__(self):
         return 'Profile of %s' % (self.user.get_full_name() or self.user.username)

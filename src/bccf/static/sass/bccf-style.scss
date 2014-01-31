@@ -638,7 +638,7 @@ textarea {
             background-color: $sgreen;
         }
     }
-    
+
     .mnav-mobile-arrow {
         height: 46px;
         width: 46px;
@@ -650,7 +650,7 @@ textarea {
         background-repeat: no-repeat;
         background-color: $lgreen;
         &:active {
-            background-color: $sgreen;    
+            background-color: $sgreen;
         }
     }
 
@@ -666,14 +666,14 @@ textarea {
 	       border-bottom: 2px solid $lgreen;
 	       display: none;
 	       margin: 0;
-   	       background: $sgrey;  
+   	       background: $sgrey;
 	       li {
-	           display: inline; 
-	           a {  
+	           display: inline;
+	           a {
                    &:hover {
                       background: $lgrey;
-                      color: $sgrey;   
-                   }	           
+                      color: $sgrey;
+                   }
 	           }
 	       }
 	    }
@@ -770,15 +770,15 @@ textarea {
                font-weight:bold;
                float:left;
                text-alignt: center;
-               
+
                a {
                    padding: 0;
                     text-decoration: none;
                     &:hover {
-                        background-color: $sgreen;    
-                    }    
+                        background-color: $sgreen;
+                    }
                }
-               
+
                .mnav-submenu {
                     z-index: 9999;
                 	display:none;
@@ -797,8 +797,8 @@ textarea {
             }
         }
     }
-	
-	
+
+
 	.mnav-mobile-btn {
         height: 50px;
         width: 50px;
@@ -965,8 +965,8 @@ textarea {
 		    z-index:-100;
 		    overflow:hidden;
 		    display: block;
-		}	
-	}	
+		}
+	}
 	.hnote-caption{
 		z-index:100;
 		padding-left: 20px;
@@ -1024,8 +1024,8 @@ textarea {
 			height:250px;
 		    z-index:-100;
 		    overflow:hidden;
-		}	
-	}	
+		}
+	}
 	.hpro-caption {
 		z-index:100;
 		width:100%;
@@ -1189,8 +1189,8 @@ textarea {
                 a:nth-of-type(2) {
                     img {
                         height: 100%;
-                        width: 100%; 
-                    }    
+                        width: 100%;
+                    }
                 }
 				img { padding:0;
 				margin:0;
@@ -1353,7 +1353,7 @@ textarea {
 }
 
 #filter-container > input {
-    margin-top: -5px;    
+    margin-top: -5px;
 }
 
 .mobile-content-container {
@@ -1377,21 +1377,21 @@ textarea {
         width: 33.33%;
         margin: 0;
         h4 {
-            @include font-size(15);     
+            @include font-size(15);
         }
         a:hover {
-            font-weight: 400 !important; 
+            font-weight: 400 !important;
         }
     }
 
     .home-content,
     .subpage-content {
         padding: 10px;
-        margin: 0; 
+        margin: 0;
     }
 
     .baby-content {
-        display: none;    
+        display: none;
     }
 
     .subpage {
@@ -1399,8 +1399,8 @@ textarea {
             text-decoration: none;
             &:hover, &:active {
                 text-decoration: underline;
-            }    
-        }    
+            }
+        }
     }
 
     .subpage-tabs {
@@ -1416,11 +1416,11 @@ textarea {
                     display: block;
                     text-align: center;
                     &:hover, &:active {
-                        text-decoration: none;    
+                        text-decoration: none;
                     }
                 }
                 #child-home {
-                    color: $dgrey;                
+                    color: $dgrey;
                 }
             }
         }
@@ -1462,7 +1462,7 @@ textarea {
 	   color: #FFF;
 	   a {
 	       color: #FFF;
-	       text-decoration: underline;     
+	       text-decoration: underline;
 	   }
 	}
 	.subpage-tabs {
@@ -1507,7 +1507,7 @@ textarea {
 	   color: #FFF;
 	   a {
 	       color: #FFF;
-	       text-decoration: underline;     
+	       text-decoration: underline;
 	   }
 	}
 	.subpage-tabs {
@@ -1552,7 +1552,7 @@ textarea {
 	   color: #FFF;
 	   a {
 	       color: #FFF;
-	       text-decoration: underline;     
+	       text-decoration: underline;
 	   }
 	}
 	.subpage-tabs {
@@ -1743,20 +1743,20 @@ textarea {
     border-top: 2px solid $dgreen;
     border-bottom: 2px solid $dgreen;
     li {
-        display: inline-block;    
+        display: inline-block;
         a {
             text-decoration: none;
             display: block;
             padding: 5px;
             &:hover, &:active {
-                text-decoration: underline;    
+                text-decoration: underline;
             }
         }
         .current-filter {
             color: $dgreen;
             font-weight: bold;
-            @include font-size(20);   
-        }    
+            @include font-size(20);
+        }
     }
 } /* End of Directory Letter Filter */
 
@@ -1765,12 +1765,12 @@ textarea {
 .result-box,
 .user-box {
     display: block;
-    padding: 10px;    
+    padding: 10px;
 }
 
 .result-box:nth-child(odd),
 .user-box:nth-child(odd) {
-    
+
 }
 
 .result-box:nth-child(even),
@@ -1783,14 +1783,14 @@ textarea {
  **/
 #builder-main {
     .field-container-inner:hover {
-        background-color: $sgreen;    
-    }    
+        background-color: $sgreen;
+    }
 }
 
 #settings-box {
     li {
         height: 50px;
-        line-height: 50px;    
+        line-height: 50px;
     }
     #settings-title {
         font-family: inherit !important;
@@ -1801,18 +1801,18 @@ textarea {
     background: $sgrey !important;
     font-family: inherit !important;
     .ui-widget-header {
-        background: $lgreen;    
-    }    
+        background: $lgreen;
+    }
 }
 
 #settings-box,
 #form-main {
     label {
         width: 150px;
-        display: inline-block;    
+        display: inline-block;
     }
     textarea {
-        max-width: 100%;    
+        max-width: 100%;
     }
 }
 
@@ -1822,13 +1822,13 @@ textarea {
 .topic {
     .controls {
         a {
-            text-decoration: none;    
+            text-decoration: none;
             &:hover {
                 font-weight: bold;
-                color: $dgreen;    
-            }        
+                color: $dgreen;
+            }
         }
-    }    
+    }
 }
 
 .post-header th {
@@ -1836,7 +1836,7 @@ textarea {
     color: $dgreen;
     a {
         color: inherit;
-    }    
+    }
 }
 
 /* Forum End */
@@ -1849,10 +1849,10 @@ textarea {
     border-top: 2px solid $dgreen;
     label {
         width: 150px;
-        display: inline-block;    
+        display: inline-block;
     }
     textarea {
-        max-width: 100%;    
+        max-width: 100%;
     }
 }
 
@@ -1869,24 +1869,24 @@ textarea {
                 text-decoration: none;
                 @include font-size(15);
                 &:hover {
-                    color: $dgreen;    
-                } 
+                    color: $dgreen;
+                }
             }
             .current {
-                @include font-size(20);    
+                @include font-size(20);
             }
-        } 
+        }
         .next-btn {
             border-left: 2px solid $dgreen;
             padding-left: 5px;
-            margin-left: 5px;    
-        } 
+            margin-left: 5px;
+        }
         .prev-btn {
             border-right: 2px solid $dgreen;
             padding-right: 5px;
-            margin-right: 5px; 
+            margin-right: 5px;
         }
-    }  
+    }
 }
 
 #comments {
@@ -1915,7 +1915,7 @@ textarea {
             width: 150px;
         }
         tr:nth-of-type(odd) {
-            background-color: $sgreen;            
+            background-color: $sgreen;
         }
     }
 }
@@ -1938,7 +1938,7 @@ footer {
 		li{
 			display:inline;
             ul {
-                display: inline;    
+                display: inline;
             }
 
 			a {
@@ -1993,7 +1993,7 @@ footer {
 		border-right:2px solid $lgrey;
 		font-size:14px;
 		color:$dgrey;
-        
+
 		p {
 			margin:2px 0;
 			padding:0;
@@ -2177,7 +2177,7 @@ footer {
 
 			}
 		.hlist-tabs {
-            
+
 			a {
 
 				&:hover {}
@@ -2269,10 +2269,10 @@ footer {
     	    }
     	}
     	.control-buttons {
-    	   padding-right: 0;  
+    	   padding-right: 0;
     	}
     	.control-buttons.six {
-    	   margin-left: 0;      
+    	   margin-left: 0;
     	}
 	}
     .page-container-outer {
@@ -2474,17 +2474,17 @@ table td {
     > span {
         height: 40px;
         line-height: 35px;
-        display: block;  
+        display: block;
         font-weight: bold;
         text-align: right;
         padding-right: 55px;
-        color: $dgreen;   
+        color: $dgreen;
     }
-    
+
     ul {
-        margin-top: 0;    
+        margin-top: 0;
     }
-    
+
 	li {
 	    display: block;
 		a {
@@ -2502,21 +2502,21 @@ table td {
 		    background: $sgreen;
 		}
 	}
-	.mnav-mobile-btn {   
-	   display: block;    
+	.mnav-mobile-btn {
+	   display: block;
 	}
-	
+
 	.mnav-submenu {
 	   a {
-	       padding-left: 40px;    
-	   }    
+	       padding-left: 40px;
+	   }
 	}
 }
 
 #browse-by {
     #browse-by-nav {
         padding-top: 50px;
-        
+
         > ul {
             > li {
         		display:block;
@@ -2536,7 +2536,7 @@ table td {
         		     background: $sgreen;
         		     color: $dgreen;
         		}
-        		
+
         		.mnav-submenu {
                 	position:static;
                 	width:100%;
@@ -2544,13 +2544,13 @@ table td {
                 	   padding-left: 40px;
                     }
                 }
-                
+
 
         	}
         }
-    
-        .mnav-mobile-btn {   
-    	   display: block;    
+
+        .mnav-mobile-btn {
+    	   display: block;
     	}
     }
 }
@@ -2675,7 +2675,7 @@ table td {
 		    height: 140px;
 	    }
 		.hlist-inner {
-            
+
             height: 100%;
 			img {
                 height: 75px;
@@ -2689,7 +2689,7 @@ table td {
 
 	       .hlist-link {
                 float: right;
-                margin: 0; 
+                margin: 0;
 	       }
 
 		} /* End #hlist-right-side */
@@ -2758,7 +2758,7 @@ table td {
     	    }
     	}
     	.control-buttons {
-    	   padding-right: 0; 
+    	   padding-right: 0;
     	}
     }
 	.page-container-outer { /* Container */
@@ -2800,7 +2800,7 @@ table td {
 			margin:3px 10px 10px;}
 
 		h6 {
-		  padding: 0 10px;    
+		  padding: 0 10px;
 		}
 		p {
 			padding:0 10px;
@@ -2926,3 +2926,4 @@ footer {
 @import "../mixins/marquee_themes";
 /*@import "../mixins/menus"; // Import the menus styles*/
 @import "../mixins/messages"; // Styles for message boxes
+@import "dev_styles"; // Developer-created styles

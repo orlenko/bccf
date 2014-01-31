@@ -25,7 +25,7 @@ urlpatterns = patterns("",
     # Change the admin prefix here to use an alternate URL for the
     # admin interface, which would be marginally more secure.
     ("^admin/", include(admin.site.urls)),
-    
+
     # FORUM URLs
     (r'^forum/', include('pybb.urls', namespace='pybb')),
 
@@ -40,19 +40,14 @@ urlpatterns = patterns("",
 
     # Podcasts
     #('^podcasts/', include('podcasting.urls')),
-    
+
     url('^bccf_admin_page_ordering/$', 'bccf.views.page.bccf_admin_page_ordering', name='bccf-admin-page-ordering'),
 
-    
+
     url("^account/orders/$", "cartridge.shop.views.order_history", name="shop_order_history"),
 
-    url(r'^member/directory/', 'bccf.views.page.user_list', name='member-directory'),
-    url(r'^member/profile/$', 'bccf.views.member.profile', name='member-profile'),
-    url(r'^member/upgrade/(?P<variation_id>.*)/$', 'bccf.views.member.membership_upgrade', name='member-membership-upgrade'),
-    url(r'^member/renew/$', 'bccf.views.member.membership_renew', name='member-membership-renew'),
-    url(r'^member/select/$', 'bccf.views.member.membership_select', name='member-membership-select'),
-    url(r'^member/cancel/$', 'bccf.views.member.membership_cancel', name='member-membership-cancel'),
-    url(r'^member/(?P<slug>.*)/$', 'bccf.views.member.membership', name='member-membership'),
+    #Member views
+    (r'^member/', include('bccf.member_urls')),
 
     # Parents
     url(r'^parents/$', 'bccf.views.parents.parents_page', name='parents-page'),
@@ -67,16 +62,16 @@ urlpatterns = patterns("",
     url(r'^professionals/event/signup/(?P<slug>.*)/$', 'bccf.views.events.professionals_event_signup', name='professionals-event-signup'),
     url(r'^professionals/event/create/$', ProfessionalEventWizard.as_view(FORMS), name='professionals-event-create'),
     url(r'^professionals/event/(?P<slug>.*)/$', 'bccf.views.events.professionals_event', name='professionals-event'),
-        
+
     # MEZZANINE URL OVERRIDES
     #------------------------
     # The patterns here will be used to override Mezzanine-specific urls.
-    url("^rating/$", "bccf.views.views.rating", name="rating"),        
-        
+    url("^rating/$", "bccf.views.views.rating", name="rating"),
+
     # Reports
     url(r'^report/survey/event/(?P<slug>.+)/$', 'bccf.views.report.event_survey_report', name='event-survey-report'),
-    url(r'^report/survey/(?P<slug>.+)/$', 'bccf.views.report.survey_report', name='survey-report'),        
-        
+    url(r'^report/survey/(?P<slug>.+)/$', 'bccf.views.report.survey_report', name='survey-report'),
+
     #Pages
     url(r'^filter/(?P<query>.*)/$', 'bccf.views.page.filter', name='filter'),
     url(r'^next/topic/(?P<topic>.+)/(?P<which>.*)/(?P<offset>\d+)/$', 'bccf.views.page.topic_next', name='topic-next'),

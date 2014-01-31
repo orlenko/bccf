@@ -18,6 +18,9 @@ from bccf.models import UserProfile, EventForParents, EventForProfessionals
 from bccf.settings import MEDIA_ROOT
 
 from formable.builder.models import FormStructure, FormPublished, Question
+from django.contrib.auth.models import User
+from mezzanine.core.forms import Html5Mixin
+from mezzanine.utils.urls import slugify, unique_slug
 log = logging.getLogger(__name__)
 
 class RatingRenderer(RadioFieldRenderer):
@@ -50,7 +53,7 @@ class BCCFRatingForm(CommentSecurityForm):
         self.previous = request.COOKIES.get("mezzanine-rating", "").split(",")
         already_rated = self.current in self.previous
         if already_rated and not self.request.user.is_authenticated():
-            raise forms.ValidationError(_("Already rated."))
+            raise forms.ValidationError("Already rated.")
         return self.cleaned_data
 
     def save(self):
@@ -75,19 +78,21 @@ class BCCFRatingForm(CommentSecurityForm):
                     rating_instance.save()
         else:
             rating_instance = Rating(value=rating_value)
-            rating_manager.add(rating_instance)    
+            rating_manager.add(rating_instance)
             # edits
-        
+
         sum = Rating.objects.filter(object_pk=self.target_object.pk).aggregate(Sum('value'))
         self.target_object.rating_sum = int(sum['value__sum'])
         self.target_object.rating_average = self.target_object.rating_sum / self.target_object.rating_count
         self.target_object.save()
         return rating_instance
 
+
 class ProfileForm(forms.ModelForm):
     class Meta:
         exclude = ('membership_order',)
         model = UserProfile
+
 
 class ParentEventForm(forms.ModelForm):
     class Meta:
@@ -118,13 +123,13 @@ class ProfessionalEventForm(forms.ModelForm):
             'date_start': forms.DateTimeInput(attrs={'class':'vDatefield', 'placeholder':'YYYY-MM-DD HH:MM'}),
             'date_end': forms.DateTimeInput(attrs={'class':'vDatefield', 'placeholder':'YYYY-MM-DD HH:MM'})
         }
-            
+
     def __init__(self, *args, **kwargs):
         super(ProfessionalEventForm, self).__init__(*args, **kwargs)
         self.fields['survey'] = forms.BooleanField(label='Create Surveys?',
             widget=forms.CheckboxInput, required=False)
-            
-    
+
+
     def handle_upload(self):
         image_path = 'uploads/childpage/'+self.files['0-image'].name
         destination = open(MEDIA_ROOT+'/'+image_path, 'wb+')
@@ -145,20 +150,20 @@ class ProfessionalEventForm(forms.ModelForm):
         event = EventForProfessionals(**data)
         if '0-image' in self.files:
             event.image = self.handle_upload()
-            
+
         event.save()
         for topic in topics:
             event.bccf_topic.add(topic)
         return event
-        
-            
+
+
 class FormStructureSurveyBase(forms.Form):
     """
     Superclass that creates a generic save function for the wizard forms.
     """
     class Meta:
-        abstract = True        
-    def save(self, user):    
+        abstract = True
+    def save(self, user):
         data = self.cleaned_data
         if 'clone' in data: # check and remove the clone key-value pair
             del data['clone']
@@ -184,8 +189,8 @@ class FormStructureSurveyBase(forms.Form):
                         num_answers=num_answers)
                     question.save()
         # End Create Questions
-        return published # FormPublished object            
-            
+        return published # FormPublished object
+
 class FormStructureSurveyFormOne(FormStructureSurveyBase):
     """
     Form for creating a before survey in the Professional Event creation Wizard
@@ -205,3 +210,148 @@ class FormStructureSurveyFormTwo(FormStructureSurveyBase):
     title = forms.CharField(widget=forms.HiddenInput(attrs={'id': 'form_structure_title'}))
     structure = forms.CharField(widget=forms.HiddenInput(attrs={'id': 'form_structure_data'}))
     type = forms.CharField(widget=forms.HiddenInput(attrs={'id': 'form_structure_type'}))
+
+
+class ProfileFieldsForm(forms.ModelForm):
+        class Meta:
+            model = UserProfile
+            exclude = settings.ACCOUNTS_PROFILE_FORM_EXCLUDE_FIELDS + ['user', 'description', 'photo']
+            widgets = {'organization': forms.HiddenInput()}
+
+
+class AddUserForm(Html5Mixin, forms.ModelForm):
+    '''This form is used by an organization user.
+    '''
+    password1 = forms.CharField(label="Password",
+                                widget=forms.PasswordInput(render_value=False))
+    password2 = forms.CharField(label="Password (again)",
+                                widget=forms.PasswordInput(render_value=False))
+
+    class Meta:
+        model = User
+        fields = ("first_name", "last_name", "email", "username")
+        exclude = settings.ACCOUNTS_PROFILE_FORM_EXCLUDE_FIELDS + ['description', 'photo']
+        widgets = {'organization': forms.HiddenInput()}
+
+    def __init__(self, *args, **kwargs):
+        super(AddUserForm, self).__init__(*args, **kwargs)
+        self._signup = self.instance.id is None
+        user_fields = User._meta.get_all_field_names()  # @UndefinedVariable PyDev limitation ("_meta")
+        try:
+            self.fields["username"].help_text = "Only letters, numbers, dashes or underscores please"
+        except KeyError:
+            pass
+        for field in self.fields:
+            # Make user fields required.
+            if field in user_fields:
+                self.fields[field].required = True
+        # Add any profile fields to the form.
+        profile_fields = ProfileFieldsForm().fields
+        self.fields.update(profile_fields)
+
+
+    def clean_username(self):
+        """
+        Ensure the username doesn't exist or contain invalid chars.
+        We limit it to slugifiable chars since it's used as the slug
+        for the user's profile view.
+        """
+        username = self.cleaned_data.get("username")
+        if username.lower() != slugify(username).lower():
+            raise forms.ValidationError("Username can only contain letters, "
+                                          "numbers, dashes or underscores.")
+        lookup = {"username__iexact": username}
+        try:
+            User.objects.exclude(id=self.instance.id).get(**lookup)  # @UndefinedVariable PyDev limitation ("exclude")
+        except User.DoesNotExist:
+            return username
+        raise forms.ValidationError("This username is already registered")
+
+    def clean_password2(self):
+        """
+        Ensure the password fields are equal, and match the minimum
+        length defined by ``ACCOUNTS_MIN_PASSWORD_LENGTH``.
+        """
+        password1 = self.cleaned_data.get("password1")
+        password2 = self.cleaned_data.get("password2")
+
+        if password1:
+            errors = []
+            if password1 != password2:
+                errors.append("Passwords do not match")
+            if len(password1) < settings.ACCOUNTS_MIN_PASSWORD_LENGTH:
+                errors.append("Password must be at least %s characters" %
+                              settings.ACCOUNTS_MIN_PASSWORD_LENGTH)
+            if errors:
+                self._errors["password1"] = self.error_class(errors)
+        return password2
+
+    def clean_email(self):
+        """
+        Ensure the email address is not already registered.
+        """
+        email = self.cleaned_data.get("email")
+        qs = User.objects.exclude(id=self.instance.id).filter(email=email)  # @UndefinedVariable PyDev limitation ("exclude")
+        if len(qs) == 0:
+            return email
+        raise forms.ValidationError("This email is already registered")
+
+    def save(self, *args, **kwargs):
+        kwargs["commit"] = False
+        user = super(AddUserForm, self).save(*args, **kwargs)
+        try:
+            self.cleaned_data["username"]
+        except KeyError:
+            if not self.instance.username:
+                username = "%(first_name)s %(last_name)s" % self.cleaned_data
+                if not username.strip():
+                    username = self.cleaned_data["email"].split("@")[0]
+                qs = User.objects.exclude(id=self.instance.id)  # @UndefinedVariable PyDev limitation ("exclude")
+                user.username = unique_slug(qs, "username", slugify(username))
+        password = self.cleaned_data.get("password1")
+        if password:
+            user.set_password(password)
+        user.save()
+
+        # Save profile model.
+        ProfileFieldsForm(self.data, self.files, instance=user.profile).save()
+        settings.use_editable()
+        if (settings.ACCOUNTS_VERIFICATION_REQUIRED or
+            settings.ACCOUNTS_APPROVAL_REQUIRED):
+            user.is_active = False
+            user.save()
+        return user
+
+
+class AddExistingUserForm(forms.Form):
+    organization = forms.IntegerField(widget=forms.HiddenInput())
+    user = forms.TypedChoiceField(coerce=int)
+
+    def __init__(self, *args, **kwargs):
+        super(AddExistingUserForm, self).__init__(*args, **kwargs)
+        organization = self.initial.get('organization', self.data.get('organization'))
+        self.fields['user'].choices=[
+            (rec.pk, rec.get_full_name())
+            for rec in User.objects.filter(
+                profile__organization=None,
+                profile__membership_type='professional'
+            ).exclude(pk=organization)  # @UndefinedVariable PyDev does not get it
+        ]
+
+    def save(self, *args, **kwargs):
+        user = User.objects.get(pk=self.cleaned_data['user'])
+        log.debug('Saving user %s with org %s' % (user, self.cleaned_data['organization']))
+        profile = user.profile
+        profile.organization_id = self.cleaned_data['organization']
+        profile.save()
+
+
+class DelMember(forms.Form):
+    user = forms.IntegerField()
+
+    def save(self):
+        user = User.objects.get(pk=self.cleaned_data['user'])
+        profile = user.profile
+        profile.organization = None
+        profile.save()
+        log.debug('User %s organization is now %s' % (user, profile.organization))
