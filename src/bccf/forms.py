@@ -213,7 +213,7 @@ class FormStructureSurveyFormTwo(FormStructureSurveyBase):
 class ProfileFieldsForm(forms.ModelForm):
         class Meta:
             model = UserProfile
-            exclude = settings.ACCOUNTS_PROFILE_FORM_EXCLUDE_FIELDS + ['user', ]
+            exclude = settings.ACCOUNTS_PROFILE_FORM_EXCLUDE_FIELDS + ['user', 'description', 'photo']
             widgets = {'organization': forms.HiddenInput()}
 
 
@@ -228,7 +228,7 @@ class AddUserForm(Html5Mixin, forms.ModelForm):
     class Meta:
         model = User
         fields = ("first_name", "last_name", "email", "username")
-        exclude = settings.ACCOUNTS_PROFILE_FORM_EXCLUDE_FIELDS + []
+        exclude = settings.ACCOUNTS_PROFILE_FORM_EXCLUDE_FIELDS + ['description', 'photo']
         widgets = {'organization': forms.HiddenInput()}
 
     def __init__(self, *args, **kwargs):
@@ -323,12 +323,15 @@ class AddUserForm(Html5Mixin, forms.ModelForm):
 
 class AddExistingUserForm(forms.Form):
     organization = forms.IntegerField(widget=forms.HiddenInput())
-    user = forms.TypedChoiceField(
-        coerce=int,
-        choices=[
+    user = forms.TypedChoiceField(coerce=int)
+
+    def __init__(self, *args, **kwargs):
+        super(AddExistingUserForm, self).__init__(*args, **kwargs)
+        organization = self.initial.get('organization', self.data.get('organization'))
+        self.fields['user'].choices=[
             (rec.pk, rec.get_full_name())
-            for rec in User.objects.filter(profile__organization=None)]
-    )
+            for rec in User.objects.filter(profile__organization=None).exclude(pk=organization)  # @UndefinedVariable PyDev does not get it
+        ]
 
     def save(self, *args, **kwargs):
         user = User.objects.get(pk=self.cleaned_data['user'])
