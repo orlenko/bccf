@@ -4,6 +4,17 @@
 </div>
 <div id="builder-main" class="col twelve">
     <div class="col three mobile-full">
+        <!-- Settings Buttons -->
+        {% block settings_buttons %}
+        <div class="section twelve row section-head">
+            <span>Settings Buttons</span>
+        </div>
+        <div class="twelve field-container">
+            <div class="section twelve row field-container-inner">
+                <a id="formable-add-row" href="#">Add Fieldset</a>
+            </div>
+        </div>
+        {% endblock %}
         <!-- Common Fields -->
         <div class="section twelve row section-head">
             <span>Common Fields</span>
@@ -41,18 +52,6 @@
                 <span id="static-section-field" class="field draggable">Section Heading</span>
             </div>
         </div>
-        
-        <!-- Settings Buttons -->
-        {% block settings_buttons %}
-        <div class="section twelve row section-head">
-            <span>Settings Buttons</span>
-        </div>
-        <div class="twelve field-container">
-            <div class="section twelve row field-container-inner">
-                <a id="formable-add-row" href="#">Add Fieldset</a>
-            </div>
-        </div>
-        {% endblock %}
     </div>
     <div id="form-container" class="col nine mobile-full">
         <form id="form_structure_form" action="{{ request.get_full_path }}" method="POST">
