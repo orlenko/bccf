@@ -14,46 +14,8 @@ from formable.builder.models import FormStructure, FormPublished, Question, Fiel
 from formable.builder.forms import ViewFormForm, FormStructureForm, CloneFormForm, FormPublishForm
 from formable.builder.utils import parse
 
-from bccf.models import BCCFChildPage
-
 log = logging.getLogger(__name__)
 
-@require_http_methods(["POST"])
-@login_required
-@never_cache
-def submit_form(request):
-    """
-    Submits a filled form. Every answer will its own separate row.
-    """  
-    try:
-        page = FormPublished.objects.get(id=request.POST.get("publish_id"))
-    except ObjectDoesNotExist:
-        raise Http404
-        
-    form_filled = FormFilled(form_published=page, user=request.user)
-    form_filled.save()
-    
-    for id in request.POST:
-        key = id.split('.', 1)
-        if key[0].isdigit():
-            try:
-                question_obj = Question.objects.get(pk=key[0])
-            except ObjectDoesNotExist:
-                raise Http404
-            if key[1] == "checkbox_field" or key[1] == "multiselect_field": # Check if it's a multi-answer field
-                answers = request.POST.getlist(id)
-                for ans in answers:
-                    answer = FieldAnswer(form_filled=form_filled, question=question_obj,
-                        answer=ans)
-                    answer.save()
-            else: # not multi-answer field
-                answer = FieldAnswer(form_filled=form_filled, question=question_obj,
-                    answer=request.POST.get(id))
-                answer.save()    
-    
-    context = RequestContext(request, locals())
-    return render_to_response('success/submit_form.html', {}, context_instance=context)
-    
 @login_required
 @never_cache
 def publish_form(request, id):
@@ -85,6 +47,9 @@ def publish_form(request, id):
 @login_required
 @never_cache
 def create_survey(request, type=None, id=None):
+    """
+    View to create a survey structure.
+    """
     if request.method == 'POST':
         form = FormStructureForm(request.POST)
         structure = request.POST['structure']
@@ -111,8 +76,7 @@ def create_survey(request, type=None, id=None):
             form = FormStructureForm()
     context = RequestContext(request, locals())
     return render_to_response('builder_page.html', {}, context_instance=context)
-    
-@require_http_methods(["GET"])
+
 @login_required
 @never_cache
 def view(request, slug=None):
@@ -120,19 +84,44 @@ def view(request, slug=None):
     Creates a view based on the ID passed via GET. If there's no ID or not a GET, 
     it will redirect the user to the index page.
     """
-    if slug == None:
-        raise Http404
     page = FormPublished.objects.get(slug=slug)
     filled = FormFilled.objects.filter(form_published=page, user=request.user)
+    form_structure = FormStructure.objects.get(pk=page.form_structure.pk)
+    fieldset, field = parse(form_structure.structure, page.pk)
+    
     if len(filled) != 0:
         context = RequestContext(request, locals())
         return render_to_response('already_filled.html', {}, context_instance=context)
-    form_structure = FormStructure.objects.get(pk=page.form_structure.pk)
-    fieldset, field = parse(form_structure.structure, page.pk)
-    form = ViewFormForm(fieldset, field)
-    form_title = form_structure.title
-    form = form
-    publish_id =  page.pk
+
+    if request.method == 'POST':
+        form = ViewFormForm(fieldset, field, request.POST)
+        
+        if form.is_valid():
+            template = 'success/submit_form.html'
+            form_filled = FormFilled(form_published=page, user=request.user)
+            form_filled.save()
+            
+            for id in request.POST:
+                key = id.split('.', 1)
+                if key[0].isdigit():
+                    try:
+                        question_obj = Question.objects.get(pk=key[0])
+                    except ObjectDoesNotExist:
+                        raise Http404
+                    if key[1] == "checkbox_field" or key[1] == "multiselect_field": # Check if it's a multi-answer field
+                        answers = request.POST.getlist(id)
+                        for ans in answers:
+                            answer = FieldAnswer(form_filled=form_filled, question=question_obj,
+                                answer=ans)
+                            answer.save()
+                    else: # not multi-answer field
+                        answer = FieldAnswer(form_filled=form_filled, question=question_obj,
+                            answer=request.POST.get(id))
+                        answer.save()  
+    else:
+        template = 'view_form.html'
+        form = ViewFormForm(fieldset, field)
+        
     context = RequestContext(request, locals())
-    return render_to_response('view_form.html', {}, context_instance=context)
+    return render_to_response(template, {}, context_instance=context)
 

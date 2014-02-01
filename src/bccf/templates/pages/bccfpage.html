@@ -105,7 +105,6 @@ $('.content-pages').on('click', '.page-box', function(e) {
     } else {
         clicked = $(e.target).parents('.page-box');
     }
-    console.log(clicked);
     if(clicked.hasClass('go-blank')) {
         window.open(clicked.find('a').attr('href'), '_blank');
         return;     
@@ -152,17 +151,6 @@ $('.content-pages').on('click', 'a[class^="button"]', function(e) {
         carousel.trigger('owl.next');    
     }
 });
-
-/*
-$(document).on('touchmove', function(e) {
-    if($(e.target).attr('id') === 'mobile-content-container') {
-        var c = $(e.target);
-        if(c.scrollTop()+c.innerHeight >= c[0].scrollHeight()) {
-                    
-        }
-    }
-});
-*/
 
 /** HELPER FUNCTIONS **/
 var get_next = function(carousel) {

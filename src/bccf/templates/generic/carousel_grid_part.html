@@ -4,7 +4,7 @@
     <div>
         <ul class="page-container-inner">
     {% endif %}
-            <li id="{{ slide.slug }}" class="page-box {% if slide.content_model == 'topic' and slide.content_model == 'formpublished' %} go-blank {% endif %} grid-box col four">
+            <li id="{{ slide.slug }}" class="page-box {% if slide.content_model == 'topic' or slide.content_model == 'formpublished' %} go-blank {% endif %} grid-box col four">
                 <img src="{{ MEDIA_URL }}{% bccf_thumbnail slide.image 195 75 %}" alt="{{ slide.title }}" />
                 <div>
                     {% if slide.content_model == 'topic' or slide.content_model == 'formpublished' %}

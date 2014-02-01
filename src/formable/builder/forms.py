@@ -84,17 +84,7 @@ class FormPublishForm(forms.Form):
                         form_published=form_published, required=required,
                         num_answers=num_answers)
                     question.save()
-        return form_published        
-        
-class ListForPublishForm(forms.Form):
-    """
-    Form for creating a select field consisting the available structures for publishing
-    """
-
-    def __init__(self, *args, **kwargs):
-        super(ListForPublishForm, self).__init__(*args, **kwargs)
-        self.struct_id = forms.ChoiceField(FormStructure.objects.all().values_list('id', 'title'))
-
+        return form_published
 
 class CloneFormForm(forms.Form):
     """
