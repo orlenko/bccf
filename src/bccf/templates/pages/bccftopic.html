@@ -1,4 +1,4 @@
-{% extends "pages/bccfpage.html" %}
+{% extends "pages/base_bccfpage.html" %}
 
 {% load static content_carousel_tags mezzanine_tags %}
 
@@ -15,6 +15,7 @@
 {% endblock %}
 
 {% block footer_scripts %}
+{{ block.super }}
 <script type="text/javascript" >
 $(function() {
     $('.to-carousel').owlCarousel({
@@ -29,7 +30,7 @@ $(function() {
         'singleItem': true,
         'autoPlay': 5000,
         'autoHeight': true,
-        'theme': "big-marquee",
+        'theme': "normal-marquee",
     });
     $(window).on('resize', function(e) {
         if($(window).width() <= 724) {
@@ -46,7 +47,7 @@ $('.content-pages').on('click', '.page-box', function(e) {
     } else {
         clicked = $(e.target).parents('.page-box');
     }
-    window.location.href = clicked.find('a').attr('href');
+    window.open(clicked.find('a').attr('href'), '_blank');
 });
 
 $('.control-buttons').on('click', 'a', function(e) {

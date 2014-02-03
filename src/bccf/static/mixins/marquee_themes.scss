@@ -34,7 +34,6 @@
 }
 .big-marquee {
     @extend .normal-marquee;
-    min-height: 410px;
     .owl-controls {
         bottom: 5%;
         right: 2%;  
