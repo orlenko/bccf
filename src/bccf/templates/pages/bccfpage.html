@@ -189,7 +189,6 @@ var load_content = function(box) {
         context: container,
         success: function(data) {
             $(this).html(data);
-            console.log(container);
             if(!$('.mnav-mobile-btn').is(':visible')) {
                 $('body, html').animate({
                     'scrollTop':   $(this).offset().top-160
