@@ -1,10 +1,12 @@
-{% extends "pages/bccfpage.html" %}
+{% extends "pages/base_bccfpage.html" %}
 
-{% block marquee %}{% endblock %}
+{% block meta_title %}Publish Survey: {{ struct.title|title}}{% endblock %}
+{% block title %}Publish Survey: {{ struct.title|title}}{% endblock %}
 
 {% block content %}
 <h2>Publish {{ struct.title }}</h2>
 {% endblock %}
+
 {% block carousels %}
 <form id="publish-form" action="{{ request.get_full_path }}" method="POST">
 {% csrf_token %}
@@ -13,7 +15,8 @@
 </form>
 {% endblock %}
 
-{% block page_script %}
+{% block footer_scripts %}
+{{ block.super }}
 <script type="text/javascript" >
 $('#form_submit').on('click', function(e) {
     e.preventDefault();

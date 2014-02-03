@@ -1,5 +1,8 @@
 {% extends "view_form.html" %}
 
+{% block meta_title %}Success: Submitted {{ page.title|title }}{% endblock %}
+{% block title %}Success: Submitted {{ page.title|title }}{% endblock %}
+
 {% load form_utils content_carousel_tags bccf_feature_tags %}
 
 {% block content%}

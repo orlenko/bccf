@@ -1,6 +1,9 @@
 {% extends 'pages/base_bccfpage.html' %}
 {% load static bccf_big_marquee_tags content_carousel_tags mezzanine_tags %}
 
+{% block meta_title %}{{ page.title|title }}{% endblock %}
+{% block title %}{{ page.title|title }}{% endblock %}
+
 {% block extra_css %}
 <link rel="stylesheet" href="{% static "css/vendor/rating.css" %}" />
 {% endblock %}
@@ -194,14 +197,14 @@ var load_content = function(box) {
                     'scrollTop':   $(this).offset().top-160
                 }, 500);
             }
+            if (pageURL != window.location) {
+                window.history.pushState({ path: pageURL }, '', pageURL);
+            }
         },
         error: function() {
             $(this).html('<h3>Error Loading Page</h3>');        
         }
     });
-    if (pageURL != window.location) {
-        window.history.pushState({ path: pageURL }, '', pageURL);
-    }
 }
 </script>
 {% endblock %}

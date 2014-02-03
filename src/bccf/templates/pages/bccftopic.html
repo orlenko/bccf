@@ -2,6 +2,9 @@
 
 {% load static content_carousel_tags mezzanine_tags %}
 
+{% block meta_title %}{{ page.title|title }}{% endblock %}
+{% block title %}{{ page.title|title }}{% endblock %}
+
 {% block content %}
     {% editable page.title page.content %}
     <h1>{{ page.title }}</h1>
