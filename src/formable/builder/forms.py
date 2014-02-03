@@ -56,8 +56,8 @@ class FormPublishForm(forms.Form):
         destination.close()
         return image_path
 
-    def save(self, struct, **kwargs):
-        form_published = FormPublished.objects.create(form_structure=struct, user=struct.user, title=self.data['title'], content=self.data['content'])
+    def save(self, struct, user, **kwargs):
+        form_published = FormPublished.objects.create(form_structure=struct, user=user, title=self.data['title'], content=self.data['content'])
         if 'page_for' in self.data:
             form_published.page_for = self.data['page_for']
         if 'featured' in self.data:

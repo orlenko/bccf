@@ -37,7 +37,7 @@ def publish_form(request, id):
     if request.method == 'POST':
         form = FormPublishForm(request.POST)
         if form.is_valid():
-            published = form.save(struct)
+            published = form.save(struct, request.user)
             return redirect(published.get_absolute_url())
     else:
         form = FormPublishForm()
