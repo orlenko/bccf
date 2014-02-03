@@ -1,10 +1,6 @@
 {% extends "pages/bccfpage.html" %}
 
-{% load static bccf_big_marquee_tags content_carousel_tags %}
-
-{% block marquee %}
-{% big_marquee_for page %}
-{% endblock %}
+{% load static content_carousel_tags %}
 
 {% block carousels %}
 {% if child %}

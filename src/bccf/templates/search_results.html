@@ -1,4 +1,4 @@
-{% extends "bccf/bccf_page.html" %}
+{% extends "pages/base_bccfpage.html" %}
 
 {% load i18n future mezzanine_tags bccf_tags %}
 
@@ -37,5 +37,3 @@ Showing {{ start }} to {{ end }} of {{ total }} results of: {{ query }}
 {% endif %}
 
 {% endblock %}
-
-{% block page_script %}{% endblock %}

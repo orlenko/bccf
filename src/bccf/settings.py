@@ -520,16 +520,15 @@ else:
 ##################
 ## OWN SETTINGS ##
 ##################
-#JQUERY_FILENAME = ""
+COMMENTS_USE_RATINGS = False
+
 BCCF_RESOURCE_TYPES = '(article|downloadableform|magazine|tipsheet|video)'
-BCCF_CORE_PAGES = ['trainings','blog','resources','tag','programs','news']
+BCCF_CORE_PAGES = ['trainings','resources','tag','programs','news']
 SEARCH_MODEL_CHOICES = (
     'bccf.BCCFChildPage',
     'bccf.BCCFTopic',
     'bccf.BCCFPage',
 )
-COMMENTS_USE_RATINGS = False
-COMMENTS_ACCOUNT_REQUIRED = True
 
 #TINYMCE
 TINYMCE_SPELLCHECKER = True

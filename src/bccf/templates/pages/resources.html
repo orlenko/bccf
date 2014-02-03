@@ -1,10 +1,6 @@
 {% extends "pages/bccfpage.html" %}
 
-{% load static bccf_big_marquee_tags content_carousel_tags %}
-
-{% block marquee %}
-{% big_marquee_for page %}
-{% endblock %}
+{% load static content_carousel_tags %}
 
 {% block carousels %}
 {% content_carousel_for page 'Article' child 'article' %}
@@ -14,11 +10,11 @@
 {% content_carousel_for page 'Video' child 'video' %}
 {% endblock %}
 
-{% block page_script %}
+{% block footer_scripts %}
 {{ block.super }}
 
 {% if type %}
-<script>
+<script type="text/javascript">
     $(function() {
         $('#{{ type }}').scrollTop();
         $('#{{ type }} .to-grid').trigger('click');

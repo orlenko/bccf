@@ -18,6 +18,8 @@
     {% endwith %}
 {% endblock %}
 
+{% block marquee %}{% endblock %}
+
 {% block content %}
 <h1>{{ topic.title|title }}</h1>
 {{ topic.content|safe }}
@@ -117,7 +119,7 @@
 
 {% endblock %}
 
-{% block page_script %}
+{% block footer_scripts %}
 {{ block.super }}
 <script type="text/javascript" >
 $(function() {
