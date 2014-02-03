@@ -4,7 +4,8 @@
 
 {% load pybb_tags i18n content_carousel_tags bccf_feature_tags %}
 
-{% block title %}{{ topic }}{% endblock %}
+{% block meta_title %}{{ topic.title|title }}{% endblock %}
+{% block title %}{{ topic.title|title }}{% endblock %}
 
 {% block extra_script %}
     {{ block.super }}
