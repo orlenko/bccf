@@ -1,4 +1,4 @@
-{% extends "pages/bccfpage.html" %}
+{% extends "view_form.html" %}
 
 {% load form_utils content_carousel_tags bccf_feature_tags %}
 
@@ -9,9 +9,9 @@
 {% endblock %}
 
 {% block carousels %}
-<h4 class="container">Thank you for filling out a suvery.</h4>
 
-<div class="section row row-two">
-    {% content_carousel_for page.gparent 'Other Surveys' None 'formpublished' %}
-</div>
+{% block message %}
+<h4 class="container">Thank you for filling out {{ page.title }}.</h4>
+{% endblock %}
+
 {% endblock %}

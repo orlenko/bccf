@@ -1,4 +1,4 @@
-{% extends "pages/bccfpage.html" %}
+{% extends "pages/base_bccfpage.html" %}
 
 {% block content%}
 <div class="container">
@@ -13,5 +13,3 @@
 <a href="{{ struct.get_clone_url }}">Clone</a>
 <a href="{% url 'formable-create-form' %}">Create another survey</a>
 {% endblock %}
-
-{% block page_script %}{% endblock %}
