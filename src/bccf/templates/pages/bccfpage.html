@@ -24,13 +24,8 @@
         {% content_carousel_for page page.title child %}
     {% else %}
         {% content_carousel_for page page.title %}
-    {% endif %}
+    {% endif %} 
 {% endblock %}
-
-<div id="mobile-content-container" class="no-desktop no-tablet mobile-content-container">
-    <a class="close-btn" href="#">CLOSE</a>
-    <div class="mobile-content"></div>
-</div>
 
 {% block footer_scripts %}
 {{ block.super }}
@@ -183,9 +178,9 @@ var load_content = function(box) {
         $('body').css({overflow: 'hidden', height: '100%'});
         $('#mobile-content-container').show();
         container = $('#mobile-content-container .mobile-content');
-    } else if(box.parents('.carousel-slide').length) {
+    } else if(box.parents('.carousel-slide').length) { // If Slide
         container = box.parents('.carousel-slide').siblings('.slide-content');
-    } else if(box.parents('.carousel-grid').length) {
+    } else if(box.parents('.carousel-grid').length) { // If Grid
         container = box.nextAll('.grid-content').first();
     }
     container.html(loader).show();
@@ -194,6 +189,7 @@ var load_content = function(box) {
         context: container,
         success: function(data) {
             $(this).html(data);
+            console.log(container);
             if(!$('.mnav-mobile-btn').is(':visible')) {
                 $('body, html').animate({
                     'scrollTop':   $(this).offset().top-160
