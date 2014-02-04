@@ -2,6 +2,9 @@
 
 {% load form_utils content_carousel_tags bccf_feature_tags %}
 
+{% block meta_title %}View Form: {{ page.title|title }}{% endblock %}
+{% block title %}View Form: {{ page.title|title }}{% endblock %}
+
 {% block marquee %}{% endblock %}
 
 {% block content %}
@@ -10,17 +13,19 @@
 {% endblock %}
 
 {% block carousels %}
+
+{% block message %}
 <div id="form_view" class="section row">
-    <form action="{% url 'formable-submit-form' %}" method="POST">
-        {{ form|render }}
-        <input type="hidden" name="publish_id" value="{{ publish_id }}"/>
+    <form id="form-form" action="{{ request.get_full_path }}" method="POST">
         {% csrf_token %}
-        <input type="Submit" />
+        {{ form|render }}
+        <input id="submit-survey" type="Submit" value="Submit Survey" />
     </form>
 </div>
 <div class="section row row-two">
     {% content_carousel_for page.gparent 'Other Surveys' None 'formpublished' %}
 </div>
+{% endblock %}
 
 <div id="related-resource-container" class="section row row-two">
     <h3>Related Resources</h3>
@@ -33,7 +38,7 @@
 
 {% endblock %}
 
-{% block page_script %}
+{% block footer_scripts %}
 {{ block.super }}
 <script type="text/javascript" >
 $(function() {
@@ -50,6 +55,13 @@ $(function() {
     $('#related-resource-container > .related-resource').each(function() {
         $(this).css('height', highest);
     });
+});
+
+$('#submit-survey').on('click', function(e) {
+    e.preventDefault();
+    if(confirm('Are you sure you want to submit the survey? It cannot be edited once submitted.')) {
+        $('#form-form').submit();    
+    }
 });
 </script>
 {% endblock %}

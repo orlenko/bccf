@@ -1,14 +1,28 @@
-{% extends "pages/bccfpage.html" %}
+{% extends "pages/base_bccfpage.html" %}
 
-{% load form_utils %}
+{% load form_utils static %}
 
-{% block marquee %}{% endblock %}
+{% block meta_title %}Create Survey{% endblock %}
+{% block title %}Create Survey{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static "css/formable_style.css" %}" />
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static "js/jquery-touch-punch.min.js" %}"></script>
+<script src="{% static "js/helpers.js" %}"></script>
+{% endblock %}
+
 
 {% block content %}
+{% if type %}
+<h2>{{ type|title }}: {{ struct.title }}</h2>
+{% else %}
 <h2>Create Survey</h2>
+{% endif %}
 {% endblock %}
+
 {% block carousels %}
 {% include 'builder.html' %}
 {% endblock %}
-
-{% block page_script %}{% endblock %}

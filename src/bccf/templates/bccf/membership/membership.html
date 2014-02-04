@@ -1,4 +1,4 @@
-{% extends "pages/bccfpage.html" %}
+{% extends "pages/base_bccfpage.html" %}
 {% load mezzanine_tags shop_tags i18n %}
 
 {% block content %}
@@ -6,7 +6,6 @@
 {% endblock %}
 
 {% block carousels %}
-
 	<div class="memberships-selection">
 	<ul class="thumbnails">
 	{% for product in the_category.products.all %}

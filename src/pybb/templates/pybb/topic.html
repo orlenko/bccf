@@ -4,7 +4,8 @@
 
 {% load pybb_tags i18n content_carousel_tags bccf_feature_tags %}
 
-{% block title %}{{ topic }}{% endblock %}
+{% block meta_title %}{{ topic.title|title }}{% endblock %}
+{% block title %}{{ topic.title|title }}{% endblock %}
 
 {% block extra_script %}
     {{ block.super }}
@@ -17,6 +18,8 @@
         {% include "pybb/breadcrumb.html" %}
     {% endwith %}
 {% endblock %}
+
+{% block marquee %}{% endblock %}
 
 {% block content %}
 <h1>{{ topic.title|title }}</h1>
@@ -117,7 +120,7 @@
 
 {% endblock %}
 
-{% block page_script %}
+{% block footer_scripts %}
 {{ block.super }}
 <script type="text/javascript" >
 $(function() {

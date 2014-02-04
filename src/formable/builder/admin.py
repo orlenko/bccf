@@ -34,15 +34,26 @@ class FormStructureAdmin(admin.ModelAdmin):
     """
     readonly_fields = ('created',)
     fieldsets = [
-        ('Form Details', {'fields':['title', 'type', 'structure']}),
+        ('Form Details', {'fields':['title', 'user', 'type', 'structure']}),
         ('Meta', {'fields':['created']})
     ]
     inlines = [
         FormPublishedLine
     ]
-    list_display = ('title', 'id', 'type', 'created')
-    list_filter = ['type', 'created']
+    list_display = ('title', 'user', 'id', 'type', 'created', 'clone_link', 'edit_link', 'publish_link')
+    list_filter = ['type', 'user', 'created']
     search_fields = ['title', 'id', 'type']
+    
+    def clone_link(self, obj):
+        return '<a href="%s" target="_blank">Clone Form</a>' % obj.get_clone_url()
+    clone_link.allow_tags = True
+    def edit_link(self, obj):
+        return '<a href="%s" target="_blank">Edit Form</a>' % obj.get_edit_url()
+    edit_link.allow_tags = True
+    def publish_link(self, obj):
+        return '<a href="%s" target="_blank">Publish Form</a>' % obj.get_publish_url()
+    publish_link.allow_tags = True
+        
     
 class FormPublishedAdmin(DisplayableAdmin):
     def __init__(self, *args, **kwargs):

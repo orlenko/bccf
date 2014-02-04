@@ -22,6 +22,7 @@ class FormStructure(models.Model):
         #('4', 'XML'), # To be Implemented
     )
 
+    user = models.ForeignKey(User, blank=True, null=True)
     title = models.CharField(_("Form Title"), default="Form Structure", max_length=100)
     structure = models.TextField(_("Form Structure"))
     type = models.CharField(_("Form Type"), max_length=4, default='JSON', choices=FORM_TYPE)
@@ -30,7 +31,14 @@ class FormStructure(models.Model):
     class Meta:
         verbose_name = _("Form Structure")
         verbose_name_plural = _("Form Structures")
-        
+    
+    def get_edit_url(self):
+        return reverse('formable-edit-clone-form', kwargs={'type':'edit', 'id':self.pk})
+    def get_clone_url(self):
+        return reverse('formable-edit-clone-form', kwargs={'type':'clone', 'id':self.pk})
+    def get_publish_url(self):
+        return reverse('formable-publish-form', kwargs={'id':self.pk})
+    
     def __unicode__(self):
         return self.title
         
@@ -46,11 +54,10 @@ class FormPublished(BCCFChildPage):
         verbose_name_plural = _("Published Forms")        
         
     def save(self, **kwargs):
-        if self.pk is None:
+        if self.pk is None: 
             self.gparent = BCCFPage.objects.get(slug='tag')
-            self.published = datetime.now()
-            self.title = self.form_structure.title
         super(FormPublished, self).save(**kwargs)
+        
     def get_absolute_url(self):
         """
         URL for a page

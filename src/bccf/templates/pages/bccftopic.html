@@ -1,10 +1,9 @@
-{% extends "pages/bccfpage.html" %}
+{% extends "pages/base_bccfpage.html" %}
 
-{% load static bccf_big_marquee_tags content_carousel_tags mezzanine_tags %}
+{% load static content_carousel_tags mezzanine_tags %}
 
-{% block marquee %}
-{% big_marquee_for page %}
-{% endblock %}
+{% block meta_title %}{{ page.title|title }}{% endblock %}
+{% block title %}{{ page.title|title }}{% endblock %}
 
 {% block content %}
     {% editable page.title page.content %}
@@ -18,7 +17,8 @@
 {% content_carousel_for_topic page 'professional' %}
 {% endblock %}
 
-{% block page_script %}
+{% block footer_scripts %}
+{{ block.super }}
 <script type="text/javascript" >
 $(function() {
     $('.to-carousel').owlCarousel({
@@ -33,7 +33,7 @@ $(function() {
         'singleItem': true,
         'autoPlay': 5000,
         'autoHeight': true,
-        'theme': "big-marquee",
+        'theme': "normal-marquee",
     });
     $(window).on('resize', function(e) {
         if($(window).width() <= 724) {
@@ -50,7 +50,7 @@ $('.content-pages').on('click', '.page-box', function(e) {
     } else {
         clicked = $(e.target).parents('.page-box');
     }
-    window.location.href = clicked.find('a').attr('href');
+    window.open(clicked.find('a').attr('href'), '_blank');
 });
 
 $('.control-buttons').on('click', 'a', function(e) {

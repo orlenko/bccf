@@ -1,7 +1,8 @@
-{% extends 'pages/bccfpage.html' %}
+{% extends 'pages/base_bccfpage.html' %}
 {% load mezzanine_tags bccf_tags %}
 
 {% block meta_title %}Member Directory{% endblock %}
+{% block title %}User Directory{% if f %} - Filter {{ f }}{% endif %}{% endblock %}
 
 {% block content %}
 <h1>Member Directory</h1>
@@ -38,7 +39,8 @@
 
 {% endblock %}
 
-{% block page_script %}
+{% block footer_scripts %}
+{{ block.super }}
 <script type="text/javascript" >
 $(function() {
     var f = "{{ f }}";

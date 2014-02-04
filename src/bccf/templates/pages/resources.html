@@ -1,24 +1,30 @@
 {% extends "pages/bccfpage.html" %}
 
-{% load static bccf_big_marquee_tags content_carousel_tags %}
-
-{% block marquee %}
-{% big_marquee_for page %}
-{% endblock %}
+{% load static content_carousel_tags %}
 
 {% block carousels %}
+
+{% if child %}
 {% content_carousel_for page 'Article' child 'article' %}
 {% content_carousel_for page 'Downloadable Form' child 'downloadableform' %}
 {% content_carousel_for page 'Magazine' child 'magazine' %}
 {% content_carousel_for page 'Tip Sheet' child 'tipsheet' %}
 {% content_carousel_for page 'Video' child 'video' %}
+{% else %}
+{% content_carousel_for page 'Article' None 'article' %}
+{% content_carousel_for page 'Downloadable Form' None 'downloadableform' %}
+{% content_carousel_for page 'Magazine' None 'magazine' %}
+{% content_carousel_for page 'Tip Sheet' None 'tipsheet' %}
+{% content_carousel_for page 'Video' None 'video' %}
+{% endif %}
+
 {% endblock %}
 
-{% block page_script %}
+{% block footer_scripts %}
 {{ block.super }}
 
 {% if type %}
-<script>
+<script type="text/javascript">
     $(function() {
         $('#{{ type }}').scrollTop();
         $('#{{ type }} .to-grid').trigger('click');

@@ -144,6 +144,7 @@ $('.baby-content-btn').on('click', function(e) {
 });
 
 $(function() { 
+    document.title = "{{ child_obj.title|title }} | {{ child_obj.gparent.title|title }} | {{ settings.SITE_TITLE }}"
     {% if baby_obj %}
         $('#{{ baby_obj }}').trigger('click');
     {% else %}

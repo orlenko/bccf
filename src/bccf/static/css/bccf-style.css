@@ -1234,6 +1234,10 @@ textarea {
   display: block;
   margin: 20px auto; }
 
+#related-resource-container {
+  background-color: whitesmoke;
+  padding: 20px; }
+
 .green-list .control-buttons a {
   background-color: #8fab3d; }
   .green-list .control-buttons a:hover, .green-list .control-buttons a:focus {
@@ -1317,12 +1321,18 @@ textarea {
 .yellow-list .carousel-title-container h2 {
   display: inline;
   background-color: #fdcd26; }
-.yellow-list .subpage-tabs {
-  border-top: 2px solid #fdcd26; }
-  .yellow-list .subpage-tabs > ul > li > a {
-    background-color: #fdcd26; }
-    .yellow-list .subpage-tabs > ul > li > a:hover, .yellow-list .subpage-tabs > ul > li > a:focus {
-      background-color: #ffe129; }
+.yellow-list .subpage-content {
+  background-color: #fdcd26;
+  color: #FFF; }
+  .yellow-list .subpage-content a {
+    color: #FFF;
+    text-decoration: underline; }
+.yellow-list .subpage-tabs > ul > li > a:not(#child-home) {
+  background-color: #fdcd26; }
+  .yellow-list .subpage-tabs > ul > li > a:not(#child-home):hover, .yellow-list .subpage-tabs > ul > li > a:not(#child-home):focus {
+    background-color: #ffe129; }
+.yellow-list .subpage-tabs > ul > li.active {
+  border-bottom: 10px solid #fdcd26; }
 
 #tag-widget {
   background: url(../img/stripe-BG-grey.jpg) repeat; }
@@ -2205,11 +2215,9 @@ footer {
   bottom: 5%;
   right: 2%; }
 
-.big-marquee {
-  min-height: 410px; }
-  .big-marquee .owl-controls {
-    bottom: 5%;
-    right: 2%; }
+.big-marquee .owl-controls {
+  bottom: 5%;
+  right: 2%; }
 
 .lightbox {
   position: absolute;

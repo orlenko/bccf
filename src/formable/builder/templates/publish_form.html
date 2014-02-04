@@ -1,0 +1,28 @@
+{% extends "pages/base_bccfpage.html" %}
+
+{% block meta_title %}Publish Survey: {{ struct.title|title}}{% endblock %}
+{% block title %}Publish Survey: {{ struct.title|title}}{% endblock %}
+
+{% block content %}
+<h2>Publish {{ struct.title }}</h2>
+{% endblock %}
+
+{% block carousels %}
+<form id="publish-form" action="{{ request.get_full_path }}" method="POST">
+{% csrf_token %}
+{{ form.as_p }}
+<input id="form_submit" type="submit" value="Submit" />
+</form>
+{% endblock %}
+
+{% block footer_scripts %}
+{{ block.super }}
+<script type="text/javascript" >
+$('#form_submit').on('click', function(e) {
+    e.preventDefault();
+    if(confirm('Are you sure you want to publish this Survey? It cannot be undone.')) {
+        $('#publish-form').submit();
+    }
+});
+</script>
+{% endblock %}
