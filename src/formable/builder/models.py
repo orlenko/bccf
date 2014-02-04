@@ -3,6 +3,7 @@ from datetime import datetime
 
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.db.models import permalink
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext, ugettext_lazy as _
 
@@ -32,15 +33,15 @@ class FormStructure(models.Model):
         verbose_name = _("Form Structure")
         verbose_name_plural = _("Form Structures")
     
-    @models.permalink
+    @permalink
     def get_edit_url(self):
-        return reverse('formable-edit-clone-form', kwargs={'type':'edit', 'id':self.pk})
+        return ('formable-edit-clone-form', (), {'type':'edit', 'id':self.pk})
     @models.permalink
     def get_clone_url(self):
-        return reverse('formable-edit-clone-form', kwargs={'type':'clone', 'id':self.pk})
+        return ('formable-edit-clone-form', (), {'type':'clone', 'id':self.pk})
     @models.permalink
     def get_publish_url(self):
-        return reverse('formable-publish-form', kwargs={'id':self.pk})
+        return ('formable-publish-form', (), {'id':self.pk})
     
     def __unicode__(self):
         return self.title
@@ -61,22 +62,15 @@ class FormPublished(BCCFChildPage):
             self.gparent = BCCFPage.objects.get(slug='tag')
         super(FormPublished, self).save(**kwargs)
         
-    @models.permalink
+    @permalink
     def get_absolute_url(self):
-        """
-        URL for a page
-        """
-        slug = self.slug
-        if self.parent:
-            return self.parent.get_absolute_url()
-        else:
-            return self.get_survey_url()
-    @models.permalink
+        return ('formable-view', (), {'slug': self.slug})
+    @permalink
     def get_survey_url(self):       
-        return reverse('formable-view', kwargs={'slug':self.slug})
-    @models.permalink
+        return ('formable-view', (), {'slug': self.slug})
+    @permalink
     def get_report_url(self):
-        return reverse('survey-report', kwargs={'slug': self.slug})
+        return ('survey-report', (), {'slug': self.slug})
 
 class FormFilled(models.Model):
     """
