@@ -32,10 +32,13 @@ class FormStructure(models.Model):
         verbose_name = _("Form Structure")
         verbose_name_plural = _("Form Structures")
     
+    @models.permalink
     def get_edit_url(self):
         return reverse('formable-edit-clone-form', kwargs={'type':'edit', 'id':self.pk})
+    @models.permalink
     def get_clone_url(self):
         return reverse('formable-edit-clone-form', kwargs={'type':'clone', 'id':self.pk})
+    @models.permalink
     def get_publish_url(self):
         return reverse('formable-publish-form', kwargs={'id':self.pk})
     
@@ -58,6 +61,7 @@ class FormPublished(BCCFChildPage):
             self.gparent = BCCFPage.objects.get(slug='tag')
         super(FormPublished, self).save(**kwargs)
         
+    @models.permalink
     def get_absolute_url(self):
         """
         URL for a page
@@ -67,12 +71,12 @@ class FormPublished(BCCFChildPage):
             return self.parent.get_absolute_url()
         else:
             return self.get_survey_url()
-    def get_survey_url(self):
-        slug = self.slug        
-        return reverse('formable-view', kwargs={'slug':slug})
+    @models.permalink
+    def get_survey_url(self):       
+        return reverse('formable-view', kwargs={'slug':self.slug})
+    @models.permalink
     def get_report_url(self):
-        if self.slug:
-            return reverse('survey-report', kwargs={'slug': self.slug})
+        return reverse('survey-report', kwargs={'slug': self.slug})
 
 class FormFilled(models.Model):
     """

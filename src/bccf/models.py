@@ -715,6 +715,12 @@ class Event(BCCFChildPage):
     survey_before = models.ForeignKey('builder.FormPublished', null=True, blank=True, related_name='survey_before')
     survey_after = models.ForeignKey('builder.FormPublished', null=True, blank=True, related_name='survey_after')
 
+    def save(self, **kwargs):
+        if not self.pk:
+            gp = BCCFPage.objects.get(slug='trainings')
+            self.gparent = gp
+        super(Event, self).save(kwargs)
+
     @permalink
     def signup_url(self):
         return ('event-signup', (), {'slug': self.slug})
@@ -722,6 +728,10 @@ class Event(BCCFChildPage):
     @permalink
     def create_url(self):
         return('event-create', (), {})
+        
+    @permalink
+    def report_url(self):
+        return('event-survey-report', (), {'slug':self.slug})
 
 
 class EventRegistration(models.Model):

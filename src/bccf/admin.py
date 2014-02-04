@@ -50,7 +50,7 @@ class EventAdmin(DisplayableAdmin):
                 self.list_display.insert(-1, fieldname)
 
     def report_link(self, obj):
-        return '<a href="%s">Download Report</a>' % obj.get_report_url()
+        return '<a href="%s">Download Report</a>' % obj.report_url()
     report_link.allow_tags = True
 
 admin.site.register(Settings, SettingsAdmin)
