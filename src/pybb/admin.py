@@ -88,7 +88,6 @@ class BCCFTopicAdmin(DisplayableAdmin):
                                     'forum',
                                     'name',
                                     'user',
-                                    'poll_type',
                                     'closed',
                                     'content',
                                     'bccf_topic',

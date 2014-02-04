@@ -55,11 +55,11 @@
         {% if user.is_authenticated %}
             <div class="controls">
                 {% if user.is_moderator %}
-                    {% if topic.sticky %}
+                    <!--{% if topic.sticky %}
                         <a href="{% url 'pybb:unstick_topic' topic.id %}">{% trans "Unstick topic" %}</a> |
                     {% else %}
                         <a href="{% url 'pybb:stick_topic' topic.id %}">{% trans "Stick topic" %}</a> |
-                    {% endif %}
+                    {% endif %}-->
 
                     {% if topic.closed %}
                         <a href="{% url 'pybb:open_topic' topic.id %}">{% trans "Open topic" %}</a> |

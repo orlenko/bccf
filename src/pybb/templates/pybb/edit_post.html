@@ -1,4 +1,4 @@
-{% extends 'pybb/base.html' %}
+{% extends 'pages/base_bccfpage.html' %}
 {% load pybb_tags i18n %}
 
 {% block title %}{% trans "Editing the post" %}{% endblock title %}
@@ -11,12 +11,8 @@
 
 {% block content %}
     <h1>{% trans "Editing the post" %}</h1>
-    {% include "pybb/post_form.html" %}
 {% endblock content %}
 
-{% block breadcrumb %}
-    {% with extra_crumb="Edit post" %}
-        {% include "pybb/breadcrumb.html" %}
-    {% endwith %}
-    
+{% block carousels %}
+{% include "pybb/post_form.html" %}
 {% endblock %}
