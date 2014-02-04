@@ -64,6 +64,7 @@ $(document).ready(function(){
 			  + '<div class="col"><input type="text" name="first_name-' + maxIndex + '"/></div>'
 			  + '<div class="col"><input type="text" name="last_name-' + maxIndex + '"/></div>'
 			  + '</div>').insertBefore($(this));
+	  $('input[name="email-' + maxIndex + '"]').focus();
 	  return false;
   });
 

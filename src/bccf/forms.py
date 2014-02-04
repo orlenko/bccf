@@ -369,6 +369,7 @@ class AddUsersForm(forms.Form):
                 try:
                     email_validator(v)
                 except ValidationError, err:
+                    log.debug('Failed to validate %s' % v, exc_info=1)
                     errors.setdefault(index, [v]).append(err.message)
                     users.pop(index, None)
             user[kind] = v
@@ -381,7 +382,9 @@ class AddUsersForm(forms.Form):
                 except User.DoesNotExist:
                     pass
                 else:
+                    log.debug('Duplicate user %s' % email)
                     errors.setdefault(index, [email]).append('This user already exists.')
+                    users.pop(index, None)
                     continue
 
                 rec = User.objects.create(email=email,
@@ -405,6 +408,7 @@ class AddUsersForm(forms.Form):
             else:
                 pass
                 #errors.setdefault(index, [' '.join(user.values())]).append('Email is required')
+        log.debug('Returning users, errors: %s %s' % (users, errors))
         return users, errors
 
 

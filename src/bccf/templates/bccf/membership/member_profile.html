@@ -30,7 +30,7 @@
 		    	{% for line, err in feedback.new_user_errors.items %}
 		    		<li>Line {{ line|add:'1' }}: {{ err.0 }}
 		    			<ul>
-		    				{% for e in err|slice:':1' %}
+		    				{% for e in err|slice:'1:' %}
 		    				<li>{{ e }}</li>
 		    				{% endfor %}
 		    			</ul>
