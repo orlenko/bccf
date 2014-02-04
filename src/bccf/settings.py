@@ -112,15 +112,14 @@ ADMIN_MENU_ORDER = (
     ("Site", ("sites.Site", "redirects.Redirect", "conf.Setting")),
     ("Users", ("auth.User", "auth.Group",)),
     ("BCCF", ("news.NewsPost",
-              "bccf.EventForParents",
-              "bccf.EventForProfessionals",
+              "bccf.Event",
               "bccf.Settings",
               "bccf.Topic",
               "bccf.TopicLink",
               "bccf.UserProfile",)),
     ("Marquees", ("bccf.HomeMarquee", "bccf.HomeMarqueeSlide", "bccf.FooterMarquee", "bccf.FooterMarqueeSlide", "bccf.PageMarquee", "bccf.PageMarqueeSlide")),
     ("Resources", ("bccf.Article", "bccf.DownloadableForm", "bccf.Magazine", "bccf.TipSheet", "bccf.Video")),
-    ("Events", ("bccf.EventForParents", "bccf.EventForProfessionals")),
+    ("Events", ("bccf.Event",)),
     ("Forum", ("pybb.Topic", "pybb.Post", "pybb.Profile")),
 )
 

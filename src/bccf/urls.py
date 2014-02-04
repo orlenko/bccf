@@ -1,12 +1,7 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-from django.views.generic import TemplateView
-
-from mezzanine.core.views import direct_to_template
-
 from bccf import settings
 from bccf.feeds import EventsForParentsFeed, EventsForProfessionalsFeed
-from bccf.views.events import ProfessionalEventWizard, FORMS
 
 
 admin.autodiscover()
@@ -48,19 +43,12 @@ urlpatterns = patterns("",
     #Member views
     (r'^member/', include('bccf.member_urls')),
 
-    # Parents
-    url(r'^parents/$', 'bccf.views.parents.parents_page', name='parents-page'),
-    url(r'^parents/event/feed/', EventsForParentsFeed()),
-    url(r'^parents/event/signup/(?P<slug>.*)/$', 'bccf.views.events.parents_event_signup', name='parents-event-signup'),
-    url(r'^parents/event/(?P<slug>.*)/$', 'bccf.views.events.parents_event', name='parents-event'),
-    url(r'^parents/(?P<slug>.*)/$', 'bccf.views.parents.parents_page', name='parents-ajax-page'),
-
-    # Professionals
-    url(r'^professionals/$', 'bccf.views.professionals.professionals_page', name='professionals-page'),
-    url(r'^professionals/event/feed/', EventsForProfessionalsFeed()),
-    url(r'^professionals/event/signup/(?P<slug>.*)/$', 'bccf.views.events.professionals_event_signup', name='professionals-event-signup'),
-    url(r'^professionals/event/create/$', ProfessionalEventWizard.as_view(FORMS), name='professionals-event-create'),
-    url(r'^professionals/event/(?P<slug>.*)/$', 'bccf.views.events.professionals_event', name='professionals-event'),
+    # Events
+    url(r'events/feed/parents/$', EventsForParentsFeed(), name='events-for-parents'),
+    url(r'events/feed/professionals/$', EventsForProfessionalsFeed(), name='events-for-professionals'),
+    url(r'events/signup/(?P<slug>.*)/$', 'bccf.views.events.signup', name='events-signup'),
+    url(r'events/create/$', 'bccf.views.events.create', name='events-create'),
+    url(r'events/(?P<slug>.*)/$', 'bccf.views.events.event', name='events-event'),
 
     # MEZZANINE URL OVERRIDES
     #------------------------

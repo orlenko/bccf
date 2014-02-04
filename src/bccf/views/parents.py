@@ -1,7 +1,6 @@
-from django.shortcuts import render_to_response, redirect
-from django.http import HttpResponse
+from django.shortcuts import render_to_response
 from django.template.context import RequestContext
-from bccf.models import EventForParents
+from bccf.models import Event
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 
@@ -48,7 +47,7 @@ def parents_page(request, slug=None):
         profile = user.profile
         if profile:
             membership_product = profile.membership_product_variation
-    queryset = EventForParents.objects.all()
+    queryset = Event.objects.filter(page_for='parent')
     paginator = Paginator(queryset, 6)
     pagenum = request.GET.get('page')
     try:

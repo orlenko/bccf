@@ -103,15 +103,15 @@
 		{% if membership|has_feature:'events' %}
 			<h2>Events</h2>
 			<div class="groupcontent">
-				{% if user.u.bccf_eventforparents_events.count %}
+				{% if user.events.count %}
 					<h3>Current Events</h3>
 					<ul>
-					{% for event in user.u.bccf_eventforparents_events.all %}
-						<li><a href="{{ event.absolute_url }}">{{ event.title }}</a></li>
+					{% for event in user.events.all %}
+						<li><a href="{{ event.get_absolute_url }}">{{ event.title }}</a></li>
 					{% endfor %}
 					</ul>
 				{% endif %}
-				<a href="{% url 'professionals-event-create' %}">Create Event</a>
+				<a href="{% url 'events-create' %}">Create Event</a>
 			</div>
 		{% endif %}
 	</div>

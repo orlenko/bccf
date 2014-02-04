@@ -1,14 +1,11 @@
 from django.contrib.syndication.views import Feed
 
-from bccf.models import EventForParents, EventForProfessionals
+from bccf.models import Event
 
 
 
 class MemberEventsFeedBase(Feed):
     entity_type = None
-
-    def items(self):
-        return self.entity_type.objects.order_by('-date_start')[:25]
 
     def item_title(self, item):
         return item.title
@@ -20,13 +17,19 @@ class MemberEventsFeedBase(Feed):
 
 class EventsForParentsFeed(MemberEventsFeedBase):
     title = "Events for Parents"
-    link = "/parents/event/feed/"
+    link = "/events/feed/parents"
     description = "Updates on changes and additions to events for parents."
-    entity_type = EventForParents
+    entity_type = Event
+
+    def items(self):
+        return self.entity_type.objects.filter(page_for='parent').order_by('-date_start')[:25]
 
 
 class EventsForProfessionalsFeed(MemberEventsFeedBase):
     title = "Events for Professionals"
-    link = "/professionals/event/feed/"
+    link = "/events/feed/professionals"
     description = "Updates on changes and additions to events for professionals."
-    entity_type = EventForProfessionals
+    entity_type = Event
+
+    def items(self):
+        return self.entity_type.objects.filter(page_for='professional').order_by('-date_start')[:25]

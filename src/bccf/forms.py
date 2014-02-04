@@ -14,13 +14,12 @@ from tinymce.widgets import TinyMCE
 from mezzanine.conf import settings
 from mezzanine.generic.models import Rating
 
-from bccf.models import UserProfile, EventForParents, EventForProfessionals,\
-    Settings
+from bccf.models import UserProfile, Event, Settings
 from bccf.settings import MEDIA_ROOT
 
 from formable.builder.models import FormStructure, FormPublished, Question
 from django.contrib.auth.models import User
-from mezzanine.core.forms import Html5Mixin
+from mezzanine.core.forms import Html5Mixin, TinyMceWidget
 from mezzanine.utils.urls import slugify, unique_slug, admin_url
 from django.core.validators import EmailValidator
 from django.core.exceptions import ValidationError
@@ -100,67 +99,85 @@ class ProfileForm(forms.ModelForm):
         model = UserProfile
 
 
-class ParentEventForm(forms.ModelForm):
+class EventForm(forms.ModelForm):
     class Meta:
-        model = EventForParents
-        fields = ('title', 'content', 'provider', 'price', 'location_city',
+        model = Event
+        fields = ('page_for', 'title', 'content', 'provider', 'price', 'location_city',
             'location_street', 'location_street2', 'location_postal_code',
-            'date_start', 'date_end')
-        widgets = {
-            'date_start': forms.DateTimeInput(attrs={'class':'vDatefield', 'placeholder':'YYYY-MM-DD HH:MM'}),
-            'date_end': forms.DateTimeInput(attrs={'class':'vDatefield', 'placeholder':'YYYY-MM-DD HH:MM'})
-        }
-
-##################
-# For Wizard
-
-class ProfessionalEventForm(forms.ModelForm):
-    """
-    Form for creating a Professional Event using the Wizard
-    """
-    image = forms.ImageField()
-    content = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 30}))#CKEditorWidget())
-    class Meta:
-        model = EventForProfessionals
-        fields = ('title', 'content', 'provider', 'price', 'location_city',
-            'location_street', 'location_street2', 'location_postal_code',
+            'status',
             'date_start', 'date_end', 'bccf_topic')
         widgets = {
+            'provider': forms.HiddenInput(),
+            'page_for': forms.HiddenInput(),
+            'status': forms.HiddenInput(),
             'date_start': forms.DateTimeInput(attrs={'class':'vDatefield', 'placeholder':'YYYY-MM-DD HH:MM'}),
-            'date_end': forms.DateTimeInput(attrs={'class':'vDatefield', 'placeholder':'YYYY-MM-DD HH:MM'})
+            'date_end': forms.DateTimeInput(attrs={'class':'vDatefield', 'placeholder':'YYYY-MM-DD HH:MM'}),
         }
 
-    def __init__(self, *args, **kwargs):
-        super(ProfessionalEventForm, self).__init__(*args, **kwargs)
-        self.fields['survey'] = forms.BooleanField(label='Create Surveys?',
-            widget=forms.CheckboxInput, required=False)
 
-
-    def handle_upload(self):
-        image_path = 'uploads/childpage/'+self.files['0-image'].name
-        destination = open(MEDIA_ROOT+'/'+image_path, 'wb+')
-        for chunk in self.files['0-image'].chunks():
-            destination.write(chunk)
-        destination.close()
-        return image_path
-
-    def save(self, **kwargs):
-        data = self.cleaned_data
-        if 'survey' in data: # check and remove the survey key-value pair
-            del data['survey']
-        if 'bccf_topic' in data:
-            topics = data['bccf_topic']
-            del data['bccf_topic']
-        if 'image' in data:
-            del data['image']
-        event = EventForProfessionals(**data)
-        if '0-image' in self.files:
-            event.image = self.handle_upload()
-
-        event.save()
-        for topic in topics:
-            event.bccf_topic.add(topic)
-        return event
+#
+#
+# class ParentEventForm(forms.ModelForm):
+#     class Meta:
+#         model = EventForParents
+#         fields = ('title', 'content', 'provider', 'price', 'location_city',
+#             'location_street', 'location_street2', 'location_postal_code',
+#             'date_start', 'date_end')
+#         widgets = {
+#             'date_start': forms.DateTimeInput(attrs={'class':'vDatefield', 'placeholder':'YYYY-MM-DD HH:MM'}),
+#             'date_end': forms.DateTimeInput(attrs={'class':'vDatefield', 'placeholder':'YYYY-MM-DD HH:MM'})
+#         }
+#
+# ##################
+# # For Wizard
+#
+# class ProfessionalEventForm(forms.ModelForm):
+#     """
+#     Form for creating a Professional Event using the Wizard
+#     """
+#     image = forms.ImageField()
+#     content = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 30}))#CKEditorWidget())
+#     class Meta:
+#         model = EventForProfessionals
+#         fields = ('title', 'content', 'provider', 'price', 'location_city',
+#             'location_street', 'location_street2', 'location_postal_code',
+#             'date_start', 'date_end', 'bccf_topic')
+#         widgets = {
+#             'date_start': forms.DateTimeInput(attrs={'class':'vDatefield', 'placeholder':'YYYY-MM-DD HH:MM'}),
+#             'date_end': forms.DateTimeInput(attrs={'class':'vDatefield', 'placeholder':'YYYY-MM-DD HH:MM'})
+#         }
+#
+#     def __init__(self, *args, **kwargs):
+#         super(ProfessionalEventForm, self).__init__(*args, **kwargs)
+#         self.fields['survey'] = forms.BooleanField(label='Create Surveys?',
+#             widget=forms.CheckboxInput, required=False)
+#
+#
+#     def handle_upload(self):
+#         image_path = 'uploads/childpage/'+self.files['0-image'].name
+#         destination = open(MEDIA_ROOT+'/'+image_path, 'wb+')
+#         for chunk in self.files['0-image'].chunks():
+#             destination.write(chunk)
+#         destination.close()
+#         return image_path
+#
+#     def save(self, **kwargs):
+#         data = self.cleaned_data
+#         if 'survey' in data: # check and remove the survey key-value pair
+#             del data['survey']
+#         if 'bccf_topic' in data:
+#             topics = data['bccf_topic']
+#             del data['bccf_topic']
+#         if 'image' in data:
+#             del data['image']
+#         event = EventForProfessionals(**data)
+#         if '0-image' in self.files:
+#             event.image = self.handle_upload()
+#
+#         event.save()
+#         for topic in topics:
+#             event.bccf_topic.add(topic)
+#         return event
 
 
 class FormStructureSurveyBase(forms.Form):
@@ -361,6 +378,7 @@ class AddUsersForm(forms.Form):
         errors = {}
         email_validator = EmailValidator(message='Email is not valid')
         for k, v in self.data.items():
+            log.debug('Analyzing form item: %s=%s' % (k, v))
             if not ('-' in k):
                 continue
             kind, index = k.split('-')

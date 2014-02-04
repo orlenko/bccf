@@ -220,9 +220,10 @@ class BCCFChildPage(BCCFBasePage, RichText, AdminThumbMixin):
         URL for a page
         """
         slug = self.slug
+        parent = 'trainings'
         if self.gparent:
             parent = self.gparent.slug
-        else:
+        elif self.parent:
             parent = self.parent.slug
         return reverse('bccf-child', kwargs={"parent": parent, "child": slug})
 
@@ -652,6 +653,44 @@ class UserProfile(models.Model):
         now = datetime.now()
         return remaining_subscription_balance(purchase_date, expiration_date, now, price)
 
+    ### Helpers to quickly determine type of membership
+
+    @property
+    def short_membership_type(self):
+        membership = 'membership'
+        markers = ('professional', 'parent', 'organization', 'corporate')
+        membership_product_variation = self.membership_product_variation
+        if membership_product_variation:
+            for category in membership_product_variation.product.categories.all():
+                if membership in category.slug:
+                    for marker in markers:
+                        if marker in category.slug:
+                            return marker
+
+    @property
+    def is_parent(self):
+        return 'parent' in self.membership_type
+
+    @property
+    def is_professional(self):
+        return 'professional' in self.membership_type
+
+    @property
+    def is_organization(self):
+        return 'organization' in self.membership_type
+
+    @property
+    def is_corporate(self):
+        return 'corporate' in self.membership_type
+
+    @property
+    def provided_event_type(self):
+        memb = self.short_membership_type
+        if self.user.is_superuser:
+            return 'all'
+        if memb == 'professional':
+            return 'parent'
+
 
 def is_product_variation_categ(variation, categ):
     for category in variation.product.categories.all():
@@ -660,8 +699,8 @@ def is_product_variation_categ(variation, categ):
 
 #### USER STUFF END ####
 
-class EventBase(BCCFChildPage):
-    provider = models.ForeignKey(User, blank=True, null=True, related_name='%(app_label)s_%(class)s_events')
+class Event(BCCFChildPage):
+    provider = models.ForeignKey(User, blank=True, null=True, related_name='events')
 
     price = MoneyField()
 
@@ -673,59 +712,24 @@ class EventBase(BCCFChildPage):
     date_start = models.DateTimeField('Event Start', blank=True, null=True)
     date_end = models.DateTimeField('Event End', blank=True, null=True)
 
-    class Meta:
-        abstract = True
-
-class EventForParents(EventBase):
-
-    def save(self, **kwargs):
-        self.gparent = BCCFPage.objects.get(slug='trainings')
-        self.page_for = 'parent'
-        super(EventForParents, self).save(**kwargs)
-
-    @permalink
-    def signup_url(self):
-        return ('parents-event-signup', (), {'slug': self.slug})
-
-    @permalink
-    def create_url(self):
-        return('parents-event-create', (), {})
-
-    class Meta:
-        verbose_name = 'Event for Parents'
-        verbose_name_plural = 'Events for Parents'
-
-class EventForProfessionals(EventBase):
     survey_before = models.ForeignKey('builder.FormPublished', null=True, blank=True, related_name='survey_before')
     survey_after = models.ForeignKey('builder.FormPublished', null=True, blank=True, related_name='survey_after')
 
-    def save(self, **kwargs):
-        self.gparent = BCCFPage.objects.get(slug='trainings')
-        self.page_for = 'professional'
-        super(EventForProfessionals, self).save(**kwargs)
-
-        # For Surveys
-        if self.survey_before:
-            self.survey_before.parent = self
-            self.survey_before.save()
-        if self.survey_after:
-            self.survey_after.parent = self
-            self.survey_after.save()
-
     @permalink
     def signup_url(self):
-        return ('professionals-event-signup', (), {'slug': self.slug})
+        return ('event-signup', (), {'slug': self.slug})
 
     @permalink
     def create_url(self):
-        return('professionals-event-create', (), {})
+        return('event-create', (), {})
 
-    def get_report_url(self):
-        return reverse('event-survey-report', kwargs={'slug': self.slug})
 
-    class Meta:
-        verbose_name = 'Event for Professionals'
-        verbose_name_plural = 'Events for Professionals'
+class EventRegistration(models.Model):
+    event = models.ForeignKey(Event)
+    user = models.ForeignKey(User)
+    registration_date = models.DateTimeField(auto_now_add=True, blank=True)
+
+
 
 class Settings(models.Model):
     name = models.CharField(max_length=255)

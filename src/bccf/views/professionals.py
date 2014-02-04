@@ -1,6 +1,6 @@
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
-from bccf.models import EventForProfessionals
+from bccf.models import Event
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 
@@ -13,7 +13,7 @@ def professionals_page(request):
         profile = user.profile
         if profile:
             membership_product = profile.membership_product_variation
-    queryset = EventForProfessionals.objects.all()  # @UndefinedVariable
+    queryset = Event.objects.filter(page_for='professional')
     paginator = Paginator(queryset, 6)
     pagenum = request.GET.get('page')
     try:

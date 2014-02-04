@@ -10,10 +10,10 @@ from mezzanine.utils.urls import admin_url
 from mezzanine.conf import settings
 from mezzanine.pages.admin import PageAdmin
 
-from bccf.models import (BCCFTopic, Settings, EventForProfessionals,
-    EventForParents, HomeMarquee, FooterMarquee, HomeMarqueeSlide, FooterMarqueeSlide,
+from bccf.models import (BCCFTopic, Settings, HomeMarquee, FooterMarquee, HomeMarqueeSlide, FooterMarqueeSlide,
     PageMarquee, PageMarqueeSlide, BCCFPage, BCCFChildPage, BCCFBabyPage, BCCFGenericPage,
-    Blog, Program, Article, Magazine, Video, TipSheet, DownloadableForm, Campaign)
+    Blog, Program, Article, Magazine, Video, TipSheet, DownloadableForm, Campaign,
+    Event)
 from django.core.exceptions import PermissionDenied
 
 import logging
@@ -25,31 +25,9 @@ class SettingsAdmin(admin.ModelAdmin):
     list_editable = ['value']
 
 
-class ParentsEventAdmin(DisplayableAdmin):
+class EventAdmin(DisplayableAdmin):
     def __init__(self, *args, **kwargs):
-        super(ParentsEventAdmin, self).__init__(*args, **kwargs)
-        if self.fieldsets == DisplayableAdmin.fieldsets:
-            self.fieldsets = deepcopy(self.fieldsets)
-            for field in reversed(['content',
-                                    'provider',
-                                    'date_start',
-                                    'date_end',
-                                    'location_city',
-                                    'location_street',
-                                    'location_street2',
-                                    'location_postal_code',
-                                    'price',
-                                    'bccf_topic',
-                                    'image']):
-                self.fieldsets[0][1]['fields'].insert(3, field)
-        if self.list_display == DisplayableAdmin.list_display:
-            self.list_display = list(deepcopy(self.list_display))
-            for fieldname in ['provider', 'date_start', 'date_end', 'price']:
-                self.list_display.insert(-1, fieldname)
-
-class ProfessionalsEventAdmin(DisplayableAdmin):
-    def __init__(self, *args, **kwargs):
-        super(ProfessionalsEventAdmin, self).__init__(*args, **kwargs)
+        super(EventAdmin, self).__init__(*args, **kwargs)
         if self.fieldsets == DisplayableAdmin.fieldsets:
             self.fieldsets = deepcopy(self.fieldsets)
             for field in reversed(['content',
@@ -76,8 +54,7 @@ class ProfessionalsEventAdmin(DisplayableAdmin):
     report_link.allow_tags = True
 
 admin.site.register(Settings, SettingsAdmin)
-admin.site.register(EventForParents, ParentsEventAdmin)
-admin.site.register(EventForProfessionals, ProfessionalsEventAdmin)
+admin.site.register(Event, EventAdmin)
 
 #Pages
 page_fieldsets = deepcopy(DisplayableAdmin.fieldsets)
@@ -372,13 +349,13 @@ admin.site.register(Video, BCCFVideoResourceAdmin)
 
 #Inline
 class HomeMarqueeInline(admin.TabularInline):
-    model = HomeMarqueeSlide.marquee.through
+    model = HomeMarqueeSlide.marquee.through  # @UndefinedVariable
 
 class FooterMarqueeInline(admin.TabularInline):
-    model = FooterMarqueeSlide.marquee.through
+    model = FooterMarqueeSlide.marquee.through  # @UndefinedVariable
 
 class PageMarqueeInline(admin.TabularInline):
-    model = PageMarqueeSlide.marquee.through
+    model = PageMarqueeSlide.marquee.through  # @UndefinedVariable
 
 #Marquees
 class MarqueeSlideAdmin(admin.ModelAdmin):

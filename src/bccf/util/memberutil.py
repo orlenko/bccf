@@ -13,7 +13,7 @@ from django.utils.decorators import available_attrs
 from django.utils.encoding import force_str
 from django.utils.http import urlencode
 
-from bccf.models import Settings
+from bccf.models import Settings, BCCFChildPage
 from dateutil import relativedelta
 
 
@@ -84,6 +84,17 @@ def require_professional(func):
     @wraps(func, assigned=available_attrs(func))
     def _wrapper(request, *args, **kwargs):
         return require_member(Settings.get_setting('PROFESSIONAL_MEMBERSHIP_CATEGORY'), func, request, *args, **kwargs)
+    return _wrapper
+
+
+def require_event_audience(func):
+    @wraps(func, assigned=available_attrs(func))
+    def _wrapper(request, slug, *args, **kwargs):
+        event = BCCFChildPage.objects.get(slug=slug)
+        categ = Settings.get_setting('PROFESSIONAL_MEMBERSHIP_CATEGORY')
+        if event.page_for == 'parent':
+            categ = Settings.get_setting('PARENT_MEMBERSHIP_CATEGORY')
+        return require_member(categ, func, request, slug, *args, **kwargs)
     return _wrapper
 
 

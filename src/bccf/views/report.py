@@ -1,13 +1,14 @@
 import csv
 import logging
 import time
+from bccf.models import Event
+from django.shortcuts import redirect
 log = logging.getLogger(__name__)
 
 from django.http import HttpResponse, Http404
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 
-from bccf.models import BCCFChildPage, EventForProfessionals
 
 from formable.builder.models import FormPublished, FormFilled, Question, FieldAnswer
 
@@ -18,11 +19,11 @@ def survey_report(request, slug):
     except ObjectDoesNotExist:
         log.info('Object Does Not Exist')
         raise Http404
-    
+
     if not request.user.is_staff and not request.user.is_superuser and not published.user == request.user:
         log.info('Not Staff or Publish User')
         raise Http404
-    
+
     counter = 0
     current = None
 
@@ -77,7 +78,7 @@ def survey_report(request, slug):
         writer.writerow(val)
     #pass
     return response
-    
+
 @login_required
 def event_survey_report(request, slug):
     """
@@ -87,7 +88,7 @@ def event_survey_report(request, slug):
         return redirect('/')
 
     try:
-        event = EventForProfessionals.objects.get(slug=slug)
+        event = Event.objects.get(slug=slug)
     except ObjectDoesNotExist:
         raise Http404
 

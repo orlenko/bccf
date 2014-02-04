@@ -18,7 +18,7 @@ except ImportError:
     from django.utils.simplejson import dumps
 
 from bccf.forms import BCCFRatingForm
-from bccf.models import EventForParents, EventForProfessionals, FooterMarquee, FooterMarqueeSlide
+from bccf.models import FooterMarquee, FooterMarqueeSlide, Event
 from news.models import NewsPost
 
 from mezzanine.conf import settings
@@ -29,21 +29,21 @@ def home(request):
     """
     View for the home page, this is where the necessary data is grabbed from the database and passed on to the view for rendering.
     """
-    eventForParents = EventForParents.objects.filter(date_start__gte=timezone.now().date()).order_by('date_start')[:15]
-    eventForProfessionals = EventForProfessionals.objects.filter(date_start__gte=timezone.now().date()).order_by('date_start')[:15]
+    eventForParents = Event.objects.filter(page_for='parent', date_start__gte=timezone.now().date()).order_by('date_start')[:15]  # @UndefinedVariable
+    eventForProfessionals = Event.objects.filter(page_for='professional', date_start__gte=timezone.now().date()).order_by('date_start')[:15]  # @UndefinedVariable
     try:
         footerMarquee = FooterMarquee.objects.get(active=True)
         footerMarqueeSlides = FooterMarqueeSlide.objects.filter(marquee=footerMarquee)
     except ObjectDoesNotExist:
         pass
-    
+
     #TODO:
     # Grab resources
     # Grab level B+ users and organizations
     # Grab programs
     # Grab noteworthy
     # Grab footer
-    
+
     context = RequestContext(request, locals())
     return render_to_response('index.html', {}, context_instance=context);
 

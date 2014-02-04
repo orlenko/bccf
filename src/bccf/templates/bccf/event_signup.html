@@ -5,6 +5,9 @@
 	<h2>{{ event.title }}</h2>
 	{{ event.content|safe }}
 	<p>
-		Here you, {{ user.get_full_name|default:user.username }}, will sign up for the event! Yay!
+		<form action="" method="post">
+			{% csfr_token %}
+			<input type="submit" value="Sign Up"/>
+		</form>
 	</p>
 {% endblock %}
