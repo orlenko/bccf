@@ -346,6 +346,7 @@ INSTALLED_APPS = (
     "mezzanine.galleries",
     "mezzanine.twitter",
     "mezzanine.accounts",
+    #"mezzanine.blog",
     #"mezzanine.mobile",
     'news',
     'pybb',
@@ -461,6 +462,7 @@ ACCOUNTS_PROFILE_FORM_EXCLUDE_FIELDS = [
     'requested_cancellation',
 ]
 ACCOUNTS_PROFILE_VIEWS_ENABLED = True
+ACCOUNTS_VERIFICATION_REQUIRED = True
 
 GRAPPELLI_ADMIN_TITLE = 'BCCF'
 GRAPPELLI_ADMIN_HEADLINE = 'BCCF'

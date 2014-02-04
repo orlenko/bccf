@@ -30,7 +30,7 @@ $(document).ready(function(){
 	  var button = $(this);
 	  if (button.html() == '&lt; Hide') {
 		  $('#organization-add-member-forms').hide();
-		  button.html('Add Member');
+		  button.html('Add Members');
 	  } else {
 		  $('#organization-add-member-forms').show();
 		  $('#organization-add-member-forms .accordion-delayed').each(function() {
@@ -46,6 +46,24 @@ $(document).ready(function(){
 
   $('a.member-delete').click(function(){
 	  $(this).next().submit();
+	  return false;
+  });
+
+  $('.flextable .addrow').click(function(event) {
+	  event.preventDefault();
+	  var maxIndex = 0;
+	  $(this).parent().find('input[type=email]').each(function() {
+		  var index = parseInt($(this).attr('name').split('-')[1]);
+		  if (maxIndex < index) {
+			  maxIndex = index;
+		  }
+	  });
+	  maxIndex =+ 1;
+	  $('<div class="row">'
+			  + '<div class="col"><input type="email" name="email-' + maxIndex + '" /></div>'
+			  + '<div class="col"><input type="text" name="first_name-' + maxIndex + '"/></div>'
+			  + '<div class="col"><input type="text" name="last_name-' + maxIndex + '"/></div>'
+			  + '</div>').insertBefore($(this));
 	  return false;
   });
 

@@ -10,6 +10,36 @@
 {% block carousels %}
 <div class="container">
 {% if membership %}
+	{% if feedback %}
+		{% if feedback.new_users %}
+		<div class="alert alert-success" data-alert="alert">
+		    <a class="close" href="#" onclick="$(this).parent().fadeOut('fast'); return false;">×</a>
+		    <p>Successfully added users:</p>
+		    <ul>
+		    	{% for u in feedback.new_users.values %}
+		    		<li>{{ u.first_name }} {{ u.last_name }} {{ u.email }}</li>
+		    	{% endfor %}
+		    </ul>
+		</div>
+		{% endif %}
+		{% if feedback.new_user_errors %}
+		<div class="alert alert-error" data-alert="alert">
+		    <a class="close" href="#" onclick="$(this).parent().fadeOut('fast'); return false;">×</a>
+		    <p>Failed to add users:</p>
+		    <ul>
+		    	{% for line, err in feedback.new_user_errors.items %}
+		    		<li>Line {{ line|add:'1' }}: {{ err.0 }}
+		    			<ul>
+		    				{% for e in err|slice:':1' %}
+		    				<li>{{ e }}</li>
+		    				{% endfor %}
+		    			</ul>
+		    		</li>
+		    	{% endfor %}
+		    </ul>
+		</div>
+		{% endif %}
+	{% endif %}
 	<div class="accordion">
 		<h2>Your Membership</h2>
 		<div class="groupcontent">
@@ -54,12 +84,17 @@
 						</li>
 					{% endfor %}
 				</ul>
-				<button id="organization-add-member">Add Member</button>
+				<button id="organization-add-member">Add Members</button>
 				<div class="hidden" id="organization-add-member-forms">
 					<form method="post" action="{% url 'member-addmember' %}">
 						{% csrf_token %}
-						{{ add_user_form.as_p }}
-						<input type="submit" value="Create new user"/>
+						<input type="hidden" name="organization" value="{{ user.pk }}"/>
+						<div class="flextable threecols">
+							<div class="row head"><div class="col">Email</div><div class="col">First Name</div><div class="col">Last Name</div></div>
+							<div class="row"><div class="col"><input type="email" name="email-0" /></div><div class="col"><input type="text" name="first_name-0"/></div><div class="col"><input type="text" name="last_name-0"/></div></div>
+							<a href="" class="addrow">More</a>
+						</div>
+						<input type="submit" value="Create new users"/>
 					</form>
 				</div>
 			</div>
@@ -68,7 +103,15 @@
 		{% if membership|has_feature:'events' %}
 			<h2>Events</h2>
 			<div class="groupcontent">
-				Manage events here
+				{% if user.u.bccf_eventforparents_events.count %}
+					<h3>Current Events</h3>
+					<ul>
+					{% for event in user.u.bccf_eventforparents_events.all %}
+						<li><a href="{{ event.absolute_url }}">{{ event.title }}</a></li>
+					{% endfor %}
+					</ul>
+				{% endif %}
+				<a href="{% url 'professionals-event-create' %}">Create Event</a>
 			</div>
 		{% endif %}
 	</div>

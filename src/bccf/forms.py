@@ -14,13 +14,19 @@ from tinymce.widgets import TinyMCE
 from mezzanine.conf import settings
 from mezzanine.generic.models import Rating
 
-from bccf.models import UserProfile, EventForParents, EventForProfessionals
+from bccf.models import UserProfile, EventForParents, EventForProfessionals,\
+    Settings
 from bccf.settings import MEDIA_ROOT
 
 from formable.builder.models import FormStructure, FormPublished, Question
 from django.contrib.auth.models import User
 from mezzanine.core.forms import Html5Mixin
-from mezzanine.utils.urls import slugify, unique_slug
+from mezzanine.utils.urls import slugify, unique_slug, admin_url
+from django.core.validators import EmailValidator
+from django.core.exceptions import ValidationError
+from mezzanine.utils.email import send_mail_template
+
+
 log = logging.getLogger(__name__)
 
 class RatingRenderer(RadioFieldRenderer):
@@ -81,8 +87,8 @@ class BCCFRatingForm(CommentSecurityForm):
             rating_manager.add(rating_instance)
             # edits
 
-        sum = Rating.objects.filter(object_pk=self.target_object.pk).aggregate(Sum('value'))
-        self.target_object.rating_sum = int(sum['value__sum'])
+        summ = Rating.objects.filter(object_pk=self.target_object.pk).aggregate(Sum('value'))  # @UndefinedVariable - poor PyDev
+        self.target_object.rating_sum = int(summ['value__sum'])
         self.target_object.rating_average = self.target_object.rating_sum / self.target_object.rating_count
         self.target_object.save()
         return rating_instance
@@ -344,6 +350,62 @@ class AddExistingUserForm(forms.Form):
         profile = user.profile
         profile.organization_id = self.cleaned_data['organization']
         profile.save()
+
+
+class AddUsersForm(forms.Form):
+    organization = forms.IntegerField(widget=forms.HiddenInput())
+
+    def save(self, request):
+        organization = User.objects.get(pk=self.data['organization'])
+        users = {}
+        errors = {}
+        email_validator = EmailValidator(message='Email is not valid')
+        for k, v in self.data.items():
+            if not ('-' in k):
+                continue
+            kind, index = k.split('-')
+            user = users.setdefault(index, {})
+            if kind == 'email':
+                try:
+                    email_validator(v)
+                except ValidationError, err:
+                    errors.setdefault(index, [v]).append(err.message)
+                    users.pop(index, None)
+            user[kind] = v
+        for index, user in users.items():
+            if user['email']:
+                email = user['email'].strip()
+                # Make sure this user does not already exist
+                try:
+                    _existing = User.objects.get(username__iexact=email)
+                except User.DoesNotExist:
+                    pass
+                else:
+                    errors.setdefault(index, [email]).append('This user already exists.')
+                    continue
+
+                rec = User.objects.create(email=email,
+                                          username=email,
+                                          first_name=user.get('first_name', 'Firstname'),
+                                          last_name=user.get('last_name', 'Lastname'),
+                                          is_active=False)
+                send_mail_template('BCCF Invitation from %s (%s)' % (organization.get_full_name(), organization.email),
+                                   'bccf/email/membership_invitation_to_organization',
+                                   Settings.get_setting('SERVER_EMAIL'),
+                                   email,
+                                   context={
+                                        'user': rec,
+                                        'organization': organization,
+                                        'link': ('http://%s%s' % (request.get_host(),
+                                                                  admin_url(rec.__class__, "change", rec.id)))
+                                   },
+                                   attachments=None,
+                                   fail_silently=settings.DEBUG,
+                                   addr_bcc=None)
+            else:
+                pass
+                #errors.setdefault(index, [' '.join(user.values())]).append('Email is required')
+        return users, errors
 
 
 class DelMember(forms.Form):

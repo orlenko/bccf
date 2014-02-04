@@ -2440,3 +2440,35 @@ footer {
 
 .hidden {
   display: none; }
+
+.groupcontent {
+  font-size: smaller; }
+
+.flextable {
+  width: 100%;
+  padding: 0;
+  margin: 0; }
+  .flextable.threecols .row {
+    width: 100%;
+    height: 30px;
+    padding: 0;
+    margin: 0;
+    white-space: nowrap; }
+    .flextable.threecols .row.head {
+      font-weight: bold; }
+      .flextable.threecols .row.head .col {
+        text-align: center; }
+    .flextable.threecols .row .col {
+      display: inline-block;
+      width: 33%;
+      float: none;
+      padding: 0;
+      margin: 0; }
+      .flextable.threecols .row .col input {
+        border: 1px solid lightgrey;
+        width: 100%;
+        height: 100%;
+        padding: 3px; }
+  .flextable .addrow {
+    display: block;
+    margin: 10px; }

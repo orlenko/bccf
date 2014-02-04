@@ -13,7 +13,7 @@ from django.shortcuts import render_to_response, redirect
 from django.template.context import RequestContext
 
 from bccf.util.memberutil import get_upgrades, require_any_membership
-from bccf.forms import AddUserForm, AddExistingUserForm, DelMember
+from bccf.forms import AddUserForm, AddExistingUserForm, DelMember, AddUsersForm
 
 
 log = logging.getLogger(__name__)
@@ -27,8 +27,18 @@ def profile(request):
     membership = user_profile.membership_product_variation
     expiration = user_profile.membership_expiration_datetime
     upgrades = get_upgrades(membership)
-    add_user_form = AddUserForm(initial=dict(organization=user.pk))
+    add_users_form = AddUsersForm(initial=dict(organization=user.pk))
     add_existing_user_form = AddExistingUserForm(initial=dict(organization=user.pk))
+    if 'addmembers' in request.session:
+        try:
+            new_users, new_user_errors = request.session.pop('addmembers')
+            feedback = {
+                'new_users': new_users,
+                'new_user_errors': new_user_errors
+            }
+        except:
+            pass
+
     context = RequestContext(request, locals())
     return render_to_response('bccf/membership/member_profile.html', {}, context_instance=context)
 
@@ -147,14 +157,8 @@ def membership_cancel(request):
 
 
 def addmember(request):
-    form = AddUserForm(data=request.REQUEST)
-    if form.is_valid():
-        log.debug('Form is valid - saving %s', form.cleaned_data)
-        form.save()
-        messages.success(request, 'New member has been successfully created')
-    else:
-        log.debug('Form invalid: %s' % form)
-        messages.error(request, 'Failed to create user. Erros: %s' % form.errors)
+    form = AddUsersForm(data=request.REQUEST)
+    request.session['addmembers'] = form.save(request)
     return HttpResponseRedirect(reverse(profile))
 
 

@@ -12,7 +12,7 @@ def add(value, to_add):
 def has_feature(membership, feature):
     feature_map = {
         'people': ('Membership: Organizations', 'Membership: Corporate'),
-        'events': ('Membership: Professionals', 'Membership: Organizations')
+        'events': ('Membership: Professionals', 'Admin')
     }
     for categ in feature_map.get(feature, []):
         if models.is_product_variation_categ(membership, categ):

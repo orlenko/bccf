@@ -661,7 +661,7 @@ def is_product_variation_categ(variation, categ):
 #### USER STUFF END ####
 
 class EventBase(BCCFChildPage):
-    provider = models.ForeignKey(User, blank=True, null=True)
+    provider = models.ForeignKey(User, blank=True, null=True, related_name='%(app_label)s_%(class)s_events')
 
     price = MoneyField()
 
