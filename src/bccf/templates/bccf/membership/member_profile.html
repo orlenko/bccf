@@ -107,7 +107,7 @@
 					<h3>Current Events</h3>
 					<ul>
 					{% for event in user.events.all %}
-						<li><a href="{{ event.edit_url }}">{{ event.title }}</a></li>
+						<li>{{ event.title }}: <a href="{{ event.edit_url }}">edit</a> | <a href="{{ event.get_absolute_url }}">view</a></li>
 					{% endfor %}
 					</ul>
 				{% endif %}
