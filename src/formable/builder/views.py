@@ -102,7 +102,7 @@ def create_survey(request, type=None, id=None):
                 log.debug('Redirecting to publishing the form')
                 return HttpResponseRedirect('%s?after_event=%s'
                     % (reverse('formable-publish-form', kwargs={'id': struct.pk}),
-                       request.GET['before_event']))
+                       request.GET['after_event']))
 
             context = RequestContext(request, locals())
             return render_to_response('success/create_struct.html', {}, context_instance=context)
