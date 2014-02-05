@@ -10,7 +10,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from bccf.forms import EventForm
 from django.http.response import HttpResponseRedirect
-from mezzanine.core.models import CONTENT_STATUS_DRAFT
+from mezzanine.core.models import CONTENT_STATUS_DRAFT, CONTENT_STATUS_CHOICES
 from django import forms
 
 log = logging.getLogger(__name__)
@@ -269,6 +269,7 @@ def create(request):
 def edit(request, slug):
     event = Event.objects.get(slug=slug)
     form = EventForm(instance=event)
+    form.fields['status'].widget = forms.Select(choices=CONTENT_STATUS_CHOICES)
     if request.method == 'POST':
         form = EventForm(data=request.POST, files=request.FILES, instance=event)
         if form.is_valid():
