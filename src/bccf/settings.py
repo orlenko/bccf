@@ -484,8 +484,8 @@ EMPLOYEE_MEMBERSHIP_CATEGORY = 'membership-corporate-employee'
 # Server email         #
 ########################
 
-SERVER_EMAIL = 'staging_bccf@bjola.ca'
-ADMIN_EMAIL = 'admin_bccf@bjola.ca'
+SERVER_EMAIL = 'bccf@bccf-staging.bjola.ca'
+ADMIN_EMAIL = 'admin_bccf@bccf-staging.bjola.ca'
 
 
 ##################

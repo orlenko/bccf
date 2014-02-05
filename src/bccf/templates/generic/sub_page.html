@@ -3,13 +3,13 @@
         <div class="subpage-tabs section">
         <ul class="no-style-list">
             <li class="col two mobile-full">
-                <a href="{% url 'bccf-baby' child_obj.gparent.slug child_obj.slug 'child-home' %}" id="child-home" class="baby-content-btn">Home</a>
+                <a href="{% url 'bccf-baby' child_obj.gparent.slug|default:'bccf' child_obj.slug 'child-home' %}" id="child-home" class="baby-content-btn">Home</a>
                 <div class="baby-content">
                     <div class="section">
                         {% bccf_rating_for child_obj %}
                     </div>
                     <h3>{{ child_obj.title }}</h3>
-                    {{ child_obj.content|safe }}                 
+                    {{ child_obj.content|safe }}
                 </div>
             </li>
             {% for baby in babies %}
@@ -29,32 +29,32 @@
                     <table>
                         <tr>
                             <th>Price:</th>
-                            <td>{{ child_obj.get_content_model.price }}</td>                        
+                            <td>{{ child_obj.get_content_model.price }}</td>
                         </tr>
                         <tr>
                             <th>When:</th>
-                            <td>{{ child_obj.get_content_model.date_start }} {% if child_obj.get_content_model.date_end %} to {{ child_obj.get_content_model.date_end }} {% endif %}</td>                        
+                            <td>{{ child_obj.get_content_model.date_start }} {% if child_obj.get_content_model.date_end %} to {{ child_obj.get_content_model.date_end }} {% endif %}</td>
                         </tr>
                         <tr>
                             <th>Address:</th>
-                            <td>{{ child_obj.get_content_model.location_street }}</td>                       
-                        </tr>                    
+                            <td>{{ child_obj.get_content_model.location_street }}</td>
+                        </tr>
                         {% if child_obj.get_content_model.location_street2 %}
                         <tr>
                             <th>Address 2:</th>
-                            <td>{{ child_obj.get_content_model.location_street2 }}</td>                        
+                            <td>{{ child_obj.get_content_model.location_street2 }}</td>
                         </tr>
                         {% endif %}
                         <tr>
                             <th>City:</th>
-                            <td>{{ child_obj.get_content_model.location_city }}</td>                        
+                            <td>{{ child_obj.get_content_model.location_city }}</td>
                         </tr>
                         <tr>
                             <th>Postal Code:</th>
-                            <td>{{ child_obj.get_content_model.location_postal_code }}</td>                        
+                            <td>{{ child_obj.get_content_model.location_postal_code }}</td>
                         </tr>
-                    </table>               
-                </div>            
+                    </table>
+                </div>
             </li>
             {% endif %}
             {% if child_obj.gparent.slug == 'resources' %}
@@ -80,11 +80,11 @@
                 {% related_resources_for child_obj 'video' 'Videos' %}
                 </div>
             </li>
-            
+
             <li class="col two mobile-full" id="comments">
                 <a href="{% url 'bccf-baby' child_obj.gparent.slug child_obj.slug 'child-comments' %}" id="child-comments" class="baby-content-btn">Comments</a>
                 <div class="baby-content">
-                {% comments_for child_obj %}                
+                {% comments_for child_obj %}
                 </div>
             </li>
         </ul>
@@ -95,7 +95,7 @@
             {% bccf_rating_for child_obj %}
         </div>
         <h3>{{ child_obj.title }}</h3>
-        {{ child_obj.content|safe }}    
+        {{ child_obj.content|safe }}
     </div>
 </section>
 <script type="text/javascript" >
@@ -107,7 +107,7 @@ var sync_height = function() {
         if(h > height) {
             height = h;
             console.log(h);
-            highest = $(this).height();  
+            highest = $(this).height();
         }
     });
     $('.subpage-content > .related-resource').each(function() {
@@ -119,14 +119,14 @@ $('.baby-content-btn').on('click', function(e) {
     e.preventDefault();
     var url = $(this).attr('href');
     window.history.pushState({ path: url }, '', url);
-     
+
     if(!$('.mnav-mobile-btn').is(':visible')) {
-        $('li.active').removeClass('active');           
+        $('li.active').removeClass('active');
         $('.subpage-content').hide();
         $('.home-content').hide();
-        
+
         if($(this).attr('id') === 'child-home') {
-            $('.home-content').show();  
+            $('.home-content').show();
             return;
         }
         $(this).parent('li').addClass('active');
@@ -138,12 +138,12 @@ $('.baby-content-btn').on('click', function(e) {
     } else {
         $('.subpage .subpage-content').html($(this).siblings('.baby-content').html());
         if($(this).attr('id') === 'baby-resources') {
-            sync_height();            
+            sync_height();
         }
     }
 });
 
-$(function() { 
+$(function() {
     document.title = "{{ child_obj.title|title }} | {{ child_obj.gparent.title|title }} | {{ settings.SITE_TITLE }}"
     {% if baby_obj %}
         $('#{{ baby_obj }}').trigger('click');

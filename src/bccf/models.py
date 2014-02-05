@@ -208,12 +208,14 @@ class BCCFChildPage(BCCFBasePage, RichText, AdminThumbMixin):
         order_with_respect_to = "parent"
 
     def __unicode__(self):
-        if self.parent is None and self.gparent is not None:
-            return '%s: %s' % (self.gparent.title, self.title)
-        elif self.gparent is None and self.parent is not None:
-            return '%s: %s' % (self.parent.title, self.title)
-        else:
-            return self.title
+        try:
+            if self.parent is None and self.gparent is not None:
+                return '%s: %s' % (self.gparent.title, self.title)
+            elif self.gparent is None and self.parent is not None:
+                return '%s: %s' % (self.parent.title, self.title)
+        except:
+            pass
+        return self.title
 
     def get_absolute_url(self):
         """
@@ -300,7 +302,12 @@ class BCCFChildPage(BCCFBasePage, RichText, AdminThumbMixin):
         Provies a generic method of retrieving the instance of the custom
         content type's model for this page.
         """
-        return getattr(self, self.content_model, None)
+        log.debug('Getting %s from %s' % (self.content_model, self))
+        try:
+            return getattr(self, self.content_model, None)
+        except:
+            log.debug('Failed to get it!', exc_info=1)
+            return None
 
     def get_slug(self):
         """
@@ -425,6 +432,7 @@ class BCCFGenericPage(BCCFChildPage):
     class Meta:
         verbose_name = 'BCCF Generic Page'
         verbose_name_plural = 'BCCF Generic Pages'
+
 
 class BCCFBabyPage(BCCFChildPage):
     class Meta:
@@ -728,10 +736,14 @@ class Event(BCCFChildPage):
     @permalink
     def create_url(self):
         return('event-create', (), {})
-        
+
     @permalink
     def report_url(self):
         return('event-survey-report', (), {'slug':self.slug})
+
+
+EventForParents = Event
+EventForProfessionals = Event
 
 
 class EventRegistration(models.Model):
