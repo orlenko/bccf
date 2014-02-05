@@ -249,7 +249,7 @@ def create(request):
         'status': CONTENT_STATUS_DRAFT,
     })
     if request.method == 'POST':
-        form = EventForm(data=request.POST)
+        form = EventForm(data=request.POST, files=request.FILES)
         if form.is_valid():
             form.save()
             if not form.instance.parent:

@@ -192,7 +192,7 @@ class BCCFChildPage(BCCFBasePage, RichText, AdminThumbMixin):
     comments = CommentsField()
     in_menus = MenusField("Show in menus", blank=True, null=True)
     page_for = models.CharField('Type', max_length=13, default='parent', blank=True, null=True, choices=TYPES)
-    image = FileField("Image",
+    image = MyImageField("Image",
         upload_to = upload_to("bccf.ChildPage.image_file", "childpage"),
         extensions = ['.png', '.jpg', '.bmp', '.gif'],
         max_length = 255,

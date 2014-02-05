@@ -6,7 +6,7 @@
 <h2>Create Event</h2>
 {% endblock %}
 {% block carousels %}
-<form action="{% url 'events-create' %}"  method="POST">
+<form  enctype="multipart/form-data" action="{% url 'events-create' %}"  method="POST">
     {% csrf_token %}
     {{ form.as_p }}
     <br/><br/>
