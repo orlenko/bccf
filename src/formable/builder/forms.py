@@ -16,6 +16,7 @@ from bccf.settings import MEDIA_ROOT
 
 log = logging.getLogger(__name__)
 
+
 class FormStructureForm(forms.ModelForm):
     """
     Form form Creating from structures
@@ -25,14 +26,14 @@ class FormStructureForm(forms.ModelForm):
     class Meta:
         model = FormStructure
         fields = ['title', 'structure']
-        
+
 class FormPublishForm(forms.Form):
     """
     Form for creating a new form structure.
     """
     PAGE_FOR = (
         ('parent', 'Parents'),
-        ('professional', 'Professionals')    
+        ('professional', 'Professionals')
     )
     title = forms.CharField()
     content = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 30}))
@@ -40,14 +41,14 @@ class FormPublishForm(forms.Form):
     bccf_topic = forms.ModelMultipleChoiceField(queryset=BCCFTopic.objects.all().order_by('title'))
     image = forms.ImageField()
     featured = forms.BooleanField();
-        
+
     def is_valid(self):
         if not self.data['title']:
             return False
         if not self.data['content']:
             return False
         return True
-        
+
     def handle_upload(self):
         image_path = 'uploads/childpage/'+self.files['image'].name
         destination = open(MEDIA_ROOT+'/'+image_path, 'wb+')
@@ -67,7 +68,7 @@ class FormPublishForm(forms.Form):
         if 'image' in self.files:
             form_published.image = self.handle_upload()
         form_published.save()
-    
+
         # Create Questions based on structure
         struct = json.loads(struct.structure)
         for fieldset in struct["fieldset"]:

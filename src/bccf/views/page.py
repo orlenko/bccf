@@ -18,6 +18,7 @@ import json
 
 log = logging.getLogger(__name__)
 
+
 @staff_member_required
 def bccf_admin_page_ordering(request):
     """
@@ -46,7 +47,8 @@ def bccf_admin_page_ordering(request):
         BCCFChildPage.objects.filter(id=get_id(page_id)).update(_order=i)  # @UndefinedVariable - PyDev is dumb about objects' attributes
     return HttpResponse("ok")
 
-def page(request, parent, child=None, baby=None):
+def page(request, parent=None, child=None, baby=None):
+    log.debug('page')
     try:
         if(not request.is_ajax()):
             page = get_object_or_404(BCCFPage, slug=parent)
@@ -65,19 +67,21 @@ def page(request, parent, child=None, baby=None):
             if child_obj.content_model == 'event':
                 babies = BCCFChildPage.objects.filter(~Q(content_model='formpublished'), parent=child_obj).order_by('_order')  # @UndefinedVariable
             template = 'generic/sub_page.html'
-
+        log.debug('Local context: %s' % locals())
         context = RequestContext(request, locals())
         return render_to_response(template, {}, context_instance=context)
     except:
         log.debug('Failed to generate page', exc_info=1)
 
 def resource_type_page(request, type):
+    log.debug('resource_type_page')
     page = get_object_or_404(BCCFPage, slug='resources')
     child = None
     context = RequestContext(request, locals())
     return render_to_response('pages/resources.html', {}, context_instance=context)
 
 def topic_page(request, topic):
+    log.debug('topic_page')
     page = get_object_or_404(BCCFTopic, slug=topic)
     context = RequestContext(request, locals())
     return render_to_response('pages/bccftopic.html', {}, context_instance=context)

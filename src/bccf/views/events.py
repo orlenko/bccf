@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import login_required
 from bccf.forms import EventForm
 from django.http.response import HttpResponseRedirect
 from mezzanine.core.models import CONTENT_STATUS_DRAFT
+from django import forms
 
 log = logging.getLogger(__name__)
 
@@ -259,9 +260,23 @@ def create(request):
                 except:
                     pass
             messages.success(request, 'Event created successfully.')
-            return HttpResponseRedirect(form.instance.get_absolute_url())
+            return HttpResponseRedirect(form.instance.edit_url())
     context = RequestContext(request, locals())
     return render_to_response('bccf/event_create.html', {}, context_instance=context)
+
+
+@login_required
+def edit(request, slug):
+    event = Event.objects.get(slug=slug)
+    form = EventForm(instance=event)
+    if request.method == 'POST':
+        form = EventForm(data=request.POST, files=request.FILES, instance=event)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Event updated successfully.')
+            return HttpResponseRedirect(form.instance.get_absolute_url())
+    context = RequestContext(request, locals())
+    return render_to_response('bccf/event_update.html', {}, context_instance=context)
 
 
 @require_event_audience
