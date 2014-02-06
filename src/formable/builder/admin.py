@@ -62,18 +62,29 @@ class FormPublishedAdmin(DisplayableAdmin):
             self.fieldsets = deepcopy(self.fieldsets)
             for field in reversed(['title',
                                     'content',
+                                    'closed',
                                     'page_for',
                                     'bccf_topic',
                                     'featured',
                                     'image',]):
                 self.fieldsets[0][1]['fields'].insert(3, field)
+                
+        # Editable in the list display
+        if self.list_editable == DisplayableAdmin.list_editable:
+            self.list_editable = list(deepcopy(self.list_editable))
+            for fieldname in ['closed', 'featured']:
+                self.list_editable.insert(-1, fieldname)
+                
+        # Fields in the list display
         if self.list_display == DisplayableAdmin.list_display:
             self.list_display = list(deepcopy(self.list_display))
-            for fieldname in ['featured', 'report_link']:
+            for fieldname in ['featured', 'closed', 'report_link']:
                 self.list_display.insert(-1, fieldname)
+                
+        # Filters
         if self.list_filter == DisplayableAdmin.list_filter:
             self.list_filter = list(deepcopy(self.list_filter))
-            for fieldname in ['featured', 'gparent']:
+            for fieldname in ['featured', 'gparent', 'closed']:
                 self.list_filter.insert(-1, fieldname)
             
     def report_link(self, obj):
