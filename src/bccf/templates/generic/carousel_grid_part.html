@@ -12,7 +12,7 @@
                     {% else %}
                     <a href="{{ slide.get_absolute_url }}">
                     {% endif %}
-                        <h2>{{ slide.title }}</h2>
+                        <h2>{{ slide.title }} {% if slide.content_model == 'formpublished' and slide.get_content_model.closed %}- View Results{% endif %}</h2>
                     </a>
                     <p class="no-tablet">{{ slide.description|truncatechars:20 }}</p>
                 </div>

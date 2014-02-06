@@ -71,7 +71,13 @@ $(function(){
         'autoPlay': 5000,
         'pagination': true,
         'stopOnHover': true,
+        'addClassActive': true,
         'theme': 'normal-marquee',
+        'beforeMove': function(elem) {
+            if(!elem.is(':hover') && (this.owl.currentItem+1) === this.owl.owlItems.length) {
+                $('#member-organization').trigger('click');
+            }     
+        }
     });
     $('#member-organization-carousel').owlCarousel({
         'singleItem': true,
@@ -79,18 +85,39 @@ $(function(){
         'pagination': true,
         'stopOnHover': true,
         'theme': 'normal-marquee',
-    }).hide()
-        .data('owlCarousel').stop();
+        'addClassActive': true,
+        'beforeMove': function(elem) {
+            if(!elem.is(':hover') && (this.owl.currentItem+1) === this.owl.owlItems.length) { 
+                $('#member-professionals').trigger('click');
+            }
+         }
+    });
     $('#hcal-professionals-carousel').owlCarousel({
         'singleItem': true,
         'pagination': true,
-        'theme': "normal-marquee",   
+        'autoPlay': 7000,
+        'stopOnHover': true,
+        'theme': "normal-marquee",
+        'beforeMove': function(elem) {
+            if(!elem.is(':hover') && (this.owl.currentItem+1) === this.owl.owlItems.length) { 
+                $('#training-families').trigger('click');
+            }
+        } 
     });
     $('#hcal-families-carousel').owlCarousel({
         'singleItem': true,
         'pagination': true,
+        'autoPlay': 7000,
+        'stopOnHover': true,
         'theme': "normal-marquee",
+        'beforeMove': function(elem) {
+            if(!elem.is(':hover') && (this.owl.currentItem+1) === this.owl.owlItems.length) { 
+                $('#training-professionals').trigger('click');
+            }    
+        }
     });
+    $('#training-families').trigger('click');
+    $('#member-organization').trigger('click');
 });
 $('#home-resources').on('click', 'a[class^="button"]', function() {
     if($(this).hasClass('button-prev')) {
@@ -108,34 +135,43 @@ $('#home-history').on('click', 'a[class^="button"]', function() {
 });
 $('.training-button').on('click', function(e) {
     e.preventDefault();
+    var owl = null;
+    var not_owl = null;
+    $('.training-button.selected').removeClass('selected');
+    $(this).addClass('selected');
     if($(this).attr('id') === 'training-families') {
-        $('.hcal-right-side .selected').removeClass('selected');
-        $(this).addClass('selected');
-        $('#hcal-families').show();
-        $('#hcal-professionals').hide();
+        owl = $('#hcal-families-carousel');
+        not_owl = $('#hcal-professionals-carousel');
     } else {
-        $('.hcal-right-side .selected').removeClass('selected');
-        $(this).addClass('selected');
-        $('#hcal-families').hide();
-        $('#hcal-professionals').show();
+        owl = $('#hcal-professionals-carousel');
+        not_owl = $('#hcal-families-carousel');
     }
+    not_owl.hide();
+    not_owl.data('owlCarousel').stop();
+    owl.show();
+    owl.data('owlCarousel').play();
 });
 
 $('.member-button').on('click', function(e) {
     e.preventDefault();
-    $('#home-listings .selected').removeClass('selected');
+    var owl = null;
+    var not_owl = null;
+    $('.member-button.selected').removeClass('selected');
     $(this).addClass('selected');
     if($(this).attr('id') === 'member-professionals') {
-        $('#member-professionals-carousel').show()
-            .data('owlCarousel').play();
-        $('#member-organization-carousel').hide()
-            .data('owlCarousel').stop();
+        owl = $('#member-professionals-carousel');
+        not_owl = $('#member-organization-carousel');
     } else {
-        $('#member-organization-carousel').show()
-            .data('owlCarousel').play();
-        $('#member-professionals-carousel').hide()
-            .data('owlCarousel').stop();
+        owl = $('#member-organization-carousel');
+        not_owl = $('#member-professionals-carousel');
     }
+    if(owl.find('.owl-item').length > 1) {
+        owl.data('owlCarousel').jumpTo(0);
+    }
+    not_owl.hide();
+    not_owl.data('owlCarousel').stop();
+    owl.show();
+    owl.data('owlCarousel').play();
 });
 
 function slideDownImage(elem, direction) {

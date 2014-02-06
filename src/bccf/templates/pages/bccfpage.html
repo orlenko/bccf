@@ -34,6 +34,7 @@
 {{ block.super }}
 <script type="text/javascript" >
 var open_baby = false;
+var prev_hash = window.location.hash
 $(function() {
     $('.to-carousel').owlCarousel({
         'singleItem': true,
@@ -61,15 +62,18 @@ $(function() {
         'autoPlay': 5000,
         'autoHeight': true,
         'theme': "normal-marquee",
+    });    
+    
+    //$(window).on('popstate', function(e) {
+    //    window.location.hash = prev_hash;
+    //});    
+    
+    $(window).on('hashchange', function (e) {
+        if(prev_hash !== '' && prev_hash === window.location.hash) {
+           $(prev_hash).trigger('click');        
+        }
     });
-    $(window).on('popstate', function(e) {
-        e.preventDefault();
-    	//console.log('woulda reload the page to ' + location.pathname + ' here, but won\'t');
-        //window.location = location.pathname;
-    });
-    $(window).on('beforeunload', function() {
-        console.log('before Unload: '+location.pathname);
-    });
+    
     $(window).on('resize', function(e) {
         reset();
         if($('.mnav-mobile-btn').is(':visible')) {
@@ -197,7 +201,9 @@ var load_content = function(box) {
                     'scrollTop':   $(this).offset().top-160
                 }, 500);
             }
-            if (pageURL != window.location) {
+            prev_hash = window.location.hash;
+            window.location.hash = '#'+box.attr('id');
+            if(pageURL != window.location) {
                 window.history.pushState({ path: pageURL }, '', pageURL);
             }
         },
