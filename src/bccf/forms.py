@@ -24,6 +24,7 @@ from mezzanine.utils.urls import slugify, unique_slug, admin_url
 from django.core.validators import EmailValidator
 from django.core.exceptions import ValidationError
 from mezzanine.utils.email import send_mail_template
+from bccf.widgets import AdvancedFileInput
 
 
 log = logging.getLogger(__name__)
@@ -102,16 +103,20 @@ class ProfileForm(forms.ModelForm):
 class EventForm(forms.ModelForm):
     class Meta:
         model = Event
-        fields = ('page_for', 'title', 'content', 'provider', 'price', 'location_city',
+        fields = (
+            'page_for', 'title', 'content', 'provider', 'price', 'location_city',
             'location_street', 'location_street2', 'location_postal_code',
             'status',
-            'date_start', 'date_end', 'bccf_topic')
+            'image',
+            'date_start', 'date_end', 'bccf_topic',
+            )
         widgets = {
             'provider': forms.HiddenInput(),
             'page_for': forms.HiddenInput(),
             'status': forms.HiddenInput(),
             'date_start': forms.DateTimeInput(attrs={'class':'vDatefield', 'placeholder':'YYYY-MM-DD HH:MM'}),
             'date_end': forms.DateTimeInput(attrs={'class':'vDatefield', 'placeholder':'YYYY-MM-DD HH:MM'}),
+            'image': AdvancedFileInput(),
         }
 
 

@@ -39,7 +39,7 @@
                 <span id="radioset-field" class="field draggable">Radioset Field</span>
             </div>
         </div>
-        
+
         <!-- Static Fields -->
         <div class="section twelve row section-head">
             <span>Static Fields</span>
@@ -58,6 +58,15 @@
             {% csrf_token %}
             {{ form.as_p }}
             <ul id="form-body" class="section row-one twelve no-style-list sortable"></ul>
+
+            {% if before_event %}
+            	<input type="hidden" name="before_event" value="{{ before_event }}" />
+        	{% endif %}
+
+        	{% if after_event %}
+            	<input type="hidden" name="after_event" value="{{ after_event }}" />
+        	{% endif %}
+
             <input id="form_submit" type="submit" value="{% trans 'Submit' %}" class="export-btn" />
         </form>
     </div>
@@ -73,21 +82,21 @@
     $(function() {
         $(".draggable").draggable({
             revert: true,
-            revertDuration: 0, 
+            revertDuration: 0,
         });
         $(".form_row").draggable();
         $(".sortable").sortable().disableSelection();
-        
+
         // Link Buttons
         $("#formable-add-row").on('click', function(e){
-            e.preventDefault();        
+            e.preventDefault();
             add_row();
         });
         $(".export-btn").on('click', function(e){
             e.preventDefault();
             export_form();
         });
-        
+
         {% if struct %}
         import_form({{ struct.structure|safe }})
         {% endif %}

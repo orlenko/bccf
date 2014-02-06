@@ -18,6 +18,7 @@ import json
 
 log = logging.getLogger(__name__)
 
+
 @staff_member_required
 def bccf_admin_page_ordering(request):
     """
@@ -40,43 +41,45 @@ def bccf_admin_page_ordering(request):
         page.set_parent(new_parent)
         pages = BCCFChildPage.objects.filter(parent_id=old_parent_id)
         for i, page in enumerate(pages.order_by('_order')):
-            BCCFChildPage.objects.filter(id=page.id).update(_order=i)
+            BCCFChildPage.objects.filter(id=page.id).update(_order=i)  # @UndefinedVariable
     # Set the new order for the moved page and its current siblings.
     for i, page_id in enumerate(request.POST.getlist('siblings[]')):
-        BCCFChildPage.objects.filter(id=get_id(page_id)).update(_order=i)
+        BCCFChildPage.objects.filter(id=get_id(page_id)).update(_order=i)  # @UndefinedVariable - PyDev is dumb about objects' attributes
     return HttpResponse("ok")
 
-def page(request, parent, child=None, baby=None):
-    if(not request.is_ajax()):
-        page = get_object_or_404(BCCFPage, slug=parent)
-        if parent in BCCF_CORE_PAGES:
-            template = u"pages/%s.html" % parent
+def page(request, parent=None, child=None, baby=None):
+    try:
+        if(not request.is_ajax()):
+            page = get_object_or_404(BCCFPage, slug=parent)
+            if parent in BCCF_CORE_PAGES:
+                template = u"pages/%s.html" % parent
+            else:
+                template = u"pages/bccfpage.html"
         else:
-            template = u"pages/bccfpage.html"
-    else: 
-        baby_obj = None
-        if baby and baby != 'baby-resources' and baby != 'child-home' and baby != 'child-comments' and baby != 'child-info':
-            baby_temp = BCCFBabyPage.objects.get(slug=('%s/%s') % (child, baby))
-            baby_obj = slugify(baby_temp.title)
-        elif baby:
-            baby_obj = baby
-        child_obj = BCCFChildPage.objects.get(slug=child)
-        if child_obj.content_model == 'eventforprofessionals':
-            babies = BCCFChildPage.objects.filter(~Q(content_model='formpublished'), parent=child_obj).order_by('_order')        
-        else:
-            babies = BCCFChildPage.objects.filter(parent=child_obj, status=2).order_by('_order')
-        template = 'generic/sub_page.html'
-        
-    context = RequestContext(request, locals())
-    return render_to_response(template, {}, context_instance=context)
-    
+            baby_obj = None
+            if baby and baby != 'baby-resources' and baby != 'child-home' and baby != 'child-comments' and baby != 'child-info':
+                baby_temp = BCCFBabyPage.objects.get(slug=('%s/%s') % (child, baby))
+                baby_obj = slugify(baby_temp.title)
+            elif baby:
+                baby_obj = baby
+            child_obj = BCCFChildPage.objects.get(slug=child)
+            if child_obj.content_model == 'event':
+                babies = BCCFChildPage.objects.filter(~Q(content_model='formpublished'), parent=child_obj).order_by('_order')  # @UndefinedVariable
+            template = 'generic/sub_page.html'
+        context = RequestContext(request, locals())
+        return render_to_response(template, {}, context_instance=context)
+    except:
+        log.debug('Failed to generate page', exc_info=1)
+
 def resource_type_page(request, type):
+    log.debug('resource_type_page')
     page = get_object_or_404(BCCFPage, slug='resources')
     child = None
     context = RequestContext(request, locals())
     return render_to_response('pages/resources.html', {}, context_instance=context)
-    
+
 def topic_page(request, topic):
+    log.debug('topic_page')
     page = get_object_or_404(BCCFTopic, slug=topic)
     context = RequestContext(request, locals())
     return render_to_response('pages/bccftopic.html', {}, context_instance=context)
@@ -87,7 +90,7 @@ def user_list(request):
     if f and f != 'all':
         users_list = UserProfile.objects.filter(Q(user__last_name__istartswith=f) | Q(user__first_name__istartswith=f)).order_by('user__last_name', 'user__first_name')
     else:
-        users_list = UserProfile.objects.all().order_by('user__last_name', 'user__first_name')    
+        users_list = UserProfile.objects.all().order_by('user__last_name', 'user__first_name')
     paginator = Paginator(users_list, 10)
     try:
         recordlist = paginator.page(p)
@@ -96,8 +99,8 @@ def user_list(request):
     except EmptyPage:
         recordlist = paginator.page(paginator.num_pages)
     context = RequestContext(request, locals())
-    return render_to_response('bccf/user_directory.html', {}, context_instance=context)  
-    
+    return render_to_response('bccf/user_directory.html', {}, context_instance=context)
+
 def next(request, parent, which, offset):
     if request.is_ajax():
         obj = BCCFPage.objects.get(slug=parent)
@@ -111,7 +114,7 @@ def next(request, parent, which, offset):
         parts = {
             'slide': render_to_string('generic/carousel_slide_part.html', {'slides':slides, 'MEDIA_URL':MEDIA_URL}),
             'grid': render_to_string('generic/carousel_grid_part.html', {'slides':slides, 'MEDIA_URL':MEDIA_URL})
-        }  
+        }
         return HttpResponse(json.dumps(parts), content_type="application/json")
     else:
         return HttpResponse('No')
@@ -119,19 +122,19 @@ def next(request, parent, which, offset):
 def topic_next(request, topic, which, offset):
     if request.is_ajax():
         limit = int(offset)+12
-        topic = BCCFTopic.objects.get(slug=topic)    
+        topic = BCCFTopic.objects.get(slug=topic)
         slides = BCCFChildPage.objects.filter(topic=topic, page_for=which, status=2).order_by('-created')[offset:limit]
         parts = {
             'slide': render_to_string('generic/carousel_slide_part.html', {'slides':slides, 'MEDIA_URL':MEDIA_URL}),
             'grid': render_to_string('generic/carousel_grid_part.html', {'slides':slides, 'MEDIA_URL':MEDIA_URL}),
-        }    
+        }
         return HttpResponse(json.dumps(parts), content_type="application/json")
     else:
-        return HttpResponse('No')    
-    
+        return HttpResponse('No')
+
 def filter(request, query=None, type='slide'):
     if request.is_ajax():
-        if query != '':    
+        if query != '':
             topics = BCCFTopic.objects.filter(Q(title__icontains=query))
             slides = BCCFChildPage.objects.filter(Q(title__icontains=query) | Q(content__icontains=query) | Q(bccf_topic=topics), content_model='topic', status=2).distinct()
         else:

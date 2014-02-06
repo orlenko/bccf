@@ -192,7 +192,7 @@ class BCCFChildPage(BCCFBasePage, RichText, AdminThumbMixin):
     comments = CommentsField()
     in_menus = MenusField("Show in menus", blank=True, null=True)
     page_for = models.CharField('Type', max_length=13, default='parent', blank=True, null=True, choices=TYPES)
-    image = FileField("Image",
+    image = MyImageField("Image",
         upload_to = upload_to("bccf.ChildPage.image_file", "childpage"),
         extensions = ['.png', '.jpg', '.bmp', '.gif'],
         max_length = 255,
@@ -208,12 +208,14 @@ class BCCFChildPage(BCCFBasePage, RichText, AdminThumbMixin):
         order_with_respect_to = "parent"
 
     def __unicode__(self):
-        if self.parent is None and self.gparent is not None:
-            return '%s: %s' % (self.gparent.title, self.title)
-        elif self.gparent is None and self.parent is not None:
-            return '%s: %s' % (self.parent.title, self.title)
-        else:
-            return self.title
+        try:
+            if self.parent is None and self.gparent is not None:
+                return '%s: %s' % (self.gparent.title, self.title)
+            elif self.gparent is None and self.parent is not None:
+                return '%s: %s' % (self.parent.title, self.title)
+        except:
+            pass
+        return self.title
 
     def get_absolute_url(self):
         """
@@ -300,7 +302,12 @@ class BCCFChildPage(BCCFBasePage, RichText, AdminThumbMixin):
         Provies a generic method of retrieving the instance of the custom
         content type's model for this page.
         """
-        return getattr(self, self.content_model, None)
+        log.debug('Getting %s from %s' % (self.content_model, self))
+        try:
+            return getattr(self, self.content_model, None)
+        except:
+            log.debug('Failed to get it!', exc_info=1)
+            return None
 
     def get_slug(self):
         """
@@ -425,6 +432,7 @@ class BCCFGenericPage(BCCFChildPage):
     class Meta:
         verbose_name = 'BCCF Generic Page'
         verbose_name_plural = 'BCCF Generic Pages'
+
 
 class BCCFBabyPage(BCCFChildPage):
     class Meta:
@@ -723,15 +731,19 @@ class Event(BCCFChildPage):
 
     @permalink
     def signup_url(self):
-        return ('event-signup', (), {'slug': self.slug})
+        return ('events-signup', (), {'slug': self.slug})
 
     @permalink
-    def create_url(self):
-        return('event-create', (), {})
-        
+    def edit_url(self):
+        return('events-edit', (), {'slug': self.slug})
+
     @permalink
     def report_url(self):
         return('event-survey-report', (), {'slug':self.slug})
+
+
+EventForParents = Event
+EventForProfessionals = Event
 
 
 class EventRegistration(models.Model):
