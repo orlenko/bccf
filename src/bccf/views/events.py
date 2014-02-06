@@ -285,6 +285,7 @@ def edit(request, slug):
 def signup(request, slug):
     if 'aftercheckout' in request.session:
         del request.session['aftercheckout']
+    event = Event.objects.get(slug=slug)
     if request.method == 'POST':
         # Check if such registration already exists
         exists = False
@@ -294,6 +295,7 @@ def signup(request, slug):
         if not exists:
             registration = EventRegistration.objects.create(user=request.user, event=Event.objects.get(slug=slug))
             messages.success(request, 'Thank you! You signed up to the event successfully.')
+        return HttpResponseRedirect(event.get_absolute_url())
     context = RequestContext(request, locals())
     return render_to_response('bccf/event_signup.html', {}, context_instance=context)
 

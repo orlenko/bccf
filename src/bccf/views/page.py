@@ -48,7 +48,6 @@ def bccf_admin_page_ordering(request):
     return HttpResponse("ok")
 
 def page(request, parent=None, child=None, baby=None):
-    log.debug('page')
     try:
         if(not request.is_ajax()):
             page = get_object_or_404(BCCFPage, slug=parent)
@@ -67,7 +66,6 @@ def page(request, parent=None, child=None, baby=None):
             if child_obj.content_model == 'event':
                 babies = BCCFChildPage.objects.filter(~Q(content_model='formpublished'), parent=child_obj).order_by('_order')  # @UndefinedVariable
             template = 'generic/sub_page.html'
-        log.debug('Local context: %s' % locals())
         context = RequestContext(request, locals())
         return render_to_response(template, {}, context_instance=context)
     except:

@@ -1,0 +1,10 @@
+{% load mezzanine_tags i18n future %}
+{% if subscribe_obj %}
+	<div class="inline_subscribe_form">
+		<form action="{{ subscribe_obj.get_content_model.signup_url }}" method="post">
+			{% csrf_token %}
+			<input type="submit" value="Subscribe to {{ subscribe_obj.title }}"/>
+		</form>
+	</div>
+
+{% endif %}

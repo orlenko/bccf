@@ -4,9 +4,11 @@
 {% block main %}
 	<h2>{{ event.title }}</h2>
 	{{ event.content|safe }}
+
+	<h3>Sign up to event:</h3>
 	<p>
 		<form action="" method="post">
-			{% csfr_token %}
+			{% csrf_token %}
 			<input type="submit" value="Sign Up"/>
 		</form>
 	</p>

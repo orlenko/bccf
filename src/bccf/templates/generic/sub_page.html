@@ -1,4 +1,4 @@
-{% load bccf_feature_tags static bccf_rating_tags comment_tags %}
+{% load bccf_feature_tags static bccf_rating_tags bccf_event_tags comment_tags %}
 <section id={{ child_obj.slug }} class="subpage {{ child_obj.gparent.carousel_color }}">
         <div class="subpage-tabs section">
         <ul class="no-style-list">
@@ -10,6 +10,7 @@
                     </div>
                     <h3>{{ child_obj.title }}</h3>
                     {{ child_obj.content|safe }}
+                    {% bccf_subscribe_for child_obj %}
                 </div>
             </li>
             {% for baby in babies %}
@@ -96,6 +97,7 @@
         </div>
         <h3>{{ child_obj.title }}</h3>
         {{ child_obj.content|safe }}
+        {% bccf_subscribe_for child_obj %}
     </div>
 </section>
 <script type="text/javascript" >

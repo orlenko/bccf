@@ -731,7 +731,7 @@ class Event(BCCFChildPage):
 
     @permalink
     def signup_url(self):
-        return ('event-signup', (), {'slug': self.slug})
+        return ('events-signup', (), {'slug': self.slug})
 
     @permalink
     def edit_url(self):

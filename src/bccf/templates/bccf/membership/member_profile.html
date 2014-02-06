@@ -107,11 +107,27 @@
 					<h3>Current Events</h3>
 					<ul>
 					{% for event in user.events.all %}
-						<li>{{ event.title }}: <a href="{{ event.edit_url }}">edit</a> | <a href="{{ event.get_absolute_url }}">view</a></li>
+						<li>{{ event.title }} ({{ event.date_start|date:'DATETIME_FORMAT' }} &mdash;  {{ event.date_end|date:'DATETIME_FORMAT' }}):
+							<a href="{{ event.edit_url }}">edit</a> | <a href="{{ event.get_absolute_url }}">view</a></li>
 					{% endfor %}
 					</ul>
 				{% endif %}
 				<a href="{% url 'events-create' %}">Create Event</a>
+			</div>
+		{% endif %}
+
+		{% if membership|has_feature:'subscriptions' %}
+			<h2>My Events</h2>
+			<div class="groupcontent">
+				<h3>Events I am attending:</h3>
+				{% if user.eventregistration_set.count %}
+					<ul>
+					{% for reg in user.eventregistration_set.all %}
+						<li>{{ reg.event.title }} ({{ reg.event.date_start|date:'DATETIME_FORMAT' }} &mdash;  {{ reg.event.date_end|date:'DATETIME_FORMAT' }}):
+							<a href="{{ reg.event.get_absolute_url }}">view</a></li>
+					{% endfor %}
+					</ul>
+				{% endif %}
 			</div>
 		{% endif %}
 	</div>
