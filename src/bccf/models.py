@@ -142,8 +142,8 @@ class BCCFPage(Page, RichText):
     carousel_color = models.CharField(max_length=11, default='dgreen-list', choices=COLORS)
 
     class Meta:
-        verbose_name = 'BCCF Page'
-        verbose_name_plural = 'BCCF Pages'
+        verbose_name = 'Parent Page'
+        verbose_name_plural = 'Parent Pages'
 
 #Topic
 class BCCFTopic(Displayable, RichText):
@@ -423,16 +423,16 @@ class BCCFChildPage(BCCFBasePage, RichText, AdminThumbMixin):
 
 class BCCFGenericPage(BCCFChildPage):
     class Meta:
-        verbose_name = 'BCCF Generic Page'
-        verbose_name_plural = 'BCCF Generic Pages'
+        verbose_name = 'Sub Page'
+        verbose_name_plural = 'Sub Pages'
 
 
 class BCCFBabyPage(BCCFChildPage):
     order = models.IntegerField('Order', blank=True, null=True)
     
     class Meta:
-        verbose_name = 'BCCF Baby Page'
-        verbose_name_plural = 'BCCF Baby Pages'
+        verbose_name = 'Third Level Page'
+        verbose_name_plural = 'Third Level Pages'
         ordering = ('order',)
 
     def get_absolute_url(self):
