@@ -1309,15 +1309,14 @@ textarea {
                 	font-size: 16px;
         		}
         		div {
-        		  margin-top: -5px;
         		  height: 75px;
         		  padding: 10px;
         		}
         		p {
         		  margin: 0;
         		}
-        		img {
-        		  height: 75px;
+        		.page-image {
+        		  height: 110px;
         		  width: 100%;
         		}
             }
@@ -1448,8 +1447,8 @@ textarea {
 	}
 	.page-box{
 		background-color:$sgrey;
-		div {
-		  border-top:2px solid $lgreen;
+		.page-image {
+		  border-bottom:2px solid $lgreen;
 		}
 	}
    .carousel-title-container {
@@ -1493,8 +1492,8 @@ textarea {
 	}
 	.page-box{
 		background-color:$sgrey;
-		div {
-		  border-top:2px solid $dgreen;
+		.page-image {
+		  border-bottom:2px solid $dgreen;
 		}
 	}
 	.carousel-title-container {
@@ -1538,8 +1537,8 @@ textarea {
 	}
 	.page-box{
 		background-color:$sgrey;
-		div {
-	       	border-top:2px solid $lteal;
+		.page-image {
+		  border-bottom:2px solid $lteal;
 		}
 	}
 	.carousel-title-container {
@@ -1583,8 +1582,8 @@ textarea {
 	}
 	.page-box{
 	   background-color:$sgrey;
-       div {
-	       border-top:2px solid $yellow;
+       .page-image {
+		  border-bottom:2px solid $yellow;
 	   }
 	}
 	.carousel-title-container {

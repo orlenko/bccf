@@ -114,7 +114,7 @@ ADMIN_MENU_ORDER = (
     ("Blogs", ("bccf.Blog",)),
     ("Campaigns", ("bccf.Campaign",)),
     ("Events", ("bccf.Event",)),
-    ("Marquees", ("bccf.HomeMarquee", "bccf.HomeMarqueeSlide", "bccf.FooterMarquee", "bccf.FooterMarqueeSlide", "bccf.PageMarquee", "bccf.PageMarqueeSlide")),
+    ("Marquees", ("bccf.HomeMarquee", "bccf.HomeMarqueeSlide", "bccf.PageMarquee", "bccf.PageMarqueeSlide", "bccf.FooterMarquee", "bccf.FooterMarqueeSlide")),
     ("News", ("news.NewsPost",)),
     ("Programs", ("bccf.Program",)),
     ("Resources", ("bccf.Article", "bccf.DownloadableForm", "bccf.Magazine", "bccf.TipSheet", "bccf.Video")),
