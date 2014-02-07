@@ -159,8 +159,8 @@ class BCCFTopic(Displayable, RichText):
     marquee = models.ForeignKey(PageMarquee, blank=True, null=True)
     carousel_color = models.CharField(max_length=11, default='dgreen-list', choices=COLORS)
     class Meta:
-        verbose_name = 'Topic'
-        verbose_name_plural = 'Topics'
+        verbose_name = 'BCCF Topic'
+        verbose_name_plural = 'BCCF Topics'
 
     def get_absolute_url(self):
         """
@@ -186,11 +186,11 @@ class BCCFChildPage(BCCFBasePage, RichText, AdminThumbMixin):
     featured = models.BooleanField('Featured', default=False)
     titles = models.CharField(editable=False, max_length=1000, null=True)
     content_model = models.CharField(editable=False, max_length=50, null=True, blank=True)
-    login_required = models.BooleanField("Login required", default=False,
-        help_text="If checked, only logged in users can view this page")
+    #login_required = models.BooleanField("Login required", default=False,
+    #    help_text="If checked, only logged in users can view this page")
     rating = RatingField(verbose_name='Rating')
     comments = CommentsField()
-    in_menus = MenusField("Show in menus", blank=True, null=True)
+    #in_menus = MenusField("Show in menus", blank=True, null=True)
     page_for = models.CharField('Type', max_length=13, default='parent', blank=True, null=True, choices=TYPES)
     image = MyImageField("Image",
         upload_to = upload_to("bccf.ChildPage.image_file", "childpage"),
@@ -208,13 +208,6 @@ class BCCFChildPage(BCCFBasePage, RichText, AdminThumbMixin):
         order_with_respect_to = "parent"
 
     def __unicode__(self):
-        try:
-            if self.parent is None and self.gparent is not None:
-                return '%s: %s' % (self.gparent.title, self.title)
-            elif self.gparent is None and self.parent is not None:
-                return '%s: %s' % (self.parent.title, self.title)
-        except:
-            pass
         return self.title
 
     def get_absolute_url(self):
@@ -435,9 +428,12 @@ class BCCFGenericPage(BCCFChildPage):
 
 
 class BCCFBabyPage(BCCFChildPage):
+    order = models.IntegerField('Order', blank=True, null=True)
+    
     class Meta:
         verbose_name = 'BCCF Baby Page'
         verbose_name_plural = 'BCCF Baby Pages'
+        ordering = ('order',)
 
     def get_absolute_url(self):
         """

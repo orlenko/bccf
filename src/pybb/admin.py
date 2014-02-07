@@ -94,7 +94,7 @@ class BCCFTopicAdmin(DisplayableAdmin):
                                     'featured',
                                     'image',
                                     'page_for']):
-                self.fieldsets[0][1]['fields'].insert(3, field)
+                self.fieldsets[0][1]['fields'].insert(3, field)     
         if self.list_display == DisplayableAdmin.list_display:
             self.list_display = list(deepcopy(self.list_display))
             for fieldname in ['head', 'post_count', 'featured']:
@@ -116,6 +116,7 @@ class ForumReadTrackerAdmin(admin.ModelAdmin):
 
 class PostAdmin(admin.ModelAdmin):
     list_display = ['topic', 'user', 'created', 'updated', 'on_moderation', 'summary']
+    list_editable = ['on_moderation']
     list_per_page = 20
     raw_id_fields = ['user', 'topic']
     ordering = ['-created']
@@ -169,11 +170,11 @@ class AttachmentAdmin(admin.ModelAdmin):
     admin_edit_post.short_description = _('Edit post')
 
 
-admin.site.register(Category, CategoryAdmin)
+#admin.site.register(Category, CategoryAdmin)
 admin.site.register(Forum, ForumAdmin)
 admin.site.register(Topic, BCCFTopicAdmin)
 admin.site.register(Post, PostAdmin)
-admin.site.register(Attachment, AttachmentAdmin)
+#admin.site.register(Attachment, AttachmentAdmin)
 
 if util.get_pybb_profile_model() == Profile:
     admin.site.register(Profile, ProfileAdmin)

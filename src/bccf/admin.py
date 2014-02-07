@@ -60,209 +60,48 @@ admin.site.register(Event, EventAdmin)
 page_fieldsets = deepcopy(DisplayableAdmin.fieldsets)
 page_fieldsets[0][1]["fields"] += ("gparent", "page_for", "bccf_topic", "featured", "content",)
 
-class BCCFPageAdminForm(DisplayableAdminForm):
-
-    def clean_slug(self):
-        """
-        Save the old slug to be used later in PageAdmin.model_save()
-        to make the slug change propagate down the page tree.
-        """
-        self.instance._old_slug = self.instance.slug
-        return self.cleaned_data['slug']
-
-class BCCFPageAdmin(DisplayableAdmin):
-    """
-    Admin class for the ``Page`` model and all subclasses of
-    ``Page``. Handles redirections between admin interfaces for the
-    ``Page`` model and its subclasses.
-    """
-
-    form = BCCFPageAdminForm
-    fieldsets = page_fieldsets
-    change_list_template = "admin/page/bccf_page_list.html"
-
-    def __init__(self, *args, **kwargs):
-        """
-        For ``Page`` subclasses that are registered with an Admin class
-        that doesn't implement fieldsets, add any extra model fields
-        to this instance's fieldsets. This mimics Django's behaviour of
-        adding all model fields when no fieldsets are defined on the
-        Admin class.
-        """
-        super(BCCFPageAdmin, self).__init__(*args, **kwargs)
-        # Test that the fieldsets don't differ from BCCFPageAdmin's.
-        if self.model is not BCCFPage and self.fieldsets == BCCFPageAdmin.fieldsets:
-            # Make a copy so that we aren't modifying other Admin
-            # classes' fieldsets.
-            self.fieldsets = deepcopy(self.fieldsets)
-            # Insert each field between the publishing fields and nav
-            # fields. Do so in reverse order to retain the order of
-            # the model's fields.
-            exclude_fields = BCCFChildPage._meta.get_all_field_names() + ['bccfchildpage_ptr'] # @UndefinedVariable - PyDev quirks
-            try:
-                exclude_fields.extend(self.exclude)
-            except (AttributeError, TypeError):
-                pass
-            try:
-                exclude_fields.extend(self.form.Meta.exclude)
-            except (AttributeError, TypeError):
-                pass
-            fields = self.model._meta.fields + self.model._meta.many_to_many
-            for field in reversed(fields):
-                if field.name not in exclude_fields and field.editable:
-                    self.fieldsets[0][1]["fields"].insert(3, field.name)
-
-    def in_menu(self):
-        """
-        Hide subclasses from the admin menu.
-        """
-        return self.model is BCCFChildPage
-
-    def _check_permission(self, request, page, permission):
-        """
-        Runs the custom permission check and raises an
-        exception if False.
-        """
-        if not getattr(page, "can_" + permission)(request):
-            raise PermissionDenied
-
-    def add_view(self, request, **kwargs):
-        """
-        For the ``Page`` model, redirect to the add view for the
-        first page model, based on the ``ADD_PAGE_ORDER`` setting.
-        """
-        if self.model is BCCFChildPage:
-            return HttpResponseRedirect(self.get_content_models()[0].add_url)
-        return super(BCCFPageAdmin, self).add_view(request, **kwargs)
-
-    def change_view(self, request, object_id, **kwargs):
-        """
-        For the ``Page`` model, check ``page.get_content_model()``
-        for a subclass and redirect to its admin change view.
-        Also enforce custom change permissions for the page instance.
-        """
-        page = get_object_or_404(BCCFChildPage, pk=object_id)
-        content_model = page.get_content_model()
-        self._check_permission(request, content_model, "change")
-        if self.model is BCCFChildPage:
-            if content_model is not None:
-                change_url = admin_url(content_model.__class__, "change",
-                                       content_model.id)
-                return HttpResponseRedirect(change_url)
-        kwargs.setdefault("extra_context", {})
-        kwargs["extra_context"].update({
-            "hide_delete_link": not content_model.can_delete(request),
-            "hide_slug_field": content_model.overridden(),
-        })
-        return super(BCCFPageAdmin, self).change_view(request, object_id, **kwargs)
-
-    def delete_view(self, request, object_id, **kwargs):
-        """
-        Enforce custom delete permissions for the page instance.
-        """
-        page = get_object_or_404(BCCFChildPage, pk=object_id)
-        content_model = page.get_content_model()
-        self._check_permission(request, content_model, "delete")
-        return super(BCCFPageAdmin, self).delete_view(request, object_id, **kwargs)
-
-    def changelist_view(self, request, extra_context=None):
-        """
-        Redirect to the ``Page`` changelist view for ``Page``
-        subclasses.
-        """
-        if self.model is not BCCFChildPage:
-            return HttpResponseRedirect(admin_url(BCCFChildPage, "changelist"))
-        if not extra_context:
-            extra_context = {}
-        extra_context["page_models"] = self.get_content_models()
-        return super(BCCFPageAdmin, self).changelist_view(request, extra_context)
-
-    def save_model(self, request, obj, form, change):
-        """
-        Set the ID of the parent page if passed in via querystring, and
-        make sure the new slug propagates to all descendant pages.
-        """
-        if change and obj._old_slug != obj.slug:
-            # _old_slug was set in BCCFPageAdminForm.clean_slug().
-            new_slug = obj.slug or obj.generate_unique_slug()
-            obj.slug = obj._old_slug
-            obj.set_slug(new_slug)
-
-        # Force parent to be saved to trigger handling of ordering and slugs.
-        parent = request.GET.get("parent")
-        if parent is not None and not change:
-            obj.parent_id = parent
-            obj.save()
-        super(BCCFPageAdmin, self).save_model(request, obj, form, change)
-
-    def _maintain_parent(self, request, response):
-        """
-        Maintain the parent ID in the querystring for response_add and
-        response_change.
-        """
-        location = response._headers.get("location")
-        parent = request.GET.get("parent")
-        if parent and location and "?" not in location[1]:
-            url = "%s?parent=%s" % (location[1], parent)
-            return HttpResponseRedirect(url)
-        return response
-
-    def response_add(self, request, obj):
-        """
-        Enforce page permissions and maintain the parent ID in the
-        querystring.
-        """
-        response = super(BCCFPageAdmin, self).response_add(request, obj)
-        return self._maintain_parent(request, response)
-
-    def response_change(self, request, obj):
-        """
-        Enforce page permissions and maintain the parent ID in the
-        querystring.
-        """
-        response = super(BCCFPageAdmin, self).response_change(request, obj)
-        return self._maintain_parent(request, response)
-
-    @classmethod
-    def get_content_models(cls):
-        """
-        Return all Page subclasses that are admin registered, ordered
-        based on the ``ADD_PAGE_ORDER`` setting.
-        """
-        models = []
-        for model in BCCFChildPage.get_content_models():
-            try:
-                admin_url(model, "add")
-            except NoReverseMatch:
-                continue
-            else:
-                setattr(model, "meta_verbose_name", model._meta.verbose_name)
-                setattr(model, "add_url", admin_url(model, "add"))
-                models.append(model)
-        order = [name.lower() for name in settings.ADD_PAGE_ORDER]
-
-        def sort_key(page):
-            name = "%s.%s" % (page._meta.app_label, page._meta.object_name)
-            unordered = len(order)
-            try:
-                return (order.index(name.lower()), "")
-            except ValueError:
-                return (unordered, page.meta_verbose_name)
-        return sorted(models, key=sort_key)
-
 class BCCFTopicAdmin(DisplayableAdmin):
     def __init__(self, *args, **kwargs):
         super(BCCFTopicAdmin, self).__init__(*args, **kwargs)
+        
+        # Fields
         if self.fieldsets == DisplayableAdmin.fieldsets:
             self.fieldsets = deepcopy(self.fieldsets)
             for field in reversed(['content',
                                     'marquee',
                                     'carousel_color']):
                 self.fieldsets[0][1]['fields'].insert(3, field)
+                
+        # Editable in the list display
+        if self.list_editable == DisplayableAdmin.list_editable:
+            self.list_editable = list(deepcopy(self.list_editable))
+            for fieldname in ['marquee', 'carousel_color']:
+                self.list_editable.insert(-1, fieldname)                
+          
+        # List Display      
+        if self.list_display == DisplayableAdmin.list_display:
+            self.list_display = list(deepcopy(self.list_display))
+            for fieldname in ['carousel_color', 'marquee']:
+                self.list_display.insert(-1, fieldname)                
+
+        # Filter
+        if self.list_filter == DisplayableAdmin.list_filter:
+            self.list_filter = list(deepcopy(self.list_filter))
+            for fieldname in ['carousel_color', 'marquee']:
+                self.list_filter.insert(-1, fieldname)
+                
+class BCCFBabyInlineAdmin(admin.StackedInline):
+    model = BCCFBabyPage
+    fk_name = "parent"
+    fields = ('title', 'content', 'order',)
 
 class BCCFGenericAdmin(DisplayableAdmin):
+    inlines = (BCCFBabyInlineAdmin,)
+    
     def __init__(self, *args, **kwargs):
         super(BCCFGenericAdmin, self).__init__(*args, **kwargs)
+        
+        # Fields
         if self.fieldsets == DisplayableAdmin.fieldsets:
             self.fieldsets = deepcopy(self.fieldsets)
             for field in reversed(['content',
@@ -272,22 +111,99 @@ class BCCFGenericAdmin(DisplayableAdmin):
                                     'image']):
                 self.fieldsets[0][1]['fields'].insert(3, field)
 
+        # Editable in the list display
+        if self.list_editable == DisplayableAdmin.list_editable:
+            self.list_editable = list(deepcopy(self.list_editable))
+            for fieldname in ['page_for', 'gparent', 'bccf_topic']:
+                self.list_editable.insert(-1, fieldname)                
+          
+        # List Display      
+        if self.list_display == DisplayableAdmin.list_display:
+            self.list_display = list(deepcopy(self.list_display))
+            for fieldname in ['page_for', 'gparent', 'bccf_topic']:
+                self.list_display.insert(-1, fieldname)                
+
+        # Filter
+        if self.list_filter == DisplayableAdmin.list_filter:
+            self.list_filter = list(deepcopy(self.list_filter))
+            for fieldname in ['page_for', 'gparent', 'bccf_topic']:
+                self.list_filter.insert(-1, fieldname)
+
 
 class BCCFChildAdmin(DisplayableAdmin):
+    inlines = (BCCFBabyInlineAdmin,)
+    
     def __init__(self, *args, **kwargs):
         super(BCCFChildAdmin, self).__init__(*args, **kwargs)
+        
+        # Fields
         if self.fieldsets == DisplayableAdmin.fieldsets:
             self.fieldsets = deepcopy(self.fieldsets)
             for field in reversed(['content',
                                     'bccf_topic',
-                                    'featured',
                                     'page_for',
                                     'image']):
                 self.fieldsets[0][1]['fields'].insert(3, field)
+                
+        # Editable in the list display
+        if self.list_editable == DisplayableAdmin.list_editable:
+            self.list_editable = list(deepcopy(self.list_editable))
+            for fieldname in ['page_for', 'bccf_topic']:
+                self.list_editable.insert(-1, fieldname)                
+          
+        # List Display      
+        if self.list_display == DisplayableAdmin.list_display:
+            self.list_display = list(deepcopy(self.list_display))
+            for fieldname in ['page_for', 'bccf_topic']:
+                self.list_display.insert(-1, fieldname)                
+
+        # Filter
+        if self.list_filter == DisplayableAdmin.list_filter:
+            self.list_filter = list(deepcopy(self.list_filter))
+            for fieldname in ['page_for', 'bccf_topic']:
+                self.list_filter.insert(-1, fieldname)
+
+class BCCFProgramAdmin(DisplayableAdmin):
+    inlines = (BCCFBabyInlineAdmin,)
+
+    def __init__(self, *args, **kwargs):
+        super(BCCFProgramAdmin, self).__init__(*args, **kwargs)
+        
+        # Fields
+        if self.fieldsets == DisplayableAdmin.fieldsets:
+            self.fieldsets = deepcopy(self.fieldsets)
+            for field in reversed(['content',
+                                    'bccf_topic',
+                                    'page_for',
+                                    'featured',
+                                    'image']):
+                self.fieldsets[0][1]['fields'].insert(3, field)
+                
+        # Editable in the list display
+        if self.list_editable == DisplayableAdmin.list_editable:
+            self.list_editable = list(deepcopy(self.list_editable))
+            for fieldname in ['page_for', 'bccf_topic', 'featured']:
+                self.list_editable.insert(-1, fieldname)                
+          
+        # List Display      
+        if self.list_display == DisplayableAdmin.list_display:
+            self.list_display = list(deepcopy(self.list_display))
+            for fieldname in ['page_for', 'bccf_topic', 'featured']:
+                self.list_display.insert(-1, fieldname)                
+
+        # Filter
+        if self.list_filter == DisplayableAdmin.list_filter:
+            self.list_filter = list(deepcopy(self.list_filter))
+            for fieldname in ['page_for', 'bccf_topic', 'featured']:
+                self.list_filter.insert(-1, fieldname)
 
 class BCCFResourceAdmin(DisplayableAdmin):
+    inlines = (BCCFBabyInlineAdmin,)
+    
     def __init__(self, *args, **kwargs):
         super(BCCFResourceAdmin, self).__init__(*args, **kwargs)
+        
+        # Fields
         if self.fieldsets == DisplayableAdmin.fieldsets:
             self.fieldsets = deepcopy(self.fieldsets)
             for field in reversed(['content',
@@ -297,10 +213,32 @@ class BCCFResourceAdmin(DisplayableAdmin):
                                     'page_for',
                                     'image']):
                 self.fieldsets[0][1]['fields'].insert(3, field)
+                
+        # Editable in the list display
+        if self.list_editable == DisplayableAdmin.list_editable:
+            self.list_editable = list(deepcopy(self.list_editable))
+            for fieldname in ['page_for', 'bccf_topic', 'featured']:
+                self.list_editable.insert(-1, fieldname)                
+          
+        # List Display      
+        if self.list_display == DisplayableAdmin.list_display:
+            self.list_display = list(deepcopy(self.list_display))
+            for fieldname in ['page_for', 'bccf_topic', 'featured']:
+                self.list_display.insert(-1, fieldname)                
+
+        # Filter
+        if self.list_filter == DisplayableAdmin.list_filter:
+            self.list_filter = list(deepcopy(self.list_filter))
+            for fieldname in ['page_for', 'bccf_topic', 'featured']:
+                self.list_filter.insert(-1, fieldname)
 
 class BCCFVideoResourceAdmin(DisplayableAdmin):
+    inlines = (BCCFBabyInlineAdmin,)
+    
     def __init__(self, *args, **kwargs):
         super(BCCFVideoResourceAdmin, self).__init__(*args, **kwargs)
+        
+        # Fields
         if self.fieldsets == DisplayableAdmin.fieldsets:
             self.fieldsets = deepcopy(self.fieldsets)
             for field in reversed(['content',
@@ -312,8 +250,29 @@ class BCCFVideoResourceAdmin(DisplayableAdmin):
                                     'page_for',
                                     'image']):
                 self.fieldsets[0][1]['fields'].insert(3, field)
+                
+       # Editable in the list display
+        if self.list_editable == DisplayableAdmin.list_editable:
+            self.list_editable = list(deepcopy(self.list_editable))
+            for fieldname in ['page_for', 'bccf_topic', 'featured']:
+                self.list_editable.insert(-1, fieldname)                
+          
+        # List Display      
+        if self.list_display == DisplayableAdmin.list_display:
+            self.list_display = list(deepcopy(self.list_display))
+            for fieldname in ['page_for', 'bccf_topic', 'featured']:
+                self.list_display.insert(-1, fieldname)                
+
+        # Filter
+        if self.list_filter == DisplayableAdmin.list_filter:
+            self.list_filter = list(deepcopy(self.list_filter))
+            for fieldname in ['page_for', 'bccf_topic', 'featured']:
+                self.list_filter.insert(-1, fieldname)         
+        
 
 class BCCFTagAdmin(DisplayableAdmin):
+    inlines = (BCCFBabyInlineAdmin,)
+    
     def __init__(self, *args, **kwargs):
         super(BCCFTagAdmin, self).__init__(*args, **kwargs)
         if self.fieldsets == DisplayableAdmin.fieldsets:
@@ -324,27 +283,40 @@ class BCCFTagAdmin(DisplayableAdmin):
                                     'page_for',
                                     'image']):
                 self.fieldsets[0][1]['fields'].insert(3, field)
+                
+        # Editable in the list display
+        if self.list_editable == DisplayableAdmin.list_editable:
+            self.list_editable = list(deepcopy(self.list_editable))
+            for fieldname in ['featured', 'page_for', 'bccf_topic']:
+                self.list_editable.insert(-1, fieldname)              
+          
+        # List Display      
         if self.list_display == DisplayableAdmin.list_display:
             self.list_display = list(deepcopy(self.list_display))
-            for fieldname in ['featured']:
+            for fieldname in ['featured', 'page_for', 'bccf_topic']:
                 self.list_display.insert(-1, fieldname)
+                
+        # Filters
         if self.list_filter == DisplayableAdmin.list_filter:
             self.list_filter = list(deepcopy(self.list_filter))
-            for fieldname in ['featured']:
+            for fieldname in ['featured', 'page_for']:
                 self.list_filter.insert(-1, fieldname)
 
 admin.site.register(BCCFPage, PageAdmin)
 admin.site.register(BCCFTopic, BCCFTopicAdmin)
-admin.site.register(BCCFChildPage, BCCFPageAdmin)
-admin.site.register(BCCFBabyPage, BCCFChildAdmin)
 admin.site.register(BCCFGenericPage, BCCFGenericAdmin)
+
 admin.site.register(Blog, BCCFChildAdmin)
-admin.site.register(Program, BCCFChildAdmin)
+
+admin.site.register(Program, BCCFProgramAdmin)
+
 admin.site.register(Campaign, BCCFTagAdmin)
+
 admin.site.register(Article, BCCFResourceAdmin)
 admin.site.register(DownloadableForm, BCCFResourceAdmin)
 admin.site.register(Magazine, BCCFResourceAdmin)
 admin.site.register(TipSheet, BCCFResourceAdmin)
+
 admin.site.register(Video, BCCFVideoResourceAdmin)
 
 #Inline

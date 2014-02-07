@@ -107,20 +107,18 @@ def get_option_name(option_number):
 # Controls the ordering and grouping of the admin menu.
 #
 ADMIN_MENU_ORDER = (
-    ("Content", ("pages.Page", "blog.BlogPost",
+    ("Content", ("pages.Page", "bccf.BCCFGenericPage", "bccf.BCCFTopic",
        "generic.ThreadedComment", ("Media Library", "fb_browse"),)),
-    ("Site", ("sites.Site", "redirects.Redirect", "conf.Setting")),
+    ("Site", ("sites.Site", "redirects.Redirect", "bccf.Settings", "conf.Setting")),
     ("Users", ("auth.User", "auth.Group",)),
-    ("BCCF", ("news.NewsPost",
-              "bccf.Event",
-              "bccf.Settings",
-              "bccf.Topic",
-              "bccf.TopicLink",
-              "bccf.UserProfile",)),
-    ("Marquees", ("bccf.HomeMarquee", "bccf.HomeMarqueeSlide", "bccf.FooterMarquee", "bccf.FooterMarqueeSlide", "bccf.PageMarquee", "bccf.PageMarqueeSlide")),
-    ("Resources", ("bccf.Article", "bccf.DownloadableForm", "bccf.Magazine", "bccf.TipSheet", "bccf.Video")),
+    ("Blogs", ("bccf.Blog",)),
+    ("Campaigns", ("bccf.Campaign",)),
     ("Events", ("bccf.Event",)),
-    ("Forum", ("pybb.Topic", "pybb.Post", "pybb.Profile")),
+    ("Marquees", ("bccf.HomeMarquee", "bccf.HomeMarqueeSlide", "bccf.FooterMarquee", "bccf.FooterMarqueeSlide", "bccf.PageMarquee", "bccf.PageMarqueeSlide")),
+    ("News", ("news.NewsPost",)),
+    ("Programs", ("bccf.Program",)),
+    ("Resources", ("bccf.Article", "bccf.DownloadableForm", "bccf.Magazine", "bccf.TipSheet", "bccf.Video")),
+    ("Forum", ("pybb.Forum", "pybb.Topic", "pybb.Post", "pybb.Profile")),
 )
 
 # A three item sequence, each containing a sequence of template tags
