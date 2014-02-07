@@ -656,7 +656,7 @@ textarea {
 
 	ul{
 		list-style:none;
-		display:block;
+		//display:block;
 		min-height:47px;
 		margin:3px 0 0;
 	}
@@ -762,8 +762,9 @@ textarea {
             width:auto;
         	margin:0;
         	padding:0;
+        	text-transform: uppercase;
            > li{
-               width: 90px;
+               width: 196.4px;
                display:inline-block;
                position:relative;
                font-size:16px;
@@ -783,12 +784,14 @@ textarea {
                     z-index: 9999;
                 	display:none;
                 	position:absolute;
-                	width:180px;
+                	width:inherit;
                 }
                 .mnav-submenu-item a {
                 	background:$lgreen;
                 	border-bottom:1px solid $dgreen;
                 	display:block;
+                	line-height: 20px;
+                	padding: 15px 0;
                 }
                 .mnav-submenu-item a:hover {
                 	background:$sgreen;
@@ -1683,7 +1686,7 @@ textarea {
 		em {background-color:$dgreen;}
 		}
 	#tag-act {
-		em {background-color:$steal;}
+		em {background-color:$dteal;}
 		}
 	#tag-get {
 		em {background-color:$yellow;}
@@ -2151,7 +2154,24 @@ footer {
 	}
 }
 
-
+#browse-by {
+    #browse-by-nav {
+        > ul { 
+            > li {
+                @include font-size(12);
+                width: 112px;
+                > ul {
+                    > li {
+                      line-height: 10px;
+                      a {
+                        padding: 15px 0;                      
+                      }
+                    }    
+                }
+            }    
+        }
+    }    
+}
 
 
 #home-listings{
@@ -2486,7 +2506,6 @@ table td {
     }
 
 	li {
-	    display: block;
 		a {
 		    display: block;
 		    background-color: $lgreen;
