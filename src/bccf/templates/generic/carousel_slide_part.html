@@ -12,9 +12,15 @@
                     {% else %}
                     <a href="{{ slide.get_absolute_url }}">
                     {% endif %}
-                        <h2>{{ slide.title }} {% if slide.content_model == 'formpublished' and slide.get_content_model.closed %}- View Results{% endif %}</h2>
+                        <h2>{{ slide.title|truncatechars:25 }}</h2>
                     </a>
-                    <p class="no-tablet no-mobile">{{ slide.description|truncatechars:20 }}</p>
+                    <p class="no-tablet no-mobile">
+                        {% if slide.content_model == 'formpublished' and slide.get_content_model.closed %}
+                            View Results
+                        {% else %}
+                            {{ slide.description|truncatechars:75 }}
+                        {% endif %}
+                    </p>
                 </div>
             </li>
     {% if forloop.counter|divisibleby:"3" or forloop.last %}
