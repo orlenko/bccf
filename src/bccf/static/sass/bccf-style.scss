@@ -1426,6 +1426,9 @@ textarea {
                 #child-home {
                     color: $dgrey;
                 }
+                .baby-content {
+                    padding: 10px;    
+                }
             }
         }
     }
@@ -1477,6 +1480,10 @@ textarea {
                     &:hover, &:focus {
         	           background-color: $lgreen*1.1;
         	        }
+        	        & + .baby-content {
+                        color: #FFF;
+                        background-color: $lgreen;            
+                    }
                 }
             }
             > li.active {
@@ -1522,6 +1529,10 @@ textarea {
                    &:hover, &:focus {
     	               background-color: $dgreen*1.1;
     	           }
+    	           & + .baby-content {
+                        color: #FFF;
+                        background-color: $dgreen;            
+                    }
                 }
             }
             > li.active {
@@ -1567,6 +1578,10 @@ textarea {
                    &:hover, &:focus {
     	               background-color: $lteal*1.1;
     	           }
+    	           & + .baby-content {
+                        color: #FFF;
+                        background-color: $lteal;            
+                    }
                 }
             }
             > li.active {
@@ -1612,6 +1627,10 @@ textarea {
                     &:hover, &:focus {
         	           background-color: $yellow*1.1;
         	        }
+        	        & + .baby-content {
+                        color: #FFF;
+                        background-color: $yellow;            
+                    }
                 }
             }
             > li.active {
