@@ -2310,7 +2310,7 @@ footer {
 
     .related-resource {
         width: 50%;
-    }
+    } 
 
 #tag-widget {
 
@@ -2787,6 +2787,17 @@ table td {
     	}
     }
 }
+
+.subpage-tabs {
+    > ul {
+        > li {
+            width: 100%;
+            a {
+                @include font-size(20);    
+            }
+        }
+    }    
+}   
 
 #filter-container {
    text-align: left;
