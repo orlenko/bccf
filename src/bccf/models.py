@@ -554,6 +554,27 @@ class UserProfile(models.Model):
     membership_type = models.CharField('Membership Type', max_length=128, null=True, blank=True, choices=MEMBERSHIP_TYPES)
     membership_level = models.IntegerField(default=0, null=True, blank=True)
     organization = models.ForeignKey('UserProfile', null=True, blank=True, related_name='members')
+    
+    # Member Fields
+    job_title = models.CharField('Job Title', max_length=255, null=True, blank=True)
+    website = models.URLField('Website', null=True, blank=True)
+    phone_primary = models.CharField('Phone (Primary)', max_length=15, null=True, blank=True)
+    phone_work = models.CharField('Phone (Work)', max_length=15, null=True, blank=True)
+    phone_mobile = models.CharField('Phone (Mobile)', max_length=15, null=True, blank=True)
+    fax = models.CharField('Fax', null=True, max_length=15, blank=True)
+    street = models.CharField('Street', max_length=255, null=True, blank=True)
+    street_2 = models.CharField('Street 2', max_length=255, null=True, blank=True)
+    street_3 = models.CharField('Street 3', max_length=255, null=True, blank=True)
+    city = models.CharField('City', max_length=255, null=True, blank=True)
+    postal_code = models.CharField('Postal Code', max_length=10,)
+    region = models.CharField('Region', max_length=255, null=True, blank=True)
+    province = models.CharField('Province/State', max_length=255, null=True, blank=True)
+    country = models.CharField('Country', max_length=255, null=True, blank=True)
+    
+    # Social
+    facebook = models.CharField('Facebook', max_length=255, null=True, blank=True)
+    twitter = models.CharField('Twitter', max_length=255, null=True, blank=True)
+    linkedin = models.CharField('LinkedIn', max_length=255, null=True, blank=True)
 
     def __unicode__(self):
         return 'Profile of %s' % (self.user.get_full_name() or self.user.username)

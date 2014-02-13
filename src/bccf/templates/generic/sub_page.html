@@ -120,7 +120,11 @@ var sync_height = function() {
 $('.baby-content-btn').on('click', function(e) {
     e.preventDefault();
     var url = $(this).attr('href');
-    window.history.pushState({ path: url }, '', url);
+    
+    if($(this).attr('id') !== 'child-home') {
+        window.history.pushState({ path: url }, '', url);
+        pathname = url;
+    }
 
     if(!$('.mnav-mobile-btn').is(':visible')) {
         $('li.active').removeClass('active');
