@@ -1,5 +1,6 @@
 from copy import deepcopy
 
+from django.db.models import Q
 from django.contrib import admin
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
@@ -14,6 +15,7 @@ from bccf.models import (BCCFTopic, Settings, HomeMarquee, FooterMarquee, HomeMa
     PageMarquee, PageMarqueeSlide, BCCFPage, BCCFChildPage, BCCFBabyPage, BCCFGenericPage,
     Blog, Program, Article, Magazine, Video, TipSheet, DownloadableForm, Campaign,
     Event)
+from bccf.settings import BCCF_CORE_PAGES
 from django.core.exceptions import PermissionDenied
 
 import logging
@@ -59,6 +61,23 @@ admin.site.register(Event, EventAdmin)
 #Pages
 page_fieldsets = deepcopy(DisplayableAdmin.fieldsets)
 page_fieldsets[0][1]["fields"] += ("gparent", "page_for", "bccf_topic", "featured", "content",)
+
+# Actions
+def make_featured(modeladmin, request, queryset):
+    num_rows = queryset.update(featured=True)
+    if num_rows == 1:
+        message_bit = "1 row featured"
+    else:
+        message_bit = "%s rows featured" % num_rows
+make_featured.short_description = "Mark selected rows as featured"
+
+def make_unfeatured(modeladmin, request, queryset):
+    num_rows = queryset.update(featured=False)
+    if num_rows == 1:
+        message_bit = "1 row unfeatured"
+    else:
+        message_bit = "%s rows unfeatured" % num_rows
+make_unfeatured.short_description = "Mark selected rows as unfeatured"
 
 class BCCFTopicAdmin(DisplayableAdmin):
     def __init__(self, *args, **kwargs):
@@ -128,7 +147,15 @@ class BCCFGenericAdmin(DisplayableAdmin):
             self.list_filter = list(deepcopy(self.list_filter))
             for fieldname in ['page_for', 'gparent', 'bccf_topic']:
                 self.list_filter.insert(-1, fieldname)
-
+                
+    def formfield_for_foreignkey(self, db_field, request=None, **kwargs):
+        if db_field.name == 'gparent':
+            q = Q() 
+            for core in BCCF_CORE_PAGES:
+                q  = q | Q(slug=core)
+            kwargs['queryset'] = BCCFPage.objects.exclude(q)
+            return db_field.formfield(**kwargs)
+        return super(BCCFGenericAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 class BCCFChildAdmin(DisplayableAdmin):
     inlines = (BCCFBabyInlineAdmin,)
@@ -164,6 +191,7 @@ class BCCFChildAdmin(DisplayableAdmin):
                 self.list_filter.insert(-1, fieldname)
 
 class BCCFProgramAdmin(DisplayableAdmin):
+    actions = [make_featured, make_unfeatured]
     inlines = (BCCFBabyInlineAdmin,)
 
     def __init__(self, *args, **kwargs):
@@ -198,6 +226,7 @@ class BCCFProgramAdmin(DisplayableAdmin):
                 self.list_filter.insert(-1, fieldname)
 
 class BCCFResourceAdmin(DisplayableAdmin):
+    actions = [make_featured, make_unfeatured]
     inlines = (BCCFBabyInlineAdmin,)
     
     def __init__(self, *args, **kwargs):
@@ -233,6 +262,7 @@ class BCCFResourceAdmin(DisplayableAdmin):
                 self.list_filter.insert(-1, fieldname)
 
 class BCCFVideoResourceAdmin(DisplayableAdmin):
+    actions = [make_featured, make_unfeatured]
     inlines = (BCCFBabyInlineAdmin,)
     
     def __init__(self, *args, **kwargs):
@@ -271,6 +301,7 @@ class BCCFVideoResourceAdmin(DisplayableAdmin):
         
 
 class BCCFTagAdmin(DisplayableAdmin):
+    actions = [make_featured, make_unfeatured]
     inlines = (BCCFBabyInlineAdmin,)
     
     def __init__(self, *args, **kwargs):
@@ -305,13 +336,9 @@ class BCCFTagAdmin(DisplayableAdmin):
 admin.site.register(BCCFPage, PageAdmin)
 admin.site.register(BCCFTopic, BCCFTopicAdmin)
 admin.site.register(BCCFGenericPage, BCCFGenericAdmin)
-
 admin.site.register(Blog, BCCFChildAdmin)
-
 admin.site.register(Program, BCCFProgramAdmin)
-
 admin.site.register(Campaign, BCCFTagAdmin)
-
 admin.site.register(Article, BCCFResourceAdmin)
 admin.site.register(DownloadableForm, BCCFResourceAdmin)
 admin.site.register(Magazine, BCCFResourceAdmin)

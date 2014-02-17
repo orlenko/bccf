@@ -522,7 +522,8 @@ else:
 COMMENTS_USE_RATINGS = False
 
 BCCF_RESOURCE_TYPES = '(article|downloadableform|magazine|tipsheet|video)'
-BCCF_CORE_PAGES = ['trainings','resources','tag','programs']
+BCCF_SPECIAL_PAGES = ['trainings','resources','tag','programs']
+BCCF_CORE_PAGES = ['trainings','resources','tag','programs','blog','news']
 SEARCH_MODEL_CHOICES = (
     'bccf.BCCFChildPage',
     'bccf.BCCFTopic',

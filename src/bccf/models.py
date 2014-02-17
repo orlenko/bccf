@@ -181,7 +181,7 @@ class BCCFChildPage(BCCFBasePage, RichText, AdminThumbMixin):
     )
 
     parent = models.ForeignKey('BCCFChildPage', blank=True, null=True)
-    gparent = models.ForeignKey('BCCFPage', blank=True, null=True)
+    gparent = models.ForeignKey('BCCFPage', verbose_name="Parent Page", blank=True, null=True)
     bccf_topic = models.ManyToManyField('BCCFTopic', blank=True, null=True)
     featured = models.BooleanField('Featured', default=False)
     titles = models.CharField(editable=False, max_length=1000, null=True)
