@@ -1339,6 +1339,9 @@ textarea {
             .page-box {
                 margin-bottom: 10px;
             }
+            .page-box:nth-of-type(4n) {
+                margin-left: 0;    
+            }
             .grid-content {
                 margin-top: -10px;
                 margin-bottom: 10px;

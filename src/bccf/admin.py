@@ -74,10 +74,10 @@ make_featured.short_description = "Mark selected rows as featured"
 def make_unfeatured(modeladmin, request, queryset):
     num_rows = queryset.update(featured=False)
     if num_rows == 1:
-        message_bit = "1 row unfeatured"
+        message_bit = "1 row set as not featured"
     else:
-        message_bit = "%s rows unfeatured" % num_rows
-make_unfeatured.short_description = "Mark selected rows as unfeatured"
+        message_bit = "%s rows set as not featured" % num_rows
+make_unfeatured.short_description = "Mark selected rows as not featured"
 
 class BCCFTopicAdmin(DisplayableAdmin):
     def __init__(self, *args, **kwargs):

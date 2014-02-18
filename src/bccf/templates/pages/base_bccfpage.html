@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 
-{% load bccf_big_marquee_tags content_carousel_tags %}
+{% load bccf_big_marquee_tags content_carousel_tags mezzanine_tags %}
+
+{% block meta_title %}{{ page.meta_title }}{% endblock %}
+
+{% block meta_description %}{% metablock %}
+{{ page.description }}
+{% endmetablock %}{% endblock %}
 
 {% block main %}
 <div id="content-page-wrapper" class="section">
