@@ -5,16 +5,22 @@
         <ul class="page-container-inner">
     {% endif %}
             <li id="{{ slide.slug }}" class="page-box {% if slide.content_model == 'topic' or slide.content_model == 'formpublished' %} go-blank {% endif %} grid-box col four">
-                <img src="{{ MEDIA_URL }}{% bccf_thumbnail slide.image 195 75 %}" alt="{{ slide.title }}" />
+                <div class="page-image" style="background: url('{{ MEDIA_URL }}{% bccf_thumbnail slide.image 195 110 %}') top left no-repeat"></div>
                 <div>
                     {% if slide.content_model == 'topic' or slide.content_model == 'formpublished' %}
                     <a href="{{ slide.get_content_model.get_absolute_url }}">
                     {% else %}
                     <a href="{{ slide.get_absolute_url }}">
                     {% endif %}
-                        <h2>{{ slide.title }}</h2>
+                        <h2>{{ slide.title|truncatechars:25 }}</h2>
                     </a>
-                    <p class="no-tablet">{{ slide.description|truncatechars:20 }}</p>
+                    <p class="no-tablet">
+                        {% if slide.content_model == 'formpublished' and slide.get_content_model.closed %}
+                            View Results
+                        {% else %}
+                            {{ slide.description|truncatechars:75 }}
+                        {% endif %}
+                    </p>
                 </div>
             </li>
         {% if slide.content_model != 'topic' and slige.content_model != 'formpublished' %}

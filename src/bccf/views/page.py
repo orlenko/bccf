@@ -10,7 +10,7 @@ from django.shortcuts import get_object_or_404
 from django.utils.text import slugify
 
 from bccf.models import BCCFPage, BCCFChildPage, BCCFBabyPage, BCCFTopic, UserProfile
-from bccf.settings import MEDIA_URL, BCCF_RESOURCE_TYPES, BCCF_CORE_PAGES
+from bccf.settings import MEDIA_URL, BCCF_RESOURCE_TYPES, BCCF_SPECIAL_PAGES
 from pybb.models import Topic
 
 import logging
@@ -51,7 +51,7 @@ def page(request, parent=None, child=None, baby=None):
     try:
         if(not request.is_ajax()):
             page = get_object_or_404(BCCFPage, slug=parent)
-            if parent in BCCF_CORE_PAGES:
+            if parent in BCCF_SPECIAL_PAGES:
                 template = u"pages/%s.html" % parent
             else:
                 template = u"pages/bccfpage.html"
@@ -63,6 +63,7 @@ def page(request, parent=None, child=None, baby=None):
             elif baby:
                 baby_obj = baby
             child_obj = BCCFChildPage.objects.get(slug=child)
+            babies = BCCFChildPage.objects.filter(parent=child_obj)
             if child_obj.content_model == 'event':
                 babies = BCCFChildPage.objects.filter(~Q(content_model='formpublished'), parent=child_obj).order_by('_order')  # @UndefinedVariable
             template = 'generic/sub_page.html'

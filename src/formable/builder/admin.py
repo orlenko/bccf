@@ -2,6 +2,7 @@ from copy import deepcopy
 
 from django.contrib import admin
 from mezzanine.core.admin import DisplayableAdmin
+from bccf.admin import make_featured, make_unfeatured
 from formable.builder.models import FormStructure, FormPublished, FormFilled, Question, FieldAnswer
 
 class FormFilledLine(admin.TabularInline):
@@ -54,31 +55,65 @@ class FormStructureAdmin(admin.ModelAdmin):
         return '<a href="%s" target="_blank">Publish Form</a>' % obj.get_publish_url()
     publish_link.allow_tags = True
         
-    
 class FormPublishedAdmin(DisplayableAdmin):
+    actions = ['make_closed', 'make_open', make_featured, make_unfeatured]
+    
     def __init__(self, *args, **kwargs):
         super(FormPublishedAdmin, self).__init__(*args, **kwargs)
         if self.fieldsets == DisplayableAdmin.fieldsets:
             self.fieldsets = deepcopy(self.fieldsets)
             for field in reversed(['title',
                                     'content',
+                                    'closed',
                                     'page_for',
                                     'bccf_topic',
                                     'featured',
                                     'image',]):
                 self.fieldsets[0][1]['fields'].insert(3, field)
+                
+        # Editable in the list display
+        if self.list_editable == DisplayableAdmin.list_editable:
+            self.list_editable = list(deepcopy(self.list_editable))
+            for fieldname in ['closed', 'featured']:
+                self.list_editable.insert(-1, fieldname)
+                
+        # Fields in the list display
         if self.list_display == DisplayableAdmin.list_display:
             self.list_display = list(deepcopy(self.list_display))
-            for fieldname in ['featured', 'report_link']:
+            for fieldname in ['featured', 'closed', 'report_link']:
                 self.list_display.insert(-1, fieldname)
+                
+        # Filters
         if self.list_filter == DisplayableAdmin.list_filter:
             self.list_filter = list(deepcopy(self.list_filter))
-            for fieldname in ['featured', 'gparent']:
+            for fieldname in ['featured', 'gparent', 'closed']:
                 self.list_filter.insert(-1, fieldname)
+            
+        # Actions
+        #if self.actions == DisplayableAdmin.actions:
+        #    self.actions = list(deepcopy(self.actions))
+        #    for action in ['make_closed', 'make_open']:
+        #        self.actions.insert(-1, action)          
             
     def report_link(self, obj):
         return '<a href="%s">Download Report</a>' % obj.get_report_url()
-    report_link.allow_tags = True 
+    report_link.allow_tags = True
+    
+    def make_closed(self, request, queryset):
+        num_rows = queryset.update(closed=True)
+        if num_rows == 1:
+            message_bit = "1 form closed"
+        else:
+            message_bit = "%s forms closed" % num_rows
+    make_closed.short_description = "Mark selected forms as close"
+    
+    def make_open(self, request, queryset):
+        num_rows = queryset.update(closed=False)
+        if num_rows == 1:
+            message_bit = "1 form opened"
+        else:
+            message_bit = "%s forms opened" % num_rows
+    make_open.short_description = "Mark selected forms as open"  
     
 class FormFilledAdmin(admin.ModelAdmin):
     """

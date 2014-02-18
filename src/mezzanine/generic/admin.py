@@ -16,6 +16,7 @@ class ThreadedCommentAdmin(CommentsAdmin):
                     "is_removed", "admin_link")
     list_display_links = ("intro", "submit_date")
     list_filter = [f for f in CommentsAdmin.list_filter if f != "site"]
+    list_editable = ('is_public', 'is_removed',)
     fieldsets = (
         (_("User"), {"fields": ("user_name", "user_email", "user_url")}),
         (None, {"fields": ("comment", ("is_public", "is_removed"))}),
@@ -26,7 +27,6 @@ class ThreadedCommentAdmin(CommentsAdmin):
         actions.pop("delete_selected")
         actions.pop("flag_comments")
         return actions
-
 
 generic_comments = getattr(settings, "COMMENTS_APP", "") == "mezzanine.generic"
 if generic_comments and not settings.COMMENTS_DISQUS_SHORTNAME:

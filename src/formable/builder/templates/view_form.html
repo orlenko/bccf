@@ -8,12 +8,13 @@
 {% block marquee %}{% endblock %}
 
 {% block content %}
-<h1>{{ page.title|title }}</h1>
+<h1>{{ page.title|title }} {% if page.closed %}<span class="closed">[CLOSED]</span>{% endif %}</h1>
 {{ page.content|safe }}
 {% endblock %}
 
 {% block carousels %}
 
+{% if not page.closed %}
 {% block message %}
 <div id="form_view" class="section row">
     <form id="form-form" action="{{ request.get_full_path }}" method="POST">
@@ -23,6 +24,7 @@
     </form>
 </div>
 {% endblock %}
+{% endif %}
 
 <div class="section row row-two">
     {% content_carousel_for page.gparent 'Other Surveys' None 'formpublished' %}

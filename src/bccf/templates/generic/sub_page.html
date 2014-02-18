@@ -14,7 +14,7 @@
                 </div>
             </li>
             {% for baby in babies %}
-            <li class="col three mobile-full">
+            <li class="col two mobile-full">
                 <a href="{{ baby.get_content_model.get_absolute_url }}" id="{{ baby.title|slugify }}" class="baby-content-btn">{{ baby.title }}</a>
                 <div class="baby-content">
                     <h3>{{ baby.title }}</h3>
@@ -120,7 +120,11 @@ var sync_height = function() {
 $('.baby-content-btn').on('click', function(e) {
     e.preventDefault();
     var url = $(this).attr('href');
-    window.history.pushState({ path: url }, '', url);
+    
+    if($(this).attr('id') !== 'child-home') {
+        window.history.pushState({ path: url }, '', url);
+        pathname = url;
+    }
 
     if(!$('.mnav-mobile-btn').is(':visible')) {
         $('li.active').removeClass('active');

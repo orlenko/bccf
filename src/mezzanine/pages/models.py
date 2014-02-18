@@ -42,8 +42,8 @@ class Page(BasePage):
         help_text=_("If checked, only logged in users can view this page"))
 
     class Meta:
-        verbose_name = _("Page")
-        verbose_name_plural = _("Pages")
+        verbose_name = _("Parent Page")
+        verbose_name_plural = _("Parent Pages")
         ordering = ("titles",)
         order_with_respect_to = "parent"
 

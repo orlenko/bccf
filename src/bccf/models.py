@@ -142,8 +142,8 @@ class BCCFPage(Page, RichText):
     carousel_color = models.CharField(max_length=11, default='dgreen-list', choices=COLORS)
 
     class Meta:
-        verbose_name = 'BCCF Page'
-        verbose_name_plural = 'BCCF Pages'
+        verbose_name = 'Parent Page'
+        verbose_name_plural = 'Parent Pages'
 
 #Topic
 class BCCFTopic(Displayable, RichText):
@@ -159,8 +159,8 @@ class BCCFTopic(Displayable, RichText):
     marquee = models.ForeignKey(PageMarquee, blank=True, null=True)
     carousel_color = models.CharField(max_length=11, default='dgreen-list', choices=COLORS)
     class Meta:
-        verbose_name = 'Topic'
-        verbose_name_plural = 'Topics'
+        verbose_name = 'BCCF Topic'
+        verbose_name_plural = 'BCCF Topics'
 
     def get_absolute_url(self):
         """
@@ -181,16 +181,16 @@ class BCCFChildPage(BCCFBasePage, RichText, AdminThumbMixin):
     )
 
     parent = models.ForeignKey('BCCFChildPage', blank=True, null=True)
-    gparent = models.ForeignKey('BCCFPage', blank=True, null=True)
+    gparent = models.ForeignKey('BCCFPage', verbose_name="Parent Page", blank=True, null=True)
     bccf_topic = models.ManyToManyField('BCCFTopic', blank=True, null=True)
     featured = models.BooleanField('Featured', default=False)
     titles = models.CharField(editable=False, max_length=1000, null=True)
     content_model = models.CharField(editable=False, max_length=50, null=True, blank=True)
-    login_required = models.BooleanField("Login required", default=False,
-        help_text="If checked, only logged in users can view this page")
+    #login_required = models.BooleanField("Login required", default=False,
+    #    help_text="If checked, only logged in users can view this page")
     rating = RatingField(verbose_name='Rating')
     comments = CommentsField()
-    in_menus = MenusField("Show in menus", blank=True, null=True)
+    #in_menus = MenusField("Show in menus", blank=True, null=True)
     page_for = models.CharField('Type', max_length=13, default='parent', blank=True, null=True, choices=TYPES)
     image = MyImageField("Image",
         upload_to = upload_to("bccf.ChildPage.image_file", "childpage"),
@@ -208,13 +208,6 @@ class BCCFChildPage(BCCFBasePage, RichText, AdminThumbMixin):
         order_with_respect_to = "parent"
 
     def __unicode__(self):
-        try:
-            if self.parent is None and self.gparent is not None:
-                return '%s: %s' % (self.gparent.title, self.title)
-            elif self.gparent is None and self.parent is not None:
-                return '%s: %s' % (self.parent.title, self.title)
-        except:
-            pass
         return self.title
 
     def get_absolute_url(self):
@@ -430,14 +423,17 @@ class BCCFChildPage(BCCFBasePage, RichText, AdminThumbMixin):
 
 class BCCFGenericPage(BCCFChildPage):
     class Meta:
-        verbose_name = 'BCCF Generic Page'
-        verbose_name_plural = 'BCCF Generic Pages'
+        verbose_name = 'Sub Page'
+        verbose_name_plural = 'Sub Pages'
 
 
 class BCCFBabyPage(BCCFChildPage):
+    order = models.IntegerField('Order', blank=True, null=True)
+    
     class Meta:
-        verbose_name = 'BCCF Baby Page'
-        verbose_name_plural = 'BCCF Baby Pages'
+        verbose_name = 'Third Level Page'
+        verbose_name_plural = 'Third Level Pages'
+        ordering = ('order',)
 
     def get_absolute_url(self):
         """
@@ -558,6 +554,27 @@ class UserProfile(models.Model):
     membership_type = models.CharField('Membership Type', max_length=128, null=True, blank=True, choices=MEMBERSHIP_TYPES)
     membership_level = models.IntegerField(default=0, null=True, blank=True)
     organization = models.ForeignKey('UserProfile', null=True, blank=True, related_name='members')
+    
+    # Member Fields
+    job_title = models.CharField('Job Title', max_length=255, null=True, blank=True)
+    website = models.URLField('Website', null=True, blank=True)
+    phone_primary = models.CharField('Phone (Primary)', max_length=15, null=True, blank=True)
+    phone_work = models.CharField('Phone (Work)', max_length=15, null=True, blank=True)
+    phone_mobile = models.CharField('Phone (Mobile)', max_length=15, null=True, blank=True)
+    fax = models.CharField('Fax', null=True, max_length=15, blank=True)
+    street = models.CharField('Street', max_length=255, null=True, blank=True)
+    street_2 = models.CharField('Street 2', max_length=255, null=True, blank=True)
+    street_3 = models.CharField('Street 3', max_length=255, null=True, blank=True)
+    city = models.CharField('City', max_length=255, null=True, blank=True)
+    postal_code = models.CharField('Postal Code', max_length=10,)
+    region = models.CharField('Region', max_length=255, null=True, blank=True)
+    province = models.CharField('Province/State', max_length=255, null=True, blank=True)
+    country = models.CharField('Country', max_length=255, null=True, blank=True)
+    
+    # Social
+    facebook = models.CharField('Facebook', max_length=255, null=True, blank=True)
+    twitter = models.CharField('Twitter', max_length=255, null=True, blank=True)
+    linkedin = models.CharField('LinkedIn', max_length=255, null=True, blank=True)
 
     def __unicode__(self):
         return 'Profile of %s' % (self.user.get_full_name() or self.user.username)

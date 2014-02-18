@@ -5,6 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib import admin
 from django.core.urlresolvers import reverse
 
+from bccf.admin import make_featured, make_unfeatured
 from mezzanine.core.admin import DisplayableAdmin
 
 from pybb.models import Category, Forum, Topic, Post, Profile, Attachment, PollAnswer
@@ -75,6 +76,7 @@ class TopicAdmin(admin.ModelAdmin):
     inlines = [PollAnswerAdmin, ]
     
 class BCCFTopicAdmin(DisplayableAdmin):
+    actions = [make_featured, make_unfeatured]
     list_per_page = 20
     raw_id_fields = ['user', 'subscribers']
     ordering = ['-created']
@@ -94,7 +96,7 @@ class BCCFTopicAdmin(DisplayableAdmin):
                                     'featured',
                                     'image',
                                     'page_for']):
-                self.fieldsets[0][1]['fields'].insert(3, field)
+                self.fieldsets[0][1]['fields'].insert(3, field)     
         if self.list_display == DisplayableAdmin.list_display:
             self.list_display = list(deepcopy(self.list_display))
             for fieldname in ['head', 'post_count', 'featured']:
@@ -116,7 +118,9 @@ class ForumReadTrackerAdmin(admin.ModelAdmin):
 
 class PostAdmin(admin.ModelAdmin):
     list_display = ['topic', 'user', 'created', 'updated', 'on_moderation', 'summary']
+    list_editable = ['on_moderation']
     list_per_page = 20
+    actions = ['make_approve', 'make_unapprove']
     raw_id_fields = ['user', 'topic']
     ordering = ['-created']
     date_hierarchy = 'created'
@@ -136,6 +140,22 @@ class PostAdmin(admin.ModelAdmin):
                 }
          ),
         )
+        
+    def make_approve(self, request, queryset):
+        num_rows = queryset.update(on_moderation=False)
+        if num_rows == 1:
+            message_bit = '1 post approved'
+        else:
+            message_bit = '%s posts approved' % num_rows
+    make_approve.short_description = "Approve selected posts"
+    
+    def make_unapprove(self, request, queryset):
+        num_rows = queryset.update(on_moderation=True)
+        if num_rows == 1:
+            message_bit = '1 post disapproved'
+        else:
+            message_bit = '%s posts disapproved' % num_rows
+    make_unapprove.short_description = "Disapprove selected posts"
 
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ['user', 'time_zone', 'language', 'post_count']
@@ -169,11 +189,11 @@ class AttachmentAdmin(admin.ModelAdmin):
     admin_edit_post.short_description = _('Edit post')
 
 
-admin.site.register(Category, CategoryAdmin)
+#admin.site.register(Category, CategoryAdmin)
 admin.site.register(Forum, ForumAdmin)
 admin.site.register(Topic, BCCFTopicAdmin)
 admin.site.register(Post, PostAdmin)
-admin.site.register(Attachment, AttachmentAdmin)
+#admin.site.register(Attachment, AttachmentAdmin)
 
 if util.get_pybb_profile_model() == Profile:
     admin.site.register(Profile, ProfileAdmin)

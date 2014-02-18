@@ -5,9 +5,12 @@
 {% block content%}
 <div class="container">
     <h2>{{ page.title|title }}</h2>
+    {{ page.content|safe }}
 </div>
 {% endblock %}
 
 {% block message %}
+<div class="row row-two">
 <h4>You have already filled this {{ page.title|title }}.</h4>
+</div>
 {% endblock %}

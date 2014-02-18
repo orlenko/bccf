@@ -135,11 +135,11 @@ def view(request, slug=None):
     form_structure = FormStructure.objects.get(pk=page.form_structure.pk)
     fieldset, field = parse(form_structure.structure, page.pk)
 
-    if len(filled) != 0:
+    if len(filled) != 0 and not page.closed:
         context = RequestContext(request, locals())
         return render_to_response('already_filled.html', {}, context_instance=context)
 
-    if request.method == 'POST':
+    if not page.closed and request.method == 'POST':
         form = ViewFormForm(fieldset, field, request.POST)
 
         if form.is_valid():

@@ -656,7 +656,7 @@ textarea {
 
 	ul{
 		list-style:none;
-		display:block;
+		//display:block;
 		min-height:47px;
 		margin:3px 0 0;
 	}
@@ -702,7 +702,8 @@ textarea {
        background:url(../img/menu-triangle.png) top center no-repeat;
 	}
 	#search-bar {
-		padding:9px 0 0;
+		padding: 10px 0;
+		margin: 0;
 		float:left;
 		form{
 			width:100%;
@@ -762,8 +763,9 @@ textarea {
             width:auto;
         	margin:0;
         	padding:0;
+        	text-transform: uppercase;
            > li{
-               width: 90px;
+               width: 196.4px;
                display:inline-block;
                position:relative;
                font-size:16px;
@@ -783,12 +785,14 @@ textarea {
                     z-index: 9999;
                 	display:none;
                 	position:absolute;
-                	width:180px;
+                	width:inherit;
                 }
                 .mnav-submenu-item a {
                 	background:$lgreen;
                 	border-bottom:1px solid $dgreen;
                 	display:block;
+                	line-height: 20px;
+                	padding: 15px 0;
                 }
                 .mnav-submenu-item a:hover {
                 	background:$sgreen;
@@ -1272,7 +1276,6 @@ textarea {
 }
 
 .content-pages {
-	margin:0 0 40px;
 	.top-control-container {
         .carousel-title-container {
             padding-left: 8%;
@@ -1306,18 +1309,18 @@ textarea {
             .page-box {
                 padding: 0;
         		h2 {
-                	font-size: 16px;
+                	@include font-size(14);
         		}
         		div {
-        		  margin-top: -5px;
         		  height: 75px;
-        		  padding: 10px;
+        		  padding: 4px 10px 10px 10px;
         		}
         		p {
+        		  @include font-size(11);
         		  margin: 0;
         		}
-        		img {
-        		  height: 75px;
+        		.page-image {
+        		  height: 110px;
         		  width: 100%;
         		}
             }
@@ -1407,6 +1410,7 @@ textarea {
         > ul {
             > li {
                 margin: 0;
+                width: 16.66%;
                > a {
                     @include font-size(12);
                     padding: 10px 0;
@@ -1421,6 +1425,9 @@ textarea {
                 }
                 #child-home {
                     color: $dgrey;
+                }
+                .baby-content {
+                    padding: 10px;    
                 }
             }
         }
@@ -1447,8 +1454,8 @@ textarea {
 	}
 	.page-box{
 		background-color:$sgrey;
-		div {
-		  border-top:2px solid $lgreen;
+		.page-image {
+		  border-bottom:2px solid $lgreen;
 		}
 	}
    .carousel-title-container {
@@ -1473,6 +1480,10 @@ textarea {
                     &:hover, &:focus {
         	           background-color: $lgreen*1.1;
         	        }
+        	        & + .baby-content {
+                        color: #FFF;
+                        background-color: $lgreen;            
+                    }
                 }
             }
             > li.active {
@@ -1492,8 +1503,8 @@ textarea {
 	}
 	.page-box{
 		background-color:$sgrey;
-		div {
-		  border-top:2px solid $dgreen;
+		.page-image {
+		  border-bottom:2px solid $dgreen;
 		}
 	}
 	.carousel-title-container {
@@ -1518,6 +1529,10 @@ textarea {
                    &:hover, &:focus {
     	               background-color: $dgreen*1.1;
     	           }
+    	           & + .baby-content {
+                        color: #FFF;
+                        background-color: $dgreen;            
+                    }
                 }
             }
             > li.active {
@@ -1537,8 +1552,8 @@ textarea {
 	}
 	.page-box{
 		background-color:$sgrey;
-		div {
-	       	border-top:2px solid $lteal;
+		.page-image {
+		  border-bottom:2px solid $lteal;
 		}
 	}
 	.carousel-title-container {
@@ -1563,6 +1578,10 @@ textarea {
                    &:hover, &:focus {
     	               background-color: $lteal*1.1;
     	           }
+    	           & + .baby-content {
+                        color: #FFF;
+                        background-color: $lteal;            
+                    }
                 }
             }
             > li.active {
@@ -1582,8 +1601,8 @@ textarea {
 	}
 	.page-box{
 	   background-color:$sgrey;
-       div {
-	       border-top:2px solid $yellow;
+       .page-image {
+		  border-bottom:2px solid $yellow;
 	   }
 	}
 	.carousel-title-container {
@@ -1608,6 +1627,10 @@ textarea {
                     &:hover, &:focus {
         	           background-color: $yellow*1.1;
         	        }
+        	        & + .baby-content {
+                        color: #FFF;
+                        background-color: $yellow;            
+                    }
                 }
             }
             > li.active {
@@ -1683,7 +1706,7 @@ textarea {
 		em {background-color:$dgreen;}
 		}
 	#tag-act {
-		em {background-color:$steal;}
+		em {background-color:$dteal;}
 		}
 	#tag-get {
 		em {background-color:$yellow;}
@@ -2151,7 +2174,24 @@ footer {
 	}
 }
 
-
+#browse-by {
+    #browse-by-nav {
+        > ul { 
+            > li {
+                @include font-size(12);
+                width: 112px;
+                > ul {
+                    > li {
+                      line-height: 10px;
+                      a {
+                        padding: 15px 0;                      
+                      }
+                    }    
+                }
+            }    
+        }
+    }    
+}
 
 
 #home-listings{
@@ -2289,7 +2329,7 @@ footer {
 
     .related-resource {
         width: 50%;
-    }
+    } 
 
 #tag-widget {
 
@@ -2486,7 +2526,6 @@ table td {
     }
 
 	li {
-	    display: block;
 		a {
 		    display: block;
 		    background-color: $lgreen;
@@ -2767,6 +2806,17 @@ table td {
     	}
     }
 }
+
+.subpage-tabs {
+    > ul {
+        > li {
+            width: 100%;
+            a {
+                @include font-size(20);    
+            }
+        }
+    }    
+}   
 
 #filter-container {
    text-align: left;

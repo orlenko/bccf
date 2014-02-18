@@ -51,6 +51,7 @@ class FormPublished(BCCFChildPage):
     Model for a published form structure.
     """
     form_structure = models.ForeignKey('FormStructure', editable=False)
+    closed = models.BooleanField('Closed', default=False);
     user = models.ForeignKey(User)
     
     class Meta:
