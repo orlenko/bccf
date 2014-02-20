@@ -316,6 +316,12 @@ class Category(Page, RichText):
     A category of products on the website.
     """
 
+    COLORS = (
+        ('dgreen-list', 'Dark Green'),
+        ('green-list', 'Green'),
+        ('teal-list', 'Teal'),
+        ('yellow-list', 'Yellow'),
+    )
     featured_image = FileField(verbose_name=_("Featured Image"),
         upload_to=upload_to("shop.Category.featured_image", "shop"),
         format="Image", max_length=255, null=True, blank=True)
@@ -333,6 +339,8 @@ class Category(Page, RichText):
         help_text=_("If checked, "
         "products must match all specified filters, otherwise products "
         "can match any specified filter."))
+    marquee = models.ForeignKey('bccf.PageMarquee', blank=True, null=True)
+    carousel_color = models.CharField(max_length=11, default='dgreen-list', choices=COLORS)
 
     class Meta:
         verbose_name = _("Product category")
