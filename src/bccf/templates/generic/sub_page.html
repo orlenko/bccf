@@ -5,12 +5,25 @@
             <li class="col two mobile-full">
                 <a href="{% url 'bccf-baby' child_obj.gparent.slug|default:'bccf' child_obj.slug 'child-home' %}" id="child-home" class="baby-content-btn">Home</a>
                 <div class="baby-content">
-                    <div class="section">
+                    <div class="section row row-one">
                         {% bccf_rating_for child_obj %}
+                        <div class="addthis_toolbox addthis_default_style addthis_32x32_style col seven mobile-full">
+                            <a class="addthis_button_twitter"></a>
+                            <a class="addthis_button_facebook"></a>
+                            <a class="addthis_button_print"></a>
+                            <a class="addthis_button_email"></a>
+                            <a class="addthis_button_compact"></a>
+                            <a class="addthis_counter addthis_bubble_style"></a>
+                        </div>
                     </div>
-                    <h3>{{ child_obj.title }}</h3>
-                    {{ child_obj.content|safe }}
-                    {% bccf_subscribe_for child_obj %}
+                    <div class="section row-one">
+                        <h3>{{ child_obj.title }}</h3>
+                        {{ child_obj.content|safe }}
+                        {% bccf_subscribe_for child_obj %}
+                    </div>
+                    <div class="section row row-one">
+                        {% comments_for child_obj %}
+                    </div>
                 </div>
             </li>
             {% for baby in babies %}
@@ -81,23 +94,29 @@
                 {% related_resources_for child_obj 'video' 'Videos' %}
                 </div>
             </li>
-
-            <li class="col two mobile-full" id="comments">
-                <a href="{% url 'bccf-baby' child_obj.gparent.slug child_obj.slug 'child-comments' %}" id="child-comments" class="baby-content-btn">Comments</a>
-                <div class="baby-content">
-                {% comments_for child_obj %}
-                </div>
-            </li>
         </ul>
     </div>
     <div class="subpage-content section row"></div>
     <div class="home-content section row no-mobile">
-        <div class="section">
+        <div class="section row row-one">
             {% bccf_rating_for child_obj %}
+            <div class="addthis_toolbox addthis_default_style addthis_32x32_style col seven mobile-full">
+                <a class="addthis_button_twitter"></a>
+                <a class="addthis_button_facebook"></a>
+                <a class="addthis_button_print"></a>
+                <a class="addthis_button_email"></a>
+                <a class="addthis_button_compact"></a>
+                <a class="addthis_counter addthis_bubble_style"></a>
+            </div>
         </div>
-        <h3>{{ child_obj.title }}</h3>
-        {{ child_obj.content|safe }}
-        {% bccf_subscribe_for child_obj %}
+        <div class="section row-one">
+            <h3>{{ child_obj.title }}</h3>
+            {{ child_obj.content|safe }}
+            {% bccf_subscribe_for child_obj %}
+        </div>
+        <div class="section row row-one">
+            {% comments_for child_obj %}
+        </div>
     </div>
 </section>
 <script type="text/javascript" >
@@ -158,3 +177,4 @@ $(function() {
     {% endif %}
 });
 </script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5306517f3419d9e2"></script>

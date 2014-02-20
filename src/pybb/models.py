@@ -177,8 +177,8 @@ class Topic(BCCFChildPage):
 
     class Meta(object):
         ordering = ['-created']
-        verbose_name = _('Topic')
-        verbose_name_plural = _('Topics')
+        verbose_name = _('Thred')
+        verbose_name_plural = _('Threads')
 
     def __unicode__(self):
         return self.name

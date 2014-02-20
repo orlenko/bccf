@@ -17,7 +17,7 @@ def featured_programs(context):
     being rendered for.
     """
     context['class'] = 'hpro'
-    context['slides'] = BCCFChildPage.objects.filter(content_model='program', featured=True).order_by('-created')
+    context['slides'] = BCCFChildPage.objects.filter(status=2, content_model='program', featured=True).order_by('-created')
     return context
     
 @register.inclusion_tag('generic/includes/featured.html', takes_context=True)
@@ -26,7 +26,7 @@ def featured_tags(context):
     Provides a generic context variable name for the TAGs to be shown on the front page
     """
     context['class'] = 'hnote'
-    context['slides'] = BCCFChildPage.objects.filter(Q(content_model='formpublished', featured=True) | Q(content_model='topic', featured=True) | Q(content_model='campaign', featured=True)).order_by('-created')
+    context['slides'] = BCCFChildPage.objects.filter(Q(content_model='formpublished') | Q(content_model='topic') | Q(content_model='campaign'), featured=True, status=2).order_by('-created')
     return context
     
 @register.inclusion_tag('generic/includes/featured_resources.html', takes_context=True)
@@ -34,7 +34,7 @@ def featured_resources(context):
     """
     Provides a generic context variable name for the featured resources to be shown on the front page
     """
-    context['slides'] = BCCFChildPage.objects.filter(Q(content_model='article', featured=True) | Q(content_model='downloadableform', featured=True) | Q(content_model='magazine', featured=True) | Q(content_model='tipsheet', featured=True) | Q(content_model='video', featured=True)).order_by('-created')
+    context['slides'] = BCCFChildPage.objects.filter(Q(content_model='article') | Q(content_model='downloadableform') | Q(content_model='magazine') | Q(content_model='tipsheet') | Q(content_model='video'), featured=True, status=2).order_by('-created')
     return context
     
 @register.inclusion_tag('generic/includes/featured_users.html', takes_context=True)
@@ -50,6 +50,6 @@ def related_resources_for(context, obj, type, title):
     for topic in obj.bccf_topic.all():        
         q = q | Q(bccf_topic = topic)
         
-    resource_pre = BCCFChildPage.objects.filter(Q(content_model=type)).distinct()
+    resource_pre = BCCFChildPage.objects.filter(Q(content_model=type), status=2).distinct()
     context['resources'] = resource_pre.filter(q, ~Q(slug=obj)).order_by('-created')[:10]
     return context

@@ -91,7 +91,6 @@ $(function() {
 /** EVENT LISTENTERS **/
 $('.content-pages').on('click', '.page-box', function(e) {
     e.preventDefault();
-    reset();
     if($(e.target).hasClass('page-box')) {
         clicked = $(e.target);
     } else {
@@ -103,6 +102,7 @@ $('.content-pages').on('click', '.page-box', function(e) {
     }    
     
     if(!clicked.hasClass('page-box-active')) { // was the active one clicked?
+        reset();
         pageURL = clicked.find('a').attr('href');
         if(open_baby) {
             pageURL = pageURL+'{{ baby }}';
@@ -112,7 +112,8 @@ $('.content-pages').on('click', '.page-box', function(e) {
         clicked.addClass('page-box-active');
         load_content(clicked);
     } else {
-        clicked.removeClass('page-box-active');    
+        clicked.removeClass('page-box-active');
+        reset();
     }
 });
 

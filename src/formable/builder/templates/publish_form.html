@@ -1,7 +1,16 @@
 {% extends "pages/base_bccfpage.html" %}
+{% load mezzanine_tags static %}
 
 {% block meta_title %}Publish Survey: {{ struct.title|title}}{% endblock %}
 {% block title %}Publish Survey: {{ struct.title|title}}{% endblock %}
+
+{% block extra_js %}
+{% ifinstalled ckeditor %}
+<script src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+<script src="{% static "ckeditor/init.js" %}"></script>
+<!--<script src="{% static "filebrowser/js/AddFileBrowser.js"%}"></script>-->
+{% endifinstalled %}
+{% endblock %}
 
 {% block content %}
 <h2>Publish {{ struct.title }}</h2>

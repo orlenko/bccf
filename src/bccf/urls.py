@@ -29,9 +29,6 @@ urlpatterns = patterns("",
     # Formable URLs
     ("^formable/", include("formable.builder.urls")),
 
-    #TinyMCE
-    (r'^tinymce/', include('tinymce.urls')),
-
     # Podcasts
     #('^podcasts/', include('podcasting.urls')),
 

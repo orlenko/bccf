@@ -550,7 +550,7 @@ CKEDITOR_CONFIGS = {
             { 'name': 'colors' },
             { 'name': 'about' }
         ],
-        'width': 692,
+        'width': '100%',
         'height': 300,
         'allowedContent': True,
     },
