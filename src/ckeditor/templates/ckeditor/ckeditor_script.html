@@ -1,0 +1,17 @@
+<script type="text/javascript">
+<!--
+$(function(){
+    if (!window.Django_CKEditor_Configs) {
+    	window.Django_CKEditor_Configs = [];
+    }
+    window.Django_CKEditor_Configs.push({
+        re: /{{ regex|default:'----------' }}/,
+        config: {{ config|safe }}
+    });
+
+    {% if filebrowser %}
+        CKEDITOR.config.filebrowserBrowseUrl = '/admin/media-library/browse/?pop=3';
+    {% endif %}
+});
+-->
+</script>

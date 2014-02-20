@@ -429,7 +429,7 @@ class BCCFGenericPage(BCCFChildPage):
 
 class BCCFBabyPage(BCCFChildPage):
     order = models.IntegerField('Order', blank=True, null=True)
-    
+
     class Meta:
         verbose_name = 'Third Level Page'
         verbose_name_plural = 'Third Level Pages'
@@ -554,7 +554,7 @@ class UserProfile(models.Model):
     membership_type = models.CharField('Membership Type', max_length=128, null=True, blank=True, choices=MEMBERSHIP_TYPES)
     membership_level = models.IntegerField(default=0, null=True, blank=True)
     organization = models.ForeignKey('UserProfile', null=True, blank=True, related_name='members')
-    
+
     # Member Fields
     job_title = models.CharField('Job Title', max_length=255, null=True, blank=True)
     website = models.URLField('Website', null=True, blank=True)
@@ -570,7 +570,7 @@ class UserProfile(models.Model):
     region = models.CharField('Region', max_length=255, null=True, blank=True)
     province = models.CharField('Province/State', max_length=255, null=True, blank=True)
     country = models.CharField('Country', max_length=255, null=True, blank=True)
-    
+
     # Social
     facebook = models.CharField('Facebook', max_length=255, null=True, blank=True)
     twitter = models.CharField('Twitter', max_length=255, null=True, blank=True)
@@ -595,6 +595,11 @@ class UserProfile(models.Model):
 
     @property
     def membership_product_variation(self):
+        ensure_membership_products()
+        # Special case for admin:
+        if self.user.is_superuser:
+            # Make sure current order contains an Admin-level license
+            self.ensure_membership('admin')
         if not self.membership_order:
             # Special case: if this user has purchased anything at all, there might be a recent membership purchase
             # In this case, we assign the most recent membership purchase as the membership order for this user.
@@ -797,3 +802,31 @@ def remaining_subscription_balance(purchase_date, expiration_date, to_date, paid
     used_fraction = elapsed_time.total_seconds() / licensed_time.total_seconds()
     remaining = Decimal(str(float(paid) * (1 - used_fraction)))
     return remaining
+
+
+def ensure_membership_products():
+    '''Create default set of products, if necessary'''
+    REQUIRED_PRODUCTS = {
+        'Organization Membership': [{
+            'Subscription Term': 'Annual',
+            'Create Events for Parents': 'Accredited Programs Only',
+            'Directory Listing': 'Business Card',
+            'Store Discount': 'No',
+            'price': 100
+        }, {
+            'Subscription Term': 'FREE - Unlimited',
+            'Create Events for Parents': 'No',
+            'Directory Listing': 'Basic',
+            'Store Discount': 'No',
+            'price': 0
+        }, {
+            'Subscription Term': 'Annual',
+            'Create Events for Parents': 'Accredited and Other Programs',
+            'Directory Listing': 'Business Card',
+            'Store Discount': 'No',
+            'price': 200
+        }],
+        'Professional Membership': [],
+        'Parent Membership': [],
+        'Admin Membership': [],
+    }

@@ -334,6 +334,7 @@ INSTALLED_APPS = (
     "django.contrib.sites",
     "django.contrib.sitemaps",
     "django.contrib.staticfiles",
+    'ckeditor',
     "mezzanine.boot",
     "mezzanine.conf",
     "mezzanine.core",
@@ -348,7 +349,6 @@ INSTALLED_APPS = (
     'news',
     'pybb',
     'bccf',
-    'tinymce',
     "cartridge.shop",
     'formable.builder',
     # install via pip or easy_install django-form-utils
@@ -419,7 +419,7 @@ OPTIONAL_APPS = (
     "django_extensions",
     "compressor",
     PACKAGE_NAME_FILEBROWSER,
-    PACKAGE_NAME_GRAPPELLI,
+    PACKAGE_NAME_GRAPPELLI,'ckeditor',
 )
 
 DEBUG_TOOLBAR_CONFIG = {"INTERCEPT_REDIRECTS": False}
@@ -530,12 +530,51 @@ SEARCH_MODEL_CHOICES = (
     'bccf.BCCFPage',
 )
 
-#TINYMCE
-TINYMCE_SPELLCHECKER = True
-TINYMCE_COMPRESSOR = True
-TINYMCE_DEFAULT_CONFIG = {
-    'plugins': "table,spellchecker,paste,searchreplace",
-    'theme': "advanced",
-    'cleanup_on_startup': True,
-    'custom_undo_redo_levels': 10,
+
+# CKEditor
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbarGroups':  [
+            { 'name': 'clipboard',   'groups': [ 'clipboard', 'undo' ] },
+            { 'name': 'editing',     'groups': [ 'find', 'selection', 'spellchecker' ] },
+            { 'name': 'links' },
+            { 'name': 'insert' },
+            { 'name': 'forms' },
+            { 'name': 'tools' },
+            { 'name': 'document',       'groups': [ 'mode', 'document', 'doctools' ] },
+            { 'name': 'others' },
+            '/',
+            { 'name': 'basicstyles', 'groups': [ 'basicstyles', 'cleanup' ] },
+            { 'name': 'paragraph',   'groups': [ 'list', 'indent', 'blocks', 'align', 'bidi' ] },
+            { 'name': 'styles' },
+            { 'name': 'colors' },
+            { 'name': 'about' }
+        ],
+        'width': 692,
+        'height': 300,
+        'allowedContent': True,
+    },
+    'basic': {
+        'toolbar': 'Basic',
+        'toolbarGroups': [
+           # { 'name': 'clipboard',   'groups': [ 'clipboard', 'undo' ] },
+           # { 'name': 'editing',     'groups': [ 'find', 'selection', 'spellchecker' ] },
+            { 'name': 'links' },
+           # { 'name': 'insert' },
+           # { 'name': 'forms' },
+           # { 'name': 'tools' },
+           # { 'name': 'document',       'groups': [ 'mode', 'document', 'doctools' ] },
+           # { 'name': 'others' },
+           # '/',
+            { 'name': 'basicstyles', 'groups': [ 'basicstyles', 'cleanup' ] },
+           # { 'name': 'paragraph',   'groups': [ 'list', 'indent', 'blocks', 'align', 'bidi' ] },
+           # { 'name': 'styles' },
+           # { 'name': 'colors' },
+           # { 'name': 'about' }
+        ],
+        'width': '100%',
+        'height': 300,
+        'allowedContent': True,
+    }
 }
+RICHTEXT_WIDGET_CLASS = 'ckeditor.widgets.CKEditor'
