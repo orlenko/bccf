@@ -141,7 +141,6 @@ class Product(Displayable, Priced, RichText, AdminThumbMixin):
             self.image = default.image.file.name
         self.save()
 
-
 class ProductImage(Orderable):
     """
     An image for a product - a relationship is also defined with the

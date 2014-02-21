@@ -2,10 +2,13 @@
 
 {% load url from future %}
 
-{% load pybb_tags i18n content_carousel_tags bccf_feature_tags %}
+{% load pybb_tags i18n content_carousel_tags bccf_feature_tags mezzanine_tags %}
 
 {% block meta_title %}{{ topic.title|title }}{% endblock %}
 {% block title %}{{ topic.title|title }}{% endblock %}
+{% block meta_description %}{% metablock %}
+{{ topic.description }}
+{% endmetablock %}{% endblock %}
 
 {% block extra_script %}
     {{ block.super }}

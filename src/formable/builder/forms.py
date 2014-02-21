@@ -4,8 +4,8 @@ import json
 from django import forms
 from django.contrib.contenttypes.models import ContentType
 from django.db.models import Q
-#from ckeditor.widgets import CKEditorWidget
-from tinymce.widgets import TinyMCE
+from ckeditor.widgets import CKEditor
+from filebrowser.fields import FileBrowseFormField, FileBrowseWidget
 
 from mezzanine.utils.models import upload_to
 
@@ -36,11 +36,11 @@ class FormPublishForm(forms.Form):
         ('professional', 'Professionals')
     )
     title = forms.CharField()
-    content = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 30}))
+    content = forms.CharField(widget=CKEditor)
     page_for = forms.ChoiceField(choices=PAGE_FOR)
     bccf_topic = forms.ModelMultipleChoiceField(queryset=BCCFTopic.objects.all().order_by('title'))
-    image = forms.ImageField()
-    featured = forms.BooleanField();
+    image = forms.ImageField()#FileBrowseFormField(widget=FileBrowseWidget)
+    featured = forms.BooleanField()
 
     def is_valid(self):
         if not self.data['title']:
