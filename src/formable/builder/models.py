@@ -1,4 +1,5 @@
 import logging
+import json
 from datetime import datetime
 
 from django.core.urlresolvers import reverse
@@ -50,7 +51,7 @@ class FormPublished(BCCFChildPage):
     """
     Model for a published form structure.
     """
-    form_structure = models.ForeignKey('FormStructure', editable=False)
+    form_structure = models.ForeignKey('FormStructure')
     closed = models.BooleanField('Closed', default=False);
     user = models.ForeignKey(User)
     
@@ -61,7 +62,26 @@ class FormPublished(BCCFChildPage):
     def save(self, **kwargs):
         if self.pk is None: 
             self.gparent = BCCFPage.objects.get(slug='tag')
-        super(FormPublished, self).save(**kwargs)
+            
+            super(FormPublished, self).save(**kwargs)            
+
+            struct = json.loads(self.form_structure.structure)
+            for fieldset in struct["fieldset"]:
+                for field in fieldset["fields"]:
+                   if "label" in field: # don't save static text
+                        if "required" in field["attr"]:
+                            required = 0
+                        else:
+                            required = 1
+                        num_answers = 0
+                        if field['class'] == 'multiselect-field' or field['class'] == 'checkbox-field':
+                            num_answers = len(field["options"])
+                        question = Question(question=field["label"],
+                            form_published=self, required=required,
+                            num_answers=num_answers)
+                        question.save()
+        else:
+            super(FormPublished, self).save(**kwargs)
         
     @permalink
     def get_absolute_url(self):

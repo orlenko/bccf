@@ -1,4 +1,3 @@
-import json
 import logging
 
 from django.contrib.auth.decorators import login_required
@@ -21,7 +20,6 @@ log = logging.getLogger(__name__)
 
 
 @login_required
-@never_cache
 def publish_form(request, id):
     """
     Publishes a form so that it can be filled out by users. A published form
@@ -38,11 +36,12 @@ def publish_form(request, id):
     except ObjectDoesNotExist:
         return redirect('/');
 
-    if request.method == 'POST':
-        form = FormPublishForm(request.POST)
-        if form.is_valid():
-            published = form.save(struct, request.user)
+    form = FormPublishForm(initial={'form_structure': struct.pk, 'user': request.user.pk})
 
+    if request.method == 'POST':
+        form = FormPublishForm(request.POST, request.FILES, initial={'form_structure': struct.pk, 'user': request.user.pk})
+        if form.is_valid():
+            published = form.save()
             # Support editing for events
             redirect_to_event = False
             if 'before_event' in request.GET:
@@ -61,13 +60,10 @@ def publish_form(request, id):
                 redirect_to_event = event
             if redirect_to_event:
                 return HttpResponseRedirect(event.edit_url())
-
             return redirect(published.get_absolute_url())
-    else:
-        form = FormPublishForm()
-        context = RequestContext(request, locals())
-        return render_to_response('publish_form.html', {}, context_instance=context)
-
+            
+    context = RequestContext(request, locals())
+    return render_to_response('publish_form.html', {}, context_instance=context)
 
 @login_required
 @never_cache

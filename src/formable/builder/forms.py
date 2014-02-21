@@ -5,7 +5,6 @@ from django import forms
 from django.contrib.contenttypes.models import ContentType
 from django.db.models import Q
 from ckeditor.widgets import CKEditor
-#from filebrowser.fields import FileBrowseFormField, FileBrowseWidget
 
 from mezzanine.utils.models import upload_to
 
@@ -13,6 +12,7 @@ from form_utils.forms import BetterForm
 from formable.builder.models import FormStructure, FormPublished, Question
 from bccf.models import BCCFTopic
 from bccf.settings import MEDIA_ROOT
+from bccf.widgets import AdvancedFileInput
 
 log = logging.getLogger(__name__)
 
@@ -27,27 +27,19 @@ class FormStructureForm(forms.ModelForm):
         model = FormStructure
         fields = ['title', 'structure']
 
-class FormPublishForm(forms.Form):
+class FormPublishForm(forms.ModelForm):
     """
     Form for creating a new form structure.
     """
-    PAGE_FOR = (
-        ('parent', 'Parents'),
-        ('professional', 'Professionals')
-    )
-    title = forms.CharField()
-    content = forms.CharField(widget=CKEditor)
-    page_for = forms.ChoiceField(choices=PAGE_FOR)
-    bccf_topic = forms.ModelMultipleChoiceField(queryset=BCCFTopic.objects.all().order_by('title'))
-    image = forms.ImageField()#FileBrowseFormField(widget=FileBrowseWidget)
-    featured = forms.BooleanField()
-
-    def is_valid(self):
-        if not self.data['title']:
-            return False
-        if not self.data['content']:
-            return False
-        return True
+    class Meta:
+        model = FormPublished
+        widgets = {
+            'status': forms.RadioSelect,
+            'image': AdvancedFileInput,
+            'user': forms.HiddenInput(),
+            'form_structure': forms.HiddenInput()
+        }
+        fields = ('user', 'form_structure', 'title', 'status', 'content', 'page_for', 'bccf_topic', 'featured', 'image')
 
     def handle_upload(self):
         image_path = 'uploads/childpage/'+self.files['image'].name
@@ -57,34 +49,20 @@ class FormPublishForm(forms.Form):
         destination.close()
         return image_path
 
-    def save(self, struct, user, **kwargs):
-        form_published = FormPublished.objects.create(form_structure=struct, user=user, title=self.data['title'], content=self.data['content'])
-        if 'page_for' in self.data:
-            form_published.page_for = self.data['page_for']
-        if 'featured' in self.data:
-            form_published.featured = self.data['featured']
-        if 'bccf_topic' in self.data:
-            form_published.bccf_topic = bccf_topic=self.data['bccf_topic']
-        if 'image' in self.files:
-            form_published.image = self.handle_upload()
-        form_published.save()
+    def is_valid(self):
+        if not 'title' in self.data:
+            return False
+        if not 'content' in self.data:
+            return False
+        return True
 
-        # Create Questions based on structure
-        struct = json.loads(struct.structure)
-        for fieldset in struct["fieldset"]:
-            for field in fieldset["fields"]:
-               if "label" in field: # don't save static text
-                    if "required" in field["attr"]:
-                        required = 0
-                    else:
-                        required = 1
-                    num_answers = 0
-                    if field['class'] == 'multiselect-field' or field['class'] == 'checkbox-field':
-                        num_answers = len(field["options"])
-                    question = Question(question=field["label"],
-                        form_published=form_published, required=required,
-                        num_answers=num_answers)
-                    question.save()
+    def save(self, **kwargs):
+        form_published = super(FormPublishForm, self).save(**kwargs)
+        if 'image' in self.files:
+            log.debug('Saving Image')
+            form_published.image = self.handle_upload()
+            form_published.save()
+
         return form_published
 
 class CloneFormForm(forms.Form):
