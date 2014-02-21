@@ -18,7 +18,7 @@ def product_category_carousel(context, category):
     context['open'] = False
     context['filter'] = False
     context['carousel_color'] = category.get_content_model().carousel_color
-    context['carousel_title'] = 'Products'
+    context['carousel_title'] = category.title
     context['carousel_name'] = 'products'
     context['slides'] = category.get_content_model().products.all()
     return context

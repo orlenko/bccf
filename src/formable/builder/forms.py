@@ -5,7 +5,7 @@ from django import forms
 from django.contrib.contenttypes.models import ContentType
 from django.db.models import Q
 from ckeditor.widgets import CKEditor
-from filebrowser.fields import FileBrowseFormField, FileBrowseWidget
+#from filebrowser.fields import FileBrowseFormField, FileBrowseWidget
 
 from mezzanine.utils.models import upload_to
 
