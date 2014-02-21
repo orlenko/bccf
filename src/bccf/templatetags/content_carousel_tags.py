@@ -12,6 +12,19 @@ log = logging.getLogger(__name__)
 register = template.Library()
 
 @register.inclusion_tag("generic/includes/content_carousel.html", takes_context=True)
+def product_category_carousel(context, category):
+    page = re.split('/get/', context['request'].path)
+    params = None
+    context['open'] = False
+    context['filter'] = False
+    context['carousel_color'] = category.get_content_model().carousel_color
+    context['carousel_title'] = 'Products'
+    context['carousel_name'] = 'products'
+    context['slides'] = category.get_content_model().products.all()
+    return context
+
+
+@register.inclusion_tag("generic/includes/content_carousel.html", takes_context=True)
 def content_carousel_for(context, obj, title, child=None, which=None):
     """
     Provides a generic context variable name for the object that carousels are
@@ -24,11 +37,11 @@ def content_carousel_for(context, obj, title, child=None, which=None):
     context['carousel_color'] = obj.get_content_model().carousel_color
     context['carousel_title'] = title
     context['carousel_name'] = which
-    context['slides'] = None    
-    
+    context['slides'] = None
+
     if title == 'Talk':
-        context['filter'] = True    
-    
+        context['filter'] = True
+
     log.info(which)
     log.info(child)
 
@@ -64,7 +77,7 @@ def content_carousel_for(context, obj, title, child=None, which=None):
                 context['slides'] = [temp]
                 context['slides'].extend(BCCFChildPage.objects.filter(~Q(slug=child), gparent=obj.pk, page_for=which, status=2).order_by('-created')[:11])
             else:
-                context['slides'] = BCCFChildPage.objects.filter(gparent=obj.pk, page_for=which,status=2).order_by('-created')[:12]   
+                context['slides'] = BCCFChildPage.objects.filter(gparent=obj.pk, page_for=which,status=2).order_by('-created')[:12]
     except ObjectDoesNotExist, e:
         log.info('Object Does Not Exist')
         log.error(e)
@@ -91,7 +104,7 @@ def content_carousel_for_topic(context, topic, type):
         log.info('Unspecified Exception')
         log.error(e)
     return context
-    
+
 @register.inclusion_tag("generic/includes/tag_carousel.html", takes_context=True)
 def content_carousel_for_tag(context, topic=None):
     gparent = BCCFPage.objects.get(slug='tag')
@@ -104,7 +117,7 @@ def content_carousel_for_tag(context, topic=None):
         context['acts'] = BCCFChildPage.objects.filter(gparent=gparent, content_model='formpublished', featured=True, status=2).order_by('-created')[:10]
         context['gets'] = BCCFChildPage.objects.filter(gparent=gparent, content_model='campaign', featured=True, status=2).order_by('-created')[:10]
     return context
-    
+
 @register.inclusion_tag("generic/includes/resource_carousel.html", takes_context=True)
 def content_carousel_for_resources(context, topic=None):
     if topic:
