@@ -6,6 +6,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import NoReverseMatch
 
+from embed_video.admin import AdminVideoMixin
+
 from mezzanine.core.admin import DisplayableAdmin, DisplayableAdminForm
 from mezzanine.utils.urls import admin_url
 from mezzanine.conf import settings
@@ -261,7 +263,7 @@ class BCCFResourceAdmin(DisplayableAdmin):
             for fieldname in ['page_for', 'bccf_topic', 'featured']:
                 self.list_filter.insert(-1, fieldname)
 
-class BCCFVideoResourceAdmin(DisplayableAdmin):
+class BCCFVideoResourceAdmin(AdminVideoMixin, DisplayableAdmin):
     actions = [make_featured, make_unfeatured]
     inlines = (BCCFBabyInlineAdmin,)
     
@@ -273,8 +275,6 @@ class BCCFVideoResourceAdmin(DisplayableAdmin):
             self.fieldsets = deepcopy(self.fieldsets)
             for field in reversed(['content',
                                     'video_url',
-                                    'link_url',
-                                    'video_file',
                                     'bccf_topic',
                                     'featured',
                                     'page_for',

@@ -3,7 +3,7 @@ from datetime import datetime
 from decimal import Decimal
 
 from cartridge.shop.fields import MoneyField
-from cartridge.shop.models import Order, ProductVariation
+from cartridge.shop.models import Order, ProductVariation, Product
 from dateutil.relativedelta import relativedelta
 
 from django.db import models
@@ -11,6 +11,8 @@ from django.db.models import permalink, ObjectDoesNotExist
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.urlresolvers import resolve, reverse
+
+from embed_video.fields import EmbedVideoField
 
 from mezzanine.conf import settings as mezzanine_settings
 from mezzanine.generic.fields import RatingField, CommentsField
@@ -455,6 +457,7 @@ class DocumentResourceBase(BCCFChildPage):
         blank = True,
         help_text = 'You can upload an office document or a PDF file. This field is not used by Video '
             'Acceptable file types: .doc, .pdf, .rtf, .txt, .odf, .docx, .xls, .xlsx, .ppt, .pptx.')
+    product = models.ForeignKey(Product, verbose_name='Associated Product', blank=True, null=True)
     def save(self, **kwargs):
         self.gparent = BCCFPage.objects.get(slug='resources')
         super(DocumentResourceBase, self).save(**kwargs)
@@ -484,21 +487,10 @@ class TipSheet(DocumentResourceBase):
         return 'Tip Sheet'
 
 class Video(BCCFChildPage):
-    video_url = models.URLField("Video", max_length=1024, blank=True, default='', null=True,
+    video_url = EmbedVideoField("Video", max_length=1024, blank=True, default='', null=True,
     help_text='Paste a YouTube URL here. '
         'Example: http://www.youtube.com/watch?v=6Bm7DVqJTHo')
-    link_url = models.URLField("Web Link", max_length=1024, blank=True, default='', null=True,
-        help_text='A link to a web resource. '
-            'The address must start with http:// or https://. '
-            'For example: http://plei.publiclegaled.bc.ca')
-    video_file = FileField("Video File",
-        upload_to=upload_to("bccf.Video.video_file", "resource/video"),
-        extensions=['.avi', '.flv', '.mkv', '.mov', '.mp4', '.ogg', '.wmv'],
-        max_length=255,
-        null=True,
-        blank=True,
-        help_text='You can upload a video file. '
-            'Acceptable file types: .avi, .flv, .mkv, .mov, .mp4, .ogg, .wmv.')
+    product = models.ForeignKey(Product, verbose_name='Associated Product', blank=True, null=True)
     def save(self, **kwargs):
         self.gparent = BCCFPage.objects.get(slug='resources')
         super(Video, self).save(**kwargs)

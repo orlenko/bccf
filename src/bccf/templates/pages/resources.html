@@ -25,9 +25,9 @@
 
 {% if type %}
 <script type="text/javascript">
-    $(function() {
+    $(function() {;
         $('#{{ type }}').scrollTop();
-        $('#{{ type }} .to-grid').trigger('click');
+        $('#{{ type }}').find('.to-grid').trigger('click');
     });
 </script>
 {% endif %}

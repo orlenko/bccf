@@ -353,6 +353,7 @@ INSTALLED_APPS = (
     'formable.builder',
     # install via pip or easy_install django-form-utils
     'form_utils', # required by builder to call template tags
+    'embed_video',
 )
 
 # List of processors used by RequestContext to populate the context.
