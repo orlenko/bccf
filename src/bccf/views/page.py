@@ -89,9 +89,9 @@ def user_list(request):
     p = request.GET.get('page_var')
     f = request.GET.get('filter')
     if f and f != 'all':
-        users_list = UserProfile.objects.filter(Q(user__last_name__istartswith=f) | Q(user__first_name__istartswith=f)).order_by('user__last_name', 'user__first_name')
+        users_list = UserProfile.objects.filter(Q(user__last_name__istartswith=f) | Q(user__first_name__istartswith=f), Q(membership_type='professional') | Q(membership_type='organization')).order_by('user__last_name', 'user__first_name')
     else:
-        users_list = UserProfile.objects.all().order_by('user__last_name', 'user__first_name')
+        users_list = UserProfile.objects.filter(Q(membership_type='professional') | Q(membership_type='organization')).order_by('user__last_name', 'user__first_name')
     paginator = Paginator(users_list, 10)
     try:
         recordlist = paginator.page(p)
