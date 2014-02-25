@@ -449,6 +449,6 @@ class ReqProgram(forms.ModelForm):
     class Meta:
         model = ProgramRequest
         fields = ['title', 'comment', 'user']
-        widget = {
+        widgets = {
             'user': forms.HiddenInput()        
         }
