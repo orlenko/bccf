@@ -1,0 +1,65 @@
+{% load static mezzanine_tags %}
+
+{% if slides %}
+<section id="{{ carousel_name }}" class="section row row-two content-pages {{ carousel_color }}">
+    <div class="section row top-control-container">
+        <div class="col {% if filter %} four tablet-two {% else %} six {% endif %} mobile-full carousel-title-container">
+            <h2>{{ carousel_title|title }}</h2>
+        </div>
+        {% if filter %}
+        <div id="filter-container" class="col five mobile-full tablet-six">            
+            <input type="text" name="filter" placeholder="Filter" class="filter" />
+        </div>
+        {% endif %}
+        <div class="col {% if filter %} three tablet-four {% else %} six {% endif %} no-mobile control-buttons">
+            <a href="#" class="show-type-control to-grid">Grid</a>
+            <a href="#" class="show-type-control to-slide">Slide</a>
+        </div>
+    </div>
+    <div id="{{ carousel_name }}-inner">
+        <a class="button-prev-lgrey col one button-prev no-mobile no-tablet"></a>
+        {% include 'generic/content_slides.html' %}
+        <a class="button-next-lgreen col one button-next no-mobile no-tablet"></a>
+    </div>
+</section>
+
+{% if filter %}
+<script type="text/javascript" >
+$('.filter').on('keyup', function() {
+    var parent = $(this).parents('.content-pages');
+    reset();
+    $.ajax({
+        url: '/filter/'+$(this).val(),
+        success: function(data) {
+            console.log(data);
+            //var json = $.parseJSON(data);
+            var slide = $('#{{ carousel_name }}_id-carousel');
+            var grid = $('#{{ carousel_name }}_id-grid');
+            // Delete all the slides
+            // For slide view
+            var count = parent.find('.carousel-slide').find('.owl-item').length;            
+            while(count > 0) {
+                slide.data('owlCarousel').removeItem();
+                count--;
+            }
+            // For grid view
+            count = parent.find('.carousel-grid').find('.owl-item').length;
+            while(count > 0) {
+                grid.data('owlCarousel').removeItem();
+                count--;
+            }
+            if(data.slide.length > 1 && data.grid.length > 1) {
+                slide.data('owlCarousel').addItem(data.slide);
+                grid.data('owlCarousel').addItem(data.grid);
+            } else {
+                slide.data('owlCarousel').addItem('<div>No Result for filter: '+$(this).val()+'</div>');
+                grid.data('owlCarousel').addItem('<div>No Result for filter: '+$(this).val()+'</div>');
+            }
+            parent.find('.to-grid').trigger('click');
+        },
+    });
+});
+</script>
+{% endif %}
+
+{% endif %}

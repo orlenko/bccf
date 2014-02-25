@@ -47,7 +47,7 @@ class FormPublishForm(forms.ModelForm):
             destination.write(chunk)
         destination.close()
         return image_path
-    
+
     def is_valid(self):
         if not 'title' in self.data:
             return False
@@ -61,7 +61,7 @@ class FormPublishForm(forms.ModelForm):
             log.debug('Saving Image')
             form_published.image = self.handle_upload()
             form_published.save()
-        
+
         return form_published
 
 class CloneFormForm(forms.Form):
