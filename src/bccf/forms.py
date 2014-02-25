@@ -452,3 +452,7 @@ class ReqProgram(forms.ModelForm):
         widgets = {
             'user': forms.HiddenInput()        
         }
+    def is_valid(self):
+        if 'title' not in self.data:
+            return False
+        return True
