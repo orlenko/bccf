@@ -123,9 +123,11 @@
                         <li>
                             {{ request.title|title }}
                             <p>{{ request.comment|safe }}</p>
-                            <p>Status: {{ request.accept }}</p>
                             {% if request.accept %}
+                            <p>Status: Accepted</p>
                             <p>Accepted On: {{ request.accepted_on }}</p>
+                            {% else %}
+                            <p>Status: Pending</p>
                             {% endif %}
                         </li>
                     {% endfor %}                    
