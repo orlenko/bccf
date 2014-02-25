@@ -58,7 +58,6 @@ class FormPublishForm(forms.ModelForm):
     def save(self, **kwargs):
         form_published = super(FormPublishForm, self).save(**kwargs)
         if 'image' in self.files:
-            log.debug('Saving Image')
             form_published.image = self.handle_upload()
             form_published.save()
 

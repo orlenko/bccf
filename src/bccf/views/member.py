@@ -187,7 +187,7 @@ def delmember(request):
     return HttpResponseRedirect(reverse(profile))
 
 def reqprogram(request):
-    form = ProgramRequest(initial={'user': request.user.pk})
+    form = ProgramRequestForm(initial={'user': request.user.pk})
     title = 'Request Program'
     if request.method == 'POST':
         form = ProgramRequest(request.POST)
