@@ -72,7 +72,10 @@
 	}
 </script>
 <script src="http://modernizr.com/downloads/modernizr-latest.js"></script>
-
+{% ifinstalled ckeditor %}
+<script src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+<script src="{% static "ckeditor/init.js" %}"></script>
+{% endifinstalled %}
 
 {% block extra_js %}
 {% endblock %}
