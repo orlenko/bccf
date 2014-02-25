@@ -61,7 +61,7 @@ class FormPublished(BCCFChildPage):
         
     def save(self, **kwargs):
         if self.pk is None: 
-            self.gparent = BCCFPage.objects.get(slug='tag')
+            self.gparent = BCCFPage.objects.get(slug='bccf/tag')
             
             super(FormPublished, self).save(**kwargs)            
 
