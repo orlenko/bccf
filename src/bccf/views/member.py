@@ -190,7 +190,7 @@ def reqprogram(request):
     form = ReqProgram(initial={'user': request.user.pk})
     title = 'Request Program'
     if request.method == 'POST':
-        form = ProgramRequest(request.POST)
+        form = ReqProgram(request.POST)
         if form.is_valid():
             form.save()
             return HTTPResponseRedirect(reverse(profile))
