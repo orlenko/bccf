@@ -18,13 +18,12 @@
 {% endblock %}
 
 {% block footer_scripts %}
-{{ block.super }}
-<script type="text/javascript" >
+<script type="text/javascript">
 $(function() {
     $('.to-carousel').owlCarousel({
         'singleItem': true,
         'pagination': false,
-        'addClassActive': true,  
+        'addClassActive': true,
     });
     
     $('.carousel-grid').hide();
@@ -35,11 +34,12 @@ $(function() {
         'autoHeight': true,
         'theme': "normal-marquee",
     });
+    
     $(window).on('resize', function(e) {
         if($(window).width() <= 724) {
             $('.to-slide').trigger('click');
         }
-    });  
+    });
 });
 
 /** EVENT LISTENTERS **/
@@ -96,4 +96,5 @@ $('.content-pages').on('click', 'a[class^="button"]', function(e) {
 });
 
 </script>
+{{ block.super }}
 {% endblock %}

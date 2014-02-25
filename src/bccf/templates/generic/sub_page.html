@@ -1,5 +1,6 @@
 {% load bccf_feature_tags static bccf_rating_tags bccf_event_tags comment_tags embed_video_tags %}
 <section id={{ child_obj.slug }} class="subpage {{ child_obj.gparent.carousel_color }}">
+        <a id="close-btn" href="#" title="Close">X</a>
         <div class="subpage-tabs section">
         <ul class="no-style-list">
             <li class="col two mobile-full">
@@ -7,7 +8,7 @@
                 <div class="baby-content">
                     <div class="section row row-one">
                         {% bccf_rating_for child_obj %}
-                        <div class="addthis_toolbox addthis_default_style addthis_32x32_style col seven mobile-full">
+                        <div id="addthis" class="addthis_toolbox addthis_default_style addthis_32x32_style col seven mobile-full">
                             <a class="addthis_button_twitter"></a>
                             <a class="addthis_button_facebook"></a>
                             <a class="addthis_button_print"></a>
@@ -139,6 +140,10 @@ var sync_height = function() {
     });
 };
 
+$('#close-btn').on('click', function(e) {
+    e.preventDefault(); reset();
+});
+
 $('.baby-content-btn').on('click', function(e) {
     e.preventDefault();
     var url = $(this).attr('href');
@@ -178,6 +183,6 @@ $(function() {
     {% else %}
         $('#child-home').trigger('click');
     {% endif %}
+    addthis.toolbox($('#addthis'));
 });
 </script>
-<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5306517f3419d9e2"></script>

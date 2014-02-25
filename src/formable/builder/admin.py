@@ -57,6 +57,7 @@ class FormStructureAdmin(admin.ModelAdmin):
         
 class FormPublishedAdmin(DisplayableAdmin):
     actions = ['make_closed', 'make_open', make_featured, make_unfeatured]
+    ordering = ('-created',)
     
     def __init__(self, *args, **kwargs):
         super(FormPublishedAdmin, self).__init__(*args, **kwargs)
@@ -88,12 +89,6 @@ class FormPublishedAdmin(DisplayableAdmin):
             self.list_filter = list(deepcopy(self.list_filter))
             for fieldname in ['featured', 'gparent', 'closed']:
                 self.list_filter.insert(-1, fieldname)
-            
-        # Actions
-        #if self.actions == DisplayableAdmin.actions:
-        #    self.actions = list(deepcopy(self.actions))
-        #    for action in ['make_closed', 'make_open']:
-        #        self.actions.insert(-1, action)          
             
     def report_link(self, obj):
         return '<a href="%s">Download Report</a>' % obj.get_report_url()

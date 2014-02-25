@@ -38,7 +38,7 @@ def big_marquee_for(context, obj=None):
     
 @register.inclusion_tag("generic/includes/browse_by.html", takes_context=True)
 def browse_by(context):
-    page = BCCFPage.objects.get(slug='programs')
+    page = BCCFPage.objects.get(slug__exact='bccf/programs')
     context['programs']  = BCCFChildPage.objects.filter(gparent=page)
     context['topics'] = BCCFTopic.objects.all()
     return context

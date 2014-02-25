@@ -14,7 +14,7 @@ from django.template.context import RequestContext
 
 from bccf.util.memberutil import get_upgrades, require_any_membership
 from bccf.forms import AddUserForm, AddExistingUserForm, DelMember, AddUsersForm
-
+from bccf.models import ProgramRequest
 
 log = logging.getLogger(__name__)
 
@@ -29,6 +29,7 @@ def profile(request):
     upgrades = get_upgrades(membership)
     add_users_form = AddUsersForm(initial=dict(organization=user.pk))
     add_existing_user_form = AddExistingUserForm(initial=dict(organization=user.pk))
+    program_requests = ProgramRequest.objects.filter(user=user)
     if 'addmembers' in request.session:
         try:
             new_users, new_user_errors = request.session.pop('addmembers')
@@ -184,3 +185,14 @@ def delmember(request):
         log.debug('Form invalid: %s' % form)
         messages.error(request, 'Failed to remove member. Erros: %s' % form.errors)
     return HttpResponseRedirect(reverse(profile))
+
+def reqprogram(request):
+    form = ProgramRequest(initial={'user': request.user.pk})
+    title = 'Request Program'
+    if request.method == 'POST':
+        form = ProgramRequest(request.POST)
+        if form.is_valid():
+            form.save()
+            return HTTPResponseRedirect(reverse(profile))
+    context = RequestContext(request, locals())
+    return render_to_response('accounts/account_form.html', {}, context_instance=context)

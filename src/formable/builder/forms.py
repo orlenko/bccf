@@ -4,7 +4,6 @@ import json
 from django import forms
 from django.contrib.contenttypes.models import ContentType
 from django.db.models import Q
-from ckeditor.widgets import CKEditor
 
 from mezzanine.utils.models import upload_to
 

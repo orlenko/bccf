@@ -1,11 +1,13 @@
 {% extends 'pages/base_bccfpage.html' %}
-{% load mezzanine_tags bccf_tags %}
+{% load mezzanine_tags bccf_tags bccf_big_marquee_tags %}
 
 {% block meta_title %}Member Directory{% endblock %}
 {% block title %}User Directory{% if f %} - Filter {{ f }}{% endif %}{% endblock %}
 
+{% block marquee %}{% big_marquee_for page %}{% endblock %}
 {% block content %}
-<h1>Member Directory</h1>
+<h1>{{ page.title|title }}</h1>
+{{ page.content|safe }}
 {% endblock %}
 
 {% block carousels %}

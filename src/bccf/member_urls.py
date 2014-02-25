@@ -11,5 +11,6 @@ urlpatterns = patterns("",
     url('^addmember/$', 'bccf.views.member.addmember', name='member-addmember'),
     url('^addexistingmember/$', 'bccf.views.member.addexistingmember', name='member-addexisting'),
     url('^delmember/$', 'bccf.views.member.delmember', name='member-delete'),
+    url('^program/request', 'bccf.views.member.reqprogram', name='member-request-program'),
     url(r'^(?P<slug>.*)/$', 'bccf.views.member.membership', name='member-membership'),
 )

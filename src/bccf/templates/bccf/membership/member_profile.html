@@ -114,6 +114,25 @@
 				{% endif %}
 				<a href="{% url 'events-create' %}">Create Event</a>
 			</div>
+			<h2>Request Program</h2>
+			<div class="groupcontent">
+                {% if program_requests %}
+                    <h3>Programs Requested</h3>
+                    <ul>
+                    {% for request in program_requests %}
+                        <li>
+                            {{ request.title|title }}
+                            {{ request.comment|safe }}
+                            {{ request.accept }}
+                            {% if request.accept %}
+                            {{ request.accepted_on }}
+                            {% endif %}
+                        </li>
+                    {% endfor %}                    
+                    </ul>
+                {% endif %}
+                <a href="{% url 'member-request-program' %}">Request a Program</a>			
+			</div>
 		{% endif %}
 
 		{% if membership|has_feature:'subscriptions' %}

@@ -116,7 +116,7 @@ ADMIN_MENU_ORDER = (
     ("Events", ("bccf.Event",)),
     ("Marquees", ("bccf.HomeMarquee", "bccf.HomeMarqueeSlide", "bccf.PageMarquee", "bccf.PageMarqueeSlide", "bccf.FooterMarquee", "bccf.FooterMarqueeSlide")),
     ("News", ("news.NewsPost",)),
-    ("Programs", ("bccf.Program",)),
+    ("Programs", ("bccf.Program", "bccf.ProgramRequest")),
     ("Resources", ("bccf.Article", "bccf.DownloadableForm", "bccf.Magazine", "bccf.TipSheet", "bccf.Video")),
     ("Forum", ("pybb.Forum", "pybb.Topic", "pybb.Post", "pybb.Profile")),
 )

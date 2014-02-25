@@ -49,8 +49,8 @@ def bccf_admin_page_ordering(request):
 
 def page(request, parent=None, child=None, baby=None):
     try:
-        if(not request.is_ajax()):
-            page = get_object_or_404(BCCFPage, slug=parent)
+        if not request.is_ajax():
+            page = get_object_or_404(BCCFPage, slug='bccf/%s' % parent)
             if parent in BCCF_SPECIAL_PAGES:
                 template = u"pages/%s.html" % parent
             else:
@@ -73,7 +73,6 @@ def page(request, parent=None, child=None, baby=None):
         log.debug('Failed to generate page', exc_info=1)
 
 def resource_type_page(request, type):
-    log.debug('resource_type_page')
     page = get_object_or_404(BCCFPage, slug='resources')
     child = None
     context = RequestContext(request, locals())
@@ -86,6 +85,7 @@ def topic_page(request, topic):
     return render_to_response('pages/bccftopic.html', {}, context_instance=context)
 
 def user_list(request):
+    page = BCCFPage.objects.get(slug__exact='member/directory');
     p = request.GET.get('page_var')
     f = request.GET.get('filter')
     if f and f != 'all':

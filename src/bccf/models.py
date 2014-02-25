@@ -16,7 +16,7 @@ from embed_video.fields import EmbedVideoField
 
 from mezzanine.conf import settings as mezzanine_settings
 from mezzanine.generic.fields import RatingField, CommentsField
-from mezzanine.core.fields import FileField
+from mezzanine.core.fields import FileField, RichTextField
 from mezzanine.core.models import Displayable, Orderable, RichText
 from mezzanine.pages.fields import MenusField
 from mezzanine.pages.managers import PageManager
@@ -146,6 +146,11 @@ class BCCFPage(Page, RichText):
     class Meta:
         verbose_name = 'Parent Page'
         verbose_name_plural = 'Parent Pages'
+    def save(self, *args, **kwargs):
+        super(BCCFPage, self).save(*args, **kwargs);
+        if 'bccf/' not in self.slug:
+            self.slug = 'bccf/%s' % self.slug
+            super(BCCFPage, self).save(*args, **kwargs);
 
 #Topic
 class BCCFTopic(Displayable, RichText):
@@ -188,11 +193,8 @@ class BCCFChildPage(BCCFBasePage, RichText, AdminThumbMixin):
     featured = models.BooleanField('Featured', default=False)
     titles = models.CharField(editable=False, max_length=1000, null=True)
     content_model = models.CharField(editable=False, max_length=50, null=True, blank=True)
-    #login_required = models.BooleanField("Login required", default=False,
-    #    help_text="If checked, only logged in users can view this page")
     rating = RatingField(verbose_name='Rating')
     comments = CommentsField()
-    #in_menus = MenusField("Show in menus", blank=True, null=True)
     page_for = models.CharField('Type', max_length=13, default='parent', blank=True, null=True, choices=TYPES)
     image = FileField("Image",
         upload_to = upload_to("bccf.ChildPage.image_file", "childpage"),
@@ -206,8 +208,7 @@ class BCCFChildPage(BCCFBasePage, RichText, AdminThumbMixin):
     class Meta:
         verbose_name = 'BCCF Child Page'
         verbose_name_plural = 'BCCF Child Pages'
-        ordering = ("titles",)
-        order_with_respect_to = "parent"
+        ordering = ("-created",)
 
     def __unicode__(self):
         return self.title
@@ -219,7 +220,10 @@ class BCCFChildPage(BCCFBasePage, RichText, AdminThumbMixin):
         slug = self.slug
         parent = 'trainings'
         if self.gparent:
-            parent = self.gparent.slug
+            if 'bccf/' in self.gparent.slug:
+                rest, parent = self.gparent.slug.split('bccf/', 1)
+            else:
+                parent = self.gparent.slug
         elif self.parent:
             parent = self.parent.slug
         return reverse('bccf-child', kwargs={"parent": parent, "child": slug})
@@ -459,7 +463,7 @@ class DocumentResourceBase(BCCFChildPage):
             'Acceptable file types: .doc, .pdf, .rtf, .txt, .odf, .docx, .xls, .xlsx, .ppt, .pptx.')
     product = models.ForeignKey(Product, verbose_name='Associated Product', blank=True, null=True)
     def save(self, **kwargs):
-        self.gparent = BCCFPage.objects.get(slug='resources')
+        self.gparent = BCCFPage.objects.get(slug='bccf/resources')
         super(DocumentResourceBase, self).save(**kwargs)
     class Meta:
         abstract = True
@@ -492,15 +496,16 @@ class Video(BCCFChildPage):
         'Example: http://www.youtube.com/watch?v=6Bm7DVqJTHo')
     product = models.ForeignKey(Product, verbose_name='Associated Product', blank=True, null=True)
     def save(self, **kwargs):
-        self.gparent = BCCFPage.objects.get(slug='resources')
+        self.gparent = BCCFPage.objects.get(slug='bccf/resources')
         super(Video, self).save(**kwargs)
     def get_resource_type(self):
         return 'Video'
 
 #Program Pages
 class Program(BCCFChildPage):
+    users = models.ManyToManyField(User, verbose_name='Requester', blank=True, null=True)
     def save(self, **kwargs):
-        self.gparent = BCCFPage.objects.get(slug='programs')
+        self.gparent = BCCFPage.objects.get(slug='bccf/programs')
         super(Program, self).save(**kwargs)
     class Meta:
         verbose_name = 'Program'
@@ -509,7 +514,7 @@ class Program(BCCFChildPage):
 #Blog Pages
 class Blog(BCCFChildPage):
     def save(self, **kwargs):
-        self.gparent = BCCFPage.objects.get(slug='blog')
+        self.gparent = BCCFPage.objects.get(slug='bccf/blog')
         super(Blog, self).save(**kwargs)
     class Meta:
         verbose_name = 'Blog Post'
@@ -518,7 +523,7 @@ class Blog(BCCFChildPage):
 #TAG
 class Campaign(BCCFChildPage):
     def save(self, **kwargs):
-        self.gparent = BCCFPage.objects.get(slug='tag')
+        self.gparent = BCCFPage.objects.get(slug='bccf/tag')
         super(Campaign, self).save(**kwargs)
 
 #### PAGE STUFF END ####
@@ -721,6 +726,36 @@ def is_product_variation_categ(variation, categ):
 
 #### USER STUFF END ####
 
+#### PROGRAM REQUEST #####
+class ProgramRequest(models.Model):
+    user = models.ForeignKey(User)
+    title = models.CharField('Program Name', max_length=255)
+    comment = RichTextField('Comment', blank=True, null=True, help_text='Provide a reason')
+    accept = models.BooleanField('Accept', default=False)
+    created = models.DateTimeField('Requested On', auto_now_add=True, blank=True, null=True)
+    accepted_on = models.DateTimeField('Accepted On', blank=True, null=True)
+    
+    class Meta:
+        verbose_name = 'Program Request'
+        verbose_name_plural = 'Program Requests'
+        ordering = ('-created',)
+    
+    def accept_request(self):
+        if self.accept:
+            return
+        try:
+            program = Program.objects.get(title__iexact=self.title)
+        except ObjectDoesNotExist:
+            program = Program(title=self.title, content=self.comment, status=1)
+        program.save()
+        program.users.add(self.user)
+        
+        self.accepted_on = datetime.now()
+        self.accept = True
+        self.save()
+
+#### PROGRAM REQUEST END ####
+
 class Event(BCCFChildPage):
     provider = models.ForeignKey(User, blank=True, null=True, related_name='events')
 
@@ -759,13 +794,10 @@ class Event(BCCFChildPage):
 EventForParents = Event
 EventForProfessionals = Event
 
-
 class EventRegistration(models.Model):
     event = models.ForeignKey(Event)
     user = models.ForeignKey(User)
     registration_date = models.DateTimeField(auto_now_add=True, blank=True)
-
-
 
 class Settings(models.Model):
     name = models.CharField(max_length=255)

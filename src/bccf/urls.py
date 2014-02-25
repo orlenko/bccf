@@ -62,10 +62,10 @@ urlpatterns = patterns("",
     url(r'^next/topic/(?P<topic>.+)/(?P<which>.*)/(?P<offset>\d+)/$', 'bccf.views.page.topic_next', name='topic-next'),
     url(r'^next/(?P<parent>.+)/(?P<which>.*)/(?P<offset>\d+)/$', 'bccf.views.page.next', name='bccf-next'),
     url(r'^topic/(?P<topic>.+)/$', 'bccf.views.page.topic_page', name='topic-page'),
-    url(r'^resources/(?P<type>%s)/$' % settings.BCCF_RESOURCE_TYPES, 'bccf.views.page.resource_type_page', name='resource-type'),
+    url(r'^bccf/resources/type/(?P<type>%s)/$' % settings.BCCF_RESOURCE_TYPES, 'bccf.views.page.resource_type_page', name='resource-type'),
     url(r'^bccf/(?P<parent>.+)/(?P<child>.+)/(?P<baby>.+)/$', 'bccf.views.page.page', name='bccf-baby'),
     url(r'^bccf/(?P<parent>.+)/(?P<child>.+)/$', 'bccf.views.page.page', name='bccf-child'),
-    url(r'^bccf/(?P<slug>.*)/$', 'mezzanine.pages.views.page', name='page'),
+    url(r'^bccf/(?P<parent>.*)/$', 'bccf.views.page.page', name='page'),
 
     # We don't want to presume how your homepage works, so here are a
     # few patterns you can use to set it up.

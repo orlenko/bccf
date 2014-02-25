@@ -14,7 +14,7 @@ from tinymce.widgets import TinyMCE
 from mezzanine.conf import settings
 from mezzanine.generic.models import Rating
 
-from bccf.models import UserProfile, Event, Settings
+from bccf.models import UserProfile, Event, Settings, ProgramRequest
 from bccf.settings import MEDIA_ROOT
 
 from formable.builder.models import FormStructure, FormPublished, Question
@@ -444,3 +444,11 @@ class DelMember(forms.Form):
         profile.organization = None
         profile.save()
         log.debug('User %s organization is now %s' % (user, profile.organization))
+        
+class ReqProgram(forms.ModelForm):
+    class Meta:
+        model = ProgramRequest
+        fields = ['title', 'comment', 'user']
+        widget = {
+            'user': forms.HiddenInput()        
+        }

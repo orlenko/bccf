@@ -23,7 +23,6 @@ def product_category_carousel(context, category):
     context['slides'] = category.get_content_model().products.all()
     return context
 
-
 @register.inclusion_tag("generic/includes/content_carousel.html", takes_context=True)
 def content_carousel_for(context, obj, title, child=None, which=None):
     """
@@ -41,26 +40,20 @@ def content_carousel_for(context, obj, title, child=None, which=None):
 
     if title == 'Talk':
         context['filter'] = True
-
-    log.info(which)
-    log.info(child)
-
     try:
         if child is None:
-            log.info('HERE 2')
             if which is None:
                 context['slides'] = BCCFChildPage.objects.filter(gparent=obj.pk, status=2).order_by('-created')[:12]
             else:
-                if obj.slug == 'resources' or obj.slug == 'tag':
+                if obj.slug == 'bccf/resources' or obj.slug == 'bccf/tag':
                     context['slides'] = BCCFChildPage.objects.filter(gparent=obj.pk, content_model=which, status=2).order_by('-created')[:12]
                 else:
                     context['slides'] = BCCFChildPage.objects.filter(gparent=obj.pk, page_for=which, status=2).order_by('-created')[:12]
         elif which is None:
-            log.info('HERE 3')
             context['open'] = True
             context['slides'] = [BCCFChildPage.objects.get(slug=child)]
             context['slides'].extend(BCCFChildPage.objects.filter(~Q(slug=child), gparent=obj.pk, status=2).order_by('-created')[:11])
-        elif obj.slug == 'resources' or obj.slug == 'tag': #Multiple
+        elif obj.slug == 'bccf/resources' or obj.slug == 'bccf/tag': #Multiple
             temp = BCCFChildPage.objects.get(slug=child)
             log.info('HERE')
             if temp.content_model == which: #For different content models
@@ -71,7 +64,6 @@ def content_carousel_for(context, obj, title, child=None, which=None):
                 context['slides'] = BCCFChildPage.objects.filter(gparent=obj.pk, content_model=which, status=2).order_by('-created')[:12]
         else:
             temp = BCCFChildPage.objects.get(slug=child)
-            log.info('NOT HERE')
             if temp.page_for == which: #For parent or professional
                 context['open'] = True
                 context['slides'] = [temp]
@@ -107,7 +99,7 @@ def content_carousel_for_topic(context, topic, type):
 
 @register.inclusion_tag("generic/includes/tag_carousel.html", takes_context=True)
 def content_carousel_for_tag(context, topic=None):
-    gparent = BCCFPage.objects.get(slug='tag')
+    gparent = BCCFPage.objects.get(slug='bccf/tag')
     if topic:
         context['talks'] = BCCFChildPage.objects.filter(gparent=gparent, content_model='topic', featured=True, bccf_topic=topic, status=2).order_by('-created')[:10]
         context['acts'] = BCCFChildPage.objects.filter(gparent=gparent, content_model='formpublished', featured=True, bccf_topic=topic, status=2).order_by('-created')[:10]

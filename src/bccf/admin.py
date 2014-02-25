@@ -16,7 +16,7 @@ from mezzanine.pages.admin import PageAdmin
 from bccf.models import (BCCFTopic, Settings, HomeMarquee, FooterMarquee, HomeMarqueeSlide, FooterMarqueeSlide,
     PageMarquee, PageMarqueeSlide, BCCFPage, BCCFChildPage, BCCFBabyPage, BCCFGenericPage,
     Blog, Program, Article, Magazine, Video, TipSheet, DownloadableForm, Campaign,
-    Event)
+    Event, ProgramRequest)
 from bccf.settings import BCCF_CORE_PAGES
 from django.core.exceptions import PermissionDenied
 
@@ -30,6 +30,7 @@ class SettingsAdmin(admin.ModelAdmin):
 
 
 class EventAdmin(DisplayableAdmin):
+    ordering = ('-created',)
     def __init__(self, *args, **kwargs):
         super(EventAdmin, self).__init__(*args, **kwargs)
         if self.fieldsets == DisplayableAdmin.fieldsets:
@@ -50,7 +51,7 @@ class EventAdmin(DisplayableAdmin):
                 self.fieldsets[0][1]['fields'].insert(3, field)
         if self.list_display == DisplayableAdmin.list_display:
             self.list_display = list(deepcopy(self.list_display))
-            for fieldname in ['provider', 'date_start', 'date_end', 'price', 'report_link']:
+            for fieldname in ['provider', 'created', 'date_start', 'date_end', 'price', 'report_link']:
                 self.list_display.insert(-1, fieldname)
 
     def report_link(self, obj):
@@ -82,6 +83,7 @@ def make_unfeatured(modeladmin, request, queryset):
 make_unfeatured.short_description = "Mark selected rows as not featured"
 
 class BCCFTopicAdmin(DisplayableAdmin):
+    ordering = ('-created',)
     def __init__(self, *args, **kwargs):
         super(BCCFTopicAdmin, self).__init__(*args, **kwargs)
         
@@ -117,6 +119,7 @@ class BCCFBabyInlineAdmin(admin.StackedInline):
     fields = ('title', 'content', 'order',)
 
 class BCCFGenericAdmin(DisplayableAdmin):
+    ordering = ('-created',)
     inlines = (BCCFBabyInlineAdmin,)
     
     def __init__(self, *args, **kwargs):
@@ -161,6 +164,7 @@ class BCCFGenericAdmin(DisplayableAdmin):
 
 class BCCFChildAdmin(DisplayableAdmin):
     inlines = (BCCFBabyInlineAdmin,)
+    ordering = ('-created',)
     
     def __init__(self, *args, **kwargs):
         super(BCCFChildAdmin, self).__init__(*args, **kwargs)
@@ -195,6 +199,7 @@ class BCCFChildAdmin(DisplayableAdmin):
 class BCCFProgramAdmin(DisplayableAdmin):
     actions = [make_featured, make_unfeatured]
     inlines = (BCCFBabyInlineAdmin,)
+    ordering = ('-created',)
 
     def __init__(self, *args, **kwargs):
         super(BCCFProgramAdmin, self).__init__(*args, **kwargs)
@@ -206,6 +211,7 @@ class BCCFProgramAdmin(DisplayableAdmin):
                                     'bccf_topic',
                                     'page_for',
                                     'featured',
+                                    'users',
                                     'image']):
                 self.fieldsets[0][1]['fields'].insert(3, field)
                 
@@ -230,6 +236,7 @@ class BCCFProgramAdmin(DisplayableAdmin):
 class BCCFResourceAdmin(DisplayableAdmin):
     actions = [make_featured, make_unfeatured]
     inlines = (BCCFBabyInlineAdmin,)
+    ordering = ('-created',)
     
     def __init__(self, *args, **kwargs):
         super(BCCFResourceAdmin, self).__init__(*args, **kwargs)
@@ -266,6 +273,7 @@ class BCCFResourceAdmin(DisplayableAdmin):
 class BCCFVideoResourceAdmin(AdminVideoMixin, DisplayableAdmin):
     actions = [make_featured, make_unfeatured]
     inlines = (BCCFBabyInlineAdmin,)
+    ordering = ('-created',)
     
     def __init__(self, *args, **kwargs):
         super(BCCFVideoResourceAdmin, self).__init__(*args, **kwargs)
@@ -303,6 +311,7 @@ class BCCFVideoResourceAdmin(AdminVideoMixin, DisplayableAdmin):
 class BCCFTagAdmin(DisplayableAdmin):
     actions = [make_featured, make_unfeatured]
     inlines = (BCCFBabyInlineAdmin,)
+    ordering = ('-created',)
     
     def __init__(self, *args, **kwargs):
         super(BCCFTagAdmin, self).__init__(*args, **kwargs)
@@ -345,6 +354,27 @@ admin.site.register(Magazine, BCCFResourceAdmin)
 admin.site.register(TipSheet, BCCFResourceAdmin)
 
 admin.site.register(Video, BCCFVideoResourceAdmin)
+
+# Program Request
+class ProgramRequestAdmin(admin.ModelAdmin):
+    actions = ['accept_requests']
+    fields = ('title', 'comment', 'user', 'accept', 'accepted_on', 'created')
+    readonly_fields = ('created', 'accepted_on')
+    list_display = ['title', 'user', 'accept', 'accepted_on', 'created']
+    list_filter = ('accept', 'created')
+    ordering = ('-created',)
+    
+    def accept_requests(self, request, queryset):
+        for row in queryset:
+            row.accept_request()
+        num_rows = queryset.update(accept=True)
+        if num_rows == 1:
+            return '%s Request Accepted.'% num_rows
+        else:
+            return '%s Requests Accepted.' % num_rows    
+    accept_requests.short_description = 'Accept Selected Requests'
+    
+admin.site.register(ProgramRequest, ProgramRequestAdmin)
 
 #Inline
 class HomeMarqueeInline(admin.TabularInline):
