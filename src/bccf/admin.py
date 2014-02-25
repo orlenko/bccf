@@ -46,6 +46,7 @@ class EventAdmin(DisplayableAdmin):
                                     'price',
                                     'bccf_topic',
                                     'image',
+                                    'program',
                                     'survey_before',
                                     'survey_after']):
                 self.fieldsets[0][1]['fields'].insert(3, field)
