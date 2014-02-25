@@ -26,13 +26,13 @@ def event_page(request):
 @login_required
 def create(request):
     page_for = request.user.profile.provided_event_type
-    form = EventForm(initial={
+    form = EventForm(request.user, initial={
         'provider': request.user,
         'page_for': page_for,
         'status': CONTENT_STATUS_DRAFT,
     })
     if request.method == 'POST':
-        form = EventForm(data=request.POST, files=request.FILES)
+        form = EventForm(request.user, data=request.POST, files=request.FILES)
         if form.is_valid():
             form.save()
             if not form.instance.parent:

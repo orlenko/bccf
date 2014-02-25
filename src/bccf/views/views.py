@@ -102,17 +102,8 @@ def rating(request):
     url = add_cache_bypass(obj.get_absolute_url().split("#")[0])
     response = redirect(url)
     rating_form = BCCFRatingForm(request, obj, post_data)
-    log.debug('===============================')
-    log.debug('before is_valid')
-    log.debug('===============================')
     if rating_form.is_valid():
-        log.debug('===============================')
-        log.debug('inside is_valid')
-        log.debug('===============================')
         rating_form.save()
-        log.debug('===============================')
-        log.debug('after save')
-        log.debug('===============================')
         if request.is_ajax():
             # Reload the object and return the rating fields as json.
             obj = obj.__class__.objects.get(id=obj.id)
@@ -124,7 +115,4 @@ def rating(request):
             response = HttpResponse(dumps(json))
         ratings = ",".join(rating_form.previous + [rating_form.current])
         set_cookie(response, "mezzanine-rating", ratings)
-    log.debug('===============================')
-    log.debug('after is_valid')
-    log.debug('===============================')
     return response
