@@ -193,6 +193,6 @@ def reqprogram(request):
         form = ReqProgram(request.POST)
         if form.is_valid():
             form.save()
-            return HTTPResponseRedirect(reverse(profile))
+            return HttpResponseRedirect(reverse(profile))
     context = RequestContext(request, locals())
     return render_to_response('accounts/account_form.html', {}, context_instance=context)
