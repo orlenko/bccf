@@ -13,7 +13,7 @@ from django.shortcuts import render_to_response, redirect
 from django.template.context import RequestContext
 
 from bccf.util.memberutil import get_upgrades, require_any_membership
-from bccf.forms import AddUserForm, AddExistingUserForm, DelMember, AddUsersForm, ProgramRequestForm
+from bccf.forms import AddUserForm, AddExistingUserForm, DelMember, AddUsersForm, ReqProgram
 from bccf.models import ProgramRequest
 
 log = logging.getLogger(__name__)
@@ -187,7 +187,7 @@ def delmember(request):
     return HttpResponseRedirect(reverse(profile))
 
 def reqprogram(request):
-    form = ProgramRequestForm(initial={'user': request.user.pk})
+    form = ReqProgram(initial={'user': request.user.pk})
     title = 'Request Program'
     if request.method == 'POST':
         form = ProgramRequest(request.POST)
