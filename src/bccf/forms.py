@@ -14,7 +14,7 @@ from tinymce.widgets import TinyMCE
 from mezzanine.conf import settings
 from mezzanine.generic.models import Rating
 
-from bccf.models import UserProfile, Event, Settings, ProgramRequest
+from bccf.models import UserProfile, Event, Settings, ProgramRequest, Program
 from bccf.settings import MEDIA_ROOT
 
 from formable.builder.models import FormStructure, FormPublished, Question
@@ -101,6 +101,7 @@ class ProfileForm(forms.ModelForm):
 
 
 class EventForm(forms.ModelForm):
+
     class Meta:
         model = Event
         fields = (
@@ -109,6 +110,7 @@ class EventForm(forms.ModelForm):
             'status',
             'image',
             'date_start', 'date_end', 'bccf_topic',
+            'program'
             )
         widgets = {
             'provider': forms.HiddenInput(),
@@ -119,6 +121,10 @@ class EventForm(forms.ModelForm):
             'image': AdvancedFileInput(),
         }
 
+    def __init__(self, user=None, *args, **kwargs):
+        super(EventForm, self).__init__(*args, **kwargs)
+        if user:
+            self.fields['program'].queryset = Program.objects.filter(Q(user=None)|Q(user=user))
 
 #
 #

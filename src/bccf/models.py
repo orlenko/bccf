@@ -771,6 +771,8 @@ class Event(BCCFChildPage):
 
     survey_before = models.ForeignKey('builder.FormPublished', null=True, blank=True, related_name='survey_before')
     survey_after = models.ForeignKey('builder.FormPublished', null=True, blank=True, related_name='survey_after')
+    
+    program = models.ForeignKey(Program, null=True, blank=True, related_name='program')
 
     def save(self, **kwargs):
         if not self.pk:
