@@ -2,7 +2,7 @@ import logging
 import json
 
 from django import forms
-from django.db.models import Sum
+from django.db.models import Sum, Q
 from django.forms.widgets import RadioFieldRenderer
 from django.utils.encoding import force_unicode
 from django.utils.safestring import mark_safe
