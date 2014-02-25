@@ -124,7 +124,7 @@ class EventForm(forms.ModelForm):
     def __init__(self, user=None, *args, **kwargs):
         super(EventForm, self).__init__(*args, **kwargs)
         if user:
-            self.fields['program'].queryset = Program.objects.filter(Q(user=None)|Q(user=user))
+            self.fields['program'].queryset = Program.objects.filter(Q(users=None)|Q(users=user))
 
 #
 #
