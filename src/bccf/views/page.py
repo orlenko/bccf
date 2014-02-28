@@ -73,7 +73,7 @@ def page(request, parent=None, child=None, baby=None):
         log.debug('Failed to generate page', exc_info=1)
 
 def resource_type_page(request, type):
-    page = get_object_or_404(BCCFPage, slug='resources')
+    page = get_object_or_404(BCCFPage, slug='bccf/resources')
     child = None
     context = RequestContext(request, locals())
     return render_to_response('pages/resources.html', {}, context_instance=context)
