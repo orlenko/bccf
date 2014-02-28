@@ -5,10 +5,18 @@ from bccf.models import BCCFChildPage, UserProfile
 
 import logging
 import re
+import datetime
 
 log = logging.getLogger(__name__)
 
 register = template.Library()
+
+BCCF_EXPIRY = Q(expiry_date__gte=datetime.datetime.now()) | Q(expiry_date=None)
+BCCF_FILTER = {
+    'status': 2,
+    'publish_date__lte': datetime.datetime.now(),
+    'featured': True
+}
 
 @register.inclusion_tag("generic/includes/featured.html", takes_context=True)
 def featured_programs(context):
@@ -17,7 +25,7 @@ def featured_programs(context):
     being rendered for.
     """
     context['class'] = 'hpro'
-    context['slides'] = BCCFChildPage.objects.filter(status=2, content_model='program', featured=True).order_by('-created')
+    context['slides'] = BCCFChildPage.objects.filter(BCCF_EXPIRY, content_model='program', **BCCF_FILTER).order_by('-created')
     return context
     
 @register.inclusion_tag('generic/includes/featured.html', takes_context=True)
@@ -26,7 +34,7 @@ def featured_tags(context):
     Provides a generic context variable name for the TAGs to be shown on the front page
     """
     context['class'] = 'hnote'
-    context['slides'] = BCCFChildPage.objects.filter(Q(content_model='formpublished') | Q(content_model='topic') | Q(content_model='campaign'), featured=True, status=2).order_by('-created')
+    context['slides'] = BCCFChildPage.objects.filter(Q(content_model='formpublished') | Q(content_model='topic') | Q(content_model='campaign'), BCCF_EXPIRY, **BCCF_FILTER).order_by('-created')
     return context
     
 @register.inclusion_tag('generic/includes/featured_resources.html', takes_context=True)
@@ -34,7 +42,7 @@ def featured_resources(context):
     """
     Provides a generic context variable name for the featured resources to be shown on the front page
     """
-    context['slides'] = BCCFChildPage.objects.filter(Q(content_model='article') | Q(content_model='downloadableform') | Q(content_model='magazine') | Q(content_model='tipsheet') | Q(content_model='video'), featured=True, status=2).order_by('-created')
+    context['slides'] = BCCFChildPage.objects.filter(Q(content_model='article') | Q(content_model='downloadableform') | Q(content_model='magazine') | Q(content_model='tipsheet') | Q(content_model='video'), BCCF_EXPIRY, **BCCF_FILTER).order_by('-created')
     return context
     
 @register.inclusion_tag('generic/includes/featured_users.html', takes_context=True)
@@ -50,6 +58,6 @@ def related_resources_for(context, obj, type, title):
     for topic in obj.bccf_topic.all():        
         q = q | Q(bccf_topic = topic)
         
-    resource_pre = BCCFChildPage.objects.filter(Q(content_model=type), status=2).distinct()
+    resource_pre = BCCFChildPage.objects.filter(Q(content_model=type), BCCF_EXPIRY, **BCCF_FILTER).distinct()
     context['resources'] = resource_pre.filter(q, ~Q(slug=obj)).order_by('featured', '-created')[:10]
     return context

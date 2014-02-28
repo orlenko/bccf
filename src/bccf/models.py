@@ -148,7 +148,7 @@ class BCCFPage(Page, RichText):
         verbose_name_plural = 'Parent Pages'
     def save(self, *args, **kwargs):
         super(BCCFPage, self).save(*args, **kwargs);
-        if 'bccf/' not in self.slug:
+        if not self.pk and not self.slug:
             self.slug = 'bccf/%s' % self.slug
             super(BCCFPage, self).save(*args, **kwargs);
 
@@ -551,6 +551,8 @@ class UserProfile(models.Model):
     membership_type = models.CharField('Membership Type', max_length=128, null=True, blank=True, choices=MEMBERSHIP_TYPES)
     membership_level = models.IntegerField(default=0, null=True, blank=True)
     organization = models.ForeignKey('UserProfile', null=True, blank=True, related_name='members')
+
+    accreditation = models.ManyToManyField('Program', verbose_name='Accreditation', blank=True, null=True)
 
     # Member Fields
     job_title = models.CharField('Job Title', max_length=255, null=True, blank=True)

@@ -15,9 +15,11 @@ from pybb.models import Topic
 
 import logging
 import json
+import datetime
 
 log = logging.getLogger(__name__)
 
+BCCF_EXPIRY = Q(expiry_date__gte=datetime.datetime.now()) | Q(expiry_date=None)
 
 @staff_member_required
 def bccf_admin_page_ordering(request):
@@ -73,7 +75,7 @@ def page(request, parent=None, child=None, baby=None):
         log.debug('Failed to generate page', exc_info=1)
 
 def resource_type_page(request, type):
-    page = get_object_or_404(BCCFPage, slug='bccf/resources')
+    page = get_object_or_404(BCCFPage, slug__exact='bccf/resources')
     child = None
     context = RequestContext(request, locals())
     return render_to_response('pages/resources.html', {}, context_instance=context)
@@ -104,14 +106,21 @@ def user_list(request):
 
 def next(request, parent, which, offset):
     if request.is_ajax():
-        obj = BCCFPage.objects.get(slug=parent)
+        obj = BCCFPage.objects.get(slug='bccf/'%parent)
+        filter = {
+            'gparent': obj,
+            'status': 2,
+            'publish_date__lte': datetime.datetime.now(),
+        }
+
         limit = int(offset)+12
+        
         if obj.slug == 'resources' or obj.slug == 'tag':
-            slides = BCCFChildPage.objects.filter(gparent=obj.pk, content_model=which, status=2).order_by('-created')[offset:limit]
+            filter['content_model'] = which
         elif which == 'parent' or which == 'professional':
-            slides = BCCFChildPage.objects.filter(gparent=obj.pk, page_for=which, status=2).order_by('-created')[offset:limit]
-        else:
-            slides = BCCFChildPage.objects.filter(gparent=obj.pk, status=2).order_by('-created')[offset:limit]
+            filter['page_for'] = which
+            
+        slides = BCCFChildPage.objects.filter(BCCF_EXPIRY, **filter).order_by('-created')[offset:limit]
         parts = {
             'slide': render_to_string('generic/carousel_slide_part.html', {'slides':slides, 'MEDIA_URL':MEDIA_URL}),
             'grid': render_to_string('generic/carousel_grid_part.html', {'slides':slides, 'MEDIA_URL':MEDIA_URL})
@@ -124,7 +133,14 @@ def topic_next(request, topic, which, offset):
     if request.is_ajax():
         limit = int(offset)+12
         topic = BCCFTopic.objects.get(slug=topic)
-        slides = BCCFChildPage.objects.filter(topic=topic, page_for=which, status=2).order_by('-created')[offset:limit]
+        filter = {
+            'topic': topic,
+            'page_for': which,
+            'status': 2,
+            'publish_date__lte': datetime.datetime.now(),
+        }
+
+        slides = BCCFChildPage.objects.filter(BCCF_EXPIRY, **filter).order_by('-created')[offset:limit]
         parts = {
             'slide': render_to_string('generic/carousel_slide_part.html', {'slides':slides, 'MEDIA_URL':MEDIA_URL}),
             'grid': render_to_string('generic/carousel_grid_part.html', {'slides':slides, 'MEDIA_URL':MEDIA_URL}),

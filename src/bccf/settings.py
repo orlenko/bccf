@@ -520,6 +520,8 @@ else:
 ##################
 ## OWN SETTINGS ##
 ##################
+import datetime
+
 COMMENTS_USE_RATINGS = False
 
 BCCF_RESOURCE_TYPES = '(article|downloadableform|magazine|tipsheet|video)'
@@ -530,7 +532,6 @@ SEARCH_MODEL_CHOICES = (
     'bccf.BCCFTopic',
     'bccf.BCCFPage',
 )
-
 
 # CKEditor
 CKEDITOR_CONFIGS = {

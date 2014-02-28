@@ -16,7 +16,7 @@ from mezzanine.pages.admin import PageAdmin
 from bccf.models import (BCCFTopic, Settings, HomeMarquee, FooterMarquee, HomeMarqueeSlide, FooterMarqueeSlide,
     PageMarquee, PageMarqueeSlide, BCCFPage, BCCFChildPage, BCCFBabyPage, BCCFGenericPage,
     Blog, Program, Article, Magazine, Video, TipSheet, DownloadableForm, Campaign,
-    Event, ProgramRequest)
+    Event, EventRegistration, ProgramRequest)
 from bccf.settings import BCCF_CORE_PAGES
 from django.core.exceptions import PermissionDenied
 
@@ -28,9 +28,13 @@ class SettingsAdmin(admin.ModelAdmin):
     list_display = ['name', 'value']
     list_editable = ['value']
 
+class EventAttendeeInline(admin.StackedInline):
+    model = EventRegistration
+    fields = ('user',)
 
 class EventAdmin(DisplayableAdmin):
     ordering = ('-created',)
+    inlines = [EventAttendeeInline,]
     def __init__(self, *args, **kwargs):
         super(EventAdmin, self).__init__(*args, **kwargs)
         if self.fieldsets == DisplayableAdmin.fieldsets:
@@ -47,6 +51,7 @@ class EventAdmin(DisplayableAdmin):
                                     'bccf_topic',
                                     'image',
                                     'program',
+                                    'page_for',
                                     'survey_before',
                                     'survey_after']):
                 self.fieldsets[0][1]['fields'].insert(3, field)
