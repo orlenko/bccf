@@ -11,7 +11,7 @@ from mezzanine import template
 from mezzanine.conf import settings
 from django.core.urlresolvers import reverse
 
-from bccf.modesl import EventRegistration
+from bccf.models import EventRegistration
 
 # Try to import PIL in either of the two ways it can end up installed.
 try:
