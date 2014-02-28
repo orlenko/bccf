@@ -37,7 +37,7 @@ def create(request):
             form.save()
             if not form.instance.parent:
                 try:
-                    form.instance.parent = BCCFPage.objects.get(slug='trainings')
+                    form.instance.parent = BCCFPage.objects.get(slug='bccf/trainings')
                     form.instance.save()
                 except:
                     pass
@@ -84,3 +84,10 @@ def signup(request, slug):
 
 def event(request):
     pass
+    
+def attendees(request, id):
+    event = Event.object.get(id=id)
+    if not request.user.is_superuser() and event.user != request.user:
+        redirect('/')
+    
+    

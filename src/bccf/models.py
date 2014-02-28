@@ -504,6 +504,7 @@ class Video(BCCFChildPage):
 #Program Pages
 class Program(BCCFChildPage):
     users = models.ManyToManyField(User, verbose_name='Requester', blank=True, null=True)
+    user_added = models.BooleanField('Added By User', default=False, blank=True)
     def save(self, **kwargs):
         self.gparent = BCCFPage.objects.get(slug='bccf/programs')
         super(Program, self).save(**kwargs)
@@ -552,7 +553,7 @@ class UserProfile(models.Model):
     membership_level = models.IntegerField(default=0, null=True, blank=True)
     organization = models.ForeignKey('UserProfile', null=True, blank=True, related_name='members')
 
-    accreditation = models.ManyToManyField('Program', verbose_name='Accreditation', blank=True, null=True)
+    accreditation = models.ManyToManyField(Program, verbose_name='Accreditation', blank=True, null=True)
 
     # Member Fields
     job_title = models.CharField('Job Title', max_length=255, null=True, blank=True)
@@ -748,7 +749,7 @@ class ProgramRequest(models.Model):
         try:
             program = Program.objects.get(title__iexact=self.title)
         except ObjectDoesNotExist:
-            program = Program(title=self.title, content=self.comment, status=1)
+            program = Program(title=self.title, content=self.comment, status=1, user_added=True)
         program.save()
         program.users.add(self.user)
         
@@ -793,6 +794,10 @@ class Event(BCCFChildPage):
     @permalink
     def report_url(self):
         return('event-survey-report', (), {'slug':self.slug})
+        
+    @permalink
+    def attendee_url(self):
+        return ('events-attendees', (), {'id':self.id})
 
 
 EventForParents = Event
@@ -802,6 +807,17 @@ class EventRegistration(models.Model):
     event = models.ForeignKey(Event)
     user = models.ForeignKey(User)
     registration_date = models.DateTimeField(auto_now_add=True, blank=True)
+    passed = models.BooleanField('Passed', default=False, blank=True)
+    
+    def save(self, **kwargs):
+        user = UserProfile.objects.get(user=self.user)
+        if self.pk and user.membership_type == 'professional' and self.event.program:
+            if self.passed:
+                user.accreditation.add(self.event.program)
+            else:
+                user.accreditation.remove(self.event.program)
+        super(EventRegistration, self).save(**kwargs)
+        
 
 class Settings(models.Model):
     name = models.CharField(max_length=255)

@@ -30,7 +30,7 @@ class SettingsAdmin(admin.ModelAdmin):
 
 class EventAttendeeInline(admin.StackedInline):
     model = EventRegistration
-    fields = ('user',)
+    fields = ('user', 'passed')
 
 class EventAdmin(DisplayableAdmin):
     ordering = ('-created',)
@@ -205,7 +205,7 @@ class BCCFChildAdmin(DisplayableAdmin):
 class BCCFProgramAdmin(DisplayableAdmin):
     actions = [make_featured, make_unfeatured]
     inlines = (BCCFBabyInlineAdmin,)
-    ordering = ('-created',)
+    ordering = ('user_added', '-created',)
 
     def __init__(self, *args, **kwargs):
         super(BCCFProgramAdmin, self).__init__(*args, **kwargs)
@@ -218,6 +218,7 @@ class BCCFProgramAdmin(DisplayableAdmin):
                                     'page_for',
                                     'featured',
                                     'users',
+                                    'user_added',
                                     'image']):
                 self.fieldsets[0][1]['fields'].insert(3, field)
                 
@@ -230,7 +231,7 @@ class BCCFProgramAdmin(DisplayableAdmin):
         # List Display      
         if self.list_display == DisplayableAdmin.list_display:
             self.list_display = list(deepcopy(self.list_display))
-            for fieldname in ['page_for', 'bccf_topic', 'featured']:
+            for fieldname in ['page_for', 'bccf_topic', 'featured', 'user_added']:
                 self.list_display.insert(-1, fieldname)                
 
         # Filter
