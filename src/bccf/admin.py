@@ -57,8 +57,12 @@ class EventAdmin(DisplayableAdmin):
                 self.fieldsets[0][1]['fields'].insert(3, field)
         if self.list_display == DisplayableAdmin.list_display:
             self.list_display = list(deepcopy(self.list_display))
-            for fieldname in ['provider', 'created', 'date_start', 'date_end', 'price', 'report_link']:
+            for fieldname in ['provider', 'created', 'date_start', 'date_end', 'price', 'report_link', 'attendee_link']:
                 self.list_display.insert(-1, fieldname)
+
+    def attendee_link(self, obj):
+        return '<a href="%s">Download List of Attendees</a>' % obj.attendee_url()
+    attendee_link.allow_tags = True
 
     def report_link(self, obj):
         return '<a href="%s">Download Report</a>' % obj.report_url()

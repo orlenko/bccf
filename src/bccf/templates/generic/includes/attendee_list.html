@@ -1,0 +1,7 @@
+<ul>
+    {% for attendee in attendees %}
+    <li>{{ attendee.get_full_name }} - {{ attendee.email }}</li>
+    {% empty %}
+    <li>No Attendees Yet</li>
+    {% endfor %}
+</ul>

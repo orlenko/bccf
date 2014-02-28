@@ -1,4 +1,6 @@
 import logging
+import csv
+import datetime
 
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
@@ -9,6 +11,7 @@ from bccf.models import Event, EventRegistration, BCCFPage
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from bccf.forms import EventForm
+from django.http import HttpResponse
 from django.http.response import HttpResponseRedirect
 from mezzanine.core.models import CONTENT_STATUS_DRAFT, CONTENT_STATUS_CHOICES
 from django import forms
@@ -86,8 +89,22 @@ def event(request):
     pass
     
 def attendees(request, id):
-    event = Event.object.get(id=id)
-    if not request.user.is_superuser() and event.user != request.user:
+    event = Event.objects.get(id=id)
+    if not request.user.is_authenticated() and not request.user.is_superuser() and event.user != request.user:
         redirect('/')
     
+    attendees = EventRegistration.objects.filter(event=event)    
+    
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="%s-%s-attendees.csv"' % (event.slug, datetime.datetime.now())
+    
+    writer = csv.writer(response)
+    writer.writerow(['Attendees for %s' % (event.title)])
+      
+    writer.writerow(['First Name', 'Last Name', 'Email'])
+
+    for attendee in attendees:
+        writer.writerow([attendee.user.first_name, attendee.user.last_name, attendee.user.email])
+    
+    return response
     
