@@ -74,7 +74,7 @@ $(function(){
         'addClassActive': true,
         'theme': 'normal-marquee',
         'beforeMove': function(elem) {
-            if(!elem.is(':hover') && (this.owl.currentItem+1) === this.owl.owlItems.length) {
+            if(!elem.is(':hover') && (this.owl.currentItem+1) === this.owl.owlItems.length && !$('.mnav-mobile-btn').is(':visible')) {
                 $('#member-organization').trigger('click');
             }     
         }
@@ -87,7 +87,7 @@ $(function(){
         'theme': 'normal-marquee',
         'addClassActive': true,
         'beforeMove': function(elem) {
-            if(!elem.is(':hover') && (this.owl.currentItem+1) === this.owl.owlItems.length) { 
+            if(!elem.is(':hover') && (this.owl.currentItem+1) === this.owl.owlItems.length && !$('.mnav-mobile-btn').is(':visible')) { 
                 $('#member-professionals').trigger('click');
             }
          }
@@ -99,7 +99,7 @@ $(function(){
         'stopOnHover': true,
         'theme': "normal-marquee",
         'beforeMove': function(elem) {
-            if(!elem.is(':hover') && (this.owl.currentItem+1) === this.owl.owlItems.length) { 
+            if(!elem.is(':hover') && (this.owl.currentItem+1) === this.owl.owlItems.length && !$('.mnav-mobile-btn').is(':visible')) { 
                 $('#training-families').trigger('click');
             }
         } 
@@ -111,7 +111,7 @@ $(function(){
         'stopOnHover': true,
         'theme': "normal-marquee",
         'beforeMove': function(elem) {
-            if(!elem.is(':hover') && (this.owl.currentItem+1) === this.owl.owlItems.length) { 
+            if(!elem.is(':hover') && (this.owl.currentItem+1) === this.owl.owlItems.length && !$('.mnav-mobile-btn').is(':visible')) { 
                 $('#training-professionals').trigger('click');
             }    
         }
