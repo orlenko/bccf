@@ -5,7 +5,7 @@
     {% if event.survey_before %}
     <div class="with_survey">
         <a href="{{ event.survey_before.get_absolute_url }}">{{ event.survey_before.title }}</a> | 
-        <a class="remove_survey" href="{# event.get_remove_survey_url #}?e={{ event.pk }}?b=1">Remove</a>
+        <a class="remove_survey" href="{% url 'events-remove-survey' %}?e={{ event.pk }}?b=1">Remove</a>
     </div>
     {% endif %}
     
