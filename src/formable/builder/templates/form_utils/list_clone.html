@@ -5,7 +5,7 @@
     {% if event.survey_before %}
     <div class="with_survey">
         <a href="{{ event.survey_before.get_absolute_url }}">{{ event.survey_before.title }}</a> | 
-        <a class="remove_survey" href="{% url 'events-remove-survey' %}?e={{ event.pk }}&?b=1">Remove</a>
+        <a class="remove_survey" href="{% url 'events-remove-survey' %}?e={{ event.pk }}&b=1">Remove</a>
     </div>
     {% endif %}
     
@@ -23,7 +23,7 @@
     {% if event.survey_after %}
     <div class="with_survey">
         <a href="{{ event.survey_before.get_absolute_url }}">{{ event.survey_after.title }}</a> | 
-        <span><a class="remove_survey" href="{% url 'events-remove-survey' %}?e={{ event.pk }}&?a=1">Remove</a></span>
+        <span><a class="remove_survey" href="{% url 'events-remove-survey' %}?e={{ event.pk }}&a=1">Remove</a></span>
     </div>
     {% endif %}
     
