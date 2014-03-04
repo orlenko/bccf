@@ -46,7 +46,7 @@ class FormPublishForm(forms.ModelForm):
             self.fields['status'].widget = forms.HiddenInput()
             del self.fields['page_for']
             del self.fields['bccf_topic']
-            def self.fields['featured']
+            del self.fields['featured']
 
     def handle_upload(self):
         image_path = 'uploads/childpage/'+self.files['image'].name
