@@ -44,11 +44,11 @@
         }
     });
     $('.remove_survey').on('click', function(e) {
+        e.preventDefault();
         var url = $(this).attr('href');
-        var parent = $(this).parent('div');
+        var parent = $(this).parents('section');
         $.ajax({
             url: url,
-            type: 'GET',
             success: function(r) {
                 if(r === 'Yes') {
                     parent.children('.with_survey').hide();
