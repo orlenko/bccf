@@ -86,8 +86,7 @@ class BCCFTopicAdmin(DisplayableAdmin):
         super(BCCFTopicAdmin, self).__init__(*args, **kwargs)
         if self.fieldsets == DisplayableAdmin.fieldsets:
             self.fieldsets = deepcopy(self.fieldsets)
-            for field in reversed(['sticky',
-                                    'forum',
+            for field in reversed(['forum',
                                     'name',
                                     'user',
                                     'closed',
@@ -105,8 +104,6 @@ class BCCFTopicAdmin(DisplayableAdmin):
             self.list_filter = list(deepcopy(self.list_filter))
             for fieldname in ['featured']:
                 self.list_filter.insert(-1, fieldname)
-            
-    inlines = [PollAnswerAdmin, ]
 
 class TopicReadTrackerAdmin(admin.ModelAdmin):
     list_display = ['topic', 'user', 'time_stamp']

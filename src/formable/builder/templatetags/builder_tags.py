@@ -1,6 +1,6 @@
 from django import template
 
-from formable.builder.forms import FormStructureForm, ListForPublishForm
+from formable.builder.forms import FormStructureForm, CloneFormForm
 
 import logging
 
@@ -15,11 +15,9 @@ def builder(context):
     """
     context["structure_form"] = FormStructureForm()
     return context
-    
-@register.inclusion_tag("form_utils/list_forms.html", takes_context=True)
-def form_list_for_publish(context):
-    """
-    Provides a generic context variable to render a form struct list.
-    """
-    context["list_form"] = ListForPublishForm()
+
+@register.inclusion_tag("form_utils/list_clone.html", takes_context=True)
+def form_clone_for_event(context, event):
+    context['event'] = event
+    context["list_clone"] = FormStructure.objects.filter(Q(user=None) | Q(user=event.provider)).order_by('user')
     return context

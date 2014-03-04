@@ -118,8 +118,6 @@ def create_survey(request, type=None, id=None):
     context = RequestContext(request, locals())
     return render_to_response('builder_page.html', {}, context_instance=context)
 
-
-@login_required
 @never_cache
 def view(request, slug=None):
     """
