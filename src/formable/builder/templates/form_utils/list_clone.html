@@ -13,7 +13,7 @@
         <option value="" selected>-----------</option>
         <option value="{% url 'formable-create-form' %}?before_event={{ event.pk }}">Create Before Survey</option>
         {% for clone in list_clone %}
-        <option value="{% url 'formable-edit-clone-form' %}?before_event={{ event.pk }}">{{ clone.title }}</option>
+        <option value="{% url 'formable-edit-clone-form' 'clone' clone.pk %}?before_event={{ event.pk }}">{{ clone.title }}</option>
         {% endfor %}
     </select>
 </section>
@@ -31,7 +31,7 @@
         <option value="" selected>-----------</option>
         <option value="{% url 'formable-create-form' %}?after_event={{ event.pk }}">Create After Survey</option>
         {% for clone in list_clone %}
-        <option value="{% url 'formable-edit-clone-form' %}?after_event={{ event.pk }}">{{ clone.title }}</option>
+        <option value="{% url 'formable-edit-clone-form' 'clone' clone.pk  %}?after_event={{ event.pk }}">{{ clone.title }}</option>
         {% endfor %}
     </select>
 </section>
