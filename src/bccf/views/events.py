@@ -108,7 +108,7 @@ def attendees(request, id):
     
     return response
     
-def remove_sruvey(request) {
+def remove_sruvey(request):
     if request.is_ajax():
         event = None
         before = None
@@ -136,5 +136,4 @@ def remove_sruvey(request) {
         return HttpResponse('Yes')
     else:
         return HttpResponse('No')
-}
     
