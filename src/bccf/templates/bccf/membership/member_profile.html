@@ -108,7 +108,7 @@
 					<ul>
 					{% for event in user.events.all %}
 						<li>{{ event.title }} ({{ event.date_start|date:'DATETIME_FORMAT' }} &mdash;  {{ event.date_end|date:'DATETIME_FORMAT' }}):
-							<a href="{{ event.edit_url }}">edit</a> | <a href="{{ event.get_absolute_url }}">View on Site</a> | <a href="{{ event.attendee_url }}">Download Attendee List</a>
+							<a href="{{ event.edit_url }}">Edit</a> | <a href="{{ event.get_absolute_url }}">View on Site</a> | <a href="{{ event.attendee_url }}">Download Attendee List</a>
 						    {% if event.survey_before or event.survey_after %}
 						     | <a href="{{ event.report_url }}">Download Report</a>
 						    {% endif %}

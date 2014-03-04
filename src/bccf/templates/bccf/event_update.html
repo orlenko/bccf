@@ -1,6 +1,6 @@
 {% extends "pages/base_bccfpage.html" %}
 
-{% load i18n %}
+{% load i18n builder_tags %}
 
 {% block content %}
 <h2>Edit Event</h2>
@@ -9,6 +9,8 @@
 <form  enctype="multipart/form-data" action="{% url 'events-create' %}"  method="POST">
     {% csrf_token %}
     {{ form.as_p }}
+    {% list_clone_for event %}
+    <!--
     <p>
     	<strong>Survey before:</strong>
     	{% if event.survey_before %}
@@ -25,6 +27,7 @@
     		<a href="{% url 'formable-create-form' %}?after_event={{ event.pk }}">Create</a>
     	{% endif %}
     </p>
+    -->
     <br/><br/>
     <a href="{{ event.get_absolute_url }}">Click to view the event</a>
     <br/><br/>
