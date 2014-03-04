@@ -9,7 +9,7 @@
     </div>
     {% endif %}
     
-    <select class="select_survey">
+    <select class="select_survey{% if event.survey_before %} none{% endif %}">
         <option value="" selected>-----------</option>
         <option value="{% url 'formable-create-form' %}?before_event={{ event.pk }}">Create Before Survey</option>
         {% for clone in list_clone %}
@@ -39,7 +39,9 @@
 <script type="text/javascript" >
     $('.select_survey').on('change', function(e) {
         var url = $(this).val();
-        window.location = url;
+        if(url != '') {
+            window.location = url;
+        }
     });
     $('.remove_survey').on('click', function(e) {
         var url = $(this).attr('href');
