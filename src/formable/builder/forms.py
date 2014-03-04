@@ -43,7 +43,7 @@ class FormPublishForm(forms.ModelForm):
     def __init__(self, hide, *args, **kwargs):
         super(FormPublishForm, self).__init__(*args, **kwargs)
         if hide:
-            self.fields['status'].widgets = forms.HiddenInput()
+            self.fields['status'].widget = forms.HiddenInput()
 
     def handle_upload(self):
         image_path = 'uploads/childpage/'+self.files['image'].name
