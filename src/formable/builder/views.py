@@ -129,7 +129,9 @@ def view(request, slug=None):
     it will redirect the user to the index page.
     """
     page = FormPublished.objects.get(slug=slug)
-    filled = FormFilled.objects.filter(form_published=page, user=request.user)
+    filled = []
+    if request.user.is_authenticated():
+        filled = FormFilled.objects.filter(form_published=page, user=request.user)
     form_structure = FormStructure.objects.get(pk=page.form_structure.pk)
     fieldset, field = parse(form_structure.structure, page.pk)
 

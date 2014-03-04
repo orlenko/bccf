@@ -16,17 +16,12 @@
     <script type="text/javascript" src="{{ STATIC_URL }}pybb/js/jquery.formset.min.js"></script>
 {% endblock %}
 
-{% block breadcrumb %}
-    {% with object=topic %}
-        {% include "pybb/breadcrumb.html" %}
-    {% endwith %}
-{% endblock %}
-
 {% block marquee %}{% endblock %}
 
 {% block content %}
 <h1>{{ topic.title|title }}</h1>
 {{ topic.content|safe }}
+{% include "includes/add_this.html" %}
 {% endblock %}
 
 {% block carousels %}
