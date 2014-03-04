@@ -9,7 +9,7 @@
 <form  enctype="multipart/form-data" action="{% url 'events-create' %}"  method="POST">
     {% csrf_token %}
     {{ form.as_p }}
-    {% list_clone_for event %}
+    {% form_clone_for event %}
     <!--
     <p>
     	<strong>Survey before:</strong>

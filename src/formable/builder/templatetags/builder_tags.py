@@ -17,7 +17,7 @@ def builder(context):
     return context
 
 @register.inclusion_tag("form_utils/list_clone.html", takes_context=True)
-def form_clone_for_event(context, event):
+def form_clone_for(context, event):
     context['event'] = event
     context["list_clone"] = FormStructure.objects.filter(Q(user=None) | Q(user=event.provider)).order_by('user')
     return context
