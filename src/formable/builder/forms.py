@@ -35,10 +35,15 @@ class FormPublishForm(forms.ModelForm):
         widgets = {
             'status': forms.RadioSelect,
             'image': AdvancedFileInput,
-            'user': forms.HiddenInput(),
-            'form_structure': forms.HiddenInput()
+            'user': forms.HiddenInput,
+            'form_structure': forms.HiddenInput
         }
         fields = ('user', 'form_structure', 'title', 'status', 'content', 'page_for', 'bccf_topic', 'featured', 'image')
+
+    def __init__(self, hide, *args, **kwargs):
+        super(FormPublishForm, self).__init__(*args, **kwargs)
+        if hide:
+            self.widget['status'] = form.HiddenInput()
 
     def handle_upload(self):
         image_path = 'uploads/childpage/'+self.files['image'].name

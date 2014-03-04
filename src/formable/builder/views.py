@@ -31,15 +31,19 @@ def publish_form(request, id):
     try:
         if not request.user.is_superuser:
             struct = FormStructure.objects.get(user=request.user, pk=id)
+            hide = True
+            status = 1
         else:
             struct = FormStructure.objects.get(pk=id)
+            hide = False
+            status = 2
     except ObjectDoesNotExist:
         return redirect('/');
 
-    form = FormPublishForm(initial={'form_structure': struct.pk, 'user': request.user.pk})
+    form = FormPublishForm(hide,initial={'form_structure': struct.pk, 'user': request.user.pk, 'status':status})
 
     if request.method == 'POST':
-        form = FormPublishForm(request.POST, request.FILES, initial={'form_structure': struct.pk, 'user': request.user.pk})
+        form = FormPublishForm(hide, request.POST, request.FILES, initial={'form_structure': struct.pk, 'user': request.user.pk, 'status':status})
         if form.is_valid():
             published = form.save()
             # Support editing for events
