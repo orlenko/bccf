@@ -47,6 +47,7 @@ class FormPublishForm(forms.ModelForm):
             del self.fields['page_for']
             del self.fields['bccf_topic']
             del self.fields['featured']
+            del self.fields['image']
 
     def handle_upload(self):
         image_path = 'uploads/childpage/'+self.files['image'].name
