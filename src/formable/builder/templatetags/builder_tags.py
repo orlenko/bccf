@@ -1,5 +1,6 @@
 from django import template
 
+from formable.builder.models import FormStructure
 from formable.builder.forms import FormStructureForm, CloneFormForm
 
 import logging
