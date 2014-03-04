@@ -4,8 +4,8 @@
     <p>Survey Before:</p>
     {% if event.survey_before %}
     <div class="with_survey">
-        <a href="{{ event.survey_before.get_absolute_url }}">{{ event.survey_before.title }}</a>
-        <a class="remove_survey" href="{# event.get_remove_survey_url #}?before=1">Remove</a>
+        <a href="{{ event.survey_before.get_absolute_url }}">{{ event.survey_before.title }}</a> | 
+        <a class="remove_survey" href="{# event.get_remove_survey_url #}?e={{ event.pk }}?b=1">Remove</a>
     </div>
     {% endif %}
     
@@ -22,8 +22,8 @@
     <p>Survey After:</p>
     {% if event.survey_after %}
     <div class="with_survey">
-        <a href="{{ event.survey_before.get_absolute_url }}">{{ event.survey_after.title }}</a>
-        <span><a class="remove_survey" href="{# event.get_remove_survey_url #}?after=1">Remove</a></span>
+        <a href="{{ event.survey_before.get_absolute_url }}">{{ event.survey_after.title }}</a> | 
+        <span><a class="remove_survey" href="{% url 'events-remove-survey' %}?e={{ event.pk }}?a=1">Remove</a></span>
     </div>
     {% endif %}
     
@@ -48,7 +48,7 @@
         var parent = $(this).parent('div');
         $.ajax({
             url: url,
-            method: 'GET',
+            type: 'GET',
             success: function(r) {
                 if(r === 'Yes') {
                     parent.children('.with_survey').hide();

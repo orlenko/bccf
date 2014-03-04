@@ -47,6 +47,7 @@ urlpatterns = patterns("",
     url(r'events/create/$', 'bccf.views.events.create', name='events-create'),
     url(r'events/edit/(?P<slug>.*)/$', 'bccf.views.events.edit', name='events-edit'),
     url(r'events/attendees/(?P<id>.+)/$', 'bccf.views.events.attendees', name='events-attendees'),
+    url(r'events/remove/survey/$', 'bccf.views.events.remove_survey', name='events-remove-survey'),
     url(r'events/(?P<slug>.*)/$', 'bccf.views.events.event', name='events-event'),
 
     # MEZZANINE URL OVERRIDES

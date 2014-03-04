@@ -108,3 +108,33 @@ def attendees(request, id):
     
     return response
     
+def remove_sruvey(request) {
+    if request.is_ajax():
+        event = None
+        before = None
+        if 'e' in request.GET:
+            event = Event.objects.get(id=request.GET['e'])
+        
+        if 'b' in request.GET:
+            before = True
+        elif 'a' in request.GET:
+            before = False
+        
+        if not event or not before:
+            return HttpResponse('No')
+            
+        if before:
+            before = event.survey_before
+            event.survey_before = None
+            event.save()
+            before.delete()
+        else:
+            after = event.survey_after
+            event.survey_after = None
+            event.save()
+            after.delete()
+        return HttpResponse('Yes')
+    else:
+        return HttpResponse('No')
+}
+    
