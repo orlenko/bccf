@@ -376,7 +376,7 @@ class PybbProfile(models.Model):
 
 class Profile(PybbProfile):
     """
-    Profile class that can be used if you doesn't have
+    Profile class that can be used if you don't have
     your site profile.
     """
     user = AutoOneToOneField(User, related_name='pybb_profile', verbose_name=_('User'))

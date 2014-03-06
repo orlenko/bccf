@@ -407,8 +407,7 @@ def forum_instant_post(user, post):
     return False
 
 PYBB_PREMODERATION = forum_instant_post
-
-
+PYBB_PROFILE_RELATED_NAME = 'profile'
 
 #########################
 # OPTIONAL APPLICATIONS #

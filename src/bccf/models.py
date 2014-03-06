@@ -1,4 +1,6 @@
 import logging
+log = logging.getLogger(__name__)
+
 from datetime import datetime
 from decimal import Decimal
 
@@ -28,9 +30,6 @@ from bccf.fields import MyImageField
 from bccf.settings import (OPTION_SUBSCRIPTION_TERM,
                            get_option_number,)
 from mezzanine.utils.email import send_mail_template
-
-
-log = logging.getLogger(__name__)
 
 # Order statuses
 ORDER_STATUS_COMPLETE = 2
@@ -530,8 +529,10 @@ class Campaign(BCCFChildPage):
 #### PAGE STUFF END ####
 
 #### USER STUFF ####
+from pybb.models import PybbProfile
 
-class UserProfile(models.Model):
+
+class UserProfile(PybbProfile):
     MEMBERSHIP_TYPES = [
             ('parent', 'Parent'),
             ('professional', 'Professional'),
@@ -548,12 +549,13 @@ class UserProfile(models.Model):
     admin_thumb_field = "photo"
     membership_order = models.ForeignKey('shop.Order', null=True, blank=True)
     requested_cancellation = models.NullBooleanField(null=True, blank=True, default=False)
-    is_forum_moderator = models.NullBooleanField(null=True, blank=True, default=False)
     membership_type = models.CharField('Membership Type', max_length=128, null=True, blank=True, choices=MEMBERSHIP_TYPES)
     membership_level = models.IntegerField(default=0, null=True, blank=True)
     organization = models.ForeignKey('UserProfile', null=True, blank=True, related_name='members')
 
     accreditation = models.ManyToManyField(Program, verbose_name='Accreditation', blank=True, null=True)
+
+    is_forum_moderator = models.NullBooleanField(null=True, blank=True, default=False)
 
     # Member Fields
     job_title = models.CharField('Job Title', max_length=255, null=True, blank=True)
