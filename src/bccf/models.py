@@ -529,8 +529,10 @@ class Campaign(BCCFChildPage):
 #### PAGE STUFF END ####
 
 #### USER STUFF ####
-from pybb.models import PybbProfile
-
+try:
+    from pybb.models import PybbProfile
+except Exception, e:
+    log.debug(e)
 
 class UserProfile(PybbProfile):
     MEMBERSHIP_TYPES = [
@@ -577,6 +579,9 @@ class UserProfile(PybbProfile):
     facebook = models.CharField('Facebook', max_length=255, null=True, blank=True)
     twitter = models.CharField('Twitter', max_length=255, null=True, blank=True)
     linkedin = models.CharField('LinkedIn', max_length=255, null=True, blank=True)
+
+    class Meta:
+        app_label = 'bccf'
 
     def __unicode__(self):
         return 'Profile of %s' % (self.user.get_full_name() or self.user.username)
