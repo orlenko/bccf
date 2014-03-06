@@ -17,10 +17,7 @@ from django.utils.timezone import now as tznow
 from bccf.models import BCCFChildPage, BCCFPage
 
 from annoying.fields import AutoOneToOneField
-try:
-    from sorl.thumbnail import ImageField
-except ImportError:
-    from django.db.models import ImageField
+from bccf.fields import MyImageField
 from pybb.util import unescape, get_user_model, get_username_field, get_pybb_profile_model, get_pybb_profile
 
 User = get_user_model()
@@ -356,7 +353,7 @@ class PybbProfile(models.Model):
     show_signatures = models.BooleanField(_('Show signatures'), blank=True,
         default=True)
     post_count = models.IntegerField(_('Post count'), blank=True, default=0)
-    avatar = ImageField(_('Avatar'), blank=True, null=True,
+    avatar = MyImageField(_('Avatar'), blank=True, null=True,
         upload_to=get_file_path)
     autosubscribe = models.BooleanField(_('Automatically subscribe'),
         help_text=_('Automatically subscribe to topics that you answer'),
