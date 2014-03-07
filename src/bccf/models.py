@@ -5,7 +5,8 @@ from datetime import datetime
 from decimal import Decimal
 
 from cartridge.shop.fields import MoneyField
-from cartridge.shop.models import Order, ProductVariation, Product
+from cartridge.shop.models import Order, ProductVariation, Product,\
+    ProductOption, Category
 from dateutil.relativedelta import relativedelta
 
 from django.db import models
@@ -28,7 +29,9 @@ from mezzanine.utils.urls import path_to_slug, slugify
 
 from bccf.fields import MyImageField
 from bccf.settings import (OPTION_SUBSCRIPTION_TERM,
-                           get_option_number,)
+                           get_option_number,OPTION_BCCF_VOTING,
+    OPTION_STORE_DISCOUNT, OPTION_DIRECTORY_LISTING,
+    OPTION_CREATE_EVENTS_FOR_PARENTS)
 from mezzanine.utils.email import send_mail_template
 
 # Order statuses
@@ -576,7 +579,7 @@ class UserProfile(PybbProfile):
     facebook = models.CharField('Facebook', max_length=255, null=True, blank=True)
     twitter = models.CharField('Twitter', max_length=255, null=True, blank=True)
     linkedin = models.CharField('LinkedIn', max_length=255, null=True, blank=True)
-    
+
     def __unicode__(self):
         return 'Profile of %s' % (self.user.get_full_name() or self.user.username)
 
@@ -738,12 +741,12 @@ class ProgramRequest(models.Model):
     accept = models.BooleanField('Accept', default=False)
     created = models.DateTimeField('Requested On', auto_now_add=True, blank=True, null=True)
     accepted_on = models.DateTimeField('Accepted On', blank=True, null=True)
-    
+
     class Meta:
         verbose_name = 'Program Request'
         verbose_name_plural = 'Program Requests'
         ordering = ('-created',)
-    
+
     def accept_request(self):
         if self.accept:
             return
@@ -753,7 +756,7 @@ class ProgramRequest(models.Model):
             program = Program(title=self.title, content=self.comment, status=1, user_added=True)
         program.save()
         program.users.add(self.user)
-        
+
         self.accepted_on = datetime.now()
         self.accept = True
         self.save()
@@ -775,7 +778,7 @@ class Event(BCCFChildPage):
 
     survey_before = models.ForeignKey('builder.FormPublished', null=True, blank=True, related_name='survey_before')
     survey_after = models.ForeignKey('builder.FormPublished', null=True, blank=True, related_name='survey_after')
-    
+
     program = models.ForeignKey(Program, null=True, blank=True, related_name='program')
 
     def save(self, **kwargs):
@@ -795,7 +798,7 @@ class Event(BCCFChildPage):
     @permalink
     def report_url(self):
         return('event-survey-report', (), {'slug':self.slug})
-        
+
     @permalink
     def attendee_url(self):
         return ('events-attendees', (), {'id':self.id})
@@ -809,7 +812,7 @@ class EventRegistration(models.Model):
     user = models.ForeignKey(User)
     registration_date = models.DateTimeField(auto_now_add=True, blank=True)
     passed = models.BooleanField('Passed', default=False, blank=True)
-    
+
     def save(self, **kwargs):
         user = UserProfile.objects.get(user=self.user)
         if self.pk and user.membership_type == 'professional' and self.event.program:
@@ -818,7 +821,7 @@ class EventRegistration(models.Model):
             else:
                 user.accreditation.remove(self.event.program)
         super(EventRegistration, self).save(**kwargs)
-        
+
 
 class Settings(models.Model):
     name = models.CharField(max_length=255)
@@ -853,25 +856,86 @@ def ensure_membership_products():
     '''Create default set of products, if necessary'''
     REQUIRED_PRODUCTS = {
         'Organization Membership': [{
-            'Subscription Term': 'Annual',
-            'Create Events for Parents': 'Accredited Programs Only',
-            'Directory Listing': 'Business Card',
-            'Store Discount': 'No',
-            'price': 100
-        }, {
-            'Subscription Term': 'FREE - Unlimited',
-            'Create Events for Parents': 'No',
-            'Directory Listing': 'Basic',
-            'Store Discount': 'No',
+            'options': {
+                OPTION_SUBSCRIPTION_TERM: 'FREE - Unlimited',
+                OPTION_CREATE_EVENTS_FOR_PARENTS: 'No',
+                OPTION_DIRECTORY_LISTING: 'Basic',
+                OPTION_STORE_DISCOUNT: 'No',
+            },
             'price': 0
         }, {
-            'Subscription Term': 'Annual',
-            'Create Events for Parents': 'Accredited and Other Programs',
-            'Directory Listing': 'Business Card',
-            'Store Discount': 'No',
+            'options': {
+                OPTION_SUBSCRIPTION_TERM: 'Annual',
+                OPTION_CREATE_EVENTS_FOR_PARENTS: 'Accredited Programs Only',
+                OPTION_DIRECTORY_LISTING: 'Business Card',
+                OPTION_STORE_DISCOUNT: 'No',
+            },
+            'price': 100
+        }, {
+            'options': {
+                OPTION_SUBSCRIPTION_TERM: 'Annual',
+                OPTION_CREATE_EVENTS_FOR_PARENTS: 'Accredited and Other Programs',
+                OPTION_DIRECTORY_LISTING: 'High Profile',
+                OPTION_STORE_DISCOUNT: '15%',
+            },
             'price': 200
         }],
-        'Professional Membership': [],
-        'Parent Membership': [],
-        'Admin Membership': [],
+        'Professional Membership': [{
+            'options': {
+                OPTION_SUBSCRIPTION_TERM: 'FREE - Unlimited',
+                OPTION_CREATE_EVENTS_FOR_PARENTS: 'No',
+                OPTION_DIRECTORY_LISTING: 'Basic',
+                OPTION_STORE_DISCOUNT: 'No',
+            },
+            'price': 0
+        }, {
+            'options': {
+                OPTION_SUBSCRIPTION_TERM: 'Annual',
+                OPTION_CREATE_EVENTS_FOR_PARENTS: 'Accredited Programs Only',
+                OPTION_DIRECTORY_LISTING: 'Business Card',
+                OPTION_STORE_DISCOUNT: 'No',
+            },
+            'price': 100
+        }, {
+            'options': {
+                OPTION_SUBSCRIPTION_TERM: 'Annual',
+                OPTION_CREATE_EVENTS_FOR_PARENTS: 'Accredited and Other Programs',
+                OPTION_DIRECTORY_LISTING: 'High Profile',
+                OPTION_STORE_DISCOUNT: '15%',
+            },
+            'price': 200
+        }],
+        'Parent Membership': [{
+            'options': {
+                OPTION_SUBSCRIPTION_TERM: 'FREE - Unlimited',
+                OPTION_BCCF_VOTING: 'No',
+            },
+            'price': 0
+        }, {
+            'options': {
+                OPTION_SUBSCRIPTION_TERM: 'Annual',
+                OPTION_BCCF_VOTING: 'Yes',
+            },
+            'price': 50
+        }],
+        'Admin Membership': [{
+            'options': {},
+            'price': 0
+        }],
     }
+
+    category, is_new = Category.objects.get_or_create(title='Membership')
+    if is_new:
+        category.content = 'Membership products'
+        category.save()
+    for memb, types in REQUIRED_PRODUCTS.items():
+        product, is_new = Product.objects.get_or_create(title=memb)
+        if is_new:
+            product.content = memb
+            product.categories.add(category)
+            product.save()
+        for memb_type in types:
+            price = memb_type['price']
+            for option, option_value in memb_type['options'].items():
+                prodopt, _is_new = ProductOption.objects.get_or_create(type=get_option_number(option), name=option_value)
+                #variation = ProductVariation.objects.get_or_create(product=product, )
