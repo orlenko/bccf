@@ -230,7 +230,7 @@ NEVERCACHE_KEY = "2985023f-d904-479b-8c2d-fa0f2034b44f4fb12480-8a99-49e0-88bc-bc
 # Tuple of IP addresses, as strings, that:
 #   * See debug comments, when DEBUG is true
 #   * Receive x-headers
-INTERNAL_IPS = ("127.0.0.1",)
+INTERNAL_IPS = ("127.0.0.1", "67.231.18.161")
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -423,7 +423,6 @@ OPTIONAL_APPS = (
 )
 
 DEBUG_TOOLBAR_CONFIG = {"INTERCEPT_REDIRECTS": False}
-
 ###################
 # DEPLOY SETTINGS #
 ###################

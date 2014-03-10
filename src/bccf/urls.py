@@ -10,6 +10,12 @@ admin.autodiscover()
 # You can also change the ``home`` view to add your own functionality
 # to the project's homepage.
 
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns += patterns('',
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+    )
+
 urlpatterns = patterns("",
     #UPLOADS
     url(r'media/(?P<path>.*)$', 'django.views.static.serve', {
