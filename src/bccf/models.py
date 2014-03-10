@@ -624,7 +624,7 @@ class UserProfile(PybbProfile):
 
     @property
     def membership_product_variation(self):
-        ensure_membership_products()
+        #ensure_membership_products()
         # Special case for admin:
         #if self.user.is_superuser:
             # Make sure current order contains an Admin-level license
