@@ -9,12 +9,6 @@ log = logging.getLogger(__name__)
 
 register = template.Library()
 
-BCCF_EXPIRY = Q(expiry_date__gte=datetime.datetime.now()) | Q(expiry_date=None)
-BCCF_FILTER = {
-    'status': 2,
-    'publish_date__lte': datetime.datetime.now(),
-}
-
 @register.inclusion_tag("generic/includes/big_marquee.html", takes_context=True)
 def big_marquee_for(context, obj=None):
     """
@@ -45,6 +39,6 @@ def big_marquee_for(context, obj=None):
     
 @register.inclusion_tag("generic/includes/browse_by.html", takes_context=True)
 def browse_by(context):
-    context['programs']  = Program.objects.filter(BCCF_EXPIRY, user_added=0, **BCCF_FILTER)
-    context['topics'] = BCCFTopic.objects.filter(BCCF_EXPIRY, **BCCF_FILTER)
+    context['programs']  = Program.objects.filter(user_added=0)
+    context['topics'] = BCCFTopic.objects.all()
     return context
