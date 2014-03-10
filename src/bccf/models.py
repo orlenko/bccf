@@ -603,7 +603,7 @@ class UserProfile(PybbProfile):
         return 'Profile of %s' % (self.user.get_full_name() or self.user.username)
 
     def save(self, **kwargs):
-        if not self.pk and not self.is_superuser():
+        if not self.pk and not self.user.is_superuser():
             self.account_number = self.create_account_number()
             super(UserProfile, self).save(**kwargs)
         super(UserProfile, self).save(**kwargs)
