@@ -626,9 +626,9 @@ class UserProfile(PybbProfile):
     def membership_product_variation(self):
         ensure_membership_products()
         # Special case for admin:
-        if self.user.is_superuser:
+        #if self.user.is_superuser:
             # Make sure current order contains an Admin-level license
-            self.ensure_membership('admin')
+            # self.ensure_membership('admin')
         if not self.membership_order:
             # Special case: if this user has purchased anything at all, there might be a recent membership purchase
             # In this case, we assign the most recent membership purchase as the membership order for this user.
@@ -899,29 +899,29 @@ def remaining_subscription_balance(purchase_date, expiration_date, to_date, paid
     return remaining
 
 
-def ensure_membership_products():
-    '''Create default set of products, if necessary'''
-    REQUIRED_PRODUCTS = {
-        'Organization Membership': [{
-            'Subscription Term': 'Annual',
-            'Create Events for Parents': 'Accredited Programs Only',
-            'Directory Listing': 'Business Card',
-            'Store Discount': 'No',
-            'price': 100
-        }, {
-            'Subscription Term': 'FREE - Unlimited',
-            'Create Events for Parents': 'No',
-            'Directory Listing': 'Basic',
-            'Store Discount': 'No',
-            'price': 0
-        }, {
-            'Subscription Term': 'Annual',
-            'Create Events for Parents': 'Accredited and Other Programs',
-            'Directory Listing': 'Business Card',
-            'Store Discount': 'No',
-            'price': 200
-        }],
-        'Professional Membership': [],
-        'Parent Membership': [],
-        'Admin Membership': [],
-    }
+#def ensure_membership_products():
+#    '''Create default set of products, if necessary'''
+#    REQUIRED_PRODUCTS = {
+#        'Organization Membership': [{
+#            'Subscription Term': 'Annual',
+#            'Create Events for Parents': 'Accredited Programs Only',
+#            'Directory Listing': 'Business Card',
+#            'Store Discount': 'No',
+#            'price': 100
+#        }, {
+#            'Subscription Term': 'FREE - Unlimited',
+#            'Create Events for Parents': 'No',
+#            'Directory Listing': 'Basic',
+#            'Store Discount': 'No',
+#            'price': 0
+#        }, {
+#            'Subscription Term': 'Annual',
+#            'Create Events for Parents': 'Accredited and Other Programs',
+#            'Directory Listing': 'Business Card',
+#            'Store Discount': 'No',
+#            'price': 200
+#       }],
+#        'Professional Membership': [],
+#       'Parent Membership': [],
+#        'Admin Membership': [],
+#    }

@@ -1,7 +1,7 @@
 from django.db.models import get_model, ObjectDoesNotExist, Q
 from mezzanine import template
 
-from bccf.models import BCCFChildPage, UserProfile
+from bccf.models import BCCFChildPage, Program, UserProfile
 
 import logging
 import re
@@ -25,7 +25,7 @@ def featured_programs(context):
     being rendered for.
     """
     context['class'] = 'hpro'
-    context['slides'] = BCCFChildPage.objects.filter(BCCF_EXPIRY, content_model='program', **BCCF_FILTER).order_by('-created')
+    context['slides'] = Program.objects.featured().order_by('-created')
     return context
     
 @register.inclusion_tag('generic/includes/featured.html', takes_context=True)
