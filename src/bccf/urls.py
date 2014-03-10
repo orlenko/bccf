@@ -10,12 +10,6 @@ admin.autodiscover()
 # You can also change the ``home`` view to add your own functionality
 # to the project's homepage.
 
-if settings.DEBUG:
-    import debug_toolbar
-    urlpatterns += patterns('',
-        url(r'^__debug__/', include(debug_toolbar.urls)),
-    )
-
 urlpatterns = patterns("",
     #UPLOADS
     url(r'media/(?P<path>.*)$', 'django.views.static.serve', {
@@ -142,6 +136,12 @@ urlpatterns = patterns("",
     # ("^%s/" % settings.SITE_PREFIX, include("mezzanine.urls"))
 
 )
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns += patterns('',
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+    )
 
 # Adds ``STATIC_URL`` to the context of error pages, so that error
 # pages can use JS, CSS and images.

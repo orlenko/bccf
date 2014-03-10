@@ -11,12 +11,6 @@ from pybb.views import IndexView, CategoryView, ForumView, TopicView,\
     OpenTopicView, ModeratePost, TopicPollVoteView, LatestTopicsView,\
     UserTopics, UserPosts, topic_cancel_poll_vote
 
-if settings.DEBUG:
-    import debug_toolbar
-    urlpatterns += patterns('',
-        url(r'^__debug__/', include(debug_toolbar.urls)),
-    )
-
 urlpatterns = patterns('',
                        # Syndication feeds
                        url('^feeds/posts/$', LastPosts(), name='feed_posts'),
