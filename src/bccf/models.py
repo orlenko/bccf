@@ -29,7 +29,7 @@ from mezzanine.utils.urls import path_to_slug, slugify
 from bccf.fields import MyImageField
 from bccf.settings import (OPTION_SUBSCRIPTION_TERM,
                            get_option_number,)
-from bccf.managers import GenericPageManager, ChildPageManager, TagManager, EventManager, ResourceManager
+from bccf.managers import GenericPageManager, ChildPageManager, TagManager, EventManager, ResourceManager, ProgramManager
 
 from mezzanine.utils.email import send_mail_template
 
@@ -512,6 +512,9 @@ class Video(BCCFChildPage):
 class Program(BCCFChildPage):
     users = models.ManyToManyField(User, verbose_name='Requester', blank=True, null=True)
     user_added = models.BooleanField('Added By User', default=False, blank=True)
+    
+    objects = ProgramManager()    
+    
     def save(self, **kwargs):
         self.gparent = BCCFPage.objects.get(slug='bccf/programs')
         super(Program, self).save(**kwargs)

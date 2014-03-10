@@ -64,3 +64,10 @@ class TagManager(ChildPageManager):
         return super(TagManager, self).get_queryset().filter(
             Q(content_model='campaign')        
         )
+        
+class ProgramManager(ChildPageManager):
+    
+    def get_queryset(self):
+        return super(ChildPageManager, self).get_queryset().filter(
+            Q(content_model='program')
+        )

@@ -3,7 +3,6 @@ from django.contrib import admin
 from bccf import settings
 from bccf.feeds import EventsForParentsFeed, EventsForProfessionalsFeed
 
-
 admin.autodiscover()
 
 # Add the urlpatterns for any custom Django applications here.
