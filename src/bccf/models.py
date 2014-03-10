@@ -752,8 +752,8 @@ class UserProfile(PybbProfile):
             
     def create_account_number(self):
         from random import randrange
-        first = self.first_name[:3]
-        second = self.last_name[:3]
+        first = self.user.first_name[:3]
+        second = self.user.last_name[:3]
         third = ''
         
         for x in range(0, 6):
