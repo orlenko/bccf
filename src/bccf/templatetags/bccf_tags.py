@@ -144,12 +144,6 @@ def bccf_thumbnail(image_url, width, height, quality=95):
         return image_url
     return thumb_url
 
-
-@register.inclusion_tag("generic/includes/attendee_list.html", takes_context=True)
-def attendees_for(context, event):
-    context['attendees'] = EventRegistration.objects.filter(event=event)
-    return context
-
 @register.render_tag
 def membership_upgrade(context, token):
     try:

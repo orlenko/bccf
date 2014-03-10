@@ -8,7 +8,7 @@ from django.db.models import permalink
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext, ugettext_lazy as _
 
-from bccf.models import BCCFChildPage, BCCFPage
+from bccf.models import TagBase, BCCFPage
 
 log = logging.getLogger(__name__)
 
@@ -47,7 +47,7 @@ class FormStructure(models.Model):
     def __unicode__(self):
         return self.title
         
-class FormPublished(BCCFChildPage):
+class FormPublished(TagBase):
     """
     Model for a published form structure.
     """
@@ -61,8 +61,6 @@ class FormPublished(BCCFChildPage):
         
     def save(self, **kwargs):
         if self.pk is None: 
-            self.gparent = BCCFPage.objects.get(slug='bccf/tag')
-            
             super(FormPublished, self).save(**kwargs)            
 
             struct = json.loads(self.form_structure.structure)

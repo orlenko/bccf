@@ -105,12 +105,14 @@ class EventForm(forms.ModelForm):
     class Meta:
         model = Event
         fields = (
-            'page_for', 'title', 'content', 'provider', 'price', 'location_city',
+            'page_for', 'title', 'content', 'provider', 'price', 'max_seats', 'location_city',
             'location_street', 'location_street2', 'location_postal_code',
             'status',
+            'date_start', 
+            'date_end', 
+            'bccf_topic',
+            'program',
             'image',
-            'date_start', 'date_end', 'bccf_topic',
-            'program'
             )
         widgets = {
             'provider': forms.HiddenInput(),

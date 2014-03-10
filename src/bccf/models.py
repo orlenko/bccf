@@ -29,6 +29,8 @@ from mezzanine.utils.urls import path_to_slug, slugify
 from bccf.fields import MyImageField
 from bccf.settings import (OPTION_SUBSCRIPTION_TERM,
                            get_option_number,)
+from bccf.managers import GenericPageManager, ChildPageManager, TagManager, EventManager, ResourceManager
+
 from mezzanine.utils.email import send_mail_template
 
 # Order statuses
@@ -203,6 +205,8 @@ class BCCFChildPage(BCCFBasePage, RichText, AdminThumbMixin):
         blank = True,
         help_text = 'You can upload an image. '
             'Acceptable file types: .png, .jpg, .bmp, .gif.')
+
+    objects = ChildPageManager()
 
     class Meta:
         verbose_name = 'BCCF Child Page'
@@ -445,9 +449,7 @@ class BCCFBabyPage(BCCFChildPage):
         URL for a page
         """
         slug = self.slug.split('/')
-        parent = self.parent.slug
-        gparent = self.parent.gparent.slug
-        return reverse('bccf-baby', kwargs={"parent": gparent, "child": parent, "baby": slug[1]})
+        return "%s%s" % (self.parent.get_absolute_url(), slug[1])
 
 #Article
 class DocumentResourceBase(BCCFChildPage):
@@ -461,6 +463,9 @@ class DocumentResourceBase(BCCFChildPage):
         help_text = 'You can upload an office document or a PDF file. This field is not used by Video '
             'Acceptable file types: .doc, .pdf, .rtf, .txt, .odf, .docx, .xls, .xlsx, .ppt, .pptx.')
     product = models.ForeignKey(Product, verbose_name='Associated Product', blank=True, null=True)
+
+    objects = ResourceManager()    
+    
     def save(self, **kwargs):
         self.gparent = BCCFPage.objects.get(slug='bccf/resources')
         super(DocumentResourceBase, self).save(**kwargs)
@@ -494,6 +499,9 @@ class Video(BCCFChildPage):
     help_text='Paste a YouTube URL here. '
         'Example: http://www.youtube.com/watch?v=6Bm7DVqJTHo')
     product = models.ForeignKey(Product, verbose_name='Associated Product', blank=True, null=True)
+    
+    objects = ResourceManager()    
+    
     def save(self, **kwargs):
         self.gparent = BCCFPage.objects.get(slug='bccf/resources')
         super(Video, self).save(**kwargs)
@@ -521,10 +529,18 @@ class Blog(BCCFChildPage):
         verbose_name_plural = 'Blog Posts'
 
 #TAG
-class Campaign(BCCFChildPage):
+class TagBase(BCCFChildPage):
+    objects = TagManager()   
+
+    class Meta:
+        abstract = True
+
     def save(self, **kwargs):
         self.gparent = BCCFPage.objects.get(slug='bccf/tag')
-        super(Campaign, self).save(**kwargs)
+        super(TagBase, self).save(**kwargs)
+
+class Campaign(TagBase):
+    pass
 
 #### PAGE STUFF END ####
 
@@ -577,8 +593,17 @@ class UserProfile(PybbProfile):
     twitter = models.CharField('Twitter', max_length=255, null=True, blank=True)
     linkedin = models.CharField('LinkedIn', max_length=255, null=True, blank=True)
     
+    #Banking
+    account_number = models.CharField('Account Number', max_length=12, null=True, blank=True)
+    
     def __unicode__(self):
         return 'Profile of %s' % (self.user.get_full_name() or self.user.username)
+
+    def save(self, **kwargs):
+        if not self.pk:
+            self.account_number = self.create_account_number()
+            super(UserProfile, self).save(**kwargs)
+        super(UserProfile, self).save(**kwargs)
 
     def can_post_on_forum(self, post):
         return self.is_forum_moderator
@@ -721,7 +746,18 @@ class UserProfile(PybbProfile):
             return 'all'
         if memb == 'professional':
             return 'parent'
-
+            
+    def create_account_number(self):
+        from random import randrange
+        first = self.first_name[:3]
+        second = self.last_name[:3]
+        third = ''
+        
+        for x in range(0, 6):
+            num = randrange(0, 9)
+            third  += `num`
+            
+        return first+second+third
 
 def is_product_variation_categ(variation, categ):
     for category in variation.product.categories.all():
@@ -777,12 +813,19 @@ class Event(BCCFChildPage):
     survey_after = models.ForeignKey('builder.FormPublished', null=True, blank=True, related_name='survey_after')
     
     program = models.ForeignKey(Program, null=True, blank=True, related_name='program')
+    max_seats = models.PositiveIntegerField('Max number of seats', null=True, blank=True, default=1)
+    full = models.BooleanField('Event is full', blank=True, default=False)
+
+    objects = EventManager()
 
     def save(self, **kwargs):
         if not self.pk:
             gp = BCCFPage.objects.get(slug='bccf/trainings')
             self.gparent = gp
-        super(Event, self).save(kwargs)
+        super(Event, self).save(**kwargs)
+
+    def is_full(self):
+        return self.full
 
     @permalink
     def signup_url(self):
@@ -805,10 +848,14 @@ EventForParents = Event
 EventForProfessionals = Event
 
 class EventRegistration(models.Model):
-    event = models.ForeignKey(Event)
+    event = models.ForeignKey(Event, related_name='event_registration')
     user = models.ForeignKey(User)
     registration_date = models.DateTimeField(auto_now_add=True, blank=True)
     passed = models.BooleanField('Passed', default=False, blank=True)
+    
+    class Meta:
+        verbose_name = "Event Registration"
+        verbose_name_plural = "Event Registrations"
     
     def save(self, **kwargs):
         user = UserProfile.objects.get(user=self.user)

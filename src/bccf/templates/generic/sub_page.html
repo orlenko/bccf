@@ -1,12 +1,12 @@
 {% load bccf_feature_tags static bccf_rating_tags bccf_event_tags comment_tags embed_video_tags %}
 <section id={{ child_obj.slug }} class="subpage {{ child_obj.gparent.carousel_color }}">
-        <a id="close-btn" href="#" title="Close">X</a>
+        <a id="close-btn" href="#" title="Close" class="fa fa-times-circle"></a>
         <div class="subpage-tabs section">
         <ul class="no-style-list">
             <li class="col two mobile-full">
-                <a href="{% url 'bccf-baby' child_obj.gparent.slug|default:'bccf' child_obj.slug 'child-home' %}" id="child-home" class="baby-content-btn">Home</a>
+                <a href="{{ child_obj.get_absolute_url }}" id="child-home" class="baby-content-btn">Home</a>
                 <div class="baby-content">
-                    <div class="section row row-one">
+                    <div class="section row row-one social-box">
                         {% bccf_rating_for child_obj %}
                         {% include "includes/add_this.html" %}
                     </div>
@@ -79,29 +79,24 @@
             {% endif %}
 
             <li class="col two mobile-full" id="resources">
-                <a href="{% url 'bccf-baby' child_obj.gparent.slug child_obj.slug 'baby-resources' %}" id="baby-resources" class="baby-content-btn">Resources</a>
+                <a href="{{ child_obj.get_absolute_url }}baby-resources" id="baby-resources" class="baby-content-btn">Resources</a>
                 <div class="baby-content">
-                {% related_resources_for child_obj 'article' 'Articles' %}
-                {% related_resources_for child_obj 'downloadableform' 'Downloadable Forms' %}
-                {% related_resources_for child_obj 'magazine' 'Magazines' %}
-                {% related_resources_for child_obj 'tipsheet' 'Tip Sheets' %}
-                {% related_resources_for child_obj 'video' 'Videos' %}
+                    <div class="related-resources">
+                        {% related_resources_for child_obj 'article' 'Articles' %}
+                        {% related_resources_for child_obj 'downloadableform' 'Downloadable Forms' %}
+                        {% related_resources_for child_obj 'magazine' 'Magazines' %}
+                        {% related_resources_for child_obj 'tipsheet' 'Tip Sheets' %}
+                        {% related_resources_for child_obj 'video' 'Videos' %}
+                    </div>
                 </div>
             </li>
         </ul>
     </div>
     <div class="subpage-content section row"></div>
     <div class="home-content section row no-mobile">
-        <div class="section row row-one">
+        <div class="section row row-one social-box">
+            {% include "includes/add_this.html" %}
             {% bccf_rating_for child_obj %}
-            <div class="addthis_toolbox addthis_default_style addthis_32x32_style col seven mobile-full">
-                <a class="addthis_button_twitter"></a>
-                <a class="addthis_button_facebook"></a>
-                <a class="addthis_button_print"></a>
-                <a class="addthis_button_email"></a>
-                <a class="addthis_button_compact"></a>
-                <a class="addthis_counter addthis_bubble_style"></a>
-            </div>
         </div>
         <div class="section row-one">
             <h3>{{ child_obj.title }}</h3>
@@ -138,15 +133,17 @@ $('#close-btn').on('click', function(e) {
 
 $('.baby-content-btn').on('click', function(e) {
     e.preventDefault();
-    var url = $(this).attr('href');
+    var url = $(this).attr('href'); 
     
+    $('.subpage-tabs a.active').removeClass('active');     
+
     if($(this).attr('id') !== 'child-home') {
         window.history.pushState({ path: url }, '', url);
-        pathname = url;
+        $(this).addClass('active'); 
     }
+    pathname = url;
 
     if(!$('.mnav-mobile-btn').is(':visible')) {
-        $('li.active').removeClass('active');
         $('.subpage-content').hide();
         $('.home-content').hide();
 
@@ -154,7 +151,6 @@ $('.baby-content-btn').on('click', function(e) {
             $('.home-content').show();
             return;
         }
-        $(this).parent('li').addClass('active');
         $('.subpage-content').show();
     }
     if($('.mnav-mobile-btn').is(':visible')) {

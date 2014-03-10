@@ -1,3 +1,6 @@
+{% if event.is_full %}
+<p>The event is full.</p>
+{% endif %}
 <ul>
     {% for attendee in attendees %}
     <li>{{ attendee.user.get_full_name }} - {{ attendee.user.email }}</li>

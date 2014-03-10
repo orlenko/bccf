@@ -1,10 +1,14 @@
 {% load mezzanine_tags i18n future %}
 {% if subscribe_obj %}
 	<div class="inline_subscribe_form">
+	   {% if not subscribe_obj.is_full %}
 		<form action="{{ subscribe_obj.get_content_model.signup_url }}" method="post">
 			{% csrf_token %}
 			<input type="submit" value="Subscribe to {{ subscribe_obj.title }}"/>
 		</form>
+		{% else %}
+		<p>The event is full.</p>
+		{% endif %}
 	</div>
 
 {% endif %}

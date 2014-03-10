@@ -74,12 +74,19 @@ def signup(request, slug):
     if request.method == 'POST':
         # Check if such registration already exists
         exists = False
-        for existing in EventRegistration.objects.filter(user=request.user, event=Event.objects.get(slug=slug)):
-            messages.warning(request, 'You are already signed up to this event')
-            exists = True
-        if not exists:
-            registration = EventRegistration.objects.create(user=request.user, event=Event.objects.get(slug=slug))
-            messages.success(request, 'Thank you! You signed up to the event successfully.')
+        if not event.is_full():
+            for existing in EventRegistration.objects.filter(user=request.user, event=event):
+                messages.warning(request, 'You are already signed up to this event')
+                exists = True
+            if not exists:
+                registration = EventRegistration.objects.create(user=request.user, event=event)
+                messages.success(request, 'Thank you! You signed up to the event successfully.')                
+            if event.max_seats == len(EventRegistration.objects.filter(events=event)):
+                event.full = True
+                event.save()
+        else:
+            messages.warning(request, 'The event is already full.')
+            
         return HttpResponseRedirect(event.get_absolute_url())
     context = RequestContext(request, locals())
     return render_to_response('bccf/event_signup.html', {}, context_instance=context)

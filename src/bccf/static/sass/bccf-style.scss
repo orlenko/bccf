@@ -7,6 +7,7 @@
 ========================================================================== */
 
   @import "../mixins/mixins"; // Import the base mixins
+  @import "./font-awesome/font-awesome";
 
   // Global Defaults
   $mobile-container:              100%;
@@ -1331,10 +1332,6 @@ textarea {
     	.page-box-active {
     	   border-bottom: 20px solid $sgrey;
     	}
-    	.grid-content,
-    	.slide-content {
-    	    background-color: $sgrey;
-    	}
         .carousel-grid {
             .page-box {
                 margin-bottom: 10px;
@@ -1377,7 +1374,57 @@ textarea {
    }
 }
 
-.subpage {}
+.subpage {
+    background-color: $sgreen;
+    a {
+        text-decoration: none;
+        &:hover, &:active {
+            text-decoration: underline;
+        }
+    }
+    #close-btn {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        z-index: 999;
+        &:hover {
+            color: #FFF;
+            text-decoration: none;    
+        }
+    }
+}
+
+    .social-box {
+        min-height: 32px;
+    }
+
+    .addthis_toolbox {
+        > div:first-child {
+            //background-color: #FFF;
+            //padding: 5px;
+        }    
+    }
+
+    .my-rating {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        input[type="submit"] {
+            background-color: #000;
+            color: #FFF;
+            border: none;
+            text-transform: uppercase;
+            margin: 0 10px;
+        }
+        .rating-cancel {
+            display: none !important;        
+        }
+        form {
+            position: absolute;
+            right: 0;
+            bottom: 0;    
+        }
+    }
 
     .related-resource {
         width: 33.33%;
@@ -1400,39 +1447,35 @@ textarea {
         display: none;
     }
 
-    .subpage {
-        a {
-            text-decoration: none;
-            &:hover, &:active {
-                text-decoration: underline;
-            }
-        }
-    }
-
     .subpage-tabs {
-        > ul {
+        border-top: 2px solid #000;
+        background-color: $lgreen;
+    	>ul {
             > li {
                 margin: 0;
                 width: 16.66%;
                > a {
                     @include font-size(12);
                     padding: 10px 0;
+                    text-align: center;
                     text-transform: uppercase;
                     text-decoration: none;
-                    color: #FFF;
                     display: block;
                     text-align: center;
                     &:hover, &:active {
                         text-decoration: none;
                     }
-                }
-                #child-home {
-                    color: $dgrey;
-                }
-                .baby-content {
-                    padding: 10px;    
+                    &.active {
+                        background-color: $sgreen;    
+                    }
                 }
             }
+        }
+        .baby-content {
+            padding: 10px;    
+        }
+        #child-home {
+            color: #FFF;    
         }
     }
 
@@ -1467,33 +1510,6 @@ textarea {
 		  background-color:$lgreen;
 		}
 	}
-    .subpage-content {
-	   background-color: $lgreen;
-	   color: #FFF;
-	   a {
-	       color: #FFF;
-	       text-decoration: underline;
-	   }
-	}
-	.subpage-tabs {
-        > ul {
-            > li {
-                > a:not(#child-home) {
-                    background-color: $lgreen;
-                    &:hover, &:focus {
-        	           background-color: $lgreen*1.1;
-        	        }
-        	        & + .baby-content {
-                        color: #FFF;
-                        background-color: $lgreen;            
-                    }
-                }
-            }
-            > li.active {
-                border-bottom: 10px solid $lgreen;
-            }
-        }
-    }
 }
 .dgreen-list {
     .control-buttons {
@@ -1516,33 +1532,6 @@ textarea {
 		  background-color:$dgreen;
 		}
 	}
-	.subpage-content {
-	   background-color: $dgreen;
-	   color: #FFF;
-	   a {
-	       color: #FFF;
-	       text-decoration: underline;
-	   }
-	}
-	.subpage-tabs {
-        > ul {
-            > li {
-                > a:not(#child-home) {
-                   background-color: $dgreen;
-                   &:hover, &:focus {
-    	               background-color: $dgreen*1.1;
-    	           }
-    	           & + .baby-content {
-                        color: #FFF;
-                        background-color: $dgreen;            
-                    }
-                }
-            }
-            > li.active {
-                border-bottom: 10px solid $dgreen;
-            }
-        }
-    }
 }
 .teal-list {
     .control-buttons {
@@ -1565,33 +1554,6 @@ textarea {
 		  background-color:$lteal;
 		}
 	}
-	.subpage-content {
-	   background-color: $lteal;
-	   color: #FFF;
-	   a {
-	       color: #FFF;
-	       text-decoration: underline;
-	   }
-	}
-	.subpage-tabs {
-        > ul {
-            > li {
-                > a:not(#child-home) {
-                   background-color: $lteal;
-                   &:hover, &:focus {
-    	               background-color: $lteal*1.1;
-    	           }
-    	           & + .baby-content {
-                        color: #FFF;
-                        background-color: $lteal;            
-                    }
-                }
-            }
-            > li.active {
-                border-bottom: 10px solid $lteal;
-            }
-        }
-    }
 }
 .yellow-list {
     .control-buttons {
@@ -1614,33 +1576,6 @@ textarea {
 		  background-color:$yellow;
 		}
 	}
-	.subpage-content {
-	   background-color: $yellow;
-	   color: #FFF;
-	   a {
-	       color: #FFF;
-	       text-decoration: underline;     
-	   }
-	}
-	.subpage-tabs {
-        > ul {
-            > li {
-                > a:not(#child-home) {
-                    background-color: $yellow;
-                    &:hover, &:focus {
-        	           background-color: $yellow*1.1;
-        	        }
-        	        & + .baby-content {
-                        color: #FFF;
-                        background-color: $yellow;            
-                    }
-                }
-            }
-            > li.active {
-                border-bottom: 10px solid $yellow;
-            }
-        }
-    }
 }
 
 #tag-widget {
@@ -2811,15 +2746,34 @@ table td {
 }
 
 .subpage-tabs {
+    background-color: none;
     > ul {
         > li {
             width: 100%;
             a {
-                @include font-size(20);    
+                @include font-size(20); 
+                background-color: $lgreen !important;   
             }
         }
     }    
-}   
+}
+
+.social-box,
+.baby-content {
+    color: $sgreen;
+}
+
+.my-rating {
+    position: static;
+    text-align: left;
+    .star-rating-control {
+        position: static;
+        left: 0;
+    }
+    form {
+        position: static;    
+    }
+}
 
 #filter-container {
    text-align: left;

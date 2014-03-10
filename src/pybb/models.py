@@ -14,7 +14,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from django.utils.timezone import now as tznow
 
-from bccf.models import BCCFChildPage, BCCFPage
+from bccf.models import TagBase, BCCFPage
 
 from annoying.fields import AutoOneToOneField
 from bccf.fields import MyImageField
@@ -147,7 +147,7 @@ class Forum(models.Model):
         return self.category,
 
 
-class Topic(BCCFChildPage):
+class Topic(TagBase):
     POLL_TYPE_NONE = 0
     POLL_TYPE_SINGLE = 1
     POLL_TYPE_MULTIPLE = 2

@@ -19,8 +19,6 @@ import datetime
 
 log = logging.getLogger(__name__)
 
-BCCF_EXPIRY = Q(expiry_date__gte=datetime.datetime.now()) | Q(expiry_date=None)
-
 @staff_member_required
 def bccf_admin_page_ordering(request):
     """
@@ -107,20 +105,16 @@ def user_list(request):
 def next(request, parent, which, offset):
     if request.is_ajax():
         obj = BCCFPage.objects.get(slug='bccf/'%parent)
-        filter = {
-            'gparent': obj,
-            'status': 2,
-            'publish_date__lte': datetime.datetime.now(),
-        }
 
+        slides = BCCFChildPage.objects.by_gparent(obj)
         limit = int(offset)+12
         
         if obj.slug == 'resources' or obj.slug == 'tag':
-            filter['content_model'] = which
+            slides = slides.filter(content_type=which)
         elif which == 'parent' or which == 'professional':
-            filter['page_for'] = which
+            slides = slides.filter(page_for=which)
             
-        slides = BCCFChildPage.objects.filter(BCCF_EXPIRY, **filter).order_by('-created')[offset:limit]
+        slides = slides.order_by('-created')[offset:limit]
         parts = {
             'slide': render_to_string('generic/carousel_slide_part.html', {'slides':slides, 'MEDIA_URL':MEDIA_URL}),
             'grid': render_to_string('generic/carousel_grid_part.html', {'slides':slides, 'MEDIA_URL':MEDIA_URL})
@@ -133,14 +127,8 @@ def topic_next(request, topic, which, offset):
     if request.is_ajax():
         limit = int(offset)+12
         topic = BCCFTopic.objects.get(slug=topic)
-        filter = {
-            'topic': topic,
-            'page_for': which,
-            'status': 2,
-            'publish_date__lte': datetime.datetime.now(),
-        }
 
-        slides = BCCFChildPage.objects.filter(BCCF_EXPIRY, **filter).order_by('-created')[offset:limit]
+        slides = BCCFChildPage.objects.by_topic(topic).filter(page_for=which).order_by('-created')[offset:limit]
         parts = {
             'slide': render_to_string('generic/carousel_slide_part.html', {'slides':slides, 'MEDIA_URL':MEDIA_URL}),
             'grid': render_to_string('generic/carousel_grid_part.html', {'slides':slides, 'MEDIA_URL':MEDIA_URL}),

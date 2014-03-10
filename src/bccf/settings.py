@@ -457,6 +457,19 @@ ACCOUNTS_PROFILE_FORM_EXCLUDE_FIELDS = [
     'membership_type',
     'membership_level',
     'requested_cancellation',
+    'signature',
+    'signature_html',
+    'time_zone',
+    'language',
+    'show_signatures',
+    'post_count',
+    'avatar',
+    'autosubscribe',
+    'job_title',
+    'website',
+    'facebook',
+    'twitter',
+    'linkedin',
 ]
 ACCOUNTS_PROFILE_VIEWS_ENABLED = True
 ACCOUNTS_VERIFICATION_REQUIRED = True

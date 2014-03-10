@@ -48,6 +48,8 @@ class EventAdmin(DisplayableAdmin):
                                     'location_street2',
                                     'location_postal_code',
                                     'price',
+                                    'max_seats',
+                                    'full',
                                     'bccf_topic',
                                     'image',
                                     'program',
@@ -57,8 +59,14 @@ class EventAdmin(DisplayableAdmin):
                 self.fieldsets[0][1]['fields'].insert(3, field)
         if self.list_display == DisplayableAdmin.list_display:
             self.list_display = list(deepcopy(self.list_display))
-            for fieldname in ['provider', 'created', 'date_start', 'date_end', 'price', 'report_link', 'attendee_link']:
+            for fieldname in ['provider', 'created', 'date_start', 'date_end', 'price', 'report_link', 'attendee_link', 'full']:
                 self.list_display.insert(-1, fieldname)
+                
+        # Filter
+        if self.list_filter == DisplayableAdmin.list_filter:
+            self.list_filter = list(deepcopy(self.list_filter))
+            for fieldname in ['provider', 'date_start', 'date_end', 'full']:
+                self.list_filter.insert(-1, fieldname)
 
     def attendee_link(self, obj):
         return '<a href="%s">Download List of Attendees</a>' % obj.attendee_url()
