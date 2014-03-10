@@ -2,8 +2,7 @@
 <div id="big-marquee" class="section clear"> 
     <div id="slide-container">
         {% for slide in slides %}
-        <div>
-            <img src="media/{{ slide.image }}" alt="Marquee Filler"/>
+        <div class="marquee-slide" style="background: url('media/{{ slide.image }}') center center no-repeat;">
             <div class="lightbox mobile-full">
                 <span class="lightbox-title col twelve mobile-twelve">{{ slide.title }}</span>
                 <p class="no-mobile">{{ slide.caption }}</p>
@@ -20,20 +19,26 @@
     <div id="tag-container">
         <div class="a-wrapper dashed-button">
             <a href="tag/" class="tag-box mobile-full">
-                <span class="tag-title">Talk</span> 
-                <span>Share your story</span>   
+                <div class="a-inner">
+                    <span class="tag-title">Talk</span> 
+                    <span>Share your story</span>   
+                </div>
             </a>
         </div>
         <div class="a-wrapper dashed-button">
             <a href="tag/" class="tag-box mobile-full">
-                <span class="tag-title">Act</span>  
-                <span>Take a survey</span>     
+                <div class="a-inner">
+                    <span class="tag-title">Act</span>  
+                    <span>Take a survey</span> 
+                </div>    
             </a>
         </div>
         <div class="a-wrapper dashed-button">
             <a href="tag/" class="tag-box mobile-full">
-                <span class="tag-title">Get Involved</span>
-                <span>Make change happen</span>
+                <div class="a-inner">
+                    <span class="tag-title">Get Involved</span>
+                    <span>Make change happen</span>
+                </div>
             </a>
         </div>
     </div>

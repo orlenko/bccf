@@ -38,9 +38,13 @@
         bottom: 5%;
         right: 2%;  
     }
+    .marquee-slide {
+        height: 400px;    
+    }
 }
 
 .lightbox {
+    color: #FFF;
     position: absolute;
     bottom: 15%;
     right: 5%;
@@ -108,7 +112,7 @@
     .owl-controls {
         right: 5%;
         top: 2%;
-        bottom: 0;  
+        bottom: 0;
     }
 }
 
@@ -125,20 +129,46 @@
         display: block;
         margin: 0;
         .tag-box {
-            width: 99%;        
-        }      
+            width: 99%;
+            .a-inner {
+                padding: 5px;
+                border-bottom: 1px solid #000;
+            }
+            .tag-title {
+                display: inline-block;
+                border-bottom: none;
+            }
+        }    
     }    
 }
 
 .lightbox {
+    @include font-size(20);
     position: absolute;
     width: 100%;
     left: 0;
-    bottom: 0;
+    bottom: 40px;
     right: 0;
     
+    .lightbox-title {
+        font-size: inherit;    
+    }
+    
     .a-wrapper {
-        float: right;       
+        float: none;
+        display: block;
+        background: none;
+        a {
+            font-size: inherit;
+            padding: 0;
+            border: none; 
+            text-align: left;
+            text-decoration: underline;
+            &:hover {
+                background: none;
+                color: inherit;         
+            }      
+        }     
     }  
 }
 
