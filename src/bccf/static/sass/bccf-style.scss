@@ -1817,7 +1817,7 @@ textarea {
             line-height: 20px;
             &:hover {
                 color: #FFF; 
-                text-decoration: none;   
+                text-decoration: none !important;   
             }   
         }
         &.fa-facebook:hover {

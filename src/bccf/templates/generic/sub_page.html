@@ -117,14 +117,14 @@
 var sync_height = function() {
     var height = 0;
     var highest = 0;
-    $('.subpage-content > .related-resource').each(function() {
+    $('.subpage-content .related-resource').each(function() {
         var h = $(this).height();
         if(h > height) {
             height = h;
             highest = $(this).height();
         }
     });
-    $('.subpage-content > .related-resource').each(function() {
+    $('.subpage-content .related-resource').each(function() {
         $(this).css('height', highest);
     });
 };
@@ -152,6 +152,9 @@ $('.baby-content-btn').on('click', function(e) {
         if($(this).attr('id') === 'child-home') {
             $('.home-content').show();
             return;
+        }
+        if($(this).attr('id') === 'baby-resources') {
+            sync_height();        
         }
         $('.subpage-content').show();
     }

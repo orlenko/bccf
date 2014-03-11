@@ -4310,7 +4310,7 @@ textarea {
 /* line 1818, ../sass/bccf-style.scss */
 .user-box a.fa:hover {
   color: #FFF;
-  text-decoration: none;
+  text-decoration: none !important;
 }
 /* line 1823, ../sass/bccf-style.scss */
 .user-box a.fa-facebook:hover {
