@@ -169,7 +169,6 @@ def membership_upgrade(context, token):
     t = get_template('bccf/membership/upgrade.html')
     return t.render(Context(context))
 
-
 @register.filter
 def membership_upgrade_url(variation):
     return reverse('member-membership-upgrade', kwargs={'variation_id': variation.pk})
@@ -178,3 +177,4 @@ def membership_upgrade_url(variation):
 @register.filter
 def membership_renew_url(variation):
     return reverse('member-membership-renew')
+    

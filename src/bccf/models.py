@@ -557,8 +557,13 @@ class UserProfile(PybbProfile):
             ('organization', 'Organization'),
             ('corporate', 'Corporate'),
     ]
+    GENDER_TYPES = [
+            ('male', 'Male'),
+            ('female', 'Female')    
+    ]
 
     user = models.OneToOneField(User, related_name='profile')
+    gender = models.CharField('Gender', max_length=6, null=True, blank=True, choices=GENDER_TYPES)
     description = models.TextField('Description', null=True, blank=True)
     photo = MyImageField(verbose_name="Photo",
         upload_to=upload_to("bccf.Profile.photo", "uploads/profile-photos"),
@@ -605,7 +610,10 @@ class UserProfile(PybbProfile):
     def save(self, **kwargs):
         if not self.pk and not self.user.is_superuser:
             self.account_number = self.create_account_number()
-            super(UserProfile, self).save(**kwargs)
+        if not self.photo and self.gender:
+            self.photo = 'uploads/profile-photos/default_user-image-%s.gif' % (self.gender)
+        elif not self.photo:
+            self.photo = 'uploads/profile-photos/default_user-image-male.gif'
         super(UserProfile, self).save(**kwargs)
 
     def get_full_address(self):

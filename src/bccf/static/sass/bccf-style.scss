@@ -42,9 +42,12 @@ $lgrey: #A6B2A6;
 $dgrey: #414042;
 $lyellow: #FFF0C2;
 $yellow: #FDCD26;
+$sssteal: #F8FCFA;
+$ssteal: #EDF6F1;
 $steal: #C0DFCF;
 $lteal: #9FCEB4;
 $dteal: #5CAC8B;
+$ssgreen: #F9FAF4;
 $sgreen: #E5E9D2;
 $lgreen: #8FAB3D;
 $dgreen: #336442;
@@ -1127,7 +1130,6 @@ textarea {
 				margin:10px;
 				width: 75px;
 				height: 75px;
-				border: 5px solid $sgrey;
 			}
 			
 			.user-info {
@@ -1749,7 +1751,6 @@ textarea {
 
 } /* end #side-resource */
 
-
 #letter-filter {
     text-align: center;
     border-top: 2px solid $dgreen;
@@ -1780,15 +1781,80 @@ textarea {
     padding: 10px;
 }
 
-.result-box:nth-child(odd),
-.user-box:nth-child(odd) {
-
+.result-box:nth-child(odd) {
 }
 
-.result-box:nth-child(even),
-.user-box:nth-child(even) {
+.result-box:nth-child(even) {
     background-color: $sgrey;
 } /* End of member and search results */
+
+/**
+ * Member Directory
+ */
+.user-box {
+    img {
+        margin-top: 15px;
+        margin-left: 15px;    
+    }
+    .social {
+        margin-top: 0;    
+    }
+    a {
+        text-decoration: none;
+        &.fa {
+            height: 20px;
+            width: 20px;
+            text-align: center;
+            line-height: 20px;
+            &:hover {
+                color: #FFF; 
+                text-decoration: none;   
+            }   
+        }
+        &.fa-facebook:hover {
+            background-color: #3B5998;        
+        }    
+        &.fa-twitter:hover {
+            background-color: #9AE4E8;    
+        }
+        &.fa-linkedin:hover {
+            background-color: #03659A;    
+        }
+    }
+    .info {
+        @include font-size(13);
+        padding-top: 25px;
+        padding-left: 25px;       
+        h3 {
+            margin-bottom: 0;    
+        }
+        strong {
+            @include font-size(15);    
+        }
+        i.fa:before {
+            margin-right: 5px;    
+        }
+        span {
+            margin-right: 10px;    
+        }
+        a:hover {
+            text-decoration: underline;    
+        }
+    }
+    .contact {
+        margin-bottom: 0;
+    }
+    .accreditation {
+        margin-top: 0;    
+    }
+}
+.user-box.organization {
+    background-color: $ssteal;
+}
+.user-box.professional {
+    background-color: $sssteal;
+}
+/* End Member Directory */
 
 /**
  * Form builder
@@ -1854,6 +1920,9 @@ textarea {
 /* Forum End */
 
 /* Generic Above Footer */
+.photo {
+    border: 5px solid $sgrey;    
+}
 
 #form-aux {
     background-color: $sgrey;
@@ -1943,7 +2012,7 @@ footer {
 
 		ul{
 			list-style:none;
-			display:block;
+			display:inline-block;
 			height:50px;
 			margin:3px 0 0;
 	    }

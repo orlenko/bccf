@@ -17,16 +17,12 @@
     </nav>
 </div>
 
+<div id="filter-container" class="row row-one">
+    <input type="text" placeholder="Filter" />
+</div>
+
 {% for user in recordlist %}
-<a class="user-box section row">
-    <div class="col three">
-        <img src="{{ MEDIA_URL }}{% bccf_thumbnail user.photo 75 75 %}" alt="{{ user.user.get_full_name }}"/>
-    </div>
-    <div class="col nine">
-        <h3>{{ user.user.get_full_name }}</h3>
-        <p>Type: {{ user.membership_type|title }}</p>
-    </div>
-</a>
+{% include 'includes/user-box.html' %}
 {% empty %}
 <div class="user-box section row">
     {% if f %}
