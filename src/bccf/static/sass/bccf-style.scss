@@ -1791,6 +1791,15 @@ textarea {
 /**
  * Member Directory
  */
+#user-filter-container {
+    input {
+        float: right;
+        clear: both;
+        border: none;
+        background-color: $sgrey;
+        color: $dgrey;    
+    }  
+}
 .user-box {
     img {
         margin-top: 15px;
