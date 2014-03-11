@@ -1866,6 +1866,65 @@ textarea {
 /* End Member Directory */
 
 /**
+ * User Forms
+ **/
+.fieldset-header {
+    display: block;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #000;    
+}
+
+#account {
+    #form-container {
+        padding-top: 25px;
+        .form-group {
+            p {
+                margin-top: 2px;
+                margin-bottom: 0;    
+            }
+            label {
+                @include font-size(12);
+                text-transform: uppercase;
+            }
+            .help-block {
+                @include font-size(12);
+                margin-top: 0;    
+            }
+            input {
+                border: 1px solid #000;
+                background-color: $sgrey;    
+            }
+        }
+        .form-actions {
+            margin-top: 20px;
+            input {
+                @include font-size(12);
+                background-color: inherit;
+                border: 1px dashed #FFF;
+                color: #000;
+                float: left;
+                font-weight: bold;
+                margin: 2px;
+                padding: 4px 22px;
+                text-decoration: none;
+                text-transform: uppercase;
+                &:hover {
+                    color: $dgreen;
+    				text-decoration: none;
+    				background-color: $yellow;    
+                }
+            }    
+        }
+        #main-form {
+            padding-left: 25px;
+        }
+    }    
+}
+ 
+ 
+/* End User Forms */
+
+/**
  * Form builder
  **/
 #builder-main {
@@ -1929,8 +1988,16 @@ textarea {
 /* Forum End */
 
 /* Generic Above Footer */
+.req:after {
+    @include font-size(25);
+    content: '*';
+    color: $lgreen;
+    position: relative;
+    top: 11px;
+}
+
 .photo {
-    border: 5px solid $sgrey;    
+    border: 10px solid $sgrey;    
 }
 
 #form-aux {

@@ -423,7 +423,7 @@ OPTIONAL_APPS = (
 )
 
 DEBUG_TOOLBAR_CONFIG = {"INTERCEPT_REDIRECTS": False}
-DEBUG_TOOLBAR_PATCH_SETTINGS = False
+DEBUG_TOOLBAR_PATCH_SETTINGS = True
 ###################
 # DEPLOY SETTINGS #
 ###################
@@ -470,6 +470,22 @@ ACCOUNTS_PROFILE_FORM_EXCLUDE_FIELDS = [
     'facebook',
     'twitter',
     'linkedin',
+    'account_number',
+    'accreditation',
+    'street',
+    'street_2',
+    'street_3',
+    'fax',
+    'phone_primary',
+    'phone_work',
+    'phone_mobile',
+    'city',
+    'province',
+    'country',
+    'description',
+    'organization',
+    'region',
+    'gender',
 ]
 ACCOUNTS_PROFILE_VIEWS_ENABLED = True
 ACCOUNTS_VERIFICATION_REQUIRED = True

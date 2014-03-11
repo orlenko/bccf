@@ -1,12 +1,81 @@
-{% extends "accounts/account_form.html" %}
-{% load i18n %}
+{% extends "pages/base_bccfpage.html" %}
+{% load i18n mezzanine_tags static %}
+
+{% block meta_title %}Create Account{% endblock %}
+{% block title %}Create Account{% endblock %}
+{% block body_id %}account{% endblock %}
+
+{% block breadcrumb_menu %}
+{{ block.super }}
+<li>Create Your Account</li>
+{% endblock %}
+
+{% block content %}
+<h1>Create Your Account</h1>
+{% endblock %}
 
 {% block carousels %}
-<div class="col twelve">
+
+<div id="form-container" class="col twelve">
 {% if request.user.is_authenticated %}
     <p>{% trans "You're already logged in. If you'd like to create a new account, you'll need to log out first." %}</p>
 {% else %}
-    {{ block.super }}
+    <fieldset>
+        <form method="post"{% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
+        {# fields_for form #}
+        <div class="col three mobile-full">
+            <img src="{% static 'img/default_user-image-female.gif' %}" class="photo" alt="Default User Photo"/>
+            <!--<div class="form-group input_id_first_name"> 
+                {{ form.photo }}
+                <p class="help-block">{{ form.first_name.help_text }}</p>
+            </div>-->
+        </div>
+        <div id="main-form" class="col nine mobile-full">
+            <strong class="fieldset-header">Account Information</strong>
+            <div class="form-group input_id_first_name"> 
+                <p><label class="req" for="id_first_name">{{ form.first_name.label_tag }}</label></p>
+                {{ form.first_name }}
+                <p class="help-block">{{ form.first_name.help_text }}</p>
+            </div>
+            <div class="form-group input_id_last_name">      
+                <p><label class="req" for="id_last_name">{{ form.last_name.label_tag }}</label></p>
+                {{ form.last_name }}
+                <p class="help-block">{{ form.last_name.help_text }}</p>
+            </div>
+            <div class="form-group input_id_postal_code">      
+                <p><label class="req" for="id_postal_code">{{ form.postal_code.label_tag }}</label></p>
+                {{ form.postal_code }}
+                <p class="help-block">{{ form.postal_code.help_text }}</p>
+            </div>
+            <div class="form-group input_id_email">      
+                <p><label class="req" for="id_email">{{ form.email.label_tag }}</label></p>
+                {{ form.email }}
+                <p class="help-block">{{ form.email.help_text }}</p>
+            </div>
+            <div class="form-group input_id_username">      
+                <p><label class="req" for="id_username">{{ form.username.label_tag }}</label></p>
+                {{ form.username }}
+                <p class="help-block">{{ form.username.help_text }}</p>
+            </div>
+            <div class="form-group input_id_password1">      
+                <p><label class="req" for="id_password1">{{ form.password1.label_tag }}</label></p>
+                {{ form.password1 }}
+                <p class="help-block">{{ form.password1.help_text }}</p>
+            </div>
+            <div class="form-group input_id_password2">      
+                <p><label class="req" for="id_password1">{{ form.password2.label_tag }}</label></p>
+                {{ form.password2 }}
+                <p class="help-block">{{ form.password2.help_text }}</p>
+            </div>
+            <strong class="fieldset-header row row-one">Account Type</strong>
+            <strong class="fieldset-header row row-one"">Account Preferences</strong>
+            {% csrf_token %}
+            <div class="form-actions dashed-button">
+                <input class="btn btn-primary btn-large" type="submit" value="Create Account">
+            </div>
+        </div>
+        </form>
+    </fieldset>
     {% if settings.ACCOUNTS_VERIFICATION_REQUIRED %}
     <p>{% trans "After signing up, you'll receive an email with a link you need to click, in order to activate your account." %}</p>
     {% endif %}

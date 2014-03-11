@@ -3,13 +3,13 @@ import json
 
 from django import forms
 from django.db.models import Sum, Q
+from django.contrib.auth.forms import UserCreationForm
 from django.forms.widgets import RadioFieldRenderer
 from django.utils.encoding import force_unicode
 from django.utils.safestring import mark_safe
 from django.contrib.comments.forms import CommentSecurityForm
 
 #from ckeditor.widgets import CKEditorWidget
-from tinymce.widgets import TinyMCE
 
 from mezzanine.conf import settings
 from mezzanine.generic.models import Rating
@@ -19,7 +19,7 @@ from bccf.settings import MEDIA_ROOT
 
 from formable.builder.models import FormStructure, FormPublished, Question
 from django.contrib.auth.models import User
-from mezzanine.core.forms import Html5Mixin, TinyMceWidget
+from mezzanine.core.forms import Html5Mixin
 from mezzanine.utils.urls import slugify, unique_slug, admin_url
 from django.core.validators import EmailValidator
 from django.core.exceptions import ValidationError
@@ -247,6 +247,9 @@ class FormStructureSurveyFormTwo(FormStructureSurveyBase):
     structure = forms.CharField(widget=forms.HiddenInput(attrs={'id': 'form_structure_data'}))
     type = forms.CharField(widget=forms.HiddenInput(attrs={'id': 'form_structure_type'}))
 
+
+class CreateAccountForm(UserCreationForm):
+    pass
 
 class ProfileFieldsForm(forms.ModelForm):
         class Meta:
