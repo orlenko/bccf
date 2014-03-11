@@ -2,9 +2,26 @@
 
 {% for user in users %}
 <div class="hlist-inner"> <!-- Use Innner for the slide -->
-	<img src="{{ MEDIA_URL }}{% bccf_thumbnail user.photo 75 75 %}" alt="{{ user.user.get_full_name }}">
-    <h6>{{ user.user.get_full_name }}</h6>
-    <p>{{ user.description|truncatechars:100 }}</p>
-    <a class="hlist-link" href="{% url 'profile' user.user.username %}">Profile</a>
+    <a href="{% url 'profile' user.user.username %}" title="{{ user.user.get_full_name }}">
+    	<img src="{{ MEDIA_URL }}{% bccf_thumbnail user.photo 75 75 %}" alt="{{ user.user.get_full_name }}" class="user-photo"/>
+    	<div class="user-info">
+            <h6>{{ user.user.get_full_name }}</h6>
+            <p>{{ user.get_full_address }}</p>
+            <p>
+                {% if user.phone_primary %}
+                <span><i class="fa fa-phone-square"></i>{{ user.phone_primary }}</span>
+                {% endif %}
+                {% if user.fax %}
+                <span><i class="fa fa-print"></i>{{ user.fax }}</span>
+                {% endif %}
+                {% if user.user.email %}
+                <span><i class="fa fa-envelope"></i>{{ user.user.email }}</span>
+                {% endif %}
+                {% if user.website %}
+                <span><i class="fa fa-desktop"></i>{{ user.website }}</span>
+                {% endif %}    
+            </p>
+        </div>
+    </a>
 </div>
 {% endfor %}

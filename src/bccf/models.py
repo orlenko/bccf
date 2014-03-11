@@ -608,6 +608,13 @@ class UserProfile(PybbProfile):
             super(UserProfile, self).save(**kwargs)
         super(UserProfile, self).save(**kwargs)
 
+    def get_full_address(self):
+        address = ''
+        for part in [self.street, self.city, self.province, self.postal_code]:
+            if part:
+                address += part+' '
+        return address
+
     def can_post_on_forum(self, post):
         return self.is_forum_moderator
 

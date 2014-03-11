@@ -1,6 +1,13 @@
 {% if resources %}
 <div class="col mobile-full related-resource">
-    <h4 class="{{ resource_type|slugify }}-class">{{ resource_type|title }}</h4>
+    <h4 class="{{ resource_type|slugify }}-class"><i class="fa"></i>
+        {% if resource_type == 'Downloadable Forms' %}
+            Forms
+        {% else %}
+            {{ resource_type|title }}
+        {% endif %}
+    </h4>
+    <nav>
     <ul>
     {% for resource in resources %}
         <li><a href="{{ resource.get_absolute_url }}">{{ resource.title|truncatechars:20 }}</a></li>

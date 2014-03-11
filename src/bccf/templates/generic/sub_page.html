@@ -81,12 +81,14 @@
             <li class="col two mobile-full" id="resources">
                 <a href="{{ child_obj.get_absolute_url }}baby-resources" id="baby-resources" class="baby-content-btn">Resources</a>
                 <div class="baby-content">
-                    <div class="related-resources">
-                        {% related_resources_for child_obj 'article' 'Articles' %}
-                        {% related_resources_for child_obj 'downloadableform' 'Downloadable Forms' %}
-                        {% related_resources_for child_obj 'magazine' 'Magazines' %}
-                        {% related_resources_for child_obj 'tipsheet' 'Tip Sheets' %}
-                        {% related_resources_for child_obj 'video' 'Videos' %}
+                    <div id="related-resource-outer" class="section">
+                        <div class="related-resources">
+                            {% related_resources_for child_obj 'article' 'Articles' %}
+                            {% related_resources_for child_obj 'downloadableform' 'Downloadable Forms' %}
+                            {% related_resources_for child_obj 'magazine' 'Magazines' %}
+                            {% related_resources_for child_obj 'tipsheet' 'Tip Sheets' %}
+                            {% related_resources_for child_obj 'video' 'Videos' %}
+                        </div>
                     </div>
                 </div>
             </li>
