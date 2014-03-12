@@ -26,10 +26,10 @@ from mezzanine.pages.models import Page
 from mezzanine.utils.models import upload_to, AdminThumbMixin
 from mezzanine.utils.urls import path_to_slug, slugify
 
+from bccf import managers
 from bccf.fields import MyImageField
 from bccf.settings import (OPTION_SUBSCRIPTION_TERM,
                            get_option_number,)
-from bccf.managers import ChildPageManager, TagManager, EventManager
 
 from mezzanine.utils.email import send_mail_template
 
@@ -206,7 +206,7 @@ class BCCFChildPage(BCCFBasePage, RichText, AdminThumbMixin):
         help_text = 'You can upload an image. '
             'Acceptable file types: .png, .jpg, .bmp, .gif.')
 
-    objects = ChildPageManager()
+    objects = managers.ChildPageManager()
 
     class Meta:
         verbose_name = 'BCCF Child Page'
@@ -533,7 +533,7 @@ class Program(BCCFChildPage):
     users = models.ManyToManyField(User, verbose_name='Requester', blank=True, null=True)
     user_added = models.BooleanField('Added By User', default=False, blank=True) 
     
-    objects = ChildPageManager()    
+    objects = managers.ChildPageManager()    
     
     def save(self, **kwargs):
         self.gparent = BCCFPage.objects.get(slug='bccf/programs')
@@ -553,7 +553,7 @@ class Blog(BCCFChildPage):
 
 #TAG
 class TagBase(BCCFChildPage):
-    objects = TagManager()   
+    objects = managers.TagManager()   
 
     class Meta:
         abstract = True
@@ -597,8 +597,11 @@ class UserProfile(PybbProfile):
     organization = models.ForeignKey('UserProfile', null=True, blank=True, related_name='members')
 
     accreditation = models.ManyToManyField(Program, verbose_name='Accreditation', blank=True, null=True)
+    show_in_list = models.BooleanField('Show in member directory', default=True)
 
     is_forum_moderator = models.NullBooleanField(null=True, blank=True, default=False)
+
+    objects = managers.UserProfileManager()
 
     # Member Fields
     job_title = models.CharField('Job Title', max_length=255, null=True, blank=True)
@@ -854,7 +857,7 @@ class Event(BCCFChildPage):
     max_seats = models.PositiveIntegerField('Max number of seats', null=True, blank=True, default=1)
     full = models.BooleanField('Event is full', blank=True, default=False)
 
-    objects = EventManager()
+    objects = managers.EventManager()
 
     def save(self, **kwargs):
         if not self.pk:

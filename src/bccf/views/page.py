@@ -50,7 +50,7 @@ def bccf_admin_page_ordering(request):
 def page(request, parent=None, child=None, baby=None):
     try:
         if not request.is_ajax():
-            page = get_object_or_404(BCCFPage, slug='bccf/%s' % parent)
+            page = get_object_or_404(BCCFPage, slug__exact='bccf/%s' % parent)
             if parent in BCCF_SPECIAL_PAGES:
                 template = u"pages/%s.html" % parent
             else:
@@ -88,10 +88,16 @@ def user_list(request):
     page = BCCFPage.objects.get(slug__exact='member/directory');
     p = request.GET.get('page_var')
     f = request.GET.get('filter')
+    t = request.GET.get('type')
+    
+    users_list = UserProfile.objects.get_directory()
+    
     if f and f != 'all':
-        users_list = UserProfile.objects.filter(Q(user__last_name__istartswith=f) | Q(user__first_name__istartswith=f), Q(membership_type='professional') | Q(membership_type='organization')).order_by('user__last_name', 'user__first_name')
-    else:
-        users_list = UserProfile.objects.filter(Q(membership_type='professional') | Q(membership_type='organization')).order_by('user__last_name', 'user__first_name')
+        users_list = users_list.filter(Q(user__last_name__istartswith=f) | Q(user__first_name__istartswith=f))
+    if t and t != 'all':
+        users_list = users_list.filter(membership_type=t)
+        
+    users_list = users_list.order_by('user__last_name', 'user__first_name')
     paginator = Paginator(users_list, 10)
     try:
         recordlist = paginator.page(p)
