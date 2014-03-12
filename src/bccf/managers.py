@@ -22,12 +22,6 @@ class ChildPageManager(models.Manager):
         
     def featured(self):
         return self.get_queryset().filter(featured=True)
-
-class GenericPageManager(ChildPageManager):
-    def get_queryset(self):
-        return super(ChildPageManager, self).get_queryset().filter(
-            Q(content_model='bccfgenericpage')
-        )
     
 class EventManager(ChildPageManager):
 
@@ -57,11 +51,4 @@ class TagManager(ChildPageManager):
     def gets(self):
         return super(TagManager, self).get_queryset().filter(
             Q(content_model='campaign')        
-        )
-        
-class ProgramManager(ChildPageManager):
-    
-    def get_queryset(self):
-        return super(ChildPageManager, self).get_queryset().filter(
-            Q(content_model='program')
         )
