@@ -42,7 +42,7 @@ def featured_resources(context):
     """
     Provides a generic context variable name for the featured resources to be shown on the front page
     """
-    context['slides'] = BCCFChildPage.objects.filter(Q(content_model='article') | Q(content_model='downloadableform') | Q(content_model='magazine') | Q(content_model='tipsheet') | Q(content_model='video'), BCCF_EXPIRY, **BCCF_FILTER).order_by('-created')
+    context['slides'] = BCCFChildPage.objects.filter(Q(content_model='article') | Q(content_model='downloadableform') | Q(content_model='magazine') | Q(content_model='podcast') | Q(content_model='tipsheet') | Q(content_model='video'), BCCF_EXPIRY, **BCCF_FILTER).order_by('-created')
     return context
     
 @register.inclusion_tag('generic/includes/featured_users.html', takes_context=True)
@@ -55,7 +55,7 @@ def related_resources_for(context, obj, type, title):
     context['resource_type'] = title
     #Related resources
     q = Q()
-    for topic in obj.bccf_topic.all():        
+    for topic in obj.bccf_topic.all():
         q = q | Q(bccf_topic = topic)
         
     resource_pre = BCCFChildPage.objects.filter(Q(content_model=type), BCCF_EXPIRY, **BCCF_FILTER).distinct()

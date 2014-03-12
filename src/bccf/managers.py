@@ -28,12 +28,6 @@ class GenericPageManager(ChildPageManager):
         return super(ChildPageManager, self).get_queryset().filter(
             Q(content_model='bccfgenericpage')
         )
-        
-class ResourceManager(ChildPageManager):
-    def get_queryset(self):
-        return super(ChildPageManager, self).get_queryset().filter(
-            Q(content_model='article') | Q(content_model='downloadableform') | Q(content_model='magazine') | Q(content_model='tipsheet') | Q(content_model='video')
-        )
     
 class EventManager(ChildPageManager):
 

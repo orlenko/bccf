@@ -15,6 +15,9 @@
                         {% if child_obj.content_model == 'video' %}
                         {% video child_obj.get_content_model.video_url "small" %}
                         {% endif %}
+                        {% if child_obj.content_model == 'podcast' %}
+                        <audio src="{{ MEDIA_URL }}{{ child_obj.get_content_model.attached_audio }}" preload="auto" controls></audio>
+                        {% endif %}
                         {{ child_obj.content|safe }}
                         {% bccf_subscribe_for child_obj %}
                     </div>
@@ -86,6 +89,7 @@
                             {% related_resources_for child_obj 'article' 'Articles' %}
                             {% related_resources_for child_obj 'downloadableform' 'Downloadable Forms' %}
                             {% related_resources_for child_obj 'magazine' 'Magazines' %}
+                            {% related_resources_for child_obj 'podcast' 'Podcasts' %}
                             {% related_resources_for child_obj 'tipsheet' 'Tip Sheets' %}
                             {% related_resources_for child_obj 'video' 'Videos' %}
                         </div>
@@ -104,6 +108,9 @@
             <h3>{{ child_obj.title }}</h3>
             {% if child_obj.content_model == 'video' %}
             {% video child_obj.get_content_model.video_url "small" %}
+            {% endif %}
+            {% if child_obj.content_model == 'podcast' %}
+            <audio src="{{ MEDIA_URL }}{{ child_obj.get_content_model.attached_audio }}" preload="auto" controls></audio>
             {% endif %}
             {{ child_obj.content|safe }}
             {% bccf_subscribe_for child_obj %}

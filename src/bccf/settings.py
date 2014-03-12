@@ -117,7 +117,7 @@ ADMIN_MENU_ORDER = (
     ("Marquees", ("bccf.HomeMarquee", "bccf.HomeMarqueeSlide", "bccf.PageMarquee", "bccf.PageMarqueeSlide", "bccf.FooterMarquee", "bccf.FooterMarqueeSlide")),
     ("News", ("news.NewsPost",)),
     ("Programs", ("bccf.Program", "bccf.ProgramRequest")),
-    ("Resources", ("bccf.Article", "bccf.DownloadableForm", "bccf.Magazine", "bccf.TipSheet", "bccf.Video")),
+    ("Resources", ("bccf.Article", "bccf.DownloadableForm", "bccf.Magazine", "bccf.Podcast", "bccf.TipSheet", "bccf.Video")),
     ("Forum", ("pybb.Forum", "pybb.Topic", "pybb.Post", "pybb.Profile")),
 )
 
@@ -552,13 +552,14 @@ import datetime
 
 COMMENTS_USE_RATINGS = False
 
-BCCF_RESOURCE_TYPES = '(article|downloadableform|magazine|tipsheet|video)'
+BCCF_RESOURCE_TYPES = '(article|downloadableform|magazine|podcast|tipsheet|video)'
 BCCF_SPECIAL_PAGES = ['trainings','resources','tag','programs']
 BCCF_CORE_PAGES = ['trainings','resources','tag','programs','blog','news']
 SEARCH_MODEL_CHOICES = (
     'bccf.BCCFChildPage',
     'bccf.BCCFTopic',
     'bccf.BCCFPage',
+    'shop.product',
 )
 
 # CKEditor

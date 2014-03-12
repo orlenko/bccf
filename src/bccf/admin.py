@@ -15,7 +15,7 @@ from mezzanine.pages.admin import PageAdmin
 
 from bccf.models import (BCCFTopic, Settings, HomeMarquee, FooterMarquee, HomeMarqueeSlide, FooterMarqueeSlide,
     PageMarquee, PageMarqueeSlide, BCCFPage, BCCFChildPage, BCCFBabyPage, BCCFGenericPage,
-    Blog, Program, Article, Magazine, Video, TipSheet, DownloadableForm, Campaign,
+    Blog, Program, Article, Magazine, Video, Podcast, TipSheet, DownloadableForm, Campaign,
     Event, EventRegistration, ProgramRequest)
 from bccf.settings import BCCF_CORE_PAGES
 from django.core.exceptions import PermissionDenied
@@ -289,6 +289,43 @@ class BCCFResourceAdmin(DisplayableAdmin):
             for fieldname in ['page_for', 'bccf_topic', 'featured']:
                 self.list_filter.insert(-1, fieldname)
 
+class BCCFPodcastResourceAdmin(DisplayableAdmin):
+    actions = [make_featured, make_unfeatured]
+    inlines = (BCCFBabyInlineAdmin,)
+    ordering = ('-created',)
+
+    def __init__(self, *args, **kwargs):
+        super(BCCFPodcastResourceAdmin, self).__init__(*args, **kwargs)
+        
+        # Fields
+        if self.fieldsets == DisplayableAdmin.fieldsets:
+            self.fieldsets = deepcopy(self.fieldsets)
+            for field in reversed(['content',
+                                    'attached_audio',
+                                    'bccf_topic',
+                                    'featured',
+                                    'page_for',
+                                    'image']):
+                self.fieldsets[0][1]['fields'].insert(3, field)
+                
+       # Editable in the list display
+        if self.list_editable == DisplayableAdmin.list_editable:
+            self.list_editable = list(deepcopy(self.list_editable))
+            for fieldname in ['page_for', 'bccf_topic', 'featured']:
+                self.list_editable.insert(-1, fieldname)                
+          
+        # List Display      
+        if self.list_display == DisplayableAdmin.list_display:
+            self.list_display = list(deepcopy(self.list_display))
+            for fieldname in ['page_for', 'bccf_topic', 'featured']:
+                self.list_display.insert(-1, fieldname)                
+
+        # Filter
+        if self.list_filter == DisplayableAdmin.list_filter:
+            self.list_filter = list(deepcopy(self.list_filter))
+            for fieldname in ['page_for', 'bccf_topic', 'featured']:
+                self.list_filter.insert(-1, fieldname)     
+
 class BCCFVideoResourceAdmin(AdminVideoMixin, DisplayableAdmin):
     actions = [make_featured, make_unfeatured]
     inlines = (BCCFBabyInlineAdmin,)
@@ -372,6 +409,7 @@ admin.site.register(DownloadableForm, BCCFResourceAdmin)
 admin.site.register(Magazine, BCCFResourceAdmin)
 admin.site.register(TipSheet, BCCFResourceAdmin)
 
+admin.site.register(Podcast, BCCFPodcastResourceAdmin)
 admin.site.register(Video, BCCFVideoResourceAdmin)
 
 # Program Request

@@ -209,7 +209,7 @@ class ProductVariation(Priced):
     """
 
     product = models.ForeignKey("Product", related_name="variations")
-    default = models.BooleanField(_("Default"))
+    default = models.BooleanField(_("Default"), default=False)
     image = models.ForeignKey("ProductImage", verbose_name=_("Image"),
                               null=True, blank=True)
 

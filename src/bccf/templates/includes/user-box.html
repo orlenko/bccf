@@ -27,7 +27,7 @@
             {% endif %}          
         </p>
         {% if user.membership_type == 'professional' %}
-        <p class="accreditation"><strong>Accreditations: </strong>
+        <p class="accreditation"><strong>Certifications in: </strong>
             {% for a in user.accreditation.all %}
                 {% if not a.user_added %}
                     <a href="{{ a.get_absolute_url }}" target="_blank">{{ a.title }}</a>
@@ -43,6 +43,18 @@
         {% if user.membership_type == 'organization' %}
         <p>{{ user.description }}</p>
         <p><strong>Certification</strong></p>
+        <p>
+            {% for a in user.accreditation.all %}
+                {% if not a.user_added %}
+                    <a href="{{ a.get_absolute_url }}" target="_blank">{{ a.title }}</a>
+                {% else %}
+                    {{ a.title }}
+                {% endif %}
+                {% if not forloop.last %},{% endif %}
+            {% empty %}
+            None
+            {% endfor %}
+        </p>
         {% endif %}
         {% if user.membership_level == 100 %}
         {# trainings_for user #}

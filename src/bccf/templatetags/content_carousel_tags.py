@@ -97,5 +97,5 @@ def content_carousel_for_tag(context):
 
 @register.inclusion_tag("generic/includes/resource_carousel.html", takes_context=True)
 def content_carousel_for_resources(context):
-    context['slides'] = BCCFChildPage.objects.filter(Q(content_model='article') | Q(content_model='downloadableform') | Q(content_model='magazine') | Q(content_model='tipsheet') | Q(content_model='video')).order_by('-created')[:10]
+    context['slides'] = BCCFChildPage.objects.filter(Q(content_model='article') | Q(content_model='downloadableform') | Q(content_model='magazine') | Q(content_model='podcast') | Q(content_model='tipsheet') | Q(content_model='video')).order_by('-created')[:10]
     return context

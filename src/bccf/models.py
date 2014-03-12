@@ -29,7 +29,7 @@ from mezzanine.utils.urls import path_to_slug, slugify
 from bccf.fields import MyImageField
 from bccf.settings import (OPTION_SUBSCRIPTION_TERM,
                            get_option_number,)
-from bccf.managers import GenericPageManager, ChildPageManager, TagManager, EventManager, ResourceManager, ProgramManager
+from bccf.managers import GenericPageManager, ChildPageManager, TagManager, EventManager, ProgramManager
 
 from mezzanine.utils.email import send_mail_template
 
@@ -167,8 +167,8 @@ class BCCFTopic(Displayable, RichText):
     marquee = models.ForeignKey(PageMarquee, blank=True, null=True)
     carousel_color = models.CharField(max_length=11, default='dgreen-list', choices=COLORS)
     class Meta:
-        verbose_name = 'BCCF Topic'
-        verbose_name_plural = 'BCCF Topics'
+        verbose_name = 'Topic'
+        verbose_name_plural = 'Topics'
 
     def get_absolute_url(self):
         """
@@ -463,8 +463,6 @@ class DocumentResourceBase(BCCFChildPage):
         help_text = 'You can upload an office document or a PDF file. This field is not used by Video '
             'Acceptable file types: .doc, .pdf, .rtf, .txt, .odf, .docx, .xls, .xlsx, .ppt, .pptx.')
     product = models.ForeignKey(Product, verbose_name='Associated Product', blank=True, null=True)
-
-    objects = ResourceManager()    
     
     def save(self, **kwargs):
         self.gparent = BCCFPage.objects.get(slug='bccf/resources')
@@ -494,14 +492,36 @@ class TipSheet(DocumentResourceBase):
     def get_resource_type(self):
         return 'Tip Sheet'
 
+class Podcast(BCCFChildPage):
+    attached_audio = FileField('Audio File',
+        upload_to = upload_to("bccf.Podcast.attachment_audio", "resource/audio"),
+        extensions = ['.mp3'],
+        max_length = 1024,
+        null = True,
+        blank = True,
+        help_text = 'You can upload an MP3. Acceptable file types: mp3')
+    product = models.ForeignKey(Product, verbose_name='Associated Product', blank=True, null=True)
+    
+    class Meta:
+        verbose_name = 'Podcast'
+        verbose_name_plural = 'Podcasts'       
+    
+    def save(self, **kwargs):
+        self.gparent = BCCFPage.objects.get(slug='bccf/resources')
+        super(Podcast, self).save(**kwargs)
+    def get_resource_type(self):
+        return 'Podcast'
+
 class Video(BCCFChildPage):
     video_url = EmbedVideoField("Video", max_length=1024, blank=True, default='', null=True,
     help_text='Paste a YouTube URL here. '
         'Example: http://www.youtube.com/watch?v=6Bm7DVqJTHo')
     product = models.ForeignKey(Product, verbose_name='Associated Product', blank=True, null=True)
     
-    objects = ResourceManager()    
-    
+    class Meta:
+        verbose_name = 'Video'
+        verbose_name_plural = 'Videos'    
+
     def save(self, **kwargs):
         self.gparent = BCCFPage.objects.get(slug='bccf/resources')
         super(Video, self).save(**kwargs)
@@ -511,9 +531,7 @@ class Video(BCCFChildPage):
 #Program Pages
 class Program(BCCFChildPage):
     users = models.ManyToManyField(User, verbose_name='Requester', blank=True, null=True)
-    user_added = models.BooleanField('Added By User', default=False, blank=True)
-    
-    objects = ProgramManager()    
+    user_added = models.BooleanField('Added By User', default=False, blank=True) 
     
     def save(self, **kwargs):
         self.gparent = BCCFPage.objects.get(slug='bccf/programs')
@@ -602,8 +620,8 @@ class UserProfile(PybbProfile):
     linkedin = models.CharField('LinkedIn', max_length=255, null=True, blank=True)
     
     #Banking
-    account_number = models.CharField('Account Number', max_length=12, null=True, blank=True)
-    
+    account_number = models.CharField('Account Number', max_length=12, null=True, blank=True)  
+
     def __unicode__(self):
         return 'Profile of %s' % (self.user.get_full_name() or self.user.username)
 

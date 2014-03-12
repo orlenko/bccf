@@ -1478,6 +1478,11 @@ textarea {
                 @extend .fa-book    
             }
         }
+        .podcasts-class {
+            i:before {
+                @extend .fa-volume-up    
+            }
+        }
         .tip-sheets-class {
             i:before {
                 @extend .fa-files-o
@@ -1843,8 +1848,10 @@ textarea {
         i.fa:before {
             margin-right: 5px;    
         }
-        span {
-            margin-right: 10px;    
+        .contact {
+            > span:not(:first-child):not(:nth-child(2)) {
+                margin-left: 10px;    
+            }
         }
         a:hover {
             text-decoration: underline;    
