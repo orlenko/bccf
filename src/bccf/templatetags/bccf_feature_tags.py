@@ -47,7 +47,7 @@ def featured_resources(context):
     
 @register.inclusion_tag('generic/includes/featured_users.html', takes_context=True)
 def featured_users(context, type): # 0 - level 1; 50 - level 2; 100 - level 3
-    context['users'] = UserProfile.objects.filter(membership_type=type, membership_level=100).order_by('?')
+    context['users'] = UserProfile.objects.get_directory().filter(membership_type=type, membership_level=100).order_by('?')
     return context
     
 @register.inclusion_tag('generic/related_resources.html', takes_context=True)
