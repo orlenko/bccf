@@ -24,54 +24,75 @@
         <form method="post"{% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
         {# fields_for form #}
         <div class="col three mobile-full">
-            <img src="{% static 'img/default_user-image-female.gif' %}" class="photo" alt="Default User Photo"/>
-            <!--<div class="form-group input_id_first_name"> 
+            <img src="{% static 'img/default_user-image-female.gif' %}" id="photo" class="photo" alt="Default User Photo"/>
+            <div class="form-group input_id_first_name"> 
                 {{ form.photo }}
+                <button id="fake-photo">Browse</button>
+                <button id="clear-photo">Clear</button>
                 <p class="help-block">{{ form.first_name.help_text }}</p>
-            </div>-->
+            </div>
         </div>
         <div id="main-form" class="col nine mobile-full">
             <strong class="fieldset-header">Account Information</strong>
             <div class="form-group input_id_first_name"> 
-                <p><label class="req" for="id_first_name">{{ form.first_name.label_tag }}</label></p>
+                <p><label class="req" for="id_first_name">{{ form.first_name.label }}</label></p>
                 {{ form.first_name }}
                 <p class="help-block">{{ form.first_name.help_text }}</p>
             </div>
             <div class="form-group input_id_last_name">      
-                <p><label class="req" for="id_last_name">{{ form.last_name.label_tag }}</label></p>
+                <p><label class="req" for="id_last_name">{{ form.last_name.label }}</label></p>
                 {{ form.last_name }}
                 <p class="help-block">{{ form.last_name.help_text }}</p>
             </div>
             <div class="form-group input_id_postal_code">      
-                <p><label class="req" for="id_postal_code">{{ form.postal_code.label_tag }}</label></p>
+                <p><label class="req" for="id_postal_code">{{ form.postal_code.label }}</label></p>
                 {{ form.postal_code }}
                 <p class="help-block">{{ form.postal_code.help_text }}</p>
             </div>
             <div class="form-group input_id_email">      
-                <p><label class="req" for="id_email">{{ form.email.label_tag }}</label></p>
+                <p><label class="req" for="id_email">{{ form.email.label }}</label></p>
                 {{ form.email }}
                 <p class="help-block">{{ form.email.help_text }}</p>
             </div>
             <div class="form-group input_id_username">      
-                <p><label class="req" for="id_username">{{ form.username.label_tag }}</label></p>
+                <p><label class="req" for="id_username">{{ form.username.label }}</label></p>
                 {{ form.username }}
                 <p class="help-block">{{ form.username.help_text }}</p>
             </div>
             <div class="form-group input_id_password1">      
-                <p><label class="req" for="id_password1">{{ form.password1.label_tag }}</label></p>
+                <p><label class="req" for="id_password1">{{ form.password1.label }}</label></p>
                 {{ form.password1 }}
                 <p class="help-block">{{ form.password1.help_text }}</p>
             </div>
             <div class="form-group input_id_password2">      
-                <p><label class="req" for="id_password1">{{ form.password2.label_tag }}</label></p>
+                <p><label class="req" for="id_password1">{{ form.password2.label }}</label></p>
                 {{ form.password2 }}
                 <p class="help-block">{{ form.password2.help_text }}</p>
             </div>
             <strong class="fieldset-header row row-one">Account Type</strong>
-            <strong class="fieldset-header row row-one"">Account Preferences</strong>
+            <div class="form-group input_id_password2">      
+                {{ form.membership_type }}
+                <p class="help-block">{{ form.membership_type.help_text }}</p>
+            </div>
+            <strong class="fieldset-header row row-one">Account Preferences</strong>
+            <div class="form-group checkbox-group input_id_show_in_list"> 
+                <label class="req" for="id_show_in_list">Plase add my profile to your <a href="/member/directory" target="_blank">listing of professionals</a></label>
+                {{ form.show_in_list }}
+                <p class="help-block">{{ form.show_in_list.help_text }}</p>
+            </div>
+            <div class="form-group checkbox-group input_id_in_mailing_list"> 
+                <label class="req" for="id_in_mailing_list">Please add me to your mailing list</label>
+                {{ form.in_mailing_list }}
+                <p class="help-block">{{ form.in_mailing_list.help_text }}</p>
+            </div>
+            <div class="form-group checkbox-group input_id_first_name"> 
+                <label class="req" for="accept">I accept the <a href="#" target="_blank">Terms of User & Privacy</a></label>
+                <input id="accept" name="accept" type="checkbox">
+                <p class="help-block">{{ form.accept.help_text }}</p>
+            </div>
             {% csrf_token %}
             <div class="form-actions dashed-button">
-                <input class="btn btn-primary btn-large" type="submit" value="Create Account">
+                <input id="create-submit" class="btn btn-primary btn-large" type="submit" value="Create Account">
             </div>
         </div>
         </form>
@@ -82,4 +103,42 @@
 {% endif %}
 </div>
 
+{% endblock %}
+
+{% block footer_scripts %}
+{{ block.super }}
+<script type="text/javascript">
+    var default_img = "{% static 'img/default_user-image-female.gif' %}";
+    $('#create-submit').on('click', function(e) {
+        e.preventDefault();    
+        if(!$('#accept').is(':checked')) {
+            alert('Please accept the Terms of User & Privacy');
+        } else {
+            $(this).parents('form').submit();        
+        }
+    });
+    $('#fake-photo').on('click', function(e) {
+        e.preventDefault();
+        $('#id_photo').trigger('click');
+    });
+    $('#clear-photo').on('click', function(e) {
+        e.preventDefault();
+        $('#id_photo').val('').trigger('change');
+        
+    });
+    $('#id_photo').on('change', function(e) {
+        var input = this;
+        console.log(input.files);
+        if(input.files && input.files[0]) {
+            console.log('here');
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('#photo').attr('src', e.target.result);            
+            }        
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            $('#photo').attr('src', default_img);        
+        }
+    });
+</script>
 {% endblock %}

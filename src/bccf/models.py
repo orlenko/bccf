@@ -583,7 +583,7 @@ class UserProfile(PybbProfile):
     ]
 
     user = models.OneToOneField(User, related_name='profile')
-    gender = models.CharField('Gender', max_length=6, null=True, blank=True, choices=GENDER_TYPES)
+    gender = models.CharField('Gender', max_length=6, default='male', blank=True, null=True, choices=GENDER_TYPES)
     description = models.TextField('Description', null=True, blank=True)
     photo = MyImageField(verbose_name="Photo",
         upload_to=upload_to("bccf.Profile.photo", "uploads/profile-photos"),
@@ -597,7 +597,8 @@ class UserProfile(PybbProfile):
     organization = models.ForeignKey('UserProfile', null=True, blank=True, related_name='members')
 
     accreditation = models.ManyToManyField(Program, verbose_name='Accreditation', blank=True, null=True)
-    show_in_list = models.BooleanField('Show in member directory', default=True)
+    show_in_list = models.BooleanField('Show in member directory', default=False)
+    in_mailing_list = models.BooleanField('In mailing list', default=False)
 
     is_forum_moderator = models.NullBooleanField(null=True, blank=True, default=False)
 

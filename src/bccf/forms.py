@@ -3,29 +3,26 @@ import json
 
 from django import forms
 from django.db.models import Sum, Q
+from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.comments.forms import CommentSecurityForm
 from django.forms.widgets import RadioFieldRenderer
 from django.utils.encoding import force_unicode
 from django.utils.safestring import mark_safe
-from django.contrib.comments.forms import CommentSecurityForm
+from django.core.validators import EmailValidator
+from django.core.exceptions import ValidationError
 
-#from ckeditor.widgets import CKEditorWidget
-
+from mezzanine.core.forms import Html5Mixin
+from mezzanine.utils.urls import slugify, unique_slug, admin_url
+from mezzanine.utils.email import send_mail_template
 from mezzanine.conf import settings
 from mezzanine.generic.models import Rating
 
 from bccf.models import UserProfile, Event, Settings, ProgramRequest, Program
 from bccf.settings import MEDIA_ROOT
-
-from formable.builder.models import FormStructure, FormPublished, Question
-from django.contrib.auth.models import User
-from mezzanine.core.forms import Html5Mixin
-from mezzanine.utils.urls import slugify, unique_slug, admin_url
-from django.core.validators import EmailValidator
-from django.core.exceptions import ValidationError
-from mezzanine.utils.email import send_mail_template
 from bccf.widgets import AdvancedFileInput
 
+from formable.builder.models import FormStructure, FormPublished, Question
 
 log = logging.getLogger(__name__)
 
@@ -248,8 +245,37 @@ class FormStructureSurveyFormTwo(FormStructureSurveyBase):
     type = forms.CharField(widget=forms.HiddenInput(attrs={'id': 'form_structure_type'}))
 
 
-class CreateAccountForm(UserCreationForm):
-    pass
+class CreateAccountForm(UserCreationForm): 
+
+    MEMBERSHIP_TYPES = (
+        ('parent', 'Parent'),
+        ('professional', 'Professional')    
+    )
+
+    email = forms.EmailField(required=True)
+    first_name = forms.CharField(required=True)
+    last_name = forms.CharField(required=True)
+    membership_type = forms.ChoiceField(required=True, choices=MEMBERSHIP_TYPES)
+    gender = forms.ChoiceField(required=True, choices=UserProfile.GENDER_TYPES)
+    in_mailing_list = forms.BooleanField(label='Please add me to your mailing list', required=True)
+    show_in_list = forms.BooleanField(required=True)
+    accept = forms.BooleanField(required=True)
+    password2 = forms.CharField(label='Password (again)', required=True, widget=forms.PasswordInput)
+
+    class Meta:
+        model = UserProfile
+        fields = ('first_name', 'last_name', 'postal_code', 'email', 'username', 'password1', 'password2', 'gender', 'membership_type', 'show_in_list', 'in_mailing_list', 'photo')
+        
+    def save(self, *args, **kwargs):
+        super(CreateAccountForm, self).save(*args, **kwargs)        
+        
+    def is_valid(self):
+        valid = super(CreateAccountForm, self).is_valid()
+        if not self.cleaned_data.get('accept'):
+            valid &= False
+        else:
+            valid &= True
+        return valid
 
 class ProfileFieldsForm(forms.ModelForm):
         class Meta:
