@@ -20,6 +20,7 @@ from cartridge.shop import checkout
 from cartridge.shop.models import Product, ProductOption, ProductVariation
 from cartridge.shop.models import Cart, CartItem, Order, DiscountCode
 from cartridge.shop.utils import make_choices, set_locale, set_shipping
+from cartridge.shop.payment.paypal import COUNTRIES
 import logging
 
 log = logging.getLogger(__name__)
@@ -299,7 +300,13 @@ class OrderForm(FormsetForm, DiscountForm):
     checkout process with fields being hidden where applicable.
     """
 
+    PAYMENT_METHODS = (
+        ('paypal', 'Paypal'),
+        ('bill', 'Bill Payment')    
+    )
+
     step = forms.IntegerField(widget=forms.HiddenInput())
+    payment_method = forms.CharField(label='Payment Method', widget=forms.RadioSelect(choices=PAYMENT_METHODS))
     same_billing_shipping = forms.BooleanField(required=False, initial=True,
         label=_("My delivery details are the same as my billing details"))
     remember = forms.BooleanField(required=False, initial=True,
@@ -315,6 +322,10 @@ class OrderForm(FormsetForm, DiscountForm):
     card_expiry_year = forms.ChoiceField()
     card_ccv = forms.CharField(label=_("CCV"), help_text=_("A security code, "
         "usually the last 3 digits found on the back of your card."))
+        
+    # Custom
+    billing_country = forms.Select(choices=COUNTRIES)
+    shipping_country = forms.Select(choices=COUNTRIES)
 
     class Meta:
         model = Order
@@ -352,6 +363,11 @@ class OrderForm(FormsetForm, DiscountForm):
             initial["step"] = step
 
         super(OrderForm, self).__init__(request, data=data, initial=initial)
+
+        #Custom
+        self.fields['billing_detail_country'].widget = self.billing_country
+        self.fields['shipping_detail_country'].widget = self.shipping_country        
+        
         self._checkout_errors = errors
 
         # Hide discount code field if discount already applied,

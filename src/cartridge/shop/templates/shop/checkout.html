@@ -26,7 +26,15 @@ $(function() {$('.middle :input:visible:enabled:first').focus();});
 <li>{% trans "Complete" %}</li>
 {% endblock %}
 
-{% block main %}
+{% block content %}
+    {% if step.title == step_title %}
+	<h1>{{ step.title }}</h1>
+	{% else %}
+	<h1>{{ step.title }}</h1>
+	{% endif %}
+{% endblock %}
+
+{% block carousels %}
 
 {% block before-form %}{% endblock %}
 

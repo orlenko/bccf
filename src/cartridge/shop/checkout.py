@@ -1,6 +1,10 @@
 """
 Checkout process utilities.
 """
+import logging
+log = logging.getLogger(__name__)
+
+from decimal import Decimal
 
 from django.contrib.auth.models import SiteProfileNotAvailable
 from django.utils.translation import ugettext as _
@@ -9,7 +13,8 @@ from django.template.loader import get_template, TemplateDoesNotExist
 from mezzanine.conf import settings
 from mezzanine.utils.email import send_mail_template
 
-from cartridge.shop.models import Order
+from cartridge.shop.models import Order, Cart
+from cartridge.shop.managers import CartManager
 from cartridge.shop.utils import set_shipping, set_tax, sign
 
 
@@ -35,7 +40,7 @@ def default_billship_handler(request, order_form):
     """
     if not request.session.get("free_shipping"):
         settings.use_editable()
-        set_shipping(request, _("Flat rate shipping"),
+        set_shipping(request, _("Processing Fee"),
                      settings.SHOP_DEFAULT_SHIPPING_VALUE)
 
 
@@ -50,7 +55,10 @@ def default_tax_handler(request, order_form):
     accessible via ``request.cart``
     """
     settings.use_editable()
-    set_tax(request, _("Tax"), 0)
+    cart = Cart.objects.from_request(request)
+    tax = cart.total_price()
+    tax = float(tax) * settings.SHOP_DEFAULT_TAX_RATE
+    set_tax(request, _("GST+PST"), tax)
 
 
 def default_payment_handler(request, order_form, order):
@@ -63,7 +71,10 @@ def default_payment_handler(request, order_form, order):
     cartridge.shop.checkout.CheckoutError("error message") if payment
     is unsuccessful.
     """
-    pass
+    if request.session.get('paypal'):
+        pass
+    elif request.session.get('bill'):
+        pass
 
 
 def default_order_handler(request, order_form, order):

@@ -92,6 +92,10 @@ def get_option_name(option_number):
         if num == option_number:
             return name
 
+#TAXES
+SHOP_DEFAULT_TAX_RATE = 0.12
+SHOP_DEFAULT_SHIPPING_VALUE = 12
+SHOP_CHECKOUT_STEPS_SPLIT = True
 
 ######################
 # MEZZANINE SETTINGS #
