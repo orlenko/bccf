@@ -396,6 +396,11 @@ class Category(Page, RichText):
 
 class Order(models.Model):
 
+    PAYMENT_METHOD = (
+        ('paypal', 'Paypal'),
+        ('bill', 'Bill Payment')    
+    )
+
     billing_detail_first_name = CharField(_("First name"), max_length=100)
     billing_detail_last_name = CharField(_("Last name"), max_length=100)
     billing_detail_street = CharField(_("Street"), max_length=100)
@@ -432,6 +437,8 @@ class Order(models.Model):
     status = models.IntegerField(_("Status"),
                             choices=settings.SHOP_ORDER_STATUS_CHOICES,
                             default=settings.SHOP_ORDER_STATUS_CHOICES[0][0])
+
+    payment_method = models.CharField(_('Payment Method'), max_length=6, default='paypal') 
 
     objects = managers.OrderManager()
 

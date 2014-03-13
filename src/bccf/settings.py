@@ -18,17 +18,17 @@
 
 # If True, the checkout process is split into separate
 # billing/shipping and payment steps.
-SHOP_CHECKOUT_STEPS_SPLIT = False
+SHOP_CHECKOUT_STEPS_SPLIT = True
 
 # If True, the checkout process has a final confirmation step before
 # completion.
-SHOP_CHECKOUT_STEPS_CONFIRMATION = False
+SHOP_CHECKOUT_STEPS_CONFIRMATION = True
 SHOP_DISCOUNT_FIELD_IN_CHECKOUT = True
 
 # Controls the formatting of monetary values accord to the locale
 # module in the python standard library. If an empty string is
 # used, will fall back to the system's locale.
-# SHOP_CURRENCY_LOCALE = ""
+# SHOP_CURRENCY_LOCALE = "CAD"
 
 # Dotted package path and class name of the function that
 # is called on submit of the billing/shipping checkout step. This
@@ -95,7 +95,6 @@ def get_option_name(option_number):
 #TAXES
 SHOP_DEFAULT_TAX_RATE = 0.12
 SHOP_DEFAULT_SHIPPING_VALUE = 12
-SHOP_CHECKOUT_STEPS_SPLIT = True
 
 ######################
 # MEZZANINE SETTINGS #

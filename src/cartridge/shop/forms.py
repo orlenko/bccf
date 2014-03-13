@@ -306,7 +306,7 @@ class OrderForm(FormsetForm, DiscountForm):
     )
 
     step = forms.IntegerField(widget=forms.HiddenInput())
-    payment_method = forms.CharField(label='Payment Method', widget=forms.RadioSelect(choices=PAYMENT_METHODS))
+    payment_method = forms.CharField(label=_('Payment Method'), widget=forms.RadioSelect(choices=PAYMENT_METHODS))
     same_billing_shipping = forms.BooleanField(required=False, initial=True,
         label=_("My delivery details are the same as my billing details"))
     remember = forms.BooleanField(required=False, initial=True,
