@@ -1,5 +1,31 @@
-{# extends "shop/base.html" #}
-{% load mezzanine_tags shop_tags rating_tags i18n %}
+{% load mezzanine_tags shop_tags rating_tags i18n bccf_rating_tags comment_tags %}
+<section id="id_{{ product.pk }}" class="subpage section">
+    <a id="close-btn" href="#" title="Close" class="fa fa-times-circle"></a>
+    <div class="subpage-tabs section">
+        <ul class="no-style-list">
+            <li class="col two mobile-full">
+                <a href="{{ product.get_absolute_url }}" id="child-home" class="baby-content-btn">Home</a>
+                <div class="baby-content">
+                    <div class="section row row-one social-box">
+                        {% bccf_rating_for product %}
+                        {% include "includes/add_this.html" %}
+                    </div>
+                    <div class="section row-one">
+                        <h3>{{ product }}</h3>
+                        {{ product.content|richtext_filter|safe }}
+                    </div>
+                    <div class="section row row-one">
+                        {% comments_for product %}
+                    </div>
+                </div>
+            </li>
+            <li class="col two mobile-full">
+                <a href="{{ product.get_absolute_url }}"></a>
+            </li>
+        </ul>
+    </div>
+</section>
+
 
 {% if images %}
 {% spaceless %}
@@ -59,7 +85,7 @@
     {% fields_for add_product_form %}
     <div class="form-actions clearfix">
         <div class="form-actions-wrap">
-        <input type="submit" class="btn btn-primary btn-large" name="add_cart" value="{% trans "Buy" %}">
+        <input id="add_cart_btn" type="submit" class="btn btn-primary btn-large" name="add_cart" value="{% trans "Add to Cart" %}">
         {% if settings.SHOP_USE_WISHLIST %}
         <input type="submit" class="btn btn -large" name="add_wishlist" value="{% trans "Save for later" %}">
         {% endif %}
@@ -100,3 +126,10 @@
 <script src="{{ STATIC_URL }}mezzanine/js/jquery.tools.overlay.js"></script>
 <script>var variations = {{ variations_json|safe }};</script>
 <script src="{{ STATIC_URL }}cartridge/js/product_variations.js"></script>
+
+<script type="text/javascript">
+$('#close-btn').on('click', function(e) {
+    e.preventDefault(); reset();
+});
+
+</script>

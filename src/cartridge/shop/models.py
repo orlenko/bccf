@@ -15,7 +15,7 @@ from mezzanine.conf import settings
 from mezzanine.core.fields import FileField
 from mezzanine.core.managers import DisplayableManager
 from mezzanine.core.models import Displayable, RichText, Orderable
-from mezzanine.generic.fields import RatingField
+from mezzanine.generic.fields import RatingField, CommentsField
 from mezzanine.pages.models import Page
 from mezzanine.utils.models import AdminThumbMixin, upload_to
 
@@ -105,6 +105,7 @@ class Product(Displayable, Priced, RichText, AdminThumbMixin):
     upsell_products = models.ManyToManyField("self",
                              verbose_name=_("Upsell products"), blank=True)
     rating = RatingField(verbose_name=_("Rating"))
+    comments = CommentsField(verbose_name=_("Comment"))
 
     objects = DisplayableManager()
 
@@ -478,7 +479,7 @@ class Order(models.Model):
         if self.discount_total is not None:
             self.total -= self.discount_total
         if self.tax_total is not None:
-            self.total += self.tax_total
+            self.total += Decimal(str(self.tax_total))
         self.save()  # We need an ID before we can add related items.
         for item in request.cart:
             product_fields = [f.name for f in SelectedProduct._meta.fields]

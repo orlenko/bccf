@@ -1,7 +1,7 @@
 {% load bccf_feature_tags static bccf_rating_tags bccf_event_tags comment_tags embed_video_tags %}
-<section id={{ child_obj.slug }} class="subpage {{ child_obj.gparent.carousel_color }}">
-        <a id="close-btn" href="#" title="Close" class="fa fa-times-circle"></a>
-        <div class="subpage-tabs section">
+<section id={{ child_obj.slug }} class="section subpage {{ child_obj.gparent.carousel_color }}">
+    <a id="close-btn" href="#" title="Close" class="fa fa-times-circle"></a>
+    <div class="subpage-tabs section">
         <ul class="no-style-list">
             <li class="col two mobile-full">
                 <a href="{{ child_obj.get_absolute_url }}" id="child-home" class="baby-content-btn">Home</a>
