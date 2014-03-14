@@ -77,8 +77,9 @@ $('#close-btn').on('click', function(e) {
 $(function() {
    $('.add-cart-btn').on('click', function(e) {
         e.preventDefault();
+        alert('ours');
         $.ajax({
-            url: "{{ request.get_full_path }}",
+            url: "{{ product.get_absolute_url }}",
             data: $(this).parent('form').serialize(),
             success: function(r) {
                 if(r === 'Yes') {

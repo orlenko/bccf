@@ -19,7 +19,7 @@ def currency(value):
     if not value:
         value = 0
     if hasattr(locale, "currency"):
-        value = locale.currency(value, grouping=True)
+        value = locale.currency(Decimal(value), grouping=True)
         if platform.system() == 'Windows':
             value = unicode(value, encoding='iso_8859_1')
     else:

@@ -43,7 +43,7 @@ def default_billship_handler(request, order_form):
         settings.use_editable()
         cart = Cart.objects.from_request(request)
         shipping = cart.total_price() * Decimal(Settings.get_setting('SHOP_DEFAULT_SHIPPING_VALUE'))
-        set_shipping(request, _("Processing Fee"), float(shipping))
+        set_shipping(request, _("Processing Fee"), shipping)
 
 
 def default_tax_handler(request, order_form):
@@ -59,7 +59,7 @@ def default_tax_handler(request, order_form):
     settings.use_editable()
     cart = Cart.objects.from_request(request)
     tax = cart.total_price() * Decimal(Settings.get_setting('SHOP_DEFAULT_TAX_RATE'))
-    set_tax(request, _("GST+PST"), float(tax))
+    set_tax(request, _("GST+PST"), tax)
 
 
 def default_payment_handler(request, order_form, order):
