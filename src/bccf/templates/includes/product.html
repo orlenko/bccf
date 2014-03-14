@@ -42,3 +42,18 @@
 <div class="section row row-one">
     {% comments_for product %}
 </div>
+
+<script type="text/javascript" >
+$(function() {
+   $('.add-cart-btn').on('click', function(e) {
+        e.preventDefault();
+        var form = $(this).parents('form');
+        $.post("{{ product.get_absolute_url }}", form.serialize(),
+            function(r) {
+                $('#cart_num_items').html('('+r+')');                
+                form.find('span').fadeIn(500).delay(2000).fadeOut(500);            
+            }
+        );
+    }); 
+});
+</script>
