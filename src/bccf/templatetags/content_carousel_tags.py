@@ -14,7 +14,7 @@ log = logging.getLogger(__name__)
 register = template.Library()
 
 @register.inclusion_tag("generic/includes/content_carousel.html", takes_context=True)
-def product_category_carousel(context, category):
+def product_category_carousel(context, category, product=None):
     page = re.split('/get/', context['request'].path)
     params = None
     context['open'] = False
@@ -22,7 +22,11 @@ def product_category_carousel(context, category):
     context['carousel_color'] = category.get_content_model().carousel_color
     context['carousel_title'] = category.title
     context['carousel_name'] = 'products'
-    context['slides'] = category.get_content_model().products.all()
+    if product and product.categories.filter(slug=category.slug).exists():
+        context['slides'] = [product]
+        context['slides'].extend(category.get_content_model().products.filter(~Q(slug__exact=product.slug)))
+    else:
+        context['slides'] = category.get_content_model().products.all()
     return context
 
 @register.inclusion_tag("generic/includes/content_carousel.html", takes_context=True)

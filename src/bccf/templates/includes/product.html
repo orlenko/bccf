@@ -1,0 +1,44 @@
+{% load mezzanine_tags shop_tags rating_tags i18n bccf_rating_tags comment_tags %}
+<div class="section row row-one social-box">
+    {% bccf_rating_for product %}
+    {% include "includes/add_this.html" %}
+</div>
+<div class="section row-one">
+    <h3>{{ product }}</h3>
+    {{ product.content|richtext_filter|safe }}
+</div>
+{% if product.available and has_available_variations %}
+<ul id="variations" class="unstyled">
+	{% for variation in variations %}
+	<li id="variation-{{ variation.sku }}"
+		{% if not variation.default %}style="display:none;"{% endif %}>
+		{% if variation.has_price %}
+			{% if variation.on_sale %}
+				<span class="old-price">{{ variation.unit_price|currency }}</span>
+				{% trans "On sale:" %}
+			{% endif %}
+			<span class="price">{{ variation.price|currency }}</span>
+		{% else %}
+		    {% if has_available_variations %}
+		    {% trans "The selected options are currently unavailable." %}
+		    {% endif %}
+		{% endif %}
+	</li>
+	{% endfor %}
+</ul>
+<form method="post" id="add-cart" class="form-horizontal form-shop">
+    {% fields_for add_product_form %}
+    <div class="form-actions-wrap">
+        <input id="add_cart_btn" type="submit" class="btn btn-primary btn-large" name="add_cart" value="{% trans "Add to Cart" %}">
+        <span class="none">Product Added</span>
+        {% if settings.SHOP_USE_WISHLIST %}
+        <input type="submit" class="btn btn -large" name="add_wishlist" value="{% trans "Save for later" %}">
+        {% endif %}
+    </div>
+</form>
+{% else %}
+<p>{% trans "This product is currently unavailable." %}</p>
+{% endif %}
+<div class="section row row-one">
+    {% comments_for product %}
+</div>

@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.messages import info
 from django.core.urlresolvers import get_callable, reverse
 from django.http import Http404, HttpResponse
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render_to_response
 from django.template import RequestContext
 from django.template.defaultfilters import slugify
 from django.template.loader import get_template
@@ -18,7 +18,7 @@ from mezzanine.utils.views import render, set_cookie, paginate
 
 from cartridge.shop import checkout
 from cartridge.shop.forms import AddProductForm, DiscountForm, CartItemFormSet
-from cartridge.shop.models import Product, ProductVariation, Order, OrderItem
+from cartridge.shop.models import Product, ProductVariation, Order, OrderItem, Category
 from cartridge.shop.models import DiscountCode
 from cartridge.shop.utils import recalculate_cart, sign
 
@@ -42,52 +42,65 @@ def product(request, slug, template="shop/product.html"):
     """
     published_products = Product.objects.published(for_user=request.user)
     product = get_object_or_404(published_products, slug=slug)
-    fields = [f.name for f in ProductVariation.option_fields()]
-    variations = product.variations.all()
-    variations_json = simplejson.dumps([dict([(f, getattr(v, f))
-                                        for f in fields + ["sku", "image_id"]])
-                                        for v in variations])
-    to_cart = (request.method == "POST" and
-               request.POST.get("add_wishlist") is None)
-    initial_data = {}
-    if variations:
-        initial_data = dict([(f, getattr(variations[0], f)) for f in fields])
-    initial_data["quantity"] = 1
-    add_product_form = AddProductForm(request.POST or None, product=product,
-                                      initial=initial_data, to_cart=to_cart)
-    if request.method == "POST":
-        if add_product_form.is_valid():
-            if to_cart:
-                quantity = add_product_form.cleaned_data["quantity"]
-                request.cart.add_item(add_product_form.variation, quantity)
-                recalculate_cart(request)
-                if not request.is_ajax():
-                    info(request, _("Item added to cart"))
-                    return redirect("shop_cart")
-                else:
+    if not request.is_ajax():
+        page = Category.objects.get(slug__exact='shop')
+        products = Product.objects.published(for_user=request.user
+                                    ).filter(page.category.filters()).distinct()
+        sort_options = [(slugify(option[0]), option[1])
+                        for option in settings.SHOP_PRODUCT_SORT_OPTIONS]
+        sort_by = request.GET.get("sort", sort_options[0][1])
+        products = paginate(products.order_by(sort_by),
+                            request.GET.get("page", 1),
+                            settings.SHOP_PER_PAGE_CATEGORY,
+                            settings.MAX_PAGING_LINKS)
+        products.sort_by = sort_by
+        sub_categories = page.category.children.published()
+        child_categories = Category.objects.filter(id__in=sub_categories)
+        context = RequestContext(request, locals())
+        return render_to_response('pages/category.html', {}, context_instance=context)
+    else: 
+        fields = [f.name for f in ProductVariation.option_fields()]
+        variations = product.variations.all()
+        variations_json = simplejson.dumps([dict([(f, getattr(v, f))
+                                            for f in fields + ["sku", "image_id"]])
+                                            for v in variations])
+        to_cart = (request.method == "POST" and
+                   request.POST.get("add_wishlist") is None)
+        initial_data = {}
+        if variations:
+            initial_data = dict([(f, getattr(variations[0], f)) for f in fields])
+        initial_data["quantity"] = 1
+        add_product_form = AddProductForm(request.POST or None, product=product,
+                                          initial=initial_data, to_cart=to_cart)     
+        if request.method == "POST":
+            if add_product_form.is_valid(): 
+                if to_cart:
+                    quantity = add_product_form.cleaned_data["quantity"]
+                    request.cart.add_item(add_product_form.variation, quantity)
+                    recalculate_cart(request)
                     return HttpResponse(request.cart.total_quantity())
-            else:
-                skus = request.wishlist
-                sku = add_product_form.variation.sku
-                if sku not in skus:
-                    skus.append(sku)
-                info(request, _("Item added to wishlist"))
-                response = redirect("shop_wishlist")
-                set_cookie(response, "wishlist", ",".join(skus))
-                return response
-    context = {
-        "product": product,
-        "editable_obj": product,
-        "images": product.images.all(),
-        "variations": variations,
-        "variations_json": variations_json,
-        "has_available_variations": any([v.has_price() for v in variations]),
-        "related_products": product.related_products.published(
-                                                      for_user=request.user),
-        "add_product_form": add_product_form
-    }
-    templates = [u"shop/%s.html" % unicode(product.slug), template]
-    return render(request, templates, context)
+                else:
+                    skus = request.wishlist
+                    sku = add_product_form.variation.sku
+                    if sku not in skus:
+                        skus.append(sku)
+                    info(request, _("Item added to wishlist"))
+                    response = redirect("shop_wishlist")
+                    set_cookie(response, "wishlist", ",".join(skus))
+                    return response
+        context = {
+            "product": product,
+            "editable_obj": product,
+            "images": product.images.all(),
+            "variations": variations,
+            "variations_json": variations_json,
+            "has_available_variations": any([v.has_price() for v in variations]),
+            "related_products": product.related_products.published(
+                                                          for_user=request.user),
+            "add_product_form": add_product_form
+        }
+        templates = [u"shop/%s.html" % unicode(product.slug), template]
+        return render(request, templates, context)
 
 
 @never_cache

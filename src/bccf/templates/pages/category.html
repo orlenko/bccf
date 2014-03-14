@@ -8,7 +8,7 @@
 
 {% if child_categories %}
 	{% for category in child_categories %}
-		{% product_category_carousel category %}
+		{% product_category_carousel category product %}
 	{% endfor %}
 {% endif %}
 
@@ -17,11 +17,10 @@
 {% block footer_scripts %}
 {{ block.super }}
 
-{% if type %}
+{% if product %}
 <script type="text/javascript">
     $(function() {
-        $('#{{ type }}').scrollTop();
-        $('#{{ type }} .to-grid').trigger('click');
+        $('#{{ product.slug }}').trigger('click');
     });
 </script>
 {% endif %}

@@ -6,29 +6,7 @@
             <li class="col two mobile-full">
                 <a href="{{ product.get_absolute_url }}" id="child-home" class="baby-content-btn">Home</a>
                 <div class="baby-content">
-                    <div class="section row row-one social-box">
-                        {% bccf_rating_for product %}
-                        {% include "includes/add_this.html" %}
-                    </div>
-                    <div class="section row-one">
-                        <h3>{{ product }}</h3>
-                        {{ product.content|richtext_filter|safe }}
-                    </div>
-                    <form method="post" id="add-cart" class="form-horizontal form-shop">
-                        {% fields_for add_product_form %}
-                        <div class="form-actions section">
-                            <div class="form-actions-wrap">
-                                <input id="add_cart_btn" type="submit" class="btn btn-primary btn-large" name="add_cart" value="{% trans "Add to Cart" %}">
-                                <span class="none">Product Added</span>
-                                {% if settings.SHOP_USE_WISHLIST %}
-                                <input type="submit" class="btn btn -large" name="add_wishlist" value="{% trans "Save for later" %}">
-                                {% endif %}
-                            </div>
-                        </div>
-                    </form>
-                    <div class="section row row-one">
-                        {% comments_for product %}
-                    </div>
+                    {% include "includes/product.html" %}
                 </div>
             </li>
             <li class="col two mobile-full">
@@ -38,30 +16,7 @@
     </div>
     <div class="subpage-content section row"></div>
     <div class="home-content section row no-mobile">
-        <div class="section row row-one social-box">
-            {% bccf_rating_for product %}
-            {% include "includes/add_this.html" %}
-        </div>
-        <div class="section row-one">
-            <h3>{{ product }}</h3>
-            {{ product.content|richtext_filter|safe }}
-        </div>
-        <form method="post" id="add-cart" class="add-cart section row row-one form-horizontal form-shop">
-            {% csrf_token %}
-            {% fields_for add_product_form %}
-            <div class="form-actions clearfix">
-                <div class="form-actions-wrap">
-                    <input id="add_cart_btn" type="submit" class="add-cart-btn btn btn-primary btn-large" name="add_cart" value="{% trans "Add to Cart" %}">
-                    <span class="none">Product Added</span>
-                    {% if settings.SHOP_USE_WISHLIST %}
-                    <input type="submit" class="btn btn -large" name="add_wishlist" value="{% trans "Save for later" %}">
-                    {% endif %}
-                </div>
-            </div>
-        </form>
-        <div class="section row row-one">
-            {% comments_for product %}
-        </div>
+        {% include "includes/product.html" %}
     </div>
 </section>
 
