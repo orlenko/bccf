@@ -17,7 +17,7 @@
                     <form method="post" id="add-cart" class="form-horizontal form-shop">
                         {% csrf_token %}
                         {% fields_for add_product_form %}
-                        <div class="form-actions clearfix">
+                        <div class="form-actions section">
                             <div class="form-actions-wrap">
                             <input id="add_cart_btn" type="submit" class="btn btn-primary btn-large" name="add_cart" value="{% trans "Add to Cart" %}">
                             <!--{% if settings.SHOP_USE_WISHLIST %}
@@ -46,15 +46,16 @@
             <h3>{{ product }}</h3>
             {{ product.content|richtext_filter|safe }}
         </div>
-        <form method="post" id="add-cart" class="section row row-one form-horizontal form-shop">
+        <form method="post" id="add-cart" class="add-cart section row row-one form-horizontal form-shop">
             {% csrf_token %}
             {% fields_for add_product_form %}
             <div class="form-actions clearfix">
                 <div class="form-actions-wrap">
-                <input id="add_cart_btn" type="submit" class="btn btn-primary btn-large" name="add_cart" value="{% trans "Add to Cart" %}">
-                <!--{% if settings.SHOP_USE_WISHLIST %}
+                <input id="add_cart_btn" type="submit" class="add-cart-btn btn btn-primary btn-large" name="add_cart" value="{% trans "Add to Cart" %}">
+                <span class="none">Product Added</span>
+                {% if settings.SHOP_USE_WISHLIST %}
                 <input type="submit" class="btn btn -large" name="add_wishlist" value="{% trans "Save for later" %}">
-                {% endif %}-->
+                {% endif %}
                 </div>
             </div>
         </form>
@@ -72,6 +73,21 @@
 <script type="text/javascript">
 $('#close-btn').on('click', function(e) {
     e.preventDefault(); reset();
+});
+$(function() {
+   $('.add-cart-btn').on('click', function(e) {
+        e.preventDefault();
+        $.ajax({
+            url: "{{ request.get_full_path }}",
+            data: $(this).parent('form').serialize(),
+            success: function(r) {
+                if(r === 'Yes') {
+                    $(this).find('input[type=\'submit\']').hide();
+                    $(this).find('span').fadeIn();            
+                }
+            }
+        });
+    }); 
 });
 
 </script>

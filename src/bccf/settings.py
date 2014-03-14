@@ -93,8 +93,7 @@ def get_option_name(option_number):
             return name
 
 #TAXES
-SHOP_DEFAULT_TAX_RATE = 0.12
-SHOP_DEFAULT_SHIPPING_VALUE = 12
+SHOP_USE_WISHLIST = False
 
 ######################
 # MEZZANINE SETTINGS #

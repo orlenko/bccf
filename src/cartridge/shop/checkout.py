@@ -17,6 +17,7 @@ from cartridge.shop.models import Order, Cart
 from cartridge.shop.managers import CartManager
 from cartridge.shop.utils import set_shipping, set_tax, sign
 
+from bccf.models import Settings
 
 class CheckoutError(Exception):
     """
@@ -40,8 +41,9 @@ def default_billship_handler(request, order_form):
     """
     if not request.session.get("free_shipping"):
         settings.use_editable()
-        set_shipping(request, _("Processing Fee"),
-                     settings.SHOP_DEFAULT_SHIPPING_VALUE)
+        cart = Cart.objects.from_request(request)
+        shipping = cart.total_price() * Decimal(Settings.get_setting('SHOP_DEFAULT_SHIPPING_VALUE'))
+        set_shipping(request, _("Processing Fee"), float(shipping))
 
 
 def default_tax_handler(request, order_form):
@@ -56,8 +58,7 @@ def default_tax_handler(request, order_form):
     """
     settings.use_editable()
     cart = Cart.objects.from_request(request)
-    tax = cart.total_price()
-    tax = tax * Decimal(str(settings.SHOP_DEFAULT_TAX_RATE))
+    tax = cart.total_price() * Decimal(Settings.get_setting('SHOP_DEFAULT_TAX_RATE'))
     set_tax(request, _("GST+PST"), float(tax))
 
 
