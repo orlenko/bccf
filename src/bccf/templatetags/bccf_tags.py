@@ -178,3 +178,10 @@ def membership_upgrade_url(variation):
 def membership_renew_url(variation):
     return reverse('member-membership-renew')
     
+@register.render_tag
+def shopping_cart(context, token):
+    from cartridge.shop.models import Cart    
+    cart = Cart.objects.from_request(context['request'])
+    context['cart_obj'] = cart
+    t = get_template('shop/cart_text.html')
+    return t.render(Context(context))

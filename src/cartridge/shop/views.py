@@ -61,8 +61,11 @@ def product(request, slug, template="shop/product.html"):
                 quantity = add_product_form.cleaned_data["quantity"]
                 request.cart.add_item(add_product_form.variation, quantity)
                 recalculate_cart(request)
-                info(request, _("Item added to cart"))
-                return redirect("shop_cart")
+                if not request.is_ajax():
+                    info(request, _("Item added to cart"))
+                    return redirect("shop_cart")
+                else:
+                    return HttpResponse(request.cart.total_quantity())
             else:
                 skus = request.wishlist
                 sku = add_product_form.variation.sku
@@ -118,19 +121,16 @@ def wishlist(request, template="shop/wishlist.html"):
         if sku in skus:
             skus.remove(sku)
         if not error:
-            if not request.is_ajax():
-                info(request, message)
-                response = redirect(url)
-                set_cookie(response, "wishlist", ",".join(skus))
-                return response
-            else:
-                return HttpResponse('Yes')
+            info(request, message)
+            response = redirect(url)
+            set_cookie(response, "wishlist", ",".join(skus))
+            return response
 
     # Remove skus from the cookie that no longer exist.
     published_products = Product.objects.published(for_user=request.user)
     f = {"product__in": published_products, "sku__in": skus}
     wishlist = ProductVariation.objects.filter(**f).select_related(depth=1)  # @UndefinedVariable - PyDev is wrongly freaking out over select_related
-    wishlist = sorted(wishlist, key=lambda v: skus.index(v.sku))   
+    wishlist = sorted(wishlist, key=lambda v: skus.index(v.sku))     
     context = {"wishlist_items": wishlist, "error": error}
     response = render(request, template, context)
     if len(wishlist) < len(skus):

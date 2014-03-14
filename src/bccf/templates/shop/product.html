@@ -15,14 +15,14 @@
                         {{ product.content|richtext_filter|safe }}
                     </div>
                     <form method="post" id="add-cart" class="form-horizontal form-shop">
-                        {% csrf_token %}
                         {% fields_for add_product_form %}
                         <div class="form-actions section">
                             <div class="form-actions-wrap">
-                            <input id="add_cart_btn" type="submit" class="btn btn-primary btn-large" name="add_cart" value="{% trans "Add to Cart" %}">
-                            <!--{% if settings.SHOP_USE_WISHLIST %}
-                            <input type="submit" class="btn btn -large" name="add_wishlist" value="{% trans "Save for later" %}">
-                            {% endif %}-->
+                                <input id="add_cart_btn" type="submit" class="btn btn-primary btn-large" name="add_cart" value="{% trans "Add to Cart" %}">
+                                <span class="none">Product Added</span>
+                                {% if settings.SHOP_USE_WISHLIST %}
+                                <input type="submit" class="btn btn -large" name="add_wishlist" value="{% trans "Save for later" %}">
+                                {% endif %}
                             </div>
                         </div>
                     </form>
@@ -51,11 +51,11 @@
             {% fields_for add_product_form %}
             <div class="form-actions clearfix">
                 <div class="form-actions-wrap">
-                <input id="add_cart_btn" type="submit" class="add-cart-btn btn btn-primary btn-large" name="add_cart" value="{% trans "Add to Cart" %}">
-                <span class="none">Product Added</span>
-                {% if settings.SHOP_USE_WISHLIST %}
-                <input type="submit" class="btn btn -large" name="add_wishlist" value="{% trans "Save for later" %}">
-                {% endif %}
+                    <input id="add_cart_btn" type="submit" class="add-cart-btn btn btn-primary btn-large" name="add_cart" value="{% trans "Add to Cart" %}">
+                    <span class="none">Product Added</span>
+                    {% if settings.SHOP_USE_WISHLIST %}
+                    <input type="submit" class="btn btn -large" name="add_wishlist" value="{% trans "Save for later" %}">
+                    {% endif %}
                 </div>
             </div>
         </form>
@@ -77,17 +77,13 @@ $('#close-btn').on('click', function(e) {
 $(function() {
    $('.add-cart-btn').on('click', function(e) {
         e.preventDefault();
-        alert('ours');
-        $.ajax({
-            url: "{{ product.get_absolute_url }}",
-            data: $(this).parent('form').serialize(),
-            success: function(r) {
-                if(r === 'Yes') {
-                    $(this).find('input[type=\'submit\']').hide();
-                    $(this).find('span').fadeIn();            
-                }
+        var form = $(this).parents('form');
+        $.post("{{ product.get_absolute_url }}", form.serialize(),
+            function(r) {
+                $('#cart_num_items').html('('+r+')');                
+                form.find('span').fadeIn(500).delay(2000).fadeOut(500);            
             }
-        });
+        );
     }); 
 });
 
