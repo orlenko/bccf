@@ -38,57 +38,74 @@
                 <p><label class="req" for="id_first_name">{{ form.first_name.label }}</label></p>
                 {{ form.first_name }}
                 <p class="help-block">{{ form.first_name.help_text }}</p>
+                <p class="error-block">{{ form.first_name.errors.as_text|cut:'*' }}</p>
             </div>
             <div class="form-group input_id_last_name">      
                 <p><label class="req" for="id_last_name">{{ form.last_name.label }}</label></p>
                 {{ form.last_name }}
                 <p class="help-block">{{ form.last_name.help_text }}</p>
+                <p class="error-block">{{ form.last_name.errors.as_text|cut:'*' }}</p>
+            </div>
+            <div class="form-group input_id_last_name">      
+                <p><label class="req" for="id_last_name">{{ form.gender.label }}</label></p>
+                {{ form.gender }}
+                <p class="help-block">{{ form.gender.help_text }}</p>
+                <p class="error-block">{{ form.gender.errors.as_text|cut:'*' }}</p>
             </div>
             <div class="form-group input_id_postal_code">      
                 <p><label class="req" for="id_postal_code">{{ form.postal_code.label }}</label></p>
                 {{ form.postal_code }}
                 <p class="help-block">{{ form.postal_code.help_text }}</p>
+                <p class="error-block">{{ form.postal_code.errors.as_text|cut:'*' }}</p>
             </div>
             <div class="form-group input_id_email">      
                 <p><label class="req" for="id_email">{{ form.email.label }}</label></p>
                 {{ form.email }}
                 <p class="help-block">{{ form.email.help_text }}</p>
+                <p class="error-block">{{ form.email.errors.as_text|cut:'*' }}</p>
             </div>
             <div class="form-group input_id_username">      
                 <p><label class="req" for="id_username">{{ form.username.label }}</label></p>
                 {{ form.username }}
                 <p class="help-block">{{ form.username.help_text }}</p>
+                <p class="error-block">{{ form.username.errors.as_text|cut:'*' }}</p>
             </div>
             <div class="form-group input_id_password1">      
                 <p><label class="req" for="id_password1">{{ form.password1.label }}</label></p>
                 {{ form.password1 }}
                 <p class="help-block">{{ form.password1.help_text }}</p>
+                <p class="error-block">{{ form.password1.errors.as_text|cut:'*' }}</p>
             </div>
             <div class="form-group input_id_password2">      
                 <p><label class="req" for="id_password1">{{ form.password2.label }}</label></p>
                 {{ form.password2 }}
                 <p class="help-block">{{ form.password2.help_text }}</p>
+                <p class="error-block">{{ form.password2.errors.as_text|cut:'*' }}</p>
             </div>
             <strong class="fieldset-header row row-one">Account Type</strong>
             <div class="form-group input_id_password2">      
                 {{ form.membership_type }}
                 <p class="help-block">{{ form.membership_type.help_text }}</p>
+                <p class="error-block">{{ form.membership_type.errors.as_text|cut:'*' }}</p>
             </div>
             <strong class="fieldset-header row row-one">Account Preferences</strong>
             <div class="form-group checkbox-group input_id_show_in_list"> 
                 <label class="req" for="id_show_in_list">Plase add my profile to your <a href="/member/directory" target="_blank">listing of professionals</a></label>
                 {{ form.show_in_list }}
                 <p class="help-block">{{ form.show_in_list.help_text }}</p>
+                <p class="error-block">{{ form.show_in_list.errors.as_text|cut:'*' }}</p>
             </div>
             <div class="form-group checkbox-group input_id_in_mailing_list"> 
                 <label class="req" for="id_in_mailing_list">Please add me to your mailing list</label>
                 {{ form.in_mailing_list }}
                 <p class="help-block">{{ form.in_mailing_list.help_text }}</p>
+                <p class="error-block">{{ form.in_mailing_list.errors.as_text|cut:'*' }}</p>
             </div>
             <div class="form-group checkbox-group input_id_first_name"> 
                 <label class="req" for="accept">I accept the <a href="#" target="_blank">Terms of User & Privacy</a></label>
                 <input id="accept" name="accept" type="checkbox">
                 <p class="help-block">{{ form.accept.help_text }}</p>
+                <p class="error-block">{{ form.accept.errors.as_text|cut:'*' }}</p>
             </div>
             {% csrf_token %}
             <div class="form-actions dashed-button">

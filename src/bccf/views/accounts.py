@@ -1,6 +1,7 @@
 import logging
 log = logging.getLogger(__name__)
 
+from django.contrib.messages import success
 from django.template import RequestContext
 from django.shortcuts import render_to_response, redirect
 
@@ -13,7 +14,8 @@ def signup(request):
         form = CreateAccountForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            #redirect to success page    
+            success(request, 'User created, check your email and spam for the account activation email')
+            return redirect('/') 
     
     context = RequestContext(request, locals())
     return render_to_response('accounts/account_signup.html', {}, context)

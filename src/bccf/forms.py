@@ -255,27 +255,45 @@ class CreateAccountForm(UserCreationForm):
     email = forms.EmailField(required=True)
     first_name = forms.CharField(required=True)
     last_name = forms.CharField(required=True)
+    postal_code = forms.CharField(required=True)
     membership_type = forms.ChoiceField(required=True, choices=MEMBERSHIP_TYPES)
     gender = forms.ChoiceField(required=True, choices=UserProfile.GENDER_TYPES)
-    in_mailing_list = forms.BooleanField(label='Please add me to your mailing list', required=True)
-    show_in_list = forms.BooleanField(required=True)
+    in_mailing_list = forms.BooleanField(label='Please add me to your mailing list', required=False)
+    show_in_list = forms.BooleanField(required=False)
     accept = forms.BooleanField(required=True)
     password2 = forms.CharField(label='Password (again)', required=True, widget=forms.PasswordInput)
+    photo = forms.CharField(widget=AdvancedFileInput, required=False)
 
     class Meta:
-        model = UserProfile
-        fields = ('first_name', 'last_name', 'postal_code', 'email', 'username', 'password1', 'password2', 'gender', 'membership_type', 'show_in_list', 'in_mailing_list', 'photo')
+        model = User
+        fields = ('email', 'username', 'password1', 'password2')
+        
+    def handle_upload(self):
+         image_path = 'uploads/profile-photos/'+self.files['photo'].name
+         destination = open(MEDIA_ROOT+'/'+image_path, 'wb+')
+         for chunk in self.files['photo'].chunks():
+             destination.write(chunk)
+         destination.close()
+         return image_path 
         
     def save(self, *args, **kwargs):
-        super(CreateAccountForm, self).save(*args, **kwargs)        
+        user = super(CreateAccountForm, self).save(*args, **kwargs)
+        user.email = self.cleaned_data['email']
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
+        user.save()      
         
-    def is_valid(self):
-        valid = super(CreateAccountForm, self).is_valid()
-        if not self.cleaned_data.get('accept'):
-            valid &= False
-        else:
-            valid &= True
-        return valid
+        profile = user.profile    
+
+        if 'photo' in self.files:
+            profile.photo = self.handle_upload()
+        
+        profile.postal_code = self.cleaned_data['postal_code']
+        profile.membership_type = self.cleaned_data['membership_type']
+        profile.gender = self.cleaned_data['gender']
+        profile.in_mailing_list = self.cleaned_data['in_mailing_list']
+        profile.show_in_list = self.cleaned_data['show_in_list']
+        profile.save(create_number=True)
 
 class ProfileFieldsForm(forms.ModelForm):
         class Meta:

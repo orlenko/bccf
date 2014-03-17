@@ -631,13 +631,11 @@ class UserProfile(PybbProfile):
     def __unicode__(self):
         return 'Profile of %s' % (self.user.get_full_name() or self.user.username)
 
-    def save(self, **kwargs):
-        if not self.pk and not self.user.is_superuser:
+    def save(self, create_number=False, *args, **kwargs):
+        if create_number:
             self.account_number = self.create_account_number()
-        if not self.photo and self.gender:
-            self.photo = 'uploads/profile-photos/default_user-image-%s.gif' % (self.gender)
-        elif not self.photo:
-            self.photo = 'uploads/profile-photos/default_user-image-male.gif'
+            if not self.photo:
+                self.photo = 'uploads/profile-photos/default_user-image-%s.gif' % (self.gender)
         super(UserProfile, self).save(**kwargs)
 
     def get_full_address(self):
@@ -791,8 +789,8 @@ class UserProfile(PybbProfile):
             
     def create_account_number(self):
         from random import randrange
-        first = self.user.first_name[:3]
-        second = self.user.last_name[:3]
+        first = self.user.first_name[:3].upper()
+        second = self.user.last_name[:3].upper()
         third = ''
         
         for x in range(0, 6):
