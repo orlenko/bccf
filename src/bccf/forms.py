@@ -507,3 +507,96 @@ class ReqProgram(forms.ModelForm):
         widgets = {
             'user': forms.HiddenInput()        
         }
+        
+# Update Profile Forms
+class PhotoForm(forms.ModelForm):
+    photo = forms.CharField(widget=AdvancedFileInput)
+    
+    class Meta:
+        model = UserProfile
+        fields = ('photo',)    
+    
+    def handle_upload(self):
+        image_path = 'uploads/profile-photos/'+self.files['photo'].name
+        destination = open(MEDIA_ROOT+'/'+image_path, 'wb+')
+        for chunk in self.files['photo'].chunks():
+            destination.write(chunk)
+        destination.close()
+        return image_path
+        
+    def save(self, *args, **kwargs):
+        user = self.instance
+        if 'photo' in self.files and self.data['update-photo'] == 'Save':
+            user.photo = self.handle_upload()
+        else:
+            user.photo = 'uploads/profile-photos/default_user-image-%s.gif' % user.profile.gender
+        user.save()
+
+class AccountInformationForm(forms.ModelForm):
+    first_name = forms.CharField(required=True)
+    last_name = forms.CharField(required=True)
+    postal_code = forms.CharField(required=True)
+    email = forms.EmailField(required=True)
+    password1 = forms.CharField(label='Password', required=False, widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Password (again)', required=False, widget=forms.PasswordInput)    
+    
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'postal_code', 'email', 'username') 
+        
+    def clean_password2(self):
+        """
+        Ensure the password fields are equal, and match the minimum
+        length defined by ``ACCOUNTS_MIN_PASSWORD_LENGTH``.
+        """
+        password1 = self.cleaned_data.get("password1")
+        password2 = self.cleaned_data.get("password2")
+
+        if password1:
+            errors = []
+            if password1 != password2:
+                errors.append("Passwords do not match")
+            if len(password1) < settings.ACCOUNTS_MIN_PASSWORD_LENGTH:
+                errors.append("Password must be at least %s characters" %
+                              settings.ACCOUNTS_MIN_PASSWORD_LENGTH)
+            if errors:
+                self._errors["password1"] = self.error_class(errors)
+        return password2
+        
+    def clean_email(self):
+        """
+        Ensure the email address is not already registered.
+        """
+        email = self.cleaned_data.get("email")
+        try:
+            user = User.objects.get(email=email)
+            if user.pk != self.instance.pk:
+                raise forms.ValidationError("This email is already registered")
+        except User.DoesNotExist:
+            pass
+            
+        return email
+        
+        
+    def save(self, *args, **kwargs):
+        user = self.instance
+        qs = User.objects.exclude(id=user.id)
+        user.username = self.cleaned_data['username']
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
+        user.email = self.cleaned_data['email']
+        
+        password = self.cleaned_data.get("password1")
+        if password:
+            user.set_password(password)       
+
+        user.save()
+        
+        profile = user.profile 
+        profile.postal_code = self.cleaned_data['postal_code']
+        profile.save()
+        
+class ContactInformationForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('organization', 'job_title', 'website', 'phone_primary', 'street', 'street_2', 'city', 'province', 'postal_code', 'country')

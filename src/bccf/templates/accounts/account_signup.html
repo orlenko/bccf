@@ -24,12 +24,11 @@
         <form method="post"{% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
         {# fields_for form #}
         <div class="col three mobile-full">
-            <img src="{% static 'img/default_user-image-female.gif' %}" id="photo" class="photo" alt="Default User Photo"/>
-            <div class="form-group input_id_first_name"> 
+            <img src="{% static 'img/default_user-image-female.gif' %}" id="fake-photo" class="photo" alt="Default User Photo"/>
+            <div class="form-group input_id_photo"> 
                 {{ form.photo }}
-                <button id="fake-photo">Browse</button>
                 <button id="clear-photo">Clear</button>
-                <p class="help-block">{{ form.first_name.help_text }}</p>
+                <p class="help-block">{{ form.photo.help_text }}</p>
             </div>
         </div>
         <div id="main-form" class="col nine mobile-full">
