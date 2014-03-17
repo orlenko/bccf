@@ -33,7 +33,7 @@ urlpatterns = patterns("",
 
     url('^bccf_admin_page_ordering/$', 'bccf.views.page.bccf_admin_page_ordering', name='bccf-admin-page-ordering'),
 
-    url("^accounts/signup/$", "bccf.views.accounts.signup", name='signup'),
+    url("^account/signup/$", "bccf.views.accounts.signup", name='signup'),
     url("^account/orders/$", "cartridge.shop.views.order_history", name="shop_order_history"),
 
     #Member views
