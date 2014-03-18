@@ -22,4 +22,10 @@ def tab_content(context, token):
         context['form'] = forms.AccountInformationForm(instance=user, initial={'postal_code':user.profile.postal_code})
     elif tab == 'contact':
         context['form'] = forms.ContactInformationForm(instance=user.profile)
+    elif tab == 'profile':
+        context['form'] = forms.ProfessionalProfileForm(instance=user.profile)
+    elif tab == 'social':
+        context['form'] = forms.SocialMediaForm(instance=user.profile)
+    elif tab == 'preferences':
+        context['form'] = forms.AccountPreferencesForm(instance=user.profile)
     return t.render(Context(context))

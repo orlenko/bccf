@@ -18,7 +18,7 @@ from mezzanine.utils.email import send_mail_template
 from mezzanine.conf import settings
 from mezzanine.generic.models import Rating
 
-from bccf.models import UserProfile, Event, Settings, ProgramRequest, Program
+from bccf.models import UserProfile, Event, Settings, ProgramRequest, Program, Campaign
 from bccf.settings import MEDIA_ROOT
 from bccf.widgets import AdvancedFileInput
 
@@ -103,7 +103,7 @@ class EventForm(forms.ModelForm):
         model = Event
         fields = (
             'page_for', 'title', 'content', 'provider', 'price', 'max_seats', 'location_city',
-            'location_street', 'location_street2', 'location_postal_code',
+            'location_street', 'location_postal_code',
             'status',
             'date_start', 
             'date_end', 
@@ -124,6 +124,16 @@ class EventForm(forms.ModelForm):
         super(EventForm, self).__init__(*args, **kwargs)
         if user:
             self.fields['program'].queryset = Program.objects.filter(Q(users=None)|Q(users=user))
+
+class CampaignForm(forms.ModelForm):
+    class Meta:
+        model = Campaign
+        fields = ('title', 'content', 'status', 'bccf_topic', 'page_for', 'image', 'user')
+        widgets = {
+            'image': AdvancedFileInput(),
+            'status': forms.RadioSelect,
+            'user': forms.HiddenInput
+        }
 
 #
 #
@@ -244,6 +254,12 @@ class FormStructureSurveyFormTwo(FormStructureSurveyBase):
     structure = forms.CharField(widget=forms.HiddenInput(attrs={'id': 'form_structure_data'}))
     type = forms.CharField(widget=forms.HiddenInput(attrs={'id': 'form_structure_type'}))
 
+# GLOBAL
+def to_mailing_list(email, add=True):
+    """
+    Add or remove email from MailChimp mailing list
+    """
+    pass
 
 class CreateAccountForm(UserCreationForm): 
 
@@ -287,7 +303,7 @@ class CreateAccountForm(UserCreationForm):
 
         if 'photo' in self.files:
             profile.photo = self.handle_upload()
-        
+
         profile.postal_code = self.cleaned_data['postal_code']
         profile.membership_type = self.cleaned_data['membership_type']
         profile.gender = self.cleaned_data['gender']
@@ -600,3 +616,21 @@ class ContactInformationForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('organization', 'job_title', 'website', 'phone_primary', 'street', 'street_2', 'city', 'province', 'postal_code', 'country')
+        
+class ProfessionalProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('description', 'accreditation')
+        widgets = {
+            'accreditation': forms.CheckboxSelectMultiple        
+        }
+        
+class AccountPreferencesForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('show_in_list', 'in_mailing_list')
+        
+class SocialMediaForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('facebook', 'twitter', 'linkedin', 'youtube', 'pinterest')

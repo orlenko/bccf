@@ -563,7 +563,11 @@ class TagBase(BCCFChildPage):
         super(TagBase, self).save(**kwargs)
 
 class Campaign(TagBase):
-    pass
+    user = models.ForeignKey(User, null=True, blank=True, related_name='campaigns')
+    
+    @permalink
+    def edit_url(self):
+        return('campaigns-edit', (), {'slug': self.slug})
 
 #### PAGE STUFF END ####
 
@@ -596,7 +600,7 @@ class UserProfile(PybbProfile):
     membership_level = models.IntegerField(default=0, null=True, blank=True)
     organization = models.ForeignKey('UserProfile', null=True, blank=True, related_name='members')
 
-    accreditation = models.ManyToManyField(Program, verbose_name='Accreditation', blank=True, null=True)
+    accreditation = models.ManyToManyField(Program, verbose_name='Certifications', blank=True, null=True)
     show_in_list = models.BooleanField('Show in member directory', default=False)
     in_mailing_list = models.BooleanField('In mailing list', default=False)
 
@@ -624,6 +628,8 @@ class UserProfile(PybbProfile):
     facebook = models.CharField('Facebook', max_length=255, null=True, blank=True)
     twitter = models.CharField('Twitter', max_length=255, null=True, blank=True)
     linkedin = models.CharField('LinkedIn', max_length=255, null=True, blank=True)
+    youtube = models.CharField('Youtube', max_length=255, null=True, blank=True)
+    pinterest = models.CharField('Pinterest', max_length=255, null=True, blank=True)
     
     #Banking
     account_number = models.CharField('Account Number', max_length=12, null=True, blank=True)  
@@ -808,7 +814,7 @@ def is_product_variation_categ(variation, categ):
 
 #### PROGRAM REQUEST #####
 class ProgramRequest(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, related_name='program_requests')
     title = models.CharField('Program Name', max_length=255)
     comment = RichTextField('Comment', blank=True, null=True, help_text='Provide a reason')
     accept = models.BooleanField('Accept', default=False)

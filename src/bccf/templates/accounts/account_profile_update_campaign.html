@@ -1,0 +1,17 @@
+<strong class="fieldset-header">Your Trainings</strong>
+{% if user.campaigns.count %}
+    <nav>
+    	<ul>
+    	{% for campaign in user.campaigns.all %}
+    		<li><h3 class="h6">{{ campaign.title }}</h3>
+    			<p><a href="{{ campaign.edit_url }}">Edit</a> | <a href="{{ campaign.get_absolute_url }}">View</a>
+    	    </li>
+    	{% endfor %}
+    	</ul>
+	</nav>
+{% else %}
+<p>No campaigns created yet</p>
+{% endif %}
+<div class="dashed-button">
+    <a href="{% url 'campaigns-create' %}">Create Campaign</a>
+</div>

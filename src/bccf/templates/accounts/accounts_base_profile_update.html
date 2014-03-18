@@ -1,5 +1,7 @@
 {% extends "pages/base_bccfpage.html" %}
-{% load i18n mezzanine_tags static bccf_accounts_tags %}
+{% load i18n mezzanine_tags static  %}
+{% load bccf_tags bccf_event_tags bccf_accounts_tags %}
+{% load bccf_filters %}
 
 {% block meta_title %}Update Account{% endblock %}
 {% block title %}Update Account{% endblock %}
@@ -37,15 +39,17 @@
                     <li><a id="id_profile" href="{% url 'update-tab' 'profile' %}">Professional Profile</a></li>
                     <li><a id="id_social" href="{% url 'update-tab' 'social' %}">Social Media</a></li>
                     <li><a id="id_preferences" href="{% url 'update-tab' 'preferences' %}">Account Preferences</a></li>
-                    <li><a id="id_training" href="{% url 'update-tab' 'training' %}">Create Training Event</a></li>
-                    <li><a id="id_campaign" href="{% url 'update-tab' 'campaign' %}">Create Campaign</a></li>
+                    {% if membership|has_feature:'events' %}
+                    <li><a id="id_training" href="{% url 'update-tab' 'training' %}">Trainings</a></li>
+                    <li><a id="id_campaign" href="{% url 'update-tab' 'campaign' %}">Campaigns</a></li>
                     <li><a id="id_program" href="{% url 'update-tab' 'program' %}">Request Program</a></li>
+                    {% endif %}
                     <li><a id="id_history" href="{% url 'update-tab' 'history' %}">Account History</a></li>
                     <li><a id="id_orders" href="{% url 'update-tab' 'orders' %}">Orders</a></li>
                 </ul>
             </nav>
         </div>
-        <div id="main-form" class="col nine mobile-full">
+        <div id="main-form" class="{% if tab %}{{ tab }}-tab{% else %}home-tab{% endif %} col nine mobile-full">
             {% tab_content %}
         </div>
     </div>

@@ -187,12 +187,12 @@ def delmember(request):
     return HttpResponseRedirect(reverse(profile))
 
 def reqprogram(request):
-    form = ReqProgram(initial={'user': request.user.pk})
+    form = ReqProgram(initial={'user': request.user})
     title = 'Request Program'
     if request.method == 'POST':
         form = ReqProgram(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse(profile))
+            return HttpResponseRedirect(reverse('update-tab', args=['program']))
     context = RequestContext(request, locals())
     return render_to_response('accounts/account_form.html', {}, context_instance=context)

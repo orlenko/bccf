@@ -35,7 +35,7 @@ urlpatterns = patterns("",
 
     url("^account/update/(?P<tab>.+)/$", "bccf.views.accounts.profile_update", name='update-tab'),
     url("^account/update/$", "bccf.views.accounts.profile_update", name='update'),
-    url("^account/signup/$", "bccf.views.accounts.signup", name='signup'),
+    url("^account/signup/$", "bccf.views.accounts.signup", name='bccf_signup'),
     url("^account/orders/$", "cartridge.shop.views.order_history", name="shop_order_history"),
 
     #Member views
@@ -50,6 +50,10 @@ urlpatterns = patterns("",
     url(r'events/attendees/(?P<id>.+)/$', 'bccf.views.events.attendees', name='events-attendees'),
     url(r'events/remove/survey/$', 'bccf.views.events.remove_survey', name='events-remove-survey'),
     url(r'events/(?P<slug>.*)/$', 'bccf.views.events.event', name='events-event'),
+
+    # Campaigns
+    url(r'campaigns/create/$', 'bccf.views.campaign.create', name='campaigns-create'),
+    url(r'campaigns/edit/(?P<slug>.*)/$', 'bccf.views.campaign.edit', name='campaigns-edit'),
 
     # MEZZANINE URL OVERRIDES
     #------------------------

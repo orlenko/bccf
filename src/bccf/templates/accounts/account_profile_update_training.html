@@ -1,0 +1,23 @@
+{% load bccf_event_tags %}
+<strong class="fieldset-header">Your Trainings</strong>
+{% if user.events.count %}
+    <nav>
+    	<ul>
+    	{% for event in user.events.all %}
+    		<li><h3 class="h6">{{ event.title }}</h3> ({{ event.date_start|date:'DATETIME_FORMAT' }} &mdash;  {{ event.date_end|date:'DATETIME_FORMAT' }}):
+    			<p><a href="{{ event.edit_url }}">Edit</a> | <a href="{{ event.get_absolute_url }}">View</a>
+    		    {% if event.survey_before or event.survey_after %}
+    		     | <a href="{{ event.report_url }}">Download Survey Report</a>
+    		    {% endif %}</p>
+    		    <p>People Attending - <a href="{{ event.attendee_url }}">Download Attendee List</a></p>
+                {% attendees_for event%}
+    	    </li>
+    	{% endfor %}
+    	</ul>
+	</nav>
+{% else %}
+<p>No events created yet</p>
+{% endif %}
+<div class="dashed-button">
+    <a href="{% url 'events-create' %}">Create Event</a>
+</div>

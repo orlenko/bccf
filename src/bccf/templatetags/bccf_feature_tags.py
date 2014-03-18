@@ -34,7 +34,7 @@ def featured_tags(context):
     Provides a generic context variable name for the TAGs to be shown on the front page
     """
     context['class'] = 'hnote'
-    context['slides'] = BCCFChildPage.objects.filter(Q(content_model='formpublished') | Q(content_model='topic') | Q(content_model='campaign'), BCCF_EXPIRY, **BCCF_FILTER).order_by('-created')
+    context['slides'] = BCCFChildPage.objects.published().filter(Q(content_model='formpublished') | Q(content_model='topic') | Q(content_model='campaign'), BCCF_EXPIRY, **BCCF_FILTER).order_by('-created')
     return context
     
 @register.inclusion_tag('generic/includes/featured_resources.html', takes_context=True)
@@ -58,6 +58,6 @@ def related_resources_for(context, obj, type, title):
     for topic in obj.bccf_topic.all():
         q = q | Q(bccf_topic = topic)
         
-    resource_pre = BCCFChildPage.objects.filter(Q(content_model=type), BCCF_EXPIRY, **BCCF_FILTER).distinct()
+    resource_pre = BCCFChildPage.objects.published().filter(Q(content_model=type), BCCF_EXPIRY, **BCCF_FILTER).distinct()
     context['resources'] = resource_pre.filter(q, ~Q(slug=obj)).order_by('featured', '-created')[:10]
     return context

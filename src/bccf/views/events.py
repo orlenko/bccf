@@ -40,7 +40,7 @@ def create(request):
             form.save()
             if not form.instance.parent:
                 try:
-                    form.instance.parent = BCCFPage.objects.get(slug='bccf/trainings')
+                    form.instance.gparent = BCCFPage.objects.get(slug='bccf/trainings')
                     form.instance.save()
                 except:
                     pass

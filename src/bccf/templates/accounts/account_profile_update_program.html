@@ -1,0 +1,22 @@
+<strong class="fieldset-header">Program Requests</strong>
+{% if user.program_requests.count %}
+    <nav>
+    	<ul>
+    	{% for program in user.program_requests.all %}
+    		<li><h3 class="h6">{{ program.title }}</h3>
+    			{% if request.accept %}
+                <p>Status: Accepted</p>
+                <p>Accepted On: {{ request.accepted_on }}</p>
+                {% else %}
+                <p>Status: Pending</p>
+                {% endif %}
+    	    </li>
+    	{% endfor %}
+    	</ul>
+	</nav>
+{% else %}
+<p>No program requests</p>
+{% endif %}
+<div class="dashed-button">
+    <a href="{% url 'member-request-program' %}">Request a Program</a>	
+</div>

@@ -14,21 +14,28 @@ class UserProfileManager(models.Manager):
     
 class ChildPageManager(models.Manager):
     
-    def get_queryset(self):
+   #def get_queryset(self):
+   #     return super(ChildPageManager, self).get_queryset().filter(
+   #         Q(publish_date__lte=now()) | Q(publish_date__isnull=True),
+   #         Q(expiry_date__gte=now()) | Q(expiry_date__isnull=True),
+   #         Q(status=CONTENT_STATUS_PUBLISHED)
+   #     )         
+        
+    def published(self):
         return super(ChildPageManager, self).get_queryset().filter(
             Q(publish_date__lte=now()) | Q(publish_date__isnull=True),
             Q(expiry_date__gte=now()) | Q(expiry_date__isnull=True),
             Q(status=CONTENT_STATUS_PUBLISHED)
-        )         
+        )           
         
     def by_gparent(self, gparent):
-        return self.get_queryset().filter(gparent=gparent)
+        return self.published().filter(gparent=gparent)
         
     def by_topic(self, topic):
-        return self.get_queryset().filter(bccf_topic=topic)
+        return self.published().filter(bccf_topic=topic)
         
     def featured(self):
-        return self.get_queryset().filter(featured=True)
+        return self.published().filter(featured=True)
     
 class EventManager(ChildPageManager):
 
@@ -46,16 +53,16 @@ class TagManager(ChildPageManager):
         )        
         
     def talks(self):
-        return super(TagManager, self).get_queryset().filter(
+        return super(TagManager, self).published().filter(
             Q(content_model='topic')        
         )
         
     def acts(self):
-        return super(TagManager, self).get_queryset().filter(
+        return super(TagManager, self).published().filter(
             Q(content_model='formpublished')        
         )
         
     def gets(self):
-        return super(TagManager, self).get_queryset().filter(
+        return super(TagManager, self).published().filter(
             Q(content_model='campaign')        
         )

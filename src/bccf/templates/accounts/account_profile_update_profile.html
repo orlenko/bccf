@@ -1,0 +1,23 @@
+<form method="POST">
+    <strong class="fieldset-header">Profile Profile</strong>
+    <div class="form-group input_id_description"> 
+        <p><label for="id_description">{{ form.description.label }}</label></p>
+        {{ form.description }}
+        <p class="help-block">{{ form.description.help_text }}</p>
+        <p class="error-block">{{ form.description.errors.as_text|cut:'*' }}</p>
+    </div>
+    <div class="form-group input_id_accreditation"> 
+        <p><label for="id_description">I am certified in:</label><span class="help-block">(this data may be reviewed for accuracy)</span></p>
+        {% for pk, choice in form.accreditation.field.widget.choices %}
+        <div class="form-group checkbox-group input_id_show_in_list"> 
+            <label for="id_accreditation_{{ for.counter0 }}">{{ choice }}</label>
+            <input type="checkbox" id="id_accreditation_{{ for.counter0 }}" value="{{ pk }}" name="accreditation"/>
+        </div>
+        {% endfor %}
+        <p class="error-block">{{ form.accreditation.errors.as_text|cut:'*' }}</p>
+    </div>
+    {% csrf_token %}
+    <div class="form-actions dashed-button">
+        <input id="submit" class="btn btn-primary btn-large" type="submit" value="Save">
+    </div>
+</form>

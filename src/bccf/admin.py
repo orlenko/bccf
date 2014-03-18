@@ -377,6 +377,7 @@ class BCCFTagAdmin(DisplayableAdmin):
                                     'bccf_topic',
                                     'featured',
                                     'page_for',
+                                    'user',
                                     'image']):
                 self.fieldsets[0][1]['fields'].insert(3, field)
                 
