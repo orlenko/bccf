@@ -20,7 +20,7 @@
     <div id="form-container" class="col twelve">
         <div class="col three mobile-full">
             <form method="POST" enctype="multipart/form-data">
-                <img src="{{ MEDIA_URL }}{{ user.profile.photo }}" id="fake-photo" class="photo" alt="Default User Photo"/>
+                <img src="{{ MEDIA_URL }}{% bccf_thumbnail profile.photo 200 200 %}" id="fake-photo" class="photo" alt="Default User Photo"/>
                 <div class="form-group input_id_first_name"> 
                     {% csrf_token %}
                     {{ photo_form.photo }}
@@ -30,9 +30,9 @@
                     <p class="help-block">{{ form.photo.help_text }}</p>
                 </div>      
             </form>
-            <p><strong>Account Number:</strong> {{ user.profile.account_number }}</p>
-            <nav class="section row row-one">
-                <ul id="tabs">
+            <p id="account-number"><strong>Account Number:</strong> {{ profile.account_number }}</p>
+            <nav id="tabs" class="section row row-one">
+                <ul>
                     <li><a id="id_home" href="{% url 'update' %}">Home</a></li>
                     <li><a id="id_account" href="{% url 'update-tab' 'account' %}">Account Information</a></li>
                     <li><a id="id_contact" href="{% url 'update-tab' 'contact' %}">Contact Information</a></li>
@@ -59,7 +59,7 @@
 <script type="text/javascript">
     var default_img = "{{ MEDIA_URL }}{{ user.profile.photo }}";
     $(function() {
-        $('#id_{{ tab }}').addClass('selected');
+        $('#id_{{ tab }}').addClass('current');
     });
     $('#fake-photo').on('click', function(e) {
         e.preventDefault();

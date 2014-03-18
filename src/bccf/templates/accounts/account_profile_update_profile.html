@@ -10,8 +10,8 @@
         <p><label for="id_description">I am certified in:</label><span class="help-block">(this data may be reviewed for accuracy)</span></p>
         {% for pk, choice in form.accreditation.field.widget.choices %}
         <div class="form-group checkbox-group input_id_show_in_list"> 
-            <label for="id_accreditation_{{ for.counter0 }}">{{ choice }}</label>
-            <input type="checkbox" id="id_accreditation_{{ for.counter0 }}" value="{{ pk }}" name="accreditation"/>
+            <label for="id_accreditation_{{ forloop.counter0 }}">{{ choice }}</label>
+            <input type="checkbox" id="id_accreditation_{{ forloop.counter0 }}" value="{{ pk }}" name="accreditation"/>
         </div>
         {% endfor %}
         <p class="error-block">{{ form.accreditation.errors.as_text|cut:'*' }}</p>
