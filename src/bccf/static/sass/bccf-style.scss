@@ -1961,6 +1961,20 @@ textarea {
     }    
 }
 
+#photo-form {
+    button,
+    input[type='submit'] {
+        height: 30px;
+        border: none;
+        background-color: #000;
+        color: #FFF;
+        &:hover {
+            background-color: $yellow;
+            color: #000;
+        }   
+    }  
+}
+
 #account-number {
     padding: 5px 0 5px 10px;
     background-color: $sgrey;

@@ -18,17 +18,17 @@
 
 {% block carousels %}
     <div id="form-container" class="col twelve">
-        <div class="col three mobile-full">
-            <form method="POST" enctype="multipart/form-data">
+        <div class="col four mobile-full">
+            <form id="photo-form" method="POST" enctype="multipart/form-data">
                 <img src="{{ MEDIA_URL }}{% bccf_thumbnail profile.photo 200 200 %}" id="fake-photo" class="photo" alt="Default User Photo"/>
                 <div class="form-group input_id_first_name"> 
-                    {% csrf_token %}
                     {{ photo_form.photo }}
-                    <button id="clear-photo">Clear</button>
-                    <input type="submit" name="update-photo" value="Save" />
-                    <input type="submit" name="update-photo" value="Delete" />
                     <p class="help-block">{{ form.photo.help_text }}</p>
-                </div>      
+                </div> 
+                {% csrf_token %}
+                <button id="clear-photo">Clear</button>
+                <input type="submit" name="update-photo" value="Save" />
+                <input type="submit" name="update-photo" value="Delete" />     
             </form>
             <p id="account-number"><strong>Account Number:</strong> {{ profile.account_number }}</p>
             <nav id="tabs" class="section row row-one">
@@ -48,7 +48,7 @@
                 </ul>
             </nav>
         </div>
-        <div id="main-form" class="{% if tab %}{{ tab }}-tab{% else %}home-tab{% endif %} col nine mobile-full">
+        <div id="main-form" class="{% if tab %}{{ tab }}-tab{% else %}home-tab{% endif %} col eight mobile-full">
             {% tab_content %}
         </div>
     </div>

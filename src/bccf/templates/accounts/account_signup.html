@@ -23,7 +23,7 @@
     <fieldset>
         <form method="post"{% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
         {# fields_for form #}
-        <div class="col three mobile-full">
+        <div class="col four mobile-full">
             <img src="{% static 'img/default_user-image-female.gif' %}" id="fake-photo" class="photo" alt="Default User Photo"/>
             <div class="form-group input_id_photo"> 
                 {{ form.photo }}
@@ -31,7 +31,7 @@
                 <p class="help-block">{{ form.photo.help_text }}</p>
             </div>
         </div>
-        <div id="main-form" class="col nine mobile-full">
+        <div id="main-form" class="col eight mobile-full">
             <strong class="fieldset-header">Account Information</strong>
             <div class="form-group input_id_first_name"> 
                 <p><label class="req" for="id_first_name">{{ form.first_name.label }}</label></p>
