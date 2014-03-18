@@ -30,7 +30,7 @@ def edit(request, slug):
     profile = request.user.profile
     
     if not Campaign.objects.filter(slug=slug, user=profile).exists():
-        return redirect('/')
+        return HttpResponseRedirect('/')
         
     campaign = Campaign.objects.get(slug=slug)
     form = CampaignForm(instance=campaign)
