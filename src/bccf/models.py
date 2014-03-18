@@ -563,11 +563,26 @@ class TagBase(BCCFChildPage):
         super(TagBase, self).save(**kwargs)
 
 class Campaign(TagBase):
-    user = models.ForeignKey(User, null=True, blank=True, related_name='campaigns')
+    user = models.ForeignKey(User, verbose_name='Created By', null=True, blank=True, related_name='campaigns')
+    approve = models.BooleanField('Approve Campaign', default=True)
+    approved_on = models.DateTimeField('Approved On', blank=True, null=True)
+    by_user = models.BooleanField('Created By User', default=False)
     
     @permalink
     def edit_url(self):
         return('campaigns-edit', (), {'slug': self.slug})
+        
+    def save(self, *args, **kwargs):
+        super(Campaign, self).save(*args, **kwargs)
+        if self.approve:
+            self.accept_request()
+        
+    def accept_request(self):
+        if self.by_user and not self.approved_on:
+            self.approve = True
+            self.status = 2
+            self.approved_on = datetime.now()
+            self.save()
 
 #### PAGE STUFF END ####
 

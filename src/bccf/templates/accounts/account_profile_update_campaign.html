@@ -4,7 +4,13 @@
     	<ul>
     	{% for campaign in user.campaigns.all %}
     		<li><h3 class="h6">{{ campaign.title }}</h3>
-    			<p><a href="{{ campaign.edit_url }}">Edit</a> | <a href="{{ campaign.get_absolute_url }}">View</a>
+    			<p><a href="{{ campaign.edit_url }}">Edit</a>{% if campaign.approve %} | <a href="{{ campaign.get_absolute_url }}">View</a>{% endif %}
+    			{% if campaign.approve %}
+                <p>Status: Approved</p>
+                <p>Accepted On: {{ campaign.approved_on }}</p>
+                {% else %}
+                <p>Status: Pending</p>
+                {% endif %}
     	    </li>
     	{% endfor %}
     	</ul>

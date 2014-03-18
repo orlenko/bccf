@@ -12,7 +12,7 @@ from bccf.forms import CampaignForm
 
 @login_required
 def create(request):
-    form = CampaignForm(initial={'user':request.user})
+    form = CampaignForm(initial={'user':request.user, 'by_user':True, 'status':1, 'approve':False})
     if request.method == 'POST':
         form = CampaignForm(request.POST, request.FILES)
         if form.is_valid():

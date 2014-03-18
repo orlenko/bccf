@@ -365,7 +365,7 @@ class BCCFVideoResourceAdmin(AdminVideoMixin, DisplayableAdmin):
         
 
 class BCCFTagAdmin(DisplayableAdmin):
-    actions = [make_featured, make_unfeatured]
+    actions = [make_featured, make_unfeatured, 'approve_campaigns']
     inlines = (BCCFBabyInlineAdmin,)
     ordering = ('-created',)
     
@@ -378,6 +378,7 @@ class BCCFTagAdmin(DisplayableAdmin):
                                     'featured',
                                     'page_for',
                                     'user',
+                                    'approve',
                                     'image']):
                 self.fieldsets[0][1]['fields'].insert(3, field)
                 
@@ -398,6 +399,16 @@ class BCCFTagAdmin(DisplayableAdmin):
             self.list_filter = list(deepcopy(self.list_filter))
             for fieldname in ['featured', 'page_for']:
                 self.list_filter.insert(-1, fieldname)
+                
+        def approve_campaigns(self, request, queryset):
+            for row in queryset:
+                row.accept_request()
+            num_rows = queryset.update(accept=True)
+            if num_rows == 1:
+                return '%s Request Accepted.'% num_rows
+            else:
+                return '%s Requests Accepted.' % num_rows    
+        approve_campaigns.short_description = 'Approve Selected Campaigns'
 
 admin.site.register(BCCFPage, PageAdmin)
 admin.site.register(BCCFTopic, BCCFTopicAdmin)

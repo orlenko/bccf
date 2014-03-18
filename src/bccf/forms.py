@@ -128,11 +128,13 @@ class EventForm(forms.ModelForm):
 class CampaignForm(forms.ModelForm):
     class Meta:
         model = Campaign
-        fields = ('title', 'content', 'status', 'bccf_topic', 'page_for', 'image', 'user')
+        fields = ('title', 'content', 'status', 'bccf_topic', 'page_for', 'image', 'user', 'by_user', 'approve')
         widgets = {
             'image': AdvancedFileInput(),
-            'status': forms.RadioSelect,
-            'user': forms.HiddenInput
+            'approve': forms.HiddenInput,
+            'status': forms.HiddenInput,
+            'user': forms.HiddenInput,
+            'by_user': forms.HiddenInput
         }
 
 #
