@@ -1,1 +1,30 @@
+{% load bccf_tags %}
 <h1>Hello {{ user.get_full_name }}</h1>
+<div class="section row row-one">
+	{% if user.profile.requested_cancellation %}
+		<p class="message cancellation" style="color:red; font-weight: bold;">
+			You have requested a cancellation of your membership.
+			We are processing your request, and will contact you soon.
+		</p>
+	{% else %}
+		<p>Membership: {{ membership }}</p>
+		<p>Expires: {{ expiration }}</p>
+
+		<p>
+			To extend your current membership, <a href="{{ membership|membership_renew_url }}">click here</a>.
+		</p>
+
+		{% if upgrades %}
+			<h3>Upgrade to:</h3>
+			<ul>
+				{% for upgrade in upgrades %}
+					<li><a href="{{ upgrade|membership_upgrade_url }}">{{ upgrade }}</a></li>
+				{% endfor %}
+			</ul>
+		{% endif %}
+
+		<p>
+			To cancel your membership, <a href="{% url 'member-membership-cancel' %}">click here</a>
+		</p>
+	{% endif %}
+</div>
