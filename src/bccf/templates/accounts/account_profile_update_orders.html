@@ -1,1 +1,16 @@
 <strong class="fieldset-header">Your Orders</strong>
+{% if orders %}
+    <ul>    
+    {% for o in orders %}
+        <li>{{ o.invoice|safe }}<br/>
+            Ordred: {{ o.time }}<br/>
+            Transaction ID: {{ o.transaction_id }}<br/>
+            Total: {{ o.total }}<br/>
+            Payment Method: {{ o.payment_method }}<br/>
+            Status: {{ o.status }}<br/>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+<p>No Orders</p>
+{% endif %}

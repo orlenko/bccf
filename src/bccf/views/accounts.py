@@ -46,6 +46,13 @@ def profile_update(request, tab='home'):
         recalculate_cart(request)
         return redirect('/shop/checkout')
 
+    if tab == 'orders':
+        from cartridge.shop.models import Order
+        """
+        Grab all the orders that the user has made
+        """
+        orders = Order.objects.filter(user_id=user.pk)
+
     if request.method == 'POST':
         if 'update-photo' in request.POST:
            photo_form = forms.PhotoForm(request.POST, request.FILES, instance=profile)
