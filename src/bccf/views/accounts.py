@@ -39,7 +39,7 @@ def profile_update(request, tab='home'):
         Add free membership depending on their type to cart and redirect to checkout
         """
         sku = 99
-        if profile.is_parent():
+        if profile.is_parent:
             sku = 98
         variation = ProductVariation.objects.get(sku=sku)
         request.cart.add_item(variation, 1)
