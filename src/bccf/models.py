@@ -431,6 +431,9 @@ class BCCFChildPage(BCCFBasePage, RichText, AdminThumbMixin):
         return True
 
 class BCCFGenericPage(BCCFChildPage):
+    show_resources = models.BooleanField('Show Resources', default=True)
+    show_comments = models.BooleanField('Show Comments', default=True)
+    show_rating = models.BooleanField('Show Rating', default=True)
     class Meta:
         verbose_name = 'Sub Page'
         verbose_name_plural = 'Sub Pages'

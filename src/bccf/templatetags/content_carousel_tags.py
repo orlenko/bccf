@@ -17,6 +17,7 @@ register = template.Library()
 def product_category_carousel(context, category, product=None):
     page = re.split('/get/', context['request'].path)
     params = None
+
     context['open'] = False
     context['filter'] = False
     context['carousel_color'] = category.get_content_model().carousel_color

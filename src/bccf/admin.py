@@ -150,6 +150,9 @@ class BCCFGenericAdmin(DisplayableAdmin):
                                     'bccf_topic',
                                     'gparent',
                                     'page_for',
+                                    'show_resources',
+                                    'show_comments',
+                                    'show_rating',
                                     'image']):
                 self.fieldsets[0][1]['fields'].insert(3, field)
 
@@ -175,7 +178,7 @@ class BCCFGenericAdmin(DisplayableAdmin):
         if db_field.name == 'gparent':
             q = Q() 
             for core in BCCF_CORE_PAGES:
-                q  = q | Q(slug=core)
+                q  = q | Q(slug='bccf/%s' % core)
             kwargs['queryset'] = BCCFPage.objects.exclude(q)
             return db_field.formfield(**kwargs)
         return super(BCCFGenericAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)

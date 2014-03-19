@@ -63,7 +63,7 @@ def page(request, parent=None, child=None, baby=None):
             elif baby:
                 baby_obj = baby
             child_obj = BCCFChildPage.objects.get(slug=child)
-            babies = BCCFChildPage.objects.filter(parent=child_obj)
+            babies = BCCFBabyPage.objects.filter(parent=child_obj).order_by('order')
             if child_obj.content_model == 'event':
                 babies = BCCFChildPage.objects.filter(~Q(content_model='formpublished'), parent=child_obj).order_by('_order')  # @UndefinedVariable
             template = 'generic/sub_page.html'

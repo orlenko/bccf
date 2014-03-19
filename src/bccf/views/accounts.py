@@ -32,6 +32,16 @@ def profile_update(request, tab='home'):
     expiration = profile.membership_expiration_datetime
     upgrades = get_upgrades(membership)    
     
+    if 'addmembers' in request.session:
+        try:
+            new_users, new_user_errors = request.session.pop('addmembers')
+            feedback = {
+                'new_users': new_users,
+                'new_user_errors': new_user_errors
+            }
+        except:
+            pass    
+    
     if not membership:
         from cartridge.shop.models import ProductVariation
         from cartridge.shop.utils import recalculate_cart
