@@ -7,7 +7,7 @@
                 <a href="{{ child_obj.get_absolute_url }}" id="child-home" class="baby-content-btn">Home</a>
                 <div class="baby-content">
                     <div class="section row row-one social-box">
-                        {% if child_obj.show_rating %}
+                        {% if child_obj.show_rating or child_obj.content_model != 'bccfgenericpage' %}
                         {% bccf_rating_for child_obj %}
                         {% endif %}
                         {% include "includes/add_this.html" %}
@@ -23,7 +23,7 @@
                         {{ child_obj.content|safe }}
                         {% bccf_subscribe_for child_obj %}
                     </div>
-                    {% if child_obj.show_comments %}
+                    {% if child_obj.show_comments or child_obj.content_model != 'bccfgenericpage' %}
                     <div class="section row row-one">
                         {% comments_for child_obj %}
                     </div>
@@ -84,7 +84,7 @@
             {% if child_obj.content_model == 'topic' %}
             <li class="col two mobile-full"><a href="{{ child_obj.get_content_model.get_absolute_url }}" target="_blank">Talk</a></li>
             {% endif %}
-            {% if child_obj.show_resources %}
+            {% if child_obj.show_resources or child_obj.content_model != 'bccfgenericpage' %}
             <li class="col two mobile-full" id="resources">
                 <a href="{{ child_obj.get_absolute_url }}baby-resources" id="baby-resources" class="baby-content-btn">Resources</a>
                 <div class="baby-content">
@@ -107,7 +107,7 @@
     <div class="home-content section row no-mobile">
         <div class="section row row-one social-box">
             {% include "includes/add_this.html" %}
-            {% if child_obj.show_rating %}
+            {% if child_obj.show_rating or child_obj.content_model != 'bccfgenericpage' %}
             {% bccf_rating_for child_obj %}
             {% endif %}
         </div>
@@ -122,7 +122,7 @@
             {{ child_obj.content|safe }}
             {% bccf_subscribe_for child_obj %}
         </div>
-        {% if child_obj.show_comments %}
+        {% if child_obj.show_comments or child_obj.content_model != 'bccfgenericpage' %}
         <div class="section row row-one">
             {% comments_for child_obj %}
         </div>
