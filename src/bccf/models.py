@@ -149,7 +149,7 @@ class BCCFPage(Page, RichText):
         verbose_name_plural = 'Parent Pages'
     def save(self, *args, **kwargs):
         if not self.pk and not self.slug:
-            slug = super(BCCFPage, self).generate_unique_slug()
+            slug = self.generate_unique_slug()
             self.slug = 'bccf/%s' % slug
         super(BCCFPage, self).save(*args, **kwargs);
 
