@@ -147,11 +147,11 @@ class BCCFPage(Page, RichText):
     class Meta:
         verbose_name = 'Parent Page'
         verbose_name_plural = 'Parent Pages'
-    def save(self, *args, **kwargs):
-        if not self.pk and not self.slug:
-            slug = self.generate_unique_slug()
-            self.slug = 'bccf/%s' % slug
-        super(BCCFPage, self).save(*args, **kwargs);
+    def get_slug(self):
+        slug = slugify(self.title)
+        if not self.slug:
+            slug = 'bccf/%s' % slug
+        return slug
 
 #Topic
 class BCCFTopic(Displayable, RichText):
