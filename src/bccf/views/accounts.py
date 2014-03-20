@@ -81,6 +81,8 @@ def profile_update(request, tab='home'):
                 form = forms.SocialMediaForm(request.POST, instance=profile)
             elif tab == 'preferences':
                 form = forms.AccountPreferenceForm(request.POST, instance=profile)
+            elif tab == 'forum':
+                form = forms.ForumPreferencesForm(request.POST, request.FILES, instance=profile)
             if form.is_valid():
                 user = form.save()
                 success(request, 'Account Updated Successfully')

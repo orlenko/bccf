@@ -28,4 +28,6 @@ def tab_content(context, token):
         context['form'] = forms.SocialMediaForm(instance=user.profile)
     elif tab == 'preferences':
         context['form'] = forms.AccountPreferencesForm(instance=user.profile)
+    elif tab == 'forum':
+        context['form'] = forms.ForumPreferencesForm(instance=user.profile)
     return t.render(Context(context))

@@ -620,7 +620,8 @@ class UserProfile(PybbProfile):
         format="Image", max_length=255, null=True, blank=True,
         help_text='User photo')
     admin_thumb_field = "photo"
-    membership_order = models.ForeignKey('shop.Order', null=True, blank=True)
+    membership_order = models.ForeignKey('shop.Order', null=True, blank=True, related_name='order')
+    membership_order_free = models.ForeignKey('shop.Order', null=True, blank=True, related_name='free_order')
     requested_cancellation = models.NullBooleanField(null=True, blank=True, default=False)
     membership_type = models.CharField('Membership Type', max_length=128, null=True, blank=True, choices=MEMBERSHIP_TYPES)
     membership_level = models.IntegerField(default=0, null=True, blank=True)
@@ -682,6 +683,8 @@ class UserProfile(PybbProfile):
 
     def set_membership_order(self, order):
         self.membership_order = order
+        if not self.membership_order_free:
+            self.membership_order_free = order
         # Update membership type and level
         variation = self.membership_product_variation
         categ_name = variation.product.categories.all()[0].title.lower()

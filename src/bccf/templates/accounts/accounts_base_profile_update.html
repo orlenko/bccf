@@ -36,16 +36,22 @@
                     <li><a id="id_home" href="{% url 'update' %}">Home</a></li>
                     <li><a id="id_account" href="{% url 'update-tab' 'account' %}">Account Information</a></li>
                     <li><a id="id_contact" href="{% url 'update-tab' 'contact' %}">Contact Information</a></li>
-                    <li><a id="id_profile" href="{% url 'update-tab' 'profile' %}">Professional Profile</a></li>
-                    <li><a id="id_social" href="{% url 'update-tab' 'social' %}">Social Media</a></li>
-                    <li><a id="id_preferences" href="{% url 'update-tab' 'preferences' %}">Account Preferences</a></li>
-                    {% if membership|has_feature:'events' %}
-                    <li><a id="id_training" href="{% url 'update-tab' 'training' %}">Trainings</a></li>
-                    <li><a id="id_campaign" href="{% url 'update-tab' 'campaign' %}">Campaigns</a></li>
-                    <li><a id="id_program" href="{% url 'update-tab' 'program' %}">Request Program</a></li>
-                    {% endif %}
-                    {% if membership|has_feature:'people' %}
-                    
+                    {% if profile.membership_type != 'parent' %}
+                        <li><a id="id_profile" href="{% url 'update-tab' 'profile' %}">Professional Profile</a></li>
+                        <li><a id="id_social" href="{% url 'update-tab' 'social' %}">Social Media</a></li>
+                        <li><a id="id_preferences" href="{% url 'update-tab' 'preferences' %}">Account Preferences</a></li>
+                        <li><a id="id_forum" href="{% url 'update-tab' 'forum' %}">Forum Preferences</a></li>
+                        {% if membership %}
+                            {% if membership|has_feature:'events' %}
+                            <li><a id="id_training" href="{% url 'update-tab' 'training' %}">Trainings</a></li>
+                            <li><a id="id_campaign" href="{% url 'update-tab' 'campaign' %}">Campaigns</a></li>
+                            <li><a id="id_program" href="{% url 'update-tab' 'program' %}">Request Program</a></li>
+                            {% endif %}
+                            {% if membership|has_feature:'people' %}
+                            <li><a id="id_feedback" href="{% url 'update-tab' 'feedback' %}">Add User</a></li>
+                            <li><a id="id_feedback" href="{% url 'update-tab' 'feedback' %}">Add User Feedback</a></li>
+                            {% endif %}
+                        {% endif %}
                     {% endif %}
                     <li><a id="id_orders" href="{% url 'update-tab' 'orders' %}">Orders</a></li>
                 </ul>

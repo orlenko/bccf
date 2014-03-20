@@ -257,6 +257,7 @@ class FormStructureSurveyFormTwo(FormStructureSurveyBase):
     type = forms.CharField(widget=forms.HiddenInput(attrs={'id': 'form_structure_type'}))
 
 # GLOBAL
+    
 def to_mailing_list(email, add=True):
     """
     Add or remove email from MailChimp mailing list
@@ -532,7 +533,7 @@ class PhotoForm(forms.ModelForm):
     
     class Meta:
         model = UserProfile
-        fields = ('photo',)    
+        fields = ('photo',)
     
     def handle_upload(self):
         image_path = 'uploads/profile-photos/'+self.files['photo'].name
@@ -595,7 +596,6 @@ class AccountInformationForm(forms.ModelForm):
             
         return email
         
-        
     def save(self, *args, **kwargs):
         user = self.instance
         qs = User.objects.exclude(id=user.id)
@@ -631,6 +631,28 @@ class AccountPreferencesForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('show_in_list', 'in_mailing_list')
+        
+class ForumPreferencesForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('avatar', 'show_signatures', 'signature', 'signature_html',)
+        widgets = {
+            'avatar': AdvancedFileInput        
+        }
+        
+    def handle_upload(self):
+        image_path = 'pybb/avatar'+self.files['avatar'].name
+        destination = open(MEDIA_ROOT+'/'+image_path, 'wb+')
+        for chunk in self.files['avatar'].chunks():
+            destination.write(chunk)
+        destination.close()
+        return image_path
+        
+    def save(self, *args, **kwargs):
+        super(ForumPreferencesForm, self).save(*args, **kwargs)
+        if 'avatar' in self.files:
+            self.instance.avatar = self.handle_upload()
+            self.instance.save()
         
 class SocialMediaForm(forms.ModelForm):
     class Meta:
