@@ -1906,7 +1906,8 @@ textarea {
             textarea {
                 resize: vertical;
                 overflow-y: scroll;
-                min-height: 200px;    
+                min-height: 200px;
+                width: 100%;   
             }
             input[type='checkbox'] {
                 background-color: #FFF;
@@ -2036,7 +2037,12 @@ textarea {
                 top: 5px;
             }
         }   
-    }    
+    }
+    &.forum-tab {
+        #id_show_signatures {
+            top: 5px !important;    
+        }    
+    } 
 }
  
  
@@ -3245,6 +3251,7 @@ footer {
 } /* End Footer */
 } /* End Mobile Media Query */
 
+@import "../mixins/memberships";
 @import "../mixins/marquee_themes";
 /*@import "../mixins/menus"; // Import the menus styles*/
 @import "../mixins/messages"; // Styles for message boxes
