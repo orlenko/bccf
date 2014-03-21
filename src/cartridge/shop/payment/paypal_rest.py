@@ -1,6 +1,7 @@
 import httplib2
 import logging
 import paypalrestsdk as paypal
+from decimal import Decimal
 log = logging.getLogger(__name__)
 
 from django.core.exceptions import ImproperlyConfigured
@@ -45,8 +46,10 @@ def process(request, order_form, order):
             'price': str(item.unit_price),
             'currency': 'CAD',
             'quantity': item.quantity
-        })
+        }) 
         
+    TWO_PLACES = Decimal(10) ** -2 
+
     log.debug('-----------------------------')
     log.debug(order.total)
     log.debug(order.tax_total)
@@ -63,12 +66,12 @@ def process(request, order_form, order):
                 'items': items
             },
             'amount': {
-                'total': order.total,
+                'total': str(order.total.quantize(TWO_PLACES)),
                 'currency': 'CAD',
                 'details': {
                     'subtotal': str(cart.total_price()),
-                    'tax': order.tax_total,
-                    'shipping': order.shipping_total       
+                    'tax': str(order.tax_total.quantize(TWO_PLACES)),
+                    'shipping': str(order.shipping_total.quantize(TWO_PLACES))    
                 }  
             },
             'description': 'Test Payment'
