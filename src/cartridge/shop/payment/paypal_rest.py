@@ -1,6 +1,7 @@
 import httplib2
 import logging
 import paypalrestsdk as paypal
+from decimal import Decimal
 log = logging.getLogger(__name__)
 
 from django.core.exceptions import ImproperlyConfigured
@@ -46,31 +47,11 @@ def process(request, order_form, order):
             'currency': 'CAD',
             'quantity': item.quantity
         })
-
-    data = order_form.cleaned_data
+        
     payment = paypal.Payment({
         'intent': 'sale',
         'payer': {
-            'payment_method': 'paypal',
-            #'funding_instruments': [{
-            #    'credit_card': {
-            #        'type': data['card_type'].lower(),
-            #        'number': data['card_number'].replace(' ', ''),
-            #        'expire_month': data['card_expiry_month'],
-            #        'expire_year': data['card_expiry_year'],
-            #        'cvv2': data['card_ccv'],
-            #        'first_name': data['billing_detail_first_name'],
-            #        'last_name': data['billing_detail_last_name'],
-            #        'payer_id': data['billing_detail_email'],
-            #        'billing_address': {
-            #            'line1': data['billing_detail_street'],
-            #            'city': data['billing_detail_city'],
-            #            'state': data['billing_detail_state'],
-            #            'postal_code': data['billing_detail_postcode'],
-            #            'country_code': data['billing_detail_country']                   
-            #        },           
-            #    }
-            #}]    
+            'payment_method': 'paypal',   
         },
         'transactions': [{
             'item_list': {
@@ -98,9 +79,6 @@ def process(request, order_form, order):
 
     if payment.create(): # Success
         log.debug("Payment Successful: %s" % payment.id)
-        request.session['transaction_id'] = payment.id
-        order.transaction_id = payment.id
-        order.save()
         # Return redirect URL
         for link in payment.links:
             if link.method == "REDIRECT":
@@ -108,7 +86,3 @@ def process(request, order_form, order):
                 return link.href
     else:
         raise CheckoutError(payment.error)
-        
-def find(id):
-    sale = paypal.Sale.find(id)
-    return sale

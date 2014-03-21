@@ -395,27 +395,18 @@ def order_history(request, template="shop/order_history.html"):
     context = {"orders": orders}
     return render(request, template, context)
     
+@never_cache
 def paypal_approve(request):
-    transaction_id = request.session['transaction_id']
-    order = Order.objects.get(transaction_id)
+    order = Order.objects.get(id=request.session['order_id'])
+    del request.session['order_id']
     order.complete(request)
-    order_handler(request, form, order)
+    order_handler(request, None, order)
     checkout.send_order_email(request, order)
-    
-    # Set the cookie for remembering address details
-    # if the "remember" checkbox was checked.
-    response = redirect("complete")
-    
-    if form.cleaned_data.get("remember"):
-        remembered = "%s:%s" % (sign(order.key), order.key)
-        set_cookie(response, "remember", remembered,
-                   secure=request.is_secure())
-    else:
-        response.delete_cookie("remember")
-    return response    
-    
+    return redirect("shop_complete")   
+
+@never_cache   
 def paypal_cancel(request, template="shop/paypal_cancel.html"):
-    transaction_di = request.session['transaction_id']
-    order = Order.objects.get(transaction_id)
+    order = Order.objects.get(id=request.session['order_id'])
+    del request.session['order_id']
     order.delete()
     return render(request, template, {})

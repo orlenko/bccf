@@ -5,7 +5,7 @@ import logging
 from urlparse import urlparse
 
 from cartridge.shop.models import ProductVariation, Cart, Order
-from cartridge.shop.utils import set_shipping, set_tax
+from cartridge.shop.utils import set_shipping, set_tax, generate_transaction_id
 
 from django.conf import settings
 from django.contrib import messages
@@ -131,28 +131,12 @@ def payment_handler(request, order_form, order):
     """
     if order_form.cleaned_data.get('payment_method') == 'paypal':
         from cartridge.shop.payment import paypal_rest as paypal
+        order.transaction_id = generate_transaction_id()
+        order.save()
+        request.session['order_id'] = order.pk
         return paypal.process(request, order_form, order)
     else:
         return generate_transaction_id() 
-
-def generate_transaction_id():
-    """
-    Create a unique transaction number of billing payments
-    
-    Transaction number format:
-        BIL-XXXXXXXXXXXXXXXXXXXXXXXX
-    """
-    from random import randrange
-    part1 = 'BIL-'
-    part2 = ''
-    for x in range(0, 24):
-        num = randrange(0, 9)
-        part2  += `num`    
-    id = part1+part2    
-    if id and not Order.objects.filter(transaction_id=id).exists():
-        return id
-    else:
-        generate_transaction_id()
 
 
 def handle_membership(profile, order):
