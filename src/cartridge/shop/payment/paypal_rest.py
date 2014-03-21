@@ -71,7 +71,7 @@ def process(request, order_form, order):
                 'details': {
                     'subtotal': str(cart.total_price()),
                     'tax': str(Decimal(order.tax_total)),
-                    'shipping': str(Decimal(order.shipping_total)))    
+                    'shipping': str(Decimal(order.shipping_total))   
                 }  
             },
             'description': 'Test Payment'
