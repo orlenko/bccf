@@ -47,15 +47,10 @@ def process(request, order_form, order):
             'currency': 'CAD',
             'quantity': item.quantity
         }) 
-        
-    TWO_PLACES = Decimal(10) ** -2 
+    
+    # Makes sure that the prices have two decimal places    
+    TWO_PLACES = Decimal(10) ** -2
 
-    log.debug('-----------------------------')
-    log.debug(order.total)
-    log.debug(order.tax_total)
-    log.debug(order.shipping_total)
-    log.debug('-----------------------------')
-        
     payment = paypal.Payment({
         'intent': 'sale',
         'payer': {

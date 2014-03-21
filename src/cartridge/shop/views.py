@@ -289,7 +289,7 @@ def checkout_steps(request):
                     checkout.send_order_email(request, order)
                     # Set the cookie for remembering address details
                     # if the "remember" checkbox was checked.
-                    response = redirect("complete")
+                    response = redirect("shop_complete")   
                     if form.cleaned_data.get("remember"):
                         remembered = "%s:%s" % (sign(order.key), order.key)
                         set_cookie(response, "remember", remembered,
