@@ -1,9 +1,12 @@
 from datetime import datetime
 from functools import wraps
+from decimal import Decimal
 import logging
 from urlparse import urlparse
 
-from cartridge.shop.models import ProductVariation
+from cartridge.shop.models import ProductVariation, Cart, Order
+from cartridge.shop.utils import set_shipping, set_tax
+
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.views import redirect_to_login
@@ -96,7 +99,23 @@ def require_event_audience(func):
             categ = Settings.get_setting('PARENT_MEMBERSHIP_CATEGORY')
         return require_member(categ, func, request, slug, *args, **kwargs)
     return _wrapper
+   
+def billship_handler(request, order_form):
+    """
+    Calculates Shipping(Processing)
+    """
+    if not request.session.get("free_shipping"):
+        cart = Cart.objects.from_request(request)
+        shipping = cart.total_price() * Decimal(Settings.get_setting('SHOP_DEFAULT_SHIPPING_VALUE'))
+        set_shipping(request, "Processing Fee", shipping)
 
+def tax_handler(request, order_form):
+    """
+    Calculates Tax
+    """
+    cart = Cart.objects.from_request(request)
+    tax = cart.total_price() * Decimal(Settings.get_setting('SHOP_DEFAULT_TAX_RATE'))
+    set_tax(request, "GST+PST", tax)
 
 def order_handler(request, order_form, order):
     '''checks if the user who ordered the order
@@ -105,6 +124,35 @@ def order_handler(request, order_form, order):
     user = request.user
     profile = user.profile
     handle_membership(profile, order)
+
+def payment_handler(request, order_form, order):
+    """
+    Processes Payment
+    """
+    if order_form.cleaned_data.get('payment_method') == 'paypal':
+        from cartridge.shop.payment import paypal_rest as paypal
+        return paypal.process(request, order_form, order)
+    else:
+        return generate_transaction_id() 
+
+def generate_transaction_id():
+    """
+    Create a unique transaction number of billing payments
+    
+    Transaction number format:
+        BIL-XXXXXXXXXXXXXXXXXXXXXXXX
+    """
+    from random import randrange
+    part1 = 'BIL-'
+    part2 = ''
+    for x in range(0, 24):
+        num = randrange(0, 9)
+        part2  += `num`    
+    id = part1+part2    
+    if id and not Order.objects.filter(transaction_id=id).exists():
+        return id
+    else:
+        generate_transaction_id()
 
 
 def handle_membership(profile, order):

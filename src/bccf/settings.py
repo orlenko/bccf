@@ -24,6 +24,7 @@ SHOP_CHECKOUT_STEPS_SPLIT = True
 # completion.
 SHOP_CHECKOUT_STEPS_CONFIRMATION = True
 SHOP_DISCOUNT_FIELD_IN_CHECKOUT = True
+SHOP_PAYMENT_STEP_ENABLED = False
 
 # Controls the formatting of monetary values accord to the locale
 # module in the python standard library. If an empty string is
@@ -34,8 +35,7 @@ SHOP_DISCOUNT_FIELD_IN_CHECKOUT = True
 # is called on submit of the billing/shipping checkout step. This
 # is where shipping calculation can be performed and set using the
 # function ``cartridge.shop.utils.set_shipping``.
-# SHOP_HANDLER_BILLING_SHIPPING = \
-#                           "cartridge.shop.checkout.default_billship_handler"
+SHOP_HANDLER_BILLING_SHIPPING = "bccf.util.memberutil.billship_handler"
 
 # Dotted package path and class name of the function that
 # is called once an order is successful and all of the order
@@ -46,7 +46,10 @@ SHOP_HANDLER_ORDER = "bccf.util.memberutil.order_handler"
 # Dotted package path and class name of the function that
 # is called on submit of the payment checkout step. This is where
 # integration with a payment gateway should be implemented.
-# SHOP_HANDLER_PAYMENT = "cartridge.shop.checkout.default_payment_handler"
+SHOP_HANDLER_PAYMENT = "bccf.util.memberutil.payment_handler"
+
+#
+SHOP_HANDLER_TAX = "bccf.util.memberutil.tax_handler"
 
 # Sequence of value/name pairs for order statuses.
 SHOP_ORDER_STATUS_CHOICES = (

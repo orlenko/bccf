@@ -103,7 +103,7 @@ def membership_upgrade(request, variation_id):
                          % (current_category, new_category))
         return HttpResponseRedirect(reverse('member-profile'))
     discount_amount = profile.remaining_balance
-    discount_code = str(uuid4())
+    discount_code = str(uuid4()) 
     discount = DiscountCode.objects.create(title='[temporary discount for membership upgrade]',
                             active=True,
                             discount_deduct=discount_amount,

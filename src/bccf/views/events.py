@@ -81,7 +81,7 @@ def signup(request, slug):
             if not exists:
                 registration = EventRegistration.objects.create(user=request.user, event=event)
                 messages.success(request, 'Thank you! You signed up to the event successfully.')                
-            if event.max_seats == len(EventRegistration.objects.filter(events=event)):
+            if event.max_seats == len(EventRegistration.objects.filter(event=event)):
                 event.full = True
                 event.save()
         else:
