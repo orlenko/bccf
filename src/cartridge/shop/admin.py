@@ -250,7 +250,7 @@ class OrderItemInline(admin.TabularInline):
 class OrderAdmin(admin.ModelAdmin):
     ordering = ("status", "-id")
     list_display = ("id", "billing_name", "total", "time", "status",
-                    "transaction_id", "invoice")
+                    "transaction_id", "invoice", "payment_method")
     list_editable = ("status",)
     list_filter = ("status", "time")
     list_display_links = ("id", "billing_name",)
@@ -263,7 +263,7 @@ class OrderAdmin(admin.ModelAdmin):
     fieldsets = (
         (_("Billing details"), {"fields": (tuple(billing_fields),)}),
         (_("Shipping details"), {"fields": (tuple(shipping_fields),)}),
-        (None, {"fields": ("additional_instructions", ("shipping_total",
+        (None, {"fields": ("payment_method", "additional_instructions", ("shipping_total",
             "shipping_type"), ('tax_total', 'tax_type'),
              ("discount_total", "discount_code"), "item_total",
             ("total", "status"), "transaction_id")}),

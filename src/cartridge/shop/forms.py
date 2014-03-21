@@ -299,14 +299,9 @@ class OrderForm(FormsetForm, DiscountForm):
     with extra fields for credit card. Used across each step of the
     checkout process with fields being hidden where applicable.
     """
-
-    PAYMENT_METHODS = (
-        ('paypal', 'Paypal'),
-        ('bill', 'Bill Payment')    
-    )
-
+    
     step = forms.IntegerField(widget=forms.HiddenInput())
-    payment_method = forms.CharField(label=_('Payment Method'), widget=forms.RadioSelect(choices=PAYMENT_METHODS))
+    #payment_method = forms.CharField(label=_('Payment Method'), widget=forms.RadioSelect(choices=PAYMENT_METHODS))
     same_billing_shipping = forms.BooleanField(required=False, initial=True,
         label=_("My delivery details are the same as my billing details"))
     remember = forms.BooleanField(required=False, initial=True,
@@ -332,9 +327,11 @@ class OrderForm(FormsetForm, DiscountForm):
         fields = ([f.name for f in Order._meta.fields if
                    f.name.startswith("billing_detail") or
                    f.name.startswith("shipping_detail")] +
-                   ["additional_instructions", "discount_code"])
+                   ["additional_instructions", "discount_code", "payment_method"]
+                   )
         widgets = {
-            'discount_code': forms.HiddenInput()
+            'discount_code': forms.HiddenInput,
+            'payment_method': forms.RadioSelect
         }
 
     def __init__(self, request, step, data=None, initial=None, errors=None):
