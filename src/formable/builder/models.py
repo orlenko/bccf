@@ -60,6 +60,8 @@ class FormPublished(TagBase):
         verbose_name_plural = _("Published Forms")        
         
     def save(self, **kwargs):
+        if not self.image:
+            self.image = 'childpage/placeholder-survey.gif'
         if self.pk is None: 
             super(FormPublished, self).save(**kwargs)            
 

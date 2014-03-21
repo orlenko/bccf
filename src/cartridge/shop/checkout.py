@@ -39,12 +39,7 @@ def default_billship_handler(request, order_form):
     ``cartridge.shop.utils.set_shipping``. The Cart object is also
     accessible via ``request.cart``
     """
-    if not request.session.get("free_shipping"):
-        settings.use_editable()
-        cart = Cart.objects.from_request(request)
-        shipping = cart.total_price() * Decimal(Settings.get_setting('SHOP_DEFAULT_SHIPPING_VALUE'))
-        set_shipping(request, _("Processing Fee"), shipping)
-
+    pass
 
 def default_tax_handler(request, order_form):
     """
@@ -56,10 +51,7 @@ def default_tax_handler(request, order_form):
     ``cartridge.shop.utils.set_tax``. The Cart object is also
     accessible via ``request.cart``
     """
-    settings.use_editable()
-    cart = Cart.objects.from_request(request)
-    tax = cart.total_price() * Decimal(Settings.get_setting('SHOP_DEFAULT_TAX_RATE'))
-    set_tax(request, _("GST+PST"), tax)
+    pass
 
 
 def default_payment_handler(request, order_form, order):
@@ -72,11 +64,7 @@ def default_payment_handler(request, order_form, order):
     cartridge.shop.checkout.CheckoutError("error message") if payment
     is unsuccessful.
     """
-    if request.session.get('paypal'):
-        pass
-    elif request.session.get('bill'):
-        pass
-
+    pass
 
 def default_order_handler(request, order_form, order):
     """

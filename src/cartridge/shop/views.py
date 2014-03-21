@@ -20,6 +20,7 @@ from cartridge.shop import checkout
 from cartridge.shop.forms import AddProductForm, DiscountForm, CartItemFormSet
 from cartridge.shop.models import Product, ProductVariation, Order, OrderItem, Category
 from cartridge.shop.models import DiscountCode
+from cartridge.shop.payment import paypal_rest as Paypal
 from cartridge.shop.utils import recalculate_cart, sign
 
 import logging
@@ -267,7 +268,9 @@ def checkout_steps(request):
                 order.setup(request)
                 # Try payment.
                 try:
-                    transaction_id = payment_handler(request, form, order)
+                    payment = payment_handler(request, form, order)
+                    if form.cleaned_data.get('payment_method') == 'paypal':
+                        return redirect(payment)
                 except checkout.CheckoutError, e:
                     # Error in payment handler.
                     order.delete()
@@ -280,13 +283,13 @@ def checkout_steps(request):
                     # ``order_handler()`` can be defined by the
                     # developer to implement custom order processing.
                     # Then send the order email to the customer.
-                    order.transaction_id = transaction_id
+                    order.transaction_id = payment
                     order.complete(request)
                     order_handler(request, form, order)
                     checkout.send_order_email(request, order)
                     # Set the cookie for remembering address details
                     # if the "remember" checkbox was checked.
-                    response = redirect("shop_complete")
+                    response = redirect("complete")
                     if form.cleaned_data.get("remember"):
                         remembered = "%s:%s" % (sign(order.key), order.key)
                         set_cookie(response, "remember", remembered,
@@ -391,3 +394,28 @@ def order_history(request, template="shop/order_history.html"):
         setattr(order, "quantity_total", order_quantities[order.id])
     context = {"orders": orders}
     return render(request, template, context)
+    
+def paypal_approve(request):
+    transaction_id = request.session['transaction_id']
+    order = Order.objects.get(transaction_id)
+    order.complete(request)
+    order_handler(request, form, order)
+    checkout.send_order_email(request, order)
+    
+    # Set the cookie for remembering address details
+    # if the "remember" checkbox was checked.
+    response = redirect("complete")
+    
+    if form.cleaned_data.get("remember"):
+        remembered = "%s:%s" % (sign(order.key), order.key)
+        set_cookie(response, "remember", remembered,
+                   secure=request.is_secure())
+    else:
+        response.delete_cookie("remember")
+    return response    
+    
+def paypal_cancel(request, template="shop/paypal_cancel.html"):
+    transaction_di = request.session['transaction_id']
+    order = Order.objects.get(transaction_id)
+    order.delete()
+    return render(request, template, {})

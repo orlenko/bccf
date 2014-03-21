@@ -201,6 +201,8 @@ class Topic(TagBase):
         return reverse('pybb:topic', kwargs={'pk': self.id})
 
     def save(self, *args, **kwargs):
+        if not self.image:
+            self.image = 'childpage/placeholder-forum.gif'
         if self.id is None:
             self.created = tznow()
             
