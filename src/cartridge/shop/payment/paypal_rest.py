@@ -66,12 +66,12 @@ def process(request, order_form, order):
                 'items': items
             },
             'amount': {
-                'total': str(Decimal(order.total)),
+                'total': str(Decimal(order.total).quantize(TWO_PLACES)),
                 'currency': 'CAD',
                 'details': {
                     'subtotal': str(cart.total_price()),
-                    'tax': str(Decimal(order.tax_total)),
-                    'shipping': str(Decimal(order.shipping_total))   
+                    'tax': str(Decimal(order.tax_total).quantize(TWO_PLACES)),
+                    'shipping': str(Decimal(order.shipping_total).quantize(TWO_PLACES))   
                 }  
             },
             'description': 'Test Payment'
