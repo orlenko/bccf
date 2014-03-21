@@ -48,9 +48,11 @@ def process(request, order_form, order):
             'quantity': item.quantity
         })
         
+    log.debug('-----------------------------')
     log.debug(order.total)
     log.debug(order.tax_total)
-    log.debug(order.shipping_total)        
+    log.debug(order.shipping_total)
+    log.debug('-----------------------------')
         
     payment = paypal.Payment({
         'intent': 'sale',
