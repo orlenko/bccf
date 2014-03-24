@@ -15,7 +15,7 @@ from mezzanine.pages.admin import PageAdmin
 
 from bccf.models import (BCCFTopic, Settings, HomeMarquee, FooterMarquee, HomeMarqueeSlide, FooterMarqueeSlide,
     PageMarquee, PageMarqueeSlide, BCCFPage, BCCFChildPage, BCCFBabyPage, BCCFGenericPage,
-    Blog, Program, Article, Magazine, Video, Podcast, TipSheet, DownloadableForm, Campaign,
+    Blog, Program, Article, Magazine, Video, Podcast, Podcast2, TipSheet, DownloadableForm, Campaign,
     Event, EventRegistration, ProgramRequest)
 from bccf.settings import BCCF_CORE_PAGES
 from django.core.exceptions import PermissionDenied
@@ -425,6 +425,7 @@ admin.site.register(Magazine, BCCFResourceAdmin)
 admin.site.register(TipSheet, BCCFResourceAdmin)
 
 admin.site.register(Podcast, BCCFPodcastResourceAdmin)
+admin.site.register(Podcast2, BCCFPodcastResourceAdmin)
 admin.site.register(Video, BCCFVideoResourceAdmin)
 
 # Program Request
