@@ -26,7 +26,7 @@ def signup(request):
     if request.method == 'POST':
         form = forms.CreateAccountForm(data=request.POST, files=request.FILES)
         if form.is_valid():
-            response = redirect('member-profile')
+            response = redirect('update')
             if product_sku and membership_type == form.cleaned_data.get('membership_type'):
                 """
                 If SKU exists in the query string and the SKU fits with the membership type, 
