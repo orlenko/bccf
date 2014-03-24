@@ -10,7 +10,7 @@ class Migration(SchemaMigration):
     def forwards(self, orm):
         # Adding field 'EventRegistration.event_order'
         db.add_column(u'bccf_eventregistration', 'event_order',
-                      self.gf('django.db.models.fields.related.ForeignKey')(default=False, related_name='event-order', blank=True, to=orm['shop.Order']),
+                      self.gf('django.db.models.fields.related.ForeignKey')(null=True, related_name='event-order', blank=True, to=orm['shop.Order']),
                       keep_default=False)
 
         # Adding field 'EventRegistration.paid'
