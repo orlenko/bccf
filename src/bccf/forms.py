@@ -268,7 +268,8 @@ class CreateAccountForm(UserCreationForm):
 
     MEMBERSHIP_TYPES = (
         ('parent', 'Parent'),
-        ('professional', 'Professional')    
+        ('professional', 'Professional'),
+        ('organization', 'Organization')    
     )
 
     email = forms.EmailField(required=True)

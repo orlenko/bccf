@@ -1,23 +1,48 @@
 import logging
 log = logging.getLogger(__name__)
 
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages import success, error
+from django.http import Http404
+from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.template import RequestContext
-from django.shortcuts import render_to_response, redirect
+
+from cartridge.shop.models import ProductVariation
 
 from bccf import forms
 from bccf.util.memberutil import get_upgrades
 
 def signup(request):
-    form = forms.CreateAccountForm()
+    # Optional queries
+    membership_type = request.GET.get('type', None)
+    product_sku = request.GET.get('var', None)
+    
+    if product_sku and not ProductVariation.objects.filter(sku=product_sku).exists():
+        raise Http404
+    
+    form = forms.CreateAccountForm(initial={'membership_type': membership_type})
     
     if request.method == 'POST':
-        form = forms.CreateAccountForm(request.POST, request.FILES)
+        form = forms.CreateAccountForm(data=request.POST, files=request.FILES)
         if form.is_valid():
+            response = redirect('member-profile')
+            if product_sku and membership_type == form.cleaned_data.get('membership_type'):
+                """
+                If SKU exists in the query string and the SKU fits with the membership type, 
+                add that product to the cart and redirect the user to the checkout
+                """
+                from cartridge.shop.utils import recalculate_cart
+                variation = ProductVariation.objects.get(sku=product_sku)
+                request.cart.add_item(variation, 1)
+                recalculate_cart(request)
+                response = redirect('shop_checkout')
             form.save()
-            success(request, 'User created, check your email and spam for the account activation email')
-            return redirect('/') 
+            new_user = authenticate(username=form.cleaned_data.get('username'), 
+                                    password=form.cleaned_data.get('password1'))
+            login(request, new_user)
+            success(request, 'User created successfully! Welcome to the BCCF community %s' % form.instance.get_full_name())
+            return response
     
     context = RequestContext(request, locals())
     return render_to_response('accounts/account_signup.html', {}, context)
@@ -40,21 +65,7 @@ def profile_update(request, tab='home'):
                 'new_user_errors': new_user_errors
             }
         except:
-            pass    
-    
-    if not membership:
-        from cartridge.shop.models import ProductVariation
-        from cartridge.shop.utils import recalculate_cart
-        """
-        Add free membership depending on their type to cart and redirect to checkout
-        """
-        sku = 99
-        if profile.is_parent:
-            sku = 98
-        variation = ProductVariation.objects.get(sku=sku)
-        request.cart.add_item(variation, 1)
-        recalculate_cart(request)
-        return redirect('/shop/checkout')
+            pass
 
     if tab == 'orders':
         from cartridge.shop.models import Order

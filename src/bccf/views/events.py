@@ -79,8 +79,16 @@ def signup(request, slug):
                 messages.warning(request, 'You are already signed up to this event')
                 exists = True
             if not exists:
-                registration = EventRegistration.objects.create(user=request.user, event=event)
-                messages.success(request, 'Thank you! You signed up to the event successfully.')                
+                if event.event_product:
+                    from cartridge.shop.models import ProductVariation
+                    from cartridge.shop.utils import recalculate_cart
+                    variation = ProductVariation.objects.get(sku='EVENT-%s' % event.pk)
+                    request.cart.add_item(variation, 1)
+                    recalculate_cart(request)
+                    messages.success(request, 'To complete the registration, please go through the checkout.')
+                else:
+                    registration = EventRegistration.objects.create(user=request.user, event=event)
+                    messages.success(request, 'Thank you! You signed up to the event successfully.')                
             if event.max_seats == len(EventRegistration.objects.filter(event=event)):
                 event.full = True
                 event.save()

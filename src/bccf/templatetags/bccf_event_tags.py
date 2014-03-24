@@ -1,5 +1,9 @@
+import simplejson
+
 from django.db.models import get_model, ObjectDoesNotExist, Q
 from mezzanine import template
+
+from cartridge.shop.forms import AddProductForm
 
 from bccf.models import BCCFChildPage, EventRegistration
 
@@ -19,7 +23,9 @@ def bccf_subscribe_for(context, obj):
     if obj._meta.object_name == 'BCCFChildPage':
         if obj.content_model == 'event':
             log.debug('Subscribe form leads to %s' % obj.get_content_model().signup_url())
+            request = context['request']
             context['subscribe_obj'] = obj.get_content_model()
+            context['product'] = obj.get_content_model().event_product
     return context
     
 @register.inclusion_tag("generic/includes/attendee_list.html", takes_context=True)

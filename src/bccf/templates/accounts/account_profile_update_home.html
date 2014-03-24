@@ -14,7 +14,7 @@
 			To extend your current membership, <a href="{{ membership|membership_renew_url }}">click here</a>.
 		</p>
 
-		{% if upgrades %}
+		{% if not profile.is_level_C and upgrades %}
 			<h3>Upgrade to:</h3>
 			<ul>
 				{% for upgrade in upgrades %}

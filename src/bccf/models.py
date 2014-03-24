@@ -601,6 +601,9 @@ class Campaign(TagBase):
 from pybb.models import PybbProfile
 
 class UserProfile(PybbProfile):
+    """
+    User Profile
+    """
     MEMBERSHIP_TYPES = [
             ('parent', 'Parent'),
             ('professional', 'Professional'),
@@ -611,6 +614,11 @@ class UserProfile(PybbProfile):
             ('male', 'Male'),
             ('female', 'Female')    
     ]
+    MEMBERSHIP_LEVELS = [
+            ('A', 'Level A'),
+            ('B', 'Level B'),
+            ('C', 'Level C')    
+    ]
 
     user = models.OneToOneField(User, related_name='profile')
     gender = models.CharField('Gender', max_length=6, default='male', blank=True, null=True, choices=GENDER_TYPES)
@@ -620,11 +628,14 @@ class UserProfile(PybbProfile):
         format="Image", max_length=255, null=True, blank=True,
         help_text='User photo')
     admin_thumb_field = "photo"
-    membership_order = models.ForeignKey('shop.Order', null=True, blank=True, related_name='order')
-    membership_order_free = models.ForeignKey('shop.Order', null=True, blank=True, related_name='free_order')
-    requested_cancellation = models.NullBooleanField(null=True, blank=True, default=False)
+    
+    # Membership Fields
     membership_type = models.CharField('Membership Type', max_length=128, null=True, blank=True, choices=MEMBERSHIP_TYPES)
-    membership_level = models.IntegerField(default=0, null=True, blank=True)
+    membership_order = models.ForeignKey('shop.Order', null=True, blank=True, related_name='order')
+    voting_order = models.ForeignKey('shop.Order', null=True, blank=True, related_name='voting')
+    membership_level = models.CharField('Membership Level', max_length=1, default='A', choices=MEMBERSHIP_LEVELS)
+    requested_cancellation = models.NullBooleanField(null=True, blank=True, default=False)
+    
     organization = models.ForeignKey('UserProfile', null=True, blank=True, related_name='members')
 
     accreditation = models.ManyToManyField(Program, verbose_name='Certifications', blank=True, null=True)
@@ -683,16 +694,15 @@ class UserProfile(PybbProfile):
 
     def set_membership_order(self, order):
         self.membership_order = order
-        if not self.membership_order_free:
-            self.membership_order_free = order
         # Update membership type and level
         variation = self.membership_product_variation
-        categ_name = variation.product.categories.all()[0].title.lower()
-        self.membership_level = variation.unit_price
-        self.membership_type = None
-        for label, _descr in self.MEMBERSHIP_TYPES:
-            if label in categ_name:
-                self.membership_type = label
+        #categ_name = variation.product.categories.all()[0].title.lower()
+        sku_parts = variation.sku.split('-')
+        self.membership_level = sku_parts[1] # only get the middle one (B or C)
+        #self.membership_type = None
+        #for label, _descr in self.MEMBERSHIP_TYPES:
+        #    if label in categ_name:
+        #        self.membership_type = label
 
     @property
     def membership_product_variation(self):
@@ -799,6 +809,18 @@ class UserProfile(PybbProfile):
                             return marker
 
     @property
+    def is_level_A(self):
+        return 'A' in self.membership_level
+
+    @property
+    def is_level_B(self):
+        return 'B' in self.membership_level
+        
+    @property
+    def is_level_C(self):
+        return 'C' in self.membership_level
+
+    @property
     def is_parent(self):
         return 'parent' in self.membership_type
 
@@ -891,12 +913,20 @@ class Event(BCCFChildPage):
     max_seats = models.PositiveIntegerField('Max number of seats', null=True, blank=True, default=1)
     full = models.BooleanField('Event is full', blank=True, default=False)
 
+    event_product = models.ForeignKey('shop.Product', null=True, blank=True, related_name='event-product')
+
     objects = managers.EventManager()
 
     def save(self, **kwargs):
         if not self.pk:
             gp = BCCFPage.objects.get(slug='bccf/trainings')
             self.gparent = gp
+            super(Event, self).save(**kwargs)
+            if self.price: # If it's not free create a product
+                product = Product.objects.create(title=self.title, content=self.content)
+                variation = ProductVariation.objects.create(product=product, sku='EVENT-%s' % self.pk,
+                    num_in_stock=self.max_seats, default=True, unit_price=self.price)
+                self.event_product = product
         super(Event, self).save(**kwargs)
 
     def is_full(self):
@@ -927,6 +957,8 @@ class EventRegistration(models.Model):
     user = models.ForeignKey(User)
     registration_date = models.DateTimeField(auto_now_add=True, blank=True)
     passed = models.BooleanField('Passed', default=False, blank=True)
+    event_order = models.ForeignKey('shop.Order', default=False, blank=True, related_name='event-order')
+    paid = models.BooleanField('Paid', default=False)
     
     class Meta:
         verbose_name = "Event Registration"
