@@ -600,6 +600,14 @@ class Campaign(TagBase):
 #### USER STUFF ####
 from pybb.models import PybbProfile
 
+class ProfessionalPayment(models.Model):
+    user = models.ForeignKey(User, related_name='paid_to')
+    amount = MoneyField()
+    paid_on = models.DateTimeField('Paid On', auto_now_add=True)
+    
+    class Meta:
+        ordering = ('-paid_on',)
+
 class UserProfile(PybbProfile):
     """
     User Profile
@@ -670,7 +678,8 @@ class UserProfile(PybbProfile):
     pinterest = models.CharField('Pinterest', max_length=255, null=True, blank=True)
     
     #Banking
-    account_number = models.CharField('Account Number', max_length=12, null=True, blank=True)  
+    account_number = models.CharField('Account Number', max_length=12, null=True, blank=True)
+    payment = MoneyField()
 
     def __unicode__(self):
         return 'Profile of %s' % (self.user.get_full_name() or self.user.username)
@@ -855,6 +864,10 @@ class UserProfile(PybbProfile):
             third  += `num`
             
         return first+second+third
+        
+    def pay_professional(self):
+        if self.is_professional() or self.is_organization():
+            payment = ProfessionalPayment.objects.create(user=self, amount=self.payment)
 
 def is_product_variation_categ(variation, categ):
     for category in variation.product.categories.all():
@@ -937,6 +950,10 @@ class Event(BCCFChildPage):
         return ('events-signup', (), {'slug': self.slug})
 
     @permalink
+    def publish_url(self):
+        return('events-publish', (), {'slug': self.slug})
+
+    @permalink
     def edit_url(self):
         return('events-edit', (), {'slug': self.slug})
 
@@ -958,12 +975,15 @@ class EventRegistration(models.Model):
     registration_date = models.DateTimeField(auto_now_add=True, blank=True)
     passed = models.BooleanField('Passed', default=False, blank=True)
     event_order = models.ForeignKey('shop.Order', null=True, blank=True, related_name='event-order')
-    paid = models.BooleanField('Paid', default=False)
+    paid = models.NullBooleanField('Paid', null=True, blank=True)
     
     class Meta:
         verbose_name = "Event Registration"
         verbose_name_plural = "Event Registrations"
     
+    def __unicode__(self):
+        return '%s-%s-%s' % (self.user.last_name, self.event.pk, self.registration_date)    
+
     def save(self, **kwargs):
         user = UserProfile.objects.get(user=self.user)
         if self.pk and user.membership_type == 'professional' and self.event.program:

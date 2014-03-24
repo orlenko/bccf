@@ -41,12 +41,10 @@
                         <li><a id="id_social" href="{% url 'update-tab' 'social' %}">Social Media</a></li>
                         <li><a id="id_preferences" href="{% url 'update-tab' 'preferences' %}">Account Preferences</a></li>
                         <li><a id="id_forum" href="{% url 'update-tab' 'forum' %}">Forum Preferences</a></li>
-                        {% if profile.is_level_C %}
-                            {% if membership|has_feature:'events' %}
+                        {% if profile.is_level_B or profile.is_level_C %}
                             <li><a id="id_training" href="{% url 'update-tab' 'training' %}">Trainings</a></li>
                             <li><a id="id_campaign" href="{% url 'update-tab' 'campaign' %}">Campaigns</a></li>
                             <li><a id="id_program" href="{% url 'update-tab' 'program' %}">Request Program</a></li>
-                            {% endif %}
                             {% if profile.is_organization %}
                             <li><a id="id_feedback" href="{% url 'update-tab' 'feedback' %}">Add User</a></li>
                             <li><a id="id_feedback" href="{% url 'update-tab' 'feedback' %}">Add User Feedback</a></li>

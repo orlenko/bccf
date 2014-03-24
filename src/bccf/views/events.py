@@ -2,19 +2,20 @@ import logging
 import csv
 import datetime
 
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from django.template.context import RequestContext
 from django.views.decorators.cache import never_cache
+from django.core.urlresolvers import reverse
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
+from django.http.response import HttpResponseRedirect
+from django import forms
 
 from bccf.util.memberutil import require_event_audience
 from bccf.models import Event, EventRegistration, BCCFPage
-from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from bccf.forms import EventForm
-from django.http import HttpResponse
-from django.http.response import HttpResponseRedirect
-from mezzanine.core.models import CONTENT_STATUS_DRAFT, CONTENT_STATUS_CHOICES
-from django import forms
+from mezzanine.core.models import CONTENT_STATUS_DRAFT, CONTENT_STATUS_PUBLISHED, CONTENT_STATUS_CHOICES
 
 log = logging.getLogger(__name__)
 
@@ -28,10 +29,9 @@ def event_page(request):
 
 @login_required
 def create(request):
-    page_for = request.user.profile.provided_event_type
     form = EventForm(request.user, initial={
         'provider': request.user,
-        'page_for': page_for,
+        'page_for': 'parent',
         'status': CONTENT_STATUS_DRAFT,
     })
     if request.method == 'POST':
@@ -64,6 +64,13 @@ def edit(request, slug):
     context = RequestContext(request, locals())
     return render_to_response('bccf/event_update.html', {}, context_instance=context)
 
+@login_required
+def publish(request, slug):
+    event = Event.objects.get(slug=slug)
+    event.status = CONTENT_STATUS_PUBLISHED
+    event.save()
+    messages.success(request, 'Event published')
+    return redirect(reverse('update-tab', (), {'tab': 'training'}))
 
 @require_event_audience
 @never_cache

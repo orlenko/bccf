@@ -17,6 +17,7 @@ from django.utils.encoding import force_str
 from django.utils.http import urlencode
 
 from bccf.models import Settings, BCCFChildPage, EventRegistration
+from bccf.util.eventutil import handle_event
 from dateutil import relativedelta
 
 
@@ -155,26 +156,6 @@ def handle_membership(profile, order):
                         order.status = 2
                         order.save()
                     return
-                   
-def handle_event(user, order):
-    """
-    Check if the order has events in it. Process the even and register
-    the user.
-    """
-    from bccf.models import Event
-    for order_item in order.items.all():
-        variation = ProductVariation.objects.get(sku=order_item.sku)
-        if order_item.sku.startswith('EVENT-'):
-            sku_parts = order_item.sku.split('EVENT-')
-            event = Event.objects.get(id=int(sku_parts[1]))
-            paid = False
-            if order.payment_method == 'paypal':
-                order.status = 2
-                order.save()
-                paid = True
-            EventRegistration.objects.create(user=user, event=event, 
-                                     event_order=order, paid=paid)
-            return
 
 def get_upgrades(membership):
     upgrades = []

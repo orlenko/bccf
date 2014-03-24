@@ -6,6 +6,9 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import NoReverseMatch
 
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import User
+
 from embed_video.admin import AdminVideoMixin
 
 from mezzanine.core.admin import DisplayableAdmin, DisplayableAdminForm
@@ -13,16 +16,56 @@ from mezzanine.utils.urls import admin_url
 from mezzanine.conf import settings
 from mezzanine.pages.admin import PageAdmin
 
-from bccf.models import (BCCFTopic, Settings, HomeMarquee, FooterMarquee, HomeMarqueeSlide, FooterMarqueeSlide,
+from bccf.models import (UserProfile, BCCFTopic, Settings, HomeMarquee, FooterMarquee, HomeMarqueeSlide, FooterMarqueeSlide,
     PageMarquee, PageMarqueeSlide, BCCFPage, BCCFChildPage, BCCFBabyPage, BCCFGenericPage,
     Blog, Program, Article, Magazine, Video, Podcast, TipSheet, DownloadableForm, Campaign,
-    Event, EventRegistration, ProgramRequest)
+    Event, EventRegistration, ProgramRequest, ProfessionalPayment)
 from bccf.settings import BCCF_CORE_PAGES
 from django.core.exceptions import PermissionDenied
 
 import logging
 log = logging.getLogger(__name__)
 
+# User Admin
+class BCCFProfileInline(admin.StackedInline):
+    model = UserProfile
+    readonly_fields = ('account_number', 'post_count')
+    fieldsets = (
+        ('Account Information', {
+            'fields': ('account_number', 'membership_order', 'voting_order', ('membership_type', 'membership_level'), 'requested_cancellation'),       
+        }),
+        ('Contact Information', {
+            'fields': ('street', 'street_2', 'street_3', 'city', 'region', 'province', 'postal_code', 'country', 'phone_primary', 'phone_work', 'phone_mobile',
+                       'fax')
+        }),
+        ('Professional Profile', {
+            'fields': ('photo', 'description', 'job_title', 'organization', 'website', 'facebook', 'twitter', 'linkedin', 'youtube', 'pinterest')
+        }),
+        ('Forum Profile', {
+            'fields': ('avatar', 'signature', 'signature_html', 'post_count')        
+        }),
+        ('Miscellaneous Information', {
+            'fields': ('gender', 'payment')
+        })
+    )
+    max_num = 1
+    extra = 0
+
+class BCCFUserAdmin(UserAdmin):
+    inlines = [BCCFProfileInline]    
+    list_filter = UserAdmin.list_filter + ('profile__membership_type', 'profile__membership_level')
+    list_display = ('username', 'get_account_number', 'email', 'first_name', 'last_name', 'is_staff', 'get_membership_type', 'get_membership_level')
+    
+    def get_account_number(self, obj):
+        return obj.profile.account_number
+    def get_membership_type(self, obj):
+        return obj.profile.membership_type
+    def get_membership_level(self, obj):
+        return obj.profile.membership_level
+    
+admin.site.unregister(User)
+admin.site.register(User, BCCFUserAdmin)
+# End User Admin
 
 class SettingsAdmin(admin.ModelAdmin):
     list_display = ['name', 'value']
