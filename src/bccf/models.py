@@ -499,7 +499,7 @@ class TipSheet(DocumentResourceBase):
 
 class Podcast(BCCFChildPage):
     attached_audio = FileField('Audio File',
-        upload_to = upload_to("bccf.Podcast.attachment_audio", "resource/audio"),
+       upload_to = upload_to("bccf.Podcast.attachment_audio", "resource/audio"),
         extensions = ['.mp3'],
         max_length = 1024,
         null = True,
