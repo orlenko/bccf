@@ -13,10 +13,10 @@ from cartridge.shop.models import ProductVariation
 from bccf import forms
 from bccf.util.memberutil import get_upgrades
 
-def signup(request):
+def signup(request, type=None, var=None):
     # Optional queries
-    membership_type = request.GET.get('type', None)
-    product_sku = request.GET.get('var', None)
+    membership_type = type #request.GET.get('type', None)
+    product_sku = var #request.GET.get('var', None)
     
     if product_sku and not ProductVariation.objects.filter(sku=product_sku).exists():
         raise Http404
