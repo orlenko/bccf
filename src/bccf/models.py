@@ -957,7 +957,7 @@ class EventRegistration(models.Model):
     user = models.ForeignKey(User)
     registration_date = models.DateTimeField(auto_now_add=True, blank=True)
     passed = models.BooleanField('Passed', default=False, blank=True)
-    event_order = models.ForeignKey('shop.Order', default=False, blank=True, related_name='event-order')
+    event_order = models.ForeignKey('shop.Order', null=True, blank=True, related_name='event-order')
     paid = models.BooleanField('Paid', default=False)
     
     class Meta:

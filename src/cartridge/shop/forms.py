@@ -334,7 +334,7 @@ class OrderForm(FormsetForm, DiscountForm):
             'payment_method': forms.RadioSelect
         }
 
-    def __init__(self, request, step, data=None, initial=None, errors=None):
+    def __init__(self, request, step, bill=True, data=None, initial=None, errors=None):
         """
         Setup for each order form step which does a few things:
 

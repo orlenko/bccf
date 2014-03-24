@@ -166,7 +166,7 @@ class Migration(SchemaMigration):
         u'bccf.eventregistration': {
             'Meta': {'object_name': 'EventRegistration'},
             'event': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'event_registration'", 'to': u"orm['bccf.Event']"}),
-            'event_order': ('django.db.models.fields.related.ForeignKey', [], {'default': 'False', 'related_name': "'event-order'", 'blank': 'True', 'to': u"orm['shop.Order']"}),
+            'event_order': ('django.db.models.fields.related.ForeignKey', [], {'null': 'True', 'related_name': "'event-order'", 'blank': 'True', 'to': u"orm['shop.Order']"}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'paid': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'passed': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
