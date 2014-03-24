@@ -35,7 +35,7 @@ urlpatterns = patterns("",
 
     url("^accounts/update/(?P<tab>.+)/$", "bccf.views.accounts.profile_update", name='update-tab'),
     url("^accounts/update/$", "bccf.views.accounts.profile_update", name='update'),
-    url("^accounts/signup/(?P<type>.+)/(?P<var>.*)/$", "bccf.views.accounts.signup", name="signup-var"),
+    #url("^accounts/signup/(?P<type>.+)/(?P<var>.*)/$", "bccf.views.accounts.signup", name="signup-var"),
     url("^accounts/signup/$", "bccf.views.accounts.signup", name='signup'),
     url("^accounts/orders/$", "cartridge.shop.views.order_history", name="shop_order_history"),
 
