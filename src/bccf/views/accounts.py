@@ -13,7 +13,7 @@ from cartridge.shop.models import ProductVariation
 from bccf import forms
 from bccf.util.memberutil import get_upgrades
 
-def signup(request, type=None, var=None):
+def signup(request):
     # Optional queries
     membership_type = request.GET.get('type', None)
     product_sku = request.GET.get('var', None)
