@@ -619,6 +619,15 @@ class ContactInformationForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('organization', 'job_title', 'website', 'phone_primary', 'street', 'street_2', 'city', 'province', 'postal_code', 'country')
+    
+    def __init__(self, *args, **kwargs):
+        super(ContactInformationForm, self).__init__(*args, **kwargs)
+        self.fields['organization'].widget.choices = self.get_organizations()
+        if self.instance.is_organization or not self.instance.is_level_A:
+            del self.fields['organization']
+            
+    def get_organizations(self):
+        return User.objects.filter(profile__membership_type__exact='organization').values_list('id', 'first_name')
         
 class ProfessionalProfileForm(forms.ModelForm):
     class Meta:

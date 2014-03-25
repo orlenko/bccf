@@ -55,7 +55,7 @@ def profile_update(request, tab='home'):
     order = profile.membership_order
     membership = profile.membership_product_variation
     expiration = profile.membership_expiration_datetime
-    upgrades = get_upgrades(membership)    
+        
     
     if 'addmembers' in request.session:
         try:
@@ -73,6 +73,8 @@ def profile_update(request, tab='home'):
         Grab all the orders that the user has made
         """
         orders = Order.objects.filter(user_id=user.pk)
+    elif tab == 'home':
+        upgrades = get_upgrades(profile)
 
     if request.method == 'POST':
         if 'update-photo' in request.POST:
