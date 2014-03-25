@@ -27,6 +27,12 @@ import logging
 log = logging.getLogger(__name__)
 
 # User Admin
+class ProPaymentInline(admin.StackedInline):
+    model = ProfessionalPayment
+    readonly_fields = ('paid_on', 'amount')
+    fields = ('paid_on', 'amount')
+    extra = 0
+
 class BCCFProfileInline(admin.StackedInline):
     model = UserProfile
     readonly_fields = ('account_number', 'post_count')
@@ -48,11 +54,14 @@ class BCCFProfileInline(admin.StackedInline):
             'fields': ('gender', 'payment')
         })
     )
+    classes = ('collapse-open',)
+    inline_classes = ('collapse-open',)
     max_num = 1
     extra = 0
 
 class BCCFUserAdmin(UserAdmin):
-    inlines = [BCCFProfileInline]    
+    actions = ['make_payment']
+    inlines = [BCCFProfileInline, ProPaymentInline]    
     list_filter = UserAdmin.list_filter + ('profile__membership_type', 'profile__membership_level')
     list_display = ('username', 'get_account_number', 'email', 'first_name', 'last_name', 'is_staff', 'get_membership_type', 'get_membership_level')
     
@@ -62,6 +71,21 @@ class BCCFUserAdmin(UserAdmin):
         return obj.profile.membership_type
     def get_membership_level(self, obj):
         return obj.profile.membership_level
+
+    def make_payment(modeladmin, request, queryset):
+        counter = 0        
+        for user in queryset.all():
+            if user.profile.is_parent:
+                continue
+            counter += 1
+            ProfessionalPayment.objects.create(amount=user.profile.payment, user=user)
+            user.profile.payment = 0
+            user.profile.save()
+        if counter <= 1:
+            return "%s user paid" % counter
+        else:
+            return "%s users paid" % counter
+    make_payment.short_description = "Mark selected users as payment sent"
     
 admin.site.unregister(User)
 admin.site.register(User, BCCFUserAdmin)
@@ -130,17 +154,17 @@ page_fieldsets[0][1]["fields"] += ("gparent", "page_for", "bccf_topic", "feature
 def make_featured(modeladmin, request, queryset):
     num_rows = queryset.update(featured=True)
     if num_rows == 1:
-        message_bit = "1 row featured"
+        return "1 row featured"
     else:
-        message_bit = "%s rows featured" % num_rows
+        return "%s rows featured" % num_rows
 make_featured.short_description = "Mark selected rows as featured"
 
 def make_unfeatured(modeladmin, request, queryset):
     num_rows = queryset.update(featured=False)
     if num_rows == 1:
-        message_bit = "1 row set as not featured"
+        return "1 row set as not featured"
     else:
-        message_bit = "%s rows set as not featured" % num_rows
+        return "%s rows set as not featured" % num_rows
 make_unfeatured.short_description = "Mark selected rows as not featured"
 
 class BCCFTopicAdmin(DisplayableAdmin):

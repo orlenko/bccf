@@ -21,6 +21,9 @@ from cartridge.shop.models import Product, ProductOption, ProductVariation
 from cartridge.shop.models import Cart, CartItem, Order, DiscountCode
 from cartridge.shop.utils import make_choices, set_locale, set_shipping
 from cartridge.shop.payment.paypal import COUNTRIES
+
+from bccf.util.eventutil import show_bill
+
 import logging
 
 log = logging.getLogger(__name__)
@@ -360,6 +363,10 @@ class OrderForm(FormsetForm, DiscountForm):
             initial["step"] = step
 
         super(OrderForm, self).__init__(request, data=data, initial=initial)
+
+        # Create a cart instance and remove billing if there is an event that is close to starting
+        if not show_bill(request):
+            self.fields['payment_method'].widget.choices = (('paypal', 'Paypal'),)
 
         #Custom
         self.fields['billing_detail_country'].widget = self.billing_country
