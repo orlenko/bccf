@@ -316,15 +316,30 @@ class CreateAccountForm(UserCreationForm):
         profile.save(create_number=True)
 
 class ProfileFieldsForm(forms.ModelForm):
+        postal_code = forms.CharField(required=True)
+        gender = forms.ChoiceField(required=True, choices=UserProfile.GENDER_TYPES)
+        
         class Meta:
             model = UserProfile
-            exclude = settings.ACCOUNTS_PROFILE_FORM_EXCLUDE_FIELDS + ['user', 'description', 'photo']
-            widgets = {'organization': forms.HiddenInput()}
-
+            fields = ('postal_code', 'membership_type', 'gender', 'organization')
+            widgets = {
+                'organization': forms.HiddenInput,
+                'membership_type': forms.HiddenInput
+            }
+        
+        def save(self, *args, **kwargs):
+            user = User.objects.get(id=self.data['organization'])
+            self.instance.organization = user.profile
+            self.instance.membership_type = self.data['membership_type']
+            self.instance.postal_code = self.data['postal_code']
+            self.instance.save(create_number=True)
 
 class AddUserForm(Html5Mixin, forms.ModelForm):
     '''This form is used by an organization user.
     '''
+    email = forms.EmailField(required=True)
+    first_name = forms.CharField(required=True)
+    last_name = forms.CharField(required=True)
     password1 = forms.CharField(label="Password",
                                 widget=forms.PasswordInput(render_value=False))
     password2 = forms.CharField(label="Password (again)",
@@ -333,8 +348,6 @@ class AddUserForm(Html5Mixin, forms.ModelForm):
     class Meta:
         model = User
         fields = ("first_name", "last_name", "email", "username")
-        exclude = settings.ACCOUNTS_PROFILE_FORM_EXCLUDE_FIELDS + ['description', 'photo']
-        widgets = {'organization': forms.HiddenInput()}
 
     def __init__(self, *args, **kwargs):
         super(AddUserForm, self).__init__(*args, **kwargs)
@@ -419,10 +432,10 @@ class AddUserForm(Html5Mixin, forms.ModelForm):
         # Save profile model.
         ProfileFieldsForm(self.data, self.files, instance=user.profile).save()
         settings.use_editable()
-        if (settings.ACCOUNTS_VERIFICATION_REQUIRED or
-            settings.ACCOUNTS_APPROVAL_REQUIRED):
-            user.is_active = False
-            user.save()
+        #if (settings.ACCOUNTS_VERIFICATION_REQUIRED or
+        #    settings.ACCOUNTS_APPROVAL_REQUIRED):
+        #    user.is_active = False
+        #    user.save()
         return user
 
 
@@ -511,7 +524,7 @@ class AddUsersForm(forms.Form):
 
 
 class DelMember(forms.Form):
-    user = forms.IntegerField()
+    user = forms.IntegerField(widget=forms.HiddenInput)
 
     def save(self):
         user = User.objects.get(pk=self.cleaned_data['user'])

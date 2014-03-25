@@ -1,0 +1,15 @@
+<strong class="fieldset-header">Organization Members</strong>
+<div class="section">
+    {% for member in members %}
+    <a href="#" class="col six">{{ member.get_full_name }}</a>
+    <form method="POST" action="{% url 'member-delete'%}" class="col six">
+        <input type="hidden" value="{{ member.pk }}" name="user">
+        {% csrf_token %}
+        <div class="form-actions dashed-button">
+            <input type="submit" class="btn btn-primary btn-large" value="Delete">
+        </div>
+    </form>
+    {% empty %}
+    No members yet
+    {% endfor %}
+</div>

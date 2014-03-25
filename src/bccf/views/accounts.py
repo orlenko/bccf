@@ -1,6 +1,7 @@
 import logging
 log = logging.getLogger(__name__)
 
+from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages import success, error
@@ -75,6 +76,8 @@ def profile_update(request, tab='home'):
         orders = Order.objects.filter(user_id=user.pk)
     elif tab == 'home':
         upgrades = get_upgrades(profile)
+    elif tab == 'members':
+        members = User.objects.filter(profile__organization=profile)
 
     if request.method == 'POST':
         if 'update-photo' in request.POST:
@@ -96,9 +99,13 @@ def profile_update(request, tab='home'):
                 form = forms.AccountPreferenceForm(request.POST, instance=profile)
             elif tab == 'forum':
                 form = forms.ForumPreferencesForm(request.POST, request.FILES, instance=profile)
+            elif tab == 'adduser':
+                form = forms.AddUserForm(request.POST)
             if form.is_valid():
                 user = form.save()
                 success(request, 'Account Updated Successfully')
+                if tab == 'adduser':
+                    form = None
             else:
                 error(request, 'Please fix the form errors below')
             
