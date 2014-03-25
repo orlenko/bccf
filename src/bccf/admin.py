@@ -97,7 +97,7 @@ class SettingsAdmin(admin.ModelAdmin):
 
 class EventAttendeeInline(admin.StackedInline):
     model = EventRegistration
-    readonly_fields =  ('get_full_name', 'paid', 'get_invoice_link')
+    readonly_fields =  ('get_full_name', 'get_invoice_link')
     fields = ('get_full_name', 'passed', 'paid', 'get_invoice_link')
 
     def get_full_name(self, obj):
