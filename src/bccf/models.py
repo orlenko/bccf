@@ -970,7 +970,7 @@ EventForParents = Event
 EventForProfessionals = Event
 
 class EventRegistration(models.Model):
-    event = models.ForeignKey(Event, related_name='event_registration')
+    event = models.ForeignKey(Event, related_name='event')
     user = models.ForeignKey(User)
     registration_date = models.DateTimeField(auto_now_add=True, blank=True)
     passed = models.BooleanField('Passed', default=False, blank=True)
@@ -983,6 +983,12 @@ class EventRegistration(models.Model):
     
     def __unicode__(self):
         return '%s-%s-%s' % (self.user.last_name, self.event.pk, self.registration_date)    
+
+    @property
+    def is_paid_description(self):
+        if self.paid:
+            return "Yes"
+        return "No"
 
     def save(self, **kwargs):
         user = UserProfile.objects.get(user=self.user)

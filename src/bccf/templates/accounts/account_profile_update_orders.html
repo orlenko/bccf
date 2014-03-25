@@ -1,4 +1,4 @@
-{% load shop_tags %}
+{% load shop_tags mezzanine_tags %}
 <strong class="fieldset-header">Your Orders</strong>
 {% if orders %}
     <ul>    
@@ -15,6 +15,7 @@
 {% else %}
 <p>No Orders</p>
 {% endif %}
+{% pagination_for orders %}
 <div class="dashed-button">
     <a href="/shop">Shop</a>
 </div>

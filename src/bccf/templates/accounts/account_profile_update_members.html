@@ -1,3 +1,4 @@
+{% load mezzanine_tags %}
 <strong class="fieldset-header">Organization Members</strong>
 <div class="section">
     {% for member in members %}
@@ -12,4 +13,8 @@
     {% empty %}
     No members yet
     {% endfor %}
+</div>
+{% pagination_for members %}
+<div class="section row row-one dashed-button">
+    <a href="{% url 'update-tab' 'adduser' %}">Add Member</a>    
 </div>

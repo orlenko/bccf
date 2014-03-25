@@ -46,11 +46,12 @@
                             <li><a id="id_campaign" href="{% url 'update-tab' 'campaign' %}">Campaigns</a></li>
                             <li><a id="id_program" href="{% url 'update-tab' 'program' %}">Request Program</a></li>
                             {% if profile.is_organization %}
-                            <li><a id="id_adduser" href="{% url 'update-tab' 'adduser' %}">Add Member</a></li>
                             <li><a id="id_feedback" href="{% url 'update-tab' 'members' %}">Organization Members</a></li>
+                            <li><a id="id_adduser" href="{% url 'update-tab' 'adduser' %}">Add Member</a></li>
                             {% endif %}
                         {% endif %}
                     {% endif %}
+                    <li><a id="id_attending" href="{% url 'update-tab' 'attending' %}">Trainings Registered For</a></li>
                     <li><a id="id_orders" href="{% url 'update-tab' 'orders' %}">Orders</a></li>
                 </ul>
             </nav>

@@ -97,7 +97,16 @@ class SettingsAdmin(admin.ModelAdmin):
 
 class EventAttendeeInline(admin.StackedInline):
     model = EventRegistration
-    fields = ('user', 'passed')
+    readonly_fields =  ('get_full_name', 'paid', 'get_invoice_link')
+    fields = ('get_full_name', 'passed', 'paid', 'get_invoice_link')
+
+    def get_full_name(self, obj):
+        return obj.user.get_full_name()
+    get_full_name.short_description = "Attendee Name"
+    def get_invoice_link(self, obj):
+        return '<a target="_blank" href="/shop/invoice/%s">View Invoice</a>' % obj.event_order.pk 
+    get_invoice_link.allow_tags = True
+    get_invoice_link.short_description = "View event invoice online"
 
 class EventAdmin(DisplayableAdmin):
     ordering = ('-created',)

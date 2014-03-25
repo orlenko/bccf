@@ -1,13 +1,15 @@
 import logging
 log = logging.getLogger(__name__)
 
-from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.contrib.messages import success, error
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import Http404
 from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.template import RequestContext
+
 
 from cartridge.shop.models import ProductVariation
 
@@ -56,8 +58,9 @@ def profile_update(request, tab='home'):
     order = profile.membership_order
     membership = profile.membership_product_variation
     expiration = profile.membership_expiration_datetime
-        
-    
+            
+    page = request.GET.get('page', 1)
+
     if 'addmembers' in request.session:
         try:
             new_users, new_user_errors = request.session.pop('addmembers')
@@ -73,11 +76,26 @@ def profile_update(request, tab='home'):
         """
         Grab all the orders that the user has made
         """
-        orders = Order.objects.filter(user_id=user.pk)
+        objects = Order.objects.filter(user_id=user.pk)
+        orders = get_page(objects, page)
     elif tab == 'home':
+        """
+        Grabs the proper upgrade products for the current user.
+        """
         upgrades = get_upgrades(profile)
     elif tab == 'members':
-        members = User.objects.filter(profile__organization=profile)
+        """
+        Grabs all the members asssociated with this account
+        """
+        objects = User.objects.filter(profile__organization=profile)
+        members = get_page(objects, page)
+    elif tab == 'attending':
+        from bccf.models import EventRegistration
+        """
+        Grabs all the events the user is registered for.
+        """
+        objects = EventRegistration.objects.filter(user=user)
+        events = get_page(objects, page)
 
     if request.method == 'POST':
         if 'update-photo' in request.POST:
@@ -111,3 +129,13 @@ def profile_update(request, tab='home'):
             
     context = RequestContext(request, locals())
     return render_to_response('accounts/accounts_base_profile_update.html', {}, context)
+    
+def get_page(objects, page):
+    p = Paginator(objects, 10)
+    try:
+        objects = p.page(page)
+    except PageNotAnInteger:
+        objects = p.page(1)
+    except EmptyPage:
+        objects = p.page(p.num_pages)
+    return objects
