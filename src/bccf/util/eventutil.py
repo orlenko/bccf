@@ -27,6 +27,8 @@ def show_bill(request):
             start = event.date_start
             limit = start - relativedelta(days=14)
             return limit > now()
+        if order_item.sku.startswith('ORG') or order_item.sku.startswith('PRO'):
+            return False
     return True
     
 def handle_event(user, order):
