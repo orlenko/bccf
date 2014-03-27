@@ -86,6 +86,8 @@ class BCCFRatingForm(CommentSecurityForm):
 
         summ = Rating.objects.filter(object_pk=self.target_object.pk).aggregate(Sum('value'))  # @UndefinedVariable - poor PyDev
         self.target_object.rating_sum = int(summ['value__sum'])
+        if not self.target_object.rating_count or self.target_object.rating_count == 0:
+            self.target_object.rating_count = 1
         self.target_object.rating_average = self.target_object.rating_sum / self.target_object.rating_count
         self.target_object.save()
         return rating_instance
