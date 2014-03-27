@@ -518,8 +518,8 @@ class Podcast(BCCFChildPage):
         super(Podcast, self).save(**kwargs)
     def get_resource_type(self):
         return 'Podcast'
-        
-class TestPodcast(BCCFChildPage):
+
+class Audio(BCCFChildPage):
     attached_audio = FileField('Audio File',
        upload_to = upload_to("bccf.Podcast.attachment_audio", "resource/audio"),
         extensions = ['.mp3'],
@@ -530,16 +530,17 @@ class TestPodcast(BCCFChildPage):
     product = models.ForeignKey(Product, verbose_name='Associated Product', blank=True, null=True)
     
     class Meta:
-        verbose_name = 'Test Podcast'
-        verbose_name_plural = 'Test Podcasts'       
+        verbose_name = 'Audio'
+        verbose_name_plural = 'Audios'
     
     def save(self, **kwargs):
         self.gparent = BCCFPage.objects.get(slug='bccf/resources')
         if not self.image:
             self.image = 'childpage/placeholder-podcast.gif'
-        super(Podcast, self).save(**kwargs)
+        super(Audio, self).save(**kwargs)
+
     def get_resource_type(self):
-        return 'Test Podcast'
+        return 'Podcast'    
 
 class Video(BCCFChildPage):
     video_url = EmbedVideoField("Video", max_length=1024, blank=True, default='', null=True,
