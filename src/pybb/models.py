@@ -6,6 +6,7 @@ from pybb.subscription import notify_topic_subscribers
 import os.path
 import uuid
 
+from django.contrib.auth.models import User
 from django.db import models, transaction
 from django.core.urlresolvers import reverse
 from django.db.utils import IntegrityError
@@ -20,8 +21,8 @@ from annoying.fields import AutoOneToOneField
 from bccf.fields import MyImageField
 from pybb.util import unescape, get_user_model, get_username_field, get_pybb_profile_model, get_pybb_profile
 
-User = get_user_model()
-username_field = get_username_field()
+#User = get_user_model()
+#username_field = get_username_field()
 
 try:
     from hashlib import sha1
