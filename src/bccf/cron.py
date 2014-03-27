@@ -64,6 +64,9 @@ class EventClose(CronJobBase):
         events = Event.objects.filter(date_start__lte=now())
         for event in events:
             event.status = 1
+            if event.provider:
+                # Send email to provider
+                pass
             if event.survey_before:
                 event.survey_before.closed = True
                 event.survey_before.save()
@@ -91,7 +94,7 @@ class UserMembershipReminder(CronJobBase):
                 limit = expiry - relativedelta(months=1)
             elif type == 'Monthly': # 1 week before
                 limit = expiry - relativedelta(week=1)
-            if now() <= limit:
+            if limit and now() <= limit:
                 # Send email
                 pass
 
@@ -133,7 +136,7 @@ class UserVotingReminder(CronJobBase):
                 limit = expiry - relativedelta(months=1)
             elif type == 'Monthly': # 1 week before
                 limit = expiry - relativedelta(week=1)
-            if now() <= limit:
+            if limit and now() <= limit:
                 # Send email
                 pass
                 
