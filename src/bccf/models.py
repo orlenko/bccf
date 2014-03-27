@@ -705,21 +705,17 @@ class UserProfile(PybbProfile):
         self.membership_order = order
         # Update membership type and level
         variation = self.membership_product_variation
-        #categ_name = variation.product.categories.all()[0].title.lower()
         sku_parts = variation.sku.split('-')
         self.membership_level = sku_parts[1] # only get the middle one (B or C)
-        #self.membership_type = None
-        #for label, _descr in self.MEMBERSHIP_TYPES:
-        #    if label in categ_name:
-        #        self.membership_type = label
 
     @property
+    def voting_product_variation(self):
+        for order_item in self.voting_order.items.all():
+            if '-V-' in order_item.sku:
+                return ProductVariation.objects.filter(sku=order_item.sku)
+                
+    @property
     def membership_product_variation(self):
-        #ensure_membership_products()
-        # Special case for admin:
-        #if self.user.is_superuser:
-            # Make sure current order contains an Admin-level license
-            # self.ensure_membership('admin')
         if not self.membership_order:
             # Special case: if this user has purchased anything at all, there might be a recent membership purchase
             # In this case, we assign the most recent membership purchase as the membership order for this user.
@@ -780,19 +776,48 @@ class UserProfile(PybbProfile):
                            addr_bcc=None)
 
     @property
-    def membership_expiration_datetime(self):
-        variation = self.membership_product_variation
-        if not variation:
+    def voting_expiration_datetime(self):
+        subscription_term = self.voting_membership_type
+        if not subscription_term:
             return None
-        options = dict([(f.name, v) for f, v in zip(variation.option_fields(), variation.options())])
-        d = self.membership_order.time
-        subscription_term = options.get('option%s' % get_option_number(OPTION_SUBSCRIPTION_TERM))
+        d = self.voting_order.time
         if subscription_term == 'Annual':
             return d + relativedelta(years=+1)
         if subscription_term == 'Quaterly':
             return d + relativedelta(months=+3)
         if subscription_term == 'Monthly':
             return d + relativedelta(months=+1)
+
+    @property
+    def membership_expiration_datetime(self):
+        subscription_term = self.membership_payment_type
+        if not subscription_term:
+            return None
+        d = self.membership_order.time
+        if subscription_term == 'Annual':
+            return d + relativedelta(years=+1)
+        if subscription_term == 'Quaterly':
+            return d + relativedelta(months=+3)
+        if subscription_term == 'Monthly':
+            return d + relativedelta(months=+1)
+          
+    @property
+    def voting_payment_type(self):
+        variation = self.voting_product_variation
+        if not variation:
+            return None
+        options = dict([(f.name, v) for f, v in zip(variation.option_fields(), variation.options())])
+        d = self.membership_order.time
+        return options.get('option%s' % get_option_number(OPTION_SUBSCRIPTION_TERM))        
+            
+    @property
+    def membership_payment_type(self):
+        variation = self.membership_product_variation
+        if not variation:
+            return None
+        options = dict([(f.name, v) for f, v in zip(variation.option_fields(), variation.options())])
+        d = self.membership_order.time
+        return options.get('option%s' % get_option_number(OPTION_SUBSCRIPTION_TERM))
 
     @property
     def remaining_balance(self):
@@ -976,6 +1001,7 @@ class EventRegistration(models.Model):
     passed = models.BooleanField('Passed', default=False, blank=True)
     event_order = models.ForeignKey('shop.Order', null=True, blank=True, related_name='event-order')
     paid = models.NullBooleanField('Paid', null=True, blank=True)
+    reminder = models.NullBooleanField('Reminded', null=True, blank=True)
     
     class Meta:
         verbose_name = "Event Registration"

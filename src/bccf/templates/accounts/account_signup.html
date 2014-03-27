@@ -78,9 +78,22 @@
             </div>
             <strong class="fieldset-header row row-one">Account Type</strong>
             <div class="form-group input_id_membership_type"> 
+                <p><label class="req" for="id_membership_type">{{ form.membership_type.label }}</label></p>
                 {{ form.membership_type }}
                 <p class="help-block">{{ form.membership_type.help_text }}</p>
                 <p class="error-block">{{ form.membership_type.errors.as_text|cut:'*' }}</p>
+            </div>
+            <div class="form-group input_id_membership_level">
+                <p><label class="req" for="id_membership_level">{{ form.membership_level.label }}</label></p>
+                {{ form.membership_level }}
+                <p class="help-block">{{ form.membership_level.help_text }}</p>
+                <p class="error-block">{{ form.membership_level.errors.as_text|cut:'*' }}</p>            
+            </div>
+            <div class="form-group input_id_payment_frequency">
+                <p><label class="req" for="id_payment_frequency">{{ form.payment_frequency.label }}</label></p>
+                {{ form.payment_frequency }}
+                <p class="help-block">{{ form.payment_frequency.help_text }}</p>
+                <p class="error-block">{{ form.payment_frequency.errors.as_text|cut:'*' }}</p>            
             </div>
             <strong class="fieldset-header row row-one">Account Preferences</strong>
             <div class="form-group checkbox-group input_id_show_in_list"> 

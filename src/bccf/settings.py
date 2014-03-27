@@ -359,6 +359,7 @@ INSTALLED_APPS = (
     # install via pip or easy_install django-form-utils
     'form_utils', # required by builder to call template tags
     'embed_video',
+    'django_cron',
 )
 
 # List of processors used by RequestContext to populate the context.
@@ -400,6 +401,16 @@ MIDDLEWARE_CLASSES = (
     "mezzanine.core.middleware.FetchFromCacheMiddleware",
     'pybb.middleware.PybbMiddleware',
 )
+
+CRON_CLASSES = [
+    'bccf.cron.EventPaymentReminder',
+    'bccf.cron.EventFreeRemind',
+    'bccf.cron.EventClose',    
+    'bccf.cron.UserMembershipReminder',    
+    'bccf.cron.UserMembershipExpire',    
+    'bccf.cron.UserVotingReminder',    
+    'bccf.cron.UserVotingExpire',    
+]
 
 # Store these package names here as they may change in the future since
 # at the moment we are using custom forks of them.

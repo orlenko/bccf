@@ -19,24 +19,25 @@ from bccf.util.memberutil import get_upgrades
 def signup(request):
     # Optional queries
     membership_type = request.GET.get('type', None)
-    product_sku = request.GET.get('var', None)
+    membership_level = request.GET.get('level', None)
+    payment_frequency = request.GET.get('freq', None)
     
-    if product_sku and not ProductVariation.objects.filter(sku=product_sku).exists():
-        raise Http404
-    
-    form = forms.CreateAccountForm(initial={'membership_type': membership_type})
+    form = forms.CreateAccountForm(initial={'membership_type': membership_type,
+        'membership_level': membership_level, 'payment_frequency': payment_frequency})
     
     if request.method == 'POST':
         form = forms.CreateAccountForm(data=request.POST, files=request.FILES)
         if form.is_valid():
             response = redirect('update')
-            if product_sku and membership_type == form.cleaned_data.get('membership_type'):
+            if form.cleaned_data.get('membership_level') != 'A':
                 """
                 If SKU exists in the query string and the SKU fits with the membership type, 
                 add that product to the cart and redirect the user to the checkout
                 """
                 from cartridge.shop.utils import recalculate_cart
-                variation = ProductVariation.objects.get(sku=product_sku)
+                membership_type = form.cleaned_data.get('membership_type')[:3].upper()
+                sku = '%s-%s-%s' % (membership_type, form.cleaned_data.get('membership_level'), form.cleaned_data.get('payment_frequency'))
+                variation = ProductVariation.objects.get(sku=sku)
                 request.cart.add_item(variation, 1)
                 recalculate_cart(request)
                 response = redirect('shop_checkout')

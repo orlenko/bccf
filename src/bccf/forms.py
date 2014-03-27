@@ -96,7 +96,6 @@ class ProfileForm(forms.ModelForm):
         exclude = ('membership_order',)
         model = UserProfile
 
-
 class EventForm(forms.ModelForm):
 
     class Meta:
@@ -271,6 +270,16 @@ class CreateAccountForm(UserCreationForm):
         ('professional', 'Professional'),
         ('organization', 'Organization')    
     )
+    MEMBERSHIP_LEVELS = (
+        ('A', 'Level A (Free)'),
+        ('B', 'Level B'),
+        ('C', 'Level C')    
+    )
+    PAYMENT_TYPES = (
+        ('Annual', 'Annual'),
+        ('Quarterly', 'Quarterly'),
+        ('Monthly', 'Monthly')    
+    )
 
     email = forms.EmailField(required=True)
     first_name = forms.CharField(required=True)
@@ -283,6 +292,9 @@ class CreateAccountForm(UserCreationForm):
     accept = forms.BooleanField(required=True)
     password2 = forms.CharField(label='Password (again)', required=True, widget=forms.PasswordInput)
     photo = forms.CharField(widget=AdvancedFileInput, required=False)
+    payment_frequency = forms.ChoiceField(required=True, choices=PAYMENT_TYPES,
+        help_text='Ignored if Level A is chosen.')
+    membership_level = forms.ChoiceField(required=True, choices=MEMBERSHIP_LEVELS)
 
     class Meta:
         model = User
