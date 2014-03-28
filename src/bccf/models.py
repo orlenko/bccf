@@ -786,9 +786,8 @@ class UserProfile(PybbProfile):
         variation = self.membership_product_variation
         if not variation:
             return None
-        options = dict([(f.name, v) for f, v in zip(variation.option_fields(), variation.options())])
-        d = self.membership_order.time
-        return options.get('option%s' % get_option_number(OPTION_SUBSCRIPTION_TERM))
+        parts = varation.sku.split('-')
+        return parts[2]
 
     @property
     def remaining_balance(self):
