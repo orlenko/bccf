@@ -786,7 +786,7 @@ class UserProfile(PybbProfile):
         variation = self.membership_product_variation
         if not variation:
             return None
-        parts = varation.sku.split('-')
+        parts = variation.sku.split('-')
         return parts[2]
 
     @property
