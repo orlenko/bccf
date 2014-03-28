@@ -496,7 +496,7 @@ class TipSheet(DocumentResourceBase):
     def get_resource_type(self):
         return 'Tip Sheet'
 
-class Podcast(models.Model):
+class Podcast(BCCFChildPage):
     attached_audio = FileField('Audio File',
        upload_to = upload_to("bccf.Podcast.attachment_audio", "resource/audio"),
         extensions = ['.mp3'],
