@@ -791,6 +791,8 @@ class UserProfile(PybbProfile):
 
     @property
     def remaining_balance(self):
+        if not self.membership_order:
+            return None
         membership = self.membership_product_variation
         expiration_date = self.membership_expiration_datetime
         purchase_date = self.membership_order.time

@@ -93,35 +93,32 @@ def membership_upgrade(request, variation_id):
     user = request.user
     profile = user.profile
     current_order = profile.membership_order
-    current_membership = profile.membership_product_variation
-    current_category = current_membership.product.categories.all()[0]
     variation = ProductVariation.objects.get(pk=variation_id)
-    new_category = variation.product.categories.all()[0]
-    if current_category.pk != new_category.pk:
-        # Cannot upgrade between categories
-        messages.warning(request, 'Sorry, cannot upgrade from a %s to a %s'
-                         % (current_category, new_category))
+    membership_type = profile.membership_type[:3].upper()
+    if not membership_type in variation.sku:
+        # Cannot upgrade between membership types
+        messages.warning(request, 'Sorry, cannot upgrade from across membership types.')
         return HttpResponseRedirect(reverse('member-profile'))
     discount_amount = profile.remaining_balance
-    discount_code = str(uuid4()) 
-    discount = DiscountCode.objects.create(title='[temporary discount for membership upgrade]',
-                            active=True,
-                            discount_deduct=discount_amount,
-                            code=discount_code,
-                            min_purchase=0,
-                            free_shipping=False)
-    discount_code = '%s%s' % (discount.pk, discount_code[:5])
-    discount.code = discount_code
-    discount.save() # These 3 lines are a hack, to get a discount code shorter than 20 chars
-    discount.products.add(variation.product)
-    discount.categories.add(current_category)
+    if discount_amount:
+        discount_code = str(uuid4()) 
+        discount = DiscountCode.objects.create(title='[temporary discount for membership upgrade]',
+                                active=True,
+                                discount_deduct=discount_amount,
+                                code=discount_code,
+                                min_purchase=0,
+                                free_shipping=False)
+        discount_code = '%s%s' % (discount.pk, discount_code[:5])
+        discount.code = discount_code
+        discount.save() # These 3 lines are a hack, to get a discount code shorter than 20 chars
+        discount.products.add(variation.product)
+        discount.categories.add(current_category)
+        log.debug('New cart: %s %s' % (request.cart, request.cart.has_items()))
+        request.session['force_discount'] = discount_code
+        log.debug('Session variables: %s' % dict(request.session))
     log.debug('Adding item to cart: %s' % variation)
     request.cart.add_item(variation, 1)
-    log.debug('New cart: %s %s' % (request.cart, request.cart.has_items()))
-    request.session['force_discount'] = discount_code
-    log.debug('Session variables: %s' % dict(request.session))
     return redirect('shop_checkout')
-
 
 @require_any_membership
 def membership_renew(request):
