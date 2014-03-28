@@ -677,6 +677,9 @@ class UserProfile(PybbProfile):
     #Banking
     account_number = models.CharField('Account Number', max_length=12, null=True, blank=True)
     payment = MoneyField()
+    
+    #Rating
+    rating = RatingField(verbose_name='Rating')
 
     def __unicode__(self):
         return 'Profile of %s' % (self.user.get_full_name() or self.user.username)
