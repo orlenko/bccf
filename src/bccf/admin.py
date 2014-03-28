@@ -38,7 +38,7 @@ class BCCFProfileInline(admin.StackedInline):
     readonly_fields = ('account_number', 'post_count', 'membership_type')
     fieldsets = (
         ('Account Information', {
-            'fields': ('account_number', 'membership_order', 'voting_order', ('membership_type', 'membership_level'), 'requested_cancellation'),       
+            'fields': ('account_number', 'membership_order', ('membership_type', 'membership_level'), 'requested_cancellation'),       
         }),
         ('Contact Information', {
             'fields': ('street', 'street_2', 'street_3', 'city', 'region', 'province', 'postal_code', 'country', 'phone_primary', 'phone_work', 'phone_mobile',
