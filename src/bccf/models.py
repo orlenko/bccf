@@ -772,8 +772,8 @@ class UserProfile(PybbProfile):
     def membership_expiration_datetime(self):
         subscription_term = self.membership_payment_type
         if not subscription_term:
-            return 'hi'            
-            #return None
+            return None
+        return subscription_term
         d = self.membership_order.time
         if subscription_term == 'Annual':
             return d + relativedelta(years=+1)
