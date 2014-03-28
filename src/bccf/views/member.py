@@ -156,6 +156,17 @@ def membership_cancel(request):
     context = RequestContext(request, locals())
     return render_to_response('bccf/membership/cancel.html', {}, context_instance=context)
 
+def voting_membership(request, variation_id):
+    """
+    Puts a voting membership product into the cart and redirects to checkout to finish the
+    membership process
+    """
+    user = request.user
+    profile = user.profile
+    current_order = profile.voting_order
+    current_membership = profile.voting_product_variation
+    variation = ProductVariation.objects.get(id=variation_id)
+    
 
 def addmember(request):
     form = AddUsersForm(data=request.REQUEST)

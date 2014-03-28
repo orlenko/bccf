@@ -695,3 +695,17 @@ class SocialMediaForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('facebook', 'twitter', 'linkedin', 'youtube', 'pinterest')
+        
+class RegisterUserForm(forms.Form):
+    """
+    Form to register organization members to professional-only events.
+    """
+    members = forms.MultipleChoiceField(widget=forms.SelectMultiple)
+    event = forms.ChoiceField()
+    
+    def __init__(self, request, *args, **kwargs):
+        super(RegisterUserForm, self).__init__(*args, **kwargs)
+        org_members = User.objects.filter(profile__organization=request.user.profile).values_list('id', 'last_name')
+        events_available = Event.objects.published().filter(page_for='professional').values_list('id', 'title')
+        self.fields['members'].widget.choices = org_members
+        self.fields['event'].widget.choices = events_available

@@ -19,8 +19,6 @@ from mezzanine.core.models import CONTENT_STATUS_DRAFT, CONTENT_STATUS_PUBLISHED
 
 log = logging.getLogger(__name__)
 
-
-
 def event_page(request):
     page = BCCFPage.objects.get(slug='trainings')
     context = RequestContext(request, locals())

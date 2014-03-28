@@ -127,15 +127,17 @@ def order_handler(request, order_form, order):
     user = request.user
     profile = user.profile
     handle_membership(profile, order)
-    handle_event(user, order)
+    handle_event(request, user, order)
 
 def payment_handler(request, order_form, order):
     """
     Processes Payment
     """
+    payer_id = request.GET.get('PayerID', None)
     if order_form.cleaned_data.get('payment_method') == 'paypal':
         from cartridge.shop.payment import paypal_rest as paypal
         order.transaction_id = generate_transaction_id()
+        order.payer_id = payer_id
         order.save()
         request.session['order_id'] = order.pk
         return paypal.process(request, order_form, order)
@@ -152,9 +154,6 @@ def handle_membership(profile, order):
                     profile.cancel_membership()
                     profile.membership_order = order
                     profile.save()
-                    if order.payment_method == 'paypal':
-                        order.status = 2
-                        order.save()
                     return
 
 def get_upgrades(profile):

@@ -637,7 +637,6 @@ class UserProfile(PybbProfile):
     # Membership Fields
     membership_type = models.CharField('Membership Type', max_length=128, null=True, blank=True, choices=MEMBERSHIP_TYPES)
     membership_order = models.ForeignKey('shop.Order', null=True, blank=True, related_name='order')
-    voting_order = models.ForeignKey('shop.Order', null=True, blank=True, related_name='voting')
     membership_level = models.CharField('Membership Level', max_length=1, default='A', choices=MEMBERSHIP_LEVELS)
     requested_cancellation = models.NullBooleanField(null=True, blank=True, default=False)
     
@@ -707,12 +706,6 @@ class UserProfile(PybbProfile):
         variation = self.membership_product_variation
         sku_parts = variation.sku.split('-')
         self.membership_level = sku_parts[1] # only get the middle one (B or C)
-
-    @property
-    def voting_product_variation(self):
-        for order_item in self.voting_order.items.all():
-            if '-V-' in order_item.sku:
-                return ProductVariation.objects.filter(sku=order_item.sku)
                 
     @property
     def membership_product_variation(self):
@@ -776,19 +769,6 @@ class UserProfile(PybbProfile):
                            addr_bcc=None)
 
     @property
-    def voting_expiration_datetime(self):
-        subscription_term = self.voting_membership_type
-        if not subscription_term:
-            return None
-        d = self.voting_order.time
-        if subscription_term == 'Annual':
-            return d + relativedelta(years=+1)
-        if subscription_term == 'Quaterly':
-            return d + relativedelta(months=+3)
-        if subscription_term == 'Monthly':
-            return d + relativedelta(months=+1)
-
-    @property
     def membership_expiration_datetime(self):
         subscription_term = self.membership_payment_type
         if not subscription_term:
@@ -799,16 +779,7 @@ class UserProfile(PybbProfile):
         if subscription_term == 'Quaterly':
             return d + relativedelta(months=+3)
         if subscription_term == 'Monthly':
-            return d + relativedelta(months=+1)
-          
-    @property
-    def voting_payment_type(self):
-        variation = self.voting_product_variation
-        if not variation:
-            return None
-        options = dict([(f.name, v) for f, v in zip(variation.option_fields(), variation.options())])
-        d = self.membership_order.time
-        return options.get('option%s' % get_option_number(OPTION_SUBSCRIPTION_TERM))        
+            return d + relativedelta(months=+1)       
             
     @property
     def membership_payment_type(self):
@@ -999,7 +970,7 @@ class EventRegistration(models.Model):
     user = models.ForeignKey(User)
     registration_date = models.DateTimeField(auto_now_add=True, blank=True)
     passed = models.BooleanField('Passed', default=False, blank=True)
-    event_order = models.ForeignKey('shop.Order', null=True, blank=True, related_name='event-order')
+    event_order = models.ForeignKey('shop.Order', default=None, null=True, blank=True, related_name='event-order')
     paid = models.NullBooleanField('Paid', null=True, blank=True)
     reminder = models.NullBooleanField('Reminded', null=True, blank=True)
     

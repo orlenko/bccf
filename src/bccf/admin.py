@@ -35,7 +35,7 @@ class ProPaymentInline(admin.StackedInline):
 
 class BCCFProfileInline(admin.StackedInline):
     model = UserProfile
-    readonly_fields = ('account_number', 'post_count')
+    readonly_fields = ('account_number', 'post_count', 'membership_type')
     fieldsets = (
         ('Account Information', {
             'fields': ('account_number', 'membership_order', 'voting_order', ('membership_type', 'membership_level'), 'requested_cancellation'),       
@@ -500,7 +500,6 @@ admin.site.register(DownloadableForm, BCCFResourceAdmin)
 admin.site.register(Magazine, BCCFResourceAdmin)
 admin.site.register(TipSheet, BCCFResourceAdmin)
 
-#admin.site.register(Podcast)
 admin.site.register(Podcast, BCCFPodcastResourceAdmin)
 admin.site.register(Video, BCCFVideoResourceAdmin)
 

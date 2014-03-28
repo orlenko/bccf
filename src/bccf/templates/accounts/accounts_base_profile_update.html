@@ -45,10 +45,11 @@
                             <li><a id="id_training" href="{% url 'update-tab' 'training' %}">Trainings</a></li>
                             <li><a id="id_campaign" href="{% url 'update-tab' 'campaign' %}">Campaigns</a></li>
                             <li><a id="id_program" href="{% url 'update-tab' 'program' %}">Request Program</a></li>
-                            {% if profile.is_organization %}
-                            <li><a id="id_feedback" href="{% url 'update-tab' 'members' %}">Organization Members</a></li>
-                            <li><a id="id_adduser" href="{% url 'update-tab' 'adduser' %}">Add Member</a></li>
-                            {% endif %}
+                         {% endif %}
+                        {% if profile.is_organization %}
+                        <li><a id="id_feedback" href="{% url 'update-tab' 'members' %}">Organization Members</a></li>
+                        <li><a id="id_register" href="{% url 'update-tab' 'register' %}">Register Members to Trainings</a></li>
+                        <li><a id="id_adduser" href="{% url 'update-tab' 'adduser' %}">Add Member</a></li>
                         {% endif %}
                     {% endif %}
                     <li><a id="id_attending" href="{% url 'update-tab' 'attending' %}">Trainings Registered For</a></li>

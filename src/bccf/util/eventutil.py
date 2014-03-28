@@ -5,6 +5,7 @@ from decimal import Decimal
 from dateutil.relativedelta import relativedelta
 
 from django.utils.timezone import now
+from django.contrib.auth.models import User
 
 from cartridge.shop.models import Cart, ProductVariation
 
@@ -31,7 +32,7 @@ def show_bill(request):
             return False
     return True
     
-def handle_event(user, order):
+def handle_event(request, user, order):
     """
     Check if the order has events in it. Process the even and register
     the user.
@@ -58,9 +59,27 @@ def handle_event(user, order):
                         profile.payment = price
                     else:
                         profile.payment += price
-                    profile.save()
+                    profile.save()    
                     
-            EventRegistration.objects.create(user=user, event=event, 
-                                     event_order=order, paid=paid)
+            if user.profile.is_organization:
+                user_ids = request.session.get('register_selected_members', [])
+                event_id = request.session.get('register_selected_event', None)
+                
+                if not event_id:
+                    log.debug('event ID is None')
+                    return
+                    
+                event = Event.objects.get(id=event_id)
+                for user_id in user_ids:
+                    u = User.objects.get(id=user_id)
+                    EventRegistration.objects.create(user=user, event=event,
+                                            event_order=order, paid=paid)
+                                            
+                del request.session['register_selected_members']
+                del request.session['register_selected_event']
+                                    
+            else:        
+                EventRegistration.objects.create(user=user, event=event, 
+                                         event_order=order, paid=paid)
 
             return

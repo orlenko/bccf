@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.messages import success, error
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.urlresolvers import reverse
 from django.http import Http404
 from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.template import RequestContext
@@ -120,7 +121,12 @@ def profile_update(request, tab='home'):
                 form = forms.ForumPreferencesForm(request.POST, request.FILES, instance=profile)
             elif tab == 'adduser':
                 form = forms.AddUserForm(request.POST)
-            if form.is_valid():
+            elif tab == 'register':
+                form = forms.RegisterUserForm(request, data=request.POST)
+                request.session['register_selected_members'] = request.POST.getlist('members')
+                request.session['register_selected_event'] = request.POST.get('event')
+                return redirect(reverse('register-event'))
+            if form.is_valid():       
                 user = form.save()
                 success(request, 'Account Updated Successfully')
                 if tab == 'adduser':
@@ -130,8 +136,50 @@ def profile_update(request, tab='home'):
             
     context = RequestContext(request, locals())
     return render_to_response('accounts/accounts_base_profile_update.html', {}, context)
+
+@login_required
+def register_event(request):
+    """
+    Registers users to the event, registerer must complete registration using checkout if
+    the event is not free
+    """
+    from cartridge.shop.utils import recalculate_cart
+    from bccf.models import Event, EventRegistration
     
+    member_ids = request.session['register_selected_members']
+    event_id = request.session['register_selected_event']
+    response = redirect(reverse('update'))
+    message = 'Users registered successfully.'
+
+    event = Event.objects.get(id=event_id)
+    seats = len(EventRegistration.objects.filter(event=event)) + len(member_ids)
+    
+    if event.max_seats < seats: # Not everyone will fit
+        error(request, 'There is not enough space in the event for your members.')
+        return response
+    
+    if event.event_product: # If paid event, add event to cart
+        variation = ProductVariation.objects.get(sku='EVENT-%s' % event.pk)
+        request.cart.add_item(variation, len(member_ids))
+        recalculate_cart(request)
+        response = redirect('/shop/checkout')
+        message = 'Users registered successfully. Please continue with the  checkout to complete registrations.'
+    else: # If not paid event, auto-register the members
+       for member_id in member_ids:
+           user = User.objects.get(id=member_id)
+           EventRegistration.objects.create(user=user, event=event)
+           
+       # Delete session variables since the IDs have been registered
+       del request.session['register_selected_members']
+       del request.session['register_selected_event']   
+
+    success(request, message) 
+    return response
+
 def get_page(objects, page):
+    """
+    Helper function for pagination.
+    """
     p = Paginator(objects, 10)
     try:
         objects = p.page(page)

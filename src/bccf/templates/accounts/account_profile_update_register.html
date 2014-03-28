@@ -1,0 +1,19 @@
+<form method="POST">
+    <strong class="fieldset-header">Register Members to Events</strong>
+    <div class="form-group input_id_members">      
+        <p><label for="id_users">{{ form.members.label }}</label></p>
+        {{ form.members }}
+        <p class="help-block">{{ form.members.help_text }}</p>
+        <p class="error-block">{{ form.members.errors.as_text|cut:'*' }}</p>
+    </div>
+    <div class="form-group input_id_event">      
+        <p><label for="id_events">{{ form.event.label }}</label></p>
+        {{ form.event }}
+        <p class="help-block">{{ form.event.help_text }}</p>
+        <p class="error-block">{{ form.event.errors.as_text|cut:'*' }}</p>
+    </div>
+    {% csrf_token %}
+    <div class="form-actions dashed-button">
+        <input id="submit" class="btn btn-primary btn-large" type="submit" value="Register">
+    </div>
+</form>

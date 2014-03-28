@@ -115,44 +115,4 @@ class UserMembershipExpire(CronJobBase):
                 # Send email
                 user.profile.membership_order = None
                 user.profile.membership_level = 'A'
-                user.profile.save() 
-   
-class UserVotingReminder(CronJobBase):
-    """
-    Sends reminders to users about their expiring voting memberships.
-    """
-    RUN_EVERY_MINS = 0.01
-    schedule = Schedule(run_every_mins=RUN_EVERY_MINS)
-    code = 'bccf.user_voting_reminder'
-    
-    def do(self):
-        users = User.objects.filter(~Q(profile__voting_order=None))
-        for user in users:
-            expiry = user.profile.voting_expiration_datetime
-            type = user.profile.voting_payment_type
-            if type == 'Annual': # 3 months before
-                limit = expiry - relativedelta(months=3)
-            elif type == 'Quarterly': # 1 month before
-                limit = expiry - relativedelta(months=1)
-            elif type == 'Monthly': # 1 week before
-                limit = expiry - relativedelta(week=1)
-            if limit and now() <= limit:
-                # Send email
-                pass
-                
-class UserVotingExpire(CronJobBase):
-    """
-    Remove the voting membership of the user
-    """
-    RUN_EVERY_MINS = 0.01
-    schedule = Schedule(run_every_mins=RUN_EVERY_MINS)
-    code = 'bccf.user_voting_expire'
-    
-    def do(self):
-        users = User.objects.filter(~Q(profile__voting_order=None))
-        for user in users:
-            expiry =user.profile.voting_expiration_datetime
-            if now() <= expiry:
-                # Send email
-                user.profile.voting_order = None
-                user.profile.save() 
+                user.profile.save()
