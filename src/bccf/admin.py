@@ -500,7 +500,8 @@ admin.site.register(DownloadableForm, BCCFResourceAdmin)
 admin.site.register(Magazine, BCCFResourceAdmin)
 admin.site.register(TipSheet, BCCFResourceAdmin)
 
-admin.site.register(Podcast, BCCFPodcastResourceAdmin)
+admin.site.register(Podcast)
+#admin.site.register(Podcast, BCCFPodcastResourceAdmin)
 admin.site.register(Video, BCCFVideoResourceAdmin)
 
 # Program Request
