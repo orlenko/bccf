@@ -773,11 +773,10 @@ class UserProfile(PybbProfile):
         subscription_term = self.membership_payment_type
         if not subscription_term:
             return None
-        return subscription_term
         d = self.membership_order.time
         if subscription_term == 'Annual':
             return d + relativedelta(years=+1)
-        if subscription_term == 'Quaterly':
+        if subscription_term == 'Quarterly':
             return d + relativedelta(months=+3)
         if subscription_term == 'Monthly':
             return d + relativedelta(months=+1)       
