@@ -45,7 +45,7 @@ def send_moderate(request, subject, app_name, model_name, id, to=MOD_EMAIL, fr=N
     html_content = render_to_string(TEMPLATE_DIR % template_html, {}, context_instance=c)
     
     msg = EmailMultiAlternatives(subject, plain_content, fr, [to])
-    msg.attach_alternatives(html_content, "text/html")
+    msg.attach_alternative(html_content, "text/html")
     msg.send()
     
 def send_reminder(request, subject, user, app_name, model_name, id, fr=NO_EMAIL):
@@ -65,7 +65,7 @@ def send_reminder(request, subject, user, app_name, model_name, id, fr=NO_EMAIL)
     html_content = render_to_string(TEMPLATE_DIR % template, {}, context_instance=c)
     
     msg = EmailMultiAlternatives(subject, plain_content, fr, [to])
-    msg.attach_alternatives(html_content, "text/html")
+    msg.attach_alternative(html_content, "text/html")
     msg.send()
     
 def send_receipt(request, user, order, fr=NO_EMAIL):
@@ -79,7 +79,7 @@ def send_receipt(request, user, order, fr=NO_EMAIL):
     html_content = render_to_string(TEMPLATE_DIR % template, {}, context_instance=c)
     
     msg = EmailMultiAlternatives(subject, plain_content, fr, [to])
-    msg.attach_alternatives(html_content, "text/html")
+    msg.attach_alternative(html_content, "text/html")
     msg.send()
     
 def send_after_survey(request, id, fr=NO_EMAIL):
@@ -99,5 +99,5 @@ def send_after_survey(request, id, fr=NO_EMAIL):
     html_content = render_to_string(TEMPLATE_DIR % template, {}, context_instance=c)
     
     msg = EmailMultiAlternatives(subject, plain_content, fr, to)
-    msg.attach_alternatives(html_content, "text/html")
+    msg.attach_alternative(html_content, "text/html")
     msg.send()
