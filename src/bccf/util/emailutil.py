@@ -9,7 +9,7 @@ from django.template.loader import render_to_string
 from bccf.models import Event, EventRegistration, Settings
 from cartridge.shop.models import Order
 
-TEMPLATE_DIR = "html/%s"
+TEMPLATE_DIR = "email/%s"
 NO_EMAIL = Settings.get_setting('NO_REPLY_EMAIL')
 MOD_EMAIL = Settings.get_setting('MODERATOR_EMAIL')
     

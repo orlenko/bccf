@@ -434,9 +434,6 @@ class Order(models.Model):
     total = fields.MoneyField(_("Order total"))
     transaction_id = CharField(_("Transaction ID"), max_length=255, null=True,
                                blank=True)
-    
-    # Store the payer ID returned by paypal
-    # payer_id = CharField(_("Paypal Payer ID"), max_length=255, null=True, blank=True)
 
     status = models.IntegerField(_("Status"),
                             choices=settings.SHOP_ORDER_STATUS_CHOICES,
