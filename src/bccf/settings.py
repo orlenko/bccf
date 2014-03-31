@@ -408,8 +408,6 @@ CRON_CLASSES = [
     'bccf.cron.EventClose',    
     'bccf.cron.UserMembershipReminder',    
     'bccf.cron.UserMembershipExpire',    
-    'bccf.cron.UserVotingReminder',    
-    'bccf.cron.UserVotingExpire',    
 ]
 
 # Store these package names here as they may change in the future since

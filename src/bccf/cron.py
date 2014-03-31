@@ -15,15 +15,18 @@ class EventPaymentReminder(CronJobBase):
     RUN_EVERY_MINS = 0.01
     schedule = Schedule(run_every_mins=RUN_EVERY_MINS)
     code = 'bccf.event_payment_reminder'
+
+    email_title = 'Event Registration Payment Reminder'    
     
     def do(self):
         events = Event.objects.need_reminder().all()
         for event in events:
             regs = EventRegistration.objects.filter(~Q(reminder=True), event=event.pk, paid=False)
             for reg in regs:
-                pass
-                # Send email
-                # Set registration reminded
+                print "Send Email"
+                send_reminder(email_title, reg.user, 'bccf', 'Event', event.pk)
+                reg.reminder = True
+                reg.save()
         
 class EventFreeRemind(CronJobBase):
     """

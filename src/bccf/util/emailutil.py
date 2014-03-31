@@ -48,7 +48,7 @@ def send_moderate(request, subject, app_name, model_name, id, to=MOD_EMAIL, fr=N
     msg.attach_alternative(html_content, "text/html")
     msg.send()
     
-def send_reminder(request, subject, user, app_name, model_name, id, fr=NO_EMAIL):
+def send_reminder(subject, user, app_name, model_name, id, fr=NO_EMAIL):
     """
     Helper function that sends an email when something needs reminding.
     Things that need reminding include
@@ -57,7 +57,7 @@ def send_reminder(request, subject, user, app_name, model_name, id, fr=NO_EMAIL)
         - event payment,
         - event seat released,
     """
-    to = user.email
+    to = 'khcastillo@hotmail.com' #user.email
     model = get_model(app_name, model_name)
     object = model.objects.get(id=id)
     c = Context({'obj': object, 'user': user})
