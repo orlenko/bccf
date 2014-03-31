@@ -6,6 +6,7 @@ from django.shortcuts import render_to_response
 from django.http.response import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.core.urlresolvers import reverse
 
 from bccf.models import Campaign
 from bccf.forms import CampaignForm
@@ -32,9 +33,10 @@ def create(request):
    
 @login_required 
 def edit(request, slug):
-    profile = request.user.profile
+    user = request.user
+    profile = user.profile
     
-    if not Campaign.objects.filter(slug=slug, user=profile).exists():
+    if not Campaign.objects.filter(slug=slug, user=user).exists():
         return HttpResponseRedirect('/')
         
     campaign = Campaign.objects.get(slug=slug)
