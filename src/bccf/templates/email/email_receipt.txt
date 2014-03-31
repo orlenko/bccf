@@ -1,0 +1,26 @@
+{% load shop_tags %}
+Thank you for purchasing from BCCF.
+
+Customer Name: {{ user.get_full_name }}
+Account Number: {{ user.profile.bank_number }}
+
+Order ID: {{ order.pk }}
+Order Date: {{ order.time }}
+Payment Method: {{ order.payment_method }}
+
+Products Purchased:
+{% if order.items.all %}
+    Description, Unit Price, Quantity, Total Price
+    {% for item in order.items.all %}
+        {{ item.description }},
+        {{ item.unit_price|currency }}, 
+        {{ item.quantity }},
+        {{ item.total_price|currency }}
+    {% endfor %}
+{% endif %}
+
+Link to online invoice:
+{% url 'shop_invoice' order.pk %}
+
+Link to PDF invoice:
+{% url 'shop_invoice' order.pk %}?format=pdf

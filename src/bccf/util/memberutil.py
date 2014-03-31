@@ -133,16 +133,14 @@ def payment_handler(request, order_form, order):
     """
     Processes Payment
     """
-    payer_id = request.GET.get('PayerID', None)
     if order_form.cleaned_data.get('payment_method') == 'paypal':
         from cartridge.shop.payment import paypal_rest as paypal
-        order.transaction_id = generate_transaction_id()
-        order.payer_id = payer_id
+        href = paypal.process(request, order_form, order)
         order.save()
         request.session['order_id'] = order.pk
-        return paypal.process(request, order_form, order)
+        return href
     else:
-        return generate_transaction_id() 
+        return generate_transaction_id()
 
 
 def handle_membership(profile, order):

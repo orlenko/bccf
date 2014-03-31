@@ -59,7 +59,7 @@ def _order_totals(context):
     if context.get("shipping_total", None) is not None:
         context["order_total"] += Decimal(str(context["shipping_total"]))
     if context.get("discount_total", None) is not None:
-        context["order_total"] -= context["discount_total"]
+        context["order_total"] -= Decimal(context["discount_total"])
     if context.get("tax_total", None) is not None:
         context["order_total"] += Decimal(str(context["tax_total"]))
     return context

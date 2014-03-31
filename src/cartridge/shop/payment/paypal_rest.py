@@ -66,8 +66,9 @@ def process(request, order_form, order):
                 'details': {
                     'subtotal': str(cart.total_price()),
                     'tax': str(Decimal(order.tax_total).quantize(TWO_PLACES)),
-                    'shipping': str(Decimal(order.shipping_total).quantize(TWO_PLACES))   
-                }  
+                    'shipping': str(Decimal(order.shipping_total).quantize(TWO_PLACES)),
+                    #'discount': str(Decimal(order.discount_total).quantize(TWO_PLACES)), 
+                },
             },
             'description': 'Test Payment'
         }],
@@ -82,10 +83,20 @@ def process(request, order_form, order):
 
     if payment.create(): # Success
         log.debug("Payment Successful: %s" % payment.id)
+        request.session['paypal_id'] = payment.id
         # Return redirect URL
         for link in payment.links:
             if link.method == "REDIRECT":
                 log.debug("Approve URL: %s" % link.href)
                 return link.href
+    else:
+        raise CheckoutError(payment.error)
+
+def execute(request, payer_id):
+    paypal_id = request.session["paypal_id"]
+    payment = paypal.Payment.find(paypal_id)
+    
+    if payment.execute({"payer_id": payer_id}):
+        return True
     else:
         raise CheckoutError(payment.error)

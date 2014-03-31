@@ -9,6 +9,7 @@ from django.contrib import messages
 
 from bccf.models import Campaign
 from bccf.forms import CampaignForm
+from bccf.util.emailutil import send_moderate
 
 @login_required
 def create(request):
@@ -17,6 +18,10 @@ def create(request):
         form = CampaignForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
+            
+            # Send moderation email
+            send_moderate(request, "A Campaign needs moderation", "bccf", "campaign", form.instance.pk)            
+            
             messages.success(request, 'Campaign successfully created')
             return HttpResponseRedirect(form.instance.edit_url())
         else:

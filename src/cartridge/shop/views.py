@@ -21,7 +21,7 @@ from cartridge.shop.forms import AddProductForm, DiscountForm, CartItemFormSet
 from cartridge.shop.models import Product, ProductVariation, Order, OrderItem, Category
 from cartridge.shop.models import DiscountCode
 from cartridge.shop.payment import paypal_rest as Paypal
-from cartridge.shop.utils import recalculate_cart, sign
+from cartridge.shop.utils import recalculate_cart, sign, generate_transaction_id
 
 import logging
 
@@ -399,6 +399,9 @@ def order_history(request, template="shop/order_history.html"):
 def paypal_approve(request):
     order = Order.objects.get(id=request.session['order_id'])
     del request.session['order_id']
+    payer_id = request.GET.get('PayerID')
+    Paypal.execute(request, payer_id)
+    order.transaction_id = generate_transaction_id()
     order.complete(request)
     order_handler(request, None, order)
     checkout.send_order_email(request, order)

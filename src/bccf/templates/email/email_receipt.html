@@ -1,0 +1,29 @@
+{% load shop_tags i18n %}
+Thank you for purchasing from BCCF.
+
+<section>
+<strong>Customer Name:</strong> {{ user.get_full_name }}<br/>
+<strong>Account Number:</strong> {{ user.profile.account_number }}<br/>
+</section>
+
+<section>
+<strong>Order ID:</strong> {{ order.id }}<br/>
+<strong>Order Date:</strong> {{ order.time }}<br/>
+<strong>Payment Method:</strong> {{ order.payment_method }}<br/>
+</section>
+
+<section>
+<strong>Products Purchased:</strong>
+</section>
+
+<section>
+    <div>
+        <strong>Link to online Invoice</strong>
+        <a href="{% url 'shop_invoice' order.pk %}">{% url 'shop_invoice' order.pk %}</a>
+    </div>
+    <div>
+        <strong>Link to download PDF Invoice</strong>
+        <a href="{% url 'shop_invoice' order.pk %}?format=pdf">{% url 'shop_invoice' order.pk %}?format=pdf</a>    
+    </div>
+<strong>
+</section>

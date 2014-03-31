@@ -16,6 +16,7 @@ from cartridge.shop.models import ProductVariation
 
 from bccf import forms
 from bccf.util.memberutil import get_upgrades
+from bccf.util.emailutil import send_welcome
 
 def signup(request):
     # Optional queries
@@ -46,6 +47,10 @@ def signup(request):
             new_user = authenticate(username=form.cleaned_data.get('username'), 
                                     password=form.cleaned_data.get('password1'))
             login(request, new_user)
+            
+            # Send welcome message
+            send_welcome(request)
+            
             success(request, 'User created successfully! Welcome to the BCCF community %s' % form.instance.get_full_name())
             return response
     
