@@ -6,6 +6,7 @@ from dateutil.relativedelta import relativedelta
 from django.contrib.auth.models import User
 
 from bccf.models import Event, EventRegistration
+from bccf.util import emailutil as email
 
 class EventPaymentReminder(CronJobBase):
     """
@@ -25,7 +26,7 @@ class EventPaymentReminder(CronJobBase):
             print regs
             for reg in regs:
                 print reg
-                send_reminder(email_title, reg.user, 'bccf', 'Event', event.pk)
+                email.send_reminder(email_title, reg.user, 'bccf', 'Event', event.pk)
                 reg.reminder = True
                 reg.save()
         
