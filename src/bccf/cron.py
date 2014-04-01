@@ -22,6 +22,7 @@ class EventPaymentReminder(CronJobBase):
         events = Event.objects.need_reminder().all()
         for event in events:
             regs = EventRegistration.objects.filter(~Q(reminder=True), event=event.pk, paid=False)
+            print regs
             for reg in regs:
                 print "Send Email"
                 send_reminder(email_title, reg.user, 'bccf', 'Event', event.pk)
