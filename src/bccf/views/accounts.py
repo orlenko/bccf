@@ -10,6 +10,8 @@ from django.core.urlresolvers import reverse
 from django.http import Http404
 from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.template import RequestContext
+from django.views.decorators.cache import never_cache
+from django.views.decorators.csrf import csrf_protect
 
 from cartridge.shop.models import ProductVariation
 
@@ -17,11 +19,8 @@ from bccf import forms
 from bccf.util.memberutil import get_upgrades
 from bccf.util.emailutil import send_welcome, send_moderate, send_welcome
 
-def my_login(request, **kwargs):
-     if not request.user.is_authenticated():
-         login(request, **kwargs)
-     return HttpResponseRedirect(reverse('update'))
-
+@csrf_protect
+@never_cache
 def signup(request):
     # Optional queries
     membership_type = request.GET.get('type', None)
@@ -62,6 +61,7 @@ def signup(request):
     context = RequestContext(request, locals())
     return render_to_response('accounts/account_signup.html', {}, context)
 
+@csrf_protect
 @login_required    
 def profile_update(request, tab='home'):
     user = request.user
