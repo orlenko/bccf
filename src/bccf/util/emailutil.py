@@ -15,12 +15,12 @@ TEMPLATE_DIR = "email/%s"
 NO_EMAIL = Settings.get_setting('NO_REPLY_EMAIL')
 MOD_EMAIL = Settings.get_setting('MODERATOR_EMAIL')
     
-def send_welcome(request, subject="Welcome to BCCF", fr=NO_EMAIL, template="email_welcome.txt", template_html="email_welcome.html"):
+def send_welcome(request, user, subject="Welcome to BCCF", fr=NO_EMAIL, template="email_welcome.txt", template_html="email_welcome.html"):
     """
     Helper function that sends a welcome email to users upon registration.
     """
     to = request.user.email
-    c = Context({'user': request.user})
+    c = Context({'user': user})
     plain_content = render_to_string(TEMPLATE_DIR % template, {}, context_instance=c)
     html_content = render_to_string(TEMPLATE_DIR % template_html, {}, context_instance=c)
     
@@ -28,8 +28,8 @@ def send_welcome(request, subject="Welcome to BCCF", fr=NO_EMAIL, template="emai
     msg.attach_alternative(html_content, "text/html")
     msg.send()
     
-def send_moderate(request, subject, app_name, model_name, id, to=MOD_EMAIL, fr=NO_EMAIL,
-    template="email_moderate.txt", template_html="email_moderate.html"):
+def send_moderate(request, subject, id=None, app_name='bccf', model_name=None, to=MOD_EMAIL, fr=NO_EMAIL,
+    template="email_moderate.txt", template_html="email_moderate.html", user=None):
     """
     Helper function that sends an email when something needs moderation.
     Things that need moderation include
@@ -40,9 +40,12 @@ def send_moderate(request, subject, app_name, model_name, id, to=MOD_EMAIL, fr=N
         - new member sign up,
         - and shop orders.
     """
-    model = get_model(app_name, model_name)
-    object = model.objects.get(id=id)
-    c = Context({'obj': object})
+    if id:
+        model = get_model(app_name, model_name)
+        object = model.objects.get(id=id)
+        c = Context({'obj': object, 'user':None})
+    else:
+        c = Context({'user': user})
     plain_content = render_to_string(TEMPLATE_DIR % template, {}, context_instance=c)
     html_content = render_to_string(TEMPLATE_DIR % template_html, {}, context_instance=c)
     
