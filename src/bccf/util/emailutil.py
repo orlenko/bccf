@@ -50,8 +50,8 @@ def send_moderate(request, subject, app_name, model_name, id, to=MOD_EMAIL, fr=N
     msg.attach_alternative(html_content, "text/html")
     msg.send()
     
-def send_reminder(subject, user, app_name, model_name, id, fr=NO_EMAIL, template="email_reminder.txt",
-    template_html="email_reminder.html"):
+def send_reminder(subject, user, app_name, model_name, id, fr=NO_EMAIL, template="email_remind.txt",
+    template_html="email_remind.html"):
     """
     Helper function that sends an email when something needs reminding.
     Things that need reminding include
