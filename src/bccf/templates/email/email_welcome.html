@@ -1,3 +1,6 @@
-Thank you for registering {{ user.get_full_name }} to BCCF.
+<section>
+    Thank you for registering {{ user.get_full_name }} to BCCF.
+</section>
 
-<a href="{% url 'login' %}">{% url "login" %}</a>
+Click here to login:
+<a href="{{ request.build_absolute_uri }}{% url 'login' %}">{{ request.build_absolute_uri }}{% url "login" %}</a>
