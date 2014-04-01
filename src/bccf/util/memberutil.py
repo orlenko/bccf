@@ -18,6 +18,7 @@ from django.utils.http import urlencode
 
 from bccf.models import Settings, BCCFChildPage, EventRegistration
 from bccf.util.eventutil import handle_event
+from bccf.util.emailutil import send_reminder
 from dateutil import relativedelta
 
 

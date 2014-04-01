@@ -11,6 +11,7 @@ from cartridge.shop.models import Cart, ProductVariation
 
 from bccf.models import Event, EventRegistration
 from bccf.models import Settings
+from bccf.util.emailutil import send_reminder
 
 def show_bill(request):
     """
