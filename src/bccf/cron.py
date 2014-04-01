@@ -28,7 +28,7 @@ class EventPaymentReminder(CronJobBase):
             print regs
             for reg in regs:
                 print reg
-                email.send_reminder(email_title, reg.user, 'bccf', 'Event', event.pk)
+                email.send_reminder(self.email_title, reg.user, 'bccf', 'Event', event.pk)
                 reg.reminder = True
                 reg.save()
         
