@@ -68,7 +68,10 @@ def send_reminder(subject, user, app_name, model_name, id, fr=NO_EMAIL):
     msg.attach_alternative(html_content, "text/html")
     # msg.send()
     
-    send_mail('Test Email', plain_content, fr, [to], fail_silently=False, html_message=html_content)
+    try:
+        send_mail('Test Email', plain_content, fr, [to], fail_silently=False, html_message=html_content)
+    except Exception, e:
+        print e
     
 def send_receipt(request, user, order, fr=NO_EMAIL):
     """
