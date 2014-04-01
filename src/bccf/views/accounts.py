@@ -17,6 +17,11 @@ from bccf import forms
 from bccf.util.memberutil import get_upgrades
 from bccf.util.emailutil import send_welcome, send_moderate, send_welcome
 
+def my_login(request, **kwargs):
+     if not request.user.is_authenticated():
+         login(request, **kwargs)
+     return HttpResponseRedirect(reverse('update'))
+
 def signup(request):
     # Optional queries
     membership_type = request.GET.get('type', None)

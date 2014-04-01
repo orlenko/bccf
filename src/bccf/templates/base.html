@@ -117,7 +117,7 @@
             <p>Welcome <a href="{% url "update" %}">{{ request.user.get_full_name }}</a></p>
             <p><a href="{% url "logout" %}">Logout</a></p>
             {% else %}
-            <p><a href="{% url "login" %}/?next={% url 'update' %}">Login</a></p>
+            <p><a href="{% url "login" %}">Login</a></p>
             <p><a href="{% url "signup" %}">Create Account</a></p>
             {% endif %}
             {% shopping_cart %}
