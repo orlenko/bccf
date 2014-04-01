@@ -21,6 +21,8 @@ class EventPaymentReminder(CronJobBase):
     
     def do(self):
         events = Event.objects.need_reminder().all()
+        print "Event:"
+        print events
         for event in events:
             regs = EventRegistration.objects.filter(~Q(reminder=True), ~Q(paid=True), event=event.pk)
             print regs
