@@ -69,11 +69,10 @@ def send_reminder(subject, user, app_name, model_name, id, fr=NO_EMAIL, template
     
     msg = EmailMultiAlternatives(subject, plain_content, fr, [to])
     msg.attach_alternative(html_content, "text/html")
-    msg.send()
+    # msg.send()
 
     try:
         print "Sending Email"
-        send_mail('Test Email', 'Test Email', fr, [to], fail_silently=False, html_message=html_content)
         send_mail_template('Test Email', TEMPLATE_DIR % template_html, fr, [to], context=c, fail_silently=settings.DEBUG)
     except Exception, e:
         print e
