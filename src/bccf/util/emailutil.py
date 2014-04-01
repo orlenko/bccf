@@ -69,27 +69,21 @@ def send_reminder(subject, user, app_name, model_name, id, fr=NO_EMAIL, template
     
     msg = EmailMultiAlternatives(subject, plain_content, fr, [to])
     msg.attach_alternative(html_content, "text/html")
-    # msg.send()
-
-    try:
-        print "Sending Email"
-        send_mail_template('Test Email', TEMPLATE_DIR % template_html, fr, [to], context=c, fail_silently=settings.DEBUG)
-    except Exception, e:
-        print e
-    
-def send_receipt(request, user, order, fr=NO_EMAIL):
-    """
-    Helper function that sends an receipt to the user who bought a product
-    from the BCCF Shop
-    """
-    to = user.email
-    c = Context({'order': order, 'user': user})
-    plain_content = render_to_string(TEMPLATE_DIR % template, {}, context_instance=c)
-    html_content = render_to_string(TEMPLATE_DIR % template, {}, context_instance=c)
-    
-    msg = EmailMultiAlternatives(subject, plain_content, fr, [to])
-    msg.attach_alternative(html_content, "text/html")
     msg.send()
+    
+# def send_receipt(request, user, order, fr=NO_EMAIL):
+#    """
+#    Helper function that sends an receipt to the user who bought a product
+#    from the BCCF Shop
+#    """
+#    to = user.email
+#    c = Context({'order': order, 'user': user})
+#    plain_content = render_to_string(TEMPLATE_DIR % template, {}, context_instance=c)
+#    html_content = render_to_string(TEMPLATE_DIR % template, {}, context_instance=c)
+#    
+#    msg = EmailMultiAlternatives(subject, plain_content, fr, [to])
+#    msg.attach_alternative(html_content, "text/html")
+#    msg.send()
     
 def send_after_survey(request, id, fr=NO_EMAIL):
     """

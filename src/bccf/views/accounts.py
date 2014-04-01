@@ -11,6 +11,7 @@ from django.http import Http404
 from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.template import RequestContext
 
+from mezzanine.utils.email import send_approve_mail, send_approved_mail
 
 from cartridge.shop.models import ProductVariation
 
@@ -49,7 +50,8 @@ def signup(request):
             login(request, new_user)
             
             # Send welcome message
-            send_welcome(request)
+            send_approve_mail(request, request.user)
+            send_approved_mail(request, request.user)
             
             success(request, 'User created successfully! Welcome to the BCCF community %s' % form.instance.get_full_name())
             return response
