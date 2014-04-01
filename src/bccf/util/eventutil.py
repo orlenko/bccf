@@ -59,7 +59,7 @@ def handle_event(request, user, order):
                         profile.payment = price
                     else:
                         profile.payment += price
-                    profile.save()    
+                    profile.save()
                     
             if user.profile.is_organization:
                 user_ids = request.session.get('register_selected_members', [])
@@ -68,12 +68,19 @@ def handle_event(request, user, order):
                 if not event_id:
                     log.debug('event ID is None')
                     return
+                if event_id != event:
+                    continue                
                     
                 event = Event.objects.get(id=event_id)
+                members = []
                 for user_id in user_ids:
                     u = User.objects.get(id=user_id)
+                    members.append(u)
                     EventRegistration.objects.create(user=user, event=event,
                                             event_order=order, paid=paid)
+                    send_reminder("Event Registration Complete.", u, context={'event':event})
+                    
+                send_reminder("Event Registration Complete.", request.user, context={'event': event, 'members': members})
                                             
                 del request.session['register_selected_members']
                 del request.session['register_selected_event']
@@ -81,5 +88,8 @@ def handle_event(request, user, order):
             else:        
                 EventRegistration.objects.create(user=user, event=event, 
                                          event_order=order, paid=paid)
+                
+                # Send confirmation
+                send_reminder("Event Registration Complete.", request.user, context={'event':event})
 
             return

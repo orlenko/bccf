@@ -13,6 +13,7 @@ from django.shortcuts import render_to_response, redirect
 from django.template.context import RequestContext
 
 from bccf.util.memberutil import get_upgrades, require_any_membership
+from bccf.util.emailutil import send_moderate
 from bccf.forms import AddUserForm, AddExistingUserForm, DelMember, AddUsersForm, ReqProgram
 from bccf.models import ProgramRequest
 
@@ -149,6 +150,10 @@ def membership_cancel(request):
                          'Your membership cancellation request has been submitted. '
                          'You should receive an email about this. '
                          'We will get back to you as soon as we can.')
+        
+        # Send email moderate
+        send_moderate('Membership Cancellation Request', context={'user': user})        
+        
         return HttpResponseRedirect('/')
     context = RequestContext(request, locals())
     return render_to_response('bccf/membership/cancel.html', {}, context_instance=context)
@@ -200,6 +205,8 @@ def reqprogram(request):
     if request.method == 'POST':
         form = ReqProgram(request.POST)
         if form.is_valid():
+            # Send email for moderation
+            send_moderate('Program request', context={'request': form.instance, 'user': request.user})
             form.save()
             return HttpResponseRedirect(reverse('update-tab', args=['program']))
     context = RequestContext(request, locals())

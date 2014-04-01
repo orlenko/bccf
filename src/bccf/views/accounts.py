@@ -15,7 +15,7 @@ from cartridge.shop.models import ProductVariation
 
 from bccf import forms
 from bccf.util.memberutil import get_upgrades
-from bccf.util.emailutil import send_welcome, send_moderate
+from bccf.util.emailutil import send_welcome, send_moderate, send_welcome
 
 def signup(request):
     # Optional queries
@@ -48,8 +48,8 @@ def signup(request):
             login(request, new_user)
             
             # Send welcome message
-            send_welcome(request, new_user)
-            send_moderate(request, "New user signed up.", user=new_user)
+            send_welcome(new_user)
+            send_moderate("New user signed up.", context={'user': new_user})
             
             success(request, 'User created successfully! Welcome to the BCCF community %s' % form.instance.get_full_name())
             return response
@@ -169,16 +169,26 @@ def register_event(request):
         recalculate_cart(request)
         response = redirect('/shop/checkout')
         message = 'Users registered successfully. Please continue with the  checkout to complete registrations.'
+        
+        # Send event registration confirmation
+        send_reminder("Event Registration Pending.", user, context={'event':event})
+        
     else: # If not paid event, auto-register the members
-       for member_id in member_ids:
-           user = User.objects.get(id=member_id)
-           EventRegistration.objects.create(user=user, event=event)
-           
-       # Delete session variables since the IDs have been registered
-       del request.session['register_selected_members']
-       del request.session['register_selected_event']   
+        members = []        
+        for member_id in member_ids:
+            user = User.objects.get(id=member_id)
+            members.append(user)
+            EventRegistration.objects.create(user=user, event=event)
+            send_reminder("Event Registration Complete.", user, context={'event': event})
+          
+        # Send event registration confirmation
+        send_reminder("Event Registration Complete.", request.user, context={'event': event, 'members': members})
 
-    success(request, message) 
+        # Delete session variables since the IDs have been registered
+        del request.session['register_selected_members']
+        del request.session['register_selected_event']   
+
+    success(request, message)
     return response
 
 def get_page(objects, page):

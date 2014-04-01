@@ -24,7 +24,11 @@ class EventPaymentReminder(CronJobBase):
         for event in events:
             regs = EventRegistration.objects.filter(~Q(reminder=True), ~Q(paid=True), event=event.pk)
             for reg in regs:
-                email.send_reminder(self.email_title, reg.user, 'bccf', 'Event', event.pk)
+                context = {
+                    'event': event,
+                    'reg': reg                
+                }
+                email.send_reminder(self.email_title, reg.user, context)
                 reg.reminder = True
                 reg.save()
         
@@ -42,15 +46,13 @@ class EventFreeRemind(CronJobBase):
         events = Event.objects.need_freeing().all()
         for event in events:
             counter = 0
-            regs = EventRegistration.objects.filter(event=event.pk)
+            regs = EventRegistration.objects.filter(event=event)
             for reg in regs:
                 if not reg.paid: # Remove
-                    print reg.user.get_full_name()
                     counter += 1
-                    # Send email about revoked seat
+                    email.send_reminder('Event seat reservation released', reg.user, context={'event': event})
                 else: # Send Reminder
-                    print reg.user.get_full_name()
-                    # Send email reminder about event
+                    email.send_reminder('Event reminder', reg.user, context={'event': event})
             if counter > 0: # Set event to not full if there are people who has not paid
                 event.full = False
                 event.save()
@@ -67,9 +69,11 @@ class EventClose(CronJobBase):
         events = Event.objects.filter(date_start__lte=now())
         for event in events:
             event.status = 1
+            regs = EventRegistration.objects.filter(event=event)
             if event.provider:
-                # Send email to provider
-                pass
+                email.send_reminder('Event finished', event.provider, context={'event': event}) # To Provider
+            for reg in regs:
+                email.send_reminder('Event finished', reg.user, context={'event': event}) # To Attendees
             if event.survey_before:
                 event.survey_before.closed = True
                 event.survey_before.save()
@@ -98,8 +102,7 @@ class UserMembershipReminder(CronJobBase):
             elif type == 'Monthly': # 1 week before
                 limit = expiry - relativedelta(week=1)
             if limit and now() <= limit:
-                # Send email
-                pass
+                email.send_reminder('Membership Expiring', user)
 
 class UserMembershipExpire(CronJobBase):
     """
@@ -115,7 +118,8 @@ class UserMembershipExpire(CronJobBase):
         for user in users:
             expiry =user.profile.membership_expiration_datetime
             if now() <= expiry:
-                # Send email
+                email.send_reminder('Membership Expired', user)
+                email.send_moderate('Membership Expired', context={'user': user})
                 user.profile.membership_order = None
                 user.profile.membership_level = 'A'
                 user.profile.save()

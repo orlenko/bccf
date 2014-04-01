@@ -152,6 +152,9 @@ def handle_membership(profile, order):
                     profile.cancel_membership()
                     profile.membership_order = order
                     profile.save()
+                    
+                    # Send confirmation
+                    send_reminder("Membership Purchase Confirmation", profile.user, context={'order': order})
                     return
 
 def get_upgrades(profile):

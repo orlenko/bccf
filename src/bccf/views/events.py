@@ -12,7 +12,11 @@ from django.http import HttpResponse
 from django.http.response import HttpResponseRedirect
 from django import forms
 
+from cartridge.shop.models import ProductVariation
+from cartridge.shop.utils import recalculate_cart
+
 from bccf.util.memberutil import require_event_audience
+from bccf.util.emailutil import send_moderate
 from bccf.models import Event, EventRegistration, BCCFPage
 from bccf.forms import EventForm
 from mezzanine.core.models import CONTENT_STATUS_DRAFT, CONTENT_STATUS_PUBLISHED, CONTENT_STATUS_CHOICES
@@ -67,7 +71,8 @@ def publish(request, slug):
     event = Event.objects.get(slug=slug)
     event.status = CONTENT_STATUS_PUBLISHED
     event.save()
-    messages.success(request, 'Event published')
+    send_moderate("An Event has been published", context={'event':event})
+    messages.success(request, 'Event published. The event will be subject to review and can be taken down without notice.')
     return redirect(reverse('update-tab', (), {'tab': 'training'}))
 
 @require_event_audience
@@ -85,15 +90,21 @@ def signup(request, slug):
                 exists = True
             if not exists:
                 if event.event_product:
-                    from cartridge.shop.models import ProductVariation
-                    from cartridge.shop.utils import recalculate_cart
                     variation = ProductVariation.objects.get(sku='EVENT-%s' % event.pk)
                     request.cart.add_item(variation, 1)
                     recalculate_cart(request)
                     messages.success(request, 'To complete the registration, please go through the checkout.')
+                    
+                    # Send event registration confirmation
+                    send_reminder("Event Registration Pending.", user, context={'event':event})
+                    
                 else:
                     registration = EventRegistration.objects.create(user=request.user, event=event)
-                    messages.success(request, 'Thank you! You signed up to the event successfully.')                
+                    
+                    # Send event registration confirmation
+                    send_reminder("Event Registration Complete.", request.user, context={'event':event})
+                    
+                    messages.success(request, 'Thank you! You signed up to the event successfully.')              
             if event.max_seats == len(EventRegistration.objects.filter(event=event)):
                 event.full = True
                 event.save()

@@ -15,11 +15,11 @@ TEMPLATE_DIR = "email/%s"
 NO_EMAIL = Settings.get_setting('NO_REPLY_EMAIL')
 MOD_EMAIL = Settings.get_setting('MODERATOR_EMAIL')
     
-def send_welcome(request, user, subject="Welcome to BCCF", fr=NO_EMAIL, template="email_welcome.txt", template_html="email_welcome.html"):
+def send_welcome(user, subject="Welcome to BCCF", fr=NO_EMAIL, template="email_welcome.txt", template_html="email_welcome.html"):
     """
     Helper function that sends a welcome email to users upon registration.
     """
-    to = request.user.email
+    to = user.email
     c = Context({'user': user})
     plain_content = render_to_string(TEMPLATE_DIR % template, {}, context_instance=c)
     html_content = render_to_string(TEMPLATE_DIR % template_html, {}, context_instance=c)
@@ -28,8 +28,8 @@ def send_welcome(request, user, subject="Welcome to BCCF", fr=NO_EMAIL, template
     msg.attach_alternative(html_content, "text/html")
     msg.send()
     
-def send_moderate(request, subject, id=None, app_name='bccf', model_name=None, to=MOD_EMAIL, fr=NO_EMAIL,
-    template="email_moderate.txt", template_html="email_moderate.html", user=None):
+def send_moderate(subject, context={}, to=MOD_EMAIL, fr=NO_EMAIL,
+    template="email_moderate.txt", template_html="email_moderate.html"):
     """
     Helper function that sends an email when something needs moderation.
     Things that need moderation include
@@ -40,12 +40,7 @@ def send_moderate(request, subject, id=None, app_name='bccf', model_name=None, t
         - new member sign up,
         - and shop orders.
     """
-    if id:
-        model = get_model(app_name, model_name)
-        object = model.objects.get(id=id)
-        c = Context({'obj': object, 'user':None})
-    else:
-        c = Context({'user': user})
+    c = Context(context)
     plain_content = render_to_string(TEMPLATE_DIR % template, {}, context_instance=c)
     html_content = render_to_string(TEMPLATE_DIR % template_html, {}, context_instance=c)
     
@@ -53,7 +48,7 @@ def send_moderate(request, subject, id=None, app_name='bccf', model_name=None, t
     msg.attach_alternative(html_content, "text/html")
     msg.send()
     
-def send_reminder(subject, user, app_name, model_name, id, fr=NO_EMAIL, template="email_remind.txt",
+def send_reminder(subject, user, context={}, fr=NO_EMAIL, template="email_remind.txt",
     template_html="email_remind.html"):
     """
     Helper function that sends an email when something needs reminding.
@@ -63,10 +58,8 @@ def send_reminder(subject, user, app_name, model_name, id, fr=NO_EMAIL, template
         - event payment,
         - event seat released,
     """
-    to = 'khcastillo@hotmail.com' #user.email
-    model = get_model(app_name, model_name)
-    object = model.objects.get(id=id)
-    c = Context({'obj': object, 'user': user})
+    to = user.email
+    c = Context(context)
     plain_content = render_to_string(TEMPLATE_DIR % template, {}, context_instance=c)
     html_content = render_to_string(TEMPLATE_DIR % template_html, {}, context_instance=c)
     
