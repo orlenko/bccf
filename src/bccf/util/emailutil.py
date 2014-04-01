@@ -6,6 +6,8 @@ from django.core.mail import send_mail, BadHeaderError, EmailMultiAlternatives
 from django.template import Context
 from django.template.loader import render_to_string
 
+from mezzanine.utils.email import send_mail_template
+
 from bccf.models import Event, EventRegistration, Settings
 from cartridge.shop.models import Order
 
@@ -62,14 +64,15 @@ def send_reminder(subject, user, app_name, model_name, id, fr=NO_EMAIL):
     object = model.objects.get(id=id)
     c = Context({'obj': object, 'user': user})
     plain_content = render_to_string(TEMPLATE_DIR % template, {}, context_instance=c)
-    html_content = render_to_string(TEMPLATE_DIR % template, {}, context_instance=c)
+    html_content = render_to_string(TEMPLATE_DIR % template_html, {}, context_instance=c)
     
     msg = EmailMultiAlternatives(subject, plain_content, fr, [to])
     msg.attach_alternative(html_content, "text/html")
     # msg.send()
-    
+
     try:
-        send_mail('Test Email', plain_content, fr, [to], fail_silently=False, html_message=html_content)
+        print "Sending Email"
+        send_mail_template('Test Email', TEMPLATE_DIR % template_html, fr, [to], context=c, fail_silently=settings.DEBUG)
     except Exception, e:
         print e
     
