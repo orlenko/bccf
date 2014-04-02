@@ -19,12 +19,10 @@ register = template.Library()
 def bccf_subscribe_for(context, obj):
     """If obj is subscribable (like an event), render a form for subscribing to it.
     """
-    log.debug('Checking subscribe form for %s' % obj._meta.object_name)
     if obj._meta.object_name == 'BCCFChildPage':
         if obj.content_model == 'event':
-            log.debug('Subscribe form leads to %s' % obj.get_content_model().signup_url())
-            request = context['request']
-            context['subscribe_obj'] = obj.get_content_model()
+            context['subscribe_obj'] = obj
+            context['event_obj'] = obj.get_content_model()
             context['product'] = obj.get_content_model().event_product
     return context
     

@@ -169,6 +169,38 @@ class ProductImage(Orderable):
             value = ""
         return value
 
+class ProductDownloadableContent(Orderable):
+    """
+    If the product has a downloadable content - a relationship is defined with
+    the product's variations so that each variation can potentially have it's own
+    downloadable content, while the relationship between the ``Product`` and ``Product
+    Downloadable Content`` model ensures there is a single set of downloadable content
+    for the product.
+    """
+    
+    file = FileField("Downloadable Content",
+        upload_to = upload_to("shop.ProductDownloadable.file", "product"),     
+        extensions = ['.pdf'],
+        max_length = 255,
+        null = True,
+        blank = True,
+        help_text = 'You can upload a downloadable content. ' 
+            'Acceptable file types: .pdf.')
+    description = CharField(_('Description'), blank=True, max_length=1000)
+    product = models.ForeignKey("Product", related_name="downloadables")
+        
+    class Meta:
+        verbose_name = _("Downloadable Content")
+        verbose_name_plural = _("Downloadable Contents")
+        order_with_respect_to = "product"
+        
+    def __unicode__(self):
+        value = self.description
+        if not value:
+            value = self.file.name
+        if not value:
+            value = ""
+        return value
 
 class ProductOption(models.Model):
     """
@@ -213,6 +245,8 @@ class ProductVariation(Priced):
     default = models.BooleanField(_("Default"), default=False)
     image = models.ForeignKey("ProductImage", verbose_name=_("Image"),
                               null=True, blank=True)
+    downloadable = models.ForeignKey("ProductDownloadableContent", verbose_name=_("Downloadable Content"),
+                                        null=True, blank=True)
 
     objects = managers.ProductVariationManager()
 

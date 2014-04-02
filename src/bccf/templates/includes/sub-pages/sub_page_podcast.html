@@ -1,0 +1,3 @@
+{% if podcast_obj %}
+    <audio src="{{ MEDIA_URL }}{{ podcast_obj.attached_audio }}" preload="auto" controls></audio>
+{% endif %}

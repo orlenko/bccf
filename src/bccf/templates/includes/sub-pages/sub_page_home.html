@@ -1,0 +1,25 @@
+{% load bccf_rating_tags bccf_event_tags bccf_resource_tags embed_video_tags comment_tags %}
+<div class="section row row-one social-box">
+    {% if child_obj.show_rating or child_obj.content_model != 'bccfgenericpage' %}
+        {% bccf_rating_for child_obj %}
+    {% endif %}
+    {% include "includes/add_this.html" %}
+</div>
+<div class="section row-one">
+    <h3>{{ child_obj.title }}</h3>
+    {% if child_obj.content_model == 'video' %}
+        {% video child_obj.get_content_model.video_url "small" %}
+    {% endif %}
+    
+    {% podcast_for child_obj %}
+    {% bccf_subscribe_for child_obj %}
+    
+    <section>
+        {{ child_obj.content|safe }}
+    </section>
+</div>
+{% if child_obj.show_comments or child_obj.content_model != 'bccfgenericpage' %}
+    <div class="section row row-one">
+        {% comments_for child_obj %}
+    </div>
+{% endif %}

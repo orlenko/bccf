@@ -1,4 +1,4 @@
-{% load bccf_feature_tags static bccf_rating_tags bccf_event_tags comment_tags embed_video_tags %}
+{% load bccf_feature_tags static %}
 <section id={{ child_obj.slug }} class="section subpage {{ child_obj.gparent.carousel_color }}">
     <a id="close-btn" href="#" title="Close" class="fa fa-times-circle"></a>
     <div class="subpage-tabs section">
@@ -6,28 +6,7 @@
             <li class="col two mobile-full">
                 <a href="{{ child_obj.get_absolute_url }}" id="child-home" class="baby-content-btn">Home</a>
                 <div class="baby-content">
-                    <div class="section row row-one social-box">
-                        {% if child_obj.show_rating or child_obj.content_model != 'bccfgenericpage' %}
-                        {% bccf_rating_for child_obj %}
-                        {% endif %}
-                        {% include "includes/add_this.html" %}
-                    </div>
-                    <div class="section row-one">
-                        <h3>{{ child_obj.title }}</h3>
-                        {% if child_obj.content_model == 'video' %}
-                        {% video child_obj.get_content_model.video_url "small" %}
-                        {% endif %}
-                        {% if child_obj.content_model == 'podcast' %}
-                        <audio src="{{ MEDIA_URL }}{{ child_obj.get_content_model.attached_audio }}" preload="auto" controls></audio>
-                        {% endif %}
-                        {{ child_obj.content|safe }}
-                        {% bccf_subscribe_for child_obj %}
-                    </div>
-                    {% if child_obj.show_comments or child_obj.content_model != 'bccfgenericpage' %}
-                    <div class="section row row-one">
-                        {% comments_for child_obj %}
-                    </div>
-                    {% endif %}
+                    {% include 'includes/sub-pages/sub_page_home.html' %}                    
                 </div>
             </li>
             {% for baby in babies %}
@@ -105,28 +84,7 @@
     </div>
     <div class="subpage-content section row"></div>
     <div class="home-content section row no-mobile">
-        <div class="section row row-one social-box">
-            {% include "includes/add_this.html" %}
-            {% if child_obj.show_rating or child_obj.content_model != 'bccfgenericpage' %}
-            {% bccf_rating_for child_obj %}
-            {% endif %}
-        </div>
-        <div class="section row-one">
-            <h3>{{ child_obj.title }}</h3>
-            {% if child_obj.content_model == 'video' %}
-            {% video child_obj.get_content_model.video_url "small" %}
-            {% endif %}
-            {% if child_obj.content_model == 'podcast' %}
-            <audio src="{{ MEDIA_URL }}{{ child_obj.get_content_model.attached_audio }}" preload="auto" controls></audio>
-            {% endif %}
-            {{ child_obj.content|safe }}
-            {% bccf_subscribe_for child_obj %}
-        </div>
-        {% if child_obj.show_comments or child_obj.content_model != 'bccfgenericpage' %}
-        <div class="section row row-one">
-            {% comments_for child_obj %}
-        </div>
-        {% endif %}
+        {% include 'includes/sub-pages/sub_page_home.html' %}
     </div>
 </section>
 <script type="text/javascript" >

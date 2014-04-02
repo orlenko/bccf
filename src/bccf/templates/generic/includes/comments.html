@@ -27,6 +27,10 @@ $(function() {
         <input class="btn btn-primary btn-lg" type="submit" value="{% trans "Comment" %}">
     </div>
 </form>
+{% else %}
+    <a href="{% url 'login' %}?next={{ request.get_full_path }}">Login</a> or 
+    <a href="{% url 'signup' %}">Sign Up</a> 
+    as a {{ event_obj.page_for }} to register for this event.
 {% endif %}
 </div>
 {% endif %}

@@ -1,13 +1,19 @@
 {% load mezzanine_tags shop_tags i18n future %}
 {% if subscribe_obj %}
-    {% if not subscribe_obj.get_content_model.is_full %}
-    	<div class="inline_subscribe_form">
-    		<form action="{{ subscribe_obj.get_content_model.signup_url }}" method="post">
-    			{% csrf_token %}
-    			<input type="submit" value="Register" />
-    		</form>
-    	</div>
-	{% else %}
-	   <p>The event is full.</p>
-	{% endif %}
+    {% if user.is_authenticated %}
+        {% if not event_obj.is_full %}
+        	<div class="inline_subscribe_form">
+        		<form action="{{ subscribe_obj.get_content_model.signup_url }}" method="post">
+        			{% csrf_token %}
+        			<input type="submit" value="Register" />
+        		</form>
+        	</div>
+    	{% else %}
+    	   <p>The event is full.</p>
+    	{% endif %}
+    {% else %}
+        <a href="{% url 'login' %}?next={{ request.get_full_path }}">Login</a> or 
+        <a href="{% url 'signup' %}?type={{ event_obj.page_for }}">Sign Up</a> 
+        as a {{ event_obj.page_for }} to register for this event.
+    {% endif %}
 {% endif %}

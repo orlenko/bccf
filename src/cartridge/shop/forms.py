@@ -541,7 +541,9 @@ class ProductVariationAdminForm(forms.ModelForm):
             product = kwargs["instance"].product
             qs = self.fields["image"].queryset.filter(product=product)
             self.fields["image"].queryset = qs
-
+            log.debug(self.fields)
+            qs = self.fields["downloadable"].queryset.filter(product=product)
+            self.fields["downloadable"].queryset = qs
 
 class ProductVariationAdminFormset(BaseInlineFormSet):
     """
