@@ -1,17 +1,23 @@
 import logging
 log = logging.getLogger(__name__)
 
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import REDIRECT_FIELD_NAME, authenticate, login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.messages import success, error
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
-from django.http import Http404
+from django.http import Http404, HttpResponseRedirect
+from django.utils.http import is_safe_url
 from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.template import RequestContext
+
+from django.views.decorators.debug import sensitive_post_parameters
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
+
+from django.template.response import TemplateResponse
 
 from cartridge.shop.models import ProductVariation
 
@@ -19,6 +25,43 @@ from bccf import forms
 from bccf.util.memberutil import get_upgrades
 from bccf.util.emailutil import send_welcome, send_moderate, send_welcome
 
+@sensitive_post_parameters()
+@csrf_protect
+@never_cache
+def my_login(request, template_name='accounts/account_login.html',#'registration/login.html',
+          redirect_field_name=REDIRECT_FIELD_NAME,
+          authentication_form=AuthenticationForm,
+          current_app=None, extra_context=None):
+              
+    redirect_to = request.POST.get(redirect_field_name,
+                                   request.GET.get(redirect_field_name, reverse('update')))
+
+    if request.method == "POST":
+        form = authentication_form(request, data=request.POST)
+        if form.is_valid():
+
+            # Ensure the user-originating redirection url is safe.
+            if not is_safe_url(url=redirect_to, host=request.get_host()):
+                redirect_to = resolve_url(settings.LOGIN_REDIRECT_URL)
+
+            # Okay, security check complete. Log the user in.
+            auth_login(request, form.get_user())
+
+            return HttpResponseRedirect(redirect_to)
+    else:
+        form = authentication_form(request)
+
+    context = {
+        'form': form,
+        redirect_field_name: redirect_to,
+        'title': 'Login',
+    }
+    if extra_context is not None:
+        context.update(extra_context)
+    return TemplateResponse(request, template_name, context,
+                            current_app=current_app)
+
+@sensitive_post_parameters()
 @csrf_protect
 @never_cache
 def signup(request):
@@ -49,7 +92,7 @@ def signup(request):
             form.save()
             new_user = authenticate(username=form.cleaned_data.get('username'), 
                                     password=form.cleaned_data.get('password1'))
-            login(request, new_user)
+            auth_login(request, new_user)
             
             # Send welcome message
             send_welcome(new_user)
@@ -61,6 +104,7 @@ def signup(request):
     context = RequestContext(request, locals())
     return render_to_response('accounts/account_signup.html', {}, context)
 
+@sensitive_post_parameters()
 @csrf_protect
 @login_required    
 def profile_update(request, tab='home'):
