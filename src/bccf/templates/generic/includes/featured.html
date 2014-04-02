@@ -3,7 +3,7 @@
 <div class="{{ class }}-slide">
     <img src="{{ MEDIA_URL }}{% bccf_thumbnail slide.image 535 250 %}" alt="{{ slide.title }}" />
     <div class="{{ class }}-caption">
-        <div class="col seven mobile-seven">
+        <div class="caption-body col seven mobile-seven">
             <h4>{{ slide.title }}</h4>
             <p>{{ slide.content|safe|striptags|truncatechars:50 }}<p>
         </div>

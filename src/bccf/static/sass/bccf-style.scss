@@ -987,13 +987,16 @@ textarea {
         p{
             color:#000000;
 		}
+		.caption-body {
+		  margin-top: 10px;    
+		}
 	}
     .hnote-buttons {
 		float:right;
 		width:40%;
 		text-align:right;
 		/*margin:14px 5px 0 0;*/
-		div {margin:5px; }
+		div {margin:10px; }
 		.dashed-button {float:right;}
 	}
 	.hnote-pagination {
@@ -1046,13 +1049,16 @@ textarea {
 		p {
 			color:#000000;
 		}
+		.caption-body {
+		  margin-top: 10px;    
+		}
 	}
 	.hpro-buttons {
 		float:right;
 		width:40%;
 		text-align:right;
 		/*margin:14px 5px 0 0;*/
-		div {margin:5px; }
+		div {margin: 10px; }
 		.dashed-button {float:right;}
 	}
 	.hpro-pagination {
