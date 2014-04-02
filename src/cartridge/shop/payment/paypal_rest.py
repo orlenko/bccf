@@ -6,7 +6,7 @@ log = logging.getLogger(__name__)
 
 from django.core.exceptions import ImproperlyConfigured
 
-from cartridge.shop.models import Cart
+from cartridge.shop.models import Cart, DiscountCode
 from cartridge.shop.checkout import CheckoutError
 
 from bccf import settings
@@ -37,23 +37,39 @@ def process(request, order_form, order):
     """
     cart = Cart.objects.from_request(request)
     items = []
-    
+    subtotal = Decimal(0)
+    if order_form._request.session["discount_code"]:
+        discount = DiscountCode.objects.get(code=order_form._request.session["discount_code"])
+   
     # Create a list of items to be sent to paypal
     for item in cart.items.all():
+        price = item.unit_price
+        if discount:
+            price = price - cart.calculate_item_discount(item, discount)
+        subtotal = subtotal + price
         items.append({
             'name': 'item',
             'sku': item.sku,
-            'price': str(item.unit_price),
+            'price': str(price),
             'currency': 'CAD',
             'quantity': item.quantity
-        }) 
+        })
+        
+    #log.debug(cart.items.all())
+    log.debug(items)      
+    log.debug(order.total)  
+    log.debug(order.tax_total)        
+    log.debug(order.shipping_total)
+    log.debug(subtotal)      
+        
+    #fail()
     
     # Makes sure that the prices have two decimal places    
     TWO_PLACES = Decimal(10) ** -2
     
-    discount = ''
-    if order.discount_total:
-        discount = str(Decimal(order.discount_total).quantize(TWO_PLACES))
+    #discount = ''
+    #if order.discount_total:
+    #    discount = str(Decimal(order.discount_total).quantize(TWO_PLACES))
 
     data = order_form.cleaned_data
 
@@ -79,10 +95,9 @@ def process(request, order_form, order):
                 'total': str(Decimal(order.total).quantize(TWO_PLACES)),
                 'currency': 'CAD',
                 'details': {
-                    'subtotal': str(cart.total_price()),
+                    'subtotal': str(subtotal.quantize(TWO_PLACES)),
                     'tax': str(Decimal(order.tax_total).quantize(TWO_PLACES)),
                     'shipping': str(Decimal(order.shipping_total).quantize(TWO_PLACES)),
-                    #'discount': discount, 
                 },
             },
             'description': 'Invoice for BCCF Registration/Product Purchases'
@@ -92,9 +107,6 @@ def process(request, order_form, order):
             'cancel_url': PAYPAL_CANCEL_URLS       
         },
     })
-    
-    # Uncomment to produce an error
-    # payment.does_not_exist()
 
     if payment.create(): # Success
         log.debug("Payment Successful: %s" % payment.id)

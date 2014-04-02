@@ -650,7 +650,7 @@ class Cart(models.Model):
             return discount.calculate(self.total_price())
         total = Decimal("0")
         # Create a list of skus in the cart that are applicable to
-        # the discount, and total the discount for appllicable items.
+        # the discount, and total the discount for applicable items.
         lookup = {"product__in": products, "sku__in": self.skus()}
         discount_variations = ProductVariation.objects.filter(**lookup)
         discount_skus = discount_variations.values_list("sku", flat=True)
@@ -658,7 +658,15 @@ class Cart(models.Model):
             if item.sku in discount_skus:
                 total += discount.calculate(item.unit_price) * item.quantity
         return total
-
+        
+    def calculate_item_discount(self, product, discount):
+        """
+        Calculates the discount for a specific product, some might not have
+        any discount.
+        """
+        if DiscountCode.objects.filter(products=product):
+            return product.unit_price
+        return discount.calculate(product.unit_price)
 
 class SelectedProduct(models.Model):
     """
