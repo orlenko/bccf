@@ -19,6 +19,8 @@ from bccf.models import ProgramRequest
 
 log = logging.getLogger(__name__)
 
+def pub_profile(request):
+    pass
 
 @login_required
 def profile(request):

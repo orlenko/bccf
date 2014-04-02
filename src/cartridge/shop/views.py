@@ -400,11 +400,26 @@ def paypal_approve(request):
     order = Order.objects.get(id=request.session['order_id'])
     del request.session['order_id']
     payer_id = request.GET.get('PayerID')
+    
     Paypal.execute(request, payer_id)
+    payment = Paypal.find(request)
+ 
+    if payment.shipping_info:
+        order.shipping_detail_first_name = payment.shipping_info.first_name
+        order.shipping_detail_last_name = payment.shipping_info.last_name
+        order.shipping_detail_street = payment.shipping_info.address.line1
+        order.shipping_detail_city = payment.shipping_info.address.city
+        order.shipping_detail_state = payment.shipping_info.address.state
+        order.shipping_detail_postcode = payment.shipping_info.address.postal_code
+        order.shipping_detail_country = payment.shipping_info.address.country_code
+ 
     order.transaction_id = generate_transaction_id()
-    order.complete(request)
+    order.complete(request)    
     order_handler(request, None, order)
-    checkout.send_order_email(request, order)
+    
+    checkout.send_order_email(request, order)   
+    del request.session["paypal_id"]
+
     return redirect("shop_complete")   
 
 @never_cache   

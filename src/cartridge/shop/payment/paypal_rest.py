@@ -50,15 +50,30 @@ def process(request, order_form, order):
     
     # Makes sure that the prices have two decimal places    
     TWO_PLACES = Decimal(10) ** -2
+    
+    discount = ''
+    if order.discount_total:
+        discount = str(Decimal(order.discount_total).quantize(TWO_PLACES))
+
+    data = order_form.cleaned_data
 
     payment = paypal.Payment({
         'intent': 'sale',
         'payer': {
-            'payment_method': 'paypal',   
+            'payment_method': 'paypal',
         },
         'transactions': [{
             'item_list': {
-                'items': items
+                'items': items,
+                #'shipping_address': {
+                #    'recipient_name': '%s %s' % (data['shipping_detail_first_name'], data['shipping_detail_last_name']),
+                #    'line1': data['shipping_detail_street'],
+                #    'city': data['shipping_detail_city'],
+                #    'country_code': data['shipping_detail_country'],
+                #    'postal_code': data['shipping_detail_postcode'],
+                #    'state': data['shipping_detail_state'],
+                #    'phone': data['shipping_detail_phone'],
+                #},
             },
             'amount': {
                 'total': str(Decimal(order.total).quantize(TWO_PLACES)),
@@ -67,10 +82,10 @@ def process(request, order_form, order):
                     'subtotal': str(cart.total_price()),
                     'tax': str(Decimal(order.tax_total).quantize(TWO_PLACES)),
                     'shipping': str(Decimal(order.shipping_total).quantize(TWO_PLACES)),
-                    #'discount': str(Decimal(order.discount_total).quantize(TWO_PLACES)), 
+                    #'discount': discount, 
                 },
             },
-            'description': 'Test Payment'
+            'description': 'Invoice for BCCF Registration/Product Purchases'
         }],
         'redirect_urls': {
             'return_url': PAYPAL_RETURN_URLS,
@@ -84,6 +99,10 @@ def process(request, order_form, order):
     if payment.create(): # Success
         log.debug("Payment Successful: %s" % payment.id)
         request.session['paypal_id'] = payment.id
+        
+        log.debug(payment)
+        # payment.does_not_exist()
+        
         # Return redirect URL
         for link in payment.links:
             if link.method == "REDIRECT":
@@ -100,3 +119,7 @@ def execute(request, payer_id):
         return True
     else:
         raise CheckoutError(payment.error)
+        
+def find(request):
+    paypal_id = request.session["paypal_id"]
+    return paypal.Payment.find(paypal_id)
