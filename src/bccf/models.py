@@ -440,6 +440,7 @@ class BCCFGenericPage(BCCFChildPage):
 
 
 class BCCFBabyPage(BCCFChildPage):
+    short_title = models.CharField('Short Title', max_length=20, default='Tab')
     order = models.IntegerField('Order', blank=True, null=True)
 
     class Meta:
