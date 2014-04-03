@@ -5815,59 +5815,61 @@ footer #newsletter .dashed-button a:hover {
 For BCCF Memberships
 */
 /* line 5, ../mixins/memberships.scss */
-.membership {
-  width: 100%;
+.membership, .mem-yellow, .mem-dteal, .mem-lteal, .mem-green, .two-words {
+  max-width: 562px;
+  margin-bottom: 18px;
   float: left;
-  background: url(../img/mem-yellow.gif) right repeat-y;
+  background-position: right;
+  background-repeat: repeat-y;
 }
-/* line 10, ../mixins/memberships.scss */
-.membership ul {
+/* line 12, ../mixins/memberships.scss */
+.membership ul, .mem-yellow ul, .mem-dteal ul, .mem-lteal ul, .mem-green ul, .two-words ul {
   list-style: none;
 }
-/* line 13, ../mixins/memberships.scss */
-.membership li {
+/* line 15, ../mixins/memberships.scss */
+.membership li, .mem-yellow li, .mem-dteal li, .mem-lteal li, .mem-green li, .two-words li {
   float: left;
   width: 100%;
   min-height: 40px;
   background: url(../img/mem-row.png) repeat;
   margin-top: 6px;
 }
-/* line 20, ../mixins/memberships.scss */
-.membership li p {
+/* line 22, ../mixins/memberships.scss */
+.membership li p, .mem-yellow li p, .mem-dteal li p, .mem-lteal li p, .mem-green li p, .two-words li p {
   float: right;
   margin-right: 72px;
   text-align: center;
 }
-/* line 24, ../mixins/memberships.scss */
-.membership li p:first-child {
+/* line 26, ../mixins/memberships.scss */
+.membership li p:first-child, .mem-yellow li p:first-child, .mem-dteal li p:first-child, .mem-lteal li p:first-child, .mem-green li p:first-child, .two-words li p:first-child {
   float: left;
   width: 50%;
   text-align: left;
   padding-left: 10px;
   margin-right: 10px;
 }
-/* line 34, ../mixins/memberships.scss */
-.membership li:first-child {
-  background: none;
-  height: 100px;
-}
 /* line 36, ../mixins/memberships.scss */
-.membership li:first-child p {
+.membership li:first-child, .mem-yellow li:first-child, .mem-dteal li:first-child, .mem-lteal li:first-child, .mem-green li:first-child, .two-words li:first-child {
+  background: none;
+  min-height: 100px;
+}
+/* line 38, ../mixins/memberships.scss */
+.membership li:first-child p, .mem-yellow li:first-child p, .mem-dteal li:first-child p, .mem-lteal li:first-child p, .mem-green li:first-child p, .two-words li:first-child p {
   float: right;
   clear: both;
   width: auto;
   text-align: center;
-  margin: -8px 47px 18px;
+  margin: -8px 50px 18px;
 }
-/* line 41, ../mixins/memberships.scss */
-.membership li:first-child p:nth-child(2) {
+/* line 43, ../mixins/memberships.scss */
+.membership li:first-child p:nth-child(2), .mem-yellow li:first-child p:nth-child(2), .mem-dteal li:first-child p:nth-child(2), .mem-lteal li:first-child p:nth-child(2), .mem-green li:first-child p:nth-child(2), .two-words li:first-child p:nth-child(2) {
   background-color: #8fab3d;
   float: right;
   text-align: center;
   margin: 0px 30px 18px;
 }
-/* line 47, ../mixins/memberships.scss */
-.membership li:first-child p:nth-child(2) a {
+/* line 49, ../mixins/memberships.scss */
+.membership li:first-child p:nth-child(2) a, .mem-yellow li:first-child p:nth-child(2) a, .mem-dteal li:first-child p:nth-child(2) a, .mem-lteal li:first-child p:nth-child(2) a, .mem-green li:first-child p:nth-child(2) a, .two-words li:first-child p:nth-child(2) a {
   font-weight: bold;
   color: #000;
   float: left;
@@ -5877,11 +5879,40 @@ For BCCF Memberships
   text-transform: uppercase;
   border: 1px dashed #fff;
 }
-/* line 57, ../mixins/memberships.scss */
-.membership li:first-child p:nth-child(2) a:hover {
+/* line 59, ../mixins/memberships.scss */
+.membership li:first-child p:nth-child(2) a:hover, .mem-yellow li:first-child p:nth-child(2) a:hover, .mem-dteal li:first-child p:nth-child(2) a:hover, .mem-lteal li:first-child p:nth-child(2) a:hover, .mem-green li:first-child p:nth-child(2) a:hover, .two-words li:first-child p:nth-child(2) a:hover {
   color: #336442;
   text-decoration: none;
   background-color: #fdcd26;
+}
+
+/* line 72, ../mixins/memberships.scss */
+.mem-yellow {
+  background-image: url(../img/mem-yellow.gif);
+}
+
+/* line 76, ../mixins/memberships.scss */
+.mem-dteal {
+  background-image: url(../img/mem-dteal.gif);
+}
+
+/* line 80, ../mixins/memberships.scss */
+.mem-lteal {
+  background-image: url(../img/mem-lteal.gif);
+}
+
+/* line 84, ../mixins/memberships.scss */
+.mem-green {
+  background-image: url(../img/mem-green.gif);
+}
+
+/* line 92, ../mixins/memberships.scss */
+.two-words li:first-child p {
+  float: right;
+  clear: both;
+  width: auto;
+  text-align: center;
+  margin: -8px 40px 18px;
 }
 
 /* line 2, ../mixins/marquee_themes.scss */

@@ -3,9 +3,11 @@ For BCCF Memberships
 */
 
 .membership {
-	width:100%;
+	max-width:562px;
+	margin-bottom:18px;
 	float:left;
-	background: url(../img/mem-yellow.gif) right repeat-y; 
+	background-position:right;
+	background-repeat:repeat-y; 
 	
 	ul {
 		list-style:none;
@@ -32,12 +34,12 @@ For BCCF Memberships
 			}
 		
 			&:first-child {background:none;
-						   height:100px;
+						   min-height:100px;
 					       		p{float:right;
 								clear:both;
 								width:auto;
 								text-align:center;
-								margin: -8px 47px 18px;
+								margin: -8px 50px 18px;
 									&:nth-child(2) {
 													background-color:$lgreen;
 													float:right;
@@ -66,4 +68,31 @@ For BCCF Memberships
 	}
 	
 	
+}
+.mem-yellow {
+	@extend .membership;
+	background-image: url(../img/mem-yellow.gif); 
+}
+.mem-dteal {
+	@extend .membership;
+	background-image: url(../img/mem-dteal.gif); 
+}
+.mem-lteal {
+	@extend .membership;
+	background-image: url(../img/mem-lteal.gif); 
+}
+.mem-green {
+	@extend .membership;
+	background-image: url(../img/mem-green.gif); 
+}
+.two-words {
+	@extend .membership;
+	li { &:first-child 
+	{
+					       		p{float:right;
+								clear:both;
+								width:auto;
+								text-align:center;
+		margin: -8px 40px 18px;}}
+	}
 }
