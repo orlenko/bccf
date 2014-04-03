@@ -1816,7 +1816,11 @@ textarea {
         position: absolute;
         top: 30px;
         right: 10px;
-        width: 100%; 
+        width: 100%;
+        .rate-count {
+            @include font-size(12);
+            margin-left: 5px;    
+        }
     }
     img {
         margin-top: 15px;
@@ -1899,6 +1903,11 @@ textarea {
         .event-header,
         .event-row {
             border-bottom: 1px solid #000;
+        }
+        a[title='More'] {
+            text-decoration: underline;
+            color: $lgreen;
+            font-weight: bold;    
         }
     }
 }

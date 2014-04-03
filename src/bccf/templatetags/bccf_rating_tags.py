@@ -7,11 +7,12 @@ log = logging.getLogger(__name__)
 register = template.Library()
 
 @register.inclusion_tag("generic/includes/rating.html", takes_context=True)
-def bccf_rating_for(context, obj):
+def bccf_rating_for(context, obj, rate=True):
     """
     Provides a generic context variable name for the object that
     ratings are being rendered for, and the rating form.
     """
+    context["rate_obj"] = rate
     context["rating_object"] = context["rating_obj"] = obj
     context["rating_form"] = BCCFRatingForm(context["request"], obj)
     ratings = context["request"].COOKIES.get("mezzanine-rating", "")

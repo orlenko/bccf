@@ -932,11 +932,21 @@ class Event(BCCFChildPage):
             gp = BCCFPage.objects.get(slug='bccf/trainings')
             self.gparent = gp
             super(Event, self).save(**kwargs)
-            if self.price: # If it's not free create a product
+                    
+        if self.price: # If it's not free create a product
+            if not self.event_product:
                 product = Product.objects.create(title=self.title, content=self.content)
                 variation = ProductVariation.objects.create(product=product, sku='EVENT-%s' % self.pk,
                     num_in_stock=self.max_seats, default=True, unit_price=self.price)
                 self.event_product = product
+            else:
+                variation = ProductVariation.objects.get(product=self.event_product, default=True)
+                variation.unit_price = self.price
+                variation.save()
+        else:
+            self.event_product.delete()
+            self.event_product = None
+                
         super(Event, self).save(**kwargs)
 
     def is_full(self):

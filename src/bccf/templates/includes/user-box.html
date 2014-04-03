@@ -2,7 +2,7 @@
 <div class="user-box section row {{ user.membership_type }}">
     {% if user.is_level_C %}
         <div class="user-rating-box">
-            {% bccf_rating_for user %}    
+            {% bccf_rating_for user False %}    
         </div>
     {% endif %}
     <div class="section">
