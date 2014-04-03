@@ -1,8 +1,17 @@
 {% extends 'pages/base_bccfpage.html' %}
-{% load mezzanine_tags bccf_tags bccf_big_marquee_tags %}
+{% load static mezzanine_tags bccf_tags bccf_big_marquee_tags %}
 
 {% block meta_title %}Member Directory{% endblock %}
 {% block title %}User Directory{% if f %} - Filter {{ f }}{% endif %}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static "css/vendor/rating.css" %}" />
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static "js/rating/jquery.MetaData.js" %}"></script>
+<script src="{% static "js/rating/jquery.rating.pack.js" %}"></script>
+{% endblock %}
 
 {% block marquee %}{% big_marquee_for page %}{% endblock %}
 {% block content %}
