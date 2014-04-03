@@ -29,8 +29,7 @@ $(function() {
 </form>
 {% else %}
     <a href="{% url 'login' %}?next={{ request.get_full_path }}">Login</a> or 
-    <a href="{% url 'signup' %}">Sign Up</a> 
-    as a {{ event_obj.page_for }} to comment.
+    <a href="{% url 'signup' %}">Sign Up</a> to comment.
 {% endif %}
 </div>
 {% endif %}
