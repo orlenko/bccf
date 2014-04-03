@@ -118,7 +118,7 @@
             <p><a href="{% url "logout" %}">Logout</a></p>
             {% else %}
             <p><a href="{% url "login" %}">Login</a></p>
-            <p><a href="{% url "signup" %}">Create Account</a></p>
+            <p><a href="/accounts/signup">Create Account</a></p>
             {% endif %}
             {% shopping_cart %}
         </div>
