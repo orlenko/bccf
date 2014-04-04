@@ -97,7 +97,9 @@
 
 </head>
 <body id="{% block body_id %}body{% endblock %}">
-
+<div id="pop-up-over" class="none">
+    <div class="content"></div>
+</div>
 <div class="container">
 
 	{% nevercache %}
@@ -178,6 +180,20 @@
             theme: 'main-bccf',
             subMenuSpeed: 0,       
         });
+    });
+    $('.mem-pop-up').on('click', function(e) {
+        e.preventDefault();
+        var content = $(this).attr('title');
+        console.log(content);
+        $('#pop-up-over').children('.content').html('<p>'+content+'</p>');
+        $('#pop-up-over').show();
+        $('html, body').css({ overflow:'hidden'});
+    });
+    $('#pop-up-over').on('click', function(e) {
+        e.preventDefault();
+        $(this).hide();
+        $(this).children('.content').html('');
+        $('html, body').css({ overflow:'auto'});
     });
 </script>
 {% endblock %}
