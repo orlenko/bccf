@@ -140,6 +140,7 @@ def password_reset(request, template="accounts/account_password_reset.html"):
         send_verification_mail(request, user, "password_reset_verify")
         info(request, _("A verification email has been sent with "
                         "a link for resetting your password."))
+        return redirect("/")
     context = {"form": form, "title": _("Password Reset")}
     return render(request, template, context)
 
