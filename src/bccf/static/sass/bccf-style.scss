@@ -2670,7 +2670,9 @@ footer {
 
 } /* end #tag-widget */
 
-
+#tabs {
+    @include font-size(15)
+}
 
 footer {
 
