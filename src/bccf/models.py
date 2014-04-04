@@ -436,18 +436,31 @@ class BCCFGenericPage(BCCFChildPage):
     show_resources = models.BooleanField('Show Resources', default=True)
     show_comments = models.BooleanField('Show Comments', default=True)
     show_rating = models.BooleanField('Show Rating', default=True)
+    
+    objects = managers.ChildPageManager()    
+    
     class Meta:
         verbose_name = 'Sub Page'
         verbose_name_plural = 'Sub Pages'
+        
+    def __init__(self, *args, **kwargs):
+        super(BCCFGenericPage, self).__init__(*args, **kwargs)
 
 
 class BCCFBabyPage(BCCFChildPage):
     order = models.IntegerField('Order', blank=True, null=True)
 
+    objects = managers.ChildPageManager()
+
     class Meta:
         verbose_name = 'Third Level Page'
         verbose_name_plural = 'Third Level Pages'
         ordering = ('order',)
+
+    objects = managers.ChildPageManager()
+
+    def __init__(self, *args, **kwargs):
+        super(BCCFBabyPage, self).__init__(*args, **kwargs)
 
     def get_absolute_url(self):
         """
@@ -467,6 +480,11 @@ class DocumentResourceBase(BCCFChildPage):
         blank = True,
         help_text = 'You can upload an office document or a PDF file. This field is not used by Video '
             'Acceptable file types: .doc, .pdf, .rtf, .txt, .odf, .docx, .xls, .xlsx, .ppt, .pptx.')
+            
+    objects = managers.ChildPageManager()
+    
+    def __init__(self, *args, **kwargs):
+        super(DocumentResourceBase, self).__init__(*args, **kwargs)    
     
     def save(self, **kwargs):
         if not self.image:
@@ -477,28 +495,52 @@ class DocumentResourceBase(BCCFChildPage):
         abstract = True
 
 class Article(DocumentResourceBase):
+    objects = managers.ChildPageManager()
+    
+    def __init__(self, *args, **kwargs):
+        super(Article, self).__init__(*args, **kwargs)
+        
     def get_resource_type(self):
         return 'Article'
 
 class DownloadableForm(DocumentResourceBase):
+    objects = managers.ChildPageManager()
+    
     class Meta:
         verbose_name = 'Downloadable Form'
         verbose_name_plural = 'Downloadable Forms'
+        
+    def __init__(self, *args, **kwargs):
+        super(DownloadableForm, self).__init__(*args, **kwargs)        
+
     def get_resource_type(self):
         return 'Downloadable Form'
 
 class Magazine(DocumentResourceBase):
+    objects = managers.ChildPageManager()
+    
+    def __init__(self, *args, **kwargs):
+        super(Magazine, self).__init__(*args, **kwargs)     
+    
     def get_resource_type(self):
         return 'Magazine'
 
 class TipSheet(DocumentResourceBase):
+    objects = managers.ChildPageManager()
+    
     class Meta:
         verbose_name = 'Tip Sheet'
         verbose_name_plural = 'Tip Sheets'
+        
+    def __init__(self, *args, **kwargs):
+        super(TipSheet, self).__init__(*args, **kwargs)            
+        
     def get_resource_type(self):
         return 'Tip Sheet'
 
 class Podcast(BCCFChildPage):
+    objects = managers.ChildPageManager()
+    
     attached_audio = FileField('Audio File',
        upload_to = upload_to("bccf.Podcast.attachment_audio", "resource/audio"),
         extensions = ['.mp3'],
@@ -511,6 +553,9 @@ class Podcast(BCCFChildPage):
         verbose_name = 'Podcast'
         verbose_name_plural = 'Podcasts'       
     
+    def __init__(self, *args, **kwargs):
+        super(Podcast, self).__init__(*args, **kwargs)     
+
     def save(self, **kwargs):
         self.gparent = BCCFPage.objects.get(slug='bccf/resources')
         if not self.image:
@@ -524,9 +569,14 @@ class Video(BCCFChildPage):
     help_text='Paste a YouTube URL here. '
         'Example: http://www.youtube.com/watch?v=6Bm7DVqJTHo')
 
+    objects = managers.ChildPageManager()
+
     class Meta:
         verbose_name = 'Video'
         verbose_name_plural = 'Videos'    
+
+    def __init__(self, *args, **kwargs):
+        super(Video, self).__init__(*args, **kwargs)  
 
     def save(self, **kwargs):
         self.gparent = BCCFPage.objects.get(slug='bccf/resources')
@@ -552,19 +602,27 @@ class Program(BCCFChildPage):
 
 #Blog Pages
 class Blog(BCCFChildPage):
+    objects = managers.ChildPageManager()
+    
     def save(self, **kwargs):
         self.gparent = BCCFPage.objects.get(slug='bccf/blog')
         super(Blog, self).save(**kwargs)
     class Meta:
         verbose_name = 'Blog Post'
         verbose_name_plural = 'Blog Posts'
+        
+    def __init__(self, *args, **kwargs):
+        super(Blog, self).__init__(*args, **kwargs) 
 
 #TAG
 class TagBase(BCCFChildPage):
-    objects = managers.TagManager()   
-
+    objects = managers.TagManager()
+    
     class Meta:
         abstract = True
+
+    def __init__(self, *args, **kwargs):
+        super(TagBase, self).__init__(*args, **kwargs)
 
     def save(self, **kwargs):
         self.gparent = BCCFPage.objects.get(slug='bccf/tag')
@@ -576,6 +634,9 @@ class Campaign(TagBase):
     approved_on = models.DateTimeField('Approved On', blank=True, null=True)
     by_user = models.BooleanField('Created By User', default=False)
     
+    def __init__(self, *args, **kwargs):
+        super(Campaign, self).__init__(*args, **kwargs)    
+
     @permalink
     def edit_url(self):
         return('campaigns-edit', (), {'slug': self.slug})

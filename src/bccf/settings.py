@@ -571,6 +571,8 @@ BCCF_SPECIAL_PAGES = ['trainings','resources','tag','programs']
 BCCF_CORE_PAGES = ['trainings','resources','tag','programs','blog','news']
 SEARCH_MODEL_CHOICES = (
     'bccf.BCCFChildPage',
+    #'bccf.BCCFGenericPage',
+    #'bccf.Magazine',    
     'bccf.BCCFTopic',
     'bccf.BCCFPage',
     'shop.product',

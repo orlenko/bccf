@@ -16,6 +16,7 @@ from django.conf import settings
 from django.utils.timezone import now as tznow
 
 from bccf.models import TagBase, BCCFPage
+from bccf.managers import TagManager
 
 from annoying.fields import AutoOneToOneField
 from bccf.fields import MyImageField
@@ -173,6 +174,8 @@ class Topic(TagBase):
     poll_type = models.IntegerField(_('Poll type'), choices=POLL_TYPE_CHOICES, default=POLL_TYPE_NONE)
     poll_question = models.TextField(_('Poll question'), blank=True, null=True)
 
+    objects = TagManager()
+
     class Meta(object):
         ordering = ['-created']
         verbose_name = _('Thred')
@@ -180,6 +183,9 @@ class Topic(TagBase):
 
     def __unicode__(self):
         return self.name
+
+    def __init__(self, *args, **kwargs):
+        super(Topic, self).__init__(*args, **kwargs)  
 
     @property
     def head(self):

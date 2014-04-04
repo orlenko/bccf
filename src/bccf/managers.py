@@ -6,7 +6,8 @@ from dateutil.relativedelta import relativedelta
 from django.db import models
 from django.db.models import Q
 
-from mezzanine.core.managers import DisplayableManager
+from mezzanine.pages.managers import PageManager
+from mezzanine.core.managers import DisplayableManager, SearchableManager
 from mezzanine.core.models import CONTENT_STATUS_PUBLISHED
 
 #Manager
@@ -17,8 +18,11 @@ class UserProfileManager(models.Manager):
             Q(show_in_list=True),
         )
     
-class ChildPageManager(DisplayableManager):     
+class ChildPageManager(PageManager):     
         
+    def __init__(self, *args, **kwargs):
+        super(ChildPageManager, self).__init__(*args, **kwargs)
+
     def by_gparent(self, gparent):
         return self.published().filter(gparent=gparent)
         
@@ -30,11 +34,8 @@ class ChildPageManager(DisplayableManager):
     
 class EventManager(ChildPageManager):
 
-    def parent_events(self):
-        return self.get_queryset().filter(page_for='parent')
-       
-    def professional_events(self):
-        return self.get_queryset().filter(page_for='professional')    
+    def __init__(self, *args, **kwargs):
+        super(EventManager, self).__init__(*args, **kwargs)   
     
     def need_reminder(self):
         last_month = now() + relativedelta(weeks=4)
@@ -53,22 +54,5 @@ class EventManager(ChildPageManager):
 
 class TagManager(ChildPageManager):
         
-    def get_queryset(self):
-        return super(ChildPageManager, self).get_queryset().filter(
-            Q(content_model='topic') | Q(content_model='formpublished') | Q(content_model='campaign')
-        )        
-        
-    def talks(self):
-        return super(TagManager, self).published().filter(
-            Q(content_model='topic')        
-        )
-        
-    def acts(self):
-        return super(TagManager, self).published().filter(
-            Q(content_model='formpublished')        
-        )
-        
-    def gets(self):
-        return super(TagManager, self).published().filter(
-            Q(content_model='campaign')        
-        )
+    def __init__(self, *args, **kwargs):
+        super(TagManager, self).__init__(*args, **kwargs)
