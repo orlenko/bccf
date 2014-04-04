@@ -149,7 +149,7 @@ def password_reset_verify(request, uidb36=None, token=None):
     user = authenticate(uidb36=uidb36, token=token, is_active=True)
     if user is not None:
         auth_login(request, user)
-        return redirect(reverse("update-tab", args=('account')))
+        return redirect(reverse("update-tab", args=('account',)))
     else:
         error(request, _("The link you clicked is no longer valid."))
         return redirect("/")
