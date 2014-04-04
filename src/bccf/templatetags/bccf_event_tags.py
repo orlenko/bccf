@@ -28,10 +28,11 @@ def bccf_subscribe_for(context, obj):
             context['subscribe_obj'] = obj 
             event = obj.get_content_model()
             context['event_for'] = event.page_for
-            if profile and event.page_for == profile.membership_type \
-                or (event.page_for == 'professional' and profile.membership_type != 'parent'):
-                context['event_obj'] = event
-                context['product'] = obj.get_content_model().event_product
+            if profile:
+                if event.page_for == profile.membership_type \
+                    or (event.page_for == 'professional' and profile.membership_type != 'parent'):
+                    context['event_obj'] = event
+                    context['product'] = obj.get_content_model().event_product
     return context
     
 @register.inclusion_tag("generic/includes/attendee_list.html", takes_context=True)

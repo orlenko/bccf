@@ -37,10 +37,8 @@
                 {% if forloop.counter|divisibleby:"6" or forloop.first %}
                 <div>
                 {% endif %}
-                
                         <div class="hcal-line">
                             <ul>
-                                
                             	<li>{{ event.date_start|date:"F d" }}</li>
                                 <li>{{ event.program.short_title }}</li>
                                 <li><a href="{{ event.get_absolute_url }}">Learn More</a></li>
