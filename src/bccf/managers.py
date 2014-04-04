@@ -6,6 +6,7 @@ from dateutil.relativedelta import relativedelta
 from django.db import models
 from django.db.models import Q
 
+from mezzanine.core.managers import DisplayableManager
 from mezzanine.core.models import CONTENT_STATUS_PUBLISHED
 
 #Manager
@@ -16,14 +17,7 @@ class UserProfileManager(models.Manager):
             Q(show_in_list=True),
         )
     
-class ChildPageManager(models.Manager):
-           
-    def published(self):
-        return super(ChildPageManager, self).get_queryset().filter(
-            Q(publish_date__lte=now()) | Q(publish_date__isnull=True),
-            Q(expiry_date__gte=now()) | Q(expiry_date__isnull=True),
-            Q(status=CONTENT_STATUS_PUBLISHED)
-        )           
+class ChildPageManager(DisplayableManager):     
         
     def by_gparent(self, gparent):
         return self.published().filter(gparent=gparent)
