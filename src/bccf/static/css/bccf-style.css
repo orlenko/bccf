@@ -3087,13 +3087,14 @@ textarea {
 }
 /* line 699, ../sass/bccf-style.scss */
 #main-top-nav li a:active {
-  background: url(../img/menu-triangle.png) top center no-repeat;
+  /*background:url(../img/menu-triangle.png) top center no-repeat;*/
   font-weight: bold;
   color: #414042;
 }
 /* line 705, ../sass/bccf-style.scss */
 #main-top-nav .active > a {
-  background: url(../img/menu-triangle.png) top center no-repeat;
+  /*background:url(../img/menu-triangle.png) top center no-repeat;*/
+  font-weight: bold;
 }
 /* line 708, ../sass/bccf-style.scss */
 #main-top-nav #search-bar {
@@ -3107,7 +3108,7 @@ textarea {
 }
 /* line 716, ../sass/bccf-style.scss */
 #main-top-nav #search-bar input[type="text"] {
-  background-color: #414042;
+  background-color: #a6b2a6;
   border: none;
   box-shadow: none;
   height: 36px;
@@ -3115,6 +3116,7 @@ textarea {
   float: right;
   width: 85%;
   border-radius: none;
+  color: #000;
 }
 /* line 726, ../sass/bccf-style.scss */
 #main-top-nav #search-bar input[type="submit"] {
@@ -3292,7 +3294,7 @@ textarea {
 }
 /* line 886, ../sass/bccf-style.scss */
 #home-calendar .hcal-tabs .hcal-right-side a.selected {
-  padding: 18px 18px 6px;
+  padding: 12px 18px 6px;
   background-color: #336442;
 }
 /* line 895, ../sass/bccf-style.scss */
@@ -3566,7 +3568,7 @@ textarea {
 }
 /* line 1121, ../sass/bccf-style.scss */
 #home-listings .hlist-tabs a.selected {
-  padding: 18px 18px 6px;
+  padding: 12px 18px 6px;
   background-color: #336442;
 }
 /* line 1128, ../sass/bccf-style.scss */
