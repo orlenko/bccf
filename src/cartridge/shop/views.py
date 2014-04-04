@@ -215,9 +215,8 @@ def checkout_steps(request):
         return redirect(url)
 
     # Level C Discount
-    if request.user.is_authenticated:
-        if request.user.profile.is_level_C:
-            request.session['force_discount'] = 'l3v3lC15' 
+    if request.user.profile.is_level_C:
+        request.session['force_discount'] = 'l3v3lC15' 
 
     # Determine the Form class to use during the checkout process
     form_class = get_callable(settings.SHOP_CHECKOUT_FORM_CLASS)
