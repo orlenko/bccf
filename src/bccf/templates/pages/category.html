@@ -20,7 +20,7 @@
 {% if product %}
 <script type="text/javascript">
     $(function() {
-        $('#{{ product.slug }}').trigger('click');
+        $('#id_{{ product.slug }}').trigger('click');
     });
 </script>
 {% endif %}
