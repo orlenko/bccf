@@ -98,7 +98,8 @@ class MarqueeSlide(models.Model):
         null = True,
         blank = True,
         help_text = 'You can upload an image. '
-            'Acceptable file types: .png, .jpg, .bmp, .gif.')
+            'Acceptable file types: .png, .jpg, .bmp, .gif. '
+            'Image must be 1100px wide by 412px high.')
     modified = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
     class Meta:
@@ -205,6 +206,7 @@ class BCCFChildPage(BCCFBasePage, RichText, AdminThumbMixin):
         blank = True,
         help_text = 'You can upload an image. '
             'Acceptable file types: .png, .jpg, .bmp, .gif.')
+    short_title = models.CharField('Short Title', max_length=10, null=True, blank=True)
 
     objects = managers.ChildPageManager()
 
@@ -440,7 +442,6 @@ class BCCFGenericPage(BCCFChildPage):
 
 
 class BCCFBabyPage(BCCFChildPage):
-    short_title = models.CharField('Short Title', max_length=20, default='Tab')
     order = models.IntegerField('Order', blank=True, null=True)
 
     class Meta:

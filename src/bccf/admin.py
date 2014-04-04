@@ -210,7 +210,7 @@ class BCCFTopicAdmin(DisplayableAdmin):
 class BCCFBabyInlineAdmin(admin.StackedInline):
     model = BCCFBabyPage
     fk_name = "parent"
-    fields = ('title', 'content', 'order',)
+    fields = ('title', 'short_title', 'content', 'order',)
 
 class BCCFGenericAdmin(DisplayableAdmin):
     ordering = ('-created',)
@@ -304,7 +304,8 @@ class BCCFProgramAdmin(DisplayableAdmin):
         # Fields
         if self.fieldsets == DisplayableAdmin.fieldsets:
             self.fieldsets = deepcopy(self.fieldsets)
-            for field in reversed(['content',
+            for field in reversed(['short_title',
+                                    'content',
                                     'bccf_topic',
                                     'page_for',
                                     'featured',
