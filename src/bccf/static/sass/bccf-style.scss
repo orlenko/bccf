@@ -1994,6 +1994,7 @@ textarea {
         }
         .form-actions {
             margin-top: 20px;
+            width: 100%;
             input {
                 @include font-size(12);
                 background-color: inherit;
@@ -3311,6 +3312,7 @@ footer {
 } /* End Footer */
 } /* End Mobile Media Query */
 
+@import "../mixins/shop";
 @import "../mixins/memberships";
 @import "../mixins/marquee_themes";
 /*@import "../mixins/menus"; // Import the menus styles*/

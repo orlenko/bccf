@@ -1,11 +1,11 @@
 {% load mezzanine_tags shop_tags rating_tags i18n bccf_rating_tags comment_tags %}
-<section id="id_{{ product.pk }}" class="subpage section">
+<section id="id_{{ product.pk }}" class="subpage section shop-box">
     <a id="close-btn" href="#" title="Close" class="fa fa-times-circle"></a>
     <div class="subpage-tabs section">
         <ul class="no-style-list">
             <li class="col two mobile-full">
                 <a href="{{ product.get_absolute_url }}" id="child-home" class="baby-content-btn">Home</a>
-                <div class="baby-content">
+                <div class="shop-content-mobile baby-content">
                     {% include "includes/product.html" %}
                 </div>
             </li>
@@ -15,7 +15,7 @@
         </ul>
     </div>
     <div class="subpage-content section row"></div>
-    <div class="home-content section row no-mobile">
+    <div class="shop-content home-content section row no-mobile">
         {% include "includes/product.html" %}
     </div>
 </section>

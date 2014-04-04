@@ -1,0 +1,109 @@
+.shop-box {
+    background-color: $sgrey;    
+}
+.shop-content {
+    .product-box {
+        .product-image {
+            img {
+                width: 100%;
+            }
+        }
+        .product-info {
+            h3 {
+                font-family: $pt !important;            
+            }
+        }    
+    }
+    .product-action {
+        border-top: 2px solid $dgrey;
+        padding-top: 25px;
+        .product-cart {
+            border-right: 1px solid $dgrey;
+            padding: 25px;        
+        }
+        .product-warning {
+            padding: 25px;        
+        }
+    }
+    #product-variations {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        .price {
+            display: inline-block;
+            font-family: $roboto;        
+        }
+        .cur-price {
+            @include font-size(25);
+            color: $lgreen;        
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        .save-price {
+            color: $lgreen;
+            padding-right: 10px;    
+        }
+        .old-price {
+            border-left: 1px solid $dgrey;
+            padding-left: 10px;
+            color: $lgrey;  
+        }
+        .save-price,
+        .old-price {
+            @include font-size(15);        
+        }
+    }
+    .form-shop {
+        .input_id_quantity {
+            label,
+            input[type="number"] {
+                display: inline-block;                
+            }
+            label {
+                font-weight: bold;
+                &:after {
+                    content: ":";                
+                }            
+            }
+            input[type="number"] {
+                width: 25%;
+                border: 1px solid #000;
+                background-color: $sgrey;
+            }
+        }
+        .form-actions-wrap {
+            margin-left: 0;        
+        }
+        .dashed-button {
+            width: initial;
+            margin: 0 !important;        
+        }
+        .form-actions {
+            margin: 10px auto !important;
+            display: block;
+            input {
+                @include font-size(12);
+                background-color: inherit;
+                border: 1px dashed #FFF;
+                color: #000;
+                float: left;
+                font-weight: bold;
+                margin: 2px;
+                padding: 4px 22px;
+                text-decoration: none;
+                text-transform: uppercase;
+                &:hover {
+                    color: $dgreen;
+    				text-decoration: none;
+    				background-color: $yellow;    
+                }            
+            } 
+        }
+        .product-added {
+            margin: 10px auto;
+            color: $lgreen;
+            width: 100%; 
+            font-weight: bold;       
+        }
+    }
+}
