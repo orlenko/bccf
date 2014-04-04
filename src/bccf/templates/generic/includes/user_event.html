@@ -11,7 +11,7 @@
         <div class="event-row section">
             <ul>
                 <li class="col four">{{ event_obj.date_start|date:"F d" }}</li>
-                <li class="col four">{{ event_obj.program }}</li>
+                <li class="col four">{{ event_obj.program.short_title }}</li>
                 <li class="action col two"><a href="{{ event_obj.get_absolute_url }}" title="Learn More" target="_blank">Learn More</a></li>            
                 <li class="action col two"><a href="{{ event_obj.get_absolute_url }}" title="Register" target="_blank">Register</a></li>            
             </ul>        
