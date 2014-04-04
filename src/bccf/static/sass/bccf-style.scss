@@ -597,7 +597,7 @@ textarea {
 }
 #bccftagline {
 	border-right:1px solid $lgrey;
-	padding:16px 0;
+	padding:16px;
 	font-size:26px;
 	text-transform:lowercase;
 	height:75px;
@@ -714,7 +714,7 @@ textarea {
 		}
 
 		input[type="text"] {
-			background-color: #eeeeee;
+			background-color: $dgrey;
     		border:none;
     		box-shadow: none;
     		height: 36px;
@@ -726,7 +726,7 @@ textarea {
 		input[type="submit"] {
 			border:none;
     		box-shadow: none;
-			background:url(../img/search-icon.png) top center no-repeat;
+			background:url(../img/search-icon.svg) top center no-repeat;
     		height: 36px;
 			width:10%;
 			float:left;
@@ -902,8 +902,9 @@ textarea {
 		float:left;
 		width:98.5%;
 		margin:4px;
-		padding:4px 20px;
+		padding:4px 20px 18px;
 		border:1px dashed $lgrey;
+		background-color:#ffffff;
 
 		ul{
 			list-style:none;
@@ -942,6 +943,9 @@ textarea {
 
 	#hcal-professionals {
 	   display: none;
+	}
+	hcal-families-carousel {
+		margin-left:0 !important;
 	}
 }
 
@@ -994,6 +998,7 @@ textarea {
     .hnote-buttons {
 		float:right;
 		width:40%;
+		margin-top:18px;
 		text-align:right;
 		/*margin:14px 5px 0 0;*/
 		div {margin:10px; }
@@ -1056,6 +1061,7 @@ textarea {
 	.hpro-buttons {
 		float:right;
 		width:40%;
+		margin-top:18px;
 		text-align:right;
 		/*margin:14px 5px 0 0;*/
 		div {margin: 10px; }
@@ -1082,7 +1088,7 @@ textarea {
 			width: 53%;
 		}
 
-		h2 {background:$lgrey url(../img/header-colour-bg-dteal.gif) left top repeat-y;
+		h2 {background:$lgrey url(../img/header-colour-bg-dgreen.gif) left top repeat-y;
 		height:50px;
 		font-weight:300;
 		font-size:24px;
@@ -1734,7 +1740,7 @@ textarea {
 		background-color:$sgrey;
 		float:left;
 		text-align:left;
-		background: url(../img/note-image-filler.jpg) top left no-repeat;
+		background: url(../img/suggested-res-bg.jpg) top left no-repeat;
 	}
 	em {
 		background:$lyellow url(../img/header-colour-bg-yellow.gif) repeat-y -25px 0;
@@ -2233,9 +2239,10 @@ textarea {
 .baby-content,
 .subpage-content {
     a {
-        text-decoration: none;
+        text-decoration: underline;
         &:hover, &:active {
             font-weight: bold;
+			text-decoration:none;
         }
     }
     table {
@@ -2379,6 +2386,7 @@ footer {
 	background-color:$lgreen;
 	min-width:80px;
 	float:left;
+	text-shadow:none;
 
 	a {
 	font-weight:bold;
@@ -2475,7 +2483,8 @@ footer {
 		padding: 12px 10px;
 		}
 		.active > a {
-           background: url(../img/menu-triangle.png) top center no-repeat;
+			font-weight:bold;
+           /*background: url(../img/menu-triangle.png) top center no-repeat;*/
     	}
 	}
 }
@@ -2945,7 +2954,9 @@ table td {
 
                 }
         .hcal-tabs {
-            .hcal-left-side {}
+            .hcal-left-side {
+				margin:-20px 0 25px;
+				}
             .hcal-right-side {
                 text-align: center;
             }

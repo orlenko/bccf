@@ -44,17 +44,18 @@
 }
 
 .lightbox {
-    color: #FFF;
+    color: #000;
     position: absolute;
-    bottom: 15%;
+    bottom: 30%;
     right: 5%;
     width: 400px;
     padding: 15px;
-    background: rgba(159,206,180,0.80);
+    background: rgba(159,206,180,0.90);
+	text-shadow: 2px 2px 1px #FFFFFF;
     z-index: 9999;
-    
     .lightbox-title {
-        font-size: 25px;    
+        font-size: 25px;
+		font-family:$roboto;    
     }
     
     .a-wrapper {
