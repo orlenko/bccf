@@ -206,7 +206,7 @@ class BCCFChildPage(BCCFBasePage, RichText, AdminThumbMixin):
         blank = True,
         help_text = 'You can upload an image. '
             'Acceptable file types: .png, .jpg, .bmp, .gif.')
-    short_title = models.CharField('Short Title', max_length=10, null=True, blank=True)
+    short_title = models.CharField('Short Title', max_length=20, null=True, blank=True, help_text='Max 20 characters')
 
     objects = managers.ChildPageManager()
 
