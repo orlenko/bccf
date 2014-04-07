@@ -20,7 +20,8 @@ def bccf_subscribe_for(context, obj):
     """If obj is subscribable (like an event), render a form for subscribing to it.
     """
     profile = None
-    user = context['user']
+    request = context['request']
+    user = request.user
     if user.is_authenticated():
         profile = user.profile
     if obj._meta.object_name == 'BCCFChildPage':
@@ -32,7 +33,21 @@ def bccf_subscribe_for(context, obj):
                 if event.page_for == profile.membership_type \
                     or (event.page_for == 'professional' and profile.membership_type != 'parent'):
                     context['event_obj'] = event
-                    context['product'] = obj.get_content_model().event_product
+    return context
+    
+@register.inclusion_tag("generic/includes/short_subscribe.html", takes_context=True)
+def bccf_short_subscribe_for(context, obj):
+    profile = None
+    request = context['request']
+    user = request.user
+    if user.is_authenticated():
+        profile = user.profile   
+    if obj._meta.object_name == 'Event':
+        event = obj
+        if profile:
+            if event.page_for == profile.membership_type \
+                or (event.page_for == 'professional' and profile.membership_type != 'parent'):
+                context['event_obj'] = event
     return context
     
 @register.inclusion_tag("generic/includes/attendee_list.html", takes_context=True)
@@ -44,5 +59,5 @@ def attendees_for(context, event):
 @register.inclusion_tag("generic/includes/user_event.html", takes_context=True)
 def events_of(context, user):
     if user.is_level_C:
-        context['event_objs'] = Event.objects.filter(provider=user).order_by('-date_start')[:5]
+        context['event_objs'] = Event.objects.published().filter(provider=user).order_by('-date_start')[:5]
     return context

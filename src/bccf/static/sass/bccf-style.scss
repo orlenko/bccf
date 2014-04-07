@@ -918,15 +918,18 @@ textarea {
 			height:30px;
 			width:103px;
 			padding:4px 6px 0 0;
-			a {
+			a,
+			input[type="submit"] {
+			    border: none;
 				color:#FFFFFF;
 				background-color:$dgrey;
 				padding:1px 6px;
 				text-decoration:none;
 				box-shadow: 2px 2px 2px $lgrey;
 				&:hover {
-					background-color:$lgrey;}
+					background-color:$lgrey;
 				}
+			}
 		}
 	}
 	.hcal-heading {
@@ -1923,6 +1926,13 @@ textarea {
             }
             .action {
                 text-align: center;    
+            }
+            input[type='submit'] {
+                border: 0;
+                background: 0;
+                &:hover {
+                    text-decoration: underline;    
+                }    
             }
         }
         .event-header,

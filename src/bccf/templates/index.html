@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n static bccf_big_marquee_tags bccf_feature_tags %}
+{% load i18n static bccf_big_marquee_tags bccf_event_tags bccf_feature_tags %}
 
 {% block meta_title %}{% trans "Home" %}{% endblock %}
 {% block title %}{% trans "Home" %}{% endblock %}
@@ -42,11 +42,7 @@
                             	<li>{{ event.date_start|date:"F d" }}</li>
                                 <li>{{ event.program.short_title }}</li>
                                 <li><a href="{{ event.get_absolute_url }}">Learn More</a></li>
-                                {% if user.is_authenticated %}
-                                    {% if user.profile.is_parent %}
-                                        <li><a href="#">Register</a></li>
-                                    {% endif %}                                
-                                {% endif %}
+                                {% bccf_short_subscribe_for event %}
                             </ul>
                         </div>
                 
@@ -77,11 +73,7 @@
                             	<li>{{ event.date_start|date:"F d" }}</li>
                                 <li>{{ event.program.short_title }}</li>
                                 <li><a href="{{ event.get_absolute_url }}">Learn More</a></li>
-                                {% if user.is_authenticated %}
-                                    {% if user.profile.is_professional or user.profile.is_organization %}
-                                        <li><a href="#">Register</a></li>
-                                    {% endif %}                                
-                                {% endif %}
+                                <li>{% bccf_short_subscribe_for event %}</li>
                             </ul>
                         </div>
                 
