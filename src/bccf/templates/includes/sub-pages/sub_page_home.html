@@ -1,4 +1,4 @@
-{% load bccf_rating_tags bccf_event_tags bccf_resource_tags embed_video_tags comment_tags %}
+{% load bccf_rating_tags bccf_event_tags bccf_resource_tags bccf_blog_tags embed_video_tags comment_tags %}
 <div class="section row row-one social-box">
     {% if child_obj.show_rating or child_obj.content_model != 'bccfgenericpage' %}
         {% bccf_rating_for child_obj %}
@@ -17,6 +17,7 @@
     <section>
         {{ child_obj.content|safe }}
     </section>
+    {% author_for child_obj %}
 </div>
 {% if child_obj.show_comments or child_obj.content_model != 'bccfgenericpage' %}
     <div class="section row row-one">

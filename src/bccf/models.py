@@ -603,6 +603,7 @@ class Program(BCCFChildPage):
 #Blog Pages
 class Blog(BCCFChildPage):
     objects = managers.ChildPageManager()
+    author = models.ForeignKey(User, blank=True, null=True, verbose_name='Author')
     
     def save(self, **kwargs):
         self.gparent = BCCFPage.objects.get(slug='bccf/blog')

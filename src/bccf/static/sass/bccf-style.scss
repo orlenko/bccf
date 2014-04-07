@@ -1550,6 +1550,19 @@ textarea {
             color: #FFF;    
         }
     }
+    
+    .author-box {
+        border-top: 2px dashed $lgrey;
+        padding-top: 20px;
+        margin-top: 30px;
+    }
+        .author-description {
+            padding-left: 10px;    
+        }
+        .author-name { 
+            font-weight: bold;
+            font-family: $roboto;    
+        }
 
 .ajax-loader {
     display: block;

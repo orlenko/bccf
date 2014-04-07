@@ -292,6 +292,41 @@ class BCCFChildAdmin(DisplayableAdmin):
             self.list_filter = list(deepcopy(self.list_filter))
             for fieldname in ['page_for', 'bccf_topic']:
                 self.list_filter.insert(-1, fieldname)
+                
+class BCCFBlogAdmin(DisplayableAdmin):
+    inlines = (BCCFBabyInlineAdmin,)
+    ordering = ('-created',)
+    
+    def __init__(self, *args, **kwargs):
+        super(BCCFBlogAdmin, self).__init__(*args, **kwargs)
+        
+        # Fields
+        if self.fieldsets == DisplayableAdmin.fieldsets:
+            self.fieldsets = deepcopy(self.fieldsets)
+            for field in reversed(['content',
+                                    'author',
+                                    'bccf_topic',
+                                    'page_for',
+                                    'image']):
+                self.fieldsets[0][1]['fields'].insert(3, field)
+                
+        # Editable in the list display
+        if self.list_editable == DisplayableAdmin.list_editable:
+            self.list_editable = list(deepcopy(self.list_editable))
+            for fieldname in ['page_for', 'bccf_topic']:
+                self.list_editable.insert(-1, fieldname)                
+          
+        # List Display      
+        if self.list_display == DisplayableAdmin.list_display:
+            self.list_display = list(deepcopy(self.list_display))
+            for fieldname in ['page_for', 'bccf_topic']:
+                self.list_display.insert(-1, fieldname)                
+
+        # Filter
+        if self.list_filter == DisplayableAdmin.list_filter:
+            self.list_filter = list(deepcopy(self.list_filter))
+            for fieldname in ['page_for', 'bccf_topic']:
+                self.list_filter.insert(-1, fieldname)
 
 class BCCFProgramAdmin(DisplayableAdmin):
     actions = [make_featured, make_unfeatured]
@@ -443,7 +478,6 @@ class BCCFVideoResourceAdmin(AdminVideoMixin, DisplayableAdmin):
             for fieldname in ['page_for', 'bccf_topic', 'featured']:
                 self.list_filter.insert(-1, fieldname)         
         
-
 class BCCFTagAdmin(DisplayableAdmin):
     actions = [make_featured, make_unfeatured, 'approve_campaigns']
     inlines = (BCCFBabyInlineAdmin,)
@@ -493,7 +527,7 @@ class BCCFTagAdmin(DisplayableAdmin):
 admin.site.register(BCCFPage, PageAdmin)
 admin.site.register(BCCFTopic, BCCFTopicAdmin)
 admin.site.register(BCCFGenericPage, BCCFGenericAdmin)
-admin.site.register(Blog, BCCFChildAdmin)
+admin.site.register(Blog, BCCFBlogAdmin)
 admin.site.register(Program, BCCFProgramAdmin)
 admin.site.register(Campaign, BCCFTagAdmin)
 admin.site.register(Article, BCCFResourceAdmin)
