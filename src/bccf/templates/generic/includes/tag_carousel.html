@@ -19,9 +19,11 @@
             </div>
            <div class="tag-carousel">
                {% for talk in talks %}
-               <div>
-                   <div style="background: url('{{ MEDIA_URL }}{% bccf_thumbnail talk.image 75 75 %}') top left no-repeat" class="tag-img"></div>
-                   <div class="tag-info">
+               <div class="section">
+                   <div class="col four">
+                        <span class="tag-img" style="background: url('{{ MEDIA_URL }}{% bccf_thumbnail talk.image 75 75 %}') top left no-repeat"></span>
+                   </div>
+                   <div class="tag-info col eight">
                        <h6>{{ talk.title }}</h6>
                        <p>{{ talk.description|truncatechars:100 }}</p> 
                        <div class="dashed-button"><a href="{{ talk.get_content_model.get_absolute_url }}" target="_blank">more</a></div>
@@ -42,9 +44,11 @@
            
            <div class="tag-carousel">
                {% for act in acts %}
-               <div>
-                   <div style="background: url('{{ MEDIA_URL }}{% bccf_thumbnail act.image 75 75 %}') top left no-repeat" class="tag-img"></div>
-                   <div class="tag-info">
+               <div class="section">
+                   <div class="col four">
+                        <span class="tag-img" style="background: url('{{ MEDIA_URL }}{% bccf_thumbnail act.image 75 75 %}') top left no-repeat"></span>
+                   </div>
+                   <div class="tag-info col eight">
                        <h6>{{ act.title }}</h6>
                        <p>{{ act.description|truncatechars:100  }}</p> 
                        <div class="dashed-button"><a href="{{ act.get_content_model.get_absolute_url }}" target="_blank">more</a></div>
@@ -67,8 +71,10 @@
            <div class="tag-carousel">
                {% for get in gets %}
                <div class="section">
-                   <div style="background: url('{{ MEDIA_URL }}{% bccf_thumbnail get.image 75 75 %}') top left no-repeat" class="tag-img col three"></div>
-                   <div class="tag-info col nine">                    
+                   <div class="col four">
+                        <span class="tag-img" style="background: url('{{ MEDIA_URL }}{% bccf_thumbnail get.image 75 75 %}') top left no-repeat"></span>
+                   </div>
+                   <div class="tag-info col eight">                    
                        <h6>{{ get.title }}</h6>
                        <p>{{ get.description|truncatechars:100  }}</p> 
                        <div class="dashed-button"><a href="{{ get.get_absolute_url }}" target="_blank">more</a></div>
