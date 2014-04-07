@@ -16,7 +16,7 @@ from cartridge.shop.models import ProductVariation
 from cartridge.shop.utils import recalculate_cart
 
 from bccf.util.memberutil import require_event_audience
-from bccf.util.emailutil import send_moderate
+from bccf.util.emailutil import send_moderate, send_reminder
 from bccf.models import Event, EventRegistration, BCCFPage
 from bccf.forms import EventForm
 from mezzanine.core.models import CONTENT_STATUS_DRAFT, CONTENT_STATUS_PUBLISHED, CONTENT_STATUS_CHOICES
@@ -75,7 +75,7 @@ def publish(request, slug):
     messages.success(request, 'Event published. The event will be subject to review and can be taken down without notice.')
     return redirect(reverse('update-tab', (), {'tab': 'training'}))
 
-@require_event_audience
+#@require_event_audience
 @never_cache
 def signup(request, slug):
     if 'aftercheckout' in request.session:
@@ -85,31 +85,39 @@ def signup(request, slug):
         # Check if such registration already exists
         exists = False
         if not event.is_full():
-            for existing in EventRegistration.objects.filter(user=request.user, event=event):
-                messages.warning(request, 'You are already signed up to this event')
-                exists = True
-            if not exists:
-                if event.event_product:
-                    variation = ProductVariation.objects.get(sku='EVENT-%s' % event.pk)
-                    request.cart.add_item(variation, 1)
-                    recalculate_cart(request)
-                    messages.success(request, 'To complete the registration, please go through the checkout.')
-                    
-                    # Send event registration confirmation
-                    send_reminder("Event Registration Pending.", user, context={'event':event})
-                    
-                else:
-                    registration = EventRegistration.objects.create(user=request.user, event=event)
-                    
-                    # Send event registration confirmation
-                    send_reminder("Event Registration Complete.", request.user, context={'event':event})
-                    
-                    messages.success(request, 'Thank you! You signed up to the event successfully.')              
-            if event.max_seats == len(EventRegistration.objects.filter(event=event)):
-                event.full = True
-                event.save()
+           for existing in EventRegistration.objects.filter(user=request.user, event=event):
+               messages.warning(request, 'You are already signed up to this event')
+               exists = True
+           if not exists:
+               if event.event_product:
+                   variation = ProductVariation.objects.get(sku='EVENT-%s' % event.pk)
+                   request.cart.add_item(variation, 1)
+                   recalculate_cart(request)
+                   messages.success(request, 'To complete the registration, please go through the checkout.')
+                   
+                   # Send event registration confirmation
+                   send_reminder("Event Registration Pending.", user, context={'event':event})
+                   
+               else:
+                   registration = EventRegistration.objects.create(user=request.user, event=event)
+                   
+                   # Send event registration confirmation
+                   send_reminder("Event Registration Complete.", request.user, context={'event':event})
+                   
+                   messages.success(request, 'Thank you! You signed up to the event successfully.')              
+           if event.max_seats == len(EventRegistration.objects.filter(event=event)):
+               event.full = True
+               event.save()
+
+               # Send event registration for provider
+               attendees = EventRegistration.objects.filter(event=event)
+               send_reminder("Event is now full", event.provider, context={'event':event, 'attendees':attendees})
+             
+           # Send event registration for provider
+           send_reminder("A user registered for your event", event.provider, context={'event':event, 'attendee':user})
+             
         else:
-            messages.warning(request, 'The event is already full.')
+            messages.warning(request, 'The event is full.')
             
         return HttpResponseRedirect(event.get_absolute_url())
     context = RequestContext(request, locals())

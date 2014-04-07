@@ -92,7 +92,7 @@ def require_parent(func):
 def require_professional(func):
     @wraps(func, assigned=available_attrs(func))
     def _wrapper(request, *args, **kwargs):
-        return require_member('professional', func, request, *args, **kwargs)
+        return require_member('organization', func, request, *args, **kwargs) | require_member('professional', func, request, *args, **kwargs)
         #return require_member(Settings.get_setting('PROFESSIONAL_MEMBERSHIP_CATEGORY'), func, request, *args, **kwargs)
     return _wrapper
 
