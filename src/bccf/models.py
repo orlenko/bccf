@@ -998,8 +998,10 @@ class Event(BCCFChildPage):
             super(Event, self).save(**kwargs)
                     
         if self.price: # If it's not free create a product
+            event_cat = Category.objects.get(slug='shop/events')
             if not self.event_product:
                 product = Product.objects.create(title=self.title, content=self.content)
+                product.categories.add(event_cat)
                 variation = ProductVariation.objects.create(product=product, sku='EVENT-%s' % self.pk,
                     num_in_stock=self.max_seats, default=True, unit_price=self.price)
                 self.event_product = product
