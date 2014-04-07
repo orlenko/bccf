@@ -20,7 +20,7 @@
     <div id="form-container" class="col twelve">
         <div class="col four mobile-full">
             <form id="photo-form" method="POST" enctype="multipart/form-data">
-                <img src="{{ MEDIA_URL }}{% bccf_thumbnail profile.photo 200 200 %}" id="fake-photo" class="photo" alt="Default User Photo"/>
+                <img src="{{ MEDIA_URL }}{% bccf_thumbnail profile.photo 400 400 %}" id="fake-photo" class="photo" alt="Default User Photo"/>
                 <div class="form-group input_id_first_name"> 
                     {{ photo_form.photo }}
                     <p class="help-block">{{ form.photo.help_text }}</p>
