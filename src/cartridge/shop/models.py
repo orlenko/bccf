@@ -45,6 +45,7 @@ class Priced(models.Model):
     sku = fields.SKUField(unique=True, blank=True, null=True)
     num_in_stock = models.IntegerField(_("Number in stock"), blank=True,
                                        null=True)
+    tax_exempt = models.BooleanField(_("Tax Exempt"), default=False, help_text="Is the event exempted from taxes?")
 
     class Meta:
         abstract = True
