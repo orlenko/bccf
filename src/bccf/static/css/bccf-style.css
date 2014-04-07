@@ -3671,12 +3671,12 @@ textarea {
   height: 152PX;
 }
 /* line 1220, ../sass/bccf-style.scss */
-#home-resources .hr-item .hr-images a:nth-of-type(2) img {
+#home-resources .hr-item .hr-images a:nth-of-type(2) div {
   height: 100%;
   width: 100%;
 }
 /* line 1225, ../sass/bccf-style.scss */
-#home-resources .hr-item .hr-images img {
+#home-resources .hr-item .hr-images div {
   padding: 0;
   margin: 0;
 }

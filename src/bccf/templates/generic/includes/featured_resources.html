@@ -5,7 +5,10 @@
   		<a href="#" title="{{ slide.get_content_model.resource_type|title }}">
   		    <img class="hr-icon" src="../../static/img/header-colour-bg-yellow.gif" alt="{{ slide.get_content_model.resource_type }}">
   		</a>		
-  		<a href="{{ slide.get_absolute_url }}" title="{{ slide.title }}"><img src="{{ MEDIA_URL }}{% bccf_thumbnail slide.image 225 150 %}" alt="{{ slide.title }}"></a>
+  		<a href="{{ slide.get_absolute_url }}" title="{{ slide.title }}">
+  		    <div style="background: url('{{ MEDIA_URL }}{% bccf_thumbnail slide.image 225 150 %}') top left no-repeat"></div>
+  		    <!--<img src="{{ MEDIA_URL }}{% bccf_thumbnail slide.image 225 150 %}" alt="{{ slide.title }}">-->
+  		</a>
   	</div>
     <div class="hr-text">
     	<i>FEATURED {{ slide.get_content_model.get_resource_type|title }}</i>
