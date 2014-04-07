@@ -5,7 +5,7 @@ from datetime import datetime
 from decimal import Decimal
 
 from cartridge.shop.fields import MoneyField
-from cartridge.shop.models import Order, ProductVariation, Product
+from cartridge.shop.models import Order, ProductVariation, Product, Category
 from dateutil.relativedelta import relativedelta
 
 from django.db import models
