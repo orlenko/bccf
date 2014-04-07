@@ -20,7 +20,7 @@
            <div class="tag-carousel">
                {% for talk in talks %}
                <div>
-                   <img src="{{ MEDIA_URL }}{% bccf_thumbnail talk.image 75 75 %}" alt="{{ talk.title }}">
+                   <div style="background: url('{{ MEDIA_URL }}{% bccf_thumbnail talk.image 75 75 %}') top left no-repeat" class="tag-img"></div>
                    <h6>{{ talk.title }}</h6>
                    <p>{{ talk.description|truncatechars:100 }}</p> 
                    <div class="dashed-button"><a href="{{ talk.get_content_model.get_absolute_url }}" target="_blank">more</a></div>
@@ -41,7 +41,7 @@
            <div class="tag-carousel">
                {% for act in acts %}
                <div>
-                   <img src="{{ MEDIA_URL }}{% bccf_thumbnail act.image 75 75 %}" alt="{{ act.title }}">
+                   <div style="background: url('{{ MEDIA_URL }}{% bccf_thumbnail act.image 75 75 %}') top left no-repeat" class="tag-img"></div>
                    <h6>{{ act.title }}</h6>
                    <p>{{ act.description|truncatechars:100  }}</p> 
                    <div class="dashed-button"><a href="{{ act.get_content_model.get_absolute_url }}" target="_blank">more</a></div>
@@ -63,7 +63,7 @@
            <div class="tag-carousel">
                {% for get in gets %}
                <div>
-                   <img src="{{ MEDIA_URL }}{% bccf_thumbnail get.image 75 75 %}" alt="{{ get.title }}">
+                   <div style="background: url('{{ MEDIA_URL }}{% bccf_thumbnail get.image 75 75 %}') top left no-repeat" class="tag-img"></div>
                    <h6>{{ get.title }}</h6>
                    <p>{{ get.description|truncatechars:100  }}</p> 
                    <div class="dashed-button"><a href="{{ get.get_absolute_url }}" target="_blank">more</a></div>
