@@ -6,8 +6,7 @@ from dateutil.relativedelta import relativedelta
 from django.db import models
 from django.db.models import Q
 
-from mezzanine.pages.managers import PageManager
-from mezzanine.core.managers import DisplayableManager, SearchableManager
+from mezzanine.core.managers import DisplayableManager
 from mezzanine.core.models import CONTENT_STATUS_PUBLISHED
 
 #Manager
@@ -18,7 +17,7 @@ class UserProfileManager(models.Manager):
             Q(show_in_list=True),
         )
     
-class ChildPageManager(PageManager):     
+class ChildPageManager(DisplayableManager):     
         
     def __init__(self, *args, **kwargs):
         super(ChildPageManager, self).__init__(*args, **kwargs)
