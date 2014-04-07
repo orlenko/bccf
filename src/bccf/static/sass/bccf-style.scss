@@ -1742,9 +1742,11 @@ textarea {
 		em {background-color:$yellow;}
 		}
 
-    .tag-info {    
+    .tag-carousel {
+        .section {
+            padding: 5px;    
+        }    
     }
-
     .tag-img {
         display: block;
         width: 75px;
