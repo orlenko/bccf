@@ -31,7 +31,7 @@
                     <li>Program</li>
                 </ul>
             </div>
-            <div id="hcal-families-carousel" class="col twelve mobile-full tablet-full">
+            <div id="hcal-families-carousel" class="mobile-full tablet-full">
                 {% for event in eventForParents %}
                 
                 {% if forloop.counter|divisibleby:"6" or forloop.first %}
@@ -42,7 +42,7 @@
                             	<li>{{ event.date_start|date:"F d" }}</li>
                                 <li>{{ event.program.short_title }}</li>
                                 <li><a href="{{ event.get_absolute_url }}">Learn More</a></li>
-                                {% bccf_short_subscribe_for event %}
+                                <li>{% bccf_short_subscribe_for event %}</li>
                             </ul>
                         </div>
                 
@@ -60,7 +60,7 @@
                 
                 {% endfor %}                
             </div>
-            <div id="hcal-professionals-carousel" class="col twelve mobile-full tablet-full">
+            <div id="hcal-professionals-carousel" class="mobile-full tablet-full">
                 {% for event in eventForProfessionals %}
                 
                 {% if forloop.counter|divisibleby:"6" or forloop.first %}
