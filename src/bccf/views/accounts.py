@@ -21,7 +21,9 @@ from django.template.response import TemplateResponse
 
 from cartridge.shop.models import ProductVariation
 
-from bccf import forms
+from bccf_mc.utils import subscribe, ping
+
+from bccf import forms as f
 from bccf.util.memberutil import get_upgrades
 from bccf.util.emailutil import send_welcome, send_moderate, send_welcome
 
@@ -70,11 +72,11 @@ def signup(request):
     membership_level = request.GET.get('level', None)
     payment_frequency = request.GET.get('freq', None)
     
-    form = forms.CreateAccountForm(initial={'membership_type': membership_type,
+    form = f.CreateAccountForm(initial={'membership_type': membership_type,
         'membership_level': membership_level, 'payment_frequency': payment_frequency})
     
     if request.method == 'POST':
-        form = forms.CreateAccountForm(data=request.POST, files=request.FILES)
+        form = f.CreateAccountForm(data=request.POST, files=request.FILES)
         if form.is_valid():
             response = redirect('update')
             if form.cleaned_data.get('membership_level') != 'A':
@@ -90,6 +92,12 @@ def signup(request):
                 recalculate_cart(request)
                 response = redirect('shop_checkout')
             form.save()
+            
+            subscribe(request, 'af67fb20e37', request.user.email) # Members list
+            
+            if form.cleaned_data.get('in_mailing_list'):
+                subscribe(request, '8aebc01ca2', form.cleaned_data.get('email')) # News Letter
+            
             new_user = authenticate(username=form.cleaned_data.get('username'), 
                                     password=form.cleaned_data.get('password1'))
             auth_login(request, new_user)
@@ -110,7 +118,7 @@ def signup(request):
 def profile_update(request, tab='home'):
     user = request.user
     profile = user.profile
-    photo_form = forms.PhotoForm()
+    photo_form = f.PhotoForm()
     order = profile.membership_order
     membership = profile.membership_product_variation
     expiration = profile.membership_expiration_datetime
@@ -155,35 +163,39 @@ def profile_update(request, tab='home'):
 
     if request.method == 'POST':
         if 'update-photo' in request.POST:
-           photo_form = forms.PhotoForm(request.POST, request.FILES, instance=profile)
+           photo_form = f.PhotoForm(request.POST, request.FILES, instance=profile)
            if photo_form.is_valid():
                 user = photo_form.save()
                 success(request, 'Photo Updated Successfully')
-           photo_form = forms.PhotoForm()
+           photo_form = f.PhotoForm()
         else:
             if tab == 'account':
-                form = forms.AccountInformationForm(request.POST, instance=user)
+                form = f.AccountInformationForm(request.POST, instance=user)
             elif tab == 'contact':
-                form = forms.ContactInformationForm(request.POST, instance=profile)
+                form = f.ContactInformationForm(request.POST, instance=profile)
             elif tab == 'profile':
-                form = forms.ProfessionalProfileForm(request.POST, instance=profile)
+                form = f.ProfessionalProfileForm(request.POST, instance=profile)
             elif tab == 'social':
-                form = forms.SocialMediaForm(request.POST, instance=profile)
+                form = f.SocialMediaForm(request.POST, instance=profile)
             elif tab == 'preferences':
-                form = forms.AccountPreferenceForm(request.POST, instance=profile)
+                form = f.AccountPreferencesForm(request.POST, instance=profile)
             elif tab == 'forum':
-                form = forms.ForumPreferencesForm(request.POST, request.FILES, instance=profile)
+                form = f.ForumPreferencesForm(request.POST, request.FILES, instance=profile)
             elif tab == 'adduser':
-                form = forms.AddUserForm(request.POST)
+                form = f.AddUserForm(request.POST)
             elif tab == 'register':
-                form = forms.RegisterUserForm(request, data=request.POST)
+                form = f.RegisterUserForm(request, data=request.POST)
                 request.session['register_selected_members'] = request.POST.getlist('members')
                 request.session['register_selected_event'] = request.POST.get('event')
                 return redirect(reverse('register-event'))
-            if form.is_valid():       
+            if form.is_valid():
+                ping()
                 user = form.save()
                 success(request, 'Account Updated Successfully')
-                if tab == 'adduser':
+                if tab == 'preferences':
+                    if form.cleaned_data.get('in_mailing_list'):
+                        subscribe(request, '8aebc01ca2', request.user.email) # News letter
+                elif tab == 'adduser':
                     form = None
             else:
                 error(request, 'Please fix the form errors below')

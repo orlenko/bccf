@@ -360,6 +360,7 @@ INSTALLED_APPS = (
     'form_utils', # required by builder to call template tags
     'embed_video',
     'django_cron',
+    'bccf_mc',
 )
 
 # List of processors used by RequestContext to populate the context.
