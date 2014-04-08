@@ -3351,6 +3351,8 @@ footer {
 } /* End Footer */
 } /* End Mobile Media Query */
 
+@import "../mixins/generic";
+@import "../mixins/comment";
 @import "../mixins/pop-up";
 @import "../mixins/shop";
 @import "../mixins/memberships";

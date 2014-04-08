@@ -57,12 +57,6 @@
             <!--{% if child_obj.gparent.slug == 'resources' %}
             <li class="col two mobile-full"><a href="{{ MEDIA_URL }}{{ child_obj.get_content_model.attached_document }}" target="_blank">Download</a></li>
             {% endif %}-->
-            {% if child_obj.content_model == 'formpublished' %}
-            <li class="col two mobile-full"><a href="{{ child_obj.get_content_model.get_survey_url }}" target="_blank">Act</a></li>
-            {% endif %}
-            {% if child_obj.content_model == 'topic' %}
-            <li class="col two mobile-full"><a href="{{ child_obj.get_content_model.get_absolute_url }}" target="_blank">Talk</a></li>
-            {% endif %}
             {% if child_obj.show_resources or child_obj.content_model != 'bccfgenericpage' %}
             <li class="col two mobile-full" id="resources">
                 <a href="{{ child_obj.get_absolute_url }}baby-resources" id="baby-resources" class="baby-content-btn">Resources</a>

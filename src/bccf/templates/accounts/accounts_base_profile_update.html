@@ -47,7 +47,7 @@
                             <li><a id="id_program" href="{% url 'update-tab' 'program' %}">Request Program</a></li>
                          {% endif %}
                         {% if profile.is_organization %}
-                        <li><a id="id_feedback" href="{% url 'update-tab' 'members' %}">Organization Members</a></li>
+                        <li><a id="id_members" href="{% url 'update-tab' 'members' %}">Organization Members</a></li>
                         <li><a id="id_register" href="{% url 'update-tab' 'register' %}">Register Members to Trainings</a></li>
                         <li><a id="id_adduser" href="{% url 'update-tab' 'adduser' %}">Add Member</a></li>
                         {% endif %}
