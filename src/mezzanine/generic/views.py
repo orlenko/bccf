@@ -96,6 +96,8 @@ def comment(request, template="generic/comments.html"):
         if is_spam(request, form, url):
             return redirect(url)
         comment = form.save(request)
+        obj.comments_count += 1
+        obj.save()
         response = redirect(add_cache_bypass(comment.get_absolute_url()))
         # Store commenter's details in a cookie for 90 days.
         for field in ThreadedCommentForm.cookie_fields:
@@ -105,6 +107,8 @@ def comment(request, template="generic/comments.html"):
         return response
     elif request.is_ajax() and form.errors:
         return HttpResponse(dumps({"errors": form.errors}))
+    else:
+        error(request, "ERROR")
     # Show errors with stand-alone comment form.
     context = {"obj": obj, "posted_comment_form": form}
     response = render(request, template, context)
