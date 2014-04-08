@@ -19,6 +19,7 @@
     {% if user.is_authenticated %}
     <form method="post" id="comment" action="{{ comment_url }}#comment" class="comment-form">
         <h3>{% trans "Post a comment" %}</h3>
+        {{ form.errors }}
         {% if not request.POST.replied_to %}
             {% for hidden in posted_comment_form.hidden_fields %}
                 {{ hidden }}
