@@ -46,18 +46,11 @@
                 {% for hidden in posted_comment_form.hidden_fields %}
                     {{ hidden }}
                 {% endfor %}
- 
-           {{ posted_comment_form.email.as_hidden }}
-                {{ posted_comment_form.name.as_hidden }}
-                {{ posted_comment_form.url.as_hidden }}
                 {{ posted_comment_form.comment }}
             {% else %}
                 {% for hidden in unposted_comment_form.hidden_fields %}
                     {{ hidden }}
                 {% endfor %}
-                {{ unposted_comment_form.email.as_hidden }}
-                {{ unposted_comment_form.name.as_hidden }}
-                {{ unposted_comment_form.url.as_hidden }}
                 {{ unposted_comment_form.comment }}
             {% endif %}
             <div class="dashed-button form-actions">
