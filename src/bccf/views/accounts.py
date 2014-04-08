@@ -93,7 +93,7 @@ def signup(request):
                 response = redirect('shop_checkout')
             form.save()
             
-            subscribe(request, 'af67fb20e37', form.cleaned_data.get('email')) # Members list
+            subscribe(request, 'af67fb20e3', form.cleaned_data.get('email')) # Members list
             
             if form.cleaned_data.get('in_mailing_list'):
                 subscribe(request, '8aebc01ca2', form.cleaned_data.get('email')) # News Letter
