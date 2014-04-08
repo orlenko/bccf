@@ -44,18 +44,11 @@
             <h3>{% trans "Post Reply" %}</h3>
             {{ form.errors }}
             {% if replied_to == comment.id  %}
-                {% for hidden in posted_comment_form.hidden_fields %}
-                    {{ hidden }}
-                {% endfor %}
-                {{ posted_comment_form.comment }}
+                {% fields_for posted_comment_form %}
             {% else %}
-                {% for hidden in unposted_comment_form.hidden_fields %}
-                    {{ hidden }}
-                {% endfor %}
-                {{ unposted_comment_form.comment }}
+                {% fields_for unposted_comment_form %}
             {% endif %}
-            {% csrf_token %}
-            <div class="dashed-button form-actions">
+            {% csrf_token %            <div class="dashed-button form-actions">
                 <input class="btn btn-primary btn-lg" type="submit" value="{% trans "Submit Reply" %}">
             </div>
         </form>
