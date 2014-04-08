@@ -1520,6 +1520,7 @@ textarea {
             > li {
                 margin: 0;
                 width: 16.66%;
+				&:hover {background-color: $dgreen;}
                > a {
                     @include font-size(12);
                     padding: 10px 0;
@@ -2305,7 +2306,7 @@ footer {
 
 		.dashed-button {
 			background-color:$lgreen;
-			min-width:80px;
+			min-width:76px;
 			float:left;
 			text-align: center;
 

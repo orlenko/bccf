@@ -3296,6 +3296,9 @@ textarea {
   margin: 0;
   width: 16.66%;
 }
+.subpage-tabs > ul > li:hover {
+  background-color: #336442;
+}
 .subpage-tabs > ul > li > a {
   font-size: 12px;
   font-size: 0.75rem;
@@ -4012,7 +4015,7 @@ footer #newsletter div {
 }
 footer #newsletter .dashed-button {
   background-color: #8fab3d;
-  min-width: 80px;
+  min-width: 76px;
   float: left;
   text-align: center;
 }
@@ -4842,7 +4845,6 @@ footer #newsletter .dashed-button a:hover {
   width: 400px;
   padding: 15px;
   background: rgba(159, 206, 180, 0.9);
-  text-shadow: 2px 2px 1px #FFFFFF;
   z-index: 9999;
 }
 .lightbox .lightbox-title {
