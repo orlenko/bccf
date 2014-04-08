@@ -30,6 +30,7 @@
             {% endfor %}
             {{ unposted_comment_form.comment }}
         {% endif %}
+        {% csrf_token %}
         <div class="dashed-button form-actions">
             <input class="btn btn-primary btn-lg" type="submit" value="{% trans "Submit Comment" %}">
         </div>
