@@ -1,6 +1,5 @@
 {% load static bccf_tags comment_tags %}
-    
-{% if not comment.is_removed and comment.is_public or request.user.is_staff %}
+ 
 <div class="section row row-one">
     <div class="col two">
         {% if comment_profile.photo %}
@@ -16,4 +15,3 @@
         </p>
     </div>
 </div>
-{% endif %}
