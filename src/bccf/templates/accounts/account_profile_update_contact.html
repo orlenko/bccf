@@ -36,7 +36,7 @@
         <p class="help-block">{{ form.street_2.help_text }}</p>
         <p class="error-block">{{ form.street_2.errors.as_text|cut:'*' }}</p>
     </div>
-    <div class="section">
+    <div class="section form-group">
         <div class="col six form-group input_id_province"> 
             <p><label for="id_province">{{ form.province.label }}</label></p>
             {{ form.province }}
@@ -44,7 +44,10 @@
             <p class="error-block">{{ form.province.errors.as_text|cut:'*' }}</p>
         </div>
         <div class="col six form-group input_id_postal_code">      
-            <p><label class="req" for="id_postal_code">{{ form.postal_code.label }}</label></p>
+            <p>
+                <label for="id_postal_code">{{ form.postal_code.label }}</label>
+                {% if form.postal_code.field.required %}<i class="req-asterisk fa fa-asterisk"></i>{% endif %}
+            </p>
             {{ form.postal_code }}
             <p class="help-block">{{ form.postal_code.help_text }}</p>
             <p class="error-block">{{ form.postal_code.errors.as_text|cut:'*' }}</p>

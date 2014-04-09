@@ -29,87 +29,123 @@
         <div id="main-form" class="col eight mobile-full">
             <strong class="fieldset-header">Account Information</strong>
             <div class="form-group input_id_first_name"> 
-                <p><label class="req" for="id_first_name">{{ form.first_name.label }}</label></p>
+                <p>
+                    <label for="id_first_name">{{ form.first_name.label }}</label>
+                    {% if form.first_name.field.required %}<i class="req-asterisk fa fa-asterisk"></i>{% endif %}
+                </p>
                 {{ form.first_name }}
                 <p class="help-block">{{ form.first_name.help_text }}</p>
                 <p class="error-block">{{ form.first_name.errors.as_text|cut:'*' }}</p>
             </div>
             <div class="form-group input_id_last_name">      
-                <p><label class="req" for="id_last_name">{{ form.last_name.label }}</label></p>
+                <p>
+                    <label for="id_last_name">{{ form.last_name.label }}</label>
+                    {% if form.last_name.field.required %}<i class="req-asterisk fa fa-asterisk"></i>{% endif %}
+                </p>
                 {{ form.last_name }}
                 <p class="help-block">{{ form.last_name.help_text }}</p>
                 <p class="error-block">{{ form.last_name.errors.as_text|cut:'*' }}</p>
             </div>
-            <div class="form-group input_id_last_name">      
-                <p><label class="req" for="id_last_name">{{ form.gender.label }}</label></p>
+            <div class="form-group input_id_gender">      
+                <p>
+                    <label for="id_gender">{{ form.gender.label }}</label>
+                    {% if form.gender.field.required %}<i class="req-asterisk fa fa-asterisk"></i>{% endif %}
+                </p>
                 {{ form.gender }}
                 <p class="help-block">{{ form.gender.help_text }}</p>
                 <p class="error-block">{{ form.gender.errors.as_text|cut:'*' }}</p>
             </div>
             <div class="form-group input_id_postal_code">      
-                <p><label class="req" for="id_postal_code">{{ form.postal_code.label }}</label></p>
+                <p>
+                    <label for="id_postal_code">{{ form.postal_code.label }}</label>
+                    {% if form.postal_code.field.required %}<i class="req-asterisk fa fa-asterisk"></i>{% endif %}
+                </p>
                 {{ form.postal_code }}
                 <p class="help-block">{{ form.postal_code.help_text }}</p>
                 <p class="error-block">{{ form.postal_code.errors.as_text|cut:'*' }}</p>
             </div>
             <div class="form-group input_id_email">      
-                <p><label class="req" for="id_email">{{ form.email.label }}</label></p>
+                <p>
+                    <label for="id_email">{{ form.email.label }}</label>
+                    {% if form.email.field.required %}<i class="req-asterisk fa fa-asterisk"></i>{% endif %}
+                </p>
                 {{ form.email }}
                 <p class="help-block">{{ form.email.help_text }}</p>
                 <p class="error-block">{{ form.email.errors.as_text|cut:'*' }}</p>
             </div>
             <div class="form-group input_id_username">      
-                <p><label class="req" for="id_username">{{ form.username.label }}</label></p>
+                <p>
+                    <label for="id_username">{{ form.username.label }}</label>
+                    {% if form.username.field.required %}<i class="req-asterisk fa fa-asterisk"></i>{% endif %}
+                </p>
                 {{ form.username }}
                 <p class="help-block">{{ form.username.help_text }}</p>
                 <p class="error-block">{{ form.username.errors.as_text|cut:'*' }}</p>
             </div>
             <div class="form-group input_id_password1">      
-                <p><label class="req" for="id_password1">{{ form.password1.label }}</label></p>
+                <p>
+                    <label for="id_password1">{{ form.password1.label }}</label>
+                    {% if form.password1.field.required %}<i class="req-asterisk fa fa-asterisk"></i>{% endif %}
+                </p>
                 {{ form.password1 }}
                 <p class="help-block">{{ form.password1.help_text }}</p>
                 <p class="error-block">{{ form.password1.errors.as_text|cut:'*' }}</p>
             </div>
             <div class="form-group input_id_password2">      
-                <p><label class="req" for="id_password2">{{ form.password2.label }}</label></p>
+                <p>
+                    <label for="id_password2">{{ form.password2.label }}</label>
+                    {% if form.password2.field.required %}<i class="req-asterisk fa fa-asterisk"></i>{% endif %}
+                </p>
                 {{ form.password2 }}
                 <p class="help-block">{{ form.password2.help_text }}</p>
                 <p class="error-block">{{ form.password2.errors.as_text|cut:'*' }}</p>
             </div>
             <strong class="fieldset-header row row-one">Account Type</strong>
             <div class="form-group input_id_membership_type"> 
-                <p><label class="req" for="id_membership_type">{{ form.membership_type.label }}</label></p>
+                <p>
+                    <label for="id_membership_type">{{ form.membership_type.label }}</label>
+                    {% if form.membership_type.field.required %}<i class="req-asterisk fa fa-asterisk"></i>{% endif %}
+                </p>
                 {{ form.membership_type }}
                 <p class="help-block">{{ form.membership_type.help_text }}</p>
                 <p class="error-block">{{ form.membership_type.errors.as_text|cut:'*' }}</p>
             </div>
             <div class="form-group input_id_membership_level">
-                <p><label class="req" for="id_membership_level">{{ form.membership_level.label }}</label></p>
+                <p>
+                    <label for="id_membership_level">{{ form.membership_level.label }}</label>
+                    {% if form.membership_level.field.required %}<i class="req-asterisk fa fa-asterisk"></i>{% endif %}
+                </p>
                 {{ form.membership_level }}
                 <p class="help-block">{{ form.membership_level.help_text }}</p>
                 <p class="error-block">{{ form.membership_level.errors.as_text|cut:'*' }}</p>            
             </div>
             <div class="form-group input_id_payment_frequency">
-                <p><label class="req" for="id_payment_frequency">{{ form.payment_frequency.label }}</label></p>
+                <p>
+                    <label for="id_payment_frequency">{{ form.payment_frequency.label }}</label>
+                    {% if form.payment_frequency.field.required %}<i class="req-asterisk fa fa-asterisk"></i>{% endif %}
+                </p>
                 {{ form.payment_frequency }}
                 <p class="help-block">{{ form.payment_frequency.help_text }}</p>
                 <p class="error-block">{{ form.payment_frequency.errors.as_text|cut:'*' }}</p>            
             </div>
             <strong class="fieldset-header row row-one">Account Preferences</strong>
             <div class="form-group checkbox-group input_id_show_in_list"> 
-                <label class="req" for="id_show_in_list">Plase add my profile to your <a href="/member/directory" target="_blank">listing of professionals</a></label>
+                <label for="id_show_in_list">Plase add my profile to your <a href="/member/directory" target="_blank">listing of professionals</a></label>
+                {% if form.show_in_list.field.required %}<i class="req-asterisk fa fa-asterisk"></i>{% endif %}
                 {{ form.show_in_list }}
                 <p class="help-block">{{ form.show_in_list.help_text }}</p>
                 <p class="error-block">{{ form.show_in_list.errors.as_text|cut:'*' }}</p>
             </div>
             <div class="form-group checkbox-group input_id_in_mailing_list"> 
-                <label class="req" for="id_in_mailing_list">Please add me to your mailing list</label>
+                <label for="id_in_mailing_list">Please add me to your mailing list</label>
+                {% if form.in_mailing_list.field.required %}<i class="req-asterisk fa fa-asterisk"></i>{% endif %}
                 {{ form.in_mailing_list }}
                 <p class="help-block">{{ form.in_mailing_list.help_text }}</p>
                 <p class="error-block">{{ form.in_mailing_list.errors.as_text|cut:'*' }}</p>
             </div>
             <div class="form-group checkbox-group input_id_first_name"> 
-                <label class="req" for="accept">I accept the <a href="#" target="_blank">Terms of User & Privacy</a></label>
+                <label for="accept">I accept the <a href="#" target="_blank">Terms of User & Privacy</a></label>
+                {% if form.accept.field.required %}<i class="req-asterisk fa fa-asterisk"></i>{% endif %}
                 <input id="accept" name="accept" type="checkbox">
                 <p class="help-block">{{ form.accept.help_text }}</p>
                 <p class="error-block">{{ form.accept.errors.as_text|cut:'*' }}</p>

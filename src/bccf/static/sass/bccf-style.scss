@@ -371,6 +371,7 @@ input[type=password],
 input[type=email],
 input[type=search],
 input[type=tel],
+input[type=url],
 textarea {
   padding: 5px 7px;
   -webkit-appearance: none; // Remove Default Browser Behaviour for Safari
@@ -1978,6 +1979,7 @@ textarea {
     #form-container {
         padding-top: 25px;
         .form-group {
+            margin: 10px 0;
             p {
                 margin-top: 2px;
                 margin-bottom: 0;    
@@ -2121,15 +2123,11 @@ textarea {
         color: $lgreen;    
     }
     &.contact-tab {
-        .input_id_postal_code {
-            .req:after {
-                @include font-size(15);
-                color: $lgreen;
-                content: "*";
-                position: relative;
-                top: 5px;
-            }
-        }   
+        .form-group {
+            .form-group {
+                margin: 0 !important;    
+            }    
+        }  
     }
     &.forum-tab {
         #id_show_signatures {
@@ -2204,15 +2202,20 @@ textarea {
 
 /* Forum End */
 
+.req-asterisk {
+    @include font-size(10);
+    color: $lgreen;    
+}
+
 /* Generic Above Footer */
-.req:after {
+/*.req:after {
     @include font-size(25);
     content: '*';
     color: $lgreen;
     position: relative;
     top: 11px;
     left: 5px;
-}
+}*/
 
 .photo {
     border: 10px solid $sgrey;    
