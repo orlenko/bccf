@@ -5,9 +5,9 @@
     <div id="comment-{{ comment.id }}"
     class="comment media section{% if comment.by_author %} comment-author{% endif %}">
         {% comment_for comment %}
-        
         {% if request.user.is_authenticated %}
-            {% if not comment.is_removed and comment.is_public or request.user.is_staff %}         
+            {% if not comment.is_removed and comment.is_public or request.user.is_staff %}
+            
             <a href="#reply-{{ comment.id }}" class="reply">
                 <i class="fa fa-reply"></i> {% trans "Reply" %}
             </a>
