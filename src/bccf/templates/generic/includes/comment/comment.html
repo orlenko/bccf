@@ -1,7 +1,7 @@
 {% load i18n mezzanine_tags static bccf_tags comment_tags %}
  
 {% if comment_obj %}
-    {% if not comment.is_removed and comment.is_public or request.user.is_staff %}
+    {% if not comment_obj.is_removed and comment_obj.is_public or request.user.is_staff %}
         <div class="section row row-one">
             <div class="col two">
                 {% if comment_profile.photo %}
@@ -24,7 +24,7 @@
             
             <form class="comment-reply-form comment-form" method="post" id="reply-{{ comment_obj.id }}"
                 action="{{ comment_url }}#reply-{{ comment_obj.id }}"
-                {% if replied_to != comment.id %}style="display:none;"{% endif %}>
+                {% if replied_to != comment_obj.id %}style="display:none;"{% endif %}>
                 <h3>{% trans "Post Reply" %}</h3>
                 {% if replied_to == comment_obj.id  %}
                     {% fields_for posted_comment_form %}
@@ -43,7 +43,7 @@
             {% else %}
             <span class="glyphicon glyphicon-warning-sign"></span> {% trans "Comment awaiting approval" %}
             {% endif %}
-            <small class="timespan">{% blocktrans with sometime=comment.submit_date|timesince %}{{ sometime }} ago{% endblocktrans %}</small>
+            <small class="timespan">{% blocktrans with sometime=comment_obj.submit_date|timesince %}{{ sometime }} ago{% endblocktrans %}</small>
         </p>
     {% endif %}
 {% endif %}
