@@ -6009,36 +6009,41 @@ footer #newsletter .dashed-button a:hover {
 /* line 12, ../mixins/comment.scss */
 #comments .comment {
   border-bottom: 2px dashed #a6b2a6;
+  margin-bottom: 20px;
 }
-/* line 14, ../mixins/comment.scss */
+/* line 15, ../mixins/comment.scss */
+#comments .comment p {
+  margin-bottom: 0;
+}
+/* line 18, ../mixins/comment.scss */
 #comments .comment .comment {
   border-bottom: none;
   padding: 0;
   margin: 20px 0 0 20px;
 }
-/* line 20, ../mixins/comment.scss */
+/* line 24, ../mixins/comment.scss */
 #comments .comment-form {
   padding-top: 20px;
 }
-/* line 22, ../mixins/comment.scss */
+/* line 26, ../mixins/comment.scss */
 #comments .comment-form h3 {
   font-size: 20px;
   font-size: 1.25rem;
   font-family: "PT Sans", sans-serif;
   font-weight: bold;
 }
-/* line 27, ../mixins/comment.scss */
+/* line 31, ../mixins/comment.scss */
 #comments .comment-form textarea {
   width: 100%;
   border: 1px solid #414042;
   background-color: whitesmoke;
 }
-/* line 33, ../mixins/comment.scss */
+/* line 37, ../mixins/comment.scss */
 #comments .form-actions {
   margin: 10px auto !important;
   display: block;
 }
-/* line 36, ../mixins/comment.scss */
+/* line 40, ../mixins/comment.scss */
 #comments .form-actions input {
   font-size: 12px;
   font-size: 0.75rem;
@@ -6052,7 +6057,7 @@ footer #newsletter .dashed-button a:hover {
   text-decoration: none;
   text-transform: uppercase;
 }
-/* line 47, ../mixins/comment.scss */
+/* line 51, ../mixins/comment.scss */
 #comments .form-actions input:hover {
   color: #336442;
   text-decoration: none;

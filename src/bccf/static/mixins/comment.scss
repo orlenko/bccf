@@ -11,6 +11,10 @@
     }
     .comment {
         border-bottom: 2px dashed $lgrey;
+        margin-bottom: 20px;
+        p {
+            margin-bottom: 0;        
+        }
         .comment {
             border-bottom: none;
             padding: 0;
