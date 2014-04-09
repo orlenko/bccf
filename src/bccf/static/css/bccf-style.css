@@ -4062,13 +4062,14 @@ textarea {
   padding: 20px;
 }
 
-/* line 1588, ../sass/bccf-style.scss */
-.green-list .control-buttons a {
-  background-color: #8fab3d;
-}
-/* line 1590, ../sass/bccf-style.scss */
-.green-list .control-buttons a:hover, .green-list .control-buttons a:focus {
-  background-color: #9dbc43;
+/* line 1587, ../sass/bccf-style.scss */
+.green-list .control-buttons {
+  /*a {
+      background-color: $lgreen;
+      &:hover, &:focus {
+          background-color: $lgreen*1.1;
+      }
+  }*/
 }
 /* line 1595, ../sass/bccf-style.scss */
 .green-list .page-box {
@@ -4084,13 +4085,14 @@ textarea {
   background-color: #8fab3d;
 }
 
-/* line 1610, ../sass/bccf-style.scss */
-.dgreen-list .control-buttons a {
-  background-color: #336442;
-}
-/* line 1612, ../sass/bccf-style.scss */
-.dgreen-list .control-buttons a:hover, .dgreen-list .control-buttons a:focus {
-  background-color: #386e48;
+/* line 1609, ../sass/bccf-style.scss */
+.dgreen-list .control-buttons {
+  /*a {
+      background-color: $dgreen;
+      &:hover, &:focus {
+          background-color: $dgreen*1.1;
+      }
+  }*/
 }
 /* line 1617, ../sass/bccf-style.scss */
 .dgreen-list .page-box {
@@ -4106,13 +4108,14 @@ textarea {
   background-color: #336442;
 }
 
-/* line 1632, ../sass/bccf-style.scss */
-.teal-list .control-buttons a {
-  background-color: #9fceb4;
-}
-/* line 1634, ../sass/bccf-style.scss */
-.teal-list .control-buttons a:hover, .teal-list .control-buttons a:focus {
-  background-color: #aee2c6;
+/* line 1631, ../sass/bccf-style.scss */
+.teal-list .control-buttons {
+  /*a {
+      background-color: $lteal;
+      &:hover, &:focus {
+          background-color: $lteal*1.1;
+      }
+  }*/
 }
 /* line 1639, ../sass/bccf-style.scss */
 .teal-list .page-box {
@@ -4128,13 +4131,14 @@ textarea {
   background-color: #9fceb4;
 }
 
-/* line 1654, ../sass/bccf-style.scss */
-.yellow-list .control-buttons a {
-  background-color: #fdcd26;
-}
-/* line 1656, ../sass/bccf-style.scss */
-.yellow-list .control-buttons a:hover, .yellow-list .control-buttons a:focus {
-  background-color: #ffe129;
+/* line 1653, ../sass/bccf-style.scss */
+.yellow-list .control-buttons {
+  /*a {
+      background-color: $yellow;
+      &:hover, &:focus {
+          background-color: $yellow*1.1;
+      }
+  }*/
 }
 /* line 1661, ../sass/bccf-style.scss */
 .yellow-list .page-box {
@@ -6525,119 +6529,229 @@ For BCCF Memberships
 -- Resource Theme
 *******************************************/
 /* line 194, ../mixins/marquee_themes.scss */
-.button-slide, .button-prev-dgreen, .button-prev-dgrey, .button-prev-dteal, .button-prev-lgreen, .button-prev-lgrey, .button-prev-lteal, .button-prev-lyellow, .button-prev-sgreen, .button-prev-sgrey, .button-next-steal, .button-prev-yellow, .button-next-dgreen, .button-next-dgrey, .button-next-dteal, .button-next-lgreen, .button-next-lgrey, .button-next-lteal, .button-next-lyellow, .button-next-sgreen, .button-next-sgrey, .button-next-yellow {
+.button-slide, .button-hover-prev-dgreen:hover, .button-hover-prev-dgrey:hover, .button-hover-prev-dteal:hover, .button-hover-prev-lgreen:hover, .button-hover-prev-lgrey:hover, .button-hover-prev-lteal:hover, .button-hover-prev-lyellow:hover, .button-hover-prev-sgreen:hover, .button-hover-prev-sgrey:hover, .button-hover-prev-steal:hover, .button-hover-prev-yellow:hover, .button-prev-dgreen, .button-prev-dgrey, .button-prev-dteal, .button-prev-lgreen, .button-prev-lgrey, .button-prev-lteal, .button-prev-lyellow, .button-prev-sgreen, .button-prev-sgrey, .button-prev-steal, .button-prev-yellow, .button-hover-next-dgreen:hover, .button-hover-next-dgrey:hover, .button-hover-next-dteal:hover, .button-hover-next-lgreen:hover, .button-hover-next-lgrey:hover, .button-hover-next-lteal:hover, .button-hover-next-lyellow:hover, .button-hover-next-sgreen:hover, .button-hover-next-sgrey:hover, .button-hover-next-steal:hover, .button-hover-next-yellow:hover, .button-next-dgreen, .button-next-dgrey, .button-next-dteal, .button-next-lgreen, .button-next-lgrey, .button-next-lteal, .button-next-lyellow, .button-next-sgreen, .button-next-sgrey, .button-next-steal, .button-next-yellow {
   background-repeat: no-repeat;
   background-position: 50% 50%;
 }
 
 /** Prev Buttons **/
 /* line 200, ../mixins/marquee_themes.scss */
-.button-prev-dgreen {
+.button-hover-prev-dgreen:hover {
   background-image: url("../img/arrow-left-dgreen.png");
 }
 
 /* line 204, ../mixins/marquee_themes.scss */
-.button-prev-dgrey {
+.button-hover-prev-dgrey:hover {
   background-image: url("../img/arrow-left-dgrey.png");
 }
 
 /* line 208, ../mixins/marquee_themes.scss */
-.button-prev-dteal {
+.button-hover-prev-dteal:hover {
   background-image: url("../img/arrow-left-dteal.png");
 }
 
 /* line 212, ../mixins/marquee_themes.scss */
-.button-prev-lgreen {
+.button-hover-prev-lgreen:hover {
   background-image: url("../img/arrow-left-lgreen.png");
 }
 
 /* line 216, ../mixins/marquee_themes.scss */
-.button-prev-lgrey {
+.button-hover-prev-lgrey:hover {
   background-image: url("../img/arrow-left-lgrey.png");
 }
 
 /* line 220, ../mixins/marquee_themes.scss */
-.button-prev-lteal {
+.button-hover-prev-lteal:hover {
   background-image: url("../img/arrow-left-lteal.png");
 }
 
 /* line 224, ../mixins/marquee_themes.scss */
-.button-prev-lyellow {
+.button-hover-prev-lyellow:hover {
   background-image: url("../img/arrow-left-lyellow.png");
 }
 
 /* line 228, ../mixins/marquee_themes.scss */
-.button-prev-sgreen {
+.button-hover-prev-sgreen:hover {
   background-image: url("../img/arrow-left-sgreen.png");
 }
 
 /* line 232, ../mixins/marquee_themes.scss */
-.button-prev-sgrey {
+.button-hover-prev-sgrey:hover {
   background-image: url("../img/arrow-left-sgrey.png");
 }
 
 /* line 236, ../mixins/marquee_themes.scss */
-.button-next-steal {
+.button-hover-prev-steal:hover {
   background-image: url("../img/arrow-left-steal.png");
 }
 
 /* line 240, ../mixins/marquee_themes.scss */
+.button-hover-prev-yellow:hover {
+  background-image: url("../img/arrow-left-yellow.png");
+}
+
+/* line 245, ../mixins/marquee_themes.scss */
+.button-prev-dgreen {
+  background-image: url("../img/arrow-left-dgreen.png");
+}
+
+/* line 249, ../mixins/marquee_themes.scss */
+.button-prev-dgrey {
+  background-image: url("../img/arrow-left-dgrey.png");
+}
+
+/* line 253, ../mixins/marquee_themes.scss */
+.button-prev-dteal {
+  background-image: url("../img/arrow-left-dteal.png");
+}
+
+/* line 257, ../mixins/marquee_themes.scss */
+.button-prev-lgreen {
+  background-image: url("../img/arrow-left-lgreen.png");
+}
+
+/* line 261, ../mixins/marquee_themes.scss */
+.button-prev-lgrey {
+  background-image: url("../img/arrow-left-lgrey.png");
+}
+
+/* line 265, ../mixins/marquee_themes.scss */
+.button-prev-lteal {
+  background-image: url("../img/arrow-left-lteal.png");
+}
+
+/* line 269, ../mixins/marquee_themes.scss */
+.button-prev-lyellow {
+  background-image: url("../img/arrow-left-lyellow.png");
+}
+
+/* line 273, ../mixins/marquee_themes.scss */
+.button-prev-sgreen {
+  background-image: url("../img/arrow-left-sgreen.png");
+}
+
+/* line 277, ../mixins/marquee_themes.scss */
+.button-prev-sgrey {
+  background-image: url("../img/arrow-left-sgrey.png");
+}
+
+/* line 281, ../mixins/marquee_themes.scss */
+.button-prev-steal {
+  background-image: url("../img/arrow-left-steal.png");
+}
+
+/* line 285, ../mixins/marquee_themes.scss */
 .button-prev-yellow {
   background-image: url("../img/arrow-left-yellow.png");
 }
 
 /** Next Buttons **/
-/* line 246, ../mixins/marquee_themes.scss */
+/* line 291, ../mixins/marquee_themes.scss */
+.button-hover-next-dgreen:hover {
+  background-image: url("../img/arrow-right-dgreen.png");
+}
+
+/* line 295, ../mixins/marquee_themes.scss */
+.button-hover-next-dgrey:hover {
+  background-image: url("../img/arrow-right-dgrey.png");
+}
+
+/* line 299, ../mixins/marquee_themes.scss */
+.button-hover-next-dteal:hover {
+  background-image: url("../img/arrow-right-dteal.png");
+}
+
+/* line 303, ../mixins/marquee_themes.scss */
+.button-hover-next-lgreen:hover {
+  background-image: url("../img/arrow-right-lgreen.png");
+}
+
+/* line 307, ../mixins/marquee_themes.scss */
+.button-hover-next-lgrey:hover {
+  background-image: url("../img/arrow-right-lgrey.png");
+}
+
+/* line 311, ../mixins/marquee_themes.scss */
+.button-hover-next-lteal:hover {
+  background-image: url("../img/arrow-right-lteal.png");
+}
+
+/* line 315, ../mixins/marquee_themes.scss */
+.button-hover-next-lyellow:hover {
+  background-image: url("../img/arrow-right-lyellow.png");
+}
+
+/* line 319, ../mixins/marquee_themes.scss */
+.button-hover-next-sgreen:hover {
+  background-image: url("../img/arrow-right-sgreen.png");
+}
+
+/* line 323, ../mixins/marquee_themes.scss */
+.button-hover-next-sgrey:hover {
+  background-image: url("../img/arrow-right-sgrey.png");
+}
+
+/* line 327, ../mixins/marquee_themes.scss */
+.button-hover-next-steal:hover {
+  background-image: url("../img/arrow-right-steal.png");
+}
+
+/* line 331, ../mixins/marquee_themes.scss */
+.button-hover-next-yellow:hover {
+  background-image: url("../img/arrow-right-yellow.png");
+}
+
+/* line 336, ../mixins/marquee_themes.scss */
 .button-next-dgreen {
   background-image: url("../img/arrow-right-dgreen.png");
 }
 
-/* line 250, ../mixins/marquee_themes.scss */
+/* line 340, ../mixins/marquee_themes.scss */
 .button-next-dgrey {
   background-image: url("../img/arrow-right-dgrey.png");
 }
 
-/* line 254, ../mixins/marquee_themes.scss */
+/* line 344, ../mixins/marquee_themes.scss */
 .button-next-dteal {
   background-image: url("../img/arrow-right-dteal.png");
 }
 
-/* line 258, ../mixins/marquee_themes.scss */
+/* line 348, ../mixins/marquee_themes.scss */
 .button-next-lgreen {
   background-image: url("../img/arrow-right-lgreen.png");
 }
 
-/* line 262, ../mixins/marquee_themes.scss */
+/* line 352, ../mixins/marquee_themes.scss */
 .button-next-lgrey {
   background-image: url("../img/arrow-right-lgrey.png");
 }
 
-/* line 266, ../mixins/marquee_themes.scss */
+/* line 356, ../mixins/marquee_themes.scss */
 .button-next-lteal {
   background-image: url("../img/arrow-right-lteal.png");
 }
 
-/* line 270, ../mixins/marquee_themes.scss */
+/* line 360, ../mixins/marquee_themes.scss */
 .button-next-lyellow {
   background-image: url("../img/arrow-right-lyellow.png");
 }
 
-/* line 274, ../mixins/marquee_themes.scss */
+/* line 364, ../mixins/marquee_themes.scss */
 .button-next-sgreen {
   background-image: url("../img/arrow-right-sgreen.png");
 }
 
-/* line 278, ../mixins/marquee_themes.scss */
+/* line 368, ../mixins/marquee_themes.scss */
 .button-next-sgrey {
   background-image: url("../img/arrow-right-sgrey.png");
 }
 
-/* line 282, ../mixins/marquee_themes.scss */
+/* line 372, ../mixins/marquee_themes.scss */
 .button-next-steal {
   background-image: url("../img/arrow-right-steal.png");
 }
 
-/* line 286, ../mixins/marquee_themes.scss */
+/* line 376, ../mixins/marquee_themes.scss */
 .button-next-yellow {
   background-image: url("../img/arrow-right-yellow.png");
 }

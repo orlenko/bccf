@@ -110,12 +110,6 @@ def comment(request, template="generic/comments.html"):
         return response
     elif request.is_ajax() and form.errors:
         return HttpResponse(dumps({"errors": form.errors}))
-    else:
-        for f in form:
-            if f.errors:
-                log.debug('-----------------------------')
-                log.debug(f)
-                log.debug('-----------------------------')
     # Show errors with stand-alone comment form.
     context = {"obj": obj, "posted_comment_form": form}
     response = render(request, template, context)
