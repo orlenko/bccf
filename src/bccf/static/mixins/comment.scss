@@ -13,12 +13,22 @@
         border-bottom: 2px dashed $lgrey;
         margin-bottom: 20px;
         p {
-            margin-bottom: 5px;        
+            margin: 0;
+            span {
+                font-weight: bold;            
+            }      
+        }
+        .commenter-info {
+            margin-top: 20px;        
         }
         .comment {
             border-bottom: none;
             padding: 0;
             margin: 20px 0 0 20px;
+        }
+        .comment-photo {
+            width: 50px;
+            height: 50px;
         }
     }
     .comment-form {

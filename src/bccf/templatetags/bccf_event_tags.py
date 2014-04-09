@@ -12,7 +12,6 @@ log = logging.getLogger(__name__)
 
 register = template.Library()
 
-
 @register.inclusion_tag("generic/includes/subscribe.html", takes_context=True)
 def bccf_subscribe_for(context, obj):
     """If obj is subscribable (like an event), render a form for subscribing to it.
