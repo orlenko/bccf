@@ -1,23 +1,19 @@
-{% load static %}
-<div id="comment-{{ comment.id }}"
-    class="comment media section{% if comment.by_author %} comment-author{% endif %}">
+{% load static bccf_tags comment_tags %}
     
-    {% if not comment.is_removed and comment.is_public or request.user.is_staff %}
-    <div class="section row row-one">
-        <div class="col one">
-            {% if comment_profile.photo %}
-            <img class="comment-photo" src="{{ MEDIA_URL }}{% bccf_thumbnail comment_profile.photo 50 50 %}" alt="{{ user.get_full_name }} />
-            {% else %}
-            <img class="comment-photo" src="{% static 'default_user-image-male.png' %}" alt="{{ user.get_full_name }}"/>
-            {% endif %}
-        </div>
-        <div class="col eleven">
-            <p>{{ comment.comment|comment_filter }}</p>
-            <p class="commenter-info">
-                <span>{{ comment_user.first_name }}</span>{% if comment_profile.job_title %}, {{ comment_profile.job_title }}{% endif %}
-            </p>
-        </div>
+{% if not comment.is_removed and comment.is_public or request.user.is_staff %}
+<div class="section row row-one">
+    <div class="col two">
+        {% if comment_profile.photo %}
+        <img class="comment-photo" src="{{ MEDIA_URL }}{% bccf_thumbnail comment_profile.photo 50 50 %}" alt="{{ user.get_full_name }}" />
+        {% else %}
+        <img class="comment-photo" src="{% static 'default_user-image-male.png' %}" alt="{{ user.get_full_name }}"/>
+        {% endif %}
     </div>
-    {% endif %}
-
+    <div class="col ten">
+        <p>{{ comment.comment|comment_filter }}</p>
+        <p class="commenter-info">
+            <span>{{ comment_user.first_name }}</span>{% if comment_profile.job_title %}, {{ comment_profile.job_title }}{% endif %}
+        </p>
+    </div>
 </div>
+{% endif %}
