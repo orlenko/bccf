@@ -10,7 +10,7 @@
         {% endif %}
     </div>
     <div class="col ten">
-        <p>{{ comment.comment|comment_filter }}</p>
+        <p>{{ comment_obj.comment|comment_filter }}</p>
         <p class="commenter-info">
             <span>{{ comment_user.first_name }}</span>{% if comment_profile.job_title %}, {{ comment_profile.job_title }}{% endif %}
         </p>
