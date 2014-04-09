@@ -2072,7 +2072,11 @@ textarea {
     img {
         width: 200px;
         height: 200px;
-    } 
+    }
+    .photo-over {
+        background-image: url('../img/default_user-image-female.png');
+        background-size: 200px 200px;    
+    }
 }
 
 #account-number {
@@ -2125,15 +2129,21 @@ textarea {
     &.contact-tab {
         .form-group {
             .form-group {
-                margin: 0 !important;    
-            }    
+                margin: 0 !important;
+            }
+            .form-group:first-of-child {
+                padding-right: 5px;             
+            }
+            .form-group:nth-child(2) {
+                padding-left: 5px;
+            }
         }  
     }
     &.forum-tab {
         #id_show_signatures {
             top: 5px !important;    
         }    
-    } 
+    }
 }
  
  
@@ -2218,8 +2228,36 @@ textarea {
 }*/
 
 .photo {
-    border: 10px solid $sgrey;    
+    border: 10px solid $sgrey;
+    width: 200px;
+    height: 200px; 
 }
+.fake-photo-container {
+    cursor: pointer;
+    &:hover {
+        .photo-over {
+            display: block;    
+        }    
+    }
+    .photo-over {
+        @include font-size(13);
+        border: 10px solid $sgrey;
+        font-weight: bold;
+        display: none;
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        color: rgba(255,255,255,0.6);
+        span {
+            border: 1px solid rgba(255,255,255,1);
+            position: absolute;
+            bottom: 15px;
+            left: 20px;
+            padding: 2px 5px;
+        }
+    }
+}
+
 
 #form-aux {
     background-color: $sgrey;
