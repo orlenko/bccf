@@ -81,7 +81,7 @@ class ThreadedCommentForm(CommentForm, Html5Mixin):
 
     name = forms.CharField(widget=forms.HiddenInput)
     email = forms.CharField(widget=forms.HiddenInput)
-    url = forms.CharField(widget=forms.HiddenInput)
+    url = forms.CharField(widget=forms.HiddenInput, required=False)
     
     # These are used to get/set prepopulated fields via cookies.
     cookie_fields = ("name", "email", "url")
@@ -108,8 +108,6 @@ class ThreadedCommentForm(CommentForm, Html5Mixin):
                 elif field == "url":
                     if user.profile.website:
                         value = user.profile.website
-                    else:
-                        value = 'n/a'
             kwargs["initial"][field] = value
         super(ThreadedCommentForm, self).__init__(*args, **kwargs)
 
