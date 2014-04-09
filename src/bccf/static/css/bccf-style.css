@@ -374,7 +374,7 @@
 }
 
 /* line 26, ../sass/font-awesome/_icons.scss */
-.fa-file-o:before, .related-resource .articles-class i:before {
+.fa-file-o:before, .related-resource .articles-class i:before:before {
   content: "\f016";
 }
 
@@ -455,7 +455,7 @@
 }
 
 /* line 43, ../sass/font-awesome/_icons.scss */
-.fa-volume-up:before, .related-resource .podcasts-class i:before {
+.fa-volume-up:before, .related-resource .podcasts-class i:before:before {
   content: "\f028";
 }
 
@@ -480,7 +480,7 @@
 }
 
 /* line 48, ../sass/font-awesome/_icons.scss */
-.fa-book:before, .related-resource .magazines-class i:before {
+.fa-book:before, .related-resource .magazines-class i:before:before {
   content: "\f02d";
 }
 
@@ -561,7 +561,7 @@
 }
 
 /* line 65, ../sass/font-awesome/_icons.scss */
-.fa-video-camera:before, .related-resource .videos-class i:before {
+.fa-video-camera:before, .related-resource .videos-class i:before:before {
   content: "\f03d";
 }
 
@@ -602,7 +602,7 @@
 }
 
 /* line 74, ../sass/font-awesome/_icons.scss */
-.fa-check-square-o:before, .related-resource .downloadable-forms-class i:before {
+.fa-check-square-o:before, .related-resource .downloadable-forms-class i:before:before {
   content: "\f046";
 }
 
@@ -1145,7 +1145,7 @@
 /* line 188, ../sass/font-awesome/_icons.scss */
 .fa-copy:before,
 .fa-files-o:before,
-.related-resource .tip-sheets-class i:before {
+.related-resource .tip-sheets-class i:before:before {
   content: "\f0c5";
 }
 
@@ -3994,6 +3994,10 @@ textarea {
   width: 16.66%;
 }
 /* line 1532, ../sass/bccf-style.scss */
+.subpage-tabs > ul > li:hover {
+  background-color: #336442;
+}
+/* line 1533, ../sass/bccf-style.scss */
 .subpage-tabs > ul > li > a {
   font-size: 12px;
   font-size: 0.75rem;
@@ -4004,163 +4008,163 @@ textarea {
   display: block;
   text-align: center;
 }
-/* line 1540, ../sass/bccf-style.scss */
+/* line 1541, ../sass/bccf-style.scss */
 .subpage-tabs > ul > li > a:hover, .subpage-tabs > ul > li > a:active {
   text-decoration: none;
 }
-/* line 1543, ../sass/bccf-style.scss */
+/* line 1544, ../sass/bccf-style.scss */
 .subpage-tabs > ul > li > a.active {
   background-color: #e5e9d2;
 }
-/* line 1549, ../sass/bccf-style.scss */
+/* line 1550, ../sass/bccf-style.scss */
 .subpage-tabs .baby-content {
   padding: 10px;
 }
-/* line 1552, ../sass/bccf-style.scss */
+/* line 1553, ../sass/bccf-style.scss */
 .subpage-tabs #child-home {
   color: #FFF;
 }
 
-/* line 1557, ../sass/bccf-style.scss */
+/* line 1558, ../sass/bccf-style.scss */
 .author-box {
   border-top: 2px dashed #a6b2a6;
   padding-top: 20px;
   margin-top: 30px;
 }
 
-/* line 1562, ../sass/bccf-style.scss */
+/* line 1563, ../sass/bccf-style.scss */
 .author-description {
   padding-left: 10px;
 }
-/* line 1564, ../sass/bccf-style.scss */
+/* line 1565, ../sass/bccf-style.scss */
 .author-description p {
   margin-top: 0;
   margin-bottom: 0;
 }
 
-/* line 1569, ../sass/bccf-style.scss */
+/* line 1570, ../sass/bccf-style.scss */
 .author-name {
   font-weight: bold;
   font-family: "Roboto Slab", serif;
 }
 
-/* line 1574, ../sass/bccf-style.scss */
+/* line 1575, ../sass/bccf-style.scss */
 .ajax-loader {
   display: block;
   margin: 20px auto;
 }
 
-/* line 1579, ../sass/bccf-style.scss */
+/* line 1580, ../sass/bccf-style.scss */
 #related-resource-container {
   background-color: whitesmoke;
   padding: 20px;
 }
 
-/* line 1586, ../sass/bccf-style.scss */
+/* line 1587, ../sass/bccf-style.scss */
 .green-list .control-buttons a {
   background-color: #8fab3d;
 }
-/* line 1588, ../sass/bccf-style.scss */
+/* line 1589, ../sass/bccf-style.scss */
 .green-list .control-buttons a:hover, .green-list .control-buttons a:focus {
   background-color: #9dbc43;
 }
-/* line 1593, ../sass/bccf-style.scss */
+/* line 1594, ../sass/bccf-style.scss */
 .green-list .page-box {
   background-color: whitesmoke;
 }
-/* line 1595, ../sass/bccf-style.scss */
+/* line 1596, ../sass/bccf-style.scss */
 .green-list .page-box .page-image {
   border-bottom: 2px solid #8fab3d;
 }
-/* line 1600, ../sass/bccf-style.scss */
+/* line 1601, ../sass/bccf-style.scss */
 .green-list .carousel-title-container h2 {
   display: inline;
   background-color: #8fab3d;
 }
 
-/* line 1608, ../sass/bccf-style.scss */
+/* line 1609, ../sass/bccf-style.scss */
 .dgreen-list .control-buttons a {
   background-color: #336442;
 }
-/* line 1610, ../sass/bccf-style.scss */
+/* line 1611, ../sass/bccf-style.scss */
 .dgreen-list .control-buttons a:hover, .dgreen-list .control-buttons a:focus {
   background-color: #386e48;
 }
-/* line 1615, ../sass/bccf-style.scss */
+/* line 1616, ../sass/bccf-style.scss */
 .dgreen-list .page-box {
   background-color: whitesmoke;
 }
-/* line 1617, ../sass/bccf-style.scss */
+/* line 1618, ../sass/bccf-style.scss */
 .dgreen-list .page-box .page-image {
   border-bottom: 2px solid #336442;
 }
-/* line 1622, ../sass/bccf-style.scss */
+/* line 1623, ../sass/bccf-style.scss */
 .dgreen-list .carousel-title-container h2 {
   display: inline;
   background-color: #336442;
 }
 
-/* line 1630, ../sass/bccf-style.scss */
+/* line 1631, ../sass/bccf-style.scss */
 .teal-list .control-buttons a {
   background-color: #9fceb4;
 }
-/* line 1632, ../sass/bccf-style.scss */
+/* line 1633, ../sass/bccf-style.scss */
 .teal-list .control-buttons a:hover, .teal-list .control-buttons a:focus {
   background-color: #aee2c6;
 }
-/* line 1637, ../sass/bccf-style.scss */
+/* line 1638, ../sass/bccf-style.scss */
 .teal-list .page-box {
   background-color: whitesmoke;
 }
-/* line 1639, ../sass/bccf-style.scss */
+/* line 1640, ../sass/bccf-style.scss */
 .teal-list .page-box .page-image {
   border-bottom: 2px solid #9fceb4;
 }
-/* line 1644, ../sass/bccf-style.scss */
+/* line 1645, ../sass/bccf-style.scss */
 .teal-list .carousel-title-container h2 {
   display: inline;
   background-color: #9fceb4;
 }
 
-/* line 1652, ../sass/bccf-style.scss */
+/* line 1653, ../sass/bccf-style.scss */
 .yellow-list .control-buttons a {
   background-color: #fdcd26;
 }
-/* line 1654, ../sass/bccf-style.scss */
+/* line 1655, ../sass/bccf-style.scss */
 .yellow-list .control-buttons a:hover, .yellow-list .control-buttons a:focus {
   background-color: #ffe129;
 }
-/* line 1659, ../sass/bccf-style.scss */
+/* line 1660, ../sass/bccf-style.scss */
 .yellow-list .page-box {
   background-color: whitesmoke;
 }
-/* line 1661, ../sass/bccf-style.scss */
+/* line 1662, ../sass/bccf-style.scss */
 .yellow-list .page-box .page-image {
   border-bottom: 2px solid #fdcd26;
 }
-/* line 1666, ../sass/bccf-style.scss */
+/* line 1667, ../sass/bccf-style.scss */
 .yellow-list .carousel-title-container h2 {
   display: inline;
   background-color: #fdcd26;
 }
 
-/* line 1673, ../sass/bccf-style.scss */
+/* line 1674, ../sass/bccf-style.scss */
 #tag-widget {
   background: url(../img/stripe-BG-grey.jpg) repeat;
 }
-/* line 1678, ../sass/bccf-style.scss */
+/* line 1679, ../sass/bccf-style.scss */
 #tag-widget #tag-logo a, #tag-widget #tag-logo p {
   padding: 0;
   margin: 0;
 }
-/* line 1681, ../sass/bccf-style.scss */
+/* line 1682, ../sass/bccf-style.scss */
 #tag-widget .tag-container {
   width: 80%;
   margin: 20px 10%;
   float: left;
   text-align: center;
 }
-/* line 1687, ../sass/bccf-style.scss */
+/* line 1688, ../sass/bccf-style.scss */
 #tag-widget .tag-box {
   width: 100%;
   background-color: whitesmoke;
@@ -4168,14 +4172,14 @@ textarea {
   float: left;
   text-align: left;
 }
-/* line 1694, ../sass/bccf-style.scss */
+/* line 1695, ../sass/bccf-style.scss */
 #tag-widget .tag-box .tag-top {
   width: 100%;
   clear: both;
   text-align: left;
   margin-bottom: 16px;
 }
-/* line 1701, ../sass/bccf-style.scss */
+/* line 1702, ../sass/bccf-style.scss */
 #tag-widget .tag-box em {
   color: #FFFFFF;
   text-transform: uppercase;
@@ -4185,52 +4189,52 @@ textarea {
   font-size: 12px;
   font-style: normal;
 }
-/* line 1710, ../sass/bccf-style.scss */
+/* line 1711, ../sass/bccf-style.scss */
 #tag-widget .tag-box i {
   font-size: 12px;
   float: right;
   padding: 3px 12px;
 }
-/* line 1714, ../sass/bccf-style.scss */
+/* line 1715, ../sass/bccf-style.scss */
 #tag-widget .tag-box img {
   float: left;
   margin: 3px 10px 50px;
 }
-/* line 1718, ../sass/bccf-style.scss */
+/* line 1719, ../sass/bccf-style.scss */
 #tag-widget .tag-box h6 {
   font-size: 12px;
   color: #000;
   padding: 0;
   margin: 0;
 }
-/* line 1722, ../sass/bccf-style.scss */
+/* line 1723, ../sass/bccf-style.scss */
 #tag-widget .tag-box p {
   font-size: 12px;
   padding: 0 20px 0 0;
   margin: 0;
 }
-/* line 1727, ../sass/bccf-style.scss */
+/* line 1728, ../sass/bccf-style.scss */
 #tag-widget .tag-box .dashed-button {
   float: right;
   margin: 10px;
 }
-/* line 1736, ../sass/bccf-style.scss */
+/* line 1737, ../sass/bccf-style.scss */
 #tag-widget #tag-talk em {
   background-color: #336442;
 }
-/* line 1739, ../sass/bccf-style.scss */
+/* line 1740, ../sass/bccf-style.scss */
 #tag-widget #tag-act em {
   background-color: #5cac8b;
 }
-/* line 1742, ../sass/bccf-style.scss */
+/* line 1743, ../sass/bccf-style.scss */
 #tag-widget #tag-get em {
   background-color: #fdcd26;
 }
-/* line 1746, ../sass/bccf-style.scss */
+/* line 1747, ../sass/bccf-style.scss */
 #tag-widget .tag-carousel .section, #tag-widget .tag-carousel #account #form-container .checkbox-group, #account #form-container #tag-widget .tag-carousel .checkbox-group {
   padding: 5px;
 }
-/* line 1750, ../sass/bccf-style.scss */
+/* line 1751, ../sass/bccf-style.scss */
 #tag-widget .tag-img {
   display: block;
   width: 75px;
@@ -4238,19 +4242,19 @@ textarea {
 }
 
 /* end #tag-widget */
-/* line 1760, ../sass/bccf-style.scss */
+/* line 1761, ../sass/bccf-style.scss */
 #side-resources {
   background: url(../img/stripe-BG-grey.jpg) repeat;
   margin: 40px 0;
 }
-/* line 1764, ../sass/bccf-style.scss */
+/* line 1765, ../sass/bccf-style.scss */
 #side-resources .res-container {
   width: 80%;
   margin: 20px 10%;
   float: left;
   text-align: center;
 }
-/* line 1770, ../sass/bccf-style.scss */
+/* line 1771, ../sass/bccf-style.scss */
 #side-resources .res-box {
   width: 100%;
   background-color: whitesmoke;
@@ -4258,7 +4262,7 @@ textarea {
   text-align: left;
   background: url(../img/suggested-res-bg.jpg) top left no-repeat;
 }
-/* line 1777, ../sass/bccf-style.scss */
+/* line 1778, ../sass/bccf-style.scss */
 #side-resources em {
   background: #fff0c2 url(../img/header-colour-bg-yellow.gif) repeat-y -25px 0;
   font-weight: 300;
@@ -4268,44 +4272,44 @@ textarea {
   font-style: normal;
   display: table-cell;
 }
-/* line 1787, ../sass/bccf-style.scss */
+/* line 1788, ../sass/bccf-style.scss */
 #side-resources h6 {
   padding: 20px 20px 0px;
   margin: 0;
 }
-/* line 1791, ../sass/bccf-style.scss */
+/* line 1792, ../sass/bccf-style.scss */
 #side-resources p {
   padding: 0 20px 20px;
   margin: 0;
 }
-/* line 1796, ../sass/bccf-style.scss */
+/* line 1797, ../sass/bccf-style.scss */
 #side-resources .dashed-button {
   float: right;
   margin: 10px;
 }
 
 /* end #side-resource */
-/* line 1803, ../sass/bccf-style.scss */
+/* line 1804, ../sass/bccf-style.scss */
 #letter-filter {
   text-align: center;
   border-top: 2px solid #336442;
   border-bottom: 2px solid #336442;
 }
-/* line 1807, ../sass/bccf-style.scss */
+/* line 1808, ../sass/bccf-style.scss */
 #letter-filter li {
   display: inline-block;
 }
-/* line 1809, ../sass/bccf-style.scss */
+/* line 1810, ../sass/bccf-style.scss */
 #letter-filter li a {
   text-decoration: none;
   display: block;
   padding: 5px;
 }
-/* line 1813, ../sass/bccf-style.scss */
+/* line 1814, ../sass/bccf-style.scss */
 #letter-filter li a:hover, #letter-filter li a:active {
   text-decoration: underline;
 }
-/* line 1817, ../sass/bccf-style.scss */
+/* line 1818, ../sass/bccf-style.scss */
 #letter-filter li .current-filter {
   color: #336442;
   font-weight: bold;
@@ -4315,14 +4319,14 @@ textarea {
 
 /* End of Directory Letter Filter */
 /* Results (Member directory and search) */
-/* line 1828, ../sass/bccf-style.scss */
+/* line 1829, ../sass/bccf-style.scss */
 .result-box,
 .user-box {
   display: block;
   padding: 10px;
 }
 
-/* line 1836, ../sass/bccf-style.scss */
+/* line 1837, ../sass/bccf-style.scss */
 .result-box:nth-child(even) {
   background-color: whitesmoke;
 }
@@ -4331,7 +4335,7 @@ textarea {
 /**
  * Member Directory
  */
-/* line 1844, ../sass/bccf-style.scss */
+/* line 1845, ../sass/bccf-style.scss */
 #user-filter-container input {
   float: right;
   clear: both;
@@ -4340,145 +4344,145 @@ textarea {
   color: #414042;
 }
 
-/* line 1853, ../sass/bccf-style.scss */
+/* line 1854, ../sass/bccf-style.scss */
 .user-box .user-rating-box {
   position: absolute;
   top: 30px;
   right: 10px;
   width: 100%;
 }
-/* line 1858, ../sass/bccf-style.scss */
+/* line 1859, ../sass/bccf-style.scss */
 .user-box .user-rating-box .rate-count {
   font-size: 12px;
   font-size: 0.75rem;
   margin-left: 5px;
 }
-/* line 1863, ../sass/bccf-style.scss */
+/* line 1864, ../sass/bccf-style.scss */
 .user-box img {
   margin-top: 15px;
   margin-left: 15px;
 }
-/* line 1867, ../sass/bccf-style.scss */
+/* line 1868, ../sass/bccf-style.scss */
 .user-box .social {
   margin-top: 0;
 }
-/* line 1870, ../sass/bccf-style.scss */
+/* line 1871, ../sass/bccf-style.scss */
 .user-box a {
   text-decoration: none;
 }
-/* line 1872, ../sass/bccf-style.scss */
+/* line 1873, ../sass/bccf-style.scss */
 .user-box a.fa {
   height: 20px;
   width: 20px;
   text-align: center;
   line-height: 20px;
 }
-/* line 1877, ../sass/bccf-style.scss */
+/* line 1878, ../sass/bccf-style.scss */
 .user-box a.fa:hover {
   color: #FFF;
   text-decoration: none !important;
 }
-/* line 1882, ../sass/bccf-style.scss */
+/* line 1883, ../sass/bccf-style.scss */
 .user-box a.fa-facebook:hover {
   background-color: #3B5998;
 }
-/* line 1885, ../sass/bccf-style.scss */
+/* line 1886, ../sass/bccf-style.scss */
 .user-box a.fa-twitter:hover {
   background-color: #9AE4E8;
 }
-/* line 1888, ../sass/bccf-style.scss */
+/* line 1889, ../sass/bccf-style.scss */
 .user-box a.fa-linkedin:hover {
   background-color: #03659A;
 }
-/* line 1892, ../sass/bccf-style.scss */
+/* line 1893, ../sass/bccf-style.scss */
 .user-box .info {
   font-size: 13px;
   font-size: 0.8125rem;
   padding-top: 50px;
   padding-left: 25px;
 }
-/* line 1896, ../sass/bccf-style.scss */
+/* line 1897, ../sass/bccf-style.scss */
 .user-box .info h3 {
   margin-bottom: 0;
 }
-/* line 1899, ../sass/bccf-style.scss */
+/* line 1900, ../sass/bccf-style.scss */
 .user-box .info strong {
   font-size: 15px;
   font-size: 0.9375rem;
 }
-/* line 1902, ../sass/bccf-style.scss */
+/* line 1903, ../sass/bccf-style.scss */
 .user-box .info i.fa:before {
   margin-right: 5px;
 }
-/* line 1906, ../sass/bccf-style.scss */
+/* line 1907, ../sass/bccf-style.scss */
 .user-box .info .contact > span:not(:first-child):not(:nth-child(2)) {
   margin-left: 10px;
 }
-/* line 1910, ../sass/bccf-style.scss */
+/* line 1911, ../sass/bccf-style.scss */
 .user-box .info a:hover {
   text-decoration: underline;
 }
-/* line 1914, ../sass/bccf-style.scss */
+/* line 1915, ../sass/bccf-style.scss */
 .user-box .contact {
   margin-bottom: 0;
 }
-/* line 1917, ../sass/bccf-style.scss */
+/* line 1918, ../sass/bccf-style.scss */
 .user-box .accreditation {
   margin-top: 0;
 }
-/* line 1921, ../sass/bccf-style.scss */
+/* line 1922, ../sass/bccf-style.scss */
 .user-box .user-events ul {
   list-style: none;
   padding-left: 0;
 }
-/* line 1924, ../sass/bccf-style.scss */
+/* line 1925, ../sass/bccf-style.scss */
 .user-box .user-events ul li {
   display: inline-block;
 }
-/* line 1928, ../sass/bccf-style.scss */
+/* line 1929, ../sass/bccf-style.scss */
 .user-box .user-events .event-header {
   font-weight: 600;
 }
-/* line 1931, ../sass/bccf-style.scss */
+/* line 1932, ../sass/bccf-style.scss */
 .user-box .user-events .event-row {
   padding-top: 5px;
   padding-bottom: 5px;
 }
-/* line 1934, ../sass/bccf-style.scss */
+/* line 1935, ../sass/bccf-style.scss */
 .user-box .user-events .event-row ul {
   margin: 0;
 }
-/* line 1937, ../sass/bccf-style.scss */
+/* line 1938, ../sass/bccf-style.scss */
 .user-box .user-events .event-row .action {
   text-align: center;
 }
-/* line 1940, ../sass/bccf-style.scss */
+/* line 1941, ../sass/bccf-style.scss */
 .user-box .user-events .event-row input[type='submit'] {
   border: 0;
   background: 0;
 }
-/* line 1943, ../sass/bccf-style.scss */
+/* line 1944, ../sass/bccf-style.scss */
 .user-box .user-events .event-row input[type='submit']:hover {
   text-decoration: underline;
 }
-/* line 1949, ../sass/bccf-style.scss */
+/* line 1950, ../sass/bccf-style.scss */
 .user-box .user-events .event-header,
 .user-box .user-events .event-row {
   border-bottom: 1px solid #000;
 }
-/* line 1952, ../sass/bccf-style.scss */
+/* line 1953, ../sass/bccf-style.scss */
 .user-box .user-events a[title='More'] {
   text-decoration: underline;
   color: #8fab3d;
   font-weight: bold;
 }
 
-/* line 1959, ../sass/bccf-style.scss */
+/* line 1960, ../sass/bccf-style.scss */
 .user-box.organization {
   background-color: #edf6f1;
 }
 
-/* line 1962, ../sass/bccf-style.scss */
+/* line 1963, ../sass/bccf-style.scss */
 .user-box.professional {
   background-color: #f8fcfa;
 }
@@ -4487,49 +4491,49 @@ textarea {
 /**
  * User Forms
  **/
-/* line 1970, ../sass/bccf-style.scss */
+/* line 1971, ../sass/bccf-style.scss */
 .fieldset-header {
   display: block;
   margin-bottom: 10px;
   border-bottom: 1px solid #000;
 }
 
-/* line 1977, ../sass/bccf-style.scss */
+/* line 1978, ../sass/bccf-style.scss */
 #account #form-container {
   padding-top: 25px;
 }
-/* line 1980, ../sass/bccf-style.scss */
+/* line 1981, ../sass/bccf-style.scss */
 #account #form-container .form-group p {
   margin-top: 2px;
   margin-bottom: 0;
 }
-/* line 1984, ../sass/bccf-style.scss */
+/* line 1985, ../sass/bccf-style.scss */
 #account #form-container .form-group label {
   font-size: 12px;
   font-size: 0.75rem;
   text-transform: uppercase;
 }
-/* line 1988, ../sass/bccf-style.scss */
+/* line 1989, ../sass/bccf-style.scss */
 #account #form-container .form-group .help-block {
   font-size: 12px;
   font-size: 0.75rem;
   margin-top: 0;
 }
-/* line 1994, ../sass/bccf-style.scss */
+/* line 1995, ../sass/bccf-style.scss */
 #account #form-container .form-group select,
 #account #form-container .form-group textarea,
 #account #form-container .form-group input {
   border: 1px solid #000;
   background-color: whitesmoke;
 }
-/* line 1998, ../sass/bccf-style.scss */
+/* line 1999, ../sass/bccf-style.scss */
 #account #form-container .form-group textarea {
   resize: vertical;
   overflow-y: scroll;
   min-height: 200px;
   width: 100%;
 }
-/* line 2004, ../sass/bccf-style.scss */
+/* line 2005, ../sass/bccf-style.scss */
 #account #form-container .form-group input[type='checkbox'] {
   background-color: #FFF;
   position: absolute;
@@ -4537,13 +4541,13 @@ textarea {
   top: 15px;
   padding: 3px;
 }
-/* line 2011, ../sass/bccf-style.scss */
+/* line 2012, ../sass/bccf-style.scss */
 #account #form-container .form-group input[type='file'] {
   opacity: 0;
   position: absolute;
   z-index: -2;
 }
-/* line 2017, ../sass/bccf-style.scss */
+/* line 2018, ../sass/bccf-style.scss */
 #account #form-container .form-group #clear-photo,
 #account #form-container .form-group #fake-photo {
   height: 30px;
@@ -4551,22 +4555,22 @@ textarea {
   background-color: #000;
   color: #FFF;
 }
-/* line 2022, ../sass/bccf-style.scss */
+/* line 2023, ../sass/bccf-style.scss */
 #account #form-container .form-group #clear-photo:hover,
 #account #form-container .form-group #fake-photo:hover {
   background-color: #fdcd26;
   color: #000;
 }
-/* line 2030, ../sass/bccf-style.scss */
+/* line 2031, ../sass/bccf-style.scss */
 #account #form-container .checkbox-group label {
   font-size: 10px;
   font-size: 0.625rem;
 }
-/* line 2034, ../sass/bccf-style.scss */
+/* line 2035, ../sass/bccf-style.scss */
 #account #form-container .form-actions {
   margin-top: 20px;
 }
-/* line 2036, ../sass/bccf-style.scss */
+/* line 2037, ../sass/bccf-style.scss */
 #account #form-container .form-actions input {
   font-size: 12px;
   font-size: 0.75rem;
@@ -4580,14 +4584,14 @@ textarea {
   text-decoration: none;
   text-transform: uppercase;
 }
-/* line 2047, ../sass/bccf-style.scss */
+/* line 2048, ../sass/bccf-style.scss */
 #account #form-container .form-actions input:hover {
   color: #336442;
   text-decoration: none;
   background-color: #fdcd26;
 }
 
-/* line 2059, ../sass/bccf-style.scss */
+/* line 2060, ../sass/bccf-style.scss */
 #photo-form button,
 #photo-form input[type='submit'] {
   height: 30px;
@@ -4595,76 +4599,76 @@ textarea {
   background-color: #000;
   color: #FFF;
 }
-/* line 2064, ../sass/bccf-style.scss */
+/* line 2065, ../sass/bccf-style.scss */
 #photo-form button:hover,
 #photo-form input[type='submit']:hover {
   background-color: #fdcd26;
   color: #000;
 }
-/* line 2069, ../sass/bccf-style.scss */
+/* line 2070, ../sass/bccf-style.scss */
 #photo-form img {
   width: 200px;
   height: 200px;
 }
 
-/* line 2075, ../sass/bccf-style.scss */
+/* line 2076, ../sass/bccf-style.scss */
 #account-number {
   padding: 5px 0 5px 10px;
   background-color: whitesmoke;
   margin-bottom: 0;
 }
-/* line 2079, ../sass/bccf-style.scss */
+/* line 2080, ../sass/bccf-style.scss */
 #account-number strong {
   color: #8fab3d;
 }
 
-/* line 2084, ../sass/bccf-style.scss */
+/* line 2085, ../sass/bccf-style.scss */
 #tabs {
   margin: 0;
 }
-/* line 2086, ../sass/bccf-style.scss */
+/* line 2087, ../sass/bccf-style.scss */
 #tabs ul {
   padding: 0;
   padding-bottom: 100px;
   border-right: 1px solid whitesmoke;
 }
-/* line 2091, ../sass/bccf-style.scss */
+/* line 2092, ../sass/bccf-style.scss */
 #tabs a {
   display: block;
   padding: 5px 0 5px 10px;
   text-decoration: none;
   height: 30px;
 }
-/* line 2097, ../sass/bccf-style.scss */
+/* line 2098, ../sass/bccf-style.scss */
 #tabs a:hover, #tabs a.current {
   background-color: whitesmoke;
   color: #8fab3d;
   font-weight: bold;
 }
 
-/* line 2105, ../sass/bccf-style.scss */
+/* line 2106, ../sass/bccf-style.scss */
 #main-form {
   padding-left: 25px;
 }
-/* line 2110, ../sass/bccf-style.scss */
+/* line 2111, ../sass/bccf-style.scss */
 #main-form input[type='text'],
 #main-form input[type='email'],
 #main-form input[type='password'],
 #main-form input[type='url'] {
   width: 100%;
 }
-/* line 2114, ../sass/bccf-style.scss */
+/* line 2115, ../sass/bccf-style.scss */
 #main-form .dashed-button a {
   font-size: 12px;
   font-size: 0.75rem;
 }
-/* line 2118, ../sass/bccf-style.scss */
+/* line 2119, ../sass/bccf-style.scss */
 #main-form .error-block {
   font-size: 12px;
   font-size: 0.75rem;
   color: #8fab3d;
 }
-/* line 2124, ../sass/bccf-style.scss */
+/* line 2125, ../sass/bccf-style.scss */
 #main-form.contact-tab .input_id_postal_code .req:after {
   font-size: 15px;
   font-size: 0.9375rem;
@@ -4673,7 +4677,7 @@ textarea {
   position: relative;
   top: 5px;
 }
-/* line 2134, ../sass/bccf-style.scss */
+/* line 2135, ../sass/bccf-style.scss */
 #main-form.forum-tab #id_show_signatures {
   top: 5px !important;
 }
@@ -4682,38 +4686,38 @@ textarea {
 /**
  * Form builder
  **/
-/* line 2147, ../sass/bccf-style.scss */
+/* line 2148, ../sass/bccf-style.scss */
 #builder-main .field-container-inner:hover {
   background-color: #e5e9d2;
 }
 
-/* line 2153, ../sass/bccf-style.scss */
+/* line 2154, ../sass/bccf-style.scss */
 #settings-box li {
   height: 50px;
   line-height: 50px;
 }
-/* line 2157, ../sass/bccf-style.scss */
+/* line 2158, ../sass/bccf-style.scss */
 #settings-box #settings-title {
   font-family: inherit !important;
 }
 
-/* line 2162, ../sass/bccf-style.scss */
+/* line 2163, ../sass/bccf-style.scss */
 .ui-dialog {
   background: whitesmoke !important;
   font-family: inherit !important;
 }
-/* line 2165, ../sass/bccf-style.scss */
+/* line 2166, ../sass/bccf-style.scss */
 .ui-dialog .ui-widget-header {
   background: #8fab3d;
 }
 
-/* line 2172, ../sass/bccf-style.scss */
+/* line 2173, ../sass/bccf-style.scss */
 #settings-box label,
 #form-main label {
   width: 150px;
   display: inline-block;
 }
-/* line 2176, ../sass/bccf-style.scss */
+/* line 2177, ../sass/bccf-style.scss */
 #settings-box textarea,
 #form-main textarea {
   max-width: 100%;
@@ -4721,29 +4725,29 @@ textarea {
 
 /* End form builder */
 /* Forum */
-/* line 2186, ../sass/bccf-style.scss */
+/* line 2187, ../sass/bccf-style.scss */
 .topic .controls a {
   text-decoration: none;
 }
-/* line 2188, ../sass/bccf-style.scss */
+/* line 2189, ../sass/bccf-style.scss */
 .topic .controls a:hover {
   font-weight: bold;
   color: #336442;
 }
 
-/* line 2196, ../sass/bccf-style.scss */
+/* line 2197, ../sass/bccf-style.scss */
 .post-header th {
   background-color: #e5e9d2;
   color: #336442;
 }
-/* line 2199, ../sass/bccf-style.scss */
+/* line 2200, ../sass/bccf-style.scss */
 .post-header th a {
   color: inherit;
 }
 
 /* Forum End */
 /* Generic Above Footer */
-/* line 2207, ../sass/bccf-style.scss */
+/* line 2208, ../sass/bccf-style.scss */
 .req:after {
   font-size: 25px;
   font-size: 1.5625rem;
@@ -4754,132 +4758,132 @@ textarea {
   left: 5px;
 }
 
-/* line 2216, ../sass/bccf-style.scss */
+/* line 2217, ../sass/bccf-style.scss */
 .photo {
   border: 10px solid whitesmoke;
 }
 
-/* line 2220, ../sass/bccf-style.scss */
+/* line 2221, ../sass/bccf-style.scss */
 #form-aux {
   background-color: whitesmoke;
   padding: 20px;
   border-top: 2px solid #336442;
 }
-/* line 2224, ../sass/bccf-style.scss */
+/* line 2225, ../sass/bccf-style.scss */
 #form-aux label {
   width: 150px;
   display: inline-block;
 }
-/* line 2228, ../sass/bccf-style.scss */
+/* line 2229, ../sass/bccf-style.scss */
 #form-aux textarea {
   max-width: 100%;
 }
 
-/* line 2234, ../sass/bccf-style.scss */
+/* line 2235, ../sass/bccf-style.scss */
 .pagination ul {
   text-align: right;
   padding-left: 0;
 }
-/* line 2237, ../sass/bccf-style.scss */
+/* line 2238, ../sass/bccf-style.scss */
 .pagination ul li {
   font-weight: bold;
   font-size: 15px;
   font-size: 0.9375rem;
   display: inline;
 }
-/* line 2241, ../sass/bccf-style.scss */
+/* line 2242, ../sass/bccf-style.scss */
 .pagination ul li a {
   padding: 0 5px;
   text-decoration: none;
   font-size: 15px;
   font-size: 0.9375rem;
 }
-/* line 2245, ../sass/bccf-style.scss */
+/* line 2246, ../sass/bccf-style.scss */
 .pagination ul li a:hover {
   color: #336442;
 }
-/* line 2249, ../sass/bccf-style.scss */
+/* line 2250, ../sass/bccf-style.scss */
 .pagination ul li .current {
   font-size: 20px;
   font-size: 1.25rem;
 }
-/* line 2253, ../sass/bccf-style.scss */
+/* line 2254, ../sass/bccf-style.scss */
 .pagination ul .next-btn {
   border-left: 2px solid #336442;
   padding-left: 5px;
   margin-left: 5px;
 }
-/* line 2258, ../sass/bccf-style.scss */
+/* line 2259, ../sass/bccf-style.scss */
 .pagination ul .prev-btn {
   border-right: 2px solid #336442;
   padding-right: 5px;
   margin-right: 5px;
 }
 
-/* line 2267, ../sass/bccf-style.scss */
+/* line 2268, ../sass/bccf-style.scss */
 #comments .comment {
   padding: 10px;
   margin-bottom: 10px;
 }
-/* line 2271, ../sass/bccf-style.scss */
+/* line 2272, ../sass/bccf-style.scss */
 #comments .comment .comment {
   margin: 10px 0 10px 20px;
 }
-/* line 2274, ../sass/bccf-style.scss */
+/* line 2275, ../sass/bccf-style.scss */
 #comments .comment:nth-child(odd) {
   background-color: #e5e9d2;
 }
 
-/* line 2281, ../sass/bccf-style.scss */
+/* line 2282, ../sass/bccf-style.scss */
 .baby-content a,
 .subpage-content a {
   text-decoration: underline;
 }
-/* line 2283, ../sass/bccf-style.scss */
+/* line 2284, ../sass/bccf-style.scss */
 .baby-content a:hover, .baby-content a:active,
 .subpage-content a:hover,
 .subpage-content a:active {
   font-weight: bold;
   text-decoration: none;
 }
-/* line 2289, ../sass/bccf-style.scss */
+/* line 2290, ../sass/bccf-style.scss */
 .baby-content table th,
 .subpage-content table th {
   width: 150px;
 }
-/* line 2292, ../sass/bccf-style.scss */
+/* line 2293, ../sass/bccf-style.scss */
 .baby-content table tr:nth-of-type(odd),
 .subpage-content table tr:nth-of-type(odd) {
   background-color: #e5e9d2;
 }
 
 /* End Generic */
-/* line 2300, ../sass/bccf-style.scss */
+/* line 2301, ../sass/bccf-style.scss */
 footer {
   background-color: whitesmoke;
 }
-/* line 2303, ../sass/bccf-style.scss */
+/* line 2304, ../sass/bccf-style.scss */
 footer #main-footer-nav {
   height: 50px;
   border-top: 10px solid #fdcd26;
   text-transform: uppercase;
 }
-/* line 2308, ../sass/bccf-style.scss */
+/* line 2309, ../sass/bccf-style.scss */
 footer #main-footer-nav ul {
   list-style: none;
   display: inline-block;
   height: 50px;
   margin: 3px 0 0;
 }
-/* line 2314, ../sass/bccf-style.scss */
+/* line 2315, ../sass/bccf-style.scss */
 footer #main-footer-nav li {
   display: inline;
 }
-/* line 2316, ../sass/bccf-style.scss */
+/* line 2317, ../sass/bccf-style.scss */
 footer #main-footer-nav li ul {
   display: inline;
 }
-/* line 2320, ../sass/bccf-style.scss */
+/* line 2321, ../sass/bccf-style.scss */
 footer #main-footer-nav li a {
   float: left;
   font-size: 14px;
@@ -4887,30 +4891,30 @@ footer #main-footer-nav li a {
   color: #808285;
   text-decoration: none;
 }
-/* line 2326, ../sass/bccf-style.scss */
+/* line 2327, ../sass/bccf-style.scss */
 footer #main-footer-nav li a:hover {
   text-decoration: underline;
 }
-/* line 2333, ../sass/bccf-style.scss */
+/* line 2334, ../sass/bccf-style.scss */
 footer aside {
   margin: 0 0 30px;
   min-height: 175px;
 }
-/* line 2337, ../sass/bccf-style.scss */
+/* line 2338, ../sass/bccf-style.scss */
 footer #newsfeed {
   padding: 10px 20px;
   border-right: 2px solid #a6b2a6;
   font-size: 12px;
 }
-/* line 2342, ../sass/bccf-style.scss */
+/* line 2343, ../sass/bccf-style.scss */
 footer #newsfeed ul {
   list-style: none;
 }
-/* line 2345, ../sass/bccf-style.scss */
+/* line 2346, ../sass/bccf-style.scss */
 footer #newsfeed li {
   margin: 10px 0 20px;
 }
-/* line 2348, ../sass/bccf-style.scss */
+/* line 2349, ../sass/bccf-style.scss */
 footer #newsfeed h6 {
   font-size: 10px;
   color: #8fab3d;
@@ -4918,54 +4922,54 @@ footer #newsfeed h6 {
   margin: 0;
   padding: 0;
 }
-/* line 2356, ../sass/bccf-style.scss */
+/* line 2357, ../sass/bccf-style.scss */
 footer #newsfeed p {
   margin: 2px 0;
   padding: 0;
 }
-/* line 2361, ../sass/bccf-style.scss */
+/* line 2362, ../sass/bccf-style.scss */
 footer #newsfeed a {
   color: #414042;
 }
-/* line 2367, ../sass/bccf-style.scss */
+/* line 2368, ../sass/bccf-style.scss */
 footer #social {
   padding: 49px 107px;
   border-right: 2px solid #a6b2a6;
   font-size: 14px;
   color: #414042;
 }
-/* line 2373, ../sass/bccf-style.scss */
+/* line 2374, ../sass/bccf-style.scss */
 footer #social p {
   margin: 2px 0;
   padding: 0;
 }
-/* line 2382, ../sass/bccf-style.scss */
+/* line 2383, ../sass/bccf-style.scss */
 footer #newsletter {
   padding: 10px 30px;
 }
-/* line 2385, ../sass/bccf-style.scss */
+/* line 2386, ../sass/bccf-style.scss */
 footer #newsletter h5 {
   margin: 2px 0;
   padding: 0;
   font-weight: bold;
 }
-/* line 2391, ../sass/bccf-style.scss */
+/* line 2392, ../sass/bccf-style.scss */
 footer #newsletter p {
   margin: 2px 0;
   padding: 0;
 }
-/* line 2395, ../sass/bccf-style.scss */
+/* line 2396, ../sass/bccf-style.scss */
 footer #newsletter div {
   margin-top: 30px;
 }
-/* line 2397, ../sass/bccf-style.scss */
+/* line 2398, ../sass/bccf-style.scss */
 footer #newsletter .dashed-button {
   background-color: #8fab3d;
-  min-width: 80px;
+  min-width: 76px;
   float: left;
   text-align: center;
 }
-/* line 2403, ../sass/bccf-style.scss */
+/* line 2404, ../sass/bccf-style.scss */
 footer #newsletter .dashed-button a {
   font-weight: bold;
   color: #fff;
@@ -4976,7 +4980,7 @@ footer #newsletter .dashed-button a {
   text-transform: uppercase;
   border: 1px dashed #fff;
 }
-/* line 2413, ../sass/bccf-style.scss */
+/* line 2414, ../sass/bccf-style.scss */
 footer #newsletter .dashed-button a:hover {
   color: #336442;
   text-decoration: none;
@@ -4984,14 +4988,14 @@ footer #newsletter .dashed-button a:hover {
 }
 
 /* End Footer */
-/* line 2425, ../sass/bccf-style.scss */
+/* line 2426, ../sass/bccf-style.scss */
 .dashed-button {
   background-color: #8fab3d;
   min-width: 80px;
   float: left;
   text-shadow: none;
 }
-/* line 2431, ../sass/bccf-style.scss */
+/* line 2432, ../sass/bccf-style.scss */
 .dashed-button a {
   font-weight: bold;
   color: #000;
@@ -5002,19 +5006,19 @@ footer #newsletter .dashed-button a:hover {
   text-transform: uppercase;
   border: 1px dashed #fff;
 }
-/* line 2441, ../sass/bccf-style.scss */
+/* line 2442, ../sass/bccf-style.scss */
 .dashed-button a:hover {
   color: #336442;
   text-decoration: none;
   background-color: #fdcd26;
 }
 
-/* line 2448, ../sass/bccf-style.scss */
+/* line 2449, ../sass/bccf-style.scss */
 #copyright {
   font-size: 11px;
   text-align: center;
 }
-/* line 2451, ../sass/bccf-style.scss */
+/* line 2452, ../sass/bccf-style.scss */
 #copyright a {
   color: #414042;
 }
@@ -5023,7 +5027,7 @@ footer #newsletter .dashed-button a:hover {
 /* -- Tablet Devices (Layout, Modifications, etc)
    ========================================================================== */
 @media only screen and (min-width: 740px) and (max-width: 1139px) {
-  /* line 2461, ../sass/bccf-style.scss */
+  /* line 2462, ../sass/bccf-style.scss */
   .container, .tablet-container {
     width: 720px;
     padding-left: 10px;
@@ -5032,67 +5036,67 @@ footer #newsletter .dashed-button a:hover {
 
   /* Tablet Grid
   * For stacking full width columns, please use the new class .tablet-full */
-  /* line 2469, ../sass/bccf-style.scss */
+  /* line 2470, ../sass/bccf-style.scss */
   .tablet-one {
     width: 6.5%;
   }
 
-  /* line 2470, ../sass/bccf-style.scss */
+  /* line 2471, ../sass/bccf-style.scss */
   .tablet-two {
     width: 15%;
   }
 
-  /* line 2471, ../sass/bccf-style.scss */
+  /* line 2472, ../sass/bccf-style.scss */
   .tablet-three {
     width: 23.5%;
   }
 
-  /* line 2472, ../sass/bccf-style.scss */
+  /* line 2473, ../sass/bccf-style.scss */
   .tablet-four {
     width: 32%;
   }
 
-  /* line 2473, ../sass/bccf-style.scss */
+  /* line 2474, ../sass/bccf-style.scss */
   .tablet-five {
     width: 40.5%;
   }
 
-  /* line 2474, ../sass/bccf-style.scss */
+  /* line 2475, ../sass/bccf-style.scss */
   .tablet-six {
     width: 49.0%;
   }
 
-  /* line 2475, ../sass/bccf-style.scss */
+  /* line 2476, ../sass/bccf-style.scss */
   .tablet-seven {
     width: 57.5%;
   }
 
-  /* line 2476, ../sass/bccf-style.scss */
+  /* line 2477, ../sass/bccf-style.scss */
   .tablet-eight {
     width: 66%;
   }
 
-  /* line 2477, ../sass/bccf-style.scss */
+  /* line 2478, ../sass/bccf-style.scss */
   .tablet-nine {
     width: 74.5%;
   }
 
-  /* line 2478, ../sass/bccf-style.scss */
+  /* line 2479, ../sass/bccf-style.scss */
   .tablet-ten {
     width: 83%;
   }
 
-  /* line 2479, ../sass/bccf-style.scss */
+  /* line 2480, ../sass/bccf-style.scss */
   .tablet-eleven {
     width: 91.5%;
   }
 
-  /* line 2480, ../sass/bccf-style.scss */
+  /* line 2481, ../sass/bccf-style.scss */
   .tablet-twelve {
     width: 100%;
   }
 
-  /* line 2482, ../sass/bccf-style.scss */
+  /* line 2483, ../sass/bccf-style.scss */
   .tablet-full {
     clear: both;
     float: none;
@@ -5101,210 +5105,210 @@ footer #newsletter .dashed-button a:hover {
     display: block;
   }
 
-  /* line 2489, ../sass/bccf-style.scss */
+  /* line 2490, ../sass/bccf-style.scss */
   .tablet-full:first-child {
     margin-top: 0;
   }
 
-  /* line 2493, ../sass/bccf-style.scss */
+  /* line 2494, ../sass/bccf-style.scss */
   .tablet-center {
     margin-left: auto;
     margin-right: auto;
     float: none;
   }
 
-  /* line 2498, ../sass/bccf-style.scss */
+  /* line 2499, ../sass/bccf-style.scss */
   .tablet-left {
     float: left;
   }
 
-  /* line 2499, ../sass/bccf-style.scss */
+  /* line 2500, ../sass/bccf-style.scss */
   .tablet-right {
     float: right;
   }
 
-  /* line 2500, ../sass/bccf-style.scss */
+  /* line 2501, ../sass/bccf-style.scss */
   .tablet-no-float {
     float: none;
   }
 
-  /* line 2502, ../sass/bccf-style.scss */
+  /* line 2503, ../sass/bccf-style.scss */
   .tablet-center:first-child {
     margin-left: auto;
   }
 
-  /* line 2503, ../sass/bccf-style.scss */
+  /* line 2504, ../sass/bccf-style.scss */
   .tablet-center-text {
     text-align: center;
   }
 
-  /* line 2507, ../sass/bccf-style.scss */
+  /* line 2508, ../sass/bccf-style.scss */
   .no-tablet {
     display: none;
   }
 
-  /* line 2508, ../sass/bccf-style.scss */
+  /* line 2509, ../sass/bccf-style.scss */
   .show-tablet {
     display: block;
   }
 
-  /* line 2521, ../sass/bccf-style.scss */
+  /* line 2522, ../sass/bccf-style.scss */
   #main-top-nav li a {
     font-size: 16px;
     padding: 12px 10px;
   }
-  /* line 2525, ../sass/bccf-style.scss */
+  /* line 2526, ../sass/bccf-style.scss */
   #main-top-nav li .active > a {
     font-weight: bold;
     /*background: url(../img/menu-triangle.png) top center no-repeat;*/
   }
 
-  /* line 2535, ../sass/bccf-style.scss */
+  /* line 2536, ../sass/bccf-style.scss */
   #browse-by #browse-by-nav > ul > li {
     font-size: 12px;
     font-size: 0.75rem;
     width: 112px;
   }
-  /* line 2539, ../sass/bccf-style.scss */
+  /* line 2540, ../sass/bccf-style.scss */
   #browse-by #browse-by-nav > ul > li > ul > li {
     line-height: 10px;
   }
-  /* line 2541, ../sass/bccf-style.scss */
+  /* line 2542, ../sass/bccf-style.scss */
   #browse-by #browse-by-nav > ul > li > ul > li a {
     padding: 15px 0;
   }
 
-  /* line 2552, ../sass/bccf-style.scss */
+  /* line 2553, ../sass/bccf-style.scss */
   #home-listings {
     /* End #hlist-right-side */
   }
-  /* line 2561, ../sass/bccf-style.scss */
+  /* line 2562, ../sass/bccf-style.scss */
   #home-listings #hlist-left-side p {
     padding: 10px 48px 0px 40px;
     font-size: 14px;
   }
-  /* line 2588, ../sass/bccf-style.scss */
+  /* line 2589, ../sass/bccf-style.scss */
   #home-listings .hlist-inner {
     width: 98%;
   }
 
   /* End #home-listings */
-  /* line 2619, ../sass/bccf-style.scss */
+  /* line 2620, ../sass/bccf-style.scss */
   #home-resources #carousel-resources .hr-item {
     margin: 0 27px;
   }
 
   /* End #home-resources */
-  /* line 2630, ../sass/bccf-style.scss */
+  /* line 2631, ../sass/bccf-style.scss */
   #home-history {
     background: url(../img/history-bg-t.gif) repeat-x bottom;
     height: 203px;
   }
-  /* line 2634, ../sass/bccf-style.scss */
+  /* line 2635, ../sass/bccf-style.scss */
   #home-history li {
     height: 203px;
   }
-  /* line 2639, ../sass/bccf-style.scss */
+  /* line 2640, ../sass/bccf-style.scss */
   #home-history .history-image {
     padding: 0 20px;
   }
-  /* line 2642, ../sass/bccf-style.scss */
+  /* line 2643, ../sass/bccf-style.scss */
   #home-history .history-text {
     padding: 64px 26px 0 0;
   }
-  /* line 2645, ../sass/bccf-style.scss */
+  /* line 2646, ../sass/bccf-style.scss */
   #home-history .history-text h3 {
     font-weight: 300;
     font-size: 20px;
   }
-  /* line 2649, ../sass/bccf-style.scss */
+  /* line 2650, ../sass/bccf-style.scss */
   #home-history .history-text p {
     font-size: 12px;
   }
 
-  /* line 2657, ../sass/bccf-style.scss */
+  /* line 2658, ../sass/bccf-style.scss */
   .content-pages .top-control-container .carousel-title-container {
     margin-left: 1%;
     padding-left: 0;
   }
-  /* line 2660, ../sass/bccf-style.scss */
+  /* line 2661, ../sass/bccf-style.scss */
   .content-pages .top-control-container .carousel-title-container h2 {
     color: #fff;
     padding: 6px;
     font-size: 16px;
   }
-  /* line 2666, ../sass/bccf-style.scss */
+  /* line 2667, ../sass/bccf-style.scss */
   .content-pages .top-control-container .control-buttons {
     padding-right: 0;
   }
-  /* line 2669, ../sass/bccf-style.scss */
+  /* line 2670, ../sass/bccf-style.scss */
   .content-pages .top-control-container .control-buttons.six, .content-pages .top-control-container .control-buttons.half {
     margin-left: 0;
   }
-  /* line 2675, ../sass/bccf-style.scss */
+  /* line 2676, ../sass/bccf-style.scss */
   .content-pages .page-container-outer .page-container-inner .page-box {
     font-size: 12px;
   }
-  /* line 2677, ../sass/bccf-style.scss */
+  /* line 2678, ../sass/bccf-style.scss */
   .content-pages .page-container-outer .page-container-inner .page-box h2 {
     font-size: 14px;
   }
 
-  /* line 2685, ../sass/bccf-style.scss */
+  /* line 2686, ../sass/bccf-style.scss */
   .related-resource {
     width: 50%;
   }
 
-  /* line 2701, ../sass/bccf-style.scss */
+  /* line 2702, ../sass/bccf-style.scss */
   #tag-widget .tag-box i {
     font-size: 10px;
     padding: 3px 6px;
   }
-  /* line 2703, ../sass/bccf-style.scss */
+  /* line 2704, ../sass/bccf-style.scss */
   #tag-widget .tag-box img {
     margin: 3px 10px 10px;
   }
-  /* line 2708, ../sass/bccf-style.scss */
+  /* line 2709, ../sass/bccf-style.scss */
   #tag-widget .tag-box p {
     padding: 0 10px;
   }
-  /* line 2712, ../sass/bccf-style.scss */
+  /* line 2713, ../sass/bccf-style.scss */
   #tag-widget .tag-box .dashed-button {
     margin: 10px;
   }
 
   /* end #tag-widget */
-  /* line 2722, ../sass/bccf-style.scss */
+  /* line 2723, ../sass/bccf-style.scss */
   #tabs {
     font-size: 15px;
     font-size: 0.9375rem;
   }
 
-  /* line 2734, ../sass/bccf-style.scss */
+  /* line 2735, ../sass/bccf-style.scss */
   footer #main-footer-nav li a {
     font-size: 12px;
     padding: 10px 10px;
   }
-  /* line 2742, ../sass/bccf-style.scss */
+  /* line 2743, ../sass/bccf-style.scss */
   footer aside {
     margin: 0 0 30px;
     min-height: 175px;
   }
-  /* line 2746, ../sass/bccf-style.scss */
+  /* line 2747, ../sass/bccf-style.scss */
   footer #newsfeed {
     padding: 10px;
     border-right: 2px solid #a6b2a6;
     font-size: 12px;
   }
-  /* line 2751, ../sass/bccf-style.scss */
+  /* line 2752, ../sass/bccf-style.scss */
   footer #newsfeed ul {
     list-style: none;
   }
-  /* line 2754, ../sass/bccf-style.scss */
+  /* line 2755, ../sass/bccf-style.scss */
   footer #newsfeed li {
     margin: 10px 0 20px;
   }
-  /* line 2757, ../sass/bccf-style.scss */
+  /* line 2758, ../sass/bccf-style.scss */
   footer #newsfeed h6 {
     font-size: 10px;
     color: #8fab3d;
@@ -5312,16 +5316,16 @@ footer #newsletter .dashed-button a:hover {
     margin: 0;
     padding: 0;
   }
-  /* line 2765, ../sass/bccf-style.scss */
+  /* line 2766, ../sass/bccf-style.scss */
   footer #newsfeed p {
     margin: 2px 0;
     padding: 0;
   }
-  /* line 2770, ../sass/bccf-style.scss */
+  /* line 2771, ../sass/bccf-style.scss */
   footer #newsfeed a {
     color: #414042;
   }
-  /* line 2776, ../sass/bccf-style.scss */
+  /* line 2777, ../sass/bccf-style.scss */
   footer #social {
     padding: 90px 49px;
   }
@@ -5335,67 +5339,67 @@ footer #newsletter .dashed-button a:hover {
 @media only screen and (max-width: 739px) {
   /* Mobile Grid
   * For stacking full width columns, please use the new class .mobile-full */
-  /* line 2795, ../sass/bccf-style.scss */
+  /* line 2796, ../sass/bccf-style.scss */
   .mobile-one {
     width: 6.5%;
   }
 
-  /* line 2796, ../sass/bccf-style.scss */
+  /* line 2797, ../sass/bccf-style.scss */
   .mobile-two {
     width: 15%;
   }
 
-  /* line 2797, ../sass/bccf-style.scss */
+  /* line 2798, ../sass/bccf-style.scss */
   .mobile-three {
     width: 23.5%;
   }
 
-  /* line 2798, ../sass/bccf-style.scss */
+  /* line 2799, ../sass/bccf-style.scss */
   .mobile-four {
     width: 32%;
   }
 
-  /* line 2799, ../sass/bccf-style.scss */
+  /* line 2800, ../sass/bccf-style.scss */
   .mobile-five {
     width: 40.5%;
   }
 
-  /* line 2800, ../sass/bccf-style.scss */
+  /* line 2801, ../sass/bccf-style.scss */
   .mobile-six {
     width: 49.0%;
   }
 
-  /* line 2801, ../sass/bccf-style.scss */
+  /* line 2802, ../sass/bccf-style.scss */
   .mobile-seven {
     width: 57.5%;
   }
 
-  /* line 2802, ../sass/bccf-style.scss */
+  /* line 2803, ../sass/bccf-style.scss */
   .mobile-eight {
     width: 66%;
   }
 
-  /* line 2803, ../sass/bccf-style.scss */
+  /* line 2804, ../sass/bccf-style.scss */
   .mobile-nine {
     width: 74.5%;
   }
 
-  /* line 2804, ../sass/bccf-style.scss */
+  /* line 2805, ../sass/bccf-style.scss */
   .mobile-ten {
     width: 83%;
   }
 
-  /* line 2805, ../sass/bccf-style.scss */
+  /* line 2806, ../sass/bccf-style.scss */
   .mobile-eleven {
     width: 91.5%;
   }
 
-  /* line 2806, ../sass/bccf-style.scss */
+  /* line 2807, ../sass/bccf-style.scss */
   .mobile-twelve {
     width: 100%;
   }
 
-  /* line 2808, ../sass/bccf-style.scss */
+  /* line 2809, ../sass/bccf-style.scss */
   .mobile-full {
     clear: both;
     float: none;
@@ -5404,84 +5408,84 @@ footer #newsletter .dashed-button a:hover {
     display: block;
   }
 
-  /* line 2815, ../sass/bccf-style.scss */
+  /* line 2816, ../sass/bccf-style.scss */
   .mobile-full:first-child {
     margin-top: 0;
   }
 
-  /* line 2818, ../sass/bccf-style.scss */
+  /* line 2819, ../sass/bccf-style.scss */
   .mobile-center {
     margin-left: auto;
     margin-right: auto;
     float: none;
   }
 
-  /* line 2823, ../sass/bccf-style.scss */
+  /* line 2824, ../sass/bccf-style.scss */
   .mobile-center:first-child {
     margin-left: auto;
   }
 
-  /* line 2824, ../sass/bccf-style.scss */
+  /* line 2825, ../sass/bccf-style.scss */
   .mobile-center-text {
     text-align: center;
   }
 
-  /* line 2827, ../sass/bccf-style.scss */
+  /* line 2828, ../sass/bccf-style.scss */
   .mobile-left {
     float: left;
   }
 
-  /* line 2828, ../sass/bccf-style.scss */
+  /* line 2829, ../sass/bccf-style.scss */
   .mobile-right {
     float: right;
   }
 
-  /* line 2829, ../sass/bccf-style.scss */
+  /* line 2830, ../sass/bccf-style.scss */
   .mobile-no-float {
     float: none;
   }
 
-  /* line 2831, ../sass/bccf-style.scss */
+  /* line 2832, ../sass/bccf-style.scss */
   .container, .mobile-container {
     padding-left: 20px;
     padding-right: 20px;
   }
 
   /* Mobile Tables */
-  /* line 2838, ../sass/bccf-style.scss */
+  /* line 2839, ../sass/bccf-style.scss */
   table th,
   table td {
     padding: 4px;
   }
 
-  /* line 2842, ../sass/bccf-style.scss */
+  /* line 2843, ../sass/bccf-style.scss */
   .no-mobile {
     display: none;
   }
 
-  /* line 2843, ../sass/bccf-style.scss */
+  /* line 2844, ../sass/bccf-style.scss */
   .show-mobile {
     display: block;
   }
 
-  /* line 2850, ../sass/bccf-style.scss */
+  /* line 2851, ../sass/bccf-style.scss */
   #bccflogo {
     border-right: none;
     text-align: center;
   }
 
-  /* line 2854, ../sass/bccf-style.scss */
+  /* line 2855, ../sass/bccf-style.scss */
   #bccftagline {
     border-right: none;
     text-align: center;
   }
 
-  /* line 2858, ../sass/bccf-style.scss */
+  /* line 2859, ../sass/bccf-style.scss */
   #bccflogin {
     text-align: center;
     height: auto;
   }
-  /* line 2861, ../sass/bccf-style.scss */
+  /* line 2862, ../sass/bccf-style.scss */
   #bccflogin p {
     width: 32%;
     padding: 0 2%;
@@ -5489,11 +5493,11 @@ footer #newsletter .dashed-button a:hover {
     float: left;
   }
 
-  /* line 2868, ../sass/bccf-style.scss */
+  /* line 2869, ../sass/bccf-style.scss */
   #main-top-nav {
     min-height: 50px;
   }
-  /* line 2871, ../sass/bccf-style.scss */
+  /* line 2872, ../sass/bccf-style.scss */
   #main-top-nav > span {
     height: 40px;
     line-height: 35px;
@@ -5503,202 +5507,202 @@ footer #newsletter .dashed-button a:hover {
     padding-right: 55px;
     color: #336442;
   }
-  /* line 2881, ../sass/bccf-style.scss */
+  /* line 2882, ../sass/bccf-style.scss */
   #main-top-nav ul {
     margin-top: 0;
   }
-  /* line 2886, ../sass/bccf-style.scss */
+  /* line 2887, ../sass/bccf-style.scss */
   #main-top-nav li a {
     display: block;
     background-color: #8fab3d;
     border-bottom: 1px solid #336442;
     color: #FFF;
   }
-  /* line 2891, ../sass/bccf-style.scss */
+  /* line 2892, ../sass/bccf-style.scss */
   #main-top-nav li a:hover {
     background: #e5e9d2;
     color: #336442;
   }
-  /* line 2896, ../sass/bccf-style.scss */
+  /* line 2897, ../sass/bccf-style.scss */
   #main-top-nav li.active > a {
     color: #336442;
     background: #e5e9d2;
   }
-  /* line 2901, ../sass/bccf-style.scss */
+  /* line 2902, ../sass/bccf-style.scss */
   #main-top-nav .mnav-mobile-btn {
     display: block;
   }
-  /* line 2906, ../sass/bccf-style.scss */
+  /* line 2907, ../sass/bccf-style.scss */
   #main-top-nav .mnav-submenu a {
     padding-left: 40px;
   }
 
-  /* line 2913, ../sass/bccf-style.scss */
+  /* line 2914, ../sass/bccf-style.scss */
   #browse-by #browse-by-nav {
     padding-top: 50px;
   }
-  /* line 2917, ../sass/bccf-style.scss */
+  /* line 2918, ../sass/bccf-style.scss */
   #browse-by #browse-by-nav > ul > li {
     display: block;
     width: 100%;
     min-height: 50px;
   }
-  /* line 2921, ../sass/bccf-style.scss */
+  /* line 2922, ../sass/bccf-style.scss */
   #browse-by #browse-by-nav > ul > li a {
     padding-left: 20px;
     border-bottom: 1px solid #336442;
     color: #FFF;
     text-align: left;
   }
-  /* line 2925, ../sass/bccf-style.scss */
+  /* line 2926, ../sass/bccf-style.scss */
   #browse-by #browse-by-nav > ul > li a:hover {
     background: #e5e9d2;
     color: #336442;
   }
-  /* line 2931, ../sass/bccf-style.scss */
+  /* line 2932, ../sass/bccf-style.scss */
   #browse-by #browse-by-nav > ul > li.active > a {
     background: #e5e9d2;
     color: #336442;
   }
-  /* line 2936, ../sass/bccf-style.scss */
+  /* line 2937, ../sass/bccf-style.scss */
   #browse-by #browse-by-nav > ul > li .mnav-submenu {
     position: static;
     width: 100%;
   }
-  /* line 2939, ../sass/bccf-style.scss */
+  /* line 2940, ../sass/bccf-style.scss */
   #browse-by #browse-by-nav > ul > li .mnav-submenu a {
     padding-left: 40px;
   }
-  /* line 2948, ../sass/bccf-style.scss */
+  /* line 2949, ../sass/bccf-style.scss */
   #browse-by #browse-by-nav .mnav-mobile-btn {
     display: block;
   }
 
-  /* line 2955, ../sass/bccf-style.scss */
+  /* line 2956, ../sass/bccf-style.scss */
   #home-noteworthy .hnote-buttons {
     margin: 0;
     font-size: 13px;
     font-size: 0.8125rem;
   }
 
-  /* line 2962, ../sass/bccf-style.scss */
+  /* line 2963, ../sass/bccf-style.scss */
   #home-programs .hpro-buttons {
     margin-left: 0;
     font-size: 13px;
     font-size: 0.8125rem;
   }
 
-  /* line 2970, ../sass/bccf-style.scss */
+  /* line 2971, ../sass/bccf-style.scss */
   #home-resources .button-next,
   #home-resources .button-prev {
     display: none;
   }
-  /* line 2975, ../sass/bccf-style.scss */
+  /* line 2976, ../sass/bccf-style.scss */
   #home-resources #carousel-resources .active {
     width: 250px !important;
   }
 
-  /* line 2982, ../sass/bccf-style.scss */
+  /* line 2983, ../sass/bccf-style.scss */
   #home-calendar {
     float: left;
     padding-bottom: 30px;
   }
-  /* line 2986, ../sass/bccf-style.scss */
+  /* line 2987, ../sass/bccf-style.scss */
   #home-calendar h2 {
     font-size: 24px;
   }
-  /* line 2991, ../sass/bccf-style.scss */
+  /* line 2992, ../sass/bccf-style.scss */
   #home-calendar .hcal-text {
     padding: 0 20px;
   }
-  /* line 2997, ../sass/bccf-style.scss */
+  /* line 2998, ../sass/bccf-style.scss */
   #home-calendar .hcal-tabs .hcal-left-side {
     margin: -20px 0 25px;
   }
-  /* line 3000, ../sass/bccf-style.scss */
+  /* line 3001, ../sass/bccf-style.scss */
   #home-calendar .hcal-tabs .hcal-right-side {
     text-align: center;
   }
-  /* line 3008, ../sass/bccf-style.scss */
+  /* line 3009, ../sass/bccf-style.scss */
   #home-calendar .hcal-inner {
     width: 98%;
   }
-  /* line 3020, ../sass/bccf-style.scss */
+  /* line 3021, ../sass/bccf-style.scss */
   #home-calendar .hcal-heading {
     width: 0;
     height: 0;
     display: none;
   }
-  /* line 3028, ../sass/bccf-style.scss */
+  /* line 3029, ../sass/bccf-style.scss */
   #home-calendar .hcal-right-side {
     text-align: right;
     padding-right: 30px;
     width: 100% !important;
   }
 
-  /* line 3036, ../sass/bccf-style.scss */
+  /* line 3037, ../sass/bccf-style.scss */
   #home-listings {
     /* End #hlist-right-side */
   }
-  /* line 3037, ../sass/bccf-style.scss */
+  /* line 3038, ../sass/bccf-style.scss */
   #home-listings .seven {
     margin: 0 1%;
     width: 98%;
     padding: 40px 0;
   }
-  /* line 3046, ../sass/bccf-style.scss */
+  /* line 3047, ../sass/bccf-style.scss */
   #home-listings #hlist-left-side p {
     padding: 20px 30px;
     font-size: 14px;
   }
-  /* line 3050, ../sass/bccf-style.scss */
+  /* line 3051, ../sass/bccf-style.scss */
   #home-listings .hlist-buttons {
     padding-left: 24px;
   }
-  /* line 3059, ../sass/bccf-style.scss */
+  /* line 3060, ../sass/bccf-style.scss */
   #home-listings .hlist-tabs {
     text-align: center;
     margin: 0;
   }
-  /* line 3072, ../sass/bccf-style.scss */
+  /* line 3073, ../sass/bccf-style.scss */
   #home-listings .hlist-outer {
     height: 140px;
   }
-  /* line 3075, ../sass/bccf-style.scss */
+  /* line 3076, ../sass/bccf-style.scss */
   #home-listings .hlist-inner {
     height: 100%;
   }
-  /* line 3078, ../sass/bccf-style.scss */
+  /* line 3079, ../sass/bccf-style.scss */
   #home-listings .hlist-inner img {
     height: 75px;
     width: 75px;
   }
-  /* line 3084, ../sass/bccf-style.scss */
+  /* line 3085, ../sass/bccf-style.scss */
   #home-listings .hlist-inner p {
     height: 70px;
   }
-  /* line 3088, ../sass/bccf-style.scss */
+  /* line 3089, ../sass/bccf-style.scss */
   #home-listings .hlist-inner .hlist-link {
     float: right;
     margin: 0;
   }
-  /* line 3094, ../sass/bccf-style.scss */
+  /* line 3095, ../sass/bccf-style.scss */
   #home-listings .hlist-pagination {
     margin-bottom: 20px;
   }
 
   /* End #home-listings */
-  /* line 3103, ../sass/bccf-style.scss */
+  /* line 3104, ../sass/bccf-style.scss */
   #home-resources #carousel-resources {
     padding: 0 4%;
   }
-  /* line 3108, ../sass/bccf-style.scss */
+  /* line 3109, ../sass/bccf-style.scss */
   #home-resources #carousel-resources .hr-item {
     margin: 0 10px;
   }
 
   /* End #home-resources */
-  /* line 3120, ../sass/bccf-style.scss */
+  /* line 3121, ../sass/bccf-style.scss */
   #home-history {
     border-top: 4px solid #c0dfcf;
     background: none;
@@ -5706,161 +5710,161 @@ footer #newsletter .dashed-button a:hover {
     height: 0;
     padding-top: 10px;
   }
-  /* line 3127, ../sass/bccf-style.scss */
+  /* line 3128, ../sass/bccf-style.scss */
   #home-history li {
     min-height: 250px;
     height: 0;
   }
-  /* line 3132, ../sass/bccf-style.scss */
+  /* line 3133, ../sass/bccf-style.scss */
   #home-history .history-image {
     padding: 0 20px;
   }
-  /* line 3135, ../sass/bccf-style.scss */
+  /* line 3136, ../sass/bccf-style.scss */
   #home-history .history-text {
     padding: 0px 10px 0 0;
   }
-  /* line 3138, ../sass/bccf-style.scss */
+  /* line 3139, ../sass/bccf-style.scss */
   #home-history .history-text h3 {
     font-weight: 300;
     font-size: 14px;
   }
-  /* line 3142, ../sass/bccf-style.scss */
+  /* line 3143, ../sass/bccf-style.scss */
   #home-history .history-text p {
     font-size: 10px;
   }
 
-  /* line 3149, ../sass/bccf-style.scss */
+  /* line 3150, ../sass/bccf-style.scss */
   .content-pages .top-control-container .carousel-title-container {
     margin-left: 1%;
     padding-left: 0;
   }
-  /* line 3152, ../sass/bccf-style.scss */
+  /* line 3153, ../sass/bccf-style.scss */
   .content-pages .top-control-container .carousel-title-container h2 {
     color: #fff;
     padding: 6px;
     font-size: 16px;
   }
-  /* line 3158, ../sass/bccf-style.scss */
+  /* line 3159, ../sass/bccf-style.scss */
   .content-pages .top-control-container .control-buttons {
     padding-right: 0;
   }
-  /* line 3162, ../sass/bccf-style.scss */
+  /* line 3163, ../sass/bccf-style.scss */
   .content-pages .page-container-outer {
     /* Container */
   }
-  /* line 3163, ../sass/bccf-style.scss */
+  /* line 3164, ../sass/bccf-style.scss */
   .content-pages .page-container-outer .page-box-active {
     border-bottom: none;
   }
 
-  /* line 3169, ../sass/bccf-style.scss */
+  /* line 3170, ../sass/bccf-style.scss */
   .subpage-tabs {
     background-color: none;
   }
-  /* line 3172, ../sass/bccf-style.scss */
+  /* line 3173, ../sass/bccf-style.scss */
   .subpage-tabs > ul > li {
     width: 100%;
   }
-  /* line 3174, ../sass/bccf-style.scss */
+  /* line 3175, ../sass/bccf-style.scss */
   .subpage-tabs > ul > li a {
     font-size: 20px;
     font-size: 1.25rem;
     background-color: #8fab3d !important;
   }
 
-  /* line 3183, ../sass/bccf-style.scss */
+  /* line 3184, ../sass/bccf-style.scss */
   .social-box,
   .baby-content {
     color: #e5e9d2;
   }
 
-  /* line 3187, ../sass/bccf-style.scss */
+  /* line 3188, ../sass/bccf-style.scss */
   .my-rating {
     position: static;
     text-align: left;
   }
-  /* line 3190, ../sass/bccf-style.scss */
+  /* line 3191, ../sass/bccf-style.scss */
   .my-rating .star-rating-control {
     position: static;
     left: 0;
   }
-  /* line 3194, ../sass/bccf-style.scss */
+  /* line 3195, ../sass/bccf-style.scss */
   .my-rating form {
     position: static;
   }
 
-  /* line 3199, ../sass/bccf-style.scss */
+  /* line 3200, ../sass/bccf-style.scss */
   #filter-container {
     text-align: left;
   }
-  /* line 3201, ../sass/bccf-style.scss */
+  /* line 3202, ../sass/bccf-style.scss */
   #filter-container > input {
     margin-top: 0;
     margin-left: 5px;
   }
 
-  /* line 3207, ../sass/bccf-style.scss */
+  /* line 3208, ../sass/bccf-style.scss */
   #mobile-content-container {
     overflow-y: scroll;
     overflow-x: hidden;
     -webkit-overflow-scrolling-y: touch;
   }
 
-  /* line 3224, ../sass/bccf-style.scss */
+  /* line 3225, ../sass/bccf-style.scss */
   #tag-widget .tag-box i {
     font-size: 10px;
     padding: 3px 6px;
   }
-  /* line 3226, ../sass/bccf-style.scss */
+  /* line 3227, ../sass/bccf-style.scss */
   #tag-widget .tag-box img {
     margin: 3px 10px 10px;
   }
-  /* line 3230, ../sass/bccf-style.scss */
+  /* line 3231, ../sass/bccf-style.scss */
   #tag-widget .tag-box h6 {
     padding: 0 10px;
   }
-  /* line 3233, ../sass/bccf-style.scss */
+  /* line 3234, ../sass/bccf-style.scss */
   #tag-widget .tag-box p {
     padding: 0 10px;
   }
-  /* line 3237, ../sass/bccf-style.scss */
+  /* line 3238, ../sass/bccf-style.scss */
   #tag-widget .tag-box .dashed-button {
     margin: 10px;
   }
 
   /* end #tag-widget */
-  /* line 3252, ../sass/bccf-style.scss */
+  /* line 3253, ../sass/bccf-style.scss */
   footer #main-footer-nav {
     height: auto;
   }
-  /* line 3256, ../sass/bccf-style.scss */
+  /* line 3257, ../sass/bccf-style.scss */
   footer #main-footer-nav ul {
     height: auto;
   }
-  /* line 3260, ../sass/bccf-style.scss */
+  /* line 3261, ../sass/bccf-style.scss */
   footer #main-footer-nav li a {
     padding: 6px 10px;
   }
-  /* line 3269, ../sass/bccf-style.scss */
+  /* line 3270, ../sass/bccf-style.scss */
   footer aside {
     margin: 0 0 30px;
     min-height: 75px;
   }
-  /* line 3273, ../sass/bccf-style.scss */
+  /* line 3274, ../sass/bccf-style.scss */
   footer #newsfeed {
     padding: 10px;
     border-right: none;
     font-size: 12px;
   }
-  /* line 3278, ../sass/bccf-style.scss */
+  /* line 3279, ../sass/bccf-style.scss */
   footer #newsfeed ul {
     list-style: none;
   }
-  /* line 3281, ../sass/bccf-style.scss */
+  /* line 3282, ../sass/bccf-style.scss */
   footer #newsfeed li {
     margin: 10px 0 20px;
   }
-  /* line 3284, ../sass/bccf-style.scss */
+  /* line 3285, ../sass/bccf-style.scss */
   footer #newsfeed h6 {
     font-size: 10px;
     color: #8fab3d;
@@ -5868,47 +5872,47 @@ footer #newsletter .dashed-button a:hover {
     margin: 0;
     padding: 0;
   }
-  /* line 3292, ../sass/bccf-style.scss */
+  /* line 3293, ../sass/bccf-style.scss */
   footer #newsfeed p {
     margin: 2px 0;
     padding: 0;
   }
-  /* line 3297, ../sass/bccf-style.scss */
+  /* line 3298, ../sass/bccf-style.scss */
   footer #newsfeed a {
     color: #414042;
   }
-  /* line 3303, ../sass/bccf-style.scss */
+  /* line 3304, ../sass/bccf-style.scss */
   footer #social {
     padding: 6px 70px;
     border-right: none;
   }
-  /* line 3313, ../sass/bccf-style.scss */
+  /* line 3314, ../sass/bccf-style.scss */
   footer #newsletter {
     padding: 10px 30px;
   }
-  /* line 3316, ../sass/bccf-style.scss */
+  /* line 3317, ../sass/bccf-style.scss */
   footer #newsletter h5 {
     margin: 2px 0;
     padding: 0;
     font-weight: bold;
   }
-  /* line 3322, ../sass/bccf-style.scss */
+  /* line 3323, ../sass/bccf-style.scss */
   footer #newsletter p {
     margin: 2px 0;
     padding: 0;
   }
-  /* line 3326, ../sass/bccf-style.scss */
+  /* line 3327, ../sass/bccf-style.scss */
   footer #newsletter div {
     margin: 30px 0;
   }
-  /* line 3328, ../sass/bccf-style.scss */
+  /* line 3329, ../sass/bccf-style.scss */
   footer #newsletter .dashed-button {
     background-color: #8fab3d;
     min-width: 80px;
     min-height: 40px;
     float: left;
   }
-  /* line 3334, ../sass/bccf-style.scss */
+  /* line 3335, ../sass/bccf-style.scss */
   footer #newsletter .dashed-button a {
     font-weight: bold;
     color: #fff;
@@ -5919,7 +5923,7 @@ footer #newsletter .dashed-button a:hover {
     text-transform: uppercase;
     border: 1px dashed #fff;
   }
-  /* line 3344, ../sass/bccf-style.scss */
+  /* line 3345, ../sass/bccf-style.scss */
   footer #newsletter .dashed-button a:hover {
     color: #336442;
     text-decoration: none;
@@ -6302,21 +6306,20 @@ For BCCF Memberships
   width: 400px;
   padding: 15px;
   background: rgba(159, 206, 180, 0.9);
-  text-shadow: 2px 2px 1px #FFFFFF;
   z-index: 9999;
 }
-/* line 56, ../mixins/marquee_themes.scss */
+/* line 55, ../mixins/marquee_themes.scss */
 .lightbox .lightbox-title {
   font-size: 25px;
   font-family: "Roboto Slab", serif;
 }
-/* line 61, ../mixins/marquee_themes.scss */
+/* line 60, ../mixins/marquee_themes.scss */
 .lightbox .a-wrapper {
   background-color: #336442;
   float: right;
   text-align: center;
 }
-/* line 65, ../mixins/marquee_themes.scss */
+/* line 64, ../mixins/marquee_themes.scss */
 .lightbox .a-wrapper a {
   margin: 2px;
   color: #FFF;
@@ -6324,18 +6327,18 @@ For BCCF Memberships
   display: block;
   text-decoration: none;
 }
-/* line 71, ../mixins/marquee_themes.scss */
+/* line 70, ../mixins/marquee_themes.scss */
 .lightbox .a-wrapper a:hover {
   color: #336442;
 }
 
-/* line 78, ../mixins/marquee_themes.scss */
+/* line 77, ../mixins/marquee_themes.scss */
 #tag-container {
   position: absolute;
   bottom: 25px;
   left: 25px;
 }
-/* line 82, ../mixins/marquee_themes.scss */
+/* line 81, ../mixins/marquee_themes.scss */
 #tag-container .a-wrapper {
   font-size: 15px;
   margin-right: 25px;
@@ -6346,33 +6349,33 @@ For BCCF Memberships
   background-color: #fdcd26;
   width: 170px;
 }
-/* line 91, ../mixins/marquee_themes.scss */
+/* line 90, ../mixins/marquee_themes.scss */
 #tag-container .a-wrapper .tag-box {
   display: block;
   width: 98%;
   text-decoration: none;
   padding: 5px 10px;
 }
-/* line 96, ../mixins/marquee_themes.scss */
+/* line 95, ../mixins/marquee_themes.scss */
 #tag-container .a-wrapper .tag-box .tag-title {
   font-weight: bold;
   display: block;
   border-bottom: 1px solid black;
 }
-/* line 101, ../mixins/marquee_themes.scss */
+/* line 100, ../mixins/marquee_themes.scss */
 #tag-container .a-wrapper .tag-box span:last-child {
   font-size: 12px;
   font-style: italic;
 }
 
 @media only screen and (max-width: 739px) {
-  /* line 111, ../mixins/marquee_themes.scss */
+  /* line 110, ../mixins/marquee_themes.scss */
   .med-marquee,
   .big-marquee {
     font-size: 12px;
     font-size: 0.75rem;
   }
-  /* line 113, ../mixins/marquee_themes.scss */
+  /* line 112, ../mixins/marquee_themes.scss */
   .med-marquee .owl-controls,
   .big-marquee .owl-controls {
     right: 5%;
@@ -6380,40 +6383,40 @@ For BCCF Memberships
     bottom: 0;
   }
 
-  /* line 120, ../mixins/marquee_themes.scss */
+  /* line 119, ../mixins/marquee_themes.scss */
   .big-marquee {
     min-height: 0;
   }
 
-  /* line 124, ../mixins/marquee_themes.scss */
+  /* line 123, ../mixins/marquee_themes.scss */
   #tag-container {
     position: static;
     width: 100%;
     font-size: 20px;
   }
-  /* line 128, ../mixins/marquee_themes.scss */
+  /* line 127, ../mixins/marquee_themes.scss */
   #tag-container .a-wrapper {
     width: 100%;
     display: block;
     margin: 0;
     padding: 3px;
   }
-  /* line 133, ../mixins/marquee_themes.scss */
+  /* line 132, ../mixins/marquee_themes.scss */
   #tag-container .a-wrapper .tag-box {
     width: 99%;
   }
-  /* line 135, ../mixins/marquee_themes.scss */
+  /* line 134, ../mixins/marquee_themes.scss */
   #tag-container .a-wrapper .tag-box .a-inner {
     padding: 5px;
     border-bottom: 1px solid #000;
   }
-  /* line 139, ../mixins/marquee_themes.scss */
+  /* line 138, ../mixins/marquee_themes.scss */
   #tag-container .a-wrapper .tag-box .tag-title {
     display: inline-block;
     border-bottom: none;
   }
 
-  /* line 147, ../mixins/marquee_themes.scss */
+  /* line 146, ../mixins/marquee_themes.scss */
   .lightbox {
     font-size: 20px;
     font-size: 1.25rem;
@@ -6423,17 +6426,17 @@ For BCCF Memberships
     bottom: 40px;
     right: 0;
   }
-  /* line 155, ../mixins/marquee_themes.scss */
+  /* line 154, ../mixins/marquee_themes.scss */
   .lightbox .lightbox-title {
     font-size: inherit;
   }
-  /* line 159, ../mixins/marquee_themes.scss */
+  /* line 158, ../mixins/marquee_themes.scss */
   .lightbox .a-wrapper {
     float: none;
     display: block;
     background: none;
   }
-  /* line 163, ../mixins/marquee_themes.scss */
+  /* line 162, ../mixins/marquee_themes.scss */
   .lightbox .a-wrapper a {
     font-size: inherit;
     padding: 0;
@@ -6441,19 +6444,19 @@ For BCCF Memberships
     text-align: left;
     text-decoration: underline;
   }
-  /* line 169, ../mixins/marquee_themes.scss */
+  /* line 168, ../mixins/marquee_themes.scss */
   .lightbox .a-wrapper a:hover {
     background: none;
     color: inherit;
   }
 
-  /* line 178, ../mixins/marquee_themes.scss */
+  /* line 177, ../mixins/marquee_themes.scss */
   #home-listings .owl-controls {
     position: static;
     margin-right: 2%;
   }
 
-  /* line 185, ../mixins/marquee_themes.scss */
+  /* line 184, ../mixins/marquee_themes.scss */
   #carousel-resources .owl-item.active:last-child {
     margin-right: -2%;
   }
@@ -6461,120 +6464,120 @@ For BCCF Memberships
 /******************************************
 -- Resource Theme
 *******************************************/
-/* line 195, ../mixins/marquee_themes.scss */
+/* line 194, ../mixins/marquee_themes.scss */
 .button-slide, .button-prev-dgreen, .button-prev-dgrey, .button-prev-dteal, .button-prev-lgreen, .button-prev-lgrey, .button-prev-lteal, .button-prev-lyellow, .button-prev-sgreen, .button-prev-sgrey, .button-next-steal, .button-prev-yellow, .button-next-dgreen, .button-next-dgrey, .button-next-dteal, .button-next-lgreen, .button-next-lgrey, .button-next-lteal, .button-next-lyellow, .button-next-sgreen, .button-next-sgrey, .button-next-yellow {
   background-repeat: no-repeat;
   background-position: 50% 50%;
 }
 
 /** Prev Buttons **/
-/* line 201, ../mixins/marquee_themes.scss */
+/* line 200, ../mixins/marquee_themes.scss */
 .button-prev-dgreen {
   background-image: url("../img/arrow-left-dgreen.png");
 }
 
-/* line 205, ../mixins/marquee_themes.scss */
+/* line 204, ../mixins/marquee_themes.scss */
 .button-prev-dgrey {
   background-image: url("../img/arrow-left-dgrey.png");
 }
 
-/* line 209, ../mixins/marquee_themes.scss */
+/* line 208, ../mixins/marquee_themes.scss */
 .button-prev-dteal {
   background-image: url("../img/arrow-left-dteal.png");
 }
 
-/* line 213, ../mixins/marquee_themes.scss */
+/* line 212, ../mixins/marquee_themes.scss */
 .button-prev-lgreen {
   background-image: url("../img/arrow-left-lgreen.png");
 }
 
-/* line 217, ../mixins/marquee_themes.scss */
+/* line 216, ../mixins/marquee_themes.scss */
 .button-prev-lgrey {
   background-image: url("../img/arrow-left-lgrey.png");
 }
 
-/* line 221, ../mixins/marquee_themes.scss */
+/* line 220, ../mixins/marquee_themes.scss */
 .button-prev-lteal {
   background-image: url("../img/arrow-left-lteal.png");
 }
 
-/* line 225, ../mixins/marquee_themes.scss */
+/* line 224, ../mixins/marquee_themes.scss */
 .button-prev-lyellow {
   background-image: url("../img/arrow-left-lyellow.png");
 }
 
-/* line 229, ../mixins/marquee_themes.scss */
+/* line 228, ../mixins/marquee_themes.scss */
 .button-prev-sgreen {
   background-image: url("../img/arrow-left-sgreen.png");
 }
 
-/* line 233, ../mixins/marquee_themes.scss */
+/* line 232, ../mixins/marquee_themes.scss */
 .button-prev-sgrey {
   background-image: url("../img/arrow-left-sgrey.png");
 }
 
-/* line 237, ../mixins/marquee_themes.scss */
+/* line 236, ../mixins/marquee_themes.scss */
 .button-next-steal {
   background-image: url("../img/arrow-left-steal.png");
 }
 
-/* line 241, ../mixins/marquee_themes.scss */
+/* line 240, ../mixins/marquee_themes.scss */
 .button-prev-yellow {
   background-image: url("../img/arrow-left-yellow.png");
 }
 
 /** Next Buttons **/
-/* line 247, ../mixins/marquee_themes.scss */
+/* line 246, ../mixins/marquee_themes.scss */
 .button-next-dgreen {
   background-image: url("../img/arrow-right-dgreen.png");
 }
 
-/* line 251, ../mixins/marquee_themes.scss */
+/* line 250, ../mixins/marquee_themes.scss */
 .button-next-dgrey {
   background-image: url("../img/arrow-right-dgrey.png");
 }
 
-/* line 255, ../mixins/marquee_themes.scss */
+/* line 254, ../mixins/marquee_themes.scss */
 .button-next-dteal {
   background-image: url("../img/arrow-right-dteal.png");
 }
 
-/* line 259, ../mixins/marquee_themes.scss */
+/* line 258, ../mixins/marquee_themes.scss */
 .button-next-lgreen {
   background-image: url("../img/arrow-right-lgreen.png");
 }
 
-/* line 263, ../mixins/marquee_themes.scss */
+/* line 262, ../mixins/marquee_themes.scss */
 .button-next-lgrey {
   background-image: url("../img/arrow-right-lgrey.png");
 }
 
-/* line 267, ../mixins/marquee_themes.scss */
+/* line 266, ../mixins/marquee_themes.scss */
 .button-next-lteal {
   background-image: url("../img/arrow-right-lteal.png");
 }
 
-/* line 271, ../mixins/marquee_themes.scss */
+/* line 270, ../mixins/marquee_themes.scss */
 .button-next-lyellow {
   background-image: url("../img/arrow-right-lyellow.png");
 }
 
-/* line 275, ../mixins/marquee_themes.scss */
+/* line 274, ../mixins/marquee_themes.scss */
 .button-next-sgreen {
   background-image: url("../img/arrow-right-sgreen.png");
 }
 
-/* line 279, ../mixins/marquee_themes.scss */
+/* line 278, ../mixins/marquee_themes.scss */
 .button-next-sgrey {
   background-image: url("../img/arrow-right-sgrey.png");
 }
 
-/* line 283, ../mixins/marquee_themes.scss */
+/* line 282, ../mixins/marquee_themes.scss */
 .button-next-steal {
   background-image: url("../img/arrow-right-steal.png");
 }
 
-/* line 287, ../mixins/marquee_themes.scss */
+/* line 286, ../mixins/marquee_themes.scss */
 .button-next-yellow {
   background-image: url("../img/arrow-right-yellow.png");
 }
