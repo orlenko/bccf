@@ -113,8 +113,9 @@ def comment(request, template="generic/comments.html"):
     else:
         for f in form:
             if f.errors:
+                log.debug('-----------------------------')
                 log.debug(f)
-                error(request, f)
+                log.debug('-----------------------------')
     # Show errors with stand-alone comment form.
     context = {"obj": obj, "posted_comment_form": form}
     response = render(request, template, context)
