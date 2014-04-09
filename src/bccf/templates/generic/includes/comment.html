@@ -7,11 +7,10 @@
         {% comment_for comment %}
         
         {% if request.user.is_authenticated %}
-            {% if not comment.is_removed and comment.is_public %}         
+            {% if not comment.is_removed and comment.is_public or request.user.is_staff %}         
             <a href="#reply-{{ comment.id }}" class="reply">
                 <i class="fa fa-reply"></i> {% trans "Reply" %}
             </a>
-            
             
             <form class="comment-reply-form comment-form" method="post" id="reply-{{ comment.id }}"
                 action="{{ comment_url }}#reply-{{ comment.id }}"
