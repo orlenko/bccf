@@ -6013,7 +6013,7 @@ footer #newsletter .dashed-button a:hover {
 }
 /* line 15, ../mixins/comment.scss */
 #comments .comment p {
-  margin-bottom: 0;
+  margin-bottom: 5px;
 }
 /* line 18, ../mixins/comment.scss */
 #comments .comment .comment {
