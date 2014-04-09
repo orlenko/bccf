@@ -4,10 +4,13 @@
 
     {% editable comment.is_public comment.is_removed %}
     
-    {% if not comment.is_removed and comment.is_public or request.user.is_staff %}
+    {% if not comment.is_removed and comment.is_public %}
     <div class="section row row-one">
         <div class="col one">
-            <img class="comment-photo" src="{{ MEDIA_URL }}{% bccf_thumbnail comment_profile.photo 50 50 %}" />
+            {% if comment_profile.photo %}
+            <img class="comment-photo" src="{{ MEDIA_URL }}{% bccf_thumbnail comment_profile.photo 50 50 %}" alt="{{ user.get_full_name }} />
+            {% else %}
+            <img class="comment-photo" src="{% static 'default_user-image-male.png' %}" alt="{{ user.get_full_name }}"/>
         </div>
         <div class="col eleven">
             <p>{{ comment.comment|comment_filter }}</p>
@@ -28,7 +31,6 @@
         action="{{ comment_url }}#reply-{{ comment.id }}"
         {% if replied_to != comment.id %}style="display:none;"{% endif %}>
         <h3>{% trans "Post Reply" %}</h3>
-        {{ form.errors }}
         {% if replied_to == comment.id  %}
             {% fields_for posted_comment_form %}
         {% else %}
