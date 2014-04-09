@@ -5,11 +5,7 @@
     {% if not comment.is_removed and comment.is_public or request.user.is_staff %}
     <div class="section row row-one">
         <div class="col one">
-            {% if comment_profile.photo %}
-            <img class="comment-photo" src="{{ MEDIA_URL }}{% bccf_thumbnail comment_profile.photo 50 50 %}" alt="{{ user.get_full_name }} />
-            {% else %}
-            <img class="comment-photo" src="{% static 'default_user-image-male.png' %}" alt="{{ user.get_full_name }}"/>
-            {% endif %}
+            
         </div>
         <div class="col eleven">
             <p>{{ comment.comment|comment_filter }}</p>
