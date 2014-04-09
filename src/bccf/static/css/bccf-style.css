@@ -374,7 +374,7 @@
 }
 
 /* line 26, ../sass/font-awesome/_icons.scss */
-.fa-file-o:before, .related-resource .articles-class i:before:before {
+.fa-file-o:before, .related-resource .articles-class i:before {
   content: "\f016";
 }
 
@@ -455,7 +455,7 @@
 }
 
 /* line 43, ../sass/font-awesome/_icons.scss */
-.fa-volume-up:before, .related-resource .podcasts-class i:before:before {
+.fa-volume-up:before, .related-resource .podcasts-class i:before {
   content: "\f028";
 }
 
@@ -480,7 +480,7 @@
 }
 
 /* line 48, ../sass/font-awesome/_icons.scss */
-.fa-book:before, .related-resource .magazines-class i:before:before {
+.fa-book:before, .related-resource .magazines-class i:before {
   content: "\f02d";
 }
 
@@ -561,7 +561,7 @@
 }
 
 /* line 65, ../sass/font-awesome/_icons.scss */
-.fa-video-camera:before, .related-resource .videos-class i:before:before {
+.fa-video-camera:before, .related-resource .videos-class i:before {
   content: "\f03d";
 }
 
@@ -602,7 +602,7 @@
 }
 
 /* line 74, ../sass/font-awesome/_icons.scss */
-.fa-check-square-o:before, .related-resource .downloadable-forms-class i:before:before {
+.fa-check-square-o:before, .related-resource .downloadable-forms-class i:before {
   content: "\f046";
 }
 
@@ -1145,7 +1145,7 @@
 /* line 188, ../sass/font-awesome/_icons.scss */
 .fa-copy:before,
 .fa-files-o:before,
-.related-resource .tip-sheets-class i:before:before {
+.related-resource .tip-sheets-class i:before {
   content: "\f0c5";
 }
 

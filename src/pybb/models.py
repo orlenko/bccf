@@ -209,7 +209,7 @@ class Topic(TagBase):
 
     def save(self, *args, **kwargs):
         if not self.image:
-            self.image = 'childpage/placeholder-forum.gif'
+            self.image = 'childpage/placeholder-forum.png'
         if self.id is None:
             self.created = tznow()
             

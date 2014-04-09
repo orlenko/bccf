@@ -488,7 +488,7 @@ class DocumentResourceBase(BCCFChildPage):
     
     def save(self, **kwargs):
         if not self.image:
-            self.image = 'childpage/placeholder-resource.gif'
+            self.image = 'childpage/placeholder-resource.png'
         self.gparent = BCCFPage.objects.get(slug='bccf/resources')
         super(DocumentResourceBase, self).save(**kwargs)
     class Meta:
@@ -559,7 +559,7 @@ class Podcast(BCCFChildPage):
     def save(self, **kwargs):
         self.gparent = BCCFPage.objects.get(slug='bccf/resources')
         if not self.image:
-            self.image = 'childpage/placeholder-podcast.gif'
+            self.image = 'childpage/placeholder-podcast.png'
         super(Podcast, self).save(**kwargs)
     def get_resource_type(self):
         return 'Podcast'   
@@ -581,7 +581,7 @@ class Video(BCCFChildPage):
     def save(self, **kwargs):
         self.gparent = BCCFPage.objects.get(slug='bccf/resources')
         if not self.image:
-            self.image = 'childpage/placeholder-video.gif'
+            self.image = 'childpage/placeholder-video.png'
         super(Video, self).save(**kwargs)
     def get_resource_type(self):
         return 'Video'
@@ -645,7 +645,7 @@ class Campaign(TagBase):
     def save(self, *args, **kwargs):
         super(Campaign, self).save(*args, **kwargs)
         if not self.image:
-            self.image = 'childpage/placeholder-campaign.gif'
+            self.image = 'childpage/placeholder-campaign.png'
         if self.approve:
             self.accept_request()
         
@@ -751,7 +751,7 @@ class UserProfile(PybbProfile):
         if create_number:
             self.account_number = self.create_account_number()
             if not self.photo:
-                self.photo = 'uploads/profile-photos/default_user-image-%s.gif' % (self.gender)
+                self.photo = 'uploads/profile-photos/default_user-image-%s.png' % (self.gender)
         super(UserProfile, self).save(**kwargs)
 
     def get_full_address(self):
