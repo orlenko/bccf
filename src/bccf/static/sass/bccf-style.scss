@@ -1342,6 +1342,9 @@ textarea {
         		  height: 75px;
         		  padding: 4px 10px 10px 10px;
         		}
+        		.page-image {
+                    padding: 0;        		    
+      		    }
         		p {
         		  @include font-size(11);
         		  margin: 0;
