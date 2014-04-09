@@ -106,7 +106,10 @@ class ThreadedCommentForm(CommentForm, Html5Mixin):
                 elif field == "email":
                     value = user.email
                 elif field == "url":
-                    value = user.profile.website
+                    if user.profile.website:
+                        value = user.profile.website
+                    else:
+                        value = 'n/a'
             kwargs["initial"][field] = value
         super(ThreadedCommentForm, self).__init__(*args, **kwargs)
 
