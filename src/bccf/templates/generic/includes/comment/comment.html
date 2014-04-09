@@ -4,7 +4,7 @@
 
     {% editable comment.is_public comment.is_removed %}
     
-    {% if not comment.is_removed and comment.is_public %}
+    {% if not comment.is_removed and comment.is_public or request.user.is_staff %}
     <div class="section row row-one">
         <div class="col one">
             {% if comment_profile.photo %}
