@@ -6,7 +6,7 @@
     class="comment media section{% if comment.by_author %} comment-author{% endif %}">
         {% comment_for comment %}
         
-        {% if not comment.is_removed and comment.is_public %}
+        {% if not comment.is_removed and comment.is_public and request.user.is_authenticated %}
         
         <a href="#reply-{{ comment.id }}" class="reply">
             <i class="fa fa-reply"></i> {% trans "Reply" %}
