@@ -1,3 +1,6 @@
+import logging
+log = logging.getLogger(__name__)
+
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.messages import error
 from django.core.urlresolvers import reverse
@@ -110,6 +113,7 @@ def comment(request, template="generic/comments.html"):
     else:
         for f in form:
             if f.errors:
+                log.debug(f)
                 error(request, f)
     # Show errors with stand-alone comment form.
     context = {"obj": obj, "posted_comment_form": form}

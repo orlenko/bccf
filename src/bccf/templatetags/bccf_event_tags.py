@@ -1,5 +1,3 @@
-import simplejson
-
 from django.db.models import get_model, ObjectDoesNotExist, Q
 from mezzanine import template
 
