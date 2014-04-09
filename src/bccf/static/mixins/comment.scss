@@ -10,7 +10,10 @@
         }
     }
     .comment {
-        border-bottom: 2px dashed $lgrey;    
+        border-bottom: 2px dashed $lgrey;
+        .comment {
+            border-bottom: none;
+        }
     }
     .comment-form {
         padding-top: 20px;
