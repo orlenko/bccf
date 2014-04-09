@@ -26,7 +26,7 @@
                 action="{{ comment_url }}#reply-{{ comment_obj.id }}"
                 {% if replied_to != comment.id %}style="display:none;"{% endif %}>
                 <h3>{% trans "Post Reply" %}</h3>
-                {% if replied_to == comment.id  %}
+                {% if replied_to == comment_obj.id  %}
                     {% fields_for posted_comment_form %}
                 {% else %}
                     {% fields_for unposted_comment_form %}
