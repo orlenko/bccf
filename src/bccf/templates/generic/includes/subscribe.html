@@ -2,17 +2,21 @@
 {% if subscribe_obj %}
     {% if user.is_authenticated and event_obj %}
         {% if not event_obj.is_full %}
-        	<div class="inline_subscribe_form">
+        	<div class="inline_subscribe_form section row row-one">
         		<form action="{{ event_obj.signup_url }}" method="post">
         			{% csrf_token %}
-        			<input type="submit" value="Register" />
+        			<div class="form-actions dashed-button">
+        			     <input type="submit" value="Register" />
+        			</div>
         		</form>
         	</div>
     	{% else %}
     	   <p>The event is full.</p>
     	{% endif %}
     {% else %}
-        {% if not user.is_authenticated %}<a href="{% url 'login' %}?next={{ request.get_full_path }}">Login</a> or{% endif %} 
-        <a href="{% url 'signup' %}?type={{ event_for }}">Sign Up</a> as a {{ event_for }} to register for this event.
+        <div class="login-container section row row-one">
+            {% if not user.is_authenticated %}<a href="{% url 'login' %}?next={{ request.get_full_path }}" class="login-btn">Login</a> or{% endif %} 
+            <a href="{% url 'signup' %}?type={{ event_for }}" class="login-btn">Sign Up</a> as a {{ event_for }} to register for this event.
+        </div>
     {% endif %}
 {% endif %}

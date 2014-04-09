@@ -1,0 +1,43 @@
+.event {
+    .event-header {
+        @include font-size(15);
+        font-weight: bold;
+        font-family: $pt;    
+    }
+    .event-info {
+        border-top: 2px dashed $lgrey;
+        border-bottom: 2px dashed $lgrey;
+        ul {
+            padding: 0;
+            list-style: none; 
+            a {
+                font-weight: bold;
+                color: $lgreen;        
+            }
+        }
+        p {
+            font-weight: bold;        
+        }
+    }
+    .form-actions {
+        margin: 10px auto !important;
+        display: block;
+        input {
+            @include font-size(12);
+            background-color: inherit;
+            border: 1px dashed #FFF;
+            color: #000;
+            float: left;
+            font-weight: bold;
+            margin: 2px;
+            padding: 4px 22px;
+            text-decoration: none;
+            text-transform: uppercase;
+            &:hover {
+                color: $dgreen;
+				text-decoration: none;
+				background-color: $yellow;    
+            }            
+        } 
+    }
+}

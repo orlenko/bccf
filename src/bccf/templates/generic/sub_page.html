@@ -18,45 +18,6 @@
                 </div>
             </li>
             {% endfor %}
-            {% if child_obj.gparent.slug == 'trainings' %}
-            <li class="col two mobile-full">
-                <a href="{% url 'bccf-baby' child_obj.gparent.slug child_obj.slug 'child-info' %}" id="child-info" class="baby-content-btn">Information</a>
-                <div class="baby-content">
-                    <h3>Event Information</h3>
-                    <table>
-                        <tr>
-                            <th>Price:</th>
-                            <td>{{ child_obj.get_content_model.price }}</td>
-                        </tr>
-                        <tr>
-                            <th>When:</th>
-                            <td>{{ child_obj.get_content_model.date_start }} {% if child_obj.get_content_model.date_end %} to {{ child_obj.get_content_model.date_end }} {% endif %}</td>
-                        </tr>
-                        <tr>
-                            <th>Address:</th>
-                            <td>{{ child_obj.get_content_model.location_street }}</td>
-                        </tr>
-                        {% if child_obj.get_content_model.location_street2 %}
-                        <tr>
-                            <th>Address 2:</th>
-                            <td>{{ child_obj.get_content_model.location_street2 }}</td>
-                        </tr>
-                        {% endif %}
-                        <tr>
-                            <th>City:</th>
-                            <td>{{ child_obj.get_content_model.location_city }}</td>
-                        </tr>
-                        <tr>
-                            <th>Postal Code:</th>
-                            <td>{{ child_obj.get_content_model.location_postal_code }}</td>
-                        </tr>
-                    </table>
-                </div>
-            </li>
-            {% endif %}
-            <!--{% if child_obj.gparent.slug == 'resources' %}
-            <li class="col two mobile-full"><a href="{{ MEDIA_URL }}{{ child_obj.get_content_model.attached_document }}" target="_blank">Download</a></li>
-            {% endif %}-->
             {% if child_obj.show_resources or child_obj.content_model != 'bccfgenericpage' %}
             <li class="col two mobile-full" id="resources">
                 <a href="{{ child_obj.get_absolute_url }}baby-resources" id="baby-resources" class="baby-content-btn">Resources</a>

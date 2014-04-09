@@ -1,12 +1,32 @@
-{% load bccf_rating_tags bccf_event_tags bccf_resource_tags bccf_blog_tags embed_video_tags comment_tags %}
+{% load bccf_rating_tags bccf_event_tags bccf_resource_tags bccf_blog_tags embed_video_tags comment_tags shop_tags %}
 <div class="section row row-one social-box">
     {% if child_obj.show_rating or child_obj.content_model != 'bccfgenericpage' %}
         {% bccf_rating_for child_obj %}
     {% endif %}
     {% include "includes/add_this.html" %}
 </div>
-<div class="section row-one">
+<div id="id_{{ child_obj.content_model }}_{{ child_obj.id }}" class="section row-one {{ child_obj.content_model }}">
     <h3>{{ child_obj.title }}</h3>
+    {% if child_obj.content_model == 'event' %}
+        <p class="event-date"> 
+            {{ child_obj.get_content_model.date_start|date:"l, F j, Y" }}, from
+            {{ child_obj.get_content_model.date_start|date:"g:i A" }} to
+            {{ child_obj.get_content_model.date_end|date:"g:i A" }}
+        </p>
+        <div class="event-info">
+            <ul>
+                <li>{{ child_obj.get_content_model.location_street }}</li>
+                <li>{{ child_obj.get_content_model.location_city }}{{ child_obj.get_content_model.location_postal_code }}</li> 
+                <li><a href="
+                    http://maps.google.com/?q={{ child_obj.get_content_model.location_street }},
+                    {{ child_obj.get_content_model.location_city }},
+                    {{ child_obj.get_content_model.location_postal_code }}                
+                ">View Map</a></li>
+            </ul>
+            <p>Event Fee(s) {{ child_obj.get_content_model.price|currency }}</p>
+        </div>
+    {% endif %}
+    
     {% if child_obj.content_model == 'video' %}
         {% video child_obj.get_content_model.video_url "small" %}
     {% endif %}
@@ -15,6 +35,9 @@
     {% bccf_subscribe_for child_obj %}
     
     <section>
+        {% if child_obj.content_model == 'event' %}
+            <h4 class="event-header">Event Details</h4>
+        {% endif %}
         {{ child_obj.content|safe }}
     </section>
     {% author_for child_obj %}

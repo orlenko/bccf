@@ -3393,6 +3393,7 @@ footer {
 } /* End Footer */
 } /* End Mobile Media Query */
 
+@import "../mixins/event";
 @import "../mixins/generic";
 @import "../mixins/comment";
 @import "../mixins/pop-up";

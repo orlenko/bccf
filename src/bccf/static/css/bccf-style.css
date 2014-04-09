@@ -5986,6 +5986,58 @@ footer #newsletter .dashed-button a:hover {
   /* End Footer */
 }
 /* End Mobile Media Query */
+/* line 2, ../mixins/event.scss */
+.event .event-header {
+  font-size: 15px;
+  font-size: 0.9375rem;
+  font-weight: bold;
+  font-family: "PT Sans", sans-serif;
+}
+/* line 7, ../mixins/event.scss */
+.event .event-info {
+  border-top: 2px dashed #a6b2a6;
+  border-bottom: 2px dashed #a6b2a6;
+}
+/* line 10, ../mixins/event.scss */
+.event .event-info ul {
+  padding: 0;
+  list-style: none;
+}
+/* line 13, ../mixins/event.scss */
+.event .event-info ul a {
+  font-weight: bold;
+  color: #8fab3d;
+}
+/* line 18, ../mixins/event.scss */
+.event .event-info p {
+  font-weight: bold;
+}
+/* line 22, ../mixins/event.scss */
+.event .form-actions {
+  margin: 10px auto !important;
+  display: block;
+}
+/* line 25, ../mixins/event.scss */
+.event .form-actions input {
+  font-size: 12px;
+  font-size: 0.75rem;
+  background-color: inherit;
+  border: 1px dashed #FFF;
+  color: #000;
+  float: left;
+  font-weight: bold;
+  margin: 2px;
+  padding: 4px 22px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+/* line 36, ../mixins/event.scss */
+.event .form-actions input:hover {
+  color: #336442;
+  text-decoration: none;
+  background-color: #fdcd26;
+}
+
 /* line 1, ../mixins/generic.scss */
 .login-container {
   font-weight: bold;
