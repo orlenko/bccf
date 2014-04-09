@@ -5995,50 +5995,50 @@ footer #newsletter .dashed-button a:hover {
 }
 
 /* line 2, ../mixins/comment.scss */
-.comment-container .comment-header {
+#comments .comment-header {
   border-top: 2px dashed #a6b2a6;
   border-bottom: 2px dashed #a6b2a6;
   padding: 15px 0;
 }
 /* line 6, ../mixins/comment.scss */
-.comment-container .comment-header p {
+#comments .comment-header p {
   margin: 0;
   @incldue font-size(30);
   font-weight: bold;
 }
 /* line 12, ../mixins/comment.scss */
-.comment-container .comment {
+#comments .comment {
   border-bottom: 2px dashed #a6b2a6;
 }
 /* line 14, ../mixins/comment.scss */
-.comment-container .comment .comment {
+#comments .comment .comment {
   border-bottom: none;
   padding: 0;
 }
 /* line 19, ../mixins/comment.scss */
-.comment-container .comment-form {
+#comments .comment-form {
   padding-top: 20px;
 }
 /* line 21, ../mixins/comment.scss */
-.comment-container .comment-form h3 {
+#comments .comment-form h3 {
   font-size: 20px;
   font-size: 1.25rem;
   font-family: "PT Sans", sans-serif;
   font-weight: bold;
 }
 /* line 26, ../mixins/comment.scss */
-.comment-container .comment-form textarea {
+#comments .comment-form textarea {
   width: 100%;
   border: 1px solid #414042;
   background-color: whitesmoke;
 }
 /* line 32, ../mixins/comment.scss */
-.comment-container .form-actions {
+#comments .form-actions {
   margin: 10px auto !important;
   display: block;
 }
 /* line 35, ../mixins/comment.scss */
-.comment-container .form-actions input {
+#comments .form-actions input {
   font-size: 12px;
   font-size: 0.75rem;
   background-color: inherit;
@@ -6052,7 +6052,7 @@ footer #newsletter .dashed-button a:hover {
   text-transform: uppercase;
 }
 /* line 46, ../mixins/comment.scss */
-.comment-container .form-actions input:hover {
+#comments .form-actions input:hover {
   color: #336442;
   text-decoration: none;
   background-color: #fdcd26;
