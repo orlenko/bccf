@@ -5,9 +5,7 @@
   Version: 1.5 - Last Updated: 21st June, 2013
 
 ========================================================================== */
-
-  @import "../mixins/mixins"; // Import the base mixins
-  @import "./font-awesome/font-awesome";
+    @import "../mixins/mixins";
 
   // Global Defaults
   $mobile-container:              100%;
@@ -28,29 +26,6 @@
   $h5:                        18;
   $h6:                        16;
 
-
-
-// BCCF Fonts
-
-$roboto: 'Roboto Slab', serif;
-$pt: 'PT Sans', sans-serif;
-
-// Main BCCF Colours
-
-$sgrey: #F5F5F5;
-$lgrey: #A6B2A6;
-$dgrey: #414042;
-$lyellow: #FFF0C2;
-$yellow: #FDCD26;
-$sssteal: #F8FCFA;
-$ssteal: #EDF6F1;
-$steal: #C0DFCF;
-$lteal: #9FCEB4;
-$dteal: #5CAC8B;
-$ssgreen: #F9FAF4;
-$sgreen: #E5E9D2;
-$lgreen: #8FAB3D;
-$dgreen: #336442;
 
 // Main BCCF Background Stripe Images
 
@@ -588,7 +563,11 @@ textarea {
 INVOICE
 ========================================================== */
 .container {
-    font-family: $pt;
+    width: 1100px;
+    font-family: 'PT Sans', sans-serif;
+    h2 {
+        font-family: 'Roboto Slab', serif;    
+    }
 }
 .text-right {
     text-align: right;
@@ -615,7 +594,7 @@ INVOICE
     }
     section.header {
         @extend .strong;
-        background: $dteal;
+        background: #5CAC8B;
         color: #000;
         padding: 5px;
         border-bottom: 1px solid #000;
