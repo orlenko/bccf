@@ -18,8 +18,11 @@
   font-weight: normal;
   font-style: normal;
 }
+<<<<<<< HEAD
 
 /* line 4, ../sass/font-awesome/_core.scss */
+=======
+>>>>>>> 5ca8afdc4c288b1f46498af50b40c8b2a3240b8b
 .fa {
   display: inline-block;
   font-family: FontAwesome;
@@ -133,7 +136,6 @@
     -moz-transform: rotate(359deg);
   }
 }
-
 @-webkit-keyframes spin {
   /* line 16, ../sass/font-awesome/_spinning.scss */
   0% {
@@ -145,7 +147,6 @@
     -webkit-transform: rotate(359deg);
   }
 }
-
 @-o-keyframes spin {
   /* line 20, ../sass/font-awesome/_spinning.scss */
   0% {
@@ -157,7 +158,6 @@
     -o-transform: rotate(359deg);
   }
 }
-
 @-ms-keyframes spin {
   /* line 24, ../sass/font-awesome/_spinning.scss */
   0% {
@@ -169,7 +169,6 @@
     -ms-transform: rotate(359deg);
   }
 }
-
 @keyframes spin {
   /* line 28, ../sass/font-awesome/_spinning.scss */
   0% {
@@ -181,8 +180,11 @@
     transform: rotate(359deg);
   }
 }
+<<<<<<< HEAD
 
 /* line 4, ../sass/font-awesome/_rotated-flipped.scss */
+=======
+>>>>>>> 5ca8afdc4c288b1f46498af50b40c8b2a3240b8b
 .fa-rotate-90 {
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=$rotation);
   -webkit-transform: rotate(90deg);
@@ -373,7 +375,10 @@
   content: "\f015";
 }
 
+<<<<<<< HEAD
 /* line 26, ../sass/font-awesome/_icons.scss */
+=======
+>>>>>>> 5ca8afdc4c288b1f46498af50b40c8b2a3240b8b
 .fa-file-o:before, .related-resource .articles-class i:before {
   content: "\f016";
 }
@@ -454,7 +459,10 @@
   content: "\f027";
 }
 
+<<<<<<< HEAD
 /* line 43, ../sass/font-awesome/_icons.scss */
+=======
+>>>>>>> 5ca8afdc4c288b1f46498af50b40c8b2a3240b8b
 .fa-volume-up:before, .related-resource .podcasts-class i:before {
   content: "\f028";
 }
@@ -479,7 +487,10 @@
   content: "\f02c";
 }
 
+<<<<<<< HEAD
 /* line 48, ../sass/font-awesome/_icons.scss */
+=======
+>>>>>>> 5ca8afdc4c288b1f46498af50b40c8b2a3240b8b
 .fa-book:before, .related-resource .magazines-class i:before {
   content: "\f02d";
 }
@@ -560,7 +571,10 @@
   content: "\f03c";
 }
 
+<<<<<<< HEAD
 /* line 65, ../sass/font-awesome/_icons.scss */
+=======
+>>>>>>> 5ca8afdc4c288b1f46498af50b40c8b2a3240b8b
 .fa-video-camera:before, .related-resource .videos-class i:before {
   content: "\f03d";
 }
@@ -601,7 +615,10 @@
   content: "\f045";
 }
 
+<<<<<<< HEAD
 /* line 74, ../sass/font-awesome/_icons.scss */
+=======
+>>>>>>> 5ca8afdc4c288b1f46498af50b40c8b2a3240b8b
 .fa-check-square-o:before, .related-resource .downloadable-forms-class i:before {
   content: "\f046";
 }
@@ -3087,13 +3104,14 @@ textarea {
 }
 /* line 699, ../sass/bccf-style.scss */
 #main-top-nav li a:active {
-  background: url(../img/menu-triangle.png) top center no-repeat;
+  /*background:url(../img/menu-triangle.png) top center no-repeat;*/
   font-weight: bold;
   color: #414042;
 }
 /* line 705, ../sass/bccf-style.scss */
 #main-top-nav .active > a {
-  background: url(../img/menu-triangle.png) top center no-repeat;
+  /*background:url(../img/menu-triangle.png) top center no-repeat;*/
+  font-weight: bold;
 }
 /* line 708, ../sass/bccf-style.scss */
 #main-top-nav #search-bar {
@@ -3107,7 +3125,7 @@ textarea {
 }
 /* line 716, ../sass/bccf-style.scss */
 #main-top-nav #search-bar input[type="text"] {
-  background-color: #414042;
+  background-color: #a6b2a6;
   border: none;
   box-shadow: none;
   height: 36px;
@@ -3115,6 +3133,7 @@ textarea {
   float: right;
   width: 85%;
   border-radius: none;
+  color: #000;
 }
 /* line 726, ../sass/bccf-style.scss */
 #main-top-nav #search-bar input[type="submit"] {
@@ -3292,7 +3311,7 @@ textarea {
 }
 /* line 886, ../sass/bccf-style.scss */
 #home-calendar .hcal-tabs .hcal-right-side a.selected {
-  padding: 18px 18px 6px;
+  padding: 12px 18px 6px;
   background-color: #336442;
 }
 /* line 895, ../sass/bccf-style.scss */
@@ -3566,7 +3585,7 @@ textarea {
 }
 /* line 1121, ../sass/bccf-style.scss */
 #home-listings .hlist-tabs a.selected {
-  padding: 18px 18px 6px;
+  padding: 12px 18px 6px;
   background-color: #336442;
 }
 /* line 1128, ../sass/bccf-style.scss */
@@ -3988,7 +4007,14 @@ textarea {
   margin: 0;
   width: 16.66%;
 }
+<<<<<<< HEAD
 /* line 1527, ../sass/bccf-style.scss */
+=======
+.subpage-tabs > ul > li:hover {
+  background-color: #336442;
+  color: #ffffff;
+}
+>>>>>>> 5ca8afdc4c288b1f46498af50b40c8b2a3240b8b
 .subpage-tabs > ul > li > a {
   font-size: 12px;
   font-size: 0.75rem;
@@ -4913,7 +4939,7 @@ footer #newsletter div {
 /* line 2357, ../sass/bccf-style.scss */
 footer #newsletter .dashed-button {
   background-color: #8fab3d;
-  min-width: 80px;
+  min-width: 76px;
   float: left;
   text-align: center;
 }
@@ -6039,7 +6065,6 @@ For BCCF Memberships
   width: 400px;
   padding: 15px;
   background: rgba(159, 206, 180, 0.9);
-  text-shadow: 2px 2px 1px #FFFFFF;
   z-index: 9999;
 }
 /* line 56, ../mixins/marquee_themes.scss */

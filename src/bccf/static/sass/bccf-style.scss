@@ -697,13 +697,14 @@ textarea {
     		text-decoration:none;
 		}
 		&:active {
-			background:url(../img/menu-triangle.png) top center no-repeat;
+			/*background:url(../img/menu-triangle.png) top center no-repeat;*/
 			font-weight:bold;
 			color:$dgrey;}
 		}
 	}
 	.active > a {
-       background:url(../img/menu-triangle.png) top center no-repeat;
+       /*background:url(../img/menu-triangle.png) top center no-repeat;*/
+	   font-weight:bold;
 	}
 	#search-bar {
 		padding: 10px 0;
@@ -714,7 +715,7 @@ textarea {
 		}
 
 		input[type="text"] {
-			background-color: $dgrey;
+			background-color: $lgrey;
     		border:none;
     		box-shadow: none;
     		height: 36px;
@@ -722,6 +723,7 @@ textarea {
 			float:right;
     		width: 85%;
 			border-radius:none;
+			color:#000;
 		}
 		input[type="submit"] {
 			border:none;
@@ -884,7 +886,7 @@ textarea {
 				color:#FFFFFF;
 				&:hover {background-color:$lgreen;}
 				&.selected {
-					padding: 18px 18px 6px;
+					padding: 12px 18px 6px;
 					background-color:$dgreen;
 					}
 
@@ -1119,7 +1121,7 @@ textarea {
 				color:#FFFFFF;
 				&:hover {background-color:$lgreen;}
 				&.selected {
-					padding: 18px 18px 6px;
+					padding: 12px 18px 6px;
 					background-color:$dgreen;
 					}
 
@@ -1524,6 +1526,8 @@ textarea {
             > li {
                 margin: 0;
                 width: 16.66%;
+				&:hover {background-color: $dgreen;
+				color:#ffffff;}
                > a {
                     @include font-size(12);
                     padding: 10px 0;
@@ -2356,7 +2360,7 @@ footer {
 
 		.dashed-button {
 			background-color:$lgreen;
-			min-width:80px;
+			min-width:76px;
 			float:left;
 			text-align: center;
 
