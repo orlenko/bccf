@@ -18,7 +18,6 @@
   font-weight: normal;
   font-style: normal;
 }
-
 .fa {
   display: inline-block;
   font-family: FontAwesome;
@@ -114,7 +113,6 @@
     -moz-transform: rotate(359deg);
   }
 }
-
 @-webkit-keyframes spin {
   0% {
     -webkit-transform: rotate(0deg);
@@ -124,7 +122,6 @@
     -webkit-transform: rotate(359deg);
   }
 }
-
 @-o-keyframes spin {
   0% {
     -o-transform: rotate(0deg);
@@ -134,7 +131,6 @@
     -o-transform: rotate(359deg);
   }
 }
-
 @-ms-keyframes spin {
   0% {
     -ms-transform: rotate(0deg);
@@ -144,7 +140,6 @@
     -ms-transform: rotate(359deg);
   }
 }
-
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -154,7 +149,6 @@
     transform: rotate(359deg);
   }
 }
-
 .fa-rotate-90 {
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=$rotation);
   -webkit-transform: rotate(90deg);
@@ -315,7 +309,7 @@
   content: "\f015";
 }
 
-.fa-file-o:before, .related-resource .articles-class i:before:before {
+.fa-file-o:before, .related-resource .articles-class i:before {
   content: "\f016";
 }
 
@@ -380,7 +374,7 @@
   content: "\f027";
 }
 
-.fa-volume-up:before, .related-resource .podcasts-class i:before:before {
+.fa-volume-up:before, .related-resource .podcasts-class i:before {
   content: "\f028";
 }
 
@@ -400,7 +394,7 @@
   content: "\f02c";
 }
 
-.fa-book:before, .related-resource .magazines-class i:before:before {
+.fa-book:before, .related-resource .magazines-class i:before {
   content: "\f02d";
 }
 
@@ -465,7 +459,7 @@
   content: "\f03c";
 }
 
-.fa-video-camera:before, .related-resource .videos-class i:before:before {
+.fa-video-camera:before, .related-resource .videos-class i:before {
   content: "\f03d";
 }
 
@@ -498,7 +492,7 @@
   content: "\f045";
 }
 
-.fa-check-square-o:before, .related-resource .downloadable-forms-class i:before:before {
+.fa-check-square-o:before, .related-resource .downloadable-forms-class i:before {
   content: "\f046";
 }
 
@@ -934,7 +928,7 @@
 
 .fa-copy:before,
 .fa-files-o:before,
-.related-resource .tip-sheets-class i:before:before {
+.related-resource .tip-sheets-class i:before {
   content: "\f0c5";
 }
 
@@ -3298,6 +3292,7 @@ textarea {
 }
 .subpage-tabs > ul > li:hover {
   background-color: #336442;
+  color: #ffffff;
 }
 .subpage-tabs > ul > li > a {
   font-size: 12px;
