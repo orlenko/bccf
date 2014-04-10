@@ -1,7 +1,11 @@
 {% load static shop_tags i18n %}
+<html>
+<head>
+    <title>Invoice {{ order.id }} | BCCF</title>
+    <link rel="stylesheet" href="{% static "css/invoice.css" %}"/>
+</head>
 
-<link rel="stylesheet" href="{% static "css/invoice.css" %}"/>
-
+<body>
 <div class="container">
     <header class="section row-two">
         <div id="bccflogo" class="col four tablet-six mobile-full"><a href="/"><img src="{% static "img/BCCF_logo_2013.png" %}" alt="BC Council for FAMILIES"/></a></div>
@@ -101,3 +105,5 @@
         </div>
     </footer>
 </div>
+</body>
+</html>
