@@ -4006,9 +4006,8 @@ textarea {
 /* line 1540, ../sass/bccf-style.scss */
 .subpage-tabs > ul > li:hover {
   background-color: #336442;
-  color: #FFF;
 }
-/* line 1544, ../sass/bccf-style.scss */
+/* line 1543, ../sass/bccf-style.scss */
 .subpage-tabs > ul > li > a {
   font-size: 12px;
   font-size: 0.75rem;
@@ -4019,9 +4018,10 @@ textarea {
   display: block;
   text-align: center;
 }
-/* line 1552, ../sass/bccf-style.scss */
+/* line 1551, ../sass/bccf-style.scss */
 .subpage-tabs > ul > li > a:hover, .subpage-tabs > ul > li > a:active {
   text-decoration: none;
+  color: #FFF;
 }
 /* line 1555, ../sass/bccf-style.scss */
 .subpage-tabs > ul > li > a.active {

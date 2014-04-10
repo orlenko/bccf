@@ -1539,7 +1539,6 @@ textarea {
                 width: 16.66%;
 				&:hover {
 				    background-color: $dgreen;
-				    color:#FFF;
 				}
                > a {
                     @include font-size(12);
@@ -1551,6 +1550,7 @@ textarea {
                     text-align: center;
                     &:hover, &:active {
                         text-decoration: none;
+                        color: #FFF;
                     }
                     &.active {
                         background-color: $sgreen;    
