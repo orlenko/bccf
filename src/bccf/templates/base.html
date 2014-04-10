@@ -181,14 +181,6 @@
             subMenuSpeed: 0,       
         });
     });
-    $('.mem-pop-up').on('click', function(e) {
-        e.preventDefault();
-        var content = $(this).attr('title');
-        console.log(content);
-        $('#pop-up-over').children('.content').html('<p>'+content+'</p>');
-        $('#pop-up-over').show();
-        $('html, body').css({ overflow:'hidden'});
-    });
     $('#pop-up-over').on('click', function(e) {
         e.preventDefault();
         $(this).hide();
