@@ -186,7 +186,7 @@ class AttachmentAdmin(admin.ModelAdmin):
     admin_edit_post.short_description = _('Edit post')
 
 
-admin.site.register(Category, CategoryAdmin)
+#admin.site.register(Category, CategoryAdmin)
 admin.site.register(Forum, ForumAdmin)
 admin.site.register(Topic, BCCFTopicAdmin)
 admin.site.register(Post, PostAdmin)
