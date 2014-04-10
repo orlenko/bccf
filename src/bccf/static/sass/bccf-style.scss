@@ -1533,8 +1533,10 @@ textarea {
             > li {
                 margin: 0;
                 width: 16.66%;
-				&:hover {background-color: $dgreen;
-				color:#ffffff;}
+				&:hover {
+				    background-color: $dgreen;
+				    color:#FFF;
+				}
                > a {
                     @include font-size(12);
                     padding: 10px 0;
