@@ -1,0 +1,5 @@
+.login-header {
+    p:first-child {
+        @include font-size(50);        
+    }    
+}

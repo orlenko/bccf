@@ -715,6 +715,10 @@ textarea {
 			width:100%;
 		}
 
+        .form-group {
+            margin: 0;                
+        }
+
 		input[type="text"] {
 			background-color: $lgrey;
     		border:none;
@@ -3399,6 +3403,7 @@ footer {
 } /* End Footer */
 } /* End Mobile Media Query */
 
+@import "../mixins/login";
 @import "../mixins/event";
 @import "../mixins/generic";
 @import "../mixins/comment";

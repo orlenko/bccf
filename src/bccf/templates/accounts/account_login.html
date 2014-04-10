@@ -2,20 +2,36 @@
 {% load i18n future %}
 
 {% block content %}
-    <h1>Log In</h1>
+<div class="login-header">
+    <p><span class="lgreen-text">Sign in</span> to the
+    <span class="strong">BC Council for Families'</span> community        
+    </p>
+    <p>Signing up for a BC Council for Families community account lets you
+    participate in many community features such as comments, surveys,
+    forums, ratings, and more.</p>
+</div>
 {% endblock %}
 
 {% block carousels %}
-<div class="col twelve">
+<div class="login-page col twelve">
 {% if request.user.is_authenticated %}
     <p>{% trans "You're already logged in." %}</p>
 {% else %}
     {{ block.super }}
-    {% url "signup" as signup_url %}
-    <p>{% blocktrans with request.GET.next as next %}If you don't have an account you can <a href="{{ signup_url }}?next={{ next }}">sign up</a> for one now.{% endblocktrans %}</p>
-    {% url "mezzanine_password_reset" as password_reset_url %}
-    {% url "profile_update" as profile_update_url %}
-    {% blocktrans %}<p>You can also <a href="{{ password_reset_url }}?next={{ profile_update_url }}">reset your password</a> if you've forgotten it.</p>{% endblocktrans %}</p>
+    <div class="form-help section row row-three">
+        {% url "signup" as signup_url %}
+        <p class="section row">Don't have a BC Council for Families community account?<br/>
+            <a href="{{ signup_url }}" class="lgreen-text strong">Sign up here</a>    
+        </p>
+        {% url "mezzanine_password_reset" as password_reset_url %}
+        {% url "update-tab" "account" as profile_update_url %}
+        <p class="section row">Forgot your password?<br/>
+            <a href="{{ password_reset_url }}?name={{ profile_update_url }}" class="lgreen-text strong">Reset your password</a>    
+        </p>
+        <p class="section row">For any other technical issues or assistance, email us at<br/>
+            <a href="mailto:bccf@bccf.ca" class="lgreen-text strong">bccf@bccf.ca</a>    
+        </p>
+    </div>
 {% endif %}
 </div>
 
