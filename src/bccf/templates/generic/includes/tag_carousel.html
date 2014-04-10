@@ -51,7 +51,7 @@
                    <div class="tag-info col eight">
                        <h6>{{ act.title }}</h6>
                        <p>{{ act.description|truncatechars:100  }}</p> 
-                       <div class="dashed-button"><a href="{{ act.get_content_model.get_absolute_url }}" target="_blank">more</a></div>
+                       <div class="dashed-button"><a href="{{ act.get_content_model.get_absolute_url }}">more</a></div>
                    </div>
                </div>
                {% endfor %}
@@ -77,7 +77,7 @@
                    <div class="tag-info col eight">                    
                        <h6>{{ get.title }}</h6>
                        <p>{{ get.description|truncatechars:100  }}</p> 
-                       <div class="dashed-button"><a href="{{ get.get_absolute_url }}" target="_blank">more</a></div>
+                       <div class="dashed-button"><a href="{{ get.get_absolute_url }}">more</a></div>
                    </div>
                </div>
                {% endfor %}
