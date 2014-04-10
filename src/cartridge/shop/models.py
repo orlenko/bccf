@@ -475,6 +475,7 @@ class Order(models.Model):
                             default=settings.SHOP_ORDER_STATUS_CHOICES[0][0])
 
     payment_method = models.CharField(_('Payment Method'), max_length=6, default='paypal', choices=PAYMENT_METHOD)
+    models.CharField('Customer Number', max_length=12, null=True, blank=True)
 
     objects = managers.OrderManager()
 
