@@ -67,7 +67,7 @@ class FormPublished(TagBase):
         
     def save(self, **kwargs):
         if not self.image:
-            self.image = 'childpage/placeholder-survey.png'
+            self.image = 'uploads/childpage/placeholder-survey.png'
         if self.pk is None: 
             super(FormPublished, self).save(**kwargs)            
 
