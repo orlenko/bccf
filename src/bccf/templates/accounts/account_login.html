@@ -19,9 +19,8 @@
 {% else %}
     {{ block.super }}
     <div class="form-help section row row-three">
-        {% url "signup" as signup_url %}
         <p class="section row">Don't have a BC Council for Families community account?<br/>
-            <a href="{{ signup_url }}" class="lgreen-text strong">Sign up here</a>    
+            <a href="/accounts/signup" class="lgreen-text strong">Sign up here</a>    
         </p>
         {% url "mezzanine_password_reset" as password_reset_url %}
         {% url "update-tab" "account" as profile_update_url %}
