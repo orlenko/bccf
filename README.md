@@ -1,7 +1,7 @@
 BCCF
 ====
 
-VNC BCCF Project
+VCN BCCF Project
 
 
 
