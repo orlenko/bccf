@@ -37,9 +37,9 @@ def process(request, order_form):
     """
     cart = Cart.objects.from_request(request)
     items = []
-    tax = request.session.get('tax_total', 0)
-    shipping = request.session.get('shipping_total', 0)
-    total = Decimal(tax) + Decimal(shipping)
+    tax = Decimal(request.session.get('tax_total', 0))
+    shipping = Decimal(request.session.get('shipping_total', 0))
+    total = tax + shipping
     subtotal = Decimal(0)
     
     discount = code = order_form._request.session.get('discount_code', None)
