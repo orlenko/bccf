@@ -16,7 +16,7 @@
         <div class="event-info">
             <ul>
                 <li>{{ child_obj.get_content_model.location_street }}</li>
-                <li>{{ child_obj.get_content_model.location_city }}{{ child_obj.get_content_model.location_postal_code }}</li> 
+                <li>{{ child_obj.get_content_model.location_city }} {{ child_obj.get_content_model.location_postal_code }}</li> 
                 <li><a href="http://maps.google.com/?q={{ child_obj.get_content_model.location_street }}, {{ child_obj.get_content_model.location_city }}, {{ child_obj.get_content_model.location_postal_code }}">View Map</a></li>
             </ul>
             <p>Event Fee(s) {{ child_obj.get_content_model.price|currency }}</p>
