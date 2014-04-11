@@ -1,8 +1,8 @@
 /* ==========================================================================
 
-  Base Stylesheet - http://git.io/base
-  Author: Matthew Hartman - http://www.matthewhartman.com.au/
-  Version: 1.5 - Last Updated: 21st June, 2013
+  VCN BCCF Project 2014
+  From the original work of Matthew Hartman with BASE
+  Authors/Contributors: Hugues Deraps, Karl Castillo & Vlad Orlenko. 
 
 ========================================================================== */
 
@@ -347,18 +347,6 @@ table caption {
 
 /* 1.5 Forms, Labels and Inputs, browser input text color overide
    ========================================================================== */
-::-webkit-input-placeholder {
-    color:#000000;
-}
-:-moz-placeholder { { /* Firefox 18- */
-    color:#000000;
-}
-::-moz-placeholder { { /* Firefox 19+ */
-    color:#000000;
-}
-:-ms-input-placeholder {
-    color:#000000;
-}
 
 
 fieldset {
@@ -753,6 +741,9 @@ textarea {
 			float:left;
 
 		}
+		input {@include placeholder {
+    color:#000000;
+}}
 	}
 } /* End main-top-nav */
 
