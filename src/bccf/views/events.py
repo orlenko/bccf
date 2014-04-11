@@ -125,7 +125,7 @@ def signup(request, slug):
 
 def event_payment(request, event_id):
     user = request.user
-    event_reg = get_object_or_404(EventRegistration, event=event_id, user=user, ~Q(paid=True))
+    event_reg = get_object_or_404(EventRegistration, ~Q(paid=True), event=event_id, user=user)
     event = event_reg.event
     variation = ProductVariation.objects.get(sku='EVENT-%s' % event.pk)
     request.cart.add_item(variation, 1)
