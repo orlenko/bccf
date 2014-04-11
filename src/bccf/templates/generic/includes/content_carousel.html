@@ -12,14 +12,14 @@
         </div>
         {% endif %}
         <div class="col {% if filter %} three tablet-four {% else %} six {% endif %} no-mobile control-buttons">
-            <a href="#" class="show-type-control to-grid">Grid</a>
-            <a href="#" class="show-type-control to-slide">Slide</a>
+            <a href="#" class="show-type-control to-grid" title="Grid View"><img src="{% static 'img/grid-icon.png' %}"/></a>
+            <a href="#" class="show-type-control to-slide" title="Slide View"><img src="{% static 'img/slide-icon.png' %}"/></a>
         </div>
     </div>
     <div id="{{ carousel_name }}-inner">
-        <a class="button-prev-lgrey col one button-prev no-mobile no-tablet"></a>
+        <a class="button-prev-dgreen button-hover-prev-lgrey col one button-prev no-mobile no-tablet"></a>
         {% include 'generic/content_slides.html' %}
-        <a class="button-next-lgreen col one button-next no-mobile no-tablet"></a>
+        <a class="button-next-dgreen button-hover-next-lgrey col one button-next no-mobile no-tablet"></a>
     </div>
 </section>
 

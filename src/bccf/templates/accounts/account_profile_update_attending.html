@@ -1,0 +1,22 @@
+{% load shop_tags mezzanine_tags %}
+<strong class="fieldset-header">Events Registered For</strong>
+{% for event in events %}
+    <div>
+    Name: {{ event.event.title }}
+    Start: {{ event.event.date_start }}
+    End: {{ event.event.date_end }}
+    {% if event.event.event_product %}
+    Paid: {{ event.is_paid_description }}
+        {% if event.event_order %}
+        Invoice: <a target="_blank" href="{% url "shop_invoice" event.event_order.id %}">View Online</a> 
+                | <a href="{% url "shop_invoice" event.event_order.id %}?format=pdf">Download PDF</a>
+        {% endif %}
+    {% endif %}
+    </div>
+{% empty %}    
+Not registered to any event
+{% endfor %}
+{% pagination_for events %}
+<div class="dashed-button">
+    <a href="bccf/trainings">View Trainings</a>
+</div>

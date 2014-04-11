@@ -5,7 +5,7 @@
     	<ul>
     	{% for event in user.events.all %}
     		<li><h3 class="h6">{{ event.title }}</h3> ({{ event.date_start|date:'DATETIME_FORMAT' }} &mdash;  {{ event.date_end|date:'DATETIME_FORMAT' }}):
-    			<p><a href="{{ event.edit_url }}">Edit</a> | <a href="{{ event.get_absolute_url }}">View</a>
+    			<p>{% if event.status == 1 %}<a href="{{ event.edit_url }}">Edit</a> | <a href="{{ event.publish_url }}">Publish</a> | {% endif %}<a href="{{ event.get_absolute_url }}">View</a>
     		    {% if event.survey_before or event.survey_after %}
     		     | <a href="{{ event.report_url }}">Download Survey Report</a>
     		    {% endif %}</p>

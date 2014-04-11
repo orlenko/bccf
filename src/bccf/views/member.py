@@ -13,11 +13,14 @@ from django.shortcuts import render_to_response, redirect
 from django.template.context import RequestContext
 
 from bccf.util.memberutil import get_upgrades, require_any_membership
+from bccf.util.emailutil import send_moderate
 from bccf.forms import AddUserForm, AddExistingUserForm, DelMember, AddUsersForm, ReqProgram
 from bccf.models import ProgramRequest
 
 log = logging.getLogger(__name__)
 
+def pub_profile(request):
+    pass
 
 @login_required
 def profile(request):
@@ -93,35 +96,32 @@ def membership_upgrade(request, variation_id):
     user = request.user
     profile = user.profile
     current_order = profile.membership_order
-    current_membership = profile.membership_product_variation
-    current_category = current_membership.product.categories.all()[0]
     variation = ProductVariation.objects.get(pk=variation_id)
-    new_category = variation.product.categories.all()[0]
-    if current_category.pk != new_category.pk:
-        # Cannot upgrade between categories
-        messages.warning(request, 'Sorry, cannot upgrade from a %s to a %s'
-                         % (current_category, new_category))
+    membership_type = profile.membership_type[:3].upper()
+    if not membership_type in variation.sku:
+        # Cannot upgrade between membership types
+        messages.warning(request, 'Sorry, cannot upgrade from across membership types.')
         return HttpResponseRedirect(reverse('member-profile'))
     discount_amount = profile.remaining_balance
-    discount_code = str(uuid4())
-    discount = DiscountCode.objects.create(title='[temporary discount for membership upgrade]',
-                            active=True,
-                            discount_deduct=discount_amount,
-                            code=discount_code,
-                            min_purchase=0,
-                            free_shipping=False)
-    discount_code = '%s%s' % (discount.pk, discount_code[:5])
-    discount.code = discount_code
-    discount.save() # These 3 lines are a hack, to get a discount code shorter than 20 chars
-    discount.products.add(variation.product)
-    discount.categories.add(current_category)
+    if discount_amount:
+        discount_code = str(uuid4()) 
+        discount = DiscountCode.objects.create(title='[temporary discount for membership upgrade]',
+                                active=True,
+                                discount_deduct=discount_amount,
+                                code=discount_code,
+                                min_purchase=0,
+                                free_shipping=False)
+        discount_code = '%s%s' % (discount.pk, discount_code[:5])
+        discount.code = discount_code
+        discount.save() # These 3 lines are a hack, to get a discount code shorter than 20 chars
+        discount.products.add(variation.product)
+        discount.categories.add(current_category)
+        log.debug('New cart: %s %s' % (request.cart, request.cart.has_items()))
+        request.session['force_discount'] = discount_code
+        log.debug('Session variables: %s' % dict(request.session))
     log.debug('Adding item to cart: %s' % variation)
     request.cart.add_item(variation, 1)
-    log.debug('New cart: %s %s' % (request.cart, request.cart.has_items()))
-    request.session['force_discount'] = discount_code
-    log.debug('Session variables: %s' % dict(request.session))
     return redirect('shop_checkout')
-
 
 @require_any_membership
 def membership_renew(request):
@@ -152,10 +152,25 @@ def membership_cancel(request):
                          'Your membership cancellation request has been submitted. '
                          'You should receive an email about this. '
                          'We will get back to you as soon as we can.')
+        
+        # Send email moderate
+        send_moderate('Membership Cancellation Request', context={'user': user})        
+        
         return HttpResponseRedirect('/')
     context = RequestContext(request, locals())
     return render_to_response('bccf/membership/cancel.html', {}, context_instance=context)
 
+def voting_membership(request, variation_id):
+    """
+    Puts a voting membership product into the cart and redirects to checkout to finish the
+    membership process
+    """
+    user = request.user
+    profile = user.profile
+    current_order = profile.voting_order
+    current_membership = profile.voting_product_variation
+    variation = ProductVariation.objects.get(id=variation_id)
+    
 
 def addmember(request):
     form = AddUsersForm(data=request.REQUEST)
@@ -184,7 +199,7 @@ def delmember(request):
     else:
         log.debug('Form invalid: %s' % form)
         messages.error(request, 'Failed to remove member. Erros: %s' % form.errors)
-    return HttpResponseRedirect(reverse(profile))
+    return HttpResponseRedirect(reverse('update-tab', ['members']))
 
 def reqprogram(request):
     form = ReqProgram(initial={'user': request.user})
@@ -192,6 +207,8 @@ def reqprogram(request):
     if request.method == 'POST':
         form = ReqProgram(request.POST)
         if form.is_valid():
+            # Send email for moderation
+            send_moderate('Program request', context={'request': form.instance, 'user': request.user})
             form.save()
             return HttpResponseRedirect(reverse('update-tab', args=['program']))
     context = RequestContext(request, locals())

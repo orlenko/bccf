@@ -45,6 +45,7 @@ class Priced(models.Model):
     sku = fields.SKUField(unique=True, blank=True, null=True)
     num_in_stock = models.IntegerField(_("Number in stock"), blank=True,
                                        null=True)
+    tax_exempt = models.BooleanField(_("Tax Exempt"), default=False, help_text="Is the event exempted from taxes?")
 
     class Meta:
         abstract = True
@@ -169,6 +170,38 @@ class ProductImage(Orderable):
             value = ""
         return value
 
+class ProductDownloadableContent(Orderable):
+    """
+    If the product has a downloadable content - a relationship is defined with
+    the product's variations so that each variation can potentially have it's own
+    downloadable content, while the relationship between the ``Product`` and ``Product
+    Downloadable Content`` model ensures there is a single set of downloadable content
+    for the product.
+    """
+    
+    file = FileField("Downloadable Content",
+        upload_to = upload_to("shop.ProductDownloadable.file", "product"),     
+        extensions = ['.pdf'],
+        max_length = 255,
+        null = True,
+        blank = True,
+        help_text = 'You can upload a downloadable content. ' 
+            'Acceptable file types: .pdf.')
+    description = CharField(_('Description'), blank=True, max_length=1000)
+    product = models.ForeignKey("Product", related_name="downloadables")
+        
+    class Meta:
+        verbose_name = _("Downloadable Content")
+        verbose_name_plural = _("Downloadable Contents")
+        order_with_respect_to = "product"
+        
+    def __unicode__(self):
+        value = self.description
+        if not value:
+            value = self.file.name
+        if not value:
+            value = ""
+        return value
 
 class ProductOption(models.Model):
     """
@@ -213,6 +246,8 @@ class ProductVariation(Priced):
     default = models.BooleanField(_("Default"), default=False)
     image = models.ForeignKey("ProductImage", verbose_name=_("Image"),
                               null=True, blank=True)
+    downloadable = models.ForeignKey("ProductDownloadableContent", verbose_name=_("Downloadable Content"),
+                                        null=True, blank=True)
 
     objects = managers.ProductVariationManager()
 
@@ -439,7 +474,8 @@ class Order(models.Model):
                             choices=settings.SHOP_ORDER_STATUS_CHOICES,
                             default=settings.SHOP_ORDER_STATUS_CHOICES[0][0])
 
-    payment_method = models.CharField(_('Payment Method'), max_length=6, default='paypal') 
+    payment_method = models.CharField(_('Payment Method'), max_length=6, default='paypal', choices=PAYMENT_METHOD)
+    account_number = models.CharField('Customer Number', max_length=12, null=True, blank=True)
 
     objects = managers.OrderManager()
 
@@ -616,7 +652,7 @@ class Cart(models.Model):
             return discount.calculate(self.total_price())
         total = Decimal("0")
         # Create a list of skus in the cart that are applicable to
-        # the discount, and total the discount for appllicable items.
+        # the discount, and total the discount for applicable items.
         lookup = {"product__in": products, "sku__in": self.skus()}
         discount_variations = ProductVariation.objects.filter(**lookup)
         discount_skus = discount_variations.values_list("sku", flat=True)
@@ -624,7 +660,15 @@ class Cart(models.Model):
             if item.sku in discount_skus:
                 total += discount.calculate(item.unit_price) * item.quantity
         return total
-
+        
+    def calculate_item_discount(self, product, discount):
+        """
+        Calculates the discount for a specific product, some might not have
+        any discount.
+        """
+        if DiscountCode.objects.filter(products=product):
+            return product.unit_price
+        return discount.calculate(product.unit_price)
 
 class SelectedProduct(models.Model):
     """

@@ -127,3 +127,18 @@ def set_locale():
                 "configure the SHOP_CURRENCY_LOCALE setting in your settings "
                 "module.")
         raise ImproperlyConfigured(msg % currency_locale)
+
+def generate_transaction_id():
+    """
+    Create a unique transaction number of billing payments
+    
+    Transaction number format:
+        XXXXXXXXXXXXXXXXXXXXXXXX
+    """
+    from cartridge.shop.models import Order
+    import random
+    id = ''.join(random.choice('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ') for i in range(25))
+    if id and not Order.objects.filter(transaction_id=id).exists():
+        return id
+    else:
+        generate_transaction_id()

@@ -1,3 +1,6 @@
+import logging
+log = logging.getLogger(__name__)
+
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.messages import error
 from django.core.urlresolvers import reverse
@@ -96,6 +99,8 @@ def comment(request, template="generic/comments.html"):
         if is_spam(request, form, url):
             return redirect(url)
         comment = form.save(request)
+        obj.comments_count += 1
+        obj.save()
         response = redirect(add_cache_bypass(comment.get_absolute_url()))
         # Store commenter's details in a cookie for 90 days.
         for field in ThreadedCommentForm.cookie_fields:

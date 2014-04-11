@@ -40,7 +40,7 @@ from cartridge.shop.fields import MoneyField
 from cartridge.shop.forms import ProductAdminForm, ProductVariationAdminForm
 from cartridge.shop.forms import ProductVariationAdminFormset
 from cartridge.shop.forms import DiscountAdminForm, ImageWidget, MoneyWidget
-from cartridge.shop.models import Category, Product, ProductImage
+from cartridge.shop.models import Category, Product, ProductImage, ProductDownloadableContent
 from cartridge.shop.models import ProductVariation, ProductOption, Order
 from cartridge.shop.models import OrderItem, Sale, DiscountCode
 
@@ -86,7 +86,7 @@ class CategoryAdmin(PageAdmin):
 # provide a single inline for managing the single variation per
 # product.
 variation_fields = ["sku", "num_in_stock", "unit_price",
-                    "sale_price", "sale_from", "sale_to", "image"]
+                    "sale_price", "sale_from", "sale_to", "downloadable", "image"]
 if settings.SHOP_USE_VARIATIONS:
     variation_fields.insert(1, "default")
     variations_max_num = None
@@ -106,10 +106,12 @@ class ProductVariationAdmin(admin.TabularInline):
     form = ProductVariationAdminForm
     formset = ProductVariationAdminFormset
 
-
 class ProductImageAdmin(TabularDynamicInlineAdmin):
     model = ProductImage
     formfield_overrides = {ImageField: {"widget": ImageWidget}}
+    
+class ProductDownloadableContentAdmin(TabularDynamicInlineAdmin):
+    model = ProductDownloadableContent
 
 ##############
 #  PRODUCTS  #
@@ -152,7 +154,7 @@ class ProductAdmin(DisplayableAdmin):
     filter_horizontal = ("categories", "related_products", "upsell_products")
     search_fields = ("title", "content", "categories__title",
                      "variations__sku")
-    inlines = (ProductImageAdmin, ProductVariationAdmin)
+    inlines = (ProductImageAdmin, ProductDownloadableContentAdmin, ProductVariationAdmin)
     form = ProductAdminForm
     fieldsets = product_fieldsets
 
@@ -250,7 +252,7 @@ class OrderItemInline(admin.TabularInline):
 class OrderAdmin(admin.ModelAdmin):
     ordering = ("status", "-id")
     list_display = ("id", "billing_name", "total", "time", "status",
-                    "transaction_id", "invoice")
+                    "transaction_id", "invoice", "payment_method")
     list_editable = ("status",)
     list_filter = ("status", "time")
     list_display_links = ("id", "billing_name",)
@@ -263,7 +265,7 @@ class OrderAdmin(admin.ModelAdmin):
     fieldsets = (
         (_("Billing details"), {"fields": (tuple(billing_fields),)}),
         (_("Shipping details"), {"fields": (tuple(shipping_fields),)}),
-        (None, {"fields": ("additional_instructions", ("shipping_total",
+        (None, {"fields": ("payment_method", "additional_instructions", ("shipping_total",
             "shipping_type"), ('tax_total', 'tax_type'),
              ("discount_total", "discount_code"), "item_total",
             ("total", "status"), "transaction_id")}),

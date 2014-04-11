@@ -29,8 +29,8 @@ def home(request):
     """
     View for the home page, this is where the necessary data is grabbed from the database and passed on to the view for rendering.
     """
-    eventForParents = Event.objects.filter(page_for='parent', date_start__gte=timezone.now().date()).order_by('date_start')[:15]  # @UndefinedVariable
-    eventForProfessionals = Event.objects.filter(page_for='professional', date_start__gte=timezone.now().date()).order_by('date_start')[:15]  # @UndefinedVariable
+    eventForParents = Event.objects.published().filter(page_for='parent', date_start__gte=timezone.now().date()).order_by('date_start')[:15]  # @UndefinedVariable
+    eventForProfessionals = Event.objects.published().filter(page_for='professional', date_start__gte=timezone.now().date()).order_by('date_start')[:15]  # @UndefinedVariable
     try:
         footerMarquee = FooterMarquee.objects.get(active=True)
         footerMarqueeSlides = FooterMarqueeSlide.objects.filter(marquee=footerMarquee)

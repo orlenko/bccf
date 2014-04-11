@@ -25,7 +25,7 @@ def featured_programs(context):
     being rendered for.
     """
     context['class'] = 'hpro'
-    context['slides'] = Program.objects.featured().order_by('-created')
+    context['slides'] = BCCFChildPage.objects.published().filter(Q(content_model='program'), featured=True).order_by('-created')
     return context
     
 @register.inclusion_tag('generic/includes/featured.html', takes_context=True)
@@ -34,7 +34,7 @@ def featured_tags(context):
     Provides a generic context variable name for the TAGs to be shown on the front page
     """
     context['class'] = 'hnote'
-    context['slides'] = BCCFChildPage.objects.published().filter(Q(content_model='formpublished') | Q(content_model='topic') | Q(content_model='campaign'), BCCF_EXPIRY, **BCCF_FILTER).order_by('-created')
+    context['slides'] = BCCFChildPage.objects.published().filter(Q(content_model='formpublished') | Q(content_model='topic') | Q(content_model='campaign'), featured=True).order_by('-created')
     return context
     
 @register.inclusion_tag('generic/includes/featured_resources.html', takes_context=True)
@@ -47,7 +47,7 @@ def featured_resources(context):
     
 @register.inclusion_tag('generic/includes/featured_users.html', takes_context=True)
 def featured_users(context, type): # 0 - level 1; 50 - level 2; 100 - level 3
-    context['users'] = UserProfile.objects.get_directory().filter(membership_type=type, membership_level=100).order_by('?')
+    context['users'] = UserProfile.objects.get_directory().filter(membership_type=type, membership_level='C').order_by('?')
     return context
     
 @register.inclusion_tag('generic/related_resources.html', takes_context=True)

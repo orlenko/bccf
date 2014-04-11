@@ -1,0 +1,11 @@
+{% if author %}
+    <div class="author-box section row row-one">
+        <div class="author-photo col two">
+            <img src="{{ MEDIA_URL }}{{ author.profile.photo }}" alt="{{ author.get_full_name }}"/>        
+        </div>
+        <div class="author-description col ten">
+            <p><span class="author-name">{{ author.get_full_name }}</span>
+            {{ author.profile.description }}</p>        
+        </div>
+    </div>
+{% endif %}

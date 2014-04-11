@@ -97,7 +97,9 @@
 
 </head>
 <body id="{% block body_id %}body{% endblock %}">
-
+<div id="pop-up-over" class="none">
+    <div class="content"></div>
+</div>
 <div class="container">
 
 	{% nevercache %}
@@ -118,7 +120,7 @@
             <p><a href="{% url "logout" %}">Logout</a></p>
             {% else %}
             <p><a href="{% url "login" %}">Login</a></p>
-            <p><a href="{% url "signup" %}">Create Account</a></p>
+            <p><a href="/accounts/signup">Create Account</a></p>
             {% endif %}
             {% shopping_cart %}
         </div>
@@ -178,6 +180,12 @@
             theme: 'main-bccf',
             subMenuSpeed: 0,       
         });
+    });
+    $('#pop-up-over').on('click', function(e) {
+        e.preventDefault();
+        $(this).hide();
+        $(this).children('.content').html('');
+        $('html, body').css({ overflow:'auto'});
     });
 </script>
 {% endblock %}

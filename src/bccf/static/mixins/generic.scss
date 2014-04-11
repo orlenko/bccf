@@ -1,0 +1,101 @@
+.lgreen-text {
+    color: $lgreen;
+}
+.login-container {
+    font-weight: bold;
+    @include font-size(20)
+}
+.login-btn {
+    color: $lgreen;
+}
+
+/* FORMS */
+.form-help {
+    @include font-size(12);
+    font-family: $pt;
+    a {
+        text-decoration: none;    
+    }
+}
+.bccf-btn {
+    @include font-size(12);
+    text-transform: uppercase;
+    padding: 5px 15px;
+    border: 0;
+    font-weight: bold;
+}
+.lgreen-btn {
+    @extend .bccf-btn;
+    color: #FFF;
+    background: $lgreen;
+}
+.form-group {
+    margin: 10px 0;
+    p {
+        margin-top: 2px;
+        margin-bottom: 0;    
+    }
+    label {
+        @include font-size(12);
+        text-transform: uppercase;
+    }
+    .help-block {
+        @include font-size(12);
+        margin-top: 0;    
+    }
+    select,
+    textarea,
+    input {
+        border: 1px solid #000;
+        background-color: $sgrey;   
+    }
+    textarea {
+        resize: vertical;
+        overflow-y: scroll;
+        min-height: 200px;
+        width: 100%;   
+    }
+    input[type='checkbox'] {
+        background-color: #FFF;
+        position: absolute;
+        right: 20px;
+        top: 15px;
+        padding: 3px;
+    }
+    input[type='file'] {
+        opacity: 0;
+        position: absolute;
+        z-index: -2;    
+    }
+    #clear-photo,
+    #fake-photo {
+        height: 30px;
+        border: none;
+        background-color: #000;
+        color: #FFF;
+        &:hover{
+            background-color: $yellow;
+            color: #000;
+        }
+    }
+}
+.form-actions.dashed {
+    margin-top: 20px;
+    input {
+        @include font-size(12);
+        background-color: inherit;
+        border: 1px dashed #FFF;
+        color: #000;
+        float: left;
+        font-weight: bold;
+        margin: 2px;
+        padding: 4px 22px;
+        text-decoration: none;
+        text-transform: uppercase;
+        &:hover {
+            color: $dgreen;
+			text-decoration: none;
+			background-color: $yellow;    
+        }
+    }    
+}

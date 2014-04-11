@@ -1,0 +1,39 @@
+{% load shop_tags i18n %}
+
+{% if discount_total or shipping_total %}
+<li><span class="col six text-right">{% trans "Sub total" %}:</span> {{ item_total|currency }}</li>
+{% endif %}
+{% if discount_total %}
+<li>
+    <span class="col six text-right">
+    {% if discount_type %}
+    {{ discount_type }}:
+    {% else %}
+    {% trans "Discount" %}:
+    {% endif %}
+    </span>{{ discount_total|currency }}
+</li>
+{% endif %}
+{% if shipping_total %}
+<li>
+    <span class="col six text-right">
+    {% if shipping_type %}
+    {{ shipping_type }}:
+    {% else %}
+    {% trans "Shipping" %}:
+    {% endif %}
+    </span> {{ shipping_total|currency }}
+</li>
+{% endif %}
+{% if tax_total %}
+<li>
+    <span class="col six text-right">
+    {% if tax_type %}
+    {{ tax_type }}:
+    {% else %}
+    {% trans "Tax" %}:
+    {% endif %}
+    </span> {{ tax_total|currency }}
+</li>
+{% endif %}
+<li class="total"><span class="col six text-right">{% trans "Total" %}:</span> {{ order_total|currency }}</li>

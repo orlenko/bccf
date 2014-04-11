@@ -3,7 +3,7 @@ from django.conf.urls import patterns, url
 
 urlpatterns = patterns("",
     url(r'^directory/', 'bccf.views.page.user_list', name='member-directory'),
-    url(r'^profile/$', 'bccf.views.member.profile', name='member-profile'),
+    #url(r'^profile/$', 'bccf.views.member.profile', name='member-profile'),
     url(r'^upgrade/(?P<variation_id>.*)/$', 'bccf.views.member.membership_upgrade', name='member-membership-upgrade'),
     url(r'^renew/$', 'bccf.views.member.membership_renew', name='member-membership-renew'),
     url(r'^select/$', 'bccf.views.member.membership_select', name='member-membership-select'),

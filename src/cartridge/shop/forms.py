@@ -21,6 +21,9 @@ from cartridge.shop.models import Product, ProductOption, ProductVariation
 from cartridge.shop.models import Cart, CartItem, Order, DiscountCode
 from cartridge.shop.utils import make_choices, set_locale, set_shipping
 from cartridge.shop.payment.paypal import COUNTRIES
+
+from bccf.util.eventutil import show_bill
+
 import logging
 
 log = logging.getLogger(__name__)
@@ -290,7 +293,7 @@ class DiscountForm(forms.ModelForm):
             self._request.session["free_shipping"] = discount.free_shipping
             log.debug('Setting session discount code: %s' % discount.code)
             self._request.session["discount_code"] = discount.code
-            self._request.session["discount_total"] = total
+            self._request.session["discount_total"] = str(total)
 
 
 class OrderForm(FormsetForm, DiscountForm):
@@ -299,14 +302,9 @@ class OrderForm(FormsetForm, DiscountForm):
     with extra fields for credit card. Used across each step of the
     checkout process with fields being hidden where applicable.
     """
-
-    PAYMENT_METHODS = (
-        ('paypal', 'Paypal'),
-        ('bill', 'Bill Payment')    
-    )
-
+    
     step = forms.IntegerField(widget=forms.HiddenInput())
-    payment_method = forms.CharField(label=_('Payment Method'), widget=forms.RadioSelect(choices=PAYMENT_METHODS))
+    #payment_method = forms.CharField(label=_('Payment Method'), widget=forms.RadioSelect(choices=PAYMENT_METHODS))
     same_billing_shipping = forms.BooleanField(required=False, initial=True,
         label=_("My delivery details are the same as my billing details"))
     remember = forms.BooleanField(required=False, initial=True,
@@ -332,9 +330,11 @@ class OrderForm(FormsetForm, DiscountForm):
         fields = ([f.name for f in Order._meta.fields if
                    f.name.startswith("billing_detail") or
                    f.name.startswith("shipping_detail")] +
-                   ["additional_instructions", "discount_code"])
+                   ["additional_instructions", "discount_code", "payment_method"]
+                   )
         widgets = {
-            'discount_code': forms.HiddenInput()
+            'discount_code': forms.HiddenInput,
+            'payment_method': forms.RadioSelect
         }
 
     def __init__(self, request, step, data=None, initial=None, errors=None):
@@ -363,6 +363,10 @@ class OrderForm(FormsetForm, DiscountForm):
             initial["step"] = step
 
         super(OrderForm, self).__init__(request, data=data, initial=initial)
+
+        # Create a cart instance and remove billing if there is an event that is close to starting
+        if not show_bill(request):
+            self.fields['payment_method'].widget.choices = (('paypal', 'Paypal'),)
 
         #Custom
         self.fields['billing_detail_country'].widget = self.billing_country
@@ -537,7 +541,9 @@ class ProductVariationAdminForm(forms.ModelForm):
             product = kwargs["instance"].product
             qs = self.fields["image"].queryset.filter(product=product)
             self.fields["image"].queryset = qs
-
+            log.debug(self.fields)
+            qs = self.fields["downloadable"].queryset.filter(product=product)
+            self.fields["downloadable"].queryset = qs
 
 class ProductVariationAdminFormset(BaseInlineFormSet):
     """

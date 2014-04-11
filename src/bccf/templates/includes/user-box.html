@@ -1,64 +1,68 @@
-{% load mezzanine_tags bccf_tags %}
+{% load mezzanine_tags bccf_rating_tags bccf_tags bccf_event_tags %}
 <div class="user-box section row {{ user.membership_type }}">
-    <div class="col three">
-        <img src="{{ MEDIA_URL }}{% bccf_thumbnail user.photo 150 150 %}" alt="{{ user.user.get_full_name }}" class="photo" />
-    </div>
-    <div class="col nine info">
-        <h3><a href="#">{{ user.user.get_full_name }}</a></h3>
-        <p class="social">
-        {% if user.facebook %}
-        <a href="{{ user.facebook }}" class="fa fa-facebook"></a>
-        {% endif %}
-        {% if user.twitter %}
-        <a href="{{ user.twitter }}" class="fa fa-twitter"></a>
-        {% endif %}
-        {% if user.linkedin %}
-        <a href="{{ user.linkedin }}" class="fa fa-linkedin"></a>
-        {% endif %}
-        </p>
-        <p class="contact">
-            <span class="section">{{ user.get_full_address }}</span>
-            {% if user.phone_primary %}
-            <span><i class="fa fa-phone-square"></i>{{ user.phone_primary }}</span>
+    {% if user.is_level_C %}
+        <div class="user-rating-box">
+            {% bccf_rating_for user False %}    
+        </div>
+    {% endif %}
+    <div class="section">
+        <div class="col three">
+            <img src="{{ MEDIA_URL }}{% bccf_thumbnail user.photo 150 150 %}" alt="{{ user.user.get_full_name }}" class="photo" />
+        </div>
+        <div class="col nine info">
+            <h3><a href="#">{{ user.user.get_full_name }}</a></h3>
+            <p class="social">
+            {% if user.facebook %}
+            <a href="{{ user.facebook }}" class="fa fa-facebook"></a>
             {% endif %}
-            <span><i class="fa fa-envelope"></i>{{ user.user.email }}</span>
-            {% if user.website %}
-            <span><a href="{{ user.website }}"><i class="fa fa-desktop"></i>{{ user.website }}</a></span>
-            {% endif %}          
-        </p>
-        {% if user.membership_type == 'professional' %}
-        <p class="accreditation"><strong>Certifications in: </strong>
-            {% for a in user.accreditation.all %}
-                {% if not a.user_added %}
-                    <a href="{{ a.get_absolute_url }}" target="_blank">{{ a.title }}</a>
-                {% else %}
-                    {{ a.title }}
+            {% if user.twitter %}
+            <a href="{{ user.twitter }}" class="fa fa-twitter"></a>
+            {% endif %}
+            {% if user.linkedin %}
+            <a href="{{ user.linkedin }}" class="fa fa-linkedin"></a>
+            {% endif %}
+            </p>
+            <p class="contact">
+                <span class="section">{{ user.get_full_address }}</span>
+                {% if user.phone_primary %}
+                <span><i class="fa fa-phone-square"></i>{{ user.phone_primary }}</span>
                 {% endif %}
-                {% if not forloop.last %},{% endif %}
-            {% empty %}
-            None
-            {% endfor %}
-        </p>
-        {% endif %}
-        {% if user.membership_type == 'organization' %}
-        <p>{{ user.description }}</p>
-        <p><strong>Certification</strong></p>
-        <p>
-            {% for a in user.accreditation.all %}
-                {% if not a.user_added %}
-                    <a href="{{ a.get_absolute_url }}" target="_blank">{{ a.title }}</a>
-                {% else %}
-                    {{ a.title }}
-                {% endif %}
-                {% if not forloop.last %},{% endif %}
-            {% empty %}
-            None
-            {% endfor %}
-        </p>
-        {% endif %}
-        {% if user.membership_level == 100 %}
-        {# trainings_for user #}
-        <p><strong>Upcoming Trainings</strong></p>
-        {% endif %}
+                <span><i class="fa fa-envelope"></i>{{ user.user.email }}</span>
+                {% if user.website %}
+                <span><a href="{{ user.website }}"><i class="fa fa-desktop"></i>{{ user.website }}</a></span>
+                {% endif %}          
+            </p>
+            {% if user.membership_type == 'professional' %}
+            <p class="accreditation"><strong>Certifications in: </strong>
+                {% for a in user.accreditation.all %}
+                    {% if not a.user_added %}
+                        <a href="{{ a.get_absolute_url }}" target="_blank">{{ a.title }}</a>
+                    {% else %}
+                        {{ a.title }}
+                    {% endif %}
+                    {% if not forloop.last %},{% endif %}
+                {% empty %}
+                None
+                {% endfor %}
+            </p>
+            {% endif %}
+            {% if user.membership_type == 'organization' %}
+            <p>{{ user.description }}</p>
+            <p><strong>Certification</strong></p>
+            <p>
+                {% for a in user.accreditation.all %}
+                    {% if not a.user_added %}
+                        <a href="{{ a.get_absolute_url }}" target="_blank">{{ a.title }}</a>
+                    {% else %}
+                        {{ a.title }}
+                    {% endif %}
+                    {% if not forloop.last %},{% endif %}
+                {% empty %}
+                None
+                {% endfor %}
+            </p>
+            {% endif %}
+            {% events_of user %}
+        </div>
     </div>
 </div>

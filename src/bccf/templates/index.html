@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n static bccf_big_marquee_tags bccf_feature_tags %}
+{% load i18n static bccf_big_marquee_tags bccf_event_tags bccf_feature_tags %}
 
 {% block meta_title %}{% trans "Home" %}{% endblock %}
 {% block title %}{% trans "Home" %}{% endblock %}
@@ -31,20 +31,18 @@
                     <li>Program</li>
                 </ul>
             </div>
-            <div id="hcal-families-carousel" class="col twelve mobile-full tablet-full">
+            <div id="hcal-families-carousel" class="mobile-full tablet-full">
                 {% for event in eventForParents %}
                 
                 {% if forloop.counter|divisibleby:"6" or forloop.first %}
                 <div>
                 {% endif %}
-                
                         <div class="hcal-line">
                             <ul>
-                                
                             	<li>{{ event.date_start|date:"F d" }}</li>
-                                <li>{{ event.title }}</li>
+                                <li>{{ event.program.short_title }}</li>
                                 <li><a href="{{ event.get_absolute_url }}">Learn More</a></li>
-                                <li><a href="#">Register</a></li>
+                                <li>{% bccf_short_subscribe_for event %}</li>
                             </ul>
                         </div>
                 
@@ -62,7 +60,7 @@
                 
                 {% endfor %}                
             </div>
-            <div id="hcal-professionals-carousel" class="col twelve mobile-full tablet-full">
+            <div id="hcal-professionals-carousel" class="mobile-full tablet-full">
                 {% for event in eventForProfessionals %}
                 
                 {% if forloop.counter|divisibleby:"6" or forloop.first %}
@@ -73,9 +71,9 @@
                             <ul>
                                 
                             	<li>{{ event.date_start|date:"F d" }}</li>
-                                <li>{{ event.program.title }}</li>
+                                <li>{{ event.program.short_title }}</li>
                                 <li><a href="{{ event.get_absolute_url }}">Learn More</a></li>
-                                <li><a href="#">Register</a></li>
+                                <li>{% bccf_short_subscribe_for event %}</li>
                             </ul>
                         </div>
                 
@@ -97,7 +95,7 @@
     </div>
 
   <div id="home-noteworthy" class="col six tablet-full mobile-full">
-    <h2>Note-Worthy</h2>
+    <h2>What's New</h2>
     <div id="noteworthy-carousel">
   	   {% featured_tags %}
   	</div>
@@ -118,7 +116,7 @@
           
         <div class="hlist-buttons">
               <div class="dashed-button"><a href="{% url 'member-directory' %}" target="_blank">Directory</a></div>
-              <div class="dashed-button"><a href="#" target="_blank">join</a></div>
+              <div class="dashed-button"><a href="/accounts/signup" target="_blank">join</a></div>
         </div>
       
   	</div><!-- End #hlist-left-side -->
@@ -143,18 +141,18 @@
   </div>
 
   <div id="home-resources" class="twelve tablet-full mobile-full">
-      <a class="button-prev button-prev-lgrey col one no-mobile"></a>
+      <a class="button-prev button-prev-dgreen button-hover-prev-lgrey col one no-mobile"></a>
       <div id="resources-carousel-container" class="col ten mobile-full">
         <div id="carousel-resources">
             {% featured_resources %}
         </div>
       </div>
-      <a class="button-next button-next-lteal col one no-mobile"></a>
+      <a class="button-next button-next-dgreen button-hover-next-lgrey col one no-mobile"></a>
   </div>
 
 
   <div id="home-history" class="twelve tablet-full mobile-full">
-      <a class="button-prev button-prev-dgreen col one no-mobile"></a>
+      <a class="button-prev button-prev-dgreen button-hover-prev-lgrey col one no-mobile"></a>
       <div id="history-carousel-container" class="col ten mobile-full">
         <div id="history-carousel">
           {% for slide in footerMarqueeSlides %}
@@ -168,7 +166,7 @@
           {% endfor %}
         </div>
       </div>
-      <a class="button-next button-next-sgrey col one no-mobile"></a>
+      <a class="button-next button-next-dgreen button-hover-next-lgrey col one no-mobile"></a>
   </div>
 
   </section>

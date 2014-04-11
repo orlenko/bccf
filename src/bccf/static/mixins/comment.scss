@@ -1,0 +1,68 @@
+#comments {
+    .comment-header {
+        border-top: 2px dashed $lgrey;
+        border-bottom: 2px dashed $lgrey;
+        padding: 15px 0;
+        p {
+            margin: 0;
+            @incldue font-size(30);
+            font-weight: bold;        
+        }
+    }
+    .comment {
+        border-bottom: 2px dashed $lgrey;
+        margin-bottom: 20px;
+        p {
+            margin: 0;
+            span {
+                font-weight: bold;            
+            }      
+        }
+        .commenter-info {
+            margin-top: 20px;        
+        }
+        .comment {
+            border-bottom: none;
+            padding: 0;
+            margin: 20px 0 0 20px;
+        }
+        .comment-photo {
+            width: 50px;
+            height: 50px;
+        }
+    }
+    .comment-form {
+        padding-top: 20px;
+        h3 {
+            @include font-size(20);
+            font-family: $pt;
+            font-weight: bold;        
+        }
+        textarea {
+            width: 100%;
+            border: 1px solid $dgrey;
+            background-color: $sgrey;        
+        }
+    }
+    .form-actions {
+        margin: 10px auto !important;
+        display: block;
+        input {
+            @include font-size(12);
+            background-color: inherit;
+            border: 1px dashed #FFF;
+            color: #000;
+            float: left;
+            font-weight: bold;
+            margin: 2px;
+            padding: 4px 22px;
+            text-decoration: none;
+            text-transform: uppercase;
+            &:hover {
+                color: $dgreen;
+				text-decoration: none;
+				background-color: $yellow;    
+            }            
+        } 
+    }
+}

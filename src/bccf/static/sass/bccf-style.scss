@@ -371,6 +371,7 @@ input[type=password],
 input[type=email],
 input[type=search],
 input[type=tel],
+input[type=url],
 textarea {
   padding: 5px 7px;
   -webkit-appearance: none; // Remove Default Browser Behaviour for Safari
@@ -714,6 +715,10 @@ textarea {
 			width:100%;
 		}
 
+        .form-group {
+            margin: 0;                
+        }
+
 		input[type="text"] {
 			background-color: $lgrey;
     		border:none;
@@ -918,15 +923,18 @@ textarea {
 			height:30px;
 			width:103px;
 			padding:4px 6px 0 0;
-			a {
+			a,
+			input[type="submit"] {
+			    border: none;
 				color:#FFFFFF;
 				background-color:$dgrey;
 				padding:1px 6px;
 				text-decoration:none;
 				box-shadow: 2px 2px 2px $lgrey;
 				&:hover {
-					background-color:$lgrey;}
+					background-color:$lgrey;
 				}
+			}
 		}
 	}
 	.hcal-heading {
@@ -993,6 +1001,9 @@ textarea {
         p{
             color:#000000;
 		}
+		.caption-body {
+		  margin-top: 10px;    
+		}
 	}
     .hnote-buttons {
 		float:right;
@@ -1000,7 +1011,7 @@ textarea {
 		margin-top:18px;
 		text-align:right;
 		/*margin:14px 5px 0 0;*/
-		div {margin:5px; }
+		div {margin:10px; }
 		.dashed-button {float:right;}
 	}
 	.hnote-pagination {
@@ -1053,6 +1064,9 @@ textarea {
 		p {
 			color:#000000;
 		}
+		.caption-body {
+		  margin-top: 10px;    
+		}
 	}
 	.hpro-buttons {
 		float:right;
@@ -1060,7 +1074,7 @@ textarea {
 		margin-top:18px;
 		text-align:right;
 		/*margin:14px 5px 0 0;*/
-		div {margin:5px; }
+		div {margin: 10px; }
 		.dashed-button {float:right;}
 	}
 	.hpro-pagination {
@@ -1208,12 +1222,12 @@ textarea {
 				border-bottom:2px solid $lgreen;
 				height:152PX;
                 a:nth-of-type(2) {
-                    img {
+                    div {
                         height: 100%;
                         width: 100%;
                     }
                 }
-				img { padding:0;
+				div { padding:0;
 				margin:0;
 				}
 				.hr-icon {
@@ -1332,6 +1346,9 @@ textarea {
         		  height: 75px;
         		  padding: 4px 10px 10px 10px;
         		}
+        		.page-image {
+                    padding: 0;        		    
+      		    }
         		p {
         		  @include font-size(11);
         		  margin: 0;
@@ -1520,8 +1537,9 @@ textarea {
             > li {
                 margin: 0;
                 width: 16.66%;
-				&:hover {background-color: $dgreen;
-				color:#ffffff;}
+				&:hover {
+				    background-color: $dgreen;
+				}
                > a {
                     @include font-size(12);
                     padding: 10px 0;
@@ -1532,6 +1550,7 @@ textarea {
                     text-align: center;
                     &:hover, &:active {
                         text-decoration: none;
+                        color: #FFF;
                     }
                     &.active {
                         background-color: $sgreen;    
@@ -1546,6 +1565,23 @@ textarea {
             color: #FFF;    
         }
     }
+    
+    .author-box {
+        border-top: 2px dashed $lgrey;
+        padding-top: 20px;
+        margin-top: 30px;
+    }
+        .author-description {
+            padding-left: 10px;
+            p {
+                margin-top: 0;
+                margin-bottom: 0;    
+            }    
+        }
+        .author-name { 
+            font-weight: bold;
+            font-family: $roboto;    
+        }
 
 .ajax-loader {
     display: block;
@@ -1559,12 +1595,12 @@ textarea {
 
 .green-list {
     .control-buttons {
-	   a {
+	   /*a {
 	       background-color: $lgreen;
 	       &:hover, &:focus {
 	           background-color: $lgreen*1.1;
 	       }
-	   }
+	   }*/
 	}
 	.page-box{
 		background-color:$sgrey;
@@ -1581,12 +1617,12 @@ textarea {
 }
 .dgreen-list {
     .control-buttons {
-	   a {
+	   /*a {
 	       background-color: $dgreen;
 	       &:hover, &:focus {
 	           background-color: $dgreen*1.1;
 	       }
-	   }
+	   }*/
 	}
 	.page-box{
 		background-color:$sgrey;
@@ -1603,12 +1639,12 @@ textarea {
 }
 .teal-list {
     .control-buttons {
-	   a {
+	   /*a {
 	       background-color: $lteal;
 	       &:hover, &:focus {
 	           background-color: $lteal*1.1;
 	       }
-	   }
+	   }*/
 	}
 	.page-box{
 		background-color:$sgrey;
@@ -1625,12 +1661,12 @@ textarea {
 }
 .yellow-list {
     .control-buttons {
-	   a {
+	   /*a {
 	       background-color: $yellow;
 	       &:hover, &:focus {
 	           background-color: $yellow*1.1;
 	       }
-	   }
+	   }*/
 	}
 	.page-box{
 	   background-color:$sgrey;
@@ -1718,6 +1754,16 @@ textarea {
 		em {background-color:$yellow;}
 		}
 
+    .tag-carousel {
+        .section {
+            padding: 5px;    
+        }    
+    }
+    .tag-img {
+        display: block;
+        width: 75px;
+        height: 75px;    
+    }
 
 } /* end #tag-widget */
 
@@ -1816,6 +1862,16 @@ textarea {
     }  
 }
 .user-box {
+    .user-rating-box {
+        position: absolute;
+        top: 30px;
+        right: 10px;
+        width: 100%;
+        .rate-count {
+            @include font-size(12);
+            margin-left: 5px;    
+        }
+    }
     img {
         margin-top: 15px;
         margin-left: 15px;    
@@ -1847,7 +1903,7 @@ textarea {
     }
     .info {
         @include font-size(13);
-        padding-top: 25px;
+        padding-top: 50px;
         padding-left: 25px;       
         h3 {
             margin-bottom: 0;    
@@ -1873,6 +1929,44 @@ textarea {
     .accreditation {
         margin-top: 0;    
     }
+    .user-events {
+        ul {
+            list-style: none;
+            padding-left: 0;
+            li {
+                display: inline-block;    
+            }    
+        }
+        .event-header {
+            font-weight: 600;    
+        }
+        .event-row {
+            padding-top: 5px;
+            padding-bottom: 5px;
+            ul {
+                margin: 0;  
+            }
+            .action {
+                text-align: center;    
+            }
+            input[type='submit'] {
+                border: 0;
+                background: 0;
+                &:hover {
+                    text-decoration: underline;    
+                }    
+            }
+        }
+        .event-header,
+        .event-row {
+            border-bottom: 1px solid #000;
+        }
+        a[title='More'] {
+            text-decoration: underline;
+            color: $lgreen;
+            font-weight: bold;    
+        }
+    }
 }
 .user-box.organization {
     background-color: $ssteal;
@@ -1895,6 +1989,7 @@ textarea {
     #form-container {
         padding-top: 25px;
         .form-group {
+            margin: 10px 0;
             p {
                 margin-top: 2px;
                 margin-bottom: 0;    
@@ -1916,7 +2011,8 @@ textarea {
             textarea {
                 resize: vertical;
                 overflow-y: scroll;
-                min-height: 200px;    
+                min-height: 200px;
+                width: 100%;   
             }
             input[type='checkbox'] {
                 background-color: #FFF;
@@ -1985,8 +2081,12 @@ textarea {
     }
     img {
         width: 200px;
-        height: 200px;    
-    } 
+        height: 200px;
+    }
+    .photo-over {
+        background-image: url('../img/default_user-image-female.png');
+        background-size: 200px 200px;    
+    }
 }
 
 #account-number {
@@ -2037,16 +2137,23 @@ textarea {
         color: $lgreen;    
     }
     &.contact-tab {
-        .input_id_postal_code {
-            .req:after {
-                @include font-size(15);
-                color: $lgreen;
-                content: "*";
-                position: relative;
-                top: 5px;
+        .form-group {
+            .form-group {
+                margin: 0 !important;
             }
-        }   
-    }    
+            .form-group:first-of-child {
+                padding-right: 5px;             
+            }
+            .form-group:nth-child(2) {
+                padding-left: 5px;
+            }
+        }  
+    }
+    &.forum-tab {
+        #id_show_signatures {
+            top: 5px !important;    
+        }    
+    }
 }
  
  
@@ -2115,19 +2222,52 @@ textarea {
 
 /* Forum End */
 
+.req-asterisk {
+    @include font-size(10);
+    color: $lgreen;    
+}
+
 /* Generic Above Footer */
-.req:after {
+/*.req:after {
     @include font-size(25);
     content: '*';
     color: $lgreen;
     position: relative;
     top: 11px;
     left: 5px;
-}
+}*/
 
 .photo {
-    border: 10px solid $sgrey;    
+    border: 10px solid $sgrey;
+    width: 200px;
+    height: 200px; 
 }
+.fake-photo-container {
+    cursor: pointer;
+    &:hover {
+        .photo-over {
+            display: block;    
+        }    
+    }
+    .photo-over {
+        @include font-size(13);
+        border: 10px solid $sgrey;
+        font-weight: bold;
+        display: none;
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        color: rgba(255,255,255,0.6);
+        span {
+            border: 1px solid rgba(255,255,255,1);
+            position: absolute;
+            bottom: 15px;
+            left: 20px;
+            padding: 2px 5px;
+        }
+    }
+}
+
 
 #form-aux {
     background-color: $sgrey;
@@ -2215,6 +2355,7 @@ footer {
 	#main-footer-nav {
 		height:50px;
 		border-top:10px solid $yellow;
+		text-transform: uppercase;
 
 		ul{
 			list-style:none;
@@ -2630,7 +2771,9 @@ footer {
 
 } /* end #tag-widget */
 
-
+#tabs {
+    @include font-size(15)
+}
 
 footer {
 
@@ -3260,6 +3403,13 @@ footer {
 } /* End Footer */
 } /* End Mobile Media Query */
 
+@import "../mixins/login";
+@import "../mixins/event";
+@import "../mixins/generic";
+@import "../mixins/comment";
+@import "../mixins/pop-up";
+@import "../mixins/shop";
+@import "../mixins/memberships";
 @import "../mixins/marquee_themes";
 /*@import "../mixins/menus"; // Import the menus styles*/
 @import "../mixins/messages"; // Styles for message boxes

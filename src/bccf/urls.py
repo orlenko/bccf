@@ -33,10 +33,13 @@ urlpatterns = patterns("",
 
     url('^bccf_admin_page_ordering/$', 'bccf.views.page.bccf_admin_page_ordering', name='bccf-admin-page-ordering'),
 
+    url("^accounts/login/$", "bccf.views.accounts.my_login", name="login"),
+    url("^accounts/profile", "bccf.views.accounts.profile_update", name="profile-tab"),
+    url("^accounts/register/$", "bccf.views.accounts.register_event", name='register-event'),
     url("^accounts/update/(?P<tab>.+)/$", "bccf.views.accounts.profile_update", name='update-tab'),
     url("^accounts/update/$", "bccf.views.accounts.profile_update", name='update'),
     url("^accounts/signup/$", "bccf.views.accounts.signup", name='signup'),
-    url("^account/orders/$", "cartridge.shop.views.order_history", name="shop_order_history"),
+    url("^accounts/orders/$", "cartridge.shop.views.order_history", name="shop_order_history"),
 
     #Member views
     (r'^member/', include('bccf.member_urls')),
@@ -47,6 +50,7 @@ urlpatterns = patterns("",
     url(r'events/signup/(?P<slug>.*)/$', 'bccf.views.events.signup', name='events-signup'),
     url(r'events/create/$', 'bccf.views.events.create', name='events-create'),
     url(r'events/edit/(?P<slug>.*)/$', 'bccf.views.events.edit', name='events-edit'),
+    url(r'events/publish/(?P<slug>.*)/$', 'bccf.views.events.publish', name='events-publish'),
     url(r'events/attendees/(?P<id>.+)/$', 'bccf.views.events.attendees', name='events-attendees'),
     url(r'events/remove/survey/$', 'bccf.views.events.remove_survey', name='events-remove-survey'),
     url(r'events/(?P<slug>.*)/$', 'bccf.views.events.event', name='events-event'),

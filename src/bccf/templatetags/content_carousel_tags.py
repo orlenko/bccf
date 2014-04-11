@@ -95,9 +95,9 @@ def content_carousel_for_topic(context, topic, type):
 
 @register.inclusion_tag("generic/includes/tag_carousel.html", takes_context=True)
 def content_carousel_for_tag(context):
-    context['talks'] = Topic.objects.talks().filter(featured=True).order_by('-created')[:10]
-    context['acts'] = FormPublished.objects.acts().filter(featured=True).order_by('-created')[:10]
-    context['gets'] = Campaign.objects.gets().filter(featured=True).order_by('-created')[:10]
+    context['talks'] = Topic.objects.published().filter(featured=True).order_by('-created')[:10]
+    context['acts'] = FormPublished.objects.published().filter(featured=True).order_by('-created')[:10]
+    context['gets'] = Campaign.objects.published().filter(featured=True).order_by('-created')[:10]
     return context
 
 @register.inclusion_tag("generic/includes/resource_carousel.html", takes_context=True)

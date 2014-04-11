@@ -1,5 +1,7 @@
 import urllib2
 import locale
+import logging
+log = logging.getLogger(__name__)
 
 from django.core.exceptions import ImproperlyConfigured
 from django.http import QueryDict
@@ -114,12 +116,14 @@ def process(request, order_form, order):
     conn = urllib2.Request(url=trans['connection'], data=trans['postString'])
     # useful for debugging transactions
     # print trans['postString']
+    log.debug(trans['postString'])
     try:
         f = urllib2.urlopen(conn)
         all_results = f.read()
     except urllib2.URLError:
         raise CheckoutError("Could not talk to PayPal payment gateway")
     parsed_results = QueryDict(all_results)
+    log.debug(parsed_results)
     state = parsed_results['ACK']
     if not state in ["Success", "SuccessWithWarning"]:
         raise CheckoutError(parsed_results['L_LONGMESSAGE0'])

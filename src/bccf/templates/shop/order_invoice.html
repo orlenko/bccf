@@ -1,0 +1,112 @@
+{% load static shop_tags i18n %}
+<html>
+<head>
+    <title>Invoice {{ order.id }} | BCCF</title>
+    <<link rel="stylesheet" href="{% static "css/invoice.css" %}"/>
+    <style type="text/css">
+        
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <header class="section row-two">
+        <div id="bccflogo" class="col four tablet-six mobile-full"><a href="/"><img src="{% static "img/BCCF_logo_2013.png" %}" alt="BC Council for FAMILIES"/></a></div>
+        <div id="bccftagline" class="col tablet-three five mobile-full">y<em><strong>our</strong></em> family.</div>
+    </header>
+    
+    <div id="order-details" class="section">
+        <div class="col six">Invoice number: {{ order.id }}</div>
+        <div class="col six text-right">{{ order.time|date:"F j, Y" }}</div>
+        <div>Customer number: {{ order.account_number }}</div>
+    </div>
+    
+    <div id="order-info" class="section">
+        <header class="section">
+            <div class="col six">
+                <h2>Your Details</h2>
+            </div>
+            <div class="col six text-right">
+                Paid By: {{ order.payment_method }}
+            </div>
+        </header>
+        
+        <!-- BODY -->
+        <div id="billing">
+            <section class="header section row row-one">
+                <div class="col six">Billing Details</div>
+                <div class="col six">Shipping Details</div>
+            </section>
+            <section class="body section row row-one">
+                <div class="col six">
+                    <ul>
+                        {% for field, value in order_billing_detail_fields %}
+                        <li class="section">
+                            <span class="col three strong">{{ field }}</span>                                
+                            <span class="col nine">{{ value }}</span>                                
+                        </li>
+                        {% endfor %}
+                    </ul>                
+                </div>
+                <div class="col six">
+                    <ul>
+                        {% for field, value in order_shipping_detail_fields %}
+                        <li class="section">
+                            <span class="col three strong">{{ field }}</span>                                
+                            <span class="col nine">{{ value }}</span>                                
+                        </li>
+                        {% endfor %}
+                    </ul>                
+                </div>
+            </section>
+        </div>
+        
+        
+        <header class="section">
+            <div class="col twelve">
+                <h2>Items Ordered</h2>
+            </div>
+        </header>        
+        <div id="items">
+            <section class="header section row row-one">
+                <div class="col three">Item</div>
+                <div class="col three">Unit Price</div>
+                <div class="col three">Qty</div>
+                <div class="col three">Price</div>
+            </section>
+            <section class="body section">
+                <ul>
+                    {% for items in order.items.all %}
+                    <li class="section">
+                        <span class="col three">{{ items.description }}</span>                    
+                        <span class="col three">{{ items.unit_price|currency }}</span>                    
+                        <span class="col three">{{ items.quantity }}</span>                    
+                        <span class="col three">{{ items.total_price|currency }}</span>                    
+                    </li>
+                    {% endfor %}
+                </ul>
+            </section>
+            <section id="totals">
+                <div class="six right">
+                    <ul>
+                        {% order_totals %}
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </div>
+    
+    <footer class="section row row-three">
+        <div class="section">
+            <span class="col four">208 – 1600 W 6th Ave Vancouver BC V6J 1R3</span>
+            <span class="col two">T 604 678 8884</span>
+            <span class="col two">F 604 678 8886</span>
+            <span class="col two">bccf@bccf.ca</span>
+        </div>
+        <div class="italic">
+            BC Council for Families GST # 11921 7180 RT0001
+        </div>
+    </footer>
+</div>
+</body>
+</html>

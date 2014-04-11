@@ -1,0 +1,32 @@
+<form method="POST" enctype="multipart/form-data">
+    <strong class="fieldset-header">Forum Preferences</strong>
+    <div class="form-group input_id_avatar"> 
+        <p><label for="id_avatar">{{ form.avatar.label }}</label></p>
+        {{ form.avatar }}
+        <p class="help-block">{{ form.avatar.help_text }}</p>
+        <p class="error-block">{{ form.avatar.errors.as_text|cut:'*' }}</p>
+    </div>
+    <strong class="fieldset-header">Forum Signature</strong>
+    <div class="form-group checkbox-group input_id_show_signatures"> 
+        <label for="id_show_signatures">{{ form.show_signatures.label }}</label>
+        {{ form.show_signatures }}
+        <p class="help-block">{{ form.show_signatures.help_text }}</p>
+        <p class="error-block">{{ form.show_signatures.errors.as_text|cut:'*' }}</p>
+    </div>
+    <div class="form-group input_id_signature"> 
+        <p><label for="id_signature">{{ form.signature.label }}</label></p>
+        {{ form.signature }}
+        <p class="help-block">{{ form.signature.help_text }}</p>
+        <p class="error-block">{{ form.signature.errors.as_text|cut:'*' }}</p>
+    </div>
+    <div class="form-group input_id_signature_html"> 
+        <p><label for="id_signature_html">{{ form.signature_html.label }}</label></p>
+        {{ form.signature_html }}
+        <p class="help-block">{{ form.signature_html.help_text }}</p>
+        <p class="error-block">{{ form.signature_html.errors.as_text|cut:'*' }}</p>
+    </div>
+    {% csrf_token %}
+    <div class="form-actions dashed-button">
+        <input id="submit" class="btn btn-primary btn-large" type="submit" value="Save">
+    </div>
+</form>

@@ -54,8 +54,8 @@ $(function() {
     {% if baby %}        
     open_baby = true;
     {% endif %}
-    
-    $('#{{ child }}:visible').trigger('click');
+
+    $('#id_{{ child }}:visible').trigger('click');
     
     {% endif %}    
 
@@ -67,7 +67,7 @@ $(function() {
     });    
     
     $(window).bind('popstate', function(e) {
-        console.log(pathname);
+        console.log('Pathname: '+pathname);
         if(pathname !== location.pathname) {
             location.pathname = location.pathname;
         }

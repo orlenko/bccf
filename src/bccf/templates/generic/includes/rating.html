@@ -10,12 +10,12 @@
         
         {{ rating_form }}
 
-        {% if request.user.is_authenticated %}
+        {% if rate_obj and request.user.is_authenticated %}
         <input type="submit" class="btn" value="{% trans "Rate" %}"
             onclick="return $(this.form).find('input:checked').length == 1;" />
         {% endif %}
 
-        ({{ rating_count }} votes)
+        <span class="rate-count">({{ rating_count }} votes)</span>
     </form>
 </div>
 
@@ -23,7 +23,7 @@
 <script type="text/javascript">
     $(function() {
         $('#{{ child_obj.slug }}-rating .star').rating().rating('select', {{ rating_average|floatformat:"0" }} - 1);
-        {% if not request.user.is_authenticated %}
+        {% if not request.user.is_authenticated or not rate_obj %}
         $('#{{ child_obj.slug }}-rating .star').rating('disable');
         {% endif %}
     });

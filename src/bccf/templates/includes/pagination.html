@@ -4,7 +4,6 @@
         <li class="prev-btn"><a href="?{{ page_var }}={{ current_page.previous_page_number }}{% if querystring %}&{{ querystring }}{% endif %}">Prev</a></li>
         {% endif %}
         {% for num in current_page.visible_page_range %}
-
 			<li>
 
 			{% if num == current_page.number %}
@@ -16,7 +15,6 @@
 	        {% if num != current_page.number %}
 	        	<a href="?{{ page_var }}={{num}}{% if querystring %}&{{ querystring }}{% endif %}">{{num}}</a>
 	        {% endif %}
-
 			</li>
         {% endfor %}
         {% if current_page.has_next %}

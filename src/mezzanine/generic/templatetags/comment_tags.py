@@ -30,7 +30,6 @@ def comments_for(context, obj):
     context["object_for_comments"] = obj
     return context
 
-
 @register.inclusion_tag("generic/includes/comment.html", takes_context=True)
 def comment_thread(context, parent):
     """
@@ -71,7 +70,6 @@ def recent_comments(context):
     comments = ThreadedComment.objects.all().select_related("user")
     context["comments"] = comments.order_by("-id")[:latest]
     return context
-
 
 @register.filter
 def comment_filter(comment_text):

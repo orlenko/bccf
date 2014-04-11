@@ -6,6 +6,7 @@ from pybb.subscription import notify_topic_subscribers
 import os.path
 import uuid
 
+from django.contrib.auth.models import User
 from django.db import models, transaction
 from django.core.urlresolvers import reverse
 from django.db.utils import IntegrityError
@@ -15,13 +16,14 @@ from django.conf import settings
 from django.utils.timezone import now as tznow
 
 from bccf.models import TagBase, BCCFPage
+from bccf.managers import TagManager
 
 from annoying.fields import AutoOneToOneField
 from bccf.fields import MyImageField
 from pybb.util import unescape, get_user_model, get_username_field, get_pybb_profile_model, get_pybb_profile
 
-User = get_user_model()
-username_field = get_username_field()
+#User = get_user_model()
+#username_field = get_username_field()
 
 try:
     from hashlib import sha1
@@ -172,6 +174,8 @@ class Topic(TagBase):
     poll_type = models.IntegerField(_('Poll type'), choices=POLL_TYPE_CHOICES, default=POLL_TYPE_NONE)
     poll_question = models.TextField(_('Poll question'), blank=True, null=True)
 
+    objects = TagManager()
+
     class Meta(object):
         ordering = ['-created']
         verbose_name = _('Thred')
@@ -179,6 +183,9 @@ class Topic(TagBase):
 
     def __unicode__(self):
         return self.name
+
+    def __init__(self, *args, **kwargs):
+        super(Topic, self).__init__(*args, **kwargs)  
 
     @property
     def head(self):
@@ -201,6 +208,8 @@ class Topic(TagBase):
         return reverse('pybb:topic', kwargs={'pk': self.id})
 
     def save(self, *args, **kwargs):
+        if not self.image:
+            self.image = 'uploads/childpage/placeholder-forum.png'
         if self.id is None:
             self.created = tznow()
             

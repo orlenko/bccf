@@ -4,7 +4,7 @@
     <div class="tag-container">
         <div id="tag-logo"> 
         
-            <a href="/tag"><img src="{% static 'img/tag-logo.png' %}" alt="BCCF's TAG Logo"></a>
+            <a href="/bccf/tag"><img src="{% static 'img/tag-logo.png' %}" alt="BCCF's TAG Logo"></a>
             <p>TALK&nbsp;&nbsp;ACT&nbsp;&nbsp;GET&nbsp;INVOLVED</p>
             
         </div>
@@ -19,11 +19,15 @@
             </div>
            <div class="tag-carousel">
                {% for talk in talks %}
-               <div>
-                   <img src="{{ MEDIA_URL }}{% bccf_thumbnail talk.image 75 75 %}" alt="{{ talk.title }}">
-                   <h6>{{ talk.title }}</h6>
-                   <p>{{ talk.description|truncatechars:100 }}</p> 
-                   <div class="dashed-button"><a href="{{ talk.get_content_model.get_absolute_url }}" target="_blank">more</a></div>
+               <div class="section">
+                   <div class="col four">
+                        <span class="tag-img" style="background: url('{{ MEDIA_URL }}{% bccf_thumbnail talk.image 75 75 %}') top left no-repeat"></span>
+                   </div>
+                   <div class="tag-info col eight">
+                       <h6>{{ talk.title }}</h6>
+                       <p>{{ talk.description|truncatechars:100 }}</p> 
+                       <div class="dashed-button"><a href="{{ talk.get_content_model.get_absolute_url }}" target="_blank">more</a></div>
+                       </div>
                </div>
                {% endfor %}
            </div>
@@ -40,11 +44,15 @@
            
            <div class="tag-carousel">
                {% for act in acts %}
-               <div>
-                   <img src="{{ MEDIA_URL }}{% bccf_thumbnail act.image 75 75 %}" alt="{{ act.title }}">
-                   <h6>{{ act.title }}</h6>
-                   <p>{{ act.description|truncatechars:100  }}</p> 
-                   <div class="dashed-button"><a href="{{ act.get_content_model.get_absolute_url }}" target="_blank">more</a></div>
+               <div class="section">
+                   <div class="col four">
+                        <span class="tag-img" style="background: url('{{ MEDIA_URL }}{% bccf_thumbnail act.image 75 75 %}') top left no-repeat"></span>
+                   </div>
+                   <div class="tag-info col eight">
+                       <h6>{{ act.title }}</h6>
+                       <p>{{ act.description|truncatechars:100  }}</p> 
+                       <div class="dashed-button"><a href="{{ act.get_content_model.get_absolute_url }}">more</a></div>
+                   </div>
                </div>
                {% endfor %}
            </div>
@@ -62,11 +70,15 @@
            
            <div class="tag-carousel">
                {% for get in gets %}
-               <div>
-                   <img src="{{ MEDIA_URL }}{% bccf_thumbnail get.image 75 75 %}" alt="{{ get.title }}">
-                   <h6>{{ get.title }}</h6>
-                   <p>{{ get.description|truncatechars:100  }}</p> 
-                   <div class="dashed-button"><a href="{{ get.get_absolute_url }}" target="_blank">more</a></div>
+               <div class="section">
+                   <div class="col four">
+                        <span class="tag-img" style="background: url('{{ MEDIA_URL }}{% bccf_thumbnail get.image 75 75 %}') top left no-repeat"></span>
+                   </div>
+                   <div class="tag-info col eight">                    
+                       <h6>{{ get.title }}</h6>
+                       <p>{{ get.description|truncatechars:100  }}</p> 
+                       <div class="dashed-button"><a href="{{ get.get_absolute_url }}">more</a></div>
+                   </div>
                </div>
                {% endfor %}
            </div>

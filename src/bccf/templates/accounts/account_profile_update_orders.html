@@ -1,16 +1,21 @@
+{% load shop_tags mezzanine_tags %}
 <strong class="fieldset-header">Your Orders</strong>
 {% if orders %}
     <ul>    
     {% for o in orders %}
-        <li>{{ o.invoice|safe }}<br/>
+        <li><a href="{% url "shop_invoice" o.id %}">View Invoice</a> | <a href="{% url "shop_invoice" o.id %}?format=pdf">Download PDF invoice</a><br/>
             Ordred: {{ o.time }}<br/>
             Transaction ID: {{ o.transaction_id }}<br/>
             Total: {{ o.total }}<br/>
             Payment Method: {{ o.payment_method }}<br/>
-            Status: {{ o.status }}<br/>
+            Status: {{ o.get_status_display }}<br/>
         </li>
     {% endfor %}
     </ul>
 {% else %}
 <p>No Orders</p>
 {% endif %}
+{% pagination_for orders %}
+<div class="dashed-button">
+    <a href="/shop">Shop</a>
+</div>

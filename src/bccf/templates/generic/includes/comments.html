@@ -1,33 +1,37 @@
 {% load i18n mezzanine_tags comment_tags %}
-<div id="comments">
-<h3>{% trans "Comments" %}</h3>
-{% if settings.COMMENTS_DISQUS_SHORTNAME %}
-{% include "generic/includes/disqus_comments.html" %}
-{% else %}
-<script>
-$(function() {
-    $('.reply').click(function() {
-        $('.comment-reply-form').hide();
-        $(this).siblings('.comment-reply-form').toggle();
+<div id="comments" class="comment-container">
+    <script>
+    $(function() {
+        $('.reply').click(function() {
+            $('.comment-reply-form').hide();
+            $(this).siblings('.comment-reply-form').toggle();
+        });
     });
-});
-</script>
-<style>.input_id_honeypot {display:none !important;}</style>
-{% comment_thread object_for_comments %}
-<div class="section row">
-{% if user.is_authenticated %}
-<h3>{% trans "New Comment" %}</h3>
-<form method="post" id="comment" action="{{ comment_url }}#comment">
-    {% if not request.POST.replied_to %}
-    {% fields_for posted_comment_form %}
-    {% else %}
-    {% fields_for unposted_comment_form %}
-    {% endif %}
-    <div class="form-actions">
-        <input class="btn btn-primary btn-lg" type="submit" value="{% trans "Comment" %}">
+    </script>
+    <style>.input_id_honeypot {display:none !important;}</style>
+    
+    <div class="comment-header">
+        <p>{{ object_for_comments.comments_count }} Comment{{ object_for_comments.comments_count|pluralize }}</p>
     </div>
-</form>
-{% endif %}
-</div>
-{% endif %}
+    
+    {% comment_thread object_for_comments %}
+    
+    {% if user.is_authenticated %}
+    <form method="post" id="comment" action="{{ comment_url }}#comment" class="comment-form">
+        <h3>{% trans "Post a comment" %}</h3>
+        {% if not request.POST.replied_to %}
+            {% fields_for posted_comment_form %}
+        {% else %}
+            {% fields_for unposted_comment_form %}
+        {% endif %}
+        <div class="dashed-button form-actions">
+            <input class="btn btn-primary btn-lg" type="submit" value="{% trans "Submit Comment" %}">
+        </div>
+    </form>
+    {% else %}
+    <div class="login-container">
+        Please <a href="{% url 'login' %}?next={{ request.get_full_path }}" class="login-btn">Sign in</a> or 
+        <a href="{% url 'signup' %}" class="login-btn">Sign up</a> to comment.
+    </div>
+    {% endif %}
 </div>

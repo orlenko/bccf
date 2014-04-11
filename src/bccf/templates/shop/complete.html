@@ -60,18 +60,11 @@ _gaq.push(['_trackTrans']);
 
 {% block title %}{% trans "Order Complete" %}{% endblock %}
 
-{% block breadcrumb_menu %}
-{% for step in steps %}
-<li>
-    {{ step.title }}
-    <span class="divider">/</span>
-</li>
-{% endfor %}
-<li><strong>{% trans "Complete" %}</strong></li>
+{% block content %}
+<h1>Order Complete</h1>
 {% endblock %}
 
-
-{% block main %}
+{% block carousels %}
 <p>{% trans "Thank you for shopping with us, your order is complete." %}</p>
 <p>{% trans "We've sent you a receipt via email." %}</p>
 <p>{% trans "You can also view your invoice using one of the links below." %}</p>
@@ -80,6 +73,10 @@ _gaq.push(['_trackTrans']);
     <a class="btn btn-large btn-primary" href="{% url "shop_invoice" order.id %}?format=pdf">{% trans "Download PDF invoice" %}</a>
     <a class="btn btn-large" target="_blank" href="{% url "shop_invoice" order.id %}">{% trans "View invoice in your browser" %}</a>
 </p>
+
+{% if order.payment_method == 'bill' %}
+    Insert Billing Info Here.
+{% endif %}
 
 {# Custom stuff starts here. We cound have used overextend template tag, if it worked #}
 {% if request.GET.next or request.session.aftercheckout %}

@@ -114,13 +114,13 @@ class ProfileForm(Html5Mixin, forms.ModelForm):
         self._has_profile = Profile is not None
         if self._has_profile:
             profile_fields = ProfileFieldsForm().fields
-            if self.instance.id and self.instance.profile.membership_type == 'professional':
-                profile_fields['organization'].choices = [(None, '[No Organization]')] + [
-                    (org.profile.pk, org.get_full_name())
-                    for org in User.objects.filter(profile__membership_type='organization')
-                ]
-            else:
-                profile_fields.pop('organization', '')
+            #if self.instance.id and self.instance.profile.membership_type == 'professional':
+            #    profile_fields['organization'].choices = [(None, '[No Organization]')] + [
+            #        (org.profile.pk, org.get_full_name())
+            #        for org in User.objects.filter(profile__membership_type='organization')
+            #   ]
+            #else:
+            #    profile_fields.pop('organization', '')
 
             self.fields.update(profile_fields)
             if not self._signup:

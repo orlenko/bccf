@@ -18,8 +18,9 @@
 <fieldset>
     <form method="post"{% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
     {% fields_for form %}
+    {% csrf_token %}
     <div class="form-actions">
-        <input class="btn btn-primary btn-large" type="submit" value="{{ title }}">
+        <input class="lgreen-btn btn btn-primary btn-large" type="submit" value="{{ title }}">
     </div>
     </form>
 </fieldset>

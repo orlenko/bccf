@@ -6,9 +6,11 @@ from django.shortcuts import render_to_response
 from django.http.response import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.core.urlresolvers import reverse
 
 from bccf.models import Campaign
 from bccf.forms import CampaignForm
+from bccf.util.emailutil import send_moderate
 
 @login_required
 def create(request):
@@ -17,7 +19,11 @@ def create(request):
         form = CampaignForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Campaign successfully created')
+            
+            # Send moderation email
+            send_moderate(request, "A Campaign needs moderation", "bccf", "campaign", form.instance.pk)            
+            
+            messages.success(request, 'Campaign successfully created. The campaign is subject to review and can be taken down without notice.')
             return HttpResponseRedirect(form.instance.edit_url())
         else:
             messages.error(request, 'Please fix the errors below')
@@ -27,9 +33,10 @@ def create(request):
    
 @login_required 
 def edit(request, slug):
-    profile = request.user.profile
+    user = request.user
+    profile = user.profile
     
-    if not Campaign.objects.filter(slug=slug, user=profile).exists():
+    if not Campaign.objects.filter(slug=slug, user=user).exists():
         return HttpResponseRedirect('/')
         
     campaign = Campaign.objects.get(slug=slug)

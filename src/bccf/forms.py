@@ -86,6 +86,8 @@ class BCCFRatingForm(CommentSecurityForm):
 
         summ = Rating.objects.filter(object_pk=self.target_object.pk).aggregate(Sum('value'))  # @UndefinedVariable - poor PyDev
         self.target_object.rating_sum = int(summ['value__sum'])
+        if not self.target_object.rating_count or self.target_object.rating_count == 0:
+            self.target_object.rating_count = 1
         self.target_object.rating_average = self.target_object.rating_sum / self.target_object.rating_count
         self.target_object.save()
         return rating_instance
@@ -95,7 +97,6 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         exclude = ('membership_order',)
         model = UserProfile
-
 
 class EventForm(forms.ModelForm):
 
@@ -257,6 +258,7 @@ class FormStructureSurveyFormTwo(FormStructureSurveyBase):
     type = forms.CharField(widget=forms.HiddenInput(attrs={'id': 'form_structure_type'}))
 
 # GLOBAL
+    
 def to_mailing_list(email, add=True):
     """
     Add or remove email from MailChimp mailing list
@@ -267,7 +269,18 @@ class CreateAccountForm(UserCreationForm):
 
     MEMBERSHIP_TYPES = (
         ('parent', 'Parent'),
-        ('professional', 'Professional')    
+        ('professional', 'Professional'),
+        ('organization', 'Organization')    
+    )
+    MEMBERSHIP_LEVELS = (
+        ('A', 'Level A (Free)'),
+        ('B', 'Level B'),
+        ('C', 'Level C')    
+    )
+    PAYMENT_TYPES = (
+        ('Annual', 'Annual'),
+        ('Quarterly', 'Quarterly'),
+        ('Monthly', 'Monthly')    
     )
 
     email = forms.EmailField(required=True)
@@ -281,6 +294,9 @@ class CreateAccountForm(UserCreationForm):
     accept = forms.BooleanField(required=True)
     password2 = forms.CharField(label='Password (again)', required=True, widget=forms.PasswordInput)
     photo = forms.CharField(widget=AdvancedFileInput, required=False)
+    payment_frequency = forms.ChoiceField(required=True, choices=PAYMENT_TYPES,
+        help_text='Ignored if Level A is chosen.')
+    membership_level = forms.ChoiceField(required=True, choices=MEMBERSHIP_LEVELS)
 
     class Meta:
         model = User
@@ -314,15 +330,30 @@ class CreateAccountForm(UserCreationForm):
         profile.save(create_number=True)
 
 class ProfileFieldsForm(forms.ModelForm):
+        postal_code = forms.CharField(required=True)
+        gender = forms.ChoiceField(required=True, choices=UserProfile.GENDER_TYPES)
+        
         class Meta:
             model = UserProfile
-            exclude = settings.ACCOUNTS_PROFILE_FORM_EXCLUDE_FIELDS + ['user', 'description', 'photo']
-            widgets = {'organization': forms.HiddenInput()}
-
+            fields = ('postal_code', 'membership_type', 'gender', 'organization')
+            widgets = {
+                'organization': forms.HiddenInput,
+                'membership_type': forms.HiddenInput
+            }
+        
+        def save(self, *args, **kwargs):
+            user = User.objects.get(id=self.data['organization'])
+            self.instance.organization = user.profile
+            self.instance.membership_type = self.data['membership_type']
+            self.instance.postal_code = self.data['postal_code']
+            self.instance.save(create_number=True)
 
 class AddUserForm(Html5Mixin, forms.ModelForm):
     '''This form is used by an organization user.
     '''
+    email = forms.EmailField(required=True)
+    first_name = forms.CharField(required=True)
+    last_name = forms.CharField(required=True)
     password1 = forms.CharField(label="Password",
                                 widget=forms.PasswordInput(render_value=False))
     password2 = forms.CharField(label="Password (again)",
@@ -331,8 +362,6 @@ class AddUserForm(Html5Mixin, forms.ModelForm):
     class Meta:
         model = User
         fields = ("first_name", "last_name", "email", "username")
-        exclude = settings.ACCOUNTS_PROFILE_FORM_EXCLUDE_FIELDS + ['description', 'photo']
-        widgets = {'organization': forms.HiddenInput()}
 
     def __init__(self, *args, **kwargs):
         super(AddUserForm, self).__init__(*args, **kwargs)
@@ -417,10 +446,10 @@ class AddUserForm(Html5Mixin, forms.ModelForm):
         # Save profile model.
         ProfileFieldsForm(self.data, self.files, instance=user.profile).save()
         settings.use_editable()
-        if (settings.ACCOUNTS_VERIFICATION_REQUIRED or
-            settings.ACCOUNTS_APPROVAL_REQUIRED):
-            user.is_active = False
-            user.save()
+        #if (settings.ACCOUNTS_VERIFICATION_REQUIRED or
+        #    settings.ACCOUNTS_APPROVAL_REQUIRED):
+        #    user.is_active = False
+        #    user.save()
         return user
 
 
@@ -509,7 +538,7 @@ class AddUsersForm(forms.Form):
 
 
 class DelMember(forms.Form):
-    user = forms.IntegerField()
+    user = forms.IntegerField(widget=forms.HiddenInput)
 
     def save(self):
         user = User.objects.get(pk=self.cleaned_data['user'])
@@ -532,7 +561,7 @@ class PhotoForm(forms.ModelForm):
     
     class Meta:
         model = UserProfile
-        fields = ('photo',)    
+        fields = ('photo',)
     
     def handle_upload(self):
         image_path = 'uploads/profile-photos/'+self.files['photo'].name
@@ -595,7 +624,6 @@ class AccountInformationForm(forms.ModelForm):
             
         return email
         
-        
     def save(self, *args, **kwargs):
         user = self.instance
         qs = User.objects.exclude(id=user.id)
@@ -618,6 +646,15 @@ class ContactInformationForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('organization', 'job_title', 'website', 'phone_primary', 'street', 'street_2', 'city', 'province', 'postal_code', 'country')
+    
+    def __init__(self, *args, **kwargs):
+        super(ContactInformationForm, self).__init__(*args, **kwargs)
+        self.fields['organization'].widget.choices = self.get_organizations()
+        if self.instance.is_organization or not self.instance.is_level_A:
+            del self.fields['organization']
+            
+    def get_organizations(self):
+        return User.objects.filter(profile__membership_type__exact='organization').values_list('id', 'first_name')
         
 class ProfessionalProfileForm(forms.ModelForm):
     class Meta:
@@ -632,7 +669,43 @@ class AccountPreferencesForm(forms.ModelForm):
         model = UserProfile
         fields = ('show_in_list', 'in_mailing_list')
         
+class ForumPreferencesForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('avatar', 'show_signatures', 'signature', 'signature_html',)
+        widgets = {
+            'avatar': AdvancedFileInput        
+        }
+        
+    def handle_upload(self):
+        image_path = 'pybb/avatar'+self.files['avatar'].name
+        destination = open(MEDIA_ROOT+'/'+image_path, 'wb+')
+        for chunk in self.files['avatar'].chunks():
+            destination.write(chunk)
+        destination.close()
+        return image_path
+        
+    def save(self, *args, **kwargs):
+        super(ForumPreferencesForm, self).save(*args, **kwargs)
+        if 'avatar' in self.files:
+            self.instance.avatar = self.handle_upload()
+            self.instance.save()
+        
 class SocialMediaForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('facebook', 'twitter', 'linkedin', 'youtube', 'pinterest')
+        
+class RegisterUserForm(forms.Form):
+    """
+    Form to register organization members to professional-only events.
+    """
+    members = forms.MultipleChoiceField(widget=forms.SelectMultiple)
+    event = forms.ChoiceField()
+    
+    def __init__(self, request, *args, **kwargs):
+        super(RegisterUserForm, self).__init__(*args, **kwargs)
+        org_members = User.objects.filter(profile__organization=request.user.profile).values_list('id', 'last_name')
+        events_available = Event.objects.published().filter(page_for='professional').values_list('id', 'title')
+        self.fields['members'].widget.choices = org_members
+        self.fields['event'].widget.choices = events_available

@@ -3,42 +3,66 @@
     {% bccf_rating_for product %}
     {% include "includes/add_this.html" %}
 </div>
-<div class="section row-one">
-    <h3>{{ product }}</h3>
-    {{ product.content|richtext_filter|safe }}
-</div>
-{% if product.available and has_available_variations %}
-<ul id="variations" class="unstyled">
-	{% for variation in variations %}
-	<li id="variation-{{ variation.sku }}"
-		{% if not variation.default %}style="display:none;"{% endif %}>
-		{% if variation.has_price %}
-			{% if variation.on_sale %}
-				<span class="old-price">{{ variation.unit_price|currency }}</span>
-				{% trans "On sale:" %}
-			{% endif %}
-			<span class="price">{{ variation.price|currency }}</span>
-		{% else %}
-		    {% if has_available_variations %}
-		    {% trans "The selected options are currently unavailable." %}
-		    {% endif %}
-		{% endif %}
-	</li>
-	{% endfor %}
-</ul>
-<form method="post" class="form-horizontal form-shop">
-    {% fields_for add_product_form %}
-    <div class="form-actions-wrap">
-        <input id="add_cart_btn" type="submit" class="add-cart-btn btn btn-primary btn-large" name="add_cart" value="{% trans "Add to Cart" %}">
-        <span class="none">Product Added</span>
-        {% if settings.SHOP_USE_WISHLIST %}
-        <input type="submit" class="btn btn -large" name="add_wishlist" value="{% trans "Save for later" %}">
+
+<section class="product-box section row row-one">
+    <div class="col four product-image">
+        <img src="{{ MEDIA_URL }}{{ product.image }}" alt="{{ product }}"/>
+    </div>
+    <div class="col eight product-info">
+        <h3>{{ product }}</h3>
+        <article>
+            {{ product.content|safe }}       
+        </article>   
+    </div>
+</section>
+
+<section class="product-action section row row-one">
+    <div class="col six product-cart">
+        {% if product.available and has_available_variations %}
+        <ul id="product-variations">
+            {% for variation in variations %}
+            <li id="variation-{{ variation.sku }}" class="{% if not variation.default %}none{% endif %}">
+                {% if variation.has_price %}
+                    <span class="cur-price price">{{ variation.price|currency }}</span>
+                    
+                    {% if user.profile.is_level_C %}
+                        <span class="save-price price">{% trans "Save 15%" %}</span>
+                    {% endif %}
+                    {% if variation.on_sale %}
+                        <span class="old-price price">{{ variation.unit_price|currency }}</span>
+                    {% endif %}
+                {% else %}
+        		    {% if has_available_variations %}
+        		      {% trans "The selected options are currently unavailable." %}
+        		    {% endif %}
+                {% endif %}
+            </li>
+            {% endfor %}        
+        </ul>
+        <form method="post" class="form-horizontal form-shop section row row-one">
+            {% fields_for add_product_form %}
+            <span class="product-added none">Product Added</span>
+            <div class="form-actions dashed-button">
+                <input id="add_cart_btn" type="submit" class="add-cart-btn btn btn-primary btn-large" name="add_cart" value="{% trans "Add to Cart" %}">
+            </div>
+            {% if settings.SHOP_USE_WISHLIST %}
+            <input type="submit" class="btn btn -large" name="add_wishlist" value="{% trans "Save for later" %}">
+            {% endif %}
+        </form>
+        <div class="row row-one">
+            <a href="{% url 'shop_checkout' %}" class="lgreen-text strong">Proceed to checkout</a>
+        </div>
+        {% else %}
+        <p>{% trans "This product is currently unavailable." %}</p>
         {% endif %}
     </div>
-</form>
-{% else %}
-<p>{% trans "This product is currently unavailable." %}</p>
-{% endif %}
+    <div class="col six product-warning">
+        <p>Please allow 2 weeks for shipping and handling once payment has been received. 
+        Shipping charges will be added to your purchase at checkout.</p>    
+    </div>
+</section>
+ 
+<!-- Comments -->
 <div class="section row row-one">
     {% comments_for product %}
 </div>

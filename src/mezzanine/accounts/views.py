@@ -3,7 +3,7 @@ from django.contrib.auth import (authenticate, login as auth_login,
                                                logout as auth_logout)
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages import info, error
-from django.core.urlresolvers import NoReverseMatch
+from django.core.urlresolvers import reverse, NoReverseMatch
 from django.shortcuts import get_object_or_404, redirect
 from django.utils.translation import ugettext_lazy as _
 
@@ -140,6 +140,7 @@ def password_reset(request, template="accounts/account_password_reset.html"):
         send_verification_mail(request, user, "password_reset_verify")
         info(request, _("A verification email has been sent with "
                         "a link for resetting your password."))
+        return redirect("/")
     context = {"form": form, "title": _("Password Reset")}
     return render(request, template, context)
 
@@ -148,7 +149,7 @@ def password_reset_verify(request, uidb36=None, token=None):
     user = authenticate(uidb36=uidb36, token=token, is_active=True)
     if user is not None:
         auth_login(request, user)
-        return redirect("profile_update")
+        return redirect(reverse("update-tab", args=('account',)))
     else:
         error(request, _("The link you clicked is no longer valid."))
         return redirect("/")

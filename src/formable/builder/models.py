@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext, ugettext_lazy as _
 
 from bccf.models import TagBase, BCCFPage
+from bccf.managers import TagManager
 
 log = logging.getLogger(__name__)
 
@@ -55,11 +56,18 @@ class FormPublished(TagBase):
     closed = models.BooleanField('Closed', default=False);
     user = models.ForeignKey(User)
     
+    objects = TagManager()
+    
     class Meta:
         verbose_name = _("Published Form")
         verbose_name_plural = _("Published Forms")        
         
+    def __init__(self, *args, **kwargs):
+        super(FormPublished, self).__init__(*args, **kwargs)        
+        
     def save(self, **kwargs):
+        if not self.image:
+            self.image = 'uploads/childpage/placeholder-survey.png'
         if self.pk is None: 
             super(FormPublished, self).save(**kwargs)            
 

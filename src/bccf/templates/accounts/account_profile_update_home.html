@@ -7,14 +7,16 @@
 			We are processing your request, and will contact you soon.
 		</p>
 	{% else %}
-		<p>Membership: {{ membership }}</p>
-		<p>Expires: {{ expiration }}</p>
+		<p>Membership: {% if membership %}Level {{ profile.membership_level }} {{ profile.membership_type|title }}{% else %}Free {{ profile.membership_type|title }}{% endif %}</p>
+		<p>Expires: {% if expiration %}{{ expiration }}{% else %}Never{% endif %}</p>
 
+        {% if not profile.is_parent or not profile.is_level_A %}
 		<p>
 			To extend your current membership, <a href="{{ membership|membership_renew_url }}">click here</a>.
 		</p>
+		{% endif %}
 
-		{% if upgrades %}
+		{% if not profile.is_level_C and upgrades %}
 			<h3>Upgrade to:</h3>
 			<ul>
 				{% for upgrade in upgrades %}
@@ -23,8 +25,10 @@
 			</ul>
 		{% endif %}
 
+        {% if not profile.is_parent or not profile.is_level_A %}
 		<p>
 			To cancel your membership, <a href="{% url 'member-membership-cancel' %}">click here</a>
 		</p>
+		{% endif %}
 	{% endif %}
 </div>

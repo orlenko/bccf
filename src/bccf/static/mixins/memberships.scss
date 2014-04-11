@@ -1,0 +1,98 @@
+/* Scss Document 
+For BCCF Memberships
+*/
+
+.membership {
+	max-width:562px;
+	margin-bottom:18px;
+	float:left;
+	background-position:right;
+	background-repeat:repeat-y; 
+	
+	ul {
+		list-style:none;
+		}	
+	li {
+		float:left;
+		width:100%;
+		min-height:40px;
+		background: url(../img/mem-row.png) repeat;
+		margin-top:6px;
+		
+			p {float:right;
+			margin-right:72px;
+			text-align:center;
+			
+				&:first-child {
+					float:left;
+					width:50%;
+					text-align:left;
+					padding-left: 10px;
+					margin-right:10px;
+				}
+				
+			}
+		
+			&:first-child {background:none;
+						   min-height:100px;
+					       		p{float:right;
+								clear:both;
+								width:auto;
+								text-align:center;
+								margin: -8px 50px 18px;
+									&:nth-child(2) {
+													background-color:$lgreen;
+													float:right;
+													 text-align: center;
+													 margin: 0px 30px 18px;
+										
+													a {
+													font-weight:bold;	
+													color: #000;
+													float: left;
+													margin: 2px;
+													padding: 4px 22px;
+													text-decoration: none;
+													text-transform: uppercase;
+													border:1px dashed #fff;
+														
+														&:hover {color:$dgreen;
+														text-decoration:none;
+														background-color:$yellow;}
+													}
+													}
+					              }
+						  }
+		
+		
+	}
+	
+	
+}
+.mem-yellow {
+	@extend .membership;
+	background-image: url(../img/mem-yellow.gif); 
+}
+.mem-dteal {
+	@extend .membership;
+	background-image: url(../img/mem-dteal.gif); 
+}
+.mem-lteal {
+	@extend .membership;
+	background-image: url(../img/mem-lteal.gif); 
+}
+.mem-green {
+	@extend .membership;
+	background-image: url(../img/mem-green.gif); 
+}
+.two-words {
+	@extend .membership;
+	li { &:first-child 
+	{
+					       		p{float:right;
+								clear:both;
+								width:auto;
+								text-align:center;
+		margin: -8px 40px 18px;}}
+	}
+}
