@@ -93,8 +93,8 @@ def process(request, order_form):
                 'currency': 'CAD',
                 'details': {
                     'subtotal': str(subtotal.quantize(TWO_PLACES)),
-                    'tax': tax,
-                    'shipping': shipping,
+                    'tax': str(tax.quantize(TWO_PLACES)),
+                    'shipping': str(shipping.quantize(TWO_PLACES)),
                 },
             },
             'description': 'Invoice for BCCF Registration/Product Purchases'
