@@ -1,9 +1,9 @@
 // ==========================================================================
 
 //  Base Mixins - built with SASS - http://sass-lang.com/
-//  Theme URI: http://git.io/base
-//  Author: Matthew Hartman - http://www.matthewhartman.com.au/
-//  Version: 0.1 - Last Updated: 7th June, 2013
+//  VCN BCCF Project 2014
+//  From the original work of Matthew Hartman with BASE
+//  Authors/Contributors: Hugues Deraps, Karl Castillo & Vlad Orlenko.
 
 // ==========================================================================
 
@@ -24,4 +24,12 @@
   -webkit-border-radius: ($radius) + px;
   -moz-border-radius: ($radius) + px;
   border-radius: ($radius) + px;
+}
+
+// Input placeholder text
+@mixin placeholder {
+  &::-webkit-input-placeholder {@content}
+  &:-moz-placeholder           {@content}
+  &::-moz-placeholder          {@content}
+  &:-ms-input-placeholder      {@content}  
 }
