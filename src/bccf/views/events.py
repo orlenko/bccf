@@ -123,6 +123,7 @@ def signup(request, slug):
     context = RequestContext(request, locals())
     return render_to_response('bccf/event_signup.html', {}, context_instance=context)
 
+@login_required
 def event_payment(request, event_id):
     user = request.user
     event_reg = get_object_or_404(EventRegistration, ~Q(paid=True), event=event_id, user=user)
