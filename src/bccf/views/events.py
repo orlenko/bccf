@@ -96,7 +96,7 @@ def signup(request, slug):
                    messages.success(request, 'To complete the registration, please go through the checkout.')
                    
                    # Send event registration confirmation
-                   send_reminder("Event Registration Pending.", user, context={'event':event})
+                   send_reminder("Event Registration Pending.", request.user, context={'event':event})
                    
                else:
                    registration = EventRegistration.objects.create(user=request.user, event=event)
