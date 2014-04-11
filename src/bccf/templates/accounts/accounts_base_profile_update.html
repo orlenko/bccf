@@ -43,7 +43,7 @@
                     <li><a id="id_preferences" href="{% url 'update-tab' 'preferences' %}">Account Preferences</a></li>
                     {% if not profile.is_parent %}
                         <li><a id="id_profile" href="{% url 'update-tab' 'profile' %}">Professional Profile</a></li>
-                        <li><a id="id_social" href="{% url 'update-tab' 'social' %}">Social Media</a></li>>
+                        <li><a id="id_social" href="{% url 'update-tab' 'social' %}">Social Media</a></li>
                         <li><a id="id_forum" href="{% url 'update-tab' 'forum' %}">Forum Preferences</a></li>
                         {% if not profile.is_level_A %}
                             <li><a id="id_training" href="{% url 'update-tab' 'training' %}">Trainings</a></li>
