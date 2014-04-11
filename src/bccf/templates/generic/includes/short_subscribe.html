@@ -1,9 +1,11 @@
 {% load mezzanine_tags shop_tags i18n future %}
 {% if event_obj %}
     {% if not event_obj.is_full %}
+    <li{% if li_class %} class="{{ li_class }}"{% endif %}>
 		<form action="{{ event_obj.signup_url }}" method="post">
 			{% csrf_token %}
 			<input type="submit" value="Register" />
 		</form>
+    </li>
     {% endif %}
 {% endif %}

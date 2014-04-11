@@ -42,7 +42,7 @@
                             	<li>{{ event.date_start|date:"F d" }}</li>
                                 <li>{{ event.program.short_title }}</li>
                                 <li><a href="{{ event.get_absolute_url }}">Learn More</a></li>
-                                <li>{% bccf_short_subscribe_for event %}</li>
+                                {% bccf_short_subscribe_for event %}
                             </ul>
                         </div>
                 
@@ -73,7 +73,7 @@
                             	<li>{{ event.date_start|date:"F d" }}</li>
                                 <li>{{ event.program.short_title }}</li>
                                 <li><a href="{{ event.get_absolute_url }}">Learn More</a></li>
-                                <li>{% bccf_short_subscribe_for event %}</li>
+                                {% bccf_short_subscribe_for event %}
                             </ul>
                         </div>
                 

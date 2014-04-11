@@ -7,7 +7,7 @@
     {% endif %}
     <div class="section">
         <div class="col three">
-            <img src="{{ MEDIA_URL }}{% bccf_thumbnail user.photo 150 150 %}" alt="{{ user.user.get_full_name }}" class="photo" />
+            <img src="{{ MEDIA_URL }}{% bccf_thumbnail user.photo 200 200 %}" alt="{{ user.user.get_full_name }}" class="photo" />
         </div>
         <div class="col nine info">
             <h3><a href="#">{{ user.user.get_full_name }}</a></h3>

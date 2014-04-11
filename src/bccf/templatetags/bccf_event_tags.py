@@ -33,7 +33,11 @@ def bccf_subscribe_for(context, obj):
     return context
     
 @register.inclusion_tag("generic/includes/short_subscribe.html", takes_context=True)
-def bccf_short_subscribe_for(context, obj):
+def bccf_short_subscribe_for(context, obj, li_class=None):
+    """
+    Short version of the subscribe_for that will be used for event tables.
+    """
+    context['li_class'] = li_class
     profile = None
     request = context['request']
     user = request.user
