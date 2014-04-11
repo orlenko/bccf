@@ -30,23 +30,31 @@ paypal.configure({
     'client_secret': PAYPAL_CLIENT_SECRET
 })
 
-def process(request, order_form, order):
+def process(request, order_form):
     """
     Uses the REST API of Paypal to create a direct purchase payment according the entered
     Credit Card Number and Billing Information.
     """
     cart = Cart.objects.from_request(request)
     items = []
+    tax = request.session.get('tax_total', 0)
+    shipping = request.session.get('shipping_total', 0)
+    total = Decimal(tax) + Decimal(shipping)
     subtotal = Decimal(0)
-    if order_form._request.session["discount_code"]:
-        discount = DiscountCode.objects.get(code=order_form._request.session["discount_code"])
+    
+    discount = code = order_form._request.session.get('discount_code', None)
+    if code:
+        try:
+            discount = DiscountCode.objects.get(code=discount)
+        except:
+            log.debug("code doesn't exist")
    
     # Create a list of items to be sent to paypal
     for item in cart.items.all():
         price = item.unit_price
-        if discount:
-            price = price - cart.calculate_item_discount(item, discount)
-        subtotal = subtotal + price
+        if discount: # Dicounted?
+            price -= cart.calculate_item_discount(item, discount)
+        subtotal += price
         items.append({
             'name': 'item',
             'sku': item.sku,
@@ -55,23 +63,12 @@ def process(request, order_form, order):
             'quantity': item.quantity
         })
         
-    #log.debug(cart.items.all())
-    log.debug(items)      
-    log.debug(order.total)  
-    log.debug(order.tax_total)        
-    log.debug(order.shipping_total)
-    log.debug(subtotal)      
-        
-    #fail()
+    total += subtotal   
     
     # Makes sure that the prices have two decimal places    
     TWO_PLACES = Decimal(10) ** -2
-    
-    #discount = ''
-    #if order.discount_total:
-    #    discount = str(Decimal(order.discount_total).quantize(TWO_PLACES))
 
-    data = order_form.cleaned_data
+    #data = order_form.cleaned_data
 
     payment = paypal.Payment({
         'intent': 'sale',
@@ -92,12 +89,12 @@ def process(request, order_form, order):
                 #},
             },
             'amount': {
-                'total': str(Decimal(order.total).quantize(TWO_PLACES)),
+                'total': str(total.quantize(TWO_PLACES)),
                 'currency': 'CAD',
                 'details': {
                     'subtotal': str(subtotal.quantize(TWO_PLACES)),
-                    'tax': str(Decimal(order.tax_total).quantize(TWO_PLACES)),
-                    'shipping': str(Decimal(order.shipping_total).quantize(TWO_PLACES)),
+                    'tax': tax,
+                    'shipping': shipping,
                 },
             },
             'description': 'Invoice for BCCF Registration/Product Purchases'
@@ -109,12 +106,7 @@ def process(request, order_form, order):
     })
 
     if payment.create(): # Success
-        log.debug("Payment Successful: %s" % payment.id)
         request.session['paypal_id'] = payment.id
-        
-        log.debug(payment)
-        # payment.does_not_exist()
-        
         # Return redirect URL
         for link in payment.links:
             if link.method == "REDIRECT":
@@ -123,8 +115,13 @@ def process(request, order_form, order):
     else:
         raise CheckoutError(payment.error)
 
-def execute(request, payer_id):
-    paypal_id = request.session["paypal_id"]
+def execute(request):
+    paypal_id = request.session.get("paypal_id", None)
+    payer_id = request.GET.get("PayerID", None)
+    
+    if not paypal_id and not payer_id:
+        return False
+    
     payment = paypal.Payment.find(paypal_id)
     
     if payment.execute({"payer_id": payer_id}):

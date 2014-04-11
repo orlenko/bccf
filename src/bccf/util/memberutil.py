@@ -108,18 +108,25 @@ def billship_handler(request, order_form):
     """
     Calculates Shipping(Processing)
     """
+    shipping = Decimal(0)
     if not request.session.get("free_shipping"):
         cart = Cart.objects.from_request(request)
-        shipping = cart.total_price() * Decimal(Settings.get_setting('SHOP_DEFAULT_SHIPPING_VALUE'))
+        for item in cart.items.all():
+            if not item.sku.startswith('PRO-') or not item.sku.startswith('ORG-') or not item.startswith('EVENT-'):
+                shipping += item.unit_price * Decimal(Settings.get_setting('SHOP_DEFAULT_SHIPPING_VALUE')) 
         set_shipping(request, "Processing Fee", shipping)
 
 def tax_handler(request, order_form):
     """
     Calculates Tax
     """
+    tax = Decimal(0)
     cart = Cart.objects.from_request(request)
-    tax = cart.total_price() * Decimal(Settings.get_setting('SHOP_DEFAULT_TAX_RATE'))
-    set_tax(request, "GST+PST", tax)
+    for item in cart.items.all():
+        variation = ProductVariation.objects.get(sku=item.sku)
+        if not variation.tax_exempt:
+            tax += item.unit_price * Decimal(Settings.get_setting('SHOP_DEFAULT_TAX_RATE'))
+    set_tax(request, "GST 5%", tax)
 
 def order_handler(request, order_form, order):
     '''checks if the user who ordered the order
@@ -136,13 +143,8 @@ def payment_handler(request, order_form, order):
     """
     if order_form.cleaned_data.get('payment_method') == 'paypal':
         from cartridge.shop.payment import paypal_rest as paypal
-        href = paypal.process(request, order_form, order)
-        order.save()
-        request.session['order_id'] = order.pk
-        return href
-    else:
+        paypal.execute(request)
         return generate_transaction_id()
-
 
 def handle_membership(profile, order):
     if profile.membership_product_variation:
