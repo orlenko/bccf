@@ -114,7 +114,7 @@ def signup(request, slug):
                send_reminder("Event is now full", event.provider, context={'event':event, 'attendees':attendees})
              
            # Send event registration for provider
-           send_reminder("A user registered for your event", event.provider, context={'event':event, 'attendee':user})
+           send_reminder("A user registered for your event", event.provider, context={'event':event, 'attendee':request.user})
              
         else:
             messages.warning(request, 'The event is full.')
