@@ -21,7 +21,7 @@ from django.template.response import TemplateResponse
 
 from cartridge.shop.models import ProductVariation
 
-from bccf_mc.utils import subscribe, ping
+from bccf_mc.utils import subscribe, unsubscribe, ping
 
 from bccf import forms as f
 from bccf.util.memberutil import get_upgrades
@@ -195,6 +195,9 @@ def profile_update(request, tab='home'):
                 if tab == 'preferences':
                     if form.cleaned_data.get('in_mailing_list'):
                         subscribe(request, '8aebc01ca2', request.user.email) # News letter
+                    else:
+                        unsubscribe(request, '8aebc01ca2', request.user.email)
+                        
                 elif tab == 'adduser':
                     form = None
             else:
@@ -232,7 +235,7 @@ def register_event(request):
         message = 'Users registered successfully. Please continue with the  checkout to complete registrations.'
         
         # Send event registration confirmation
-        send_reminder("Event Registration Pending.", user, context={'event':event})
+        send_reminder("Event Registration Pending.", request.user, context={'event':event})
         
     else: # If not paid event, auto-register the members
         members = []        

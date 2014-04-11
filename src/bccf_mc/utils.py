@@ -18,11 +18,11 @@ def ping():
     except:
         log.debug('Invalid API Key')    
     
-def subscribe(request, list_id, email):
+def subscribe(request, list_name, list_id, email):
     try:
         m = get_mailchimp_api()
         m.lists.subscribe(list_id, {'email':email})
-        messages.success(request, 'Successfully added to mailing list, please confirm the addition.')
+        messages.success(request, 'Successfully added to mailing list. You will receive a confirmation email from Mailchimp.')
     except mailchimp.ListAlreadySubscribedError:
         messages.error(request, 'The email is already subscribed to the list')
     except mailchimp.Error, e:
