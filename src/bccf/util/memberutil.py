@@ -112,9 +112,9 @@ def billship_handler(request, order_form):
     if not request.session.get("free_shipping"):
         cart = Cart.objects.from_request(request)
         for item in cart.items.all():
-            if not item.sku.startswith('PRO-') or not item.sku.startswith('ORG-') or not item.startswith('EVENT-'):
+            if not item.sku.startswith('PRO-') and not item.sku.startswith('ORG-') and not item.startswith('EVENT-'):
                 shipping += item.unit_price * Decimal(Settings.get_setting('SHOP_DEFAULT_SHIPPING_VALUE')) 
-        set_shipping(request, "Processing Fee", shipping)
+        set_shipping(request, "Shipping and Handling", shipping)
 
 def tax_handler(request, order_form):
     """
