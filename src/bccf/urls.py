@@ -53,6 +53,7 @@ urlpatterns = patterns("",
     url(r'events/publish/(?P<slug>.*)/$', 'bccf.views.events.publish', name='events-publish'),
     url(r'events/attendees/(?P<id>.+)/$', 'bccf.views.events.attendees', name='events-attendees'),
     url(r'events/remove/survey/$', 'bccf.views.events.remove_survey', name='events-remove-survey'),
+    url(r'events/remind/(?P<id>.+)/$', 'bccf.views.events.event_payment', name='events-remind-payment'),
     url(r'events/(?P<slug>.*)/$', 'bccf.views.events.event', name='events-event'),
 
     # Campaigns

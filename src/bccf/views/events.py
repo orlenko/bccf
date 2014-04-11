@@ -2,7 +2,7 @@ import logging
 import csv
 import datetime
 
-from django.shortcuts import render_to_response, redirect
+from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.template.context import RequestContext
 from django.views.decorators.cache import never_cache
 from django.core.urlresolvers import reverse
@@ -123,6 +123,14 @@ def signup(request, slug):
     context = RequestContext(request, locals())
     return render_to_response('bccf/event_signup.html', {}, context_instance=context)
 
+def event_payment(request, event_id):
+    user = request.user
+    event_reg = get_object_or_404(EventRegistration, event=event_id, user=user, ~Q(paid=True))
+    event = event_reg.event
+    variation = ProductVariation.objects.get(sku='EVENT-%s' % event.pk)
+    request.cart.add_item(variation, 1)
+    recalculate_cart(request)
+    return redirect('shop/checkout')
 
 def event(request):
     pass
