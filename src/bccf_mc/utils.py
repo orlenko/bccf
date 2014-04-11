@@ -18,7 +18,7 @@ def ping():
     except:
         log.debug('Invalid API Key')    
     
-def subscribe(request, list_name, list_id, email):
+def subscribe(request, list_id, email):
     try:
         m = get_mailchimp_api()
         m.lists.subscribe(list_id, {'email':email})
