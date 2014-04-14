@@ -57,13 +57,6 @@ class FormPublishForm(forms.ModelForm):
         destination.close()
         return image_path
 
-    def is_valid(self):
-        if not 'title' in self.data:
-            return False
-        if not 'content' in self.data:
-            return False
-        return True
-
     def save(self, **kwargs):
         form_published = super(FormPublishForm, self).save(**kwargs)
         if 'image' in self.files:

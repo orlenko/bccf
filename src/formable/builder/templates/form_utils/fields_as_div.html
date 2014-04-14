@@ -1,11 +1,4 @@
-{% load mezzanine_tags %}
-
-{% nevercache %}
-<input type="hidden" name="referrer" value="{{ request.META.HTTP_REFERER }}">
-{% csrf_token %}
-{% endnevercache %}
-
-{% for field in form_for_fields %}
+{% for field in fields %}
     {% if field.is_hidden %}
         {{ field }}
     {% else %}
@@ -21,7 +14,7 @@
 
             {% if field.help_text %}
             <p class="help-block">{{ field.help_text }}</p>
-            {% endif %}
+            {% endif %}            
             
             {% if field.errors %}
             <p class="error-block">
