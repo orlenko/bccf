@@ -30,8 +30,12 @@ legend {
 }
 .lgreen-btn {
     @extend .bccf-btn;
-    color: #FFF;
+    color: #000;
     background: $lgreen;
+    text-decoration: none;
+    &:hover {
+        background: $yellow;
+    }
 }
 .form-group {
     margin: 10px 0;
