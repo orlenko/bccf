@@ -11,8 +11,12 @@
 
 /* FORMS */
 legend {
+    text-indent: 0 !important;
     border-bottom: 1px solid #000;
     width: 100%;
+}
+label {
+    padding: 0 !important;
 }
 .has-error {
     label {

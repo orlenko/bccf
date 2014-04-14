@@ -6091,20 +6091,26 @@ footer #newsletter .dashed-button a:hover {
 /* FORMS */
 /* line 13, ../mixins/generic.scss */
 legend {
+  text-indent: 0 !important;
   border-bottom: 1px solid #000;
   width: 100%;
 }
 
 /* line 18, ../mixins/generic.scss */
+label {
+  padding: 0 !important;
+}
+
+/* line 22, ../mixins/generic.scss */
 .has-error label {
   font-weight: bold;
 }
-/* line 21, ../mixins/generic.scss */
+/* line 25, ../mixins/generic.scss */
 .has-error input {
   border: 1px solid #8fab3d !important;
 }
 
-/* line 25, ../mixins/generic.scss */
+/* line 29, ../mixins/generic.scss */
 .error-block {
   font-size: 12px;
   font-size: 0.75rem;
@@ -6112,18 +6118,18 @@ legend {
   color: #8fab3d;
 }
 
-/* line 30, ../mixins/generic.scss */
+/* line 34, ../mixins/generic.scss */
 .form-help {
   font-size: 12px;
   font-size: 0.75rem;
   font-family: "PT Sans", sans-serif;
 }
-/* line 33, ../mixins/generic.scss */
+/* line 37, ../mixins/generic.scss */
 .form-help a {
   text-decoration: none;
 }
 
-/* line 37, ../mixins/generic.scss */
+/* line 41, ../mixins/generic.scss */
 .bccf-btn, .lgreen-btn {
   font-size: 12px;
   font-size: 0.75rem;
@@ -6133,53 +6139,53 @@ legend {
   font-weight: bold;
 }
 
-/* line 44, ../mixins/generic.scss */
+/* line 48, ../mixins/generic.scss */
 .lgreen-btn {
   color: #000;
   background: #8fab3d;
   text-decoration: none;
 }
-/* line 49, ../mixins/generic.scss */
+/* line 53, ../mixins/generic.scss */
 .lgreen-btn:hover {
   background: #fdcd26;
 }
 
-/* line 53, ../mixins/generic.scss */
+/* line 57, ../mixins/generic.scss */
 .form-group {
   margin: 10px 0;
 }
-/* line 55, ../mixins/generic.scss */
+/* line 59, ../mixins/generic.scss */
 .form-group p {
   margin-top: 2px;
   margin-bottom: 0;
 }
-/* line 59, ../mixins/generic.scss */
+/* line 63, ../mixins/generic.scss */
 .form-group label {
   font-size: 12px;
   font-size: 0.75rem;
   text-transform: uppercase;
 }
-/* line 63, ../mixins/generic.scss */
+/* line 67, ../mixins/generic.scss */
 .form-group .help-block {
   font-size: 12px;
   font-size: 0.75rem;
   margin-top: 0;
 }
-/* line 69, ../mixins/generic.scss */
+/* line 73, ../mixins/generic.scss */
 .form-group select,
 .form-group textarea,
 .form-group input {
   border: 1px solid #000;
   background-color: whitesmoke;
 }
-/* line 73, ../mixins/generic.scss */
+/* line 77, ../mixins/generic.scss */
 .form-group textarea {
   resize: vertical;
   overflow-y: scroll;
   min-height: 200px;
   width: 100%;
 }
-/* line 79, ../mixins/generic.scss */
+/* line 83, ../mixins/generic.scss */
 .form-group input[type='checkbox'] {
   background-color: #FFF;
   position: absolute;
@@ -6187,13 +6193,13 @@ legend {
   top: 15px;
   padding: 3px;
 }
-/* line 86, ../mixins/generic.scss */
+/* line 90, ../mixins/generic.scss */
 .form-group input[type='file'] {
   opacity: 0;
   position: absolute;
   z-index: -2;
 }
-/* line 92, ../mixins/generic.scss */
+/* line 96, ../mixins/generic.scss */
 .form-group #clear-photo,
 .form-group #fake-photo {
   height: 30px;
@@ -6201,18 +6207,18 @@ legend {
   background-color: #000;
   color: #FFF;
 }
-/* line 97, ../mixins/generic.scss */
+/* line 101, ../mixins/generic.scss */
 .form-group #clear-photo:hover,
 .form-group #fake-photo:hover {
   background-color: #fdcd26;
   color: #000;
 }
 
-/* line 103, ../mixins/generic.scss */
+/* line 107, ../mixins/generic.scss */
 .form-actions.dashed {
   margin-top: 20px;
 }
-/* line 105, ../mixins/generic.scss */
+/* line 109, ../mixins/generic.scss */
 .form-actions.dashed input {
   font-size: 12px;
   font-size: 0.75rem;
@@ -6226,7 +6232,7 @@ legend {
   text-decoration: none;
   text-transform: uppercase;
 }
-/* line 116, ../mixins/generic.scss */
+/* line 120, ../mixins/generic.scss */
 .form-actions.dashed input:hover {
   color: #336442;
   text-decoration: none;

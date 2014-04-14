@@ -20,6 +20,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.template.response import TemplateResponse
 
 from cartridge.shop.models import ProductVariation
+from cartridge.shop.utils import recalculate_cart
 
 from bccf_mc.utils import subscribe, unsubscribe, ping
 
@@ -71,6 +72,7 @@ def signup(request):
     membership_type = request.GET.get('type', None)
     membership_level = request.GET.get('level', None)
     payment_frequency = request.GET.get('freq', None)
+    membership_voting = request.GET.get('vote', None)
     
     form = f.CreateAccountForm(initial={'membership_type': membership_type,
         'membership_level': membership_level, 'payment_frequency': payment_frequency})
@@ -84,7 +86,6 @@ def signup(request):
                 If SKU exists in the query string and the SKU fits with the membership type, 
                 add that product to the cart and redirect the user to the checkout
                 """
-                from cartridge.shop.utils import recalculate_cart
                 membership_type = form.cleaned_data.get('membership_type')[:3].upper()
                 sku = '%s-%s-%s' % (membership_type, form.cleaned_data.get('membership_level'), form.cleaned_data.get('payment_frequency'))
                 variation = ProductVariation.objects.get(sku=sku)
@@ -111,6 +112,14 @@ def signup(request):
     
     context = RequestContext(request, locals())
     return render_to_response('accounts/account_signup.html', {}, context)
+
+@csrf_protect
+def membership_voting(request, type):
+    variation = ProductVariation.objects.get(sku=type)
+    request.cart.add_item(variation, 1)
+    recalculate_cart(request)
+    response = redirect('shop_checkout')
+    return response
 
 @sensitive_post_parameters()
 @csrf_protect
