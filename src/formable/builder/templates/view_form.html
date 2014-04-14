@@ -1,6 +1,6 @@
 {% extends "pages/bccfpage.html" %}
 
-{% load form_utils content_carousel_tags bccf_feature_tags %}
+{% load form_utils content_carousel_tags bccf_feature_tags bccf_rating_tags %}
 
 {% block extra_script %}
     {{ block.super }}
@@ -12,9 +12,12 @@
 {% block marquee %}{% endblock %}
 
 {% block content %}
+<div class="section row row-one social-box">
+    {% bccf_rating_for page %}
+    {% include "includes/add_this.html" %}
+</div>
 <h1>{{ page.title|title }} {% if page.closed %}<span class="closed">[CLOSED]</span>{% endif %}</h1>
 {{ page.content|safe }}
-{% include "includes/add_this.html" %}
 {% endblock %}
 
 {% block carousels %}

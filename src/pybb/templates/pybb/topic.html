@@ -2,7 +2,7 @@
 
 {% load url from future %}
 
-{% load pybb_tags i18n content_carousel_tags bccf_feature_tags mezzanine_tags %}
+{% load pybb_tags i18n content_carousel_tags bccf_feature_tags mezzanine_tags bccf_rating_tags %}
 
 {% block meta_title %}{{ topic.title|title }}{% endblock %}
 {% block title %}{{ topic.title|title }}{% endblock %}
@@ -19,9 +19,12 @@
 {% block marquee %}{% endblock %}
 
 {% block content %}
+<div class="section row row-one social-box">
+    {% bccf_rating_for topic %}
+    {% include "includes/add_this.html" %}
+</div>
 <h1>{{ topic.title|title }}</h1>
 {{ topic.content|safe }}
-{% include "includes/add_this.html" %}
 {% endblock %}
 
 {% block carousels %}
