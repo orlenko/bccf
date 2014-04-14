@@ -1,6 +1,6 @@
 {% extends "pages/bccfpage.html" %}
 
-{% load form_utils content_carousel_tags bccf_feature_tags bccf_rating_tags %}
+{% load i18n form_utils content_carousel_tags bccf_feature_tags bccf_rating_tags %}
 
 {% block extra_script %}
     {{ block.super }}
@@ -23,23 +23,26 @@
 {% block carousels %}
 
 {% if not page.closed %}
-{% if user.is_authenticated %}
 {% block message %}
 <div id="form_view" class="section row">
     <form id="form-form" action="{{ request.get_full_path }}" method="POST">
         {% csrf_token %}
         {{ form|render }}
+        {% if user.is_authenticated %}
         <div class="form-actions">
             <input class="lgreen-btn btn btn-primary btn-large" type="submit" value="Submit Survey">
         </div>
+        {% else %}
+        <div id="form-aux">
+            <div class="login-container">
+                <a href="/accounts/signup" class="login-btn">{% trans "Register" %}</a> {% trans "or" %} 
+                <a href="/accounts/login/?next={{ page.get_absolute_url }}" class="login-btn">{% trans "Login" %}</a> {% trans "to submit" %}.
+            </div>
+        </div>
+        {% endif %}
     </form>
 </div>
 {% endblock %}
-{% else %}
-<div id="form-aux">
-    <a href="{% url 'signup' %}">Register</a> or <a href="{% url 'login' %}">Login</a> submit.
-</div>
-{% endif %}
 {% endif %}
 
 <div class="section row row-two">

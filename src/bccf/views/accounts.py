@@ -32,7 +32,7 @@ from bccf.util.emailutil import send_welcome, send_moderate, send_welcome
 @csrf_protect
 @never_cache
 def my_login(request, template_name='accounts/account_login.html',#'registration/login.html',
-          redirect_field_name=REDIRECT_FIELD_NAME,
+          redirect_field_name='next',
           authentication_form=AuthenticationForm,
           current_app=None, extra_context=None):
               
