@@ -1,6 +1,6 @@
 {% load mezzanine_tags rating_tags i18n future staticfiles %}
 
-<div id="{{ child_obj.slug }}-rating" class="section col five mobile-full panel my-rating">
+<div id="{{ child_obj.slug }}-rating" class="section col five tablet-full mobile-full panel my-rating">
     <p id="rating-{{ rating_object.id }}"></p>
 
     <form method="post" action="{% url "rating" %}" id="rate-form" role="form">
