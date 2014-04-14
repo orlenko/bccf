@@ -10,6 +10,10 @@
 }
 
 /* FORMS */
+legend {
+    border-bottom: 1px solid #000;
+    width: 100%;
+}
 .form-help {
     @include font-size(12);
     font-family: $pt;

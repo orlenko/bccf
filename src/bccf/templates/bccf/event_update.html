@@ -1,36 +1,17 @@
 {% extends "pages/base_bccfpage.html" %}
 
-{% load i18n builder_tags %}
+{% load i18n builder_tags mezzanine_tags %}
 
 {% block content %}
 <h2>Edit Event</h2>
 {% endblock %}
 {% block carousels %}
 <form  enctype="multipart/form-data" action="{% url 'events-create' %}"  method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
+    {% fields_for form %}
     {% form_clone_for event %}
-    <!--
-    <p>
-    	<strong>Survey before:</strong>
-    	{% if event.survey_before %}
-    		<a href="{{ event.survey_before.get_absolute_url }}">{{ event.survey_before.title }}</a>
-    	{% else %}
-    		<a href="{% url 'formable-create-form' %}?before_event={{ event.pk }}">Create</a>
-    	{% endif %}
-    </p>
-    <p>
-    	<strong>Survey after:</strong>
-    	{% if event.survey_after %}
-    		<a href="{{ event.survey_after.get_absolute_url }}">{{ event.survey_after.title }}</a>
-    	{% else %}
-    		<a href="{% url 'formable-create-form' %}?after_event={{ event.pk }}">Create</a>
-    	{% endif %}
-    </p>
-    -->
-    <br/><br/>
-    <a href="{{ event.get_absolute_url }}">Click to view the event</a>
-    <br/><br/>
-    <input type="submit" value="Update Event" />
+    <div class="form-actions">
+        <a href="{{ event.get_absolute_url }}" class="lgreen-btn" target="_blank">Click to view the event</a>
+        <input class="lgreen-btn btn btn-primary btn-large" type="submit" value="Update Event">
+    </div>
 </form>
 {% endblock %}

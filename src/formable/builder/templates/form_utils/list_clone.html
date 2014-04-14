@@ -1,7 +1,11 @@
 {% if list_clone %}
 
-<section class="section row row-one">
-    <p>Survey Before:</p>
+<fieldset>
+<legend>Surveys</legend>
+<section class="form-group section row row-one">
+    <p>
+        <label>Survey Before</label>
+    </p>
     {% if event.survey_before %}
     <div class="with_survey">
         <a href="{{ event.survey_before.get_absolute_url }}">{{ event.survey_before.title }}</a> | 
@@ -18,8 +22,10 @@
     </select>
 </section>
 
-<section class="section row row-one">
-    <p>Survey After:</p>
+<section class="form-group section row row-one">
+    <p>
+        <label>Survey After</label>
+    </p>
     {% if event.survey_after %}
     <div class="with_survey">
         <a href="{{ event.survey_before.get_absolute_url }}">{{ event.survey_after.title }}</a> | 
@@ -35,6 +41,7 @@
         {% endfor %}
     </select>
 </section>
+</fieldset>
 
 <script type="text/javascript" >
     $('.select_survey').on('change', function(e) {
