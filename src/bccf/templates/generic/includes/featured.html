@@ -1,7 +1,8 @@
 {% load static bccf_tags %}
 {% for slide in slides %}
 <div class="{{ class }}-slide">
-    <img src="{{ MEDIA_URL }}{% bccf_thumbnail slide.image 535 250 %}" alt="{{ slide.title }}" />
+    <div style="background: url('{{ MEDIA_URL }}{% bccf_thumbnail slide.image 535 250 %}') top left 100% / cover no-repeat" class="slide-img"></div>
+    <!--<div src="{{ MEDIA_URL }}{% bccf_thumbnail slide.image 535 250 %}" alt="{{ slide.title }}" />-->
     <div class="{{ class }}-caption">
         <div class="caption-body col seven mobile-seven">
             <h4>{{ slide.title }}</h4>

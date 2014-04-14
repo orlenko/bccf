@@ -986,7 +986,7 @@ textarea {
 	.hnote-slide {
 		z-index:-50;
 		position:static;
-		img {
+		.slide-img {
 			width:100%;
 			height:250px;
 		    z-index:-100;
@@ -1049,7 +1049,7 @@ textarea {
 	.hpro-slide {
 		z-index:-50;
 		position:static;
-		img {
+		.slide-img {
 		    display: block;
 			width:100%;
 			height:250px;
