@@ -13,8 +13,8 @@
 
 {% block content %}
 <div class="section row row-one social-box">
-    {% bccf_rating_for page %}
     {% include "includes/add_this.html" %}
+    {% bccf_rating_for page %}
 </div>
 <h1>{{ page.title|title }} {% if page.closed %}<span class="closed">[CLOSED]</span>{% endif %}</h1>
 {{ page.content|safe }}

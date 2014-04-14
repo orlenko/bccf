@@ -1,9 +1,9 @@
 {% load bccf_rating_tags bccf_event_tags bccf_resource_tags bccf_blog_tags embed_video_tags comment_tags shop_tags %}
 <div class="section row row-one social-box">
+    {% include "includes/add_this.html" %}
     {% if child_obj.show_rating or child_obj.content_model != 'bccfgenericpage' %}
         {% bccf_rating_for child_obj %}
     {% endif %}
-    {% include "includes/add_this.html" %}
 </div>
 <div id="id_{{ child_obj.content_model }}_{{ child_obj.id }}" class="section row-one {{ child_obj.content_model }}">
     <h3>{{ child_obj.title }}</h3>

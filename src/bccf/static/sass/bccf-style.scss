@@ -2764,6 +2764,18 @@ footer {
     @include font-size(15)
 }
 
+.my-rating {
+    position: static;
+    text-align: left;
+    .star-rating-control {
+        position: static;
+        left: 0;
+    }
+    form {
+        position: static;    
+    }
+}
+
 footer {
 
 	#main-footer-nav {

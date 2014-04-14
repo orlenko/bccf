@@ -20,8 +20,8 @@
 
 {% block content %}
 <div class="section row row-one social-box">
-    {% bccf_rating_for topic %}
     {% include "includes/add_this.html" %}
+    {% bccf_rating_for topic %}
 </div>
 <h1>{{ topic.title|title }}</h1>
 {{ topic.content|safe }}
