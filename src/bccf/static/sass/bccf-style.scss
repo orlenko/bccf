@@ -1594,8 +1594,9 @@ textarea {
 }
 
 #related-resource-container {
-    background-color: $sgrey; 
-    padding: 20px;
+    background-color: $lgreen;
+    border-top: 2px solid $dgrey; 
+    padding: 15px;
 }
 
 .green-list {
