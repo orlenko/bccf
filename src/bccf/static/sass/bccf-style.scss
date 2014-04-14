@@ -2208,18 +2208,6 @@ textarea {
 /* End form builder */
 
 /* Forum */
-.topic {
-    .controls {
-        a {
-            text-decoration: none;
-            &:hover {
-                font-weight: bold;
-                color: $dgreen;
-            }
-        }
-    }
-}
-
 .post-header th {
     background-color: $sgreen;
     color: $dgreen;
@@ -2281,13 +2269,6 @@ textarea {
     background-color: $sgrey;
     padding: 20px;
     border-top: 2px solid $dgreen;
-    label {
-        width: 150px;
-        display: inline-block;
-    }
-    textarea {
-        max-width: 100%;
-    }
 }
 
 .pagination {

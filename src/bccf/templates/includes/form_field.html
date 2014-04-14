@@ -1,0 +1,22 @@
+<div class="form-group input_{{ field.id_for_label }} {{ field.field.type }}
+    {% if field.errors %} has-error{% endif %}">
+    {% if field.label %}
+        <p>
+            <label for="{{ field.auto_id }}">{{ field.label }}</label>
+            {% if field.field.required %}<i class="req-asterisk fa fa-asterisk"></i>{% endif %}
+        </p>
+    {% endif %}
+    {{ field }}
+
+    {% if field.help_text %}
+    <p class="help-block">{{ field.help_text }}</p>
+    {% endif %}
+    
+    {% if field.errors %}
+    <p class="error-block">
+        {% for e in field.errors %}
+            {% if not forloop.first %} / {% endif %}{{ e }}
+        {% endfor %}
+    </p>
+    {% endif %}
+</div>
