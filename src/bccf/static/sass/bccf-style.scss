@@ -2087,13 +2087,10 @@ textarea {
             color: #000;
         }
     }
+    .photo-over,
     img {
         width: 200px;
         height: 200px;
-    }
-    .photo-over {
-        background-image: url('../img/default_user-image-female.png');
-        background-size: 200px 200px;    
     }
 }
 
@@ -2759,9 +2756,47 @@ footer {
 
 
 } /* end #tag-widget */
+.photo {
+    border: 10px solid $sgrey;
+    width: 150px;
+    height: 150px; 
+}
+
+#photo-form {
+    img {
+        width: 150px;
+        height: 150px;
+    }
+    .photo-over {
+        width: 150px;
+        height: 150px;
+        background-size: 150px 150px;    
+    }
+}
+
+.fake-photo-container {
+    .photo-over {
+        @include font-size(10);
+        border: 10px solid $sgrey;
+        width: 150px;
+        height: 150px;
+        span {
+            left: 10px;
+        }
+    }
+}
 
 #tabs {
-    @include font-size(15)
+    @include font-size(12);
+    a {
+        font-weight: normal;
+        &:hover {
+            font-weight: inherit;    
+        }
+        &.current {
+            font-weight: inherit;    
+        }
+    }
 }
 
 .my-rating {
@@ -3217,6 +3252,20 @@ table td {
     	   border-bottom: none;
     	}
     }
+}
+
+#tabs {
+    ul {
+        padding-bottom: 0;    
+    }    
+}
+
+#main-form{
+    padding-left: 0;    
+}
+
+.fake-photo-container {
+    width: 200px;    
 }
 
 .subpage-tabs {
