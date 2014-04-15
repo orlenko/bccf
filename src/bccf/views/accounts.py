@@ -72,7 +72,6 @@ def signup(request):
     membership_type = request.GET.get('type', None)
     membership_level = request.GET.get('level', None)
     payment_frequency = request.GET.get('freq', None)
-    membership_voting = request.GET.get('vote', None)
     
     form = f.CreateAccountForm(initial={'membership_type': membership_type,
         'membership_level': membership_level, 'payment_frequency': payment_frequency})
