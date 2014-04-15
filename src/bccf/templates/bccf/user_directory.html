@@ -26,9 +26,16 @@
     </nav>
 </div>
 
-<div id="user-filter-container" class="section row row-one">
-    <input type="text" placeholder="Filter" />
-</div>
+<form id="user-filter-container" class="section row row-one">
+    <div class="form-group">
+        <span>Member Type:</span>
+        <select id="user-filter-select">
+            <option value="all">------------</option>        
+            <option value="professional" {% if t == 'professional' %}selected{% endif %}>Professional</option>        
+            <option value="organization" {% if t == 'organization' %}selected{% endif %}>Organization</option>        
+        </select>    
+    </div>
+</form>
 
 {% for user in recordlist %}
 {% include 'includes/user-box.html' %}
@@ -51,15 +58,29 @@
 <script type="text/javascript" >
 $(function() {
     var f = "{{ f }}";
+    var type = '';    
+    {% if t %}
+    type = "type={{ t }}&"
+    {% endif %}     
+    
     for(var i=26; i<=51; i++) {
         var letter = String.fromCharCode(i+(65-26));
+        
         if(f === letter) {
-            $('#letter-filter').append('<li><a href="?filter='+letter+'" class="current-filter">'+letter+'</a></li>');
+            $('#letter-filter').append('<li><a href="?'+type+'filter='+letter+'" class="current-filter">'+letter+'</a></li>');
         } else {
-            $('#letter-filter').append('<li><a href="?filter='+letter+'">'+letter+'</a></li>');
+            $('#letter-filter').append('<li><a href="?'+type+'filter='+letter+'">'+letter+'</a></li>');
         }
     }
     $('#letter-filter').append('<li><a href="?filter=all">All</a></li>');
+});
+$('#user-filter-select').on('change', function(e) {
+    e.preventDefault();
+    var url = "?type="+$(this).val();
+    {% if f %}
+        url += "&filter={{ f }}";
+    {% endif %}
+    window.location = url;   
 });
 </script>
 {% endblock %}
