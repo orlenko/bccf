@@ -60,6 +60,12 @@
                          {{ profile.phone_primary }}
                     </li>
                     {% endif %}
+                    {% if profile.fax %}
+                    <li>
+                        <span class="list-item-name"><i class="fa fa-print"></i> Fax</span>
+                        {{ profile.fax }}                 
+                    </li>
+                    {% endif %}
                     <li>
                         <span class="list-item-name"><i class="fa fa-envelope"></i> Email</span>
                         {{ profile.user.email }}
