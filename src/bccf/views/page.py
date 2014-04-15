@@ -86,7 +86,7 @@ def topic_page(request, topic):
 
 def user_list(request):
     page = BCCFPage.objects.get(slug__exact='member/directory');
-    p = request.GET.get('page_var')
+    p = request.GET.get('page')
     f = request.GET.get('filter')
     t = request.GET.get('type')
     

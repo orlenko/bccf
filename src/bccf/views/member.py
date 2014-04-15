@@ -23,29 +23,8 @@ def pub_profile(request):
     pass
 
 @login_required
-def profile(request):
-    user = request.user
-    user_profile = user.profile
-    order = user_profile.membership_order
-    membership = user_profile.membership_product_variation
-    expiration = user_profile.membership_expiration_datetime
-    upgrades = get_upgrades(membership)
-    add_users_form = AddUsersForm(initial=dict(organization=user.pk))
-    add_existing_user_form = AddExistingUserForm(initial=dict(organization=user.pk))
-    program_requests = ProgramRequest.objects.filter(user=user)
-    if 'addmembers' in request.session:
-        try:
-            new_users, new_user_errors = request.session.pop('addmembers')
-            feedback = {
-                'new_users': new_users,
-                'new_user_errors': new_user_errors
-            }
-        except:
-            pass
-
-    context = RequestContext(request, locals())
-    return render_to_response('bccf/membership/member_profile.html', {}, context_instance=context)
-
+def profile(request, profile_id):
+    pass
 
 @login_required
 def membership(request, slug):
