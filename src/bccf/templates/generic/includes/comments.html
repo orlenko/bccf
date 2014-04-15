@@ -5,7 +5,8 @@
             $('.comment-reply-form').hide();
             $(this).siblings('.comment-reply-form').toggle();
         });
-        $('.comment-obj-{{ object_for_comments.pk }} .expand').click(function() {
+        $('.expand').click(function() {
+            $('.comment .comment').hide();
             var parent = $(this).parent('.comment');
             parent.children('.comment').toggle();
         });
