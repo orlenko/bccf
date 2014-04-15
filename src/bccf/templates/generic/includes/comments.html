@@ -10,7 +10,11 @@
             var parent = $(this).parent('.comment');
             parent.children('.comment').toggle();
         });
-        $('.comment').children('.comment').find('.expand').hide();
+        $('.comment').each(function() {
+            if($(this).children('.comment').length() > 0) {
+                $(this).find('.expand').hide();
+            }
+        });
         $('.comment .comment').hide();
     });
 </script>     
