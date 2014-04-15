@@ -38,7 +38,7 @@
             <nav id="tabs" class="section row row-one">
                 <ul>
                     <li><a id="id_home" href="{% url 'update' %}">Home</a></li>
-                    <li><a href="{% url 'member-profile' profile.id %}">Public Profile</a></li>
+                    <li><a href="{{ profile.get_absolute_url }}">Public Profile</a></li>
                     <li><a id="id_account" href="{% url 'update-tab' 'account' %}">Account Information</a></li>
                     <li><a id="id_contact" href="{% url 'update-tab' 'contact' %}">Contact Information</a></li>
                     <li><a id="id_preferences" href="{% url 'update-tab' 'preferences' %}">Account Preferences</a></li>
