@@ -9,6 +9,8 @@
         $('.expand').click(function() {
             var parent = $(this).parent('.comment');
             parent.children('.comment').toggle();
+            console.log(parent);
+            console.log(parent.children('.comment'));
         });
     });
     </script>
