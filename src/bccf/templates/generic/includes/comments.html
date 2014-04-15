@@ -1,24 +1,4 @@
-{% load i18n mezzanine_tags comment_tags %}
-<script>
-    $(function() {
-        $('.reply').click(function() {
-            $('.comment-reply-form').hide();
-            $(this).siblings('.comment-reply-form').toggle();
-        });
-        $('.expand').click(function() {
-            $('.comment .comment').hide();
-            var parent = $(this).parent('.comment');
-            parent.children('.comment').toggle();
-        });
-        $('.comment').each(function() {
-            if($(this).children('.comment').length == 0) {
-                $(this).find('.expand').hide();
-            }
-        });
-        $('.comment .comment').hide();
-    });
-</script>     
-
+{% load i18n mezzanine_tags comment_tags %}    
 <div id="comments" class="comment-obj-{{ object_for_comments.pk }} comment-container">
     <style>.input_id_honeypot {display:none !important;}</style>
     
