@@ -1,5 +1,5 @@
 {% load i18n mezzanine_tags comment_tags %}
-<div id="comments" class="comment-container">
+<div id="comments" class="comment-obj-{{ object_for_comments.pk }} comment-container">
     <style>.input_id_honeypot {display:none !important;}</style>
     
     <script>
@@ -8,10 +8,9 @@
                 $('.comment-reply-form').hide();
                 $(this).siblings('.comment-reply-form').toggle();
             });
-            $('.expand').click(function() {
+            $('.comment-obj-{{ object_for_comments.pk }} .expand').click(function() {
                 var parent = $(this).parent('.comment');
                 parent.children('.comment').toggle();
-                console.log(parent.children('.comment'));
             });
             $('.comment .comment').hide();
         });
