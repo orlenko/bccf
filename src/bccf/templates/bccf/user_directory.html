@@ -65,11 +65,13 @@ $(function() {
     
     for(var i=26; i<=51; i++) {
         var letter = String.fromCharCode(i+(65-26));
+
+        url = "?"+type+"filter="+letter;        
         
         if(f === letter) {
-            $('#letter-filter').append('<li><a href="?'+type+'filter='+letter+'" class="current-filter">'+letter+'</a></li>');
+            $('#letter-filter').append('<li><a href="'+url+'" class="current-filter">'+letter+'</a></li>');
         } else {
-            $('#letter-filter').append('<li><a href="?'+type+'filter='+letter+'">'+letter+'</a></li>');
+            $('#letter-filter').append('<li><a href="'+url+'">'+letter+'</a></li>');
         }
     }
     $('#letter-filter').append('<li><a href="?filter=all">All</a></li>');
