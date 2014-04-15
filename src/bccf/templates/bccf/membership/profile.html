@@ -19,7 +19,9 @@
 {% block content %}
     <div id="profile-rating" class="section row row-one">
         {% include 'includes/add_this.html' %}
-        {% bccf_rating_for profile %}
+        {% if profile.membership_level == 'C' %}
+            {% bccf_rating_for profile %}
+        {% endif %}
     </div>
     <h1>{{ profile.user.get_full_name }}'s Profile</h1>
     <p id="profile-social">
