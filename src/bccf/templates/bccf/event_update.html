@@ -10,7 +10,7 @@
     {% fields_for form %}
     {% form_clone_for event %}
     <div class="form-actions">
-        <a href="{{ event.get_absolute_url }}" class="lgreen-btn" target="_blank">Click to view the event</a>
+        <a href="{% url 'events-publish' event.slug %}" class="lgreen-btn" target="_blank">Publish Event</a>
         <input class="lgreen-btn btn btn-primary btn-large" type="submit" value="Update Event">
     </div>
 </form>

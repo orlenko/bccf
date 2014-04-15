@@ -73,7 +73,7 @@ def publish(request, slug):
     event.save()
     send_moderate("An Event has been published", context={'event':event})
     messages.success(request, 'Event published. The event will be subject to review and can be taken down without notice.')
-    return redirect(reverse('update-tab', (), {'tab': 'training'}))
+    return redirect(reverse('update-tab', args=['training']))
 
 #@require_event_audience
 @never_cache

@@ -1,6 +1,6 @@
 {% load mezzanine_tags rating_tags i18n future staticfiles %}
 
-<div id="{{ rating_obj.pk }}-rating" class="section col five tablet-full mobile-full panel my-rating">
+<div id="rating-{{ rating_obj.pk }}-container" class="section col five tablet-full mobile-full panel my-rating">
     <p id="rating-{{ rating_object.id }}"></p>
 
     <form method="post" action="{% url "rating" %}" id="rate-form" role="form">
@@ -23,9 +23,9 @@
 <!-- Activate proper number of stars -->
 <script type="text/javascript">
     $(function() {
-        $('#{{ rating_obj.pk }}-rating .star').rating().rating('select', {{ rating_average|floatformat:"0" }} - 1);
+        $('#rate-form .star').rating().rating('select', {{ rating_average|floatformat:"0" }} - 1);
         {% if not request.user.is_authenticated or not rate_obj %}
-        $('#{{ rating_obj.pk }}-rating .star').rating('disable');
+        $('#rate-form .star').rating('disable');
         {% endif %}
     });
 </script>
