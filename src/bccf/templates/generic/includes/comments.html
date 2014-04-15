@@ -1,21 +1,21 @@
 {% load i18n mezzanine_tags comment_tags %}
+<script>
+    $(function() {
+        $('.reply').click(function() {
+            $('.comment-reply-form').hide();
+            $(this).siblings('.comment-reply-form').toggle();
+        });
+        $('.comment-obj-{{ object_for_comments.pk }} .expand').click(function() {
+            var parent = $(this).parent('.comment');
+            parent.children('.comment').toggle();
+        });
+        $('.comment .comment').hide();
+    });
+</script>     
+
 <div id="comments" class="comment-obj-{{ object_for_comments.pk }} comment-container">
     <style>.input_id_honeypot {display:none !important;}</style>
     
-    <script>
-        $(function() {
-            $('.reply').click(function() {
-                $('.comment-reply-form').hide();
-                $(this).siblings('.comment-reply-form').toggle();
-            });
-            $('.comment-obj-{{ object_for_comments.pk }} .expand').click(function() {
-                var parent = $(this).parent('.comment');
-                parent.children('.comment').toggle();
-            });
-            $('.comment .comment').hide();
-        });
-    </script>     
-
     <div class="comment-header">
         <p>{{ object_for_comments.comments_count }} Comment{{ object_for_comments.comments_count|pluralize }}</p>
     </div>
