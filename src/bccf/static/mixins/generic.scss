@@ -54,9 +54,11 @@ label {
         background: $yellow;
     }
 }
+#form-body,
 .form-group {
     margin: 10px 0;
-    .section_head {
+    .section-head {
+        @include font-size(20);
         font-family: $roboto;
     }
     p {

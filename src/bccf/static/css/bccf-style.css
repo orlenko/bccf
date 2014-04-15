@@ -20,7 +20,7 @@
 }
 
 /* line 4, ../sass/font-awesome/_core.scss */
-.fa {
+.fa, .icon, #form-body .sort-icon, #form-body .edit-icon, #form-body .del-icon {
   display: inline-block;
   font-family: FontAwesome;
   font-style: normal;
@@ -106,11 +106,11 @@
 }
 
 /* line 14, ../sass/font-awesome/_bordered-pulled.scss */
-.fa.pull-left {
+.fa.pull-left, .pull-left.icon, #form-body .pull-left.sort-icon, #form-body .pull-left.edit-icon, #form-body .pull-left.del-icon {
   margin-right: .3em;
 }
 /* line 15, ../sass/font-awesome/_bordered-pulled.scss */
-.fa.pull-right {
+.fa.pull-right, .pull-right.icon, #form-body .pull-right.sort-icon, #form-body .pull-right.edit-icon, #form-body .pull-right.del-icon {
   margin-left: .3em;
 }
 
@@ -333,7 +333,7 @@
 }
 
 /* line 17, ../sass/font-awesome/_icons.scss */
-.fa-times:before {
+.fa-times:before, #form-body .del-icon:before {
   content: "\f00d";
 }
 
@@ -591,7 +591,7 @@
 }
 
 /* line 72, ../sass/font-awesome/_icons.scss */
-.fa-edit:before,
+.fa-edit:before, #form-body .edit-icon:before,
 .fa-pencil-square-o:before {
   content: "\f044";
 }
@@ -1257,7 +1257,8 @@
 
 /* line 212, ../sass/font-awesome/_icons.scss */
 .fa-unsorted:before,
-.fa-sort:before {
+.fa-sort:before,
+#form-body .sort-icon:before {
   content: "\f0dc";
 }
 
@@ -4405,14 +4406,14 @@ textarea {
   text-decoration: none;
 }
 /* line 1892, ../sass/bccf-style.scss */
-.user-box a.fa {
+.user-box a.fa, .user-box a.icon, .user-box #form-body a.sort-icon, #form-body .user-box a.sort-icon, .user-box #form-body a.edit-icon, #form-body .user-box a.edit-icon, .user-box #form-body a.del-icon, #form-body .user-box a.del-icon {
   height: 20px;
   width: 20px;
   text-align: center;
   line-height: 20px;
 }
 /* line 1897, ../sass/bccf-style.scss */
-.user-box a.fa:hover {
+.user-box a.fa:hover, .user-box a.icon:hover, .user-box #form-body a.sort-icon:hover, #form-body .user-box a.sort-icon:hover, .user-box #form-body a.edit-icon:hover, #form-body .user-box a.edit-icon:hover, .user-box #form-body a.del-icon:hover, #form-body .user-box a.del-icon:hover {
   color: #FFF;
   text-decoration: none !important;
 }
@@ -4445,7 +4446,7 @@ textarea {
   font-size: 0.9375rem;
 }
 /* line 1922, ../sass/bccf-style.scss */
-.user-box .info i.fa:before {
+.user-box .info i.fa:before, .user-box .info i.icon:before, .user-box .info #form-body i.sort-icon:before, #form-body .user-box .info i.sort-icon:before, .user-box .info #form-body i.edit-icon:before, #form-body .user-box .info i.edit-icon:before, .user-box .info #form-body i.del-icon:before, #form-body .user-box .info i.del-icon:before {
   margin-right: 5px;
 }
 /* line 1926, ../sass/bccf-style.scss */
@@ -6065,6 +6066,89 @@ footer #newsletter .dashed-button a:hover {
   /* End Footer */
 }
 /* End Mobile Media Query */
+/* line 1, ../mixins/builder.scss */
+#builder-main {
+  margin: 0;
+}
+
+/* line 5, ../mixins/builder.scss */
+#builder-sidebar {
+  margin-top: 3px;
+}
+/* line 7, ../mixins/builder.scss */
+#builder-sidebar .section-head {
+  font-weight: bold;
+  border-bottom: 1px solid #000;
+}
+/* line 12, ../mixins/builder.scss */
+#builder-sidebar #formable-add-row,
+#builder-sidebar .field {
+  display: block;
+  height: 40px;
+  line-height: 40px;
+  padding-left: 10px;
+}
+/* line 17, ../mixins/builder.scss */
+#builder-sidebar #formable-add-row:hover,
+#builder-sidebar .field:hover {
+  background-color: #e5e9d2;
+}
+/* line 21, ../mixins/builder.scss */
+#builder-sidebar #formable-add-row {
+  text-decoration: none;
+}
+/* line 23, ../mixins/builder.scss */
+#builder-sidebar #formable-add-row:hover {
+  text-decoration: inherit;
+}
+/* line 27, ../mixins/builder.scss */
+#builder-sidebar .field {
+  cursor: -webkit-grab;
+  cursor: -moz-grab;
+  cursor: grab;
+  z-index: 99;
+}
+
+/* line 35, ../mixins/builder.scss */
+.icon, #form-body .sort-icon, #form-body .edit-icon, #form-body .del-icon {
+  color: #8fab3d;
+  position: absolute;
+  right: 0;
+  top: 0;
+  cursor: pointer;
+}
+/* line 42, ../mixins/builder.scss */
+.icon:hover, #form-body .sort-icon:hover, #form-body .edit-icon:hover, #form-body .del-icon:hover {
+  color: #fdcd26;
+}
+
+/* line 48, ../mixins/builder.scss */
+#form-body .container {
+  padding: 0;
+}
+/* line 51, ../mixins/builder.scss */
+#form-body li {
+  display: block !important;
+}
+/* line 54, ../mixins/builder.scss */
+#form-body .sort-icon {
+  cursor: -webkit-grab;
+  cursor: -moz-grab;
+  cursor: grab;
+}
+/* line 61, ../mixins/builder.scss */
+#form-body .edit-icon {
+  right: 30px;
+}
+/* line 66, ../mixins/builder.scss */
+#form-body .del-icon {
+  right: 13px;
+}
+/* line 71, ../mixins/builder.scss */
+#form-body label {
+  display: block;
+}
+
 /* line 2, ../mixins/login.scss */
 .login-header p:first-child {
   font-size: 50px;
@@ -6202,56 +6286,71 @@ label {
   background: #fdcd26;
 }
 
-/* line 57, ../mixins/generic.scss */
+/* line 58, ../mixins/generic.scss */
+#form-body,
 .form-group {
   margin: 10px 0;
 }
-/* line 59, ../mixins/generic.scss */
-.form-group .section_head {
+/* line 60, ../mixins/generic.scss */
+#form-body .section-head,
+.form-group .section-head {
+  font-size: 20px;
+  font-size: 1.25rem;
   font-family: "Roboto Slab", serif;
 }
-/* line 62, ../mixins/generic.scss */
+/* line 64, ../mixins/generic.scss */
+#form-body p,
 .form-group p {
   margin-top: 2px;
   margin-bottom: 0;
 }
-/* line 66, ../mixins/generic.scss */
+/* line 68, ../mixins/generic.scss */
+#form-body ul,
 .form-group ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
-/* line 70, ../mixins/generic.scss */
+/* line 72, ../mixins/generic.scss */
+#form-body ul li,
 .form-group ul li {
   display: inline-block;
 }
-/* line 74, ../mixins/generic.scss */
+/* line 76, ../mixins/generic.scss */
+#form-body label,
 .form-group label {
   font-size: 12px;
   font-size: 0.75rem;
   text-transform: uppercase;
 }
-/* line 78, ../mixins/generic.scss */
+/* line 80, ../mixins/generic.scss */
+#form-body .help-block,
 .form-group .help-block {
   font-size: 12px;
   font-size: 0.75rem;
   margin-top: 0;
 }
-/* line 84, ../mixins/generic.scss */
+/* line 86, ../mixins/generic.scss */
+#form-body select,
+#form-body textarea,
+#form-body input,
 .form-group select,
 .form-group textarea,
 .form-group input {
   border: 1px solid #000;
   background-color: whitesmoke;
 }
-/* line 88, ../mixins/generic.scss */
+/* line 90, ../mixins/generic.scss */
+#form-body textarea,
 .form-group textarea {
   resize: vertical;
   overflow-y: scroll;
   min-height: 200px;
   width: 100%;
 }
-/* line 95, ../mixins/generic.scss */
+/* line 97, ../mixins/generic.scss */
+#form-body #clear-photo,
+#form-body #fake-photo,
 .form-group #clear-photo,
 .form-group #fake-photo {
   height: 30px;
@@ -6259,18 +6358,20 @@ label {
   background-color: #000;
   color: #FFF;
 }
-/* line 100, ../mixins/generic.scss */
+/* line 102, ../mixins/generic.scss */
+#form-body #clear-photo:hover,
+#form-body #fake-photo:hover,
 .form-group #clear-photo:hover,
 .form-group #fake-photo:hover {
   background-color: #fdcd26;
   color: #000;
 }
 
-/* line 106, ../mixins/generic.scss */
+/* line 108, ../mixins/generic.scss */
 .form-actions.dashed {
   margin-top: 20px;
 }
-/* line 108, ../mixins/generic.scss */
+/* line 110, ../mixins/generic.scss */
 .form-actions.dashed input {
   font-size: 12px;
   font-size: 0.75rem;
@@ -6284,7 +6385,7 @@ label {
   text-decoration: none;
   text-transform: uppercase;
 }
-/* line 119, ../mixins/generic.scss */
+/* line 121, ../mixins/generic.scss */
 .form-actions.dashed input:hover {
   color: #336442;
   text-decoration: none;

@@ -1,0 +1,74 @@
+#builder-main {
+    margin: 0;
+}
+
+#builder-sidebar {
+    margin-top: 3px;
+    .section-head {
+        font-weight: bold;
+        border-bottom: 1px solid #000;    
+    }
+    #formable-add-row,
+    .field {
+        display: block;
+        height: 40px;
+        line-height: 40px;
+        padding-left: 10px;
+        &:hover {
+            background-color: $sgreen;        
+        }
+    }
+    #formable-add-row {
+        text-decoration: none;
+        &:hover {
+            text-decoration: inherit;        
+        }    
+    }
+    .field {
+        cursor: -webkit-grab;     
+        cursor: -moz-grab;     
+        cursor: grab;
+        z-index: 99;    
+    }
+}
+
+.icon {
+    @extend .fa;
+    color: $lgreen;
+    position: absolute;
+    right: 0;
+    top: 0;
+    cursor: pointer;
+    &:hover {
+        color: $yellow;    
+    }
+}
+
+#form-body {
+    .container {
+        padding: 0;    
+    }
+    li {
+        display: block !important;    
+    }
+    .sort-icon {
+        @extend .icon;
+        @extend .fa-sort;
+        cursor: -webkit-grab;
+        cursor: -moz-grab;
+        cursor: grab;
+    }
+    .edit-icon {
+        @extend .icon;
+        @extend .fa-edit;
+        right: 30px;   
+    }
+    .del-icon {
+        @extend .icon;
+        @extend .fa-times;
+        right: 13px;    
+    }
+    label {
+        display: block;
+    }
+}

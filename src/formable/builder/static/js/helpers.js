@@ -1,12 +1,12 @@
 // Fields that will be created
 var fields = {
-    'text-field': '<label for="text-field">Text</label>: <input type="text" name="text-field"/>',
-    'textarea-field': '<label for="textarea-field">Multiline</label>: <textarea name="textarea-field" rows="4" cols="5"></textarea>',
-    'password-field': '<label for="password-field">Password</label>: <input type="password" name="password-field"/>',
-    'select-field': '<label for="select-field">Select</label>: <select name="select-field"><option>Option 1</option><option>Option 2</option><option>Option 3</option></select>',
-    'multiselect-field': '<label for="multiselect-field">Multiselect</label>: <select multiple name="multiselect-field"><option>Option 1</option><option>Option 2</option><option>Option 3</option></select>',
-    'checkbox-field': '<label for="checkbox-field">Checkbox</label>: <div class="buttons inline"><input type="checkbox" name="checkbox-field"/><span>Checkbox 1</span><input type="checkbox" name="checkbox-field"/><span>Checkbox 2</span><input type="checkbox" name="checkbox-field"/><span>Checkbox 3</span></div>',
-    'radioset-field': '<label for="radioset-field">Radioset</label>: <div class="buttons inline"><input type="radio" name="radioset-field"/><span>Radio 1</span><input type="radio" name="radioset-field"/><span>Radio 2</span><input type="radio" name="radioset-field"/><span>Radio 3</span></div>',
+    'text-field': '<label for="text-field">Text</label> <input type="text" name="text-field"/>',
+    'textarea-field': '<label for="textarea-field">Multiline</label> <textarea name="textarea-field" rows="4" cols="5"></textarea>',
+    'password-field': '<label for="password-field">Password</label> <input type="password" name="password-field"/>',
+    'select-field': '<label for="select-field">Select</label> <select name="select-field"><option>Option 1</option><option>Option 2</option><option>Option 3</option></select>',
+    'multiselect-field': '<label for="multiselect-field">Multiselect</label> <select multiple name="multiselect-field"><option>Option 1</option><option>Option 2</option><option>Option 3</option></select>',
+    'checkbox-field': '<label for="checkbox-field">Checkbox</label> <div class="buttons inline"><input type="checkbox" name="checkbox-field"/><span>Checkbox 1</span><input type="checkbox" name="checkbox-field"/><span>Checkbox 2</span><input type="checkbox" name="checkbox-field"/><span>Checkbox 3</span></div>',
+    'radioset-field': '<label for="radioset-field">Radioset</label> <div class="buttons inline"><input type="radio" name="radioset-field"/><span>Radio 1</span><input type="radio" name="radioset-field"/><span>Radio 2</span><input type="radio" name="radioset-field"/><span>Radio 3</span></div>',
     'static-text-field': '<span>Static Text Field</span>',
     'static-section-field': '<span class="section-head">Section Heading</span>',
 };
@@ -420,7 +420,7 @@ var get_textarea_field = function(label, val, id) {
 
 var create_fieldset = function(id, legend) {
     $(id).append(   
-        '<li class="form_row row draggable droppable"><fieldset class="container"><legend>'
+        '<li class="form_row row draggable droppable section"><fieldset class="container"><legend>'
         +legend+'</legend><ul class="ten col no-style-list sortable"></ul>\
         <div class="icon-container two">\
             <b class="sort-icon"></b>\
@@ -453,7 +453,7 @@ var create_fieldset = function(id, legend) {
 var create_field = function(lastli, id) {
     var fieldul = lastli.children('fieldset').children('ul');
     
-    fieldul.append('<li class="'+id+' row-one twelve">'
+    fieldul.append('<li class="'+id+' row-one section">'
         +fields[id]+'<div class="icon-container three">\
             <b class="sort-icon"></b>\
             <b class="del-icon"></b>\
