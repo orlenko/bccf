@@ -10,10 +10,8 @@
             });
             $('.expand').click(function() {
                 var parent = $(this).parent('.comment');
-                parent.children('.comment').each(function() {
-                    console.log($(this));
-                    $(this).toggle();
-                });
+                parent.children('.comment').toggle();
+                console.log(parent.children('.comment'));
             });
             $('.comment .comment').hide();
         });
