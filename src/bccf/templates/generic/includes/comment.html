@@ -9,7 +9,8 @@
             });
             $('.expand').click(function() {
                 var parent = $(this).parent('.comment');
-                parent.children('.comment').each(function(){
+                parent.children('.comment').each(function() {
+                    console.log($(this));
                     $(this).toggle();
                 });
             });
