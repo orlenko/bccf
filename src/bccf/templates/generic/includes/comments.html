@@ -11,7 +11,7 @@
             parent.children('.comment').toggle();
         });
         $('.comment').each(function() {
-            if($(this).children('.comment').length > 0) {
+            if($(this).children('.comment').length == 0) {
                 $(this).find('.expand').hide();
             }
         });
