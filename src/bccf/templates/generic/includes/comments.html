@@ -2,6 +2,23 @@
 <div id="comments" class="comment-container">
     <style>.input_id_honeypot {display:none !important;}</style>
     
+    <script>
+        $(function() {
+            $('.reply').click(function() {
+                $('.comment-reply-form').hide();
+                $(this).siblings('.comment-reply-form').toggle();
+            });
+            $('.expand').click(function() {
+                var parent = $(this).parent('.comment');
+                parent.children('.comment').each(function() {
+                    console.log($(this));
+                    $(this).toggle();
+                });
+            });
+            $('.comment .comment').hide();
+        });
+    </script>     
+
     <div class="comment-header">
         <p>{{ object_for_comments.comments_count }} Comment{{ object_for_comments.comments_count|pluralize }}</p>
     </div>
