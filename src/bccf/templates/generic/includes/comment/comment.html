@@ -21,6 +21,9 @@
             <a href="#reply-{{ comment_obj.id }}" class="reply">
                 <i class="fa fa-reply"></i> {% trans "Reply" %}
             </a>
+            <a href="#expand-{{ comment_obj.id }}" class="expand">
+                <i class="fa fa-chevron-down"></i> {% trans "Expand" %}
+            </a>
             
             <form class="comment-reply-form comment-form" method="post" id="reply-{{ comment_obj.id }}"
                 action="{{ comment_url }}#reply-{{ comment_obj.id }}"
@@ -32,6 +35,9 @@
                     {% fields_for unposted_comment_form %}
                 {% endif %}
                 <input type="hidden" name="replied_to" value="{{ comment_obj.id }}">
+                <p>
+                    Please be aware that all comments are monitored and approved before they are displayed.        
+                </p>
                 <div class="dashed-button form-actions">
                     <input class="btn btn-primary btn-lg" type="submit" value="{% trans "Submit Reply" %}">
                 </div>

@@ -6,6 +6,10 @@
             $('.comment-reply-form').hide();
             $(this).siblings('.comment-reply-form').toggle();
         });
+        $('.expand').click(function() {
+            $(this).find("> .comment").toggle();
+        });
+        $('.comment > .comment').hide();
     });
     </script>
     <style>.input_id_honeypot {display:none !important;}</style>
@@ -24,6 +28,9 @@
         {% else %}
             {% fields_for unposted_comment_form %}
         {% endif %}
+        <p>
+            Please be aware that all comments are monitored and approved before they are displayed.        
+        </p>
         <div class="dashed-button form-actions">
             <input class="btn btn-primary btn-lg" type="submit" value="{% trans "Submit Comment" %}">
         </div>
