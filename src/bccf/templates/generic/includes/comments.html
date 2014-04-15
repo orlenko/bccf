@@ -1,19 +1,5 @@
 {% load i18n mezzanine_tags comment_tags %}
 <div id="comments" class="comment-container">
-    <script>
-    $(function() {
-        $('.reply').click(function() {
-            $('.comment-reply-form').hide();
-            $(this).siblings('.comment-reply-form').toggle();
-        });
-        $('.expand').click(function() {
-            var parent = $(this).parent('.comment');
-            parent.children('.comment').toggle();
-            console.log(parent);
-            console.log(parent.children('.comment'));
-        });
-    });
-    </script>
     <style>.input_id_honeypot {display:none !important;}</style>
     
     <div class="comment-header">

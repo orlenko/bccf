@@ -1,6 +1,22 @@
 {% load bccf_comment_tags comment_tags %}
 <!-- .comment-container -->
    
+    <script>
+        $(function() {
+            $('.reply').click(function() {
+                $('.comment-reply-form').hide();
+                $(this).siblings('.comment-reply-form').toggle();
+            });
+            $('.expand').click(function() {
+                var parent = $(this).parent('.comment');
+                parent.children('.comment').each(function(){
+                    $(this).toggle();
+                });
+            });
+            $('.comment .comment').hide();
+        });
+    </script>   
+
     {% for comment in comments_for_thread %}
     <div id="comment-{{ comment.id }}"
     class="comment media section{% if comment.by_author %} comment-author{% endif %}">
