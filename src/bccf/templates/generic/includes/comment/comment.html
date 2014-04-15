@@ -21,11 +21,11 @@
             <a href="#reply-{{ comment_obj.id }}" class="reply">
                 <i class="fa fa-reply"></i> {% trans "Reply" %}
             </a>
-            <!--
+            
             <a href="#expand-{{ comment_obj.id }}" class="expand">
                 <i class="fa fa-chevron-down"></i> {% trans "Expand" %}
             </a>
-            -->
+            
             
             <form class="comment-reply-form comment-form" method="post" id="reply-{{ comment_obj.id }}"
                 action="{{ comment_url }}#reply-{{ comment_obj.id }}"
