@@ -7,7 +7,7 @@
             $(this).siblings('.comment-reply-form').toggle();
         });
         $('.expand').click(function() {
-            $(this).children("+ .comment").toggle();
+            $(this).find("+ .comment").toggle();
         });
         $('.comment .comment').hide();
     });
