@@ -23,9 +23,9 @@
 <!-- Activate proper number of stars -->
 <script type="text/javascript">
     $(function() {
-        $('#{{ child_obj.slug }}-rating .star').rating().rating('select', {{ rating_average|floatformat:"0" }} - 1);
+        $('#{{ rating_obj.pk }}-rating .star').rating().rating('select', {{ rating_average|floatformat:"0" }} - 1);
         {% if not request.user.is_authenticated or not rate_obj %}
-        $('#{{ child_obj.slug }}-rating .star').rating('disable');
+        $('#{{ rating_obj.pk }}-rating .star').rating('disable');
         {% endif %}
     });
 </script>
