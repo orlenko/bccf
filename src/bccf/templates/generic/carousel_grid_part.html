@@ -18,7 +18,7 @@
                     {% else %}
                     <a href="{{ slide.get_absolute_url }}">
                     {% endif %}
-                        <h2>{{ slide.title|truncatechars:25 }}</h2>
+                        <h2>{{ slide.title|truncatechars:20 }}</h2>
                     </a>
                     <p class="no-tablet">
                         {% if slide.content_model == 'formpublished' and slide.get_content_model.closed %}
