@@ -35,8 +35,9 @@
         {% else %}
         <div id="form-aux">
             <div class="login-container">
-                <a href="/accounts/signup" class="login-btn">{% trans "Register" %}</a> {% trans "or" %} 
-                <a href="/accounts/login/?next={{ page.get_absolute_url }}" class="login-btn">{% trans "Login" %}</a> {% trans "to submit" %}.
+                <a href="/accounts/login/?next={{ page.get_absolute_url }}" class="login-btn">{% trans "Sign in" %}</a> {% trans "to submit" %}
+                {% trans "or" %}
+                <a href="/accounts/signup" class="login-btn">{% trans "Sign up" %}</a>.
             </div>
         </div>
         {% endif %}
