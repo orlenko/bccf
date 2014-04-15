@@ -24,7 +24,7 @@
                     <div class="photo-over">
                         <span><i class="fa fa-pencil-square-o"></i> Edit Profile Picture</span>                    
                     </div>
-                    <img src="{{ MEDIA_URL }}{% bccf_thumbnail profile.photo 400 400 %}" id="fake-photo" class="photo" alt="Default User Photo"/>
+                    <img src="{{ MEDIA_URL }}{% bccf_thumbnail profile.photo 400 400 %}" id="fake-photo" class="photo" alt="{{ profile.user.get_full_name }}"/>
                 </div>
                 <div class="form-group input_id_photo"> 
                     {{ photo_form.photo }}

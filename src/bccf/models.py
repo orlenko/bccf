@@ -932,7 +932,7 @@ class UserProfile(PybbProfile):
         
     @permalink
     def get_absolute_url(self):
-        return ('member-profile', (), {'profile_id': self.id})
+        return ('member-profile', (), {'id':self.id})
 
 def is_product_variation_categ(variation, categ):
     for category in variation.product.categories.all():

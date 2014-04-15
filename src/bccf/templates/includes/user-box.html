@@ -10,7 +10,7 @@
             <img src="{{ MEDIA_URL }}{% bccf_thumbnail user.photo 200 200 %}" alt="{{ user.user.get_full_name }}" class="photo" />
         </div>
         <div class="col nine info">
-            <h3><a href="#">{{ user.user.get_full_name }}</a></h3>
+            <h3><a href="{{ user.get_absolute_url }}">{{ user.user.get_full_name }}</a></h3>
             <p class="social">
             {% if user.facebook %}
             <a href="{{ user.facebook }}" class="fa fa-facebook"></a>

@@ -6066,6 +6066,38 @@ footer #newsletter .dashed-button a:hover {
   /* End Footer */
 }
 /* End Mobile Media Query */
+/* line 2, ../mixins/profile.scss */
+#profile-social a {
+  color: #8fab3d;
+  text-decoration: none;
+}
+/* line 5, ../mixins/profile.scss */
+#profile-social a:hover {
+  color: #fdcd26;
+}
+
+/* line 11, ../mixins/profile.scss */
+#profile-container .profile-part:not(:first-of-type) {
+  padding-top: 20px;
+  border-top: 3px dashed #a6b2a6;
+}
+/* line 16, ../mixins/profile.scss */
+#profile-container .contact-info ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+/* line 21, ../mixins/profile.scss */
+#profile-container .contact-info .list-item-name {
+  display: inline-block;
+  padding: 5px 0;
+  width: 80px;
+}
+/* line 26, ../mixins/profile.scss */
+#profile-container .contact-info .list-item-name:after {
+  content: ':';
+}
+
 /* line 1, ../mixins/builder.scss */
 #builder-main {
   margin: 0;
@@ -6126,29 +6158,29 @@ footer #newsletter .dashed-button a:hover {
 #form-body .container {
   padding: 0;
 }
-/* line 53, ../mixins/builder.scss */
+/* line 51, ../mixins/builder.scss */
 #form-body li {
   display: block !important;
 }
-/* line 56, ../mixins/builder.scss */
+/* line 54, ../mixins/builder.scss */
 #form-body .sort-icon {
   cursor: -webkit-grab;
   cursor: -moz-grab;
   cursor: grab;
 }
-/* line 63, ../mixins/builder.scss */
+/* line 61, ../mixins/builder.scss */
 #form-body .edit-icon {
   right: 30px;
 }
-/* line 68, ../mixins/builder.scss */
+/* line 66, ../mixins/builder.scss */
 #form-body .del-icon {
   right: 13px;
 }
-/* line 73, ../mixins/builder.scss */
+/* line 71, ../mixins/builder.scss */
 #form-body label {
   display: block;
 }
-/* line 76, ../mixins/builder.scss */
+/* line 74, ../mixins/builder.scss */
 #form-body .row-active {
   background-color: #e5e9d2;
 }

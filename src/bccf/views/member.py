@@ -9,22 +9,20 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http.response import HttpResponseRedirect
-from django.shortcuts import render_to_response, redirect
+from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.template.context import RequestContext
 
 from bccf.util.memberutil import get_upgrades, require_any_membership
 from bccf.util.emailutil import send_moderate
 from bccf.forms import AddUserForm, AddExistingUserForm, DelMember, AddUsersForm, ReqProgram
-from bccf.models import ProgramRequest
+from bccf.models import ProgramRequest, UserProfile
 
 log = logging.getLogger(__name__)
 
-def pub_profile(request):
-    pass
-
-@login_required
-def profile(request, profile_id):
-    pass
+def profile(request, id, template='bccf/membership/profile.html'):
+    profile = get_object_or_404(UserProfile, pk=id)
+    context = {'profile':profile}
+    return render_to_response(template, context, context_instance=RequestContext(request))
 
 @login_required
 def membership(request, slug):
