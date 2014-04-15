@@ -7,7 +7,8 @@
             $(this).siblings('.comment-reply-form').toggle();
         });
         $('.expand').click(function() {
-            $(this).parent('.comment').children('.comment').toggle();
+            var parent = $(this).parent('.comment');
+            parent.children('.comment').toggle();
         });
     });
     </script>
