@@ -6126,27 +6126,31 @@ footer #newsletter .dashed-button a:hover {
 #form-body .container {
   padding: 0;
 }
-/* line 51, ../mixins/builder.scss */
+/* line 53, ../mixins/builder.scss */
 #form-body li {
   display: block !important;
 }
-/* line 54, ../mixins/builder.scss */
+/* line 56, ../mixins/builder.scss */
 #form-body .sort-icon {
   cursor: -webkit-grab;
   cursor: -moz-grab;
   cursor: grab;
 }
-/* line 61, ../mixins/builder.scss */
+/* line 63, ../mixins/builder.scss */
 #form-body .edit-icon {
   right: 30px;
 }
-/* line 66, ../mixins/builder.scss */
+/* line 68, ../mixins/builder.scss */
 #form-body .del-icon {
   right: 13px;
 }
-/* line 71, ../mixins/builder.scss */
+/* line 73, ../mixins/builder.scss */
 #form-body label {
   display: block;
+}
+/* line 76, ../mixins/builder.scss */
+#form-body .row-active {
+  background-color: #e5e9d2;
 }
 
 /* line 2, ../mixins/login.scss */
