@@ -17,7 +17,7 @@
                 </p>
             </div>
         </div>
-        {% if request.user.is_authenticated %}
+        <!--{% if request.user.is_authenticated %}
             <a href="#reply-{{ comment_obj.id }}" class="reply">
                 <i class="fa fa-reply"></i> {% trans "Reply" %}
             </a>
@@ -39,7 +39,7 @@
                     <input class="btn btn-primary btn-lg" type="submit" value="{% trans "Submit Reply" %}">
                 </div>
             </form>
-        {% endif %}
+        {% endif %}-->
     {% else %}
         <p>
             {% if comment_obj.is_removed %}
