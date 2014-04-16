@@ -36,6 +36,11 @@ class FormStructure(models.Model):
         verbose_name_plural = _("Form Structures")
     
     @permalink
+    def get_admin_url(self):
+        return ('admin:%s_%s_change' % (self._meta.app_label, self._meta.module_name),
+            (self.id,), {})    
+    
+    @permalink
     def get_edit_url(self):
         return ('formable-edit-clone-form', (), {'type':'edit', 'id':self.pk})
     @models.permalink

@@ -123,7 +123,7 @@ ADMIN_MENU_ORDER = (
     ("News", ("news.NewsPost",)),
     ("Programs", ("bccf.Program", "bccf.ProgramRequest")),
     ("Resources", ("bccf.Article", "bccf.DownloadableForm", "bccf.Magazine", "bccf.Podcast", "bccf.TipSheet", "bccf.Video")),
-    ("Forum", ("pybb.Forum", "pybb.Topic", "pybb.Post", "pybb.Profile")),
+    ("Forum", (("Create Survey", "formable-create-form"), "pybb.Forum", "pybb.Topic", "pybb.Post", "pybb.Profile")),
 )
 
 # A three item sequence, each containing a sequence of template tags

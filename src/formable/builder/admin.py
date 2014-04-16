@@ -17,17 +17,20 @@ class QuestionLine(admin.TabularInline):
     """
     model = Question
     
-class FieldAnswerLine(admin.TabularInline):
+class FieldAnswerLine(admin.StackedInline):
     """
     Inline for FieldAnswer
     """
     model = FieldAnswer
+    extra = 0
+    readonly_fields = ('question', 'answer', 'form_filled')
     
-class FormPublishedLine(admin.TabularInline):
+class FormPublishedLine(admin.StackedInline):
     """
     Inline for FormPublished
     """
     model = FormPublished
+    fields = ('title', 'status', 'publish_date', 'expiry_date', 'content', 'bccf_topic', 'featured', 'page_for', 'image')
 
 class FormStructureAdmin(admin.ModelAdmin):
     """
@@ -114,7 +117,7 @@ class FormFilledAdmin(admin.ModelAdmin):
     """
     Admin for FormFilled
     """
-    readonly_fields = ('filled', 'title', 'form_published',)
+    readonly_fields = ('user', 'filled', 'title', 'form_published',)
     fieldsets = [
         ('Form Details', {'fields':['user', 'title', 'form_published']}),
         ('Meta', {'fields':['filled']})
@@ -130,7 +133,7 @@ class QuestionAdmin(admin.ModelAdmin):
     """
     Admin for Question
     """
-    readonly_fields = ('date',)
+    readonly_fields = ('question', 'num_answers', 'required', 'form_published', 'date')
     fieldsets = [
         ('Question Details', {'fields':['question', 'num_answers', 'required']}),
         ('Question Owners', {'fields':['form_published']}),
@@ -161,4 +164,4 @@ admin.site.register(FormStructure, FormStructureAdmin)
 admin.site.register(FormPublished, FormPublishedAdmin)
 admin.site.register(FormFilled, FormFilledAdmin)
 admin.site.register(Question, QuestionAdmin)
-admin.site.register(FieldAnswer, FieldAnswerAdmin)
+#admin.site.register(FieldAnswer, FieldAnswerAdmin)
