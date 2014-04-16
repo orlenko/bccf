@@ -6440,57 +6440,55 @@ label {
   @incldue font-size(30);
   font-weight: bold;
 }
-/* line 12, ../mixins/comment.scss */
+/* line 11, ../mixins/comment.scss */
+#comments .comment-header p:nth-child(2) {
+  text-align: right;
+}
+/* line 15, ../mixins/comment.scss */
 #comments .comment {
   border-bottom: 2px dashed #a6b2a6;
   margin-bottom: 20px;
 }
-/* line 15, ../mixins/comment.scss */
+/* line 18, ../mixins/comment.scss */
 #comments .comment p {
   margin: 0;
 }
-/* line 17, ../mixins/comment.scss */
+/* line 20, ../mixins/comment.scss */
 #comments .comment p span {
   font-weight: bold;
 }
-/* line 21, ../mixins/comment.scss */
+/* line 24, ../mixins/comment.scss */
 #comments .comment .commenter-info {
   margin-top: 20px;
 }
-/* line 24, ../mixins/comment.scss */
-#comments .comment .comment {
-  border-bottom: none;
-  padding: 0;
-  margin: 20px 0 0 20px;
-}
-/* line 29, ../mixins/comment.scss */
+/* line 27, ../mixins/comment.scss */
 #comments .comment .comment-photo {
   width: 50px;
   height: 50px;
 }
-/* line 34, ../mixins/comment.scss */
+/* line 32, ../mixins/comment.scss */
 #comments .comment-form {
   padding-top: 20px;
 }
-/* line 36, ../mixins/comment.scss */
+/* line 34, ../mixins/comment.scss */
 #comments .comment-form h3 {
   font-size: 20px;
   font-size: 1.25rem;
   font-family: "PT Sans", sans-serif;
   font-weight: bold;
 }
-/* line 41, ../mixins/comment.scss */
+/* line 39, ../mixins/comment.scss */
 #comments .comment-form textarea {
   width: 100%;
   border: 1px solid #414042;
   background-color: whitesmoke;
 }
-/* line 47, ../mixins/comment.scss */
+/* line 45, ../mixins/comment.scss */
 #comments .form-actions {
   margin: 10px auto !important;
   display: block;
 }
-/* line 50, ../mixins/comment.scss */
+/* line 48, ../mixins/comment.scss */
 #comments .form-actions input {
   font-size: 12px;
   font-size: 0.75rem;
@@ -6504,7 +6502,7 @@ label {
   text-decoration: none;
   text-transform: uppercase;
 }
-/* line 61, ../mixins/comment.scss */
+/* line 59, ../mixins/comment.scss */
 #comments .form-actions input:hover {
   color: #336442;
   text-decoration: none;

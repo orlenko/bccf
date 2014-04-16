@@ -49,15 +49,9 @@
             $(this).siblings('.comment-reply-form').toggle();
         });
         $('.expand').click(function() {
-            var parent = $(this).parent('.comment');
+            var parent = $(this).parent('.comment-container');
             parent.children('.comment').toggle();
         });
-        $('.comment').each(function() {
-            if($(this).children('.comment').length == 0) {
-                $(this).find('.expand').hide();
-            }
-        });
-        $('.comment .comment').hide();
     });
 </script> 
 
