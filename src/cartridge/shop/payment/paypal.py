@@ -131,8 +131,8 @@ def process(request, order_form, order):
 
 
 COUNTRIES = (
-    ("US", "UNITED STATES"),
     ("CA", "CANADA"),
+    ("US", "UNITED STATES"),
     ("GB", "UNITED KINGDOM"),
     ("AF", "AFGHANISTAN"),
     ("AX", "ALAND ISLANDS"),

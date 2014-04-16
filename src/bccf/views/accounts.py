@@ -20,8 +20,9 @@ from django.views.decorators.csrf import csrf_protect
 from django.template.response import TemplateResponse
 
 from cartridge.shop.models import ProductVariation
+from cartridge.shop.utils import recalculate_cart
 
-from bccf_mc.utils import subscribe, ping
+from bccf_mc.utils import subscribe, unsubscribe, ping
 
 from bccf import forms as f
 from bccf.util.memberutil import get_upgrades
@@ -31,7 +32,7 @@ from bccf.util.emailutil import send_welcome, send_moderate, send_welcome
 @csrf_protect
 @never_cache
 def my_login(request, template_name='accounts/account_login.html',#'registration/login.html',
-          redirect_field_name=REDIRECT_FIELD_NAME,
+          redirect_field_name='next',
           authentication_form=AuthenticationForm,
           current_app=None, extra_context=None):
               
@@ -84,7 +85,6 @@ def signup(request):
                 If SKU exists in the query string and the SKU fits with the membership type, 
                 add that product to the cart and redirect the user to the checkout
                 """
-                from cartridge.shop.utils import recalculate_cart
                 membership_type = form.cleaned_data.get('membership_type')[:3].upper()
                 sku = '%s-%s-%s' % (membership_type, form.cleaned_data.get('membership_level'), form.cleaned_data.get('payment_frequency'))
                 variation = ProductVariation.objects.get(sku=sku)
@@ -111,6 +111,14 @@ def signup(request):
     
     context = RequestContext(request, locals())
     return render_to_response('accounts/account_signup.html', {}, context)
+
+@csrf_protect
+def membership_voting(request, type):
+    variation = ProductVariation.objects.get(sku=type)
+    request.cart.add_item(variation, 1)
+    recalculate_cart(request)
+    response = redirect('shop_checkout')
+    return response
 
 @sensitive_post_parameters()
 @csrf_protect
@@ -195,6 +203,9 @@ def profile_update(request, tab='home'):
                 if tab == 'preferences':
                     if form.cleaned_data.get('in_mailing_list'):
                         subscribe(request, '8aebc01ca2', request.user.email) # News letter
+                    else:
+                        unsubscribe(request, '8aebc01ca2', request.user.email)
+                        
                 elif tab == 'adduser':
                     form = None
             else:
@@ -232,7 +243,7 @@ def register_event(request):
         message = 'Users registered successfully. Please continue with the  checkout to complete registrations.'
         
         # Send event registration confirmation
-        send_reminder("Event Registration Pending.", user, context={'event':event})
+        send_reminder("Event Registration Pending.", request.user, context={'event':event})
         
     else: # If not paid event, auto-register the members
         members = []        

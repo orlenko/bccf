@@ -33,6 +33,7 @@ urlpatterns = patterns("",
 
     url('^bccf_admin_page_ordering/$', 'bccf.views.page.bccf_admin_page_ordering', name='bccf-admin-page-ordering'),
 
+    url("^accounts/voting/(?P<type>.+)/$", "bccf.views.accounts.membership_voting", name="voting-membership"),
     url("^accounts/login/$", "bccf.views.accounts.my_login", name="login"),
     url("^accounts/profile", "bccf.views.accounts.profile_update", name="profile-tab"),
     url("^accounts/register/$", "bccf.views.accounts.register_event", name='register-event'),
@@ -53,6 +54,7 @@ urlpatterns = patterns("",
     url(r'events/publish/(?P<slug>.*)/$', 'bccf.views.events.publish', name='events-publish'),
     url(r'events/attendees/(?P<id>.+)/$', 'bccf.views.events.attendees', name='events-attendees'),
     url(r'events/remove/survey/$', 'bccf.views.events.remove_survey', name='events-remove-survey'),
+    url(r'events/remind/(?P<id>\d+)/$', 'bccf.views.events.event_payment', name='events-remind-payment'),
     url(r'events/(?P<slug>.*)/$', 'bccf.views.events.event', name='events-event'),
 
     # Campaigns

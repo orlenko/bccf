@@ -1,9 +1,9 @@
-{% load i18n %}
+{% load i18n mezzanine_tags %}
 <div class="alert-info">
 <h4>All fields should have a different name/question.</h4>
 </div>
 <div id="builder-main" class="col twelve">
-    <div class="col three mobile-full">
+    <div id="builder-sidebar" class="col three mobile-full">
         <!-- Settings Buttons -->
         {% block settings_buttons %}
         <div class="section twelve row section-head">
@@ -24,10 +24,10 @@
                 <span id="text-field"  class="field draggable">Text Field</span>
             </div>
             <div class="section twelve row field-container-inner">
-                <span id="textarea-field" class="field draggable">Multiline Text Field</span>
+                <span id="textarea-field" class="field draggable">Textarea Field</span>
             </div>
             <div class="section twelve row field-container-inner">
-                <span id="select-field" class="field draggable">Select Field</span>
+                <span id="select-field" class="field draggable">Dropdown Field</span>
             </div>
             <div class="section twelve row field-container-inner">
                 <span id="multiselect-field" class="field draggable">Multiselect Field</span>
@@ -36,7 +36,7 @@
                 <span id="checkbox-field" class="field draggable">Checkbox Field</span>
             </div>
             <div class="section twelve row field-container-inner">
-                <span id="radioset-field" class="field draggable">Radioset Field</span>
+                <span id="radioset-field" class="field draggable">Bullet Field</span>
             </div>
         </div>
 
@@ -55,8 +55,7 @@
     </div>
     <div id="form-container" class="col nine mobile-full">
         <form id="form_structure_form" action="{{ request.get_full_path }}" method="POST">
-            {% csrf_token %}
-            {{ form.as_p }}
+            {% fields_for form %}
             <ul id="form-body" class="section row-one twelve no-style-list sortable"></ul>
 
             {% if before_event %}
@@ -67,7 +66,7 @@
             	<input type="hidden" name="after_event" value="{{ after_event }}" />
         	{% endif %}
 
-            <input id="form_submit" type="submit" value="{% trans 'Submit' %}" class="export-btn" />
+            <input id="form_submit" type="submit" value="{% trans 'Save' %}" class="lgreen-btn export-btn" />
         </form>
     </div>
 </div>

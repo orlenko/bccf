@@ -24,7 +24,7 @@
                     <div class="photo-over">
                         <span><i class="fa fa-pencil-square-o"></i> Edit Profile Picture</span>                    
                     </div>
-                    <img src="{{ MEDIA_URL }}{% bccf_thumbnail profile.photo 400 400 %}" id="fake-photo" class="photo" alt="Default User Photo"/>
+                    <img src="{{ MEDIA_URL }}{% bccf_thumbnail profile.photo 400 400 %}" id="fake-photo" class="photo" alt="{{ profile.user.get_full_name }}"/>
                 </div>
                 <div class="form-group input_id_photo"> 
                     {{ photo_form.photo }}
@@ -38,6 +38,7 @@
             <nav id="tabs" class="section row row-one">
                 <ul>
                     <li><a id="id_home" href="{% url 'update' %}">Home</a></li>
+                    <li><a href="{{ profile.get_absolute_url }}" target="_blank">Public Profile</a></li>
                     <li><a id="id_account" href="{% url 'update-tab' 'account' %}">Account Information</a></li>
                     <li><a id="id_contact" href="{% url 'update-tab' 'contact' %}">Contact Information</a></li>
                     <li><a id="id_preferences" href="{% url 'update-tab' 'preferences' %}">Account Preferences</a></li>

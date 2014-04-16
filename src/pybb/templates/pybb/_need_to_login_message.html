@@ -1,3 +1,6 @@
-{% load url from future %}
 {% load i18n %}
-<a href="{% url 'signup' %}">{% trans "Register" %}</a> {% trans "or" %} <a href="{% url 'login' %}">{% trans "login" %}</a> {% trans "to create to post a reply" %}.
+<div class="login-container">
+    <a href="/accounts/login/?next={{ topic.get_absolute_url }}" class="login-btn">{% trans "Sign in" %}</a>
+    {% trans "or" %}
+    <a href="/accounts/signup" class="login-btn">{% trans "Sign up" %}</a> {% trans "to create or post a reply" %}.
+</div>

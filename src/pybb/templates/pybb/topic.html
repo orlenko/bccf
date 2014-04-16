@@ -2,7 +2,7 @@
 
 {% load url from future %}
 
-{% load pybb_tags i18n content_carousel_tags bccf_feature_tags mezzanine_tags %}
+{% load pybb_tags i18n content_carousel_tags bccf_feature_tags mezzanine_tags bccf_rating_tags %}
 
 {% block meta_title %}{{ topic.title|title }}{% endblock %}
 {% block title %}{{ topic.title|title }}{% endblock %}
@@ -19,9 +19,12 @@
 {% block marquee %}{% endblock %}
 
 {% block content %}
+<div class="section row row-one social-box">
+    {% include "includes/add_this.html" %}
+    {% bccf_rating_for topic %}
+</div>
 <h1>{{ topic.title|title }}</h1>
 {{ topic.content|safe }}
-{% include "includes/add_this.html" %}
 {% endblock %}
 
 {% block carousels %}
@@ -51,7 +54,7 @@
         {% endwith %}
 
         {% if user.is_authenticated %}
-            <div class="controls">
+            <div class="controls section row">
                 {% if user.is_moderator %}
                     <!--{% if topic.sticky %}
                         <a href="{% url 'pybb:unstick_topic' topic.id %}">{% trans "Unstick topic" %}</a> |
@@ -60,22 +63,22 @@
                     {% endif %}-->
 
                     {% if topic.closed %}
-                        <a href="{% url 'pybb:open_topic' topic.id %}">{% trans "Open topic" %}</a> |
+                        <a href="{% url 'pybb:open_topic' topic.id %}" class="lgreen-btn">{% trans "Open topic" %}</a>
                     {% else %}
-                        <a href="{% url 'pybb:close_topic' topic.id %}">{% trans "Close topic" %}</a> |
+                        <a href="{% url 'pybb:close_topic' topic.id %}" class="lgreen-btn">{% trans "Close topic" %}</a>
                     {% endif %}
                     {% if perms.pybb.change_topic and user.is_staff %}
-                        <a href="{% url 'admin:pybb_topic_change' topic.id %}">{% trans 'Admin' %}</a> |
+                        <a href="{% url 'admin:pybb_topic_change' topic.id %}" class="lgreen-btn">{% trans 'Admin' %}</a>
                     {% endif %}
             {% comment %}
-            <a href="{% url 'pybb:merge_topics' %}?topic={{ topic.id }}">{% trans 'Merge topics' %}</a> |
+            <a href="{% url 'pybb:merge_topics' %}?topic={{ topic.id }}">{% trans 'Merge topics' %}</a>
             {% endcomment %}
                 {% endif %}
 
                 {% if user.is_subscribed %}
-                    <a href="{% url 'pybb:delete_subscription' topic.id %}?from_topic">{% trans "Unsubscribe" %}</a>
+                    <a href="{% url 'pybb:delete_subscription' topic.id %}?from_topic" class="lgreen-btn">{% trans "Unsubscribe" %}</a>
                 {% else %}
-                    <a href="{% url 'pybb:add_subscription' topic.id %}">{% trans "Subscribe" %}</a>
+                    <a href="{% url 'pybb:add_subscription' topic.id %}" class="lgreen-btn">{% trans "Subscribe" %}</a>
                 {% endif %}
             </div>
         {% endif %}
@@ -91,7 +94,10 @@
                 {% endif %}
             {% endif %}
         {% else %}
-            {% include 'pybb/_need_to_login_message.html' %}
+            <div class="login-container">
+                <a href="/accounts/login/?next={{ topic.get_absolute_url }}" class="login-btn">{% trans "Sign in" %}</a> {% trans "or" %}
+                <a href="/accounts/signup" class="login-btn">{% trans "Sign up" %}</a> {% trans "to create or post a reply" %}.
+            </div>
         {% endif %}
         </div>
 

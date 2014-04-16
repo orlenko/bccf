@@ -10,9 +10,12 @@
 {% endblock %}
 
 {% block carousels %}
-<h4 class="container">You have successfully created the <span class="form-title">{{ struct.title }}</span> form Structure</h4>
-<a href="{{ struct.get_publish_url }}">Publish</a>
-<a href="{{ struct.get_edit_url }}">Edit</a>
-<a href="{{ struct.get_clone_url }}">Clone</a>
-<a href="{% url 'formable-create-form' %}">Create another survey</a>
+<div class="section row row-one">
+    <h4>Form Structure Successfully Created</h4>
+    <p>Structure title: <span class="form-title">{{ struct.title }}</span><p>
+    <a href="{{ struct.get_publish_url }}" class="lgreen-btn" title="Publish {{ struct.title }}">Publish</a>
+    <a href="{{ struct.get_edit_url }}" class="lgreen-btn" title="Edit {{ struct.title }}">Edit</a>
+    <a href="{{ struct.get_clone_url }}" class="lgreen-btn" title="Clone {{ struct.title }}">Clone</a>
+    <a href="{% url 'formable-create-form' %}" class="lgreen-btn" title="Create New">Create another survey</a>
+</div>
 {% endblock %}

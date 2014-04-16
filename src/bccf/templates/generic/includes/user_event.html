@@ -9,13 +9,13 @@
             <li class="col seven">Program</li>        
         </ul>    
     </div>
-    {% for event_obj in event_objs %}
+    {% for event in event_objs %}
         <div class="event-row section">
             <ul>
-                <li class="col four">{{ event_obj.date_start|date:"F d" }}</li>
-                <li class="col four">{{ event_obj.program.short_title }}</li>
+                <li class="col four">{{ event.date_start|date:"F d" }}</li>
+                <li class="col four">{{ event.program.short_title }}</li>
                 <li class="action col two"><a href="{{ event_obj.get_absolute_url }}" title="Learn More" target="_blank">Learn More</a></li>
-                <li class="action col tow">{% bccf_short_subscribe_for event_obj %}</li>
+                {% bccf_short_subscribe_for event "action col two" %}
             </ul>        
         </div>
     {% endfor %}

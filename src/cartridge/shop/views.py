@@ -27,7 +27,6 @@ import logging
 
 log = logging.getLogger(__name__)
 
-
 # Set up checkout handlers.
 handler = lambda s: import_dotted_path(s) if s else lambda *args: None
 billship_handler = handler(settings.SHOP_HANDLER_BILLING_SHIPPING)
@@ -222,9 +221,16 @@ def checkout_steps(request):
     form_class = get_callable(settings.SHOP_CHECKOUT_FORM_CLASS)
 
     initial = checkout.initial_order_data(request, form_class)
-    step = int(request.POST.get("step", None)
-               or initial.get("step", None)
-               or checkout.CHECKOUT_STEP_FIRST)
+
+    cancelled = request.GET.get('c', None)    
+    
+    if not cancelled:
+        step = int(request.POST.get("step", None)
+                   or initial.get("step", None)
+                   or checkout.CHECKOUT_STEP_FIRST)
+    else:
+        step = checkout.CHECKOUT_STEP_FIRST
+        
     form = form_class(request, step, initial=initial)
     data = request.POST
     checkout_errors = []
@@ -258,8 +264,16 @@ def checkout_steps(request):
                 except checkout.CheckoutError, e:
                     checkout_errors.append(e)
                     
-                log.debug('Setting discount')
                 form.set_discount()
+                
+                if form.cleaned_data.get('payment_method') == 'paypal':
+                    step += 1
+                    try:
+                        request.session["order"]["step"] = step
+                        request.session.modified = True
+                    except KeyError:
+                        pass
+                    return redirect(Paypal.process(request, form))
 
             # FINAL CHECKOUT STEP - handle payment and process order.
             if step == checkout.CHECKOUT_STEP_LAST and not checkout_errors:
@@ -272,9 +286,7 @@ def checkout_steps(request):
                 order.setup(request)
                 # Try payment.
                 try:
-                    payment = payment_handler(request, form, order)
-                    if form.cleaned_data.get('payment_method') == 'paypal':
-                        return redirect(payment)
+                    transaction_id = payment_handler(request, form, order)
                 except checkout.CheckoutError, e:
                     # Error in payment handler.
                     order.delete()
@@ -287,7 +299,19 @@ def checkout_steps(request):
                     # ``order_handler()`` can be defined by the
                     # developer to implement custom order processing.
                     # Then send the order email to the customer.
-                    order.transaction_id = payment
+                    
+                    if form.cleaned_data.get('payment_method') == 'paypal':
+                        payment = Paypal.find(request)
+                        if payment.shipping_info:
+                            order.shipping_detail_first_name = payment.shipping_info.first_name
+                            order.shipping_detail_last_name = payment.shipping_info.last_name
+                            order.shipping_detail_street = payment.shipping_info.address.line1
+                            order.shipping_detail_city = payment.shipping_info.address.city
+                            order.shipping_detail_state = payment.shipping_info.address.state
+                            order.shipping_detail_postcode = payment.shipping_info.address.postal_code
+                            order.shipping_detail_country = payment.shipping_info.address.country_code                    
+                    
+                    order.transaction_id = transaction_id
                     order.complete(request)
                     order_handler(request, form, order)
                     checkout.send_order_email(request, order)
@@ -383,14 +407,10 @@ def invoice(request, order_id, template="shop/order_invoice.html"):
     if request.GET.get("format") == "pdf":
         response = HttpResponse(mimetype="application/pdf")
         name = slugify("%s-invoice-%s" % (settings.SITE_TITLE, order.id))
-        result = open(name, "wb")
         response["Content-Disposition"] = "attachment; filename=%s.pdf" % name
         html = get_template(template).render(context)
         import ho.pisa as pisa
-        pdf = pisa.pisaDocument(StringIO.StringIO(html.encode("UTF-8")), result,
-            link_callback=fetch_resources)
-        result.close()
-        #ho.pisa.CreatePDF(html, response)
+        ho.pisa.CreatePDF(html, response)
         return response
     return render(request, template, context)
 
@@ -414,37 +434,3 @@ def order_history(request, template="shop/order_history.html"):
         setattr(order, "quantity_total", order_quantities[order.id])
     context = {"orders": orders}
     return render(request, template, context)
-    
-@never_cache
-def paypal_approve(request):
-    order = Order.objects.get(id=request.session['order_id'])
-    del request.session['order_id']
-    payer_id = request.GET.get('PayerID')
-    
-    Paypal.execute(request, payer_id)
-    payment = Paypal.find(request)
- 
-    if payment.shipping_info:
-        order.shipping_detail_first_name = payment.shipping_info.first_name
-        order.shipping_detail_last_name = payment.shipping_info.last_name
-        order.shipping_detail_street = payment.shipping_info.address.line1
-        order.shipping_detail_city = payment.shipping_info.address.city
-        order.shipping_detail_state = payment.shipping_info.address.state
-        order.shipping_detail_postcode = payment.shipping_info.address.postal_code
-        order.shipping_detail_country = payment.shipping_info.address.country_code
- 
-    order.transaction_id = generate_transaction_id()
-    order.complete(request)    
-    order_handler(request, None, order)
-    
-    checkout.send_order_email(request, order)   
-    del request.session["paypal_id"]
-
-    return redirect("shop_complete")   
-
-@never_cache   
-def paypal_cancel(request, template="shop/paypal_cancel.html"):
-    order = Order.objects.get(id=request.session['order_id'])
-    del request.session['order_id']
-    order.delete()
-    return render(request, template, {})

@@ -42,6 +42,25 @@
         {% include 'includes/sub-pages/sub_page_home.html' %}
     </div>
 </section>
+<script>
+    $(function() {
+        $('.reply').click(function() {
+            $('.comment-reply-form').hide();
+            $(this).siblings('.comment-reply-form').toggle();
+        });
+        $('.expand').click(function() {
+            var parent = $(this).parent('.comment');
+            parent.children('.comment').toggle();
+        });
+        $('.comment').each(function() {
+            if($(this).children('.comment').length == 0) {
+                $(this).find('.expand').hide();
+            }
+        });
+        $('.comment .comment').hide();
+    });
+</script> 
+
 <script type="text/javascript" >
 var sync_height = function() {
     var height = 0;
@@ -101,7 +120,6 @@ $('.baby-content-btn').on('click', function(e) {
     $('.mem-popup').on('click', function(e) {
         e.preventDefault();
         var content = $(this).attr('title');
-        console.log('Content: '+content);
         $('#pop-up-over').children('.content').html('<p>'+content+'</p>');
         $('#pop-up-over').show();
         $('html, body').css({ overflow:'hidden'});

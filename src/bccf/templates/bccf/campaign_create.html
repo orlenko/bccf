@@ -1,15 +1,15 @@
 {% extends "pages/base_bccfpage.html" %}
 
-{% load i18n %}
+{% load i18n mezzanine_tags %}
 
 {% block content %}
 <h2>{{ title }}</h2>
 {% endblock %}
 {% block carousels %}
 <form  enctype="multipart/form-data" method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <br/><br/>
-    <input type="submit" value="Create Event" />
+    {% fields_for form %}
+    <div class="form-actions">
+        <input class="lgreen-btn btn btn-primary btn-large" type="submit" value="Create Campaign">
+    </div>
 </form>
 {% endblock %}

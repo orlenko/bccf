@@ -13,6 +13,7 @@ from mezzanine.core.models import CONTENT_STATUS_PUBLISHED
 class UserProfileManager(models.Manager):
     def get_directory(self, *args, **kwargs):
         return super(UserProfileManager, self).get_queryset().filter(
+            ~Q(user__is_staff=True), ~Q(user__is_superuser=True),
             Q(membership_type='professional') | Q(membership_type='organization'),
             Q(show_in_list=True),
         )

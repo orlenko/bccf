@@ -2,7 +2,7 @@ import logging
 import csv
 import datetime
 
-from django.shortcuts import render_to_response, redirect
+from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.template.context import RequestContext
 from django.views.decorators.cache import never_cache
 from django.core.urlresolvers import reverse
@@ -73,7 +73,7 @@ def publish(request, slug):
     event.save()
     send_moderate("An Event has been published", context={'event':event})
     messages.success(request, 'Event published. The event will be subject to review and can be taken down without notice.')
-    return redirect(reverse('update-tab', (), {'tab': 'training'}))
+    return redirect(reverse('update-tab', args=['training']))
 
 #@require_event_audience
 @never_cache
@@ -96,7 +96,7 @@ def signup(request, slug):
                    messages.success(request, 'To complete the registration, please go through the checkout.')
                    
                    # Send event registration confirmation
-                   send_reminder("Event Registration Pending.", user, context={'event':event})
+                   send_reminder("Event Registration Pending.", request.user, context={'event':event})
                    
                else:
                    registration = EventRegistration.objects.create(user=request.user, event=event)
@@ -114,7 +114,7 @@ def signup(request, slug):
                send_reminder("Event is now full", event.provider, context={'event':event, 'attendees':attendees})
              
            # Send event registration for provider
-           send_reminder("A user registered for your event", event.provider, context={'event':event, 'attendee':user})
+           send_reminder("A user registered for your event", event.provider, context={'event':event, 'attendee':request.user})
              
         else:
             messages.warning(request, 'The event is full.')
@@ -123,6 +123,15 @@ def signup(request, slug):
     context = RequestContext(request, locals())
     return render_to_response('bccf/event_signup.html', {}, context_instance=context)
 
+@login_required
+def event_payment(request, event_id):
+    user = request.user
+    event_reg = get_object_or_404(EventRegistration, ~Q(paid=True), event=event_id, user=user)
+    event = event_reg.event
+    variation = ProductVariation.objects.get(sku='EVENT-%s' % event.pk)
+    request.cart.add_item(variation, 1)
+    recalculate_cart(request)
+    return redirect('shop/checkout')
 
 def event(request):
     pass

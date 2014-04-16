@@ -929,6 +929,10 @@ class UserProfile(PybbProfile):
     def pay_professional(self):
         if self.is_professional() or self.is_organization():
             payment = ProfessionalPayment.objects.create(user=self, amount=self.payment)
+        
+    @permalink
+    def get_absolute_url(self):
+        return ('member-profile', (), {'id':self.id})
 
 def is_product_variation_categ(variation, categ):
     for category in variation.product.categories.all():
@@ -1010,8 +1014,9 @@ class Event(BCCFChildPage):
                 variation.unit_price = self.price
                 variation.save()
         else:
-            self.event_product.delete()
-            self.event_product = None
+            if self.event_product:
+                self.event_product.delete()
+                self.event_product = None
                 
         super(Event, self).save(**kwargs)
 

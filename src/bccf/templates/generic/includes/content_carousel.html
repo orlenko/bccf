@@ -7,11 +7,11 @@
             <h2>{{ carousel_title|title }}</h2>
         </div>
         {% if filter %}
-        <div id="filter-container" class="col five mobile-full tablet-six">            
+        <div id="filter-container" class="col four mobile-full tablet-six">            
             <input type="text" name="filter" placeholder="Filter" class="filter" />
         </div>
         {% endif %}
-        <div class="col {% if filter %} three tablet-four {% else %} six {% endif %} no-mobile control-buttons">
+        <div class="col {% if filter %} four tablet-four {% else %} six {% endif %} no-mobile control-buttons">
             <a href="#" class="show-type-control to-grid" title="Grid View"><img src="{% static 'img/grid-icon.png' %}"/></a>
             <a href="#" class="show-type-control to-slide" title="Slide View"><img src="{% static 'img/slide-icon.png' %}"/></a>
         </div>

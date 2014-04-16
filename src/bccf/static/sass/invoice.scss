@@ -1,11 +1,13 @@
 /* ==========================================================================
 
-  Base Stylesheet - http://git.io/base
-  Author: Matthew Hartman - http://www.matthewhartman.com.au/
-  Version: 1.5 - Last Updated: 21st June, 2013
+  VCN BCCF Project 2014
+  From the original work of Matthew Hartman with BASE
+  Authors/Contributors: Hugues Deraps, Karl Castillo & Vlad Orlenko. 
 
 ========================================================================== */
-    @import "../mixins/mixins";
+
+  @import "../mixins/mixins"; // Import the base mixins
+  @import "./font-awesome/font-awesome";
 
   // Global Defaults
   $mobile-container:              100%;
@@ -26,6 +28,29 @@
   $h5:                        18;
   $h6:                        16;
 
+
+
+// BCCF Fonts
+
+$roboto: 'Roboto Slab', serif;
+$pt: 'PT Sans', sans-serif;
+
+// Main BCCF Colours
+
+$sgrey: #F5F5F5;
+$lgrey: #A6B2A6;
+$dgrey: #414042;
+$lyellow: #FFF0C2;
+$yellow: #FDCD26;
+$sssteal: #F8FCFA;
+$ssteal: #EDF6F1;
+$steal: #C0DFCF;
+$lteal: #9FCEB4;
+$dteal: #5CAC8B;
+$ssgreen: #F9FAF4;
+$sgreen: #E5E9D2;
+$lgreen: #8FAB3D;
+$dgreen: #336442;
 
 // Main BCCF Background Stripe Images
 
@@ -320,8 +345,10 @@ table caption {
   font-weight: bold;
 }
 
-/* 1.5 Forms, Labels and Inputs
+/* 1.5 Forms, Labels and Inputs, browser input text color overide
    ========================================================================== */
+
+
 fieldset {
   border: 0;
   padding: 0;
@@ -563,10 +590,9 @@ textarea {
 INVOICE
 ========================================================== */
 .container {
-    width: 1100px;
-    font-family: 'PT Sans', sans-serif;
+    font-family: $pt;
     h2 {
-        font-family: 'Roboto Slab', serif;    
+        font-family: $roboto    
     }
 }
 .text-right {
@@ -594,7 +620,7 @@ INVOICE
     }
     section.header {
         @extend .strong;
-        background: #5CAC8B;
+        background: $lteal;
         color: #000;
         padding: 5px;
         border-bottom: 1px solid #000;

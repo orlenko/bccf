@@ -8,7 +8,5 @@ urlpatterns = patterns("cartridge.shop.views",
     url("^checkout/$", "checkout_steps", name="shop_checkout"),
     url("^checkout/complete/$", "complete", name="shop_complete"),
     url("^invoice/(?P<order_id>\d+)/$", "invoice", name="shop_invoice"),
-    url("^checkout/cancel/$", "paypal_cancel", name="shop_cancel"),
-    url("^checkout/approve/$", "paypal_approve", name="shop_approve")
 )
 
