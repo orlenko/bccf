@@ -49,8 +49,8 @@
             $(this).siblings('.comment-reply-form').toggle();
         });
         $('.expand').click(function() {
-            var parent = $(this).parent('.comment-container');
-            parent.children('.comments').toggle();
+            var parent = $(this).parents('.comment-header');
+            parent.next('.comments').slideToggle('medium');
         });
     });
 </script> 

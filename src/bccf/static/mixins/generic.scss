@@ -52,6 +52,7 @@ label {
     text-decoration: none;
     &:hover {
         background: $yellow;
+        text-decoration: none !important;  
     }
 }
 #form-body,

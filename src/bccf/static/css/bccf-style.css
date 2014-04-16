@@ -6320,53 +6320,54 @@ label {
 /* line 53, ../mixins/generic.scss */
 .lgreen-btn:hover {
   background: #fdcd26;
+  text-decoration: none !important;
 }
 
-/* line 58, ../mixins/generic.scss */
+/* line 59, ../mixins/generic.scss */
 #form-body,
 .form-group {
   margin: 10px 0;
 }
-/* line 60, ../mixins/generic.scss */
+/* line 61, ../mixins/generic.scss */
 #form-body .section-head,
 .form-group .section-head {
   font-size: 20px;
   font-size: 1.25rem;
   font-family: "Roboto Slab", serif;
 }
-/* line 64, ../mixins/generic.scss */
+/* line 65, ../mixins/generic.scss */
 #form-body p,
 .form-group p {
   margin-top: 2px;
   margin-bottom: 0;
 }
-/* line 68, ../mixins/generic.scss */
+/* line 69, ../mixins/generic.scss */
 #form-body ul,
 .form-group ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
-/* line 72, ../mixins/generic.scss */
+/* line 73, ../mixins/generic.scss */
 #form-body ul li,
 .form-group ul li {
   display: inline-block;
 }
-/* line 76, ../mixins/generic.scss */
+/* line 77, ../mixins/generic.scss */
 #form-body label,
 .form-group label {
   font-size: 12px;
   font-size: 0.75rem;
   text-transform: uppercase;
 }
-/* line 80, ../mixins/generic.scss */
+/* line 81, ../mixins/generic.scss */
 #form-body .help-block,
 .form-group .help-block {
   font-size: 12px;
   font-size: 0.75rem;
   margin-top: 0;
 }
-/* line 86, ../mixins/generic.scss */
+/* line 87, ../mixins/generic.scss */
 #form-body select,
 #form-body textarea,
 #form-body input,
@@ -6376,7 +6377,7 @@ label {
   border: 1px solid #000;
   background-color: whitesmoke;
 }
-/* line 90, ../mixins/generic.scss */
+/* line 91, ../mixins/generic.scss */
 #form-body textarea,
 .form-group textarea {
   resize: vertical;
@@ -6384,7 +6385,7 @@ label {
   min-height: 200px;
   width: 100%;
 }
-/* line 97, ../mixins/generic.scss */
+/* line 98, ../mixins/generic.scss */
 #form-body #clear-photo,
 #form-body #fake-photo,
 .form-group #clear-photo,
@@ -6394,7 +6395,7 @@ label {
   background-color: #000;
   color: #FFF;
 }
-/* line 102, ../mixins/generic.scss */
+/* line 103, ../mixins/generic.scss */
 #form-body #clear-photo:hover,
 #form-body #fake-photo:hover,
 .form-group #clear-photo:hover,
@@ -6403,11 +6404,11 @@ label {
   color: #000;
 }
 
-/* line 108, ../mixins/generic.scss */
+/* line 109, ../mixins/generic.scss */
 .form-actions.dashed {
   margin-top: 20px;
 }
-/* line 110, ../mixins/generic.scss */
+/* line 111, ../mixins/generic.scss */
 .form-actions.dashed input {
   font-size: 12px;
   font-size: 0.75rem;
@@ -6421,7 +6422,7 @@ label {
   text-decoration: none;
   text-transform: uppercase;
 }
-/* line 121, ../mixins/generic.scss */
+/* line 122, ../mixins/generic.scss */
 .form-actions.dashed input:hover {
   color: #336442;
   text-decoration: none;
