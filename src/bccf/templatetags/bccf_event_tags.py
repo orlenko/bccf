@@ -58,7 +58,9 @@ def attendees_for(context, event):
     return context
     
 @register.inclusion_tag("generic/includes/user_event.html", takes_context=True)
-def events_of(context, user):
+def events_of(context, user, in_pro=False):
+    context['in_pro'] = in_pro
+    context['user_url'] = user.get_absolute_url();
     if user.is_level_C:
-        context['event_objs'] = Event.objects.published().filter(provider=user).order_by('-date_start')[:5]
+        context['event_objs'] = Event.objects.user_event_list(user).order_by('date_start')[:5]
     return context

@@ -172,6 +172,10 @@ def membership_upgrade(context, token):
 @register.filter
 def membership_upgrade_url(variation):
     return reverse('member-membership-upgrade', kwargs={'variation_id': variation.pk})
+    
+@register.filter
+def membership_frequency(variation):
+    return variation.sku.split('-')[2]
 
 
 @register.filter

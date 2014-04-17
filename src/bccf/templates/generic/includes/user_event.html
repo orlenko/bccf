@@ -2,7 +2,7 @@
 
 {% if event_objs %}
 <section class="user-events">
-    <p><strong>Upcoming Trainings</strong></p>
+    <h4>Upcoming Events</h4>
     <div class="event-header section">
         <ul>
             <li class="col four">Date</li>
@@ -12,15 +12,17 @@
     {% for event in event_objs %}
         <div class="event-row section">
             <ul>
-                <li class="col four">{{ event.date_start|date:"F d" }}</li>
+                <li class="col four">{{ event.date_start|date:"F d, Y" }}</li>
                 <li class="col four">{{ event.program.short_title }}</li>
                 <li class="action col two"><a href="{{ event_obj.get_absolute_url }}" title="Learn More" target="_blank">Learn More</a></li>
                 {% bccf_short_subscribe_for event "action col two" %}
             </ul>        
         </div>
     {% endfor %}
+    {% if not in_pro %}
     <div class="section row">
-        <a href="#" target="_blank" title="More">More</a>
+        <a href="{{ user_url }}" target="_blank" title="More">More</a>
     </div>
+    {% endif %}
 </section>
 {% endif %}
