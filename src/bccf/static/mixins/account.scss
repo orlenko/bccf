@@ -217,7 +217,15 @@
 
 .organization-member {
     .member-info {
-        padding-top: 20px;    
+        padding-top: 20px;
+        a {
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            &:hover {
+                font-weight: bold;            
+            }      
+        }    
     }
 }
  

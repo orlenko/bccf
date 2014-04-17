@@ -7,9 +7,7 @@
             <img src="{{ MEDIA_URL }}{% bccf_thumbnail member.profile.photo 100 100 %}" alt="{{ member.get_full_name}}" />
         </div>
         <div class="member-info col nine">
-            <div>
-                <a href="{{ member.profile.get_absolute_url }}" target="_blank" title="{{ member.get_full_name }}">{{ member.get_full_name }}</a>
-            </div>
+            <a href="{{ member.profile.get_absolute_url }}" target="_blank" title="{{ member.get_full_name }}">{{ member.get_full_name }}</a>
             <form method="POST" action="{% url 'member-delete'%}">
                 <input type="hidden" value="{{ member.pk }}" name="user">
                 {% csrf_token %}

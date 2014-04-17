@@ -6125,6 +6125,16 @@ footer #newsletter .dashed-button a:hover {
 .organization-member .member-info {
   padding-top: 20px;
 }
+/* line 221, ../mixins/account.scss */
+.organization-member .member-info a {
+  text-decoration: none;
+  display: block;
+  margin-bottom: 10px;
+}
+/* line 225, ../mixins/account.scss */
+.organization-member .member-info a:hover {
+  font-weight: bold;
+}
 
 /* End User Forms */
 /* line 2, ../mixins/profile.scss */
