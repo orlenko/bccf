@@ -750,6 +750,10 @@ textarea {
 #big-marquee {
 	padding:0;
 
+    .page-marquee {
+        min-height: 300px;        
+    }
+
 	img {
 		margin:0;
 	    padding:0;

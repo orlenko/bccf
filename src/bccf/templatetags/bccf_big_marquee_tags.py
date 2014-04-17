@@ -14,27 +14,17 @@ def big_marquee_for(context, obj=None):
     """
     Provides generic content variable for the big marquee.
     """
-    context['slides'] = []
     context['show_tag'] = False
-    if obj is None: # For index
+    if not obj: # For index
         context['show_tag'] = True
         try:
             homeMarquee = HomeMarquee.objects.get(active=True)
             context['slides'] = HomeMarqueeSlide.objects.filter(marquee=homeMarquee)
         except ObjectDoesNotExist:
             pass
-    elif obj.__class__.__name__ == 'BCCFTopic':
-        if obj.marquee:
-            try:
-                context['slides'] = PageMarqueeSlide.objects.filter(marquee=obj.marquee)
-            except ObjectDoesNotExist:
-                pass
-    else: # For other pages
-        if obj.get_content_model().marquee:
-            try:
-                context['slides'] = PageMarqueeSlide.objects.filter(marquee=obj.get_content_model().marquee)
-            except ObjectDoesNotExist:
-                pass
+    else:
+        context['marquee_class'] = 'page-marquee'
+        context['slides'] = PageMarqueeSlide.objects.filter(marquee=obj.marquee)
     return context
     
 @register.inclusion_tag("generic/includes/browse_by.html", takes_context=True)

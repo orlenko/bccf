@@ -1,8 +1,9 @@
 {% load static %}
+{% if slides %}
 <div id="big-marquee" class="section clear"> 
     <div id="slide-container">
         {% for slide in slides %}
-        <div class="marquee-slide" style="background: url('media/{{ slide.image }}') center center no-repeat;">
+        <div class="marquee-slide {{ marquee_class }}" style="background: url('media/{{ slide.image }}') center center no-repeat;">
             <div class="lightbox mobile-full">
                 <span class="lightbox-title col twelve mobile-twelve">{{ slide.title }}</span>
                 <p class="no-mobile">{{ slide.caption }}</p>
@@ -44,3 +45,4 @@
     </div>
     {% endif %}
 </div>
+{% endif %}
