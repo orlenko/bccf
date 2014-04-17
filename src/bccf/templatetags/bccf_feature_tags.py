@@ -59,5 +59,5 @@ def related_resources_for(context, obj, type, title):
         q = q | Q(bccf_topic = topic)
         
     resource_pre = BCCFChildPage.objects.published().filter(Q(content_model=type)).distinct()
-    context['resources'] = resource_pre.filter(q, ~Q(slug=obj)).order_by('featured', '-created')[:10]
+    context['resources'] = resource_pre.filter(q, ~Q(slug=obj.slug)).order_by('featured', '-created')[:10]
     return context
