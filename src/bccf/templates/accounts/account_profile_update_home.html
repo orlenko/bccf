@@ -28,7 +28,7 @@
 		</p>
 		{% endif %}
 
-		{% if not profile.is_level_C and upgrades %}
+		{% if not profile.membership_type == 'parent' and not profile.is_level_C and upgrades %}
 		<div id="membership-upgrades">
 			<h3>Upgrade to:</h3>
 		     {% if upgrades.level_B %}

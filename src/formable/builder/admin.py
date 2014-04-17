@@ -30,7 +30,15 @@ class FormPublishedLine(admin.StackedInline):
     Inline for FormPublished
     """
     model = FormPublished
-    fields = ('title', 'status', 'publish_date', 'expiry_date', 'content', 'bccf_topic', 'featured', 'page_for', 'image')
+    fieldsets = (
+        ('Form Details', {
+            'fields': ('title', 'user', 'status', ('publish_date', 'expiry_date'), 'content')
+        }),
+        ('Miscellaneous', {
+            'fields': ('featured', 'closed', 'bccf_topic', 'page_for', 'image')
+        }) 
+    )
+    radio_fields = {'status': admin.HORIZONTAL}
 
 class FormStructureAdmin(admin.ModelAdmin):
     """
@@ -44,7 +52,7 @@ class FormStructureAdmin(admin.ModelAdmin):
     inlines = [
         FormPublishedLine
     ]
-    list_display = ('title', 'user', 'id', 'type', 'created', 'clone_link', 'edit_link', 'publish_link')
+    list_display = ('title', 'user', 'id', 'type', 'created', 'clone_link', 'edit_link')
     list_filter = ['type', 'user', 'created']
     search_fields = ['title', 'id', 'type']
     
@@ -54,9 +62,6 @@ class FormStructureAdmin(admin.ModelAdmin):
     def edit_link(self, obj):
         return '<a href="%s" target="_blank">Edit Form</a>' % obj.get_edit_url()
     edit_link.allow_tags = True
-    def publish_link(self, obj):
-        return '<a href="%s" target="_blank">Publish Form</a>' % obj.get_publish_url()
-    publish_link.allow_tags = True
         
 class FormPublishedAdmin(DisplayableAdmin):
     actions = ['make_closed', 'make_open', make_featured, make_unfeatured]
