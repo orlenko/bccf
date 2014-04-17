@@ -29,16 +29,21 @@ class FormPublishedLine(admin.StackedInline):
     """
     Inline for FormPublished
     """
+    readonly_fields = ['report_link']
     model = FormPublished
     fieldsets = (
         ('Form Details', {
             'fields': ('title', 'user', 'status', ('publish_date', 'expiry_date'), 'content')
         }),
         ('Miscellaneous', {
-            'fields': ('featured', 'closed', 'bccf_topic', 'page_for', 'image')
-        }) 
+            'fields': ('featured', 'closed', 'bccf_topic', 'page_for', 'image', 'report_link')
+        })
     )
     radio_fields = {'status': admin.HORIZONTAL}
+
+    def report_link(self, obj):
+        return '<a href="%s">Download Report</a>' % obj.get_report_url()
+    report_link.allow_tags = True
 
 class FormStructureAdmin(admin.ModelAdmin):
     """
