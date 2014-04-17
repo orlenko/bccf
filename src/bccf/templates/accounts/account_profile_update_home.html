@@ -9,15 +9,15 @@
 	{% else %}
         <div class="membership-info section">
     		<div>
-                <span class="col three membership-info-type">Membership</span>
-                <span class="col nine">
+                <span class="col three membership-info-type tablet-six">Membership</span>
+                <span class="col nine tablet-six">
                     {% if membership %}Level {{ profile.membership_level }} {{ profile.membership_type|title }}{% else %}Free {{ profile.membership_type|title }}{% endif %}
                 </span>
             </div>
             {% if expiration %}
             <div>
-                <span class="col three membership-info-type">Expires</span>
-                <span class="col nine">{{ expiration }}</span>         
+                <span class="col three tablet-six membership-info-type">Expires</span>
+                <span class="col nine tablet-six">{{ expiration }}</span>         
             </div>
             {% endif %}
         </div>

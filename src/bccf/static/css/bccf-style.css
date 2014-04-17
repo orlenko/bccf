@@ -6104,13 +6104,10 @@ footer #newsletter .dashed-button a:hover {
     left: 10px;
   }
 
-  /* line 264, ../mixins/account.scss */
-  #tabs {
+  /* line 265, ../mixins/account.scss */
+  #tabs a {
     font-size: 12px;
     font-size: 0.75rem;
-  }
-  /* line 266, ../mixins/account.scss */
-  #tabs a {
     font-weight: normal;
   }
   /* line 268, ../mixins/account.scss */
