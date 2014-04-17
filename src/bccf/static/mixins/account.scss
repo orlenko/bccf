@@ -262,8 +262,8 @@
 }
 
 #tabs {
-    @include font-size(12);
     a {
+        @include font-size(12);
         font-weight: normal;
         &:hover {
             font-weight: inherit;    
