@@ -272,6 +272,17 @@ class ProductVariation(Priced):
         result = u"%s %s" % (unicode(self.product), u", ".join(options))
         return result.strip()
 
+    def get_options(self):
+        options = []
+        for field in self.option_fields():
+            name = getattr(self, field.name)
+            if name is not None:
+                verbose_name = field.verbose_name
+                if isinstance(verbose_name, str):
+                    verbose_name = verbose_name.decode("utf-8")
+                options.append({'type':verbose_name, 'opt':name})
+        return options
+
     def save(self, *args, **kwargs):
         """
         Use the variation's ID as the SKU when the variation is first
