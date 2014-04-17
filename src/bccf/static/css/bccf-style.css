@@ -6071,18 +6071,69 @@ footer #newsletter .dashed-button a:hover {
   font-weight: bold;
 }
 
+@media only screen and (min-width: 740px) and (max-width: 1139px) {
+  /* line 234, ../mixins/account.scss */
+  .photo {
+    border: 10px solid whitesmoke;
+    width: 150px;
+    height: 150px;
+  }
+
+  /* line 241, ../mixins/account.scss */
+  #photo-form img {
+    width: 150px;
+    height: 150px;
+  }
+  /* line 245, ../mixins/account.scss */
+  #photo-form .photo-over {
+    width: 150px;
+    height: 150px;
+    background-size: 150px 150px;
+  }
+
+  /* line 253, ../mixins/account.scss */
+  .fake-photo-container .photo-over {
+    font-size: 10px;
+    font-size: 0.625rem;
+    border: 10px solid whitesmoke;
+    width: 150px;
+    height: 150px;
+  }
+  /* line 258, ../mixins/account.scss */
+  .fake-photo-container .photo-over span {
+    left: 10px;
+  }
+
+  /* line 264, ../mixins/account.scss */
+  #tabs {
+    font-size: 12px;
+    font-size: 0.75rem;
+  }
+  /* line 266, ../mixins/account.scss */
+  #tabs a {
+    font-weight: normal;
+  }
+  /* line 268, ../mixins/account.scss */
+  #tabs a:hover {
+    font-weight: inherit;
+  }
+  /* line 271, ../mixins/account.scss */
+  #tabs a.current {
+    font-weight: inherit;
+  }
+}
 @media only screen and (max-width: 739px) {
-  /* line 238, ../mixins/account.scss */
+  /* line 282, ../mixins/account.scss */
   #tabs ul {
     padding-bottom: 0;
   }
 
-  /* line 243, ../mixins/account.scss */
+  /* line 287, ../mixins/account.scss */
   #main-form {
     padding-left: 0;
   }
 
-  /* line 247, ../mixins/account.scss */
+  /* line 291, ../mixins/account.scss */
   .fake-photo-container {
     width: 200px;
   }
