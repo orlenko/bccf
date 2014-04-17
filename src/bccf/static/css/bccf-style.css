@@ -6106,8 +6106,8 @@ footer #newsletter .dashed-button a:hover {
 
   /* line 264, ../mixins/account.scss */
   #tabs {
-    font-size: 12px;
-    font-size: 0.75rem;
+    font-size: 11px;
+    font-size: 0.6875rem;
   }
   /* line 266, ../mixins/account.scss */
   #tabs a {
@@ -6121,19 +6121,24 @@ footer #newsletter .dashed-button a:hover {
   #tabs a.current {
     font-weight: inherit;
   }
+
+  /* line 277, ../mixins/account.scss */
+  #main-form {
+    padding-left: 0;
+  }
 }
 @media only screen and (max-width: 739px) {
-  /* line 282, ../mixins/account.scss */
+  /* line 286, ../mixins/account.scss */
   #tabs ul {
     padding-bottom: 0;
   }
 
-  /* line 287, ../mixins/account.scss */
+  /* line 291, ../mixins/account.scss */
   #main-form {
     padding-left: 0;
   }
 
-  /* line 291, ../mixins/account.scss */
+  /* line 295, ../mixins/account.scss */
   .fake-photo-container {
     width: 200px;
   }
