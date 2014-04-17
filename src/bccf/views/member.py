@@ -176,7 +176,7 @@ def delmember(request):
     else:
         log.debug('Form invalid: %s' % form)
         messages.error(request, 'Failed to remove member. Erros: %s' % form.errors)
-    return HttpResponseRedirect(reverse('update-tab', ['members']))
+    return HttpResponseRedirect(reverse('update-tab', args=('members',)))
 
 def reqprogram(request):
     form = ReqProgram(initial={'user': request.user})

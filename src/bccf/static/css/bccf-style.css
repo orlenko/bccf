@@ -6025,98 +6025,105 @@ footer #newsletter .dashed-button a:hover {
 }
 /* line 127, ../mixins/account.scss */
 #tabs a {
+  font-size: 15px;
+  font-size: 0.9375rem;
   display: block;
   padding: 5px 0 5px 10px;
   text-decoration: none;
   height: 30px;
 }
-/* line 133, ../mixins/account.scss */
+/* line 134, ../mixins/account.scss */
 #tabs a:hover, #tabs a.current {
   background-color: whitesmoke;
   color: #8fab3d;
   font-weight: bold;
 }
 
-/* line 141, ../mixins/account.scss */
+/* line 142, ../mixins/account.scss */
 #main-form {
   padding-left: 25px;
 }
-/* line 146, ../mixins/account.scss */
+/* line 147, ../mixins/account.scss */
 #main-form input[type='text'],
 #main-form input[type='email'],
 #main-form input[type='password'],
 #main-form input[type='url'] {
   width: 100%;
 }
-/* line 150, ../mixins/account.scss */
+/* line 151, ../mixins/account.scss */
 #main-form .dashed-button a {
   font-size: 12px;
   font-size: 0.75rem;
 }
-/* line 154, ../mixins/account.scss */
+/* line 155, ../mixins/account.scss */
 #main-form .error-block {
   font-size: 12px;
   font-size: 0.75rem;
   color: #8fab3d;
 }
-/* line 160, ../mixins/account.scss */
+/* line 161, ../mixins/account.scss */
 #main-form.contact-tab .form-group .form-group {
   margin: 0 !important;
 }
-/* line 163, ../mixins/account.scss */
+/* line 164, ../mixins/account.scss */
 #main-form.contact-tab .form-group .form-group:first-of-child {
   padding-right: 5px;
 }
-/* line 166, ../mixins/account.scss */
+/* line 167, ../mixins/account.scss */
 #main-form.contact-tab .form-group .form-group:nth-child(2) {
   padding-left: 5px;
 }
-/* line 172, ../mixins/account.scss */
+/* line 173, ../mixins/account.scss */
 #main-form.forum-tab #id_show_signatures {
   top: 5px !important;
 }
 
-/* line 179, ../mixins/account.scss */
+/* line 180, ../mixins/account.scss */
 .membership-info-type,
 .benefit-type {
   font-weight: bold;
 }
-/* line 181, ../mixins/account.scss */
+/* line 182, ../mixins/account.scss */
 .membership-info-type:after,
 .benefit-type:after {
   content: ':';
 }
 
-/* line 187, ../mixins/account.scss */
+/* line 188, ../mixins/account.scss */
 #membership-upgrades ul {
   list-style: none;
   padding: 0;
 }
-/* line 191, ../mixins/account.scss */
+/* line 192, ../mixins/account.scss */
 #membership-upgrades p {
   font-weight: bold;
 }
-/* line 194, ../mixins/account.scss */
+/* line 195, ../mixins/account.scss */
 #membership-upgrades .upgrade-level:first-of-type {
   border-bottom: 2px dashed #a6b2a6;
   padding-bottom: 20px;
   margin-bottom: 20px;
 }
-/* line 200, ../mixins/account.scss */
+/* line 201, ../mixins/account.scss */
 #membership-upgrades .upgrade-btn-container span {
   font-weight: bold;
 }
-/* line 203, ../mixins/account.scss */
+/* line 204, ../mixins/account.scss */
 #membership-upgrades .upgrade-btn-container .upgrade-btn {
   text-align: center;
 }
-/* line 206, ../mixins/account.scss */
+/* line 207, ../mixins/account.scss */
 #membership-upgrades .upgrade-btn-container .upgrade-btn:hover .no-hover {
   display: none;
 }
-/* line 209, ../mixins/account.scss */
+/* line 210, ../mixins/account.scss */
 #membership-upgrades .upgrade-btn-container .upgrade-btn:hover .hover {
   display: inline-block;
+}
+
+/* line 219, ../mixins/account.scss */
+.organization-member .member-info {
+  padding-top: 20px;
 }
 
 /* End User Forms */

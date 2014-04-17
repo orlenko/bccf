@@ -125,6 +125,7 @@
         border-right: 1px solid $sgrey;
     }
     a {
+        @include font-size(15);
         display: block;
         padding: 5px 0 5px 10px; 
         text-decoration: none;
@@ -211,6 +212,12 @@
                 }
             }
         }
+    }
+}
+
+.organization-member {
+    .member-info {
+        padding-top: 20px;    
     }
 }
  
