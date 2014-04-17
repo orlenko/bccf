@@ -44,10 +44,6 @@
 </section>
 <script>
     $(function() {
-        $('.reply').click(function() {
-            $('.comment-reply-form').hide();
-            $(this).siblings('.comment-reply-form').toggle();
-        });
         $('.expand').click(function() {
             var parent = $(this).parents('.comment-header');
             parent.next('.comments').slideToggle('medium');
