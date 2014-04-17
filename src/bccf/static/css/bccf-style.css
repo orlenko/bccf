@@ -6109,17 +6109,18 @@ footer #newsletter .dashed-button a:hover {
     font-size: 12px;
     font-size: 0.75rem;
     font-weight: normal;
+    padding: 7px 0 7px 10px;
   }
-  /* line 268, ../mixins/account.scss */
+  /* line 269, ../mixins/account.scss */
   #tabs a:hover {
     font-weight: inherit;
   }
-  /* line 271, ../mixins/account.scss */
+  /* line 272, ../mixins/account.scss */
   #tabs a.current {
     font-weight: inherit;
   }
 
-  /* line 277, ../mixins/account.scss */
+  /* line 278, ../mixins/account.scss */
   #main-form {
     font-size: 14px;
     font-size: 0.875rem;
@@ -6127,17 +6128,17 @@ footer #newsletter .dashed-button a:hover {
   }
 }
 @media only screen and (max-width: 739px) {
-  /* line 287, ../mixins/account.scss */
+  /* line 288, ../mixins/account.scss */
   #tabs ul {
     padding-bottom: 0;
   }
 
-  /* line 292, ../mixins/account.scss */
+  /* line 293, ../mixins/account.scss */
   #main-form {
     padding-left: 0;
   }
 
-  /* line 296, ../mixins/account.scss */
+  /* line 297, ../mixins/account.scss */
   .fake-photo-container {
     width: 200px;
   }

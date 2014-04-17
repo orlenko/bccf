@@ -17,7 +17,7 @@
             {% if expiration %}
             <div>
                 <span class="col three tablet-six membership-info-type">Expires</span>
-                <span class="col nine tablet-six">{{ expiration }}</span>         
+                <span class="col nine tablet-six">{{ expiration|date:"M j, Y" }}</span>         
             </div>
             {% endif %}
         </div>
