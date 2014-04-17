@@ -29,6 +29,7 @@ class FormPublishedLine(admin.StackedInline):
     """
     Inline for FormPublished
     """
+    extra = 5
     readonly_fields = ['report_link']
     model = FormPublished
     fieldsets = (
