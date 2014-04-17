@@ -6121,21 +6121,23 @@ footer #newsletter .dashed-button a:hover {
 
   /* line 277, ../mixins/account.scss */
   #main-form {
+    font-size: 14px;
+    font-size: 0.875rem;
     padding-left: 10px;
   }
 }
 @media only screen and (max-width: 739px) {
-  /* line 286, ../mixins/account.scss */
+  /* line 287, ../mixins/account.scss */
   #tabs ul {
     padding-bottom: 0;
   }
 
-  /* line 291, ../mixins/account.scss */
+  /* line 292, ../mixins/account.scss */
   #main-form {
     padding-left: 0;
   }
 
-  /* line 295, ../mixins/account.scss */
+  /* line 296, ../mixins/account.scss */
   .fake-photo-container {
     width: 200px;
   }

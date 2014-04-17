@@ -275,6 +275,7 @@
 }
 
 #main-form {
+    @include font-size(14);
     padding-left: 10px;
 }
 

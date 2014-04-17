@@ -21,7 +21,7 @@
             </div>
             {% endif %}
         </div>
-        {% if not profile.is_parent or not profile.is_level_A %}
+        {% if not profile.is_parent and not profile.is_level_A %}
 		<div class="row row-two">
             <h3>Extend Membership</h3>
 			<a href="{{ membership|membership_renew_url }}" class="lgreen-btn">click here</a> to extend your current membership.
@@ -29,7 +29,7 @@
 		{% endif %}
 
 		{% if not profile.membership_type == 'parent' and not profile.is_level_C and upgrades %}
-		<div id="membership-upgrades">
+		<div id="membership-upgrades" class="row row-two">
 			<h3>Upgrade to:</h3>
 		     {% if upgrades.level_B %}
 		     <div class="section row upgrade-level">
@@ -45,9 +45,9 @@
 				 </ul>
 				 {% endwith %}
 				 <div class="section upgrade-btn-container">
-				    <span class="col three">Upgrade now:</span>
+				    <span class="col three tablet-full">Upgrade now:</span>
 				    {% for upgrade in upgrades.level_B %}
-                    <a href="{{ upgrade|membership_upgrade_url }}" class="col three lgreen-btn upgrade-btn" title="{{ upgrade.price|currency }}">
+                    <a href="{{ upgrade|membership_upgrade_url }}" class="col three tablet-four lgreen-btn upgrade-btn" title="{{ upgrade.price|currency }}">
                         <span class="no-hover">{{ upgrade|membership_frequency }}</span>
                         <span class="hover no-desktop">{{ upgrade.price|currency }}</span>
                     </a>
@@ -69,9 +69,9 @@
 				 </ul>
 				 {% endwith %}
 				 <div class="section upgrade-btn-container">
-				    <span class="col three">Upgrade now:</span>
+				    <span class="col three tablet-full">Upgrade now:</span>
 				    {% for upgrade in upgrades.level_C %}
-                    <a href="{{ upgrade|membership_upgrade_url }}" class="col three lgreen-btn upgrade-btn" title="{{ upgrade.price|currency }}">
+                    <a href="{{ upgrade|membership_upgrade_url }}" class="col three tablet-four lgreen-btn upgrade-btn" title="{{ upgrade.price|currency }}">
                         <span class="no-hover">{{ upgrade|membership_frequency }}</span>
                         <span class="hover no-desktop">{{ upgrade.price|currency }}</span>
                     </a>
