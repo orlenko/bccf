@@ -4,7 +4,7 @@
     <div>
         <ul class="page-container-inner">
     {% endif %}
-            <li id="id_{{ slide.slug }}" class="page-box {% if slide.content_model == 'topic' or slide.content_model == 'formpublished' %} go-blank {% endif %} carousel-box col four">   
+            <li id="id_{{ slide.slug }}" title="{{ slide.title }}" class="page-box {% if slide.content_model == 'topic' or slide.content_model == 'formpublished' %} go-blank {% endif %} carousel-box col four">   
                 <div class="page-image" style="background: url('{{ MEDIA_URL }}{% bccf_thumbnail slide.image 195 110 %}') top left no-repeat;">
                     {% if slide.content_model == 'formpublished' %}
                         {% if slide.get_content_model.closed %}                    
@@ -24,7 +24,7 @@
                         {% if slide.content_model == 'formpublished' and slide.get_content_model.closed %}
                             View Results
                         {% else %}
-                            {{ slide.description|truncatechars:75 }}
+                            {{ slide.description|truncatechars:60 }}
                         {% endif %}
                     </p>
                 </div>
