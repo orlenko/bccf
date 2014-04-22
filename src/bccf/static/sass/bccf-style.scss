@@ -2446,7 +2446,7 @@ footer {
 			}
 		.hlist-outer {
 
-			}
+	    }
 		.hlist-inner {
             width: 98%;
 
@@ -2940,7 +2940,7 @@ table td {
 			}
 			}
 		.hlist-outer {
-		    height: 140px;
+		    height: auto;
 	    }
 		.hlist-inner {
 
@@ -2952,7 +2952,6 @@ table td {
 			h6 {
 }
 			p {
-                height: 70px;
 				}
 
 	       .hlist-link {

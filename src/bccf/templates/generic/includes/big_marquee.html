@@ -7,11 +7,7 @@
             <div class="lightbox mobile-full">
                 <span class="lightbox-title col twelve mobile-twelve">{{ slide.title }}</span>
                 <p class="no-mobile">{{ slide.caption }}</p>
-                <div class="col twelve mobile-full">
-                    <div class="a-wrapper dashed-button">
-                        <a href="{{ slide.url }}">{{ slide.linkLabel }}</a>
-                    </div>
-                </div>
+                <a href="{{ slide.url }}" class="dgreen-btn">{{ slide.linkLabel }}</a>
             </div>
         </div>
         {% endfor %}

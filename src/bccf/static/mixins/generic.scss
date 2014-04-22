@@ -44,16 +44,23 @@ label {
     padding: 5px 15px;
     border: 0;
     font-weight: bold;
+    text-decoration: none;
+    &:hover {
+        background: $yellow;
+        color: $dgreen;
+        text-decoration: none !important;  
+    }
 }
 .lgreen-btn {
     @extend .bccf-btn;
     color: #000;
     background: $lgreen;
-    text-decoration: none;
-    &:hover {
-        background: $yellow;
-        text-decoration: none !important;  
-    }
+
+}
+.dgreen-btn {
+    @extend .bccf-btn;
+    color: #FFF;
+    background: $dgreen;
 }
 #form-body,
 .form-group {
