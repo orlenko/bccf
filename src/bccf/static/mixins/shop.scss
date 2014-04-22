@@ -74,28 +74,10 @@
         .form-actions-wrap {
             margin-left: 0;        
         }
-        .dashed-button {
-            width: initial;
-            margin: 0 !important;        
-        }
         .form-actions {
             margin: 10px auto !important;
             display: block;
-            input {
-                @include font-size(12);
-                background-color: inherit;
-                color: #000;
-                float: left;
-                font-weight: bold;
-                padding: 4px 22px;
-                text-decoration: none;
-                text-transform: uppercase;
-                &:hover {
-                    color: $dgreen;
-    				text-decoration: none;
-    				background-color: $yellow;    
-                }            
-            } 
+
         }
         .product-added {
             margin: 10px auto;
@@ -103,5 +85,52 @@
             width: 100%; 
             font-weight: bold;       
         }
+    }
+}
+.shop-cart {
+    .form-actions {
+        a {
+            text-decoration: none;      
+        }    
+    }
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;    
+    }
+    .total {
+        text-align: center;
+        li {
+            padding-top: 10px;
+            padding-right: 10px;
+            .text-right {
+                text-align: right;            
+            }            
+        }    
+    }
+}
+
+#products-header {
+    font-weight: bold;
+    border-bottom: 1px solid $lgrey;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-bottom: 5px;    
+    li {
+        @extend .center-text;    
+    }
+}
+#products-list {
+    li {
+        @extend .center-text;
+        height: 120px;
+        border-bottom: 1px solid $lgrey;
+        padding-bottom: 20px;
+        div:not(:first-of-type) {
+            padding-top: 30px;        
+        }     
+        input[type='number'] {
+            width: 50%;
+        }    
     }
 }

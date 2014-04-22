@@ -42,12 +42,9 @@
         <form method="post" class="form-horizontal form-shop section row row-one">
             {% fields_for add_product_form %}
             <span class="product-added none">Product Added</span>
-            <div class="form-actions dashed-button">
-                <input id="add_cart_btn" type="submit" class="add-cart-btn btn btn-primary btn-large" name="add_cart" value="{% trans "Add to Cart" %}">
+            <div class="form-actions">
+                <input id="add_cart_btn" type="submit" class="add-cart-btn btn btn-primary btn-large lgreen-btn" name="add_cart" value="{% trans "Add to Cart" %}">
             </div>
-            {% if settings.SHOP_USE_WISHLIST %}
-            <input type="submit" class="btn btn -large" name="add_wishlist" value="{% trans "Save for later" %}">
-            {% endif %}
         </form>
         <div class="row row-one">
             <a href="{% url 'shop_checkout' %}" class="lgreen-text strong">Proceed to checkout</a>

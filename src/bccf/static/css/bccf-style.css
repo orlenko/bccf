@@ -2280,7 +2280,7 @@ textarea {
 }
 
 /* line 92, ../sass/bccf-style.scss */
-.center-text {
+.center-text, #products-header li, #products-list li {
   text-align: center;
 }
 
@@ -6804,39 +6804,64 @@ label {
   margin-left: 0;
 }
 /* line 77, ../mixins/shop.scss */
-.shop-content .form-shop .dashed-button {
-  width: initial;
-  margin: 0 !important;
-}
-/* line 81, ../mixins/shop.scss */
 .shop-content .form-shop .form-actions {
   margin: 10px auto !important;
   display: block;
 }
-/* line 84, ../mixins/shop.scss */
-.shop-content .form-shop .form-actions input {
-  font-size: 12px;
-  font-size: 0.75rem;
-  background-color: inherit;
-  color: #000;
-  float: left;
-  font-weight: bold;
-  padding: 4px 22px;
-  text-decoration: none;
-  text-transform: uppercase;
-}
-/* line 93, ../mixins/shop.scss */
-.shop-content .form-shop .form-actions input:hover {
-  color: #336442;
-  text-decoration: none;
-  background-color: #fdcd26;
-}
-/* line 100, ../mixins/shop.scss */
+/* line 82, ../mixins/shop.scss */
 .shop-content .form-shop .product-added {
   margin: 10px auto;
   color: #8fab3d;
   width: 100%;
   font-weight: bold;
+}
+
+/* line 92, ../mixins/shop.scss */
+.shop-cart .form-actions a {
+  text-decoration: none;
+}
+/* line 96, ../mixins/shop.scss */
+.shop-cart ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+/* line 101, ../mixins/shop.scss */
+.shop-cart .total {
+  text-align: center;
+}
+/* line 103, ../mixins/shop.scss */
+.shop-cart .total li {
+  padding-top: 10px;
+  padding-right: 10px;
+}
+/* line 106, ../mixins/shop.scss */
+.shop-cart .total li .text-right {
+  text-align: right;
+}
+
+/* line 113, ../mixins/shop.scss */
+#products-header {
+  font-weight: bold;
+  border-bottom: 1px solid #a6b2a6;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+}
+
+/* line 124, ../mixins/shop.scss */
+#products-list li {
+  height: 120px;
+  border-bottom: 1px solid #a6b2a6;
+  padding-bottom: 20px;
+}
+/* line 129, ../mixins/shop.scss */
+#products-list li div:not(:first-of-type) {
+  padding-top: 30px;
+}
+/* line 132, ../mixins/shop.scss */
+#products-list li input[type='number'] {
+  width: 50%;
 }
 
 /* Scss Document 
