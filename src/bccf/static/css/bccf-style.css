@@ -6141,81 +6141,88 @@ footer #newsletter .dashed-button a:hover {
   content: ':';
 }
 
-/* line 11, ../mixins/profile.scss */
+/* line 12, ../mixins/profile.scss */
+.main-list > ul > li {
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 2px dashed #a6b2a6;
+}
+
+/* line 21, ../mixins/profile.scss */
 #profile-social a {
   color: #8fab3d;
   text-decoration: none;
 }
-/* line 14, ../mixins/profile.scss */
+/* line 24, ../mixins/profile.scss */
 #profile-social a:hover {
   color: #fdcd26;
 }
 
-/* line 20, ../mixins/profile.scss */
+/* line 30, ../mixins/profile.scss */
 #profile-container .profile-part:not(:first-of-type) {
   padding-top: 20px;
   border-top: 3px dashed #a6b2a6;
 }
-/* line 25, ../mixins/profile.scss */
+/* line 35, ../mixins/profile.scss */
 #profile-container .contact-info ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
-/* line 31, ../mixins/profile.scss */
+/* line 41, ../mixins/profile.scss */
 #profile-container .user-events {
   margin-top: 20px;
   padding-top: 20px;
   border-top: 3px dashed #a6b2a6;
 }
-/* line 35, ../mixins/profile.scss */
+/* line 45, ../mixins/profile.scss */
 #profile-container .user-events strong {
   font-family: "Roboto Slab", serif;
 }
-/* line 38, ../mixins/profile.scss */
+/* line 48, ../mixins/profile.scss */
 #profile-container .user-events ul {
   font-size: 13px;
   font-size: 0.8125rem;
   list-style: none;
   padding-left: 0;
 }
-/* line 42, ../mixins/profile.scss */
+/* line 52, ../mixins/profile.scss */
 #profile-container .user-events ul li {
   display: inline-block;
 }
-/* line 46, ../mixins/profile.scss */
+/* line 56, ../mixins/profile.scss */
 #profile-container .user-events .event-header {
   font-weight: 600;
 }
-/* line 49, ../mixins/profile.scss */
+/* line 59, ../mixins/profile.scss */
 #profile-container .user-events .event-row {
   padding-top: 5px;
   padding-bottom: 5px;
 }
-/* line 52, ../mixins/profile.scss */
+/* line 62, ../mixins/profile.scss */
 #profile-container .user-events .event-row ul {
   margin: 0;
 }
-/* line 55, ../mixins/profile.scss */
+/* line 65, ../mixins/profile.scss */
 #profile-container .user-events .event-row .action {
   text-align: center;
 }
-/* line 58, ../mixins/profile.scss */
+/* line 68, ../mixins/profile.scss */
 #profile-container .user-events .event-row input[type='submit'] {
   border: 0;
   background: 0;
 }
-/* line 61, ../mixins/profile.scss */
+/* line 71, ../mixins/profile.scss */
 #profile-container .user-events .event-row input[type='submit']:hover {
   text-decoration: underline;
 }
-/* line 67, ../mixins/profile.scss */
+/* line 77, ../mixins/profile.scss */
 #profile-container .user-events .event-header,
 #profile-container .user-events .event-row {
   border-bottom: 1px solid #000;
 }
 
-/* line 78, ../mixins/profile.scss */
+/* line 88, ../mixins/profile.scss */
 .orders-tab .h5, .orders-tab .h6,
 .attending-tab .h5,
 .attending-tab .h6,
@@ -6228,59 +6235,49 @@ footer #newsletter .dashed-button a:hover {
   font-family: "PT Sans", sans-serif;
   font-weight: bold;
 }
-/* line 82, ../mixins/profile.scss */
+/* line 92, ../mixins/profile.scss */
 .orders-tab ul,
 .attending-tab ul,
 .program-tab ul,
 .campaign-tab ul,
 .training-tab ul {
-  padding: 0;
-  margin: 0;
-}
-/* line 88, ../mixins/profile.scss */
-.orders-tab .main-list > ul > li,
-.attending-tab .main-list > ul > li,
-.program-tab .main-list > ul > li,
-.campaign-tab .main-list > ul > li,
-.training-tab .main-list > ul > li {
-  padding-bottom: 20px;
-  margin-bottom: 20px;
-  border-bottom: 2px dashed #a6b2a6;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
-/* line 98, ../mixins/profile.scss */
+/* line 99, ../mixins/profile.scss */
 .training-tab .attendee-list {
   padding: 0;
   margin: 0;
 }
-/* line 102, ../mixins/profile.scss */
+/* line 103, ../mixins/profile.scss */
 .training-tab .event-full:after {
   content: ' - Full';
   color: #8fab3d;
 }
-/* line 106, ../mixins/profile.scss */
+/* line 107, ../mixins/profile.scss */
 .training-tab .btn-expand {
   text-align: right;
   text-decoration: none;
 }
-/* line 109, ../mixins/profile.scss */
+/* line 110, ../mixins/profile.scss */
 .training-tab .btn-expand i {
   margin-right: 5px;
 }
 
-/* line 118, ../mixins/profile.scss */
+/* line 119, ../mixins/profile.scss */
 .program-tab .approved,
 .program-tab .pending,
 .campaign-tab .approved,
 .campaign-tab .pending {
   font-weight: bold;
 }
-/* line 121, ../mixins/profile.scss */
+/* line 122, ../mixins/profile.scss */
 .program-tab .approved,
 .campaign-tab .approved {
   color: #8fab3d;
 }
-/* line 124, ../mixins/profile.scss */
+/* line 125, ../mixins/profile.scss */
 .program-tab .pending,
 .campaign-tab .pending {
   color: #F00;

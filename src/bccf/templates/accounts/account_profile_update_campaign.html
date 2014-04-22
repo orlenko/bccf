@@ -2,7 +2,8 @@
 <nav class="main-list">
 	<ul>
 	{% for campaign in user.campaigns.all %}
-		<li><h3 class="h5">{{ campaign.title }}</h3>
+		<li>
+		    <h3 class="h5">{{ campaign.title }}</h3>
 			<p>
 			{% if not campaign.approve %}
 			    <a href="{{ campaign.edit_url }}" class="lgreen-btn">Edit</a>
