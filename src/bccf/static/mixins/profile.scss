@@ -68,3 +68,36 @@
         }  
     }
 }
+
+.training-tab {
+    .h5, .h6 {
+        font-family: $pt;
+        font-weight: bold;    
+    }
+    nav {
+        & > ul {
+            padding: 0;
+            margin: 0;
+            & > li {
+                padding-bottom: 20px;
+                margin-bottom: 20px;
+                border-bottom: 2px dashed $lgrey;    
+            }
+        }
+    }
+    .attendee-list {
+        padding: 0;
+        margin: 0;    
+    }
+    .event-full:after {
+        content: ' - Full';
+        color: $lgreen;
+    }
+    .btn-expand {
+        text-align: right;
+        text-decoration: none;
+        i {
+            margin-right: 5px;        
+        }    
+    }
+}

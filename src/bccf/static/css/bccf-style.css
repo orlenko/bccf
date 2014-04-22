@@ -6213,6 +6213,42 @@ footer #newsletter .dashed-button a:hover {
   border-bottom: 1px solid #000;
 }
 
+/* line 73, ../mixins/profile.scss */
+.training-tab .h5, .training-tab .h6 {
+  font-family: "PT Sans", sans-serif;
+  font-weight: bold;
+}
+/* line 78, ../mixins/profile.scss */
+.training-tab nav > ul {
+  padding: 0;
+  margin: 0;
+}
+/* line 81, ../mixins/profile.scss */
+.training-tab nav > ul > li {
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 2px dashed #a6b2a6;
+}
+/* line 88, ../mixins/profile.scss */
+.training-tab .attendee-list {
+  padding: 0;
+  margin: 0;
+}
+/* line 92, ../mixins/profile.scss */
+.training-tab .event-full:after {
+  content: ' - Full';
+  color: #8fab3d;
+}
+/* line 96, ../mixins/profile.scss */
+.training-tab .btn-expand {
+  text-align: right;
+  text-decoration: none;
+}
+/* line 99, ../mixins/profile.scss */
+.training-tab .btn-expand i {
+  margin-right: 5px;
+}
+
 /* line 1, ../mixins/builder.scss */
 #builder-main {
   margin: 0;

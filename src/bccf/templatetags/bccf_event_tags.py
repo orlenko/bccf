@@ -54,7 +54,7 @@ def bccf_short_subscribe_for(context, obj, li_class=None):
 @register.inclusion_tag("generic/includes/attendee_list.html", takes_context=True)
 def attendees_for(context, event):
     context['attendees'] = EventRegistration.objects.filter(event=event)
-    context['event_obj'] = event.get_content_model()
+    context['event_obj'] = event
     return context
     
 @register.inclusion_tag("generic/includes/user_event.html", takes_context=True)

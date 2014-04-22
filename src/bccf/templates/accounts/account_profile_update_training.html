@@ -4,13 +4,19 @@
     <nav>
     	<ul>
     	{% for event in user.events.all %}
-    		<li><h3 class="h6">{{ event.title }}</h3> ({{ event.date_start|date:'DATETIME_FORMAT' }} &mdash;  {{ event.date_end|date:'DATETIME_FORMAT' }}):
-    			<p>{% if event.status == 1 %}<a href="{{ event.edit_url }}">Edit</a> | <a href="{{ event.publish_url }}">Publish</a> | {% endif %}<a href="{{ event.get_absolute_url }}">View</a>
+    		<li><h3 class="h5">{{ event.title }}</h3>
+    			<p>
+    			{% if event.status == 1 %}
+           			<a href="{{ event.edit_url }}" class="lgreen-btn">Edit</a>
+        			<a href="{{ event.publish_url }}" class="lgreen-btn">Publish</a>
+    			{% else %}
+    			    <a href="{{ event.get_absolute_url }}" class="lgreen-btn">View</a>
+    			{% endif %}
     		    {% if event.survey_before or event.survey_after %}
-    		     | <a href="{{ event.report_url }}">Download Survey Report</a>
-    		    {% endif %}</p>
-    		    <p>People Attending - <a href="{{ event.attendee_url }}">Download Attendee List</a></p>
-                {% attendees_for event%}
+        	        <a href="{{ event.report_url }}">Download Report</a>
+    		    {% endif %}
+    		    </p>
+    		    {% attendees_for event%}
     	    </li>
     	{% endfor %}
     	</ul>
@@ -18,6 +24,14 @@
 {% else %}
 <p>No events created yet</p>
 {% endif %}
-<div class="dashed-button">
-    <a href="{% url 'events-create' %}">Create Event</a>
-</div>
+<a href="{% url 'events-create' %}" class="lgreen-btn">Create Event</a>
+
+<script type="text/javascript" >
+    $(function() {
+        $('.btn-expand').click(function(e) {
+            e.preventDefault();
+            var parent = $(this).parent('div').first();
+            parent.next('.attendee-list').slideToggle();        
+        });
+    });
+</script>

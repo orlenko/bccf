@@ -20,9 +20,7 @@
     {% endfor %}
 </div>
 {% pagination_for members %}
-<div class="section row row-one dashed-button">
-    <a href="{% url 'update-tab' 'adduser' %}">Add Member</a>    
-</div>
+<a href="{% url 'update-tab' 'adduser' %}" class="lgreen-btn">Add Member</a>    
 <script type="text/javascript">
     $(function() {
         $('.delete-btn').click(function(e) {

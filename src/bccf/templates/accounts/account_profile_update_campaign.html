@@ -18,6 +18,4 @@
 {% else %}
 <p>No campaigns created yet</p>
 {% endif %}
-<div class="dashed-button">
-    <a href="{% url 'campaigns-create' %}">Create Campaign</a>
-</div>
+<a href="{% url 'campaigns-create' %}" class="lgreen-btn">Create Campaign</a>
