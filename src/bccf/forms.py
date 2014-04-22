@@ -672,24 +672,7 @@ class AccountPreferencesForm(forms.ModelForm):
 class ForumPreferencesForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('avatar', 'show_signatures', 'signature', 'signature_html',)
-        widgets = {
-            'avatar': AdvancedFileInput        
-        }
-        
-    def handle_upload(self):
-        image_path = 'pybb/avatar'+self.files['avatar'].name
-        destination = open(MEDIA_ROOT+'/'+image_path, 'wb+')
-        for chunk in self.files['avatar'].chunks():
-            destination.write(chunk)
-        destination.close()
-        return image_path
-        
-    def save(self, *args, **kwargs):
-        super(ForumPreferencesForm, self).save(*args, **kwargs)
-        if 'avatar' in self.files:
-            self.instance.avatar = self.handle_upload()
-            self.instance.save()
+        fields = ('show_signatures', 'signature', 'signature_html')
         
 class SocialMediaForm(forms.ModelForm):
     class Meta:

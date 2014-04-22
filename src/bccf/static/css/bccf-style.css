@@ -6129,124 +6129,161 @@ footer #newsletter .dashed-button a:hover {
     width: 200px;
   }
 }
-/* line 2, ../mixins/profile.scss */
+/* line 1, ../mixins/profile.scss */
+.list-item-name {
+  display: inline-block;
+  padding: 5px 0;
+  width: 80px;
+  font-weight: bold;
+}
+/* line 6, ../mixins/profile.scss */
+.list-item-name:after {
+  content: ':';
+}
+
+/* line 11, ../mixins/profile.scss */
 #profile-social a {
   color: #8fab3d;
   text-decoration: none;
 }
-/* line 5, ../mixins/profile.scss */
+/* line 14, ../mixins/profile.scss */
 #profile-social a:hover {
   color: #fdcd26;
 }
 
-/* line 11, ../mixins/profile.scss */
+/* line 20, ../mixins/profile.scss */
 #profile-container .profile-part:not(:first-of-type) {
   padding-top: 20px;
   border-top: 3px dashed #a6b2a6;
 }
-/* line 16, ../mixins/profile.scss */
+/* line 25, ../mixins/profile.scss */
 #profile-container .contact-info ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
-/* line 21, ../mixins/profile.scss */
-#profile-container .contact-info .list-item-name {
-  display: inline-block;
-  padding: 5px 0;
-  width: 80px;
-}
-/* line 26, ../mixins/profile.scss */
-#profile-container .contact-info .list-item-name:after {
-  content: ':';
-}
-/* line 30, ../mixins/profile.scss */
+/* line 31, ../mixins/profile.scss */
 #profile-container .user-events {
   margin-top: 20px;
   padding-top: 20px;
   border-top: 3px dashed #a6b2a6;
 }
-/* line 34, ../mixins/profile.scss */
+/* line 35, ../mixins/profile.scss */
 #profile-container .user-events strong {
   font-family: "Roboto Slab", serif;
 }
-/* line 37, ../mixins/profile.scss */
+/* line 38, ../mixins/profile.scss */
 #profile-container .user-events ul {
   font-size: 13px;
   font-size: 0.8125rem;
   list-style: none;
   padding-left: 0;
 }
-/* line 41, ../mixins/profile.scss */
+/* line 42, ../mixins/profile.scss */
 #profile-container .user-events ul li {
   display: inline-block;
 }
-/* line 45, ../mixins/profile.scss */
+/* line 46, ../mixins/profile.scss */
 #profile-container .user-events .event-header {
   font-weight: 600;
 }
-/* line 48, ../mixins/profile.scss */
+/* line 49, ../mixins/profile.scss */
 #profile-container .user-events .event-row {
   padding-top: 5px;
   padding-bottom: 5px;
 }
-/* line 51, ../mixins/profile.scss */
+/* line 52, ../mixins/profile.scss */
 #profile-container .user-events .event-row ul {
   margin: 0;
 }
-/* line 54, ../mixins/profile.scss */
+/* line 55, ../mixins/profile.scss */
 #profile-container .user-events .event-row .action {
   text-align: center;
 }
-/* line 57, ../mixins/profile.scss */
+/* line 58, ../mixins/profile.scss */
 #profile-container .user-events .event-row input[type='submit'] {
   border: 0;
   background: 0;
 }
-/* line 60, ../mixins/profile.scss */
+/* line 61, ../mixins/profile.scss */
 #profile-container .user-events .event-row input[type='submit']:hover {
   text-decoration: underline;
 }
-/* line 66, ../mixins/profile.scss */
+/* line 67, ../mixins/profile.scss */
 #profile-container .user-events .event-header,
 #profile-container .user-events .event-row {
   border-bottom: 1px solid #000;
 }
 
-/* line 73, ../mixins/profile.scss */
-.training-tab .h5, .training-tab .h6 {
+/* line 78, ../mixins/profile.scss */
+.orders-tab .h5, .orders-tab .h6,
+.attending-tab .h5,
+.attending-tab .h6,
+.program-tab .h5,
+.program-tab .h6,
+.campaign-tab .h5,
+.campaign-tab .h6,
+.training-tab .h5,
+.training-tab .h6 {
   font-family: "PT Sans", sans-serif;
   font-weight: bold;
 }
-/* line 78, ../mixins/profile.scss */
-.training-tab nav > ul {
+/* line 82, ../mixins/profile.scss */
+.orders-tab ul,
+.attending-tab ul,
+.program-tab ul,
+.campaign-tab ul,
+.training-tab ul {
   padding: 0;
   margin: 0;
 }
-/* line 81, ../mixins/profile.scss */
-.training-tab nav > ul > li {
+/* line 88, ../mixins/profile.scss */
+.orders-tab .main-list > ul > li,
+.attending-tab .main-list > ul > li,
+.program-tab .main-list > ul > li,
+.campaign-tab .main-list > ul > li,
+.training-tab .main-list > ul > li {
   padding-bottom: 20px;
   margin-bottom: 20px;
   border-bottom: 2px dashed #a6b2a6;
 }
-/* line 88, ../mixins/profile.scss */
+
+/* line 98, ../mixins/profile.scss */
 .training-tab .attendee-list {
   padding: 0;
   margin: 0;
 }
-/* line 92, ../mixins/profile.scss */
+/* line 102, ../mixins/profile.scss */
 .training-tab .event-full:after {
   content: ' - Full';
   color: #8fab3d;
 }
-/* line 96, ../mixins/profile.scss */
+/* line 106, ../mixins/profile.scss */
 .training-tab .btn-expand {
   text-align: right;
   text-decoration: none;
 }
-/* line 99, ../mixins/profile.scss */
+/* line 109, ../mixins/profile.scss */
 .training-tab .btn-expand i {
   margin-right: 5px;
+}
+
+/* line 118, ../mixins/profile.scss */
+.program-tab .approved,
+.program-tab .pending,
+.campaign-tab .approved,
+.campaign-tab .pending {
+  font-weight: bold;
+}
+/* line 121, ../mixins/profile.scss */
+.program-tab .approved,
+.campaign-tab .approved {
+  color: #8fab3d;
+}
+/* line 124, ../mixins/profile.scss */
+.program-tab .pending,
+.campaign-tab .pending {
+  color: #F00;
 }
 
 /* line 1, ../mixins/builder.scss */

@@ -1,29 +1,27 @@
 {% load bccf_event_tags %}
 <strong class="fieldset-header">Your Trainings</strong>
-{% if user.events.count %}
-    <nav>
-    	<ul>
-    	{% for event in user.events.all %}
-    		<li><h3 class="h5">{{ event.title }}</h3>
-    			<p>
-    			{% if event.status == 1 %}
-           			<a href="{{ event.edit_url }}" class="lgreen-btn">Edit</a>
-        			<a href="{{ event.publish_url }}" class="lgreen-btn">Publish</a>
-    			{% else %}
-    			    <a href="{{ event.get_absolute_url }}" class="lgreen-btn">View</a>
-    			{% endif %}
-    		    {% if event.survey_before or event.survey_after %}
-        	        <a href="{{ event.report_url }}">Download Report</a>
-    		    {% endif %}
-    		    </p>
-    		    {% attendees_for event%}
-    	    </li>
-    	{% endfor %}
-    	</ul>
-	</nav>
-{% else %}
-<p>No events created yet</p>
-{% endif %}
+<nav class="main-list">
+	<ul>
+	{% for event in user.events.all %}
+		<li><h3 class="h5">{{ event.title }}</h3>
+			<p>
+			{% if event.status == 1 %}
+       			<a href="{{ event.edit_url }}" class="lgreen-btn">Edit</a>
+    			<a href="{{ event.publish_url }}" class="lgreen-btn">Publish</a>
+			{% else %}
+			    <a href="{{ event.get_absolute_url }}" class="lgreen-btn">View</a>
+			{% endif %}
+		    {% if event.survey_before or event.survey_after %}
+    	        <a href="{{ event.report_url }}">Download Report</a>
+		    {% endif %}
+		    </p>
+		    {% attendees_for event%}
+	    </li>
+	{% empty %}
+	   <li>No trainings created yet.</li>
+	{% endfor %}
+	</ul>
+</nav>
 <a href="{% url 'events-create' %}" class="lgreen-btn">Create Event</a>
 
 <script type="text/javascript" >

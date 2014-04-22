@@ -1,12 +1,6 @@
+{% load mezzanine_tags %}
 <form method="POST" enctype="multipart/form-data">
     <strong class="fieldset-header">Forum Preferences</strong>
-    <div class="form-group input_id_avatar"> 
-        <p><label for="id_avatar">{{ form.avatar.label }}</label></p>
-        {{ form.avatar }}
-        <p class="help-block">{{ form.avatar.help_text }}</p>
-        <p class="error-block">{{ form.avatar.errors.as_text|cut:'*' }}</p>
-    </div>
-    <strong class="fieldset-header">Forum Signature</strong>
     <div class="form-group checkbox-group input_id_show_signatures"> 
         <label for="id_show_signatures">{{ form.show_signatures.label }}</label>
         {{ form.show_signatures }}

@@ -1,19 +1,30 @@
 {% load shop_tags mezzanine_tags %}
 <strong class="fieldset-header">Your Orders</strong>
-{% if orders %}
-    <ul>    
+<nav class="main-list">
+    <ul>
+{% if orders %} 
     {% for o in orders %}
-        <li><a href="{% url "shop_invoice" o.id %}">View Invoice</a> | <a href="{% url "shop_invoice" o.id %}?format=pdf">Download PDF invoice</a><br/>
-            Ordred: {{ o.time }}<br/>
-            Transaction ID: {{ o.transaction_id }}<br/>
-            Total: {{ o.total }}<br/>
-            Payment Method: {{ o.payment_method }}<br/>
-            Status: {{ o.get_status_display }}<br/>
+        <li>
+            <ul>
+                <li><span class="list-item-name">Ordred</span>{{ o.time }}</li>
+                <li><span class="list-item-name">ID</span>{{ o.transaction_id }}</li>
+                <li><span class="list-item-name">Total</span>{{ o.total }}</li>
+                <li><span class="list-item-name">Payment Method</span>{{ o.payment_method }}</li>
+                <li><span class="list-item-name">Status</span>{{ o.get_status_display }}</li>
+            </ul>
+            <div class="row">
+                <h4 class="h6">Invoice</h4>
+                <a href="{% url "shop_invoice" o.id %}" target="_blank" class="lgreen-btn">View</a>
+                <a href="{% url "shop_invoice" o.id %}?format=pdf" class="lgreen-btn">Download</a>
+            </div>
         </li>
     {% endfor %}
     </ul>
+</nav>
 {% else %}
-<p>No Orders</p>
+    <p>No Orders</p>
 {% endif %}
+    </ul>
+</nav>
 {% pagination_for orders %}
 <a href="/shop" class="lgreen-btn">Shop</a>

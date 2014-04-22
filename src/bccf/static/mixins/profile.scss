@@ -1,3 +1,12 @@
+.list-item-name {
+    display: inline-block;
+    padding: 5px 0;
+    width: 80px;
+    font-weight: bold;
+    &:after {
+        content: ':';          
+    }
+}
 #profile-social {
     a {
         color: $lgreen;
@@ -17,14 +26,6 @@
             list-style: none;
             padding: 0;
             margin: 0;        
-        }
-        .list-item-name {
-            display: inline-block;
-            padding: 5px 0;
-            width: 80px;        
-        }
-        .list-item-name:after {
-            content: ':';        
         }
     }
     .user-events {
@@ -69,22 +70,31 @@
     }
 }
 
+.orders-tab,
+.attending-tab,
+.program-tab,
+.campaign-tab,
 .training-tab {
     .h5, .h6 {
         font-family: $pt;
         font-weight: bold;    
     }
-    nav {
+    ul {
+        padding: 0;
+        margin: 0;    
+    }
+    .main-list {
         & > ul {
-            padding: 0;
-            margin: 0;
             & > li {
                 padding-bottom: 20px;
                 margin-bottom: 20px;
-                border-bottom: 2px dashed $lgrey;    
+                border-bottom: 2px dashed $lgrey;   
             }
         }
     }
+}
+
+.training-tab {
     .attendee-list {
         padding: 0;
         margin: 0;    
@@ -99,5 +109,19 @@
         i {
             margin-right: 5px;        
         }    
+    }
+}
+
+.program-tab,
+.campaign-tab {
+    .approved,
+    .pending {
+        font-weight: bold;    
+    }
+    .approved {
+        color: $lgreen;
+    }
+    .pending {
+        color: #F00;
     }
 }
