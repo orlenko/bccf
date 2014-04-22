@@ -39,11 +39,13 @@ $(function() {$('.middle :input:visible:enabled:first').focus();});
 <ul id="products-list" class="section row no-style-list center-text">
     {% for item in request.cart %}
     <li>
+        <div class="col two">
     	{% if item.image %}
-    	<div class="col two">
-    	   <img alt="{{ item.description }}" src="{{ MEDIA_URL }}{% thumbnail item.image 30 30 %}">
-    	</div>
+    	   <img alt="{{ item.description }}" src="{{ MEDIA_URL }}{% thumbnail item.image 30 30 %}" />
+    	{% else %}
+    	   <img alt="{{ item.description }}" />
     	{% endif %}
+    	</div>
     	<div class="col six">
     	   {{ item.quantity }} x {{ item.description }}
     	</div>
