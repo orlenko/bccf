@@ -4832,22 +4832,27 @@ footer #newsletter div {
 /* line 2264, ../sass/bccf-style.scss */
 footer #newsletter .dashed-button {
   background-color: #8fab3d;
-  min-width: 76px;
   float: left;
   text-align: center;
 }
+<<<<<<< HEAD
 /* line 2270, ../sass/bccf-style.scss */
+=======
+/* line 2440, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
 footer #newsletter .dashed-button a {
   font-weight: bold;
-  color: #fff;
+  color: #000;
   float: left;
-  margin: 4px;
-  padding: 4px 20px;
+  padding: 4px 22px;
   text-decoration: none;
   text-transform: uppercase;
-  border: 1px dashed #fff;
 }
+<<<<<<< HEAD
 /* line 2280, ../sass/bccf-style.scss */
+=======
+/* line 2448, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
 footer #newsletter .dashed-button a:hover {
   color: #336442;
   text-decoration: none;
@@ -4855,37 +4860,54 @@ footer #newsletter .dashed-button a:hover {
 }
 
 /* End Footer */
+<<<<<<< HEAD
 /* line 2292, ../sass/bccf-style.scss */
+=======
+/* line 2460, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
 .dashed-button {
   background-color: #8fab3d;
-  min-width: 80px;
   float: left;
   text-shadow: none;
 }
+<<<<<<< HEAD
 /* line 2298, ../sass/bccf-style.scss */
+=======
+/* line 2465, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
 .dashed-button a {
   font-weight: bold;
   color: #000;
   float: left;
-  margin: 2px;
   padding: 4px 22px;
   text-decoration: none;
   text-transform: uppercase;
-  border: 1px dashed #fff;
 }
+<<<<<<< HEAD
 /* line 2308, ../sass/bccf-style.scss */
+=======
+/* line 2474, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
 .dashed-button a:hover {
   color: #336442;
   text-decoration: none;
   background-color: #fdcd26;
 }
 
+<<<<<<< HEAD
 /* line 2315, ../sass/bccf-style.scss */
+=======
+/* line 2481, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
 #copyright {
   font-size: 11px;
   text-align: center;
 }
+<<<<<<< HEAD
 /* line 2318, ../sass/bccf-style.scss */
+=======
+/* line 2484, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
 #copyright a {
   color: #414042;
 }
@@ -4894,7 +4916,11 @@ footer #newsletter .dashed-button a:hover {
 /* -- Tablet Devices (Layout, Modifications, etc)
    ========================================================================== */
 @media only screen and (min-width: 740px) and (max-width: 1139px) {
+<<<<<<< HEAD
   /* line 2328, ../sass/bccf-style.scss */
+=======
+  /* line 2494, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .container, .tablet-container {
     width: 720px;
     padding-left: 10px;
@@ -4903,67 +4929,119 @@ footer #newsletter .dashed-button a:hover {
 
   /* Tablet Grid
   * For stacking full width columns, please use the new class .tablet-full */
+<<<<<<< HEAD
   /* line 2336, ../sass/bccf-style.scss */
+=======
+  /* line 2502, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .tablet-one {
     width: 6.5%;
   }
 
+<<<<<<< HEAD
   /* line 2337, ../sass/bccf-style.scss */
+=======
+  /* line 2503, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .tablet-two {
     width: 15%;
   }
 
+<<<<<<< HEAD
   /* line 2338, ../sass/bccf-style.scss */
+=======
+  /* line 2504, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .tablet-three {
     width: 23.5%;
   }
 
+<<<<<<< HEAD
   /* line 2339, ../sass/bccf-style.scss */
+=======
+  /* line 2505, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .tablet-four {
     width: 32%;
   }
 
+<<<<<<< HEAD
   /* line 2340, ../sass/bccf-style.scss */
+=======
+  /* line 2506, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .tablet-five {
     width: 40.5%;
   }
 
+<<<<<<< HEAD
   /* line 2341, ../sass/bccf-style.scss */
+=======
+  /* line 2507, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .tablet-six {
     width: 49.0%;
   }
 
+<<<<<<< HEAD
   /* line 2342, ../sass/bccf-style.scss */
+=======
+  /* line 2508, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .tablet-seven {
     width: 57.5%;
   }
 
+<<<<<<< HEAD
   /* line 2343, ../sass/bccf-style.scss */
+=======
+  /* line 2509, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .tablet-eight {
     width: 66%;
   }
 
+<<<<<<< HEAD
   /* line 2344, ../sass/bccf-style.scss */
+=======
+  /* line 2510, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .tablet-nine {
     width: 74.5%;
   }
 
+<<<<<<< HEAD
   /* line 2345, ../sass/bccf-style.scss */
+=======
+  /* line 2511, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .tablet-ten {
     width: 83%;
   }
 
+<<<<<<< HEAD
   /* line 2346, ../sass/bccf-style.scss */
+=======
+  /* line 2512, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .tablet-eleven {
     width: 91.5%;
   }
 
+<<<<<<< HEAD
   /* line 2347, ../sass/bccf-style.scss */
+=======
+  /* line 2513, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .tablet-twelve {
     width: 100%;
   }
 
+<<<<<<< HEAD
   /* line 2349, ../sass/bccf-style.scss */
+=======
+  /* line 2515, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .tablet-full {
     clear: both;
     float: none;
@@ -4972,105 +5050,182 @@ footer #newsletter .dashed-button a:hover {
     display: block;
   }
 
+<<<<<<< HEAD
   /* line 2356, ../sass/bccf-style.scss */
+=======
+  /* line 2522, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .tablet-full:first-child {
     margin-top: 0;
   }
 
+<<<<<<< HEAD
   /* line 2360, ../sass/bccf-style.scss */
+=======
+  /* line 2526, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .tablet-center {
     margin-left: auto;
     margin-right: auto;
     float: none;
   }
 
+<<<<<<< HEAD
   /* line 2365, ../sass/bccf-style.scss */
+=======
+  /* line 2531, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .tablet-left {
     float: left;
   }
 
+<<<<<<< HEAD
   /* line 2366, ../sass/bccf-style.scss */
+=======
+  /* line 2532, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .tablet-right {
     float: right;
   }
 
+<<<<<<< HEAD
   /* line 2367, ../sass/bccf-style.scss */
+=======
+  /* line 2533, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .tablet-no-float {
     float: none;
   }
 
+<<<<<<< HEAD
   /* line 2369, ../sass/bccf-style.scss */
+=======
+  /* line 2535, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .tablet-center:first-child {
     margin-left: auto;
   }
 
+<<<<<<< HEAD
   /* line 2370, ../sass/bccf-style.scss */
+=======
+  /* line 2536, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .tablet-center-text {
     text-align: center;
   }
 
+<<<<<<< HEAD
   /* line 2374, ../sass/bccf-style.scss */
+=======
+  /* line 2540, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .no-tablet {
     display: none;
   }
 
+<<<<<<< HEAD
   /* line 2375, ../sass/bccf-style.scss */
+=======
+  /* line 2541, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .show-tablet {
     display: block;
   }
 
+<<<<<<< HEAD
   /* line 2388, ../sass/bccf-style.scss */
+=======
+  /* line 2554, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #main-top-nav li a {
     font-size: 16px;
     padding: 12px 10px;
   }
+<<<<<<< HEAD
   /* line 2392, ../sass/bccf-style.scss */
+=======
+  /* line 2558, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #main-top-nav li .active > a {
     font-weight: bold;
     /*background: url(../img/menu-triangle.png) top center no-repeat;*/
   }
 
+<<<<<<< HEAD
   /* line 2402, ../sass/bccf-style.scss */
+=======
+  /* line 2568, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #browse-by #browse-by-nav > ul > li {
     font-size: 12px;
     font-size: 0.75rem;
     width: 112px;
   }
+<<<<<<< HEAD
   /* line 2406, ../sass/bccf-style.scss */
   #browse-by #browse-by-nav > ul > li > ul > li {
     line-height: 10px;
   }
   /* line 2408, ../sass/bccf-style.scss */
+=======
+  /* line 2572, ../sass/bccf-style.scss */
+  #browse-by #browse-by-nav > ul > li > ul > li {
+    line-height: 10px;
+  }
+  /* line 2574, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #browse-by #browse-by-nav > ul > li > ul > li a {
     padding: 15px 0;
   }
 
+<<<<<<< HEAD
   /* line 2419, ../sass/bccf-style.scss */
   #home-listings {
     /* End #hlist-right-side */
   }
   /* line 2428, ../sass/bccf-style.scss */
+=======
+  /* line 2585, ../sass/bccf-style.scss */
+  #home-listings {
+    /* End #hlist-right-side */
+  }
+  /* line 2594, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #home-listings #hlist-left-side p {
     padding: 10px 48px 0px 40px;
     font-size: 14px;
   }
+<<<<<<< HEAD
   /* line 2455, ../sass/bccf-style.scss */
+=======
+  /* line 2621, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #home-listings .hlist-inner {
     width: 98%;
   }
 
   /* End #home-listings */
+<<<<<<< HEAD
   /* line 2486, ../sass/bccf-style.scss */
+=======
+  /* line 2652, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #home-resources #carousel-resources .hr-item {
     margin: 0 27px;
   }
 
   /* End #home-resources */
+<<<<<<< HEAD
   /* line 2497, ../sass/bccf-style.scss */
+=======
+  /* line 2663, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #home-history {
     background: url(../img/history-bg-t.gif) repeat-x bottom;
     height: 203px;
   }
+<<<<<<< HEAD
   /* line 2501, ../sass/bccf-style.scss */
   #home-history li {
     height: 203px;
@@ -5084,26 +5239,54 @@ footer #newsletter .dashed-button a:hover {
     padding: 64px 26px 0 0;
   }
   /* line 2512, ../sass/bccf-style.scss */
+=======
+  /* line 2667, ../sass/bccf-style.scss */
+  #home-history li {
+    height: 203px;
+  }
+  /* line 2672, ../sass/bccf-style.scss */
+  #home-history .history-image {
+    padding: 0 20px;
+  }
+  /* line 2675, ../sass/bccf-style.scss */
+  #home-history .history-text {
+    padding: 64px 26px 0 0;
+  }
+  /* line 2678, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #home-history .history-text h3 {
     font-weight: 300;
     font-size: 20px;
   }
+<<<<<<< HEAD
   /* line 2516, ../sass/bccf-style.scss */
+=======
+  /* line 2682, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #home-history .history-text p {
     font-size: 12px;
   }
 
+<<<<<<< HEAD
   /* line 2524, ../sass/bccf-style.scss */
+=======
+  /* line 2690, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .content-pages .top-control-container .carousel-title-container {
     margin-left: 1%;
     padding-left: 0;
   }
+<<<<<<< HEAD
   /* line 2527, ../sass/bccf-style.scss */
+=======
+  /* line 2693, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .content-pages .top-control-container .carousel-title-container h2 {
     color: #fff;
     padding: 6px;
     font-size: 16px;
   }
+<<<<<<< HEAD
   /* line 2533, ../sass/bccf-style.scss */
   .content-pages .top-control-container .control-buttons {
     padding-right: 0;
@@ -5117,20 +5300,44 @@ footer #newsletter .dashed-button a:hover {
     font-size: 12px;
   }
   /* line 2544, ../sass/bccf-style.scss */
+=======
+  /* line 2699, ../sass/bccf-style.scss */
+  .content-pages .top-control-container .control-buttons {
+    padding-right: 0;
+  }
+  /* line 2702, ../sass/bccf-style.scss */
+  .content-pages .top-control-container .control-buttons.six, .content-pages .top-control-container .control-buttons.half {
+    margin-left: 0;
+  }
+  /* line 2708, ../sass/bccf-style.scss */
+  .content-pages .page-container-outer .page-container-inner .page-box {
+    font-size: 12px;
+  }
+  /* line 2710, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .content-pages .page-container-outer .page-container-inner .page-box h2 {
     font-size: 14px;
   }
 
+<<<<<<< HEAD
   /* line 2552, ../sass/bccf-style.scss */
+=======
+  /* line 2718, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .related-resource {
     width: 50%;
   }
 
+<<<<<<< HEAD
   /* line 2568, ../sass/bccf-style.scss */
+=======
+  /* line 2734, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #tag-widget .tag-box i {
     font-size: 10px;
     padding: 3px 6px;
   }
+<<<<<<< HEAD
   /* line 2570, ../sass/bccf-style.scss */
   #tag-widget .tag-box img {
     margin: 3px 10px 10px;
@@ -5140,42 +5347,128 @@ footer #newsletter .dashed-button a:hover {
     padding: 0 10px;
   }
   /* line 2579, ../sass/bccf-style.scss */
+=======
+  /* line 2736, ../sass/bccf-style.scss */
+  #tag-widget .tag-box img {
+    margin: 3px 10px 10px;
+  }
+  /* line 2741, ../sass/bccf-style.scss */
+  #tag-widget .tag-box p {
+    padding: 0 10px;
+  }
+  /* line 2745, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #tag-widget .tag-box .dashed-button {
     margin: 10px;
   }
 
   /* end #tag-widget */
+<<<<<<< HEAD
   /* line 2589, ../sass/bccf-style.scss */
+=======
+  /* line 2754, ../sass/bccf-style.scss */
+  .photo {
+    border: 10px solid whitesmoke;
+    width: 150px;
+    height: 150px;
+  }
+
+  /* line 2761, ../sass/bccf-style.scss */
+  #photo-form img {
+    width: 150px;
+    height: 150px;
+  }
+  /* line 2765, ../sass/bccf-style.scss */
+  #photo-form .photo-over {
+    width: 150px;
+    height: 150px;
+    background-size: 150px 150px;
+  }
+
+  /* line 2773, ../sass/bccf-style.scss */
+  .fake-photo-container .photo-over {
+    font-size: 10px;
+    font-size: 0.625rem;
+    border: 10px solid whitesmoke;
+    width: 150px;
+    height: 150px;
+  }
+  /* line 2778, ../sass/bccf-style.scss */
+  .fake-photo-container .photo-over span {
+    left: 10px;
+  }
+
+  /* line 2784, ../sass/bccf-style.scss */
+  #tabs {
+    font-size: 12px;
+    font-size: 0.75rem;
+  }
+  /* line 2786, ../sass/bccf-style.scss */
+  #tabs a {
+    font-weight: normal;
+  }
+  /* line 2788, ../sass/bccf-style.scss */
+  #tabs a:hover {
+    font-weight: inherit;
+  }
+  /* line 2791, ../sass/bccf-style.scss */
+  #tabs a.current {
+    font-weight: inherit;
+  }
+
+  /* line 2797, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .my-rating {
     position: static;
     text-align: left;
   }
+<<<<<<< HEAD
   /* line 2592, ../sass/bccf-style.scss */
+=======
+  /* line 2800, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .my-rating .star-rating-control {
     position: static;
     left: 0;
   }
+<<<<<<< HEAD
   /* line 2596, ../sass/bccf-style.scss */
+=======
+  /* line 2804, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .my-rating form {
     position: static;
   }
 
+<<<<<<< HEAD
   /* line 2609, ../sass/bccf-style.scss */
+=======
+  /* line 2817, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   footer #main-footer-nav li a {
     font-size: 12px;
     padding: 10px 10px;
   }
+<<<<<<< HEAD
   /* line 2617, ../sass/bccf-style.scss */
+=======
+  /* line 2825, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   footer aside {
     margin: 0 0 30px;
     min-height: 175px;
   }
+<<<<<<< HEAD
   /* line 2621, ../sass/bccf-style.scss */
+=======
+  /* line 2829, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   footer #newsfeed {
     padding: 10px;
     border-right: 2px solid #a6b2a6;
     font-size: 12px;
   }
+<<<<<<< HEAD
   /* line 2626, ../sass/bccf-style.scss */
   footer #newsfeed ul {
     list-style: none;
@@ -5185,6 +5478,17 @@ footer #newsletter .dashed-button a:hover {
     margin: 10px 0 20px;
   }
   /* line 2632, ../sass/bccf-style.scss */
+=======
+  /* line 2834, ../sass/bccf-style.scss */
+  footer #newsfeed ul {
+    list-style: none;
+  }
+  /* line 2837, ../sass/bccf-style.scss */
+  footer #newsfeed li {
+    margin: 10px 0 20px;
+  }
+  /* line 2840, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   footer #newsfeed h6 {
     font-size: 10px;
     color: #8fab3d;
@@ -5192,16 +5496,28 @@ footer #newsletter .dashed-button a:hover {
     margin: 0;
     padding: 0;
   }
+<<<<<<< HEAD
   /* line 2640, ../sass/bccf-style.scss */
+=======
+  /* line 2848, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   footer #newsfeed p {
     margin: 2px 0;
     padding: 0;
   }
+<<<<<<< HEAD
   /* line 2645, ../sass/bccf-style.scss */
   footer #newsfeed a {
     color: #414042;
   }
   /* line 2651, ../sass/bccf-style.scss */
+=======
+  /* line 2853, ../sass/bccf-style.scss */
+  footer #newsfeed a {
+    color: #414042;
+  }
+  /* line 2859, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   footer #social {
     padding: 90px 49px;
   }
@@ -5215,67 +5531,119 @@ footer #newsletter .dashed-button a:hover {
 @media only screen and (max-width: 739px) {
   /* Mobile Grid
   * For stacking full width columns, please use the new class .mobile-full */
+<<<<<<< HEAD
   /* line 2670, ../sass/bccf-style.scss */
+=======
+  /* line 2878, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .mobile-one {
     width: 6.5%;
   }
 
+<<<<<<< HEAD
   /* line 2671, ../sass/bccf-style.scss */
+=======
+  /* line 2879, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .mobile-two {
     width: 15%;
   }
 
+<<<<<<< HEAD
   /* line 2672, ../sass/bccf-style.scss */
+=======
+  /* line 2880, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .mobile-three {
     width: 23.5%;
   }
 
+<<<<<<< HEAD
   /* line 2673, ../sass/bccf-style.scss */
+=======
+  /* line 2881, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .mobile-four {
     width: 32%;
   }
 
+<<<<<<< HEAD
   /* line 2674, ../sass/bccf-style.scss */
+=======
+  /* line 2882, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .mobile-five {
     width: 40.5%;
   }
 
+<<<<<<< HEAD
   /* line 2675, ../sass/bccf-style.scss */
+=======
+  /* line 2883, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .mobile-six {
     width: 49.0%;
   }
 
+<<<<<<< HEAD
   /* line 2676, ../sass/bccf-style.scss */
+=======
+  /* line 2884, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .mobile-seven {
     width: 57.5%;
   }
 
+<<<<<<< HEAD
   /* line 2677, ../sass/bccf-style.scss */
+=======
+  /* line 2885, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .mobile-eight {
     width: 66%;
   }
 
+<<<<<<< HEAD
   /* line 2678, ../sass/bccf-style.scss */
+=======
+  /* line 2886, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .mobile-nine {
     width: 74.5%;
   }
 
+<<<<<<< HEAD
   /* line 2679, ../sass/bccf-style.scss */
+=======
+  /* line 2887, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .mobile-ten {
     width: 83%;
   }
 
+<<<<<<< HEAD
   /* line 2680, ../sass/bccf-style.scss */
+=======
+  /* line 2888, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .mobile-eleven {
     width: 91.5%;
   }
 
+<<<<<<< HEAD
   /* line 2681, ../sass/bccf-style.scss */
+=======
+  /* line 2889, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .mobile-twelve {
     width: 100%;
   }
 
+<<<<<<< HEAD
   /* line 2683, ../sass/bccf-style.scss */
+=======
+  /* line 2891, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .mobile-full {
     clear: both;
     float: none;
@@ -5284,84 +5652,144 @@ footer #newsletter .dashed-button a:hover {
     display: block;
   }
 
+<<<<<<< HEAD
   /* line 2690, ../sass/bccf-style.scss */
+=======
+  /* line 2898, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .mobile-full:first-child {
     margin-top: 0;
   }
 
+<<<<<<< HEAD
   /* line 2693, ../sass/bccf-style.scss */
+=======
+  /* line 2901, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .mobile-center {
     margin-left: auto;
     margin-right: auto;
     float: none;
   }
 
+<<<<<<< HEAD
   /* line 2698, ../sass/bccf-style.scss */
+=======
+  /* line 2906, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .mobile-center:first-child {
     margin-left: auto;
   }
 
+<<<<<<< HEAD
   /* line 2699, ../sass/bccf-style.scss */
+=======
+  /* line 2907, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .mobile-center-text {
     text-align: center;
   }
 
+<<<<<<< HEAD
   /* line 2702, ../sass/bccf-style.scss */
+=======
+  /* line 2910, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .mobile-left {
     float: left;
   }
 
+<<<<<<< HEAD
   /* line 2703, ../sass/bccf-style.scss */
+=======
+  /* line 2911, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .mobile-right {
     float: right;
   }
 
+<<<<<<< HEAD
   /* line 2704, ../sass/bccf-style.scss */
+=======
+  /* line 2912, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .mobile-no-float {
     float: none;
   }
 
+<<<<<<< HEAD
   /* line 2706, ../sass/bccf-style.scss */
+=======
+  /* line 2914, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .container, .mobile-container {
     padding-left: 20px;
     padding-right: 20px;
   }
 
   /* Mobile Tables */
+<<<<<<< HEAD
   /* line 2713, ../sass/bccf-style.scss */
+=======
+  /* line 2921, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   table th,
   table td {
     padding: 4px;
   }
 
+<<<<<<< HEAD
   /* line 2717, ../sass/bccf-style.scss */
+=======
+  /* line 2925, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .no-mobile {
     display: none;
   }
 
+<<<<<<< HEAD
   /* line 2718, ../sass/bccf-style.scss */
+=======
+  /* line 2926, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .show-mobile {
     display: block;
   }
 
+<<<<<<< HEAD
   /* line 2725, ../sass/bccf-style.scss */
+=======
+  /* line 2933, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #bccflogo {
     border-right: none;
     text-align: center;
   }
 
+<<<<<<< HEAD
   /* line 2729, ../sass/bccf-style.scss */
+=======
+  /* line 2937, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #bccftagline {
     border-right: none;
     text-align: center;
   }
 
+<<<<<<< HEAD
   /* line 2733, ../sass/bccf-style.scss */
+=======
+  /* line 2941, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #bccflogin {
     text-align: center;
     height: auto;
   }
+<<<<<<< HEAD
   /* line 2736, ../sass/bccf-style.scss */
+=======
+  /* line 2944, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #bccflogin p {
     width: 32%;
     padding: 0 2%;
@@ -5369,11 +5797,19 @@ footer #newsletter .dashed-button a:hover {
     float: left;
   }
 
+<<<<<<< HEAD
   /* line 2743, ../sass/bccf-style.scss */
   #main-top-nav {
     min-height: 50px;
   }
   /* line 2746, ../sass/bccf-style.scss */
+=======
+  /* line 2951, ../sass/bccf-style.scss */
+  #main-top-nav {
+    min-height: 50px;
+  }
+  /* line 2954, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #main-top-nav > span {
     height: 40px;
     line-height: 35px;
@@ -5383,106 +5819,183 @@ footer #newsletter .dashed-button a:hover {
     padding-right: 55px;
     color: #336442;
   }
+<<<<<<< HEAD
   /* line 2756, ../sass/bccf-style.scss */
   #main-top-nav ul {
     margin-top: 0;
   }
   /* line 2761, ../sass/bccf-style.scss */
+=======
+  /* line 2964, ../sass/bccf-style.scss */
+  #main-top-nav ul {
+    margin-top: 0;
+  }
+  /* line 2969, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #main-top-nav li a {
     display: block;
     background-color: #8fab3d;
     border-bottom: 1px solid #336442;
     color: #FFF;
   }
+<<<<<<< HEAD
   /* line 2766, ../sass/bccf-style.scss */
+=======
+  /* line 2974, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #main-top-nav li a:hover {
     background: #e5e9d2;
     color: #336442;
   }
+<<<<<<< HEAD
   /* line 2771, ../sass/bccf-style.scss */
+=======
+  /* line 2979, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #main-top-nav li.active > a {
     color: #336442;
     background: #e5e9d2;
   }
+<<<<<<< HEAD
   /* line 2776, ../sass/bccf-style.scss */
   #main-top-nav .mnav-mobile-btn {
     display: block;
   }
   /* line 2781, ../sass/bccf-style.scss */
+=======
+  /* line 2984, ../sass/bccf-style.scss */
+  #main-top-nav .mnav-mobile-btn {
+    display: block;
+  }
+  /* line 2989, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #main-top-nav .mnav-submenu a {
     padding-left: 40px;
   }
 
+<<<<<<< HEAD
   /* line 2788, ../sass/bccf-style.scss */
   #browse-by #browse-by-nav {
     padding-top: 50px;
   }
   /* line 2792, ../sass/bccf-style.scss */
+=======
+  /* line 2996, ../sass/bccf-style.scss */
+  #browse-by #browse-by-nav {
+    padding-top: 50px;
+  }
+  /* line 3000, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #browse-by #browse-by-nav > ul > li {
     display: block;
     width: 100%;
     min-height: 50px;
   }
+<<<<<<< HEAD
   /* line 2796, ../sass/bccf-style.scss */
+=======
+  /* line 3004, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #browse-by #browse-by-nav > ul > li a {
     padding-left: 20px;
     border-bottom: 1px solid #336442;
     color: #FFF;
     text-align: left;
   }
+<<<<<<< HEAD
   /* line 2800, ../sass/bccf-style.scss */
+=======
+  /* line 3008, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #browse-by #browse-by-nav > ul > li a:hover {
     background: #e5e9d2;
     color: #336442;
   }
+<<<<<<< HEAD
   /* line 2806, ../sass/bccf-style.scss */
+=======
+  /* line 3014, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #browse-by #browse-by-nav > ul > li.active > a {
     background: #e5e9d2;
     color: #336442;
   }
+<<<<<<< HEAD
   /* line 2811, ../sass/bccf-style.scss */
+=======
+  /* line 3019, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #browse-by #browse-by-nav > ul > li .mnav-submenu {
     position: static;
     width: 100%;
   }
+<<<<<<< HEAD
   /* line 2814, ../sass/bccf-style.scss */
   #browse-by #browse-by-nav > ul > li .mnav-submenu a {
     padding-left: 40px;
   }
   /* line 2823, ../sass/bccf-style.scss */
+=======
+  /* line 3022, ../sass/bccf-style.scss */
+  #browse-by #browse-by-nav > ul > li .mnav-submenu a {
+    padding-left: 40px;
+  }
+  /* line 3031, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #browse-by #browse-by-nav .mnav-mobile-btn {
     display: block;
   }
 
+<<<<<<< HEAD
   /* line 2830, ../sass/bccf-style.scss */
+=======
+  /* line 3038, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #home-noteworthy .hnote-buttons {
     margin: 0;
     font-size: 13px;
     font-size: 0.8125rem;
   }
 
+<<<<<<< HEAD
   /* line 2837, ../sass/bccf-style.scss */
+=======
+  /* line 3045, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #home-programs .hpro-buttons {
     margin-left: 0;
     font-size: 13px;
     font-size: 0.8125rem;
   }
 
+<<<<<<< HEAD
   /* line 2845, ../sass/bccf-style.scss */
+=======
+  /* line 3053, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #home-resources .button-next,
   #home-resources .button-prev {
     display: none;
   }
+<<<<<<< HEAD
   /* line 2850, ../sass/bccf-style.scss */
+=======
+  /* line 3058, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #home-resources #carousel-resources .active {
     width: 250px !important;
   }
 
+<<<<<<< HEAD
   /* line 2857, ../sass/bccf-style.scss */
+=======
+  /* line 3065, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #home-calendar {
     float: left;
     padding-bottom: 30px;
   }
+<<<<<<< HEAD
   /* line 2861, ../sass/bccf-style.scss */
   #home-calendar h2 {
     font-size: 24px;
@@ -5504,42 +6017,90 @@ footer #newsletter .dashed-button a:hover {
     width: 98%;
   }
   /* line 2895, ../sass/bccf-style.scss */
+=======
+  /* line 3069, ../sass/bccf-style.scss */
+  #home-calendar h2 {
+    font-size: 24px;
+  }
+  /* line 3074, ../sass/bccf-style.scss */
+  #home-calendar .hcal-text {
+    padding: 0 20px;
+  }
+  /* line 3080, ../sass/bccf-style.scss */
+  #home-calendar .hcal-tabs .hcal-left-side {
+    margin: -20px 0 25px;
+  }
+  /* line 3083, ../sass/bccf-style.scss */
+  #home-calendar .hcal-tabs .hcal-right-side {
+    text-align: center;
+  }
+  /* line 3091, ../sass/bccf-style.scss */
+  #home-calendar .hcal-inner {
+    width: 98%;
+  }
+  /* line 3103, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #home-calendar .hcal-heading {
     width: 0;
     height: 0;
     display: none;
   }
+<<<<<<< HEAD
   /* line 2903, ../sass/bccf-style.scss */
+=======
+  /* line 3111, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #home-calendar .hcal-right-side {
     text-align: right;
     padding-right: 30px;
     width: 100% !important;
   }
 
+<<<<<<< HEAD
   /* line 2911, ../sass/bccf-style.scss */
   #home-listings {
     /* End #hlist-right-side */
   }
   /* line 2912, ../sass/bccf-style.scss */
+=======
+  /* line 3119, ../sass/bccf-style.scss */
+  #home-listings {
+    /* End #hlist-right-side */
+  }
+  /* line 3120, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #home-listings .seven {
     margin: 0 1%;
     width: 98%;
     padding: 40px 0;
   }
+<<<<<<< HEAD
   /* line 2921, ../sass/bccf-style.scss */
+=======
+  /* line 3129, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #home-listings #hlist-left-side p {
     padding: 20px 30px;
     font-size: 14px;
   }
+<<<<<<< HEAD
   /* line 2925, ../sass/bccf-style.scss */
   #home-listings .hlist-buttons {
     padding-left: 24px;
   }
   /* line 2934, ../sass/bccf-style.scss */
+=======
+  /* line 3133, ../sass/bccf-style.scss */
+  #home-listings .hlist-buttons {
+    padding-left: 24px;
+  }
+  /* line 3142, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #home-listings .hlist-tabs {
     text-align: center;
     margin: 0;
   }
+<<<<<<< HEAD
   /* line 2947, ../sass/bccf-style.scss */
   #home-listings .hlist-outer {
     height: 140px;
@@ -5549,36 +6110,71 @@ footer #newsletter .dashed-button a:hover {
     height: 100%;
   }
   /* line 2953, ../sass/bccf-style.scss */
+=======
+  /* line 3155, ../sass/bccf-style.scss */
+  #home-listings .hlist-outer {
+    height: 140px;
+  }
+  /* line 3158, ../sass/bccf-style.scss */
+  #home-listings .hlist-inner {
+    height: 100%;
+  }
+  /* line 3161, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #home-listings .hlist-inner img {
     height: 75px;
     width: 75px;
   }
+<<<<<<< HEAD
   /* line 2959, ../sass/bccf-style.scss */
   #home-listings .hlist-inner p {
     height: 70px;
   }
   /* line 2963, ../sass/bccf-style.scss */
+=======
+  /* line 3167, ../sass/bccf-style.scss */
+  #home-listings .hlist-inner p {
+    height: 70px;
+  }
+  /* line 3171, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #home-listings .hlist-inner .hlist-link {
     float: right;
     margin: 0;
   }
+<<<<<<< HEAD
   /* line 2969, ../sass/bccf-style.scss */
+=======
+  /* line 3177, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #home-listings .hlist-pagination {
     margin-bottom: 20px;
   }
 
   /* End #home-listings */
+<<<<<<< HEAD
   /* line 2978, ../sass/bccf-style.scss */
   #home-resources #carousel-resources {
     padding: 0 4%;
   }
   /* line 2983, ../sass/bccf-style.scss */
+=======
+  /* line 3186, ../sass/bccf-style.scss */
+  #home-resources #carousel-resources {
+    padding: 0 4%;
+  }
+  /* line 3191, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #home-resources #carousel-resources .hr-item {
     margin: 0 10px;
   }
 
   /* End #home-resources */
+<<<<<<< HEAD
   /* line 2995, ../sass/bccf-style.scss */
+=======
+  /* line 3203, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #home-history {
     border-top: 4px solid #c0dfcf;
     background: none;
@@ -5586,11 +6182,16 @@ footer #newsletter .dashed-button a:hover {
     height: 0;
     padding-top: 10px;
   }
+<<<<<<< HEAD
   /* line 3002, ../sass/bccf-style.scss */
+=======
+  /* line 3210, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #home-history li {
     min-height: 250px;
     height: 0;
   }
+<<<<<<< HEAD
   /* line 3007, ../sass/bccf-style.scss */
   #home-history .history-image {
     padding: 0 20px;
@@ -5600,26 +6201,50 @@ footer #newsletter .dashed-button a:hover {
     padding: 0px 10px 0 0;
   }
   /* line 3013, ../sass/bccf-style.scss */
+=======
+  /* line 3215, ../sass/bccf-style.scss */
+  #home-history .history-image {
+    padding: 0 20px;
+  }
+  /* line 3218, ../sass/bccf-style.scss */
+  #home-history .history-text {
+    padding: 0px 10px 0 0;
+  }
+  /* line 3221, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #home-history .history-text h3 {
     font-weight: 300;
     font-size: 14px;
   }
+<<<<<<< HEAD
   /* line 3017, ../sass/bccf-style.scss */
+=======
+  /* line 3225, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #home-history .history-text p {
     font-size: 10px;
   }
 
+<<<<<<< HEAD
   /* line 3024, ../sass/bccf-style.scss */
+=======
+  /* line 3232, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .content-pages .top-control-container .carousel-title-container {
     margin-left: 1%;
     padding-left: 0;
   }
+<<<<<<< HEAD
   /* line 3027, ../sass/bccf-style.scss */
+=======
+  /* line 3235, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .content-pages .top-control-container .carousel-title-container h2 {
     color: #fff;
     padding: 6px;
     font-size: 16px;
   }
+<<<<<<< HEAD
   /* line 3033, ../sass/bccf-style.scss */
   .content-pages .top-control-container .control-buttons {
     padding-right: 0;
@@ -5629,10 +6254,22 @@ footer #newsletter .dashed-button a:hover {
     /* Container */
   }
   /* line 3038, ../sass/bccf-style.scss */
+=======
+  /* line 3241, ../sass/bccf-style.scss */
+  .content-pages .top-control-container .control-buttons {
+    padding-right: 0;
+  }
+  /* line 3245, ../sass/bccf-style.scss */
+  .content-pages .page-container-outer {
+    /* Container */
+  }
+  /* line 3246, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .content-pages .page-container-outer .page-box-active {
     border-bottom: none;
   }
 
+<<<<<<< HEAD
   /* line 3044, ../sass/bccf-style.scss */
   .subpage-tabs {
     background-color: none;
@@ -5642,55 +6279,114 @@ footer #newsletter .dashed-button a:hover {
     width: 100%;
   }
   /* line 3049, ../sass/bccf-style.scss */
+=======
+  /* line 3253, ../sass/bccf-style.scss */
+  #tabs ul {
+    padding-bottom: 0;
+  }
+
+  /* line 3258, ../sass/bccf-style.scss */
+  #main-form {
+    padding-left: 0;
+  }
+
+  /* line 3262, ../sass/bccf-style.scss */
+  .fake-photo-container {
+    width: 200px;
+  }
+
+  /* line 3266, ../sass/bccf-style.scss */
+  .subpage-tabs {
+    background-color: none;
+  }
+  /* line 3269, ../sass/bccf-style.scss */
+  .subpage-tabs > ul > li {
+    width: 100%;
+  }
+  /* line 3271, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .subpage-tabs > ul > li a {
     font-size: 20px;
     font-size: 1.25rem;
     background-color: #8fab3d !important;
   }
 
+<<<<<<< HEAD
   /* line 3058, ../sass/bccf-style.scss */
+=======
+  /* line 3280, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .social-box,
   .baby-content {
     color: #e5e9d2;
   }
 
+<<<<<<< HEAD
   /* line 3062, ../sass/bccf-style.scss */
+=======
+  /* line 3284, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .my-rating {
     position: static;
     text-align: left;
   }
+<<<<<<< HEAD
   /* line 3065, ../sass/bccf-style.scss */
+=======
+  /* line 3287, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .my-rating .star-rating-control {
     position: static;
     left: 0;
   }
+<<<<<<< HEAD
   /* line 3069, ../sass/bccf-style.scss */
+=======
+  /* line 3291, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   .my-rating form {
     position: static;
   }
 
+<<<<<<< HEAD
   /* line 3074, ../sass/bccf-style.scss */
   #filter-container {
     text-align: left;
   }
   /* line 3076, ../sass/bccf-style.scss */
+=======
+  /* line 3296, ../sass/bccf-style.scss */
+  #filter-container {
+    text-align: left;
+  }
+  /* line 3298, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #filter-container > input {
     margin-top: 0;
     margin-left: 5px;
   }
 
+<<<<<<< HEAD
   /* line 3082, ../sass/bccf-style.scss */
+=======
+  /* line 3304, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #mobile-content-container {
     overflow-y: scroll;
     overflow-x: hidden;
     -webkit-overflow-scrolling-y: touch;
   }
 
+<<<<<<< HEAD
   /* line 3099, ../sass/bccf-style.scss */
+=======
+  /* line 3321, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #tag-widget .tag-box i {
     font-size: 10px;
     padding: 3px 6px;
   }
+<<<<<<< HEAD
   /* line 3101, ../sass/bccf-style.scss */
   #tag-widget .tag-box img {
     margin: 3px 10px 10px;
@@ -5704,11 +6400,27 @@ footer #newsletter .dashed-button a:hover {
     padding: 0 10px;
   }
   /* line 3112, ../sass/bccf-style.scss */
+=======
+  /* line 3323, ../sass/bccf-style.scss */
+  #tag-widget .tag-box img {
+    margin: 3px 10px 10px;
+  }
+  /* line 3327, ../sass/bccf-style.scss */
+  #tag-widget .tag-box h6 {
+    padding: 0 10px;
+  }
+  /* line 3330, ../sass/bccf-style.scss */
+  #tag-widget .tag-box p {
+    padding: 0 10px;
+  }
+  /* line 3334, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   #tag-widget .tag-box .dashed-button {
     margin: 10px;
   }
 
   /* end #tag-widget */
+<<<<<<< HEAD
   /* line 3127, ../sass/bccf-style.scss */
   footer #main-footer-nav {
     height: auto;
@@ -5722,16 +6434,36 @@ footer #newsletter .dashed-button a:hover {
     padding: 6px 10px;
   }
   /* line 3144, ../sass/bccf-style.scss */
+=======
+  /* line 3349, ../sass/bccf-style.scss */
+  footer #main-footer-nav {
+    height: auto;
+  }
+  /* line 3353, ../sass/bccf-style.scss */
+  footer #main-footer-nav ul {
+    height: auto;
+  }
+  /* line 3357, ../sass/bccf-style.scss */
+  footer #main-footer-nav li a {
+    padding: 6px 10px;
+  }
+  /* line 3366, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   footer aside {
     margin: 0 0 30px;
     min-height: 75px;
   }
+<<<<<<< HEAD
   /* line 3148, ../sass/bccf-style.scss */
+=======
+  /* line 3370, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   footer #newsfeed {
     padding: 10px;
     border-right: none;
     font-size: 12px;
   }
+<<<<<<< HEAD
   /* line 3153, ../sass/bccf-style.scss */
   footer #newsfeed ul {
     list-style: none;
@@ -5741,6 +6473,17 @@ footer #newsletter .dashed-button a:hover {
     margin: 10px 0 20px;
   }
   /* line 3159, ../sass/bccf-style.scss */
+=======
+  /* line 3375, ../sass/bccf-style.scss */
+  footer #newsfeed ul {
+    list-style: none;
+  }
+  /* line 3378, ../sass/bccf-style.scss */
+  footer #newsfeed li {
+    margin: 10px 0 20px;
+  }
+  /* line 3381, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   footer #newsfeed h6 {
     font-size: 10px;
     color: #8fab3d;
@@ -5748,58 +6491,94 @@ footer #newsletter .dashed-button a:hover {
     margin: 0;
     padding: 0;
   }
+<<<<<<< HEAD
   /* line 3167, ../sass/bccf-style.scss */
+=======
+  /* line 3389, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   footer #newsfeed p {
     margin: 2px 0;
     padding: 0;
   }
+<<<<<<< HEAD
   /* line 3172, ../sass/bccf-style.scss */
   footer #newsfeed a {
     color: #414042;
   }
   /* line 3178, ../sass/bccf-style.scss */
+=======
+  /* line 3394, ../sass/bccf-style.scss */
+  footer #newsfeed a {
+    color: #414042;
+  }
+  /* line 3400, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   footer #social {
     padding: 6px 70px;
     border-right: none;
   }
+<<<<<<< HEAD
   /* line 3188, ../sass/bccf-style.scss */
   footer #newsletter {
     padding: 10px 30px;
   }
   /* line 3191, ../sass/bccf-style.scss */
+=======
+  /* line 3410, ../sass/bccf-style.scss */
+  footer #newsletter {
+    padding: 10px 30px;
+  }
+  /* line 3413, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   footer #newsletter h5 {
     margin: 2px 0;
     padding: 0;
     font-weight: bold;
   }
+<<<<<<< HEAD
   /* line 3197, ../sass/bccf-style.scss */
+=======
+  /* line 3419, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   footer #newsletter p {
     margin: 2px 0;
     padding: 0;
   }
+<<<<<<< HEAD
   /* line 3201, ../sass/bccf-style.scss */
   footer #newsletter div {
     margin: 30px 0;
   }
   /* line 3203, ../sass/bccf-style.scss */
+=======
+  /* line 3423, ../sass/bccf-style.scss */
+  footer #newsletter div {
+    margin: 30px 0;
+  }
+  /* line 3425, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   footer #newsletter .dashed-button {
     background-color: #8fab3d;
-    min-width: 80px;
-    min-height: 40px;
     float: left;
   }
+<<<<<<< HEAD
   /* line 3209, ../sass/bccf-style.scss */
+=======
+  /* line 3429, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   footer #newsletter .dashed-button a {
     font-weight: bold;
     color: #fff;
     float: left;
-    margin: 4px;
-    padding: 4px 20px;
+    padding: 4px 22px;
     text-decoration: none;
     text-transform: uppercase;
-    border: 1px dashed #fff;
   }
+<<<<<<< HEAD
   /* line 3219, ../sass/bccf-style.scss */
+=======
+  /* line 3438, ../sass/bccf-style.scss */
+>>>>>>> hderaps-master
   footer #newsletter .dashed-button a:hover {
     color: #336442;
     text-decoration: none;
@@ -6356,16 +7135,14 @@ footer #newsletter .dashed-button a:hover {
   font-size: 12px;
   font-size: 0.75rem;
   background-color: inherit;
-  border: 1px dashed #FFF;
   color: #000;
   float: left;
   font-weight: bold;
-  margin: 2px;
   padding: 4px 22px;
   text-decoration: none;
   text-transform: uppercase;
 }
-/* line 36, ../mixins/event.scss */
+/* line 34, ../mixins/event.scss */
 .event .form-actions input:hover {
   color: #336442;
   text-decoration: none;
@@ -6542,16 +7319,18 @@ label {
   font-size: 12px;
   font-size: 0.75rem;
   background-color: inherit;
-  border: 1px dashed #FFF;
   color: #000;
   float: left;
   font-weight: bold;
-  margin: 2px;
   padding: 4px 22px;
   text-decoration: none;
   text-transform: uppercase;
 }
+<<<<<<< HEAD
 /* line 122, ../mixins/generic.scss */
+=======
+/* line 119, ../mixins/generic.scss */
+>>>>>>> hderaps-master
 .form-actions.dashed input:hover {
   color: #336442;
   text-decoration: none;
@@ -6623,11 +7402,9 @@ label {
   font-size: 12px;
   font-size: 0.75rem;
   background-color: inherit;
-  border: 1px dashed #FFF;
   color: #000;
   float: left;
   font-weight: bold;
-  margin: 2px;
   padding: 4px 22px;
   text-decoration: none;
   text-transform: uppercase;
@@ -6657,6 +7434,7 @@ label {
   width: 500px;
   padding: 15px;
   background-color: #FFF;
+  background: url(../img/pupup-close.png) right top no-repeat;
 }
 
 /* line 1, ../mixins/shop.scss */
@@ -6760,22 +7538,20 @@ label {
   font-size: 12px;
   font-size: 0.75rem;
   background-color: inherit;
-  border: 1px dashed #FFF;
   color: #000;
   float: left;
   font-weight: bold;
-  margin: 2px;
   padding: 4px 22px;
   text-decoration: none;
   text-transform: uppercase;
 }
-/* line 95, ../mixins/shop.scss */
+/* line 93, ../mixins/shop.scss */
 .shop-content .form-shop .form-actions input:hover {
   color: #336442;
   text-decoration: none;
   background-color: #fdcd26;
 }
-/* line 102, ../mixins/shop.scss */
+/* line 100, ../mixins/shop.scss */
 .shop-content .form-shop .product-added {
   margin: 10px auto;
   color: #8fab3d;

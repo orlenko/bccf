@@ -2263,19 +2263,16 @@ footer {
 
 		.dashed-button {
 			background-color:$lgreen;
-			min-width:76px;
 			float:left;
 			text-align: center;
 
 			a {
 			font-weight:bold;
-    		color: #fff;
+    		color: #000;
     		float: left;
-    		margin: 4px;
-    		padding: 4px 20px;
+    		padding: 4px 22px;
     		text-decoration: none;
     		text-transform: uppercase;
- 			border:1px dashed #fff;
 
 				&:hover {color:$dgreen;
 				text-decoration:none;
@@ -2291,7 +2288,6 @@ footer {
 
 .dashed-button {
 	background-color:$lgreen;
-	min-width:80px;
 	float:left;
 	text-shadow:none;
 
@@ -2299,11 +2295,10 @@ footer {
 	font-weight:bold;
 	color: #000;
 	float: left;
-	margin: 2px;
 	padding: 4px 22px;
 	text-decoration: none;
 	text-transform: uppercase;
- 			border:1px dashed #fff;
+
 
 		&:hover {color:$dgreen;
 		text-decoration:none;
@@ -3202,19 +3197,16 @@ footer {
 
 		.dashed-button {
 			background-color:$lgreen;
-			min-width:80px;
-			min-height:40px;
 			float:left;
 
 			a {
 			font-weight:bold;
     		color: #fff;
     		float: left;
-    		margin: 4px;
-    		padding: 4px 20px;
+    		padding: 4px 22px;
     		text-decoration: none;
     		text-transform: uppercase;
- 			border:1px dashed #fff;
+
 
 				&:hover {color:$dgreen;
 				text-decoration:none;
