@@ -2280,7 +2280,7 @@ textarea {
 }
 
 /* line 92, ../sass/bccf-style.scss */
-.center-text, #products-header li, #products-list li {
+.center-text, #products-header li, #products-list li, #checkout-form .form-actions-wrap {
   text-align: center;
 }
 
@@ -6846,22 +6846,57 @@ label {
   border-bottom: 1px solid #a6b2a6;
   margin-top: 10px;
   margin-bottom: 10px;
-  padding-bottom: 5px;
+  padding: 5px 0;
+  background-color: #c0dfcf;
 }
 
-/* line 124, ../mixins/shop.scss */
+/* line 125, ../mixins/shop.scss */
 #products-list li {
   height: 120px;
   border-bottom: 1px solid #a6b2a6;
   padding-bottom: 20px;
 }
-/* line 129, ../mixins/shop.scss */
+/* line 130, ../mixins/shop.scss */
 #products-list li div:not(:first-of-type) {
   padding-top: 30px;
 }
-/* line 132, ../mixins/shop.scss */
+/* line 133, ../mixins/shop.scss */
 #products-list li input[type='number'] {
   width: 50%;
+}
+
+/* line 138, ../mixins/shop.scss */
+#edit-cart {
+  text-align: right;
+}
+
+/* line 142, ../mixins/shop.scss */
+#checkout-form fieldset {
+  background: none !important;
+}
+/* line 144, ../mixins/shop.scss */
+#checkout-form fieldset p {
+  text-align: left;
+}
+/* line 146, ../mixins/shop.scss */
+#checkout-form fieldset p label {
+  margin: 0;
+}
+/* line 151, ../mixins/shop.scss */
+#checkout-form fieldset #id_same_billing_shipping,
+#checkout-form fieldset #id_remember {
+  position: absolute;
+  left: 350px;
+  top: 5px;
+}
+/* line 157, ../mixins/shop.scss */
+#checkout-form .form-actions-wrap {
+  float: none !important;
+  margin-left: 0 !important;
+}
+/* line 161, ../mixins/shop.scss */
+#checkout-form .form-actions-wrap input {
+  float: none !important;
 }
 
 /* Scss Document 

@@ -115,7 +115,8 @@
     border-bottom: 1px solid $lgrey;
     margin-top: 10px;
     margin-bottom: 10px;
-    padding-bottom: 5px;    
+    padding: 5px 0;  
+    background-color: $steal;  
     li {
         @extend .center-text;    
     }
@@ -128,9 +129,37 @@
         padding-bottom: 20px;
         div:not(:first-of-type) {
             padding-top: 30px;        
-        }     
+        }
         input[type='number'] {
             width: 50%;
+        }    
+    }
+}
+#edit-cart {
+    text-align: right;
+}
+#checkout-form {
+    fieldset {
+        background: none !important; 
+        p {
+            text-align: left;
+            label {
+                margin: 0;            
+            }    
+        }
+        #id_same_billing_shipping,
+        #id_remember {
+            position: absolute;
+            left: 350px;
+            top: 5px;        
+        }
+    }
+    .form-actions-wrap {
+        @extend .center-text;
+        float: none !important;
+        margin-left: 0 !important;
+        input {
+            float: none !important;        
         }    
     }
 }
