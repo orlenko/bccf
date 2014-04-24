@@ -161,8 +161,10 @@ def handle_membership(profile, order):
 
 def get_upgrades(profile):
     upgrades = {}
-    type = profile.membership_type[:3].upper()
-    log.debug(type)
+    if type.membership_type:
+        type = profile.membership_type[:3].upper()
+    else:
+        return upgrades
     if profile.is_level_A:
         upgrades['level_B'] = ProductVariation.objects.filter(sku__startswith='%s-B' % type)
         upgrades['level_C'] = ProductVariation.objects.filter(sku__startswith='%s-C' % type)
