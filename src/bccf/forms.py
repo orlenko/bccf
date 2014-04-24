@@ -24,7 +24,7 @@ from bccf.widgets import AdvancedFileInput
 
 from formable.builder.models import FormStructure, FormPublished, Question
 
-from ckeditor.widgets import CKEditorWidget
+from ckeditor.widgets import CKEditor
 
 log = logging.getLogger(__name__)
 
@@ -115,7 +115,7 @@ class EventForm(forms.ModelForm):
             'image',
             )
         widgets = {
-            #'content': CKEditorWidget(config_name='basic'),
+            'content': CKEditor(ckeditor_config='basic'),
             'provider': forms.HiddenInput(),
             'page_for': forms.HiddenInput(),
             'status': forms.HiddenInput(),
@@ -137,7 +137,7 @@ class CampaignForm(forms.ModelForm):
         model = Campaign
         fields = ('title', 'content', 'status', 'bccf_topic', 'page_for', 'image', 'user', 'by_user', 'approve')
         widgets = {
-            #'content': CKEditorWidget(config_name='basic'),
+            'content': CKEditor(ckeditor_config='basic'),
             'image': AdvancedFileInput(),
             'approve': forms.HiddenInput,
             'status': forms.HiddenInput,
