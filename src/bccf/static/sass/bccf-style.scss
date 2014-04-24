@@ -3215,6 +3215,7 @@ footer {
 } /* End Footer */
 } /* End Mobile Media Query */
 
+@import "../mixins/forum";
 @import "../mixins/account";
 @import "../mixins/profile";
 @import "../mixins/builder";

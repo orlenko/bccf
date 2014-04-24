@@ -5793,6 +5793,59 @@ footer #newsletter .dashed-button a:hover {
   /* End Footer */
 }
 /* End Mobile Media Query */
+/* line 1, ../mixins/forum.scss */
+.posts {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+/* line 5, ../mixins/forum.scss */
+.posts .photo {
+  width: 150px;
+  height: 150px;
+}
+/* line 9, ../mixins/forum.scss */
+.posts .post-data {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  padding: 10px;
+  border: 1px solid whitesmoke;
+}
+/* line 14, ../mixins/forum.scss */
+.posts .post-date {
+  font-size: 12px;
+  font-size: 0.75rem;
+  line-height: 20px;
+}
+/* line 18, ../mixins/forum.scss */
+.posts .post-actions {
+  font-size: 11px;
+  font-size: 0.6875rem;
+}
+/* line 20, ../mixins/forum.scss */
+.posts .post-actions a {
+  display: inline-block;
+  margin-right: 10px;
+  color: #a6b2a6;
+}
+/* line 26, ../mixins/forum.scss */
+.posts .post-content {
+  /*blockquote:before {
+      content: $fa-var-quote-left;
+  }
+  blockquote:after {
+      content: $fa-var-quote-right;
+  }*/
+}
+/* line 27, ../mixins/forum.scss */
+.posts .post-content blockquote {
+  font-size: 15px;
+  font-size: 0.9375rem;
+  padding: 10px;
+  background-color: whitesmoke;
+}
+
 /**
  * User Forms
  **/

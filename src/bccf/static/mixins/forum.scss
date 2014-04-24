@@ -1,0 +1,39 @@
+.posts {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    .photo {
+        width: 150px;
+        height: 150px;    
+    }
+    .post-data {
+        @include rounded(5);
+        padding: 10px;
+        border: 1px solid $sgrey; 
+    }
+    .post-date {
+        @include font-size(12); 
+        line-height: 20px;
+    }
+    .post-actions {
+        @include font-size(11);
+        a {
+            display: inline-block;
+            margin-right: 10px;
+            color: $lgrey;        
+        }    
+    }
+    .post-content {
+        blockquote {
+            @include font-size(15);
+            padding: 10px;
+            background-color: $sgrey;
+        }        
+        /*blockquote:before {
+            content: $fa-var-quote-left;
+        }
+        blockquote:after {
+            content: $fa-var-quote-right;
+        }*/    
+    }
+}
