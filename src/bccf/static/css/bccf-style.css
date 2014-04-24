@@ -2270,7 +2270,7 @@ input[type=email],
 input[type=search],
 input[type=tel],
 input[type=url],
-textarea {
+textarea, div.total li.total {
   font-weight: bold;
 }
 
@@ -2280,7 +2280,7 @@ textarea {
 }
 
 /* line 92, ../sass/bccf-style.scss */
-.center-text, #products-header li, #products-list li, #checkout-form .form-actions-wrap {
+.center-text {
   text-align: center;
 }
 
@@ -6794,7 +6794,7 @@ label {
 /* line 68, ../mixins/shop.scss */
 .shop-content .form-shop .input_id_quantity input[type="number"] {
   width: 25%;
-  border: 1px solid #000;
+  border: 1px solid #414042;
   background-color: whitesmoke;
 }
 /* line 74, ../mixins/shop.scss */
@@ -6814,87 +6814,140 @@ label {
   font-weight: bold;
 }
 
-/* line 92, ../mixins/shop.scss */
+/* line 91, ../mixins/shop.scss */
+.shop-cart .form-actions {
+  text-align: left !important;
+}
+/* line 93, ../mixins/shop.scss */
+.shop-cart .form-actions .form-actions-wrap {
+  margin: 0;
+  float: none;
+}
+/* line 97, ../mixins/shop.scss */
+.shop-cart .form-actions * {
+  float: none !important;
+}
+/* line 100, ../mixins/shop.scss */
 .shop-cart .form-actions a {
   text-decoration: none;
 }
-/* line 96, ../mixins/shop.scss */
-.shop-cart ul {
+
+/* line 105, ../mixins/shop.scss */
+#products-header {
   list-style: none;
   margin: 0;
   padding: 0;
-}
-/* line 101, ../mixins/shop.scss */
-.shop-cart .total {
-  text-align: center;
-}
-/* line 103, ../mixins/shop.scss */
-.shop-cart .total li {
-  padding-top: 10px;
-  padding-right: 10px;
-}
-/* line 106, ../mixins/shop.scss */
-.shop-cart .total li .text-right {
-  text-align: right;
-}
-
-/* line 113, ../mixins/shop.scss */
-#products-header {
   font-weight: bold;
   border-bottom: 1px solid #a6b2a6;
   margin-top: 10px;
   margin-bottom: 10px;
   padding: 5px 0;
-  background-color: #c0dfcf;
 }
-
-/* line 125, ../mixins/shop.scss */
-#products-list li {
-  height: 120px;
-  border-bottom: 1px solid #a6b2a6;
-  padding-bottom: 20px;
-}
-/* line 130, ../mixins/shop.scss */
-#products-list li div:not(:first-of-type) {
-  padding-top: 30px;
-}
-/* line 133, ../mixins/shop.scss */
-#products-list li input[type='number'] {
-  width: 50%;
-}
-
-/* line 138, ../mixins/shop.scss */
-#edit-cart {
+/* line 114, ../mixins/shop.scss */
+#products-header li:not(:first-of-type) {
   text-align: right;
 }
 
-/* line 142, ../mixins/shop.scss */
+/* line 118, ../mixins/shop.scss */
+#products-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+/* line 122, ../mixins/shop.scss */
+#products-list li {
+  height: 50px;
+  border-bottom: 1px solid #a6b2a6;
+  padding-bottom: 20px;
+}
+/* line 126, ../mixins/shop.scss */
+#products-list li div {
+  padding-top: 13px;
+}
+/* line 129, ../mixins/shop.scss */
+#products-list li div:first-of-type {
+  text-align: left;
+}
+/* line 132, ../mixins/shop.scss */
+#products-list li div:not(:first-of-type) {
+  text-align: right;
+}
+/* line 135, ../mixins/shop.scss */
+#products-list li input[type='number'] {
+  width: 50%;
+  border: 1px solid #414042;
+  background-color: whitesmoke;
+}
+/* line 140, ../mixins/shop.scss */
+#products-list li input[type='checkbox'] {
+  border: 1px solid #414042;
+  background-color: whitesmoke;
+}
+
+/* line 147, ../mixins/shop.scss */
 #checkout-form fieldset {
   background: none !important;
 }
-/* line 144, ../mixins/shop.scss */
+/* line 149, ../mixins/shop.scss */
 #checkout-form fieldset p {
   text-align: left;
 }
-/* line 146, ../mixins/shop.scss */
+/* line 151, ../mixins/shop.scss */
 #checkout-form fieldset p label {
   margin: 0;
 }
-/* line 151, ../mixins/shop.scss */
+/* line 156, ../mixins/shop.scss */
 #checkout-form fieldset #id_same_billing_shipping,
 #checkout-form fieldset #id_remember {
   position: absolute;
   left: 350px;
   top: 5px;
 }
-/* line 157, ../mixins/shop.scss */
+/* line 162, ../mixins/shop.scss */
 #checkout-form .form-actions-wrap {
+  text-align: right;
   float: none !important;
   margin-left: 0 !important;
 }
-/* line 161, ../mixins/shop.scss */
+/* line 166, ../mixins/shop.scss */
 #checkout-form .form-actions-wrap input {
   float: none !important;
+}
+
+/* line 171, ../mixins/shop.scss */
+.two-weeks {
+  font-size: 12px;
+  font-size: 0.75rem;
+  font-style: italic;
+}
+
+/* line 175, ../mixins/shop.scss */
+div.total {
+  margin-top: 15px;
+  text-align: right;
+}
+/* line 178, ../mixins/shop.scss */
+div.total li {
+  padding-top: 5px;
+}
+/* line 180, ../mixins/shop.scss */
+div.total li span {
+  text-align: left;
+}
+/* line 187, ../mixins/shop.scss */
+div.total li:not(.total) {
+  border-bottom: 1px solid #a6b2a6;
+  padding-bottom: 5px;
+}
+/* line 191, ../mixins/shop.scss */
+div.total .two-weeks:before {
+  content: '*';
+  margin-right: 5px;
+}
+/* line 195, ../mixins/shop.scss */
+div.total .two-weeks {
+  padding-top: 50px;
+  text-align: center;
 }
 
 /* Scss Document 

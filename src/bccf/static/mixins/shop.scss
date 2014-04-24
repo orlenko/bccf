@@ -67,7 +67,7 @@
             }
             input[type="number"] {
                 width: 25%;
-                border: 1px solid #000;
+                border: 1px solid $dgrey;
                 background-color: $sgrey;
             }
         }
@@ -89,54 +89,59 @@
 }
 .shop-cart {
     .form-actions {
+        text-align: left !important;
+        .form-actions-wrap {
+            margin: 0;
+            float: none;
+        }
+        * {
+            float: none !important;        
+        }
         a {
             text-decoration: none;      
         }    
     }
-    ul {
-        list-style: none;
-        margin: 0;
-        padding: 0;    
-    }
-    .total {
-        text-align: center;
-        li {
-            padding-top: 10px;
-            padding-right: 10px;
-            .text-right {
-                text-align: right;            
-            }            
-        }    
-    }
 }
-
 #products-header {
+    list-style: none;
+    margin: 0;
+    padding: 0;    
     font-weight: bold;
     border-bottom: 1px solid $lgrey;
     margin-top: 10px;
     margin-bottom: 10px;
     padding: 5px 0;  
-    background-color: $steal;  
-    li {
-        @extend .center-text;    
+    li:not(:first-of-type) {
+        text-align: right    
     }
 }
 #products-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;    
     li {
-        @extend .center-text;
-        height: 120px;
+        height: 50px;
         border-bottom: 1px solid $lgrey;
         padding-bottom: 20px;
+        div {
+            padding-top: 13px;        
+        }
+        div:first-of-type {
+            text-align: left;        
+        }
         div:not(:first-of-type) {
-            padding-top: 30px;        
+            text-align: right;
         }
         input[type='number'] {
             width: 50%;
-        }    
+            border: 1px solid $dgrey;
+            background-color: $sgrey;
+        }
+        input[type='checkbox'] {
+            border: 1px solid $dgrey;
+            background-color: $sgrey;        
+        }
     }
-}
-#edit-cart {
-    text-align: right;
 }
 #checkout-form {
     fieldset {
@@ -155,11 +160,40 @@
         }
     }
     .form-actions-wrap {
-        @extend .center-text;
+        text-align: right;
         float: none !important;
         margin-left: 0 !important;
         input {
             float: none !important;        
         }    
+    }
+}
+.two-weeks {
+    @include font-size(12);
+    font-style: italic;
+}
+div.total {
+    margin-top: 15px;
+    text-align: right;
+    li {
+        padding-top: 5px;
+        span {
+            text-align: left;            
+        }      
+    }
+    li.total {
+        @extend .strong;        
+    }
+    li:not(.total) {
+        border-bottom: 1px solid $lgrey;
+        padding-bottom: 5px;        
+    }
+    .two-weeks:before {
+        content: '*';
+        margin-right: 5px;    
+    }
+    .two-weeks {
+        padding-top: 50px;
+        text-align: center;  
     }
 }

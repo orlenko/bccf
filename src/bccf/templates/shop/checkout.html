@@ -36,31 +36,30 @@ $(function() {$('.middle :input:visible:enabled:first').focus();});
 
 {% if request.cart.has_items %}
 <div class="section row">
+<ul id="products-header" class="section">
+    <li class="col six">Item</li>
+    <li class="col two">Item Price</li>
+    <li class="col two">Quantity</li>
+    <li class="col two">Total Price
+</ul>
 <ul id="products-list" class="section row no-style-list center-text">
     {% for item in request.cart %}
     <li>
-        <div class="col two">
-    	{% if item.image %}
-    	   <img alt="{{ item.description }}" src="{{ MEDIA_URL }}{% thumbnail item.image 30 30 %}" />
-    	{% else %}
-    	   <img alt="{{ item.description }}" />
-    	{% endif %}
-    	</div>
-    	<div class="col six">
-    	   {{ item.quantity }} x {{ item.description }}
-    	</div>
-    	<div class="col four">
+        <div class="col six strong"><a href="{{ item.get_absolute_url }}" target="_blank" title="{{ item.description }}">{{ item.description }}</a></div>
+    	<div class="col two">{{ item.unit_price|currency }}</div>
+    	<div class="col two">{{ item.quantity }}</div>
+    	<div class="col two">
     	   <span class="price">{{ item.total_price|currency }}</span>
     	</div>
     </li>
     {% endfor %}
 </ul>
-<div class="total section totals">
-    <div class="col seven">&nbsp;</div>
-    <div class="col five"><ul class="no-style-list">{% order_totals %}</ul></div>
+<div class="total section">
+    <div class="col eight">{% include "shop/includes/two_weeks.html" %}</div>
+    <div class="col four"><ul class="no-style-list">{% order_totals %}</ul></div>
 </div>
 <div id="edit-cart" class="section row row-two">
-    <a class="lgreen-btn" href="{% url "shop_cart" %}">{% trans "Edit Cart" %}</a>
+    <a class="lgreen-btn" href="{% url "shop_cart" %}">{% trans "Return to Cart" %}</a>
 </div>
 </div>
 {% endif %}
@@ -91,7 +90,7 @@ $(function() {$('.middle :input:visible:enabled:first').focus();});
 				    {% if not CHECKOUT_STEP_FIRST %}
 					<input type="submit" class="lgreen-btn" name="back" value="{% trans "Back" %}">
 					{% endif %}
-					<input type="submit" class="lgreen-btn" value="{% if CHECKOUT_STEP_LAST %}{% trans "Complete" %}{% else %}{% trans "Next" %}{% endif %}">
+					<input type="submit" class="lgreen-btn" value="{% if CHECKOUT_STEP_LAST %}{% trans "Complete" %}{% else %}{% trans "Continue" %}{% endif %}">
 				</div>
 			</div>
 		{% else %}
