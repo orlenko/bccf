@@ -66,9 +66,10 @@ class EventClose(CronJobBase):
     code = 'bccf.event_close'
     
     def do(self):
-        events = Event.objects.filter(date_start__lte=now())
+        events = Event.objects.filter(date_start__lte=now(), closed=True)
         for event in events:
             event.status = 1
+            event.closed = True
             regs = EventRegistration.objects.filter(event=event)
             if event.provider:
                 email.send_reminder('Event finished', event.provider, context={'event': event}) # To Provider

@@ -119,6 +119,7 @@ class EventAdmin(DisplayableAdmin):
                                     'provider',
                                     'date_start',
                                     'date_end',
+                                    'closed',
                                     'location_city',
                                     'location_street',
                                     'location_street2',
