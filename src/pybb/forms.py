@@ -156,7 +156,7 @@ class AdminPostForm(PostForm):
     Superusers can post messages from any user and from any time
     If no user with specified name - new user will be created
     """
-    login = forms.CharField(label=ugettext_lazy('User'))
+    login = forms.CharField(widget=forms.HiddenInput())
 
     def __init__(self, *args, **kwargs):
         if args:
