@@ -100,7 +100,7 @@ def pybb_link(object, anchor=u''):
 
 @register.filter
 def pybb_last_post(topic):
-    post = Post.objects.filter(topic=topic).order_by('-created')[1:]
+    post = Post.objects.filter(topic=topic, on_moderation=False).order_by('-created')[1:]
     return post[0].created
 
 @register.filter
