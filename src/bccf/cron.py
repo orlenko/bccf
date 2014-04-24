@@ -13,7 +13,7 @@ class EventPaymentReminder(CronJobBase):
     CronJob for sending a payment reminder to users who have not paid their
     registrations. The is reminder will be sent 4 weeks before the event.
     """
-    RUN_EVERY_MINS = 0.01
+    RUN_EVERY_MINS = 5
     schedule = Schedule(run_every_mins=RUN_EVERY_MINS)
     code = 'bccf.event_payment_reminder'
 
@@ -38,7 +38,7 @@ class EventFreeRemind(CronJobBase):
     registration fee. This also sends reminders to registered users about the
     event. The this only looks at events that are happening in 2 weeks
     """
-    RUN_EVERY_MINS = 0.01
+    RUN_EVERY_MINS = 5
     schedule = Schedule(run_every_mins=RUN_EVERY_MINS)
     code = 'bccf.event_free_seat'
     
@@ -61,7 +61,7 @@ class EventClose(CronJobBase):
     """
     Closes an event that passed
     """
-    RUN_EVERY_MINS = 0.01
+    RUN_EVERY_MINS = 5
     schedule = Schedule(run_every_mins=RUN_EVERY_MINS)
     code = 'bccf.event_close'
     
@@ -85,7 +85,7 @@ class UserMembershipReminder(CronJobBase):
     """
     Sends reminders to users about their expiring memberships.
     """
-    RUN_EVERY_MINS = 0.01
+    RUN_EVERY_MINS = 5
     schedule = Schedule(run_every_mins=RUN_EVERY_MINS)
     code = 'bccf.user_membership_reminder'
     
@@ -108,7 +108,7 @@ class UserMembershipExpire(CronJobBase):
     Sets user's membership to a free version after current
     membership expires
     """
-    RUN_EVERY_MINS = 0.01
+    RUN_EVERY_MINS = 5
     schedule = Schedule(run_every_mins=RUN_EVERY_MINS)
     code = 'bccf.user_membership_expire'
     
