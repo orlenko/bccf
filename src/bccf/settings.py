@@ -571,9 +571,7 @@ BCCF_RESOURCE_TYPES = '(article|downloadableform|magazine|podcast|tipsheet|video
 BCCF_SPECIAL_PAGES = ['trainings','resources','tag','programs']
 BCCF_CORE_PAGES = ['trainings','resources','tag','programs','blog','news']
 SEARCH_MODEL_CHOICES = (
-    'bccf.BCCFChildPage',
-    #'bccf.BCCFGenericPage',
-    #'bccf.Magazine',    
+    'bccf.BCCFChildPage', 
     'bccf.BCCFTopic',
     'bccf.BCCFPage',
     'shop.product',
@@ -603,19 +601,19 @@ CKEDITOR_CONFIGS = {
         'allowedContent': True,
     },
     'basic': {
-        'toolbar': 'Basic',
+        #'toolbar': 'Basic',
         'toolbarGroups': [
-           # { 'name': 'clipboard',   'groups': [ 'clipboard', 'undo' ] },
-           # { 'name': 'editing',     'groups': [ 'find', 'selection', 'spellchecker' ] },
-            { 'name': 'links' },
+           { 'name': 'clipboard',   'groups': [ 'clipboard', 'undo' ] },
+           { 'name': 'editing',     'groups': [ 'find', 'selection', 'spellchecker' ] },
+           { 'name': 'links' },
            # { 'name': 'insert' },
            # { 'name': 'forms' },
            # { 'name': 'tools' },
            # { 'name': 'document',       'groups': [ 'mode', 'document', 'doctools' ] },
            # { 'name': 'others' },
            # '/',
-            { 'name': 'basicstyles', 'groups': [ 'basicstyles', 'cleanup' ] },
-           # { 'name': 'paragraph',   'groups': [ 'list', 'indent', 'blocks', 'align', 'bidi' ] },
+           { 'name': 'basicstyles', 'groups': [ 'basicstyles', 'cleanup' ] },
+           { 'name': 'paragraph',   'groups': [ 'list', 'indent', 'blocks', 'align', 'bidi' ] },
            # { 'name': 'styles' },
            # { 'name': 'colors' },
            # { 'name': 'about' }
