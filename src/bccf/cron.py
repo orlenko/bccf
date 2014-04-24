@@ -77,9 +77,6 @@ class EventClose(CronJobBase):
             if event.survey_before:
                 event.survey_before.closed = True
                 event.survey_before.save()
-            if event.survey_after:
-                event.survey_after.closed = True
-                event.survey_after.save()
             event.save()
     
 class UserMembershipReminder(CronJobBase):
@@ -100,7 +97,7 @@ class UserMembershipReminder(CronJobBase):
             elif type == 'Quarterly': # 1 month before
                 limit = expiry - relativedelta(months=1)
             elif type == 'Monthly': # 1 week before
-                limit = expiry - relativedelta(week=1)
+                limit = expiry - relativedelta(weeks=1)
             if limit and now() <= limit:
                 email.send_reminder('Membership Expiring', user)
 

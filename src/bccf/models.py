@@ -1001,6 +1001,8 @@ class Event(BCCFChildPage):
 
     event_product = models.ForeignKey('shop.Product', null=True, blank=True, related_name='event-product')
 
+    closed = models.BooleanField('Event Finished', default=False)
+
     objects = managers.EventManager()
 
     def save(self, **kwargs):
