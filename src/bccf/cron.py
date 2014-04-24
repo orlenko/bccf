@@ -66,7 +66,7 @@ class EventClose(CronJobBase):
     code = 'bccf.event_close'
     
     def do(self):
-        events = Event.objects.filter(date_start__lte=now(), closed=True)
+        events = Event.objects.filter(date_start__lte=now(), closed=False)
         for event in events:
             event.status = 1
             event.closed = True
