@@ -161,7 +161,7 @@ def handle_membership(profile, order):
 
 def get_upgrades(profile):
     upgrades = {}
-    if type.membership_type:
+    if profile.membership_type:
         type = profile.membership_type[:3].upper()
     else:
         return upgrades
