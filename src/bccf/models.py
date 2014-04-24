@@ -892,18 +892,26 @@ class UserProfile(PybbProfile):
 
     @property
     def is_parent(self):
+        if not self.membership_type:
+            return False
         return 'parent' in self.membership_type
 
     @property
     def is_professional(self):
+        if not self.membership_type:
+            return False
         return 'professional' in self.membership_type
 
     @property
     def is_organization(self):
+        if not self.membership_type:
+            return False
         return 'organization' in self.membership_type
 
     @property
     def is_corporate(self):
+        if not self.membership_type:
+            return False
         return 'corporate' in self.membership_type
 
     @property
