@@ -1059,7 +1059,7 @@ EventForProfessionals = Event
 
 class EventRegistration(models.Model):
     event = models.ForeignKey(Event, related_name='event')
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, related_name='registree')
     registration_date = models.DateTimeField(auto_now_add=True, blank=True)
     passed = models.BooleanField('Passed', default=False, blank=True)
     event_order = models.ForeignKey('shop.Order', default=None, null=True, blank=True, related_name='event-order')
