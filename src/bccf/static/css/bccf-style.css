@@ -6909,7 +6909,7 @@ label {
 }
 /* line 122, ../mixins/shop.scss */
 #products-list li {
-  height: 50px;
+  min-height: 50px;
   border-bottom: 1px solid #a6b2a6;
   padding-bottom: 20px;
 }

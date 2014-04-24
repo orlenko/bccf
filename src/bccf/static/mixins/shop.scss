@@ -120,7 +120,7 @@
     margin: 0;
     padding: 0;    
     li {
-        height: 50px;
+        min-height: 50px;
         border-bottom: 1px solid $lgrey;
         padding-bottom: 20px;
         div {

@@ -4,9 +4,9 @@
 	{% for program in user.program_requests.all %}
 		<li><h3 class="h5">{{ program.title }}</h3>
 		    <ul>
-			{% if request.accept %}
+			{% if program.accept %}
     			<li><span class="list-item-name">Status</span><span class="approved">Accepted</span></li>
-                <li><span class="list-item-name">Accepted On<span>{{ request.accepted_on }}</li>
+                <li><span class="list-item-name">Accepted On</span>{{ program.accepted_on }}</li>
             {% else %}
                 <li><span class="list-item-name">Status</span><span class="pending">Pending</span></li>
             {% endif %}

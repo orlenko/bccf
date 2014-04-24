@@ -124,7 +124,10 @@ class EventForm(forms.ModelForm):
     def __init__(self, user=None, *args, **kwargs):
         super(EventForm, self).__init__(*args, **kwargs)
         if user:
-            self.fields['program'].queryset = Program.objects.filter(Q(users=None)|Q(users=user))
+            q = Q(users=user)
+            if user.profile.is_level_C:
+                q = q | Q(users=None)
+            self.fields['program'].queryset = Program.objects.filter(q)
 
 class CampaignForm(forms.ModelForm):
     class Meta:
