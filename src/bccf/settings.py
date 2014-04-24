@@ -578,7 +578,7 @@ SEARCH_MODEL_CHOICES = (
 )
 
 # CKEditor
-CKEDITOR_CONFIGS = {
+CKEDITOR_CONFIG = {
     'default': {
         'toolbarGroups':  [
             { 'name': 'clipboard',   'groups': [ 'clipboard', 'undo' ] },
