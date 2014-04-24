@@ -72,9 +72,8 @@ class EventClose(CronJobBase):
             event.closed = True
             regs = EventRegistration.objects.filter(event=event)
             if event.provider:
-                print event.provider
-                print event.provider.email
-                email.send_reminder('Event finished', event.provider, context={'event': event}) # To Provider
+                if event.provider.email:
+                    email.send_reminder('Event finished', event.provider, context={'event': event}) # To Provider
             for reg in regs:
                 email.send_reminder('Event finished', reg.user, context={'event': event}) # To Attendees
             if event.survey_before:
