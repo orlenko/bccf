@@ -115,7 +115,7 @@ class EventForm(forms.ModelForm):
             'image',
             )
         widgets = {
-            'content': CKEditor(ckeditor_config='basic'),
+            'content': CKEditor(ckeditor_configs='basic'),
             'provider': forms.HiddenInput(),
             'page_for': forms.HiddenInput(),
             'status': forms.HiddenInput(),
@@ -137,7 +137,7 @@ class CampaignForm(forms.ModelForm):
         model = Campaign
         fields = ('title', 'content', 'status', 'bccf_topic', 'page_for', 'image', 'user', 'by_user', 'approve')
         widgets = {
-            'content': CKEditor(ckeditor_config='basic'),
+            'content': CKEditor(ckeditor_configs='basic'),
             'image': AdvancedFileInput(),
             'approve': forms.HiddenInput,
             'status': forms.HiddenInput,
