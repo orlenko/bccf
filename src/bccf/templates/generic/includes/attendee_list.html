@@ -1,10 +1,18 @@
-{% if event.is_full %}
-<p>The event is full.</p>
-{% endif %}
-<ul>
+<div class="section">
+    <h4 class="h6 col eight {% if event.is_full %}event-full{% endif %}">People Attending ({{ attendee|length }}/{{ event_obj.max_seats }})</h4>
+    {% if attendees|length > 0 %}<a href="#" class="col four btn-expand"><i class="fa fa-chevron-down"></i>Expand</a>{% endif %}
+</div>
+<ul class="attendee-list none">
     {% for attendee in attendees %}
-    <li>{{ attendee.user.get_full_name }} - {{ attendee.user.email }}</li>
-    {% empty %}
-    <li>No Attendees Yet</li>
+    <li>
+        <a href="{{ attendee.get_absolute_url }}" title="{{ attendee.user.get_full_name }}">
+            {{ attendee.user.get_full_name }}
+        </a>
+    </li>
     {% endfor %}
 </ul>
+{% if attendees|length > 0 %}
+<p>
+    <a href="{{ event.attendee_url }}" class="lgreen-btn">Download List</a>
+</p>
+{% endif %}

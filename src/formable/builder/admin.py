@@ -17,17 +17,34 @@ class QuestionLine(admin.TabularInline):
     """
     model = Question
     
-class FieldAnswerLine(admin.TabularInline):
+class FieldAnswerLine(admin.StackedInline):
     """
     Inline for FieldAnswer
     """
     model = FieldAnswer
+    extra = 0
+    readonly_fields = ('question', 'answer', 'form_filled')
     
-class FormPublishedLine(admin.TabularInline):
+class FormPublishedLine(admin.StackedInline):
     """
     Inline for FormPublished
     """
+    extra = 5
+    readonly_fields = ['report_link']
     model = FormPublished
+    fieldsets = (
+        ('Form Details', {
+            'fields': ('title', 'user', 'status', ('publish_date', 'expiry_date'), 'content')
+        }),
+        ('Miscellaneous', {
+            'fields': ('featured', 'closed', 'bccf_topic', 'page_for', 'image', 'report_link')
+        })
+    )
+    radio_fields = {'status': admin.HORIZONTAL}
+
+    def report_link(self, obj):
+        return '<a href="%s">Download Report</a>' % obj.get_report_url()
+    report_link.allow_tags = True
 
 class FormStructureAdmin(admin.ModelAdmin):
     """
@@ -41,7 +58,7 @@ class FormStructureAdmin(admin.ModelAdmin):
     inlines = [
         FormPublishedLine
     ]
-    list_display = ('title', 'user', 'id', 'type', 'created', 'clone_link', 'edit_link', 'publish_link')
+    list_display = ('title', 'user', 'id', 'type', 'created', 'clone_link', 'edit_link')
     list_filter = ['type', 'user', 'created']
     search_fields = ['title', 'id', 'type']
     
@@ -51,9 +68,6 @@ class FormStructureAdmin(admin.ModelAdmin):
     def edit_link(self, obj):
         return '<a href="%s" target="_blank">Edit Form</a>' % obj.get_edit_url()
     edit_link.allow_tags = True
-    def publish_link(self, obj):
-        return '<a href="%s" target="_blank">Publish Form</a>' % obj.get_publish_url()
-    publish_link.allow_tags = True
         
 class FormPublishedAdmin(DisplayableAdmin):
     actions = ['make_closed', 'make_open', make_featured, make_unfeatured]
@@ -114,7 +128,7 @@ class FormFilledAdmin(admin.ModelAdmin):
     """
     Admin for FormFilled
     """
-    readonly_fields = ('filled', 'title', 'form_published',)
+    readonly_fields = ('user', 'filled', 'title', 'form_published',)
     fieldsets = [
         ('Form Details', {'fields':['user', 'title', 'form_published']}),
         ('Meta', {'fields':['filled']})
@@ -130,7 +144,7 @@ class QuestionAdmin(admin.ModelAdmin):
     """
     Admin for Question
     """
-    readonly_fields = ('date',)
+    readonly_fields = ('question', 'num_answers', 'required', 'form_published', 'date')
     fieldsets = [
         ('Question Details', {'fields':['question', 'num_answers', 'required']}),
         ('Question Owners', {'fields':['form_published']}),
@@ -161,4 +175,4 @@ admin.site.register(FormStructure, FormStructureAdmin)
 admin.site.register(FormPublished, FormPublishedAdmin)
 admin.site.register(FormFilled, FormFilledAdmin)
 admin.site.register(Question, QuestionAdmin)
-admin.site.register(FieldAnswer, FieldAnswerAdmin)
+#admin.site.register(FieldAnswer, FieldAnswerAdmin)

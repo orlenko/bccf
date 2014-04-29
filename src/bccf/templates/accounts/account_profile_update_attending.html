@@ -1,22 +1,28 @@
 {% load shop_tags mezzanine_tags %}
 <strong class="fieldset-header">Events Registered For</strong>
+<nav class="main-list">
+    <ul>
 {% for event in events %}
-    <div>
-    Name: {{ event.event.title }}
-    Start: {{ event.event.date_start }}
-    End: {{ event.event.date_end }}
-    {% if event.event.event_product %}
-    Paid: {{ event.is_paid_description }}
-        {% if event.event_order %}
-        Invoice: <a target="_blank" href="{% url "shop_invoice" event.event_order.id %}">View Online</a> 
-                | <a href="{% url "shop_invoice" event.event_order.id %}?format=pdf">Download PDF</a>
-        {% endif %}
-    {% endif %}
-    </div>
+        <li>
+            <h3 class="h5">{{ event.event.title }}</h3>
+            <ul class="section">
+                <li><span class="list-item-name">Start</span>{{ event.event.date_start }}</li>
+                <li><span class="list-item-name">End</span>{{ event.event.date_end }}</li>
+            {% if event.event.event_product %}
+                <li><span class="list-item-name">Paid</span> {{ event.is_paid_description }}</li>
+            {% endif %}
+            </ul>
+            {% if event.event_order %}
+                <div class="row">
+                    <h4 class="h6">Invoice</h4>
+                    <a target="_blank" href="{% url "shop_invoice" event.event_order.id %}" class="lgreen-btn">View</a> 
+                    <a href="{% url "shop_invoice" event.event_order.id %}?format=pdf" class="lgreen-btn">Download</a>
+                </div>                
+            {% endif %}
 {% empty %}    
-Not registered to any event
+        <li>Not registered to any event</li>
 {% endfor %}
+    </ul>
+</nav>
 {% pagination_for events %}
-<div class="dashed-button">
-    <a href="bccf/trainings">View Trainings</a>
-</div>
+<a href="/bccf/trainings" class="lgreen-btn">View Trainings</a>

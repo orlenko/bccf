@@ -21,7 +21,7 @@ def create(request):
             form.save()
             
             # Send moderation email
-            send_moderate(request, "A Campaign needs moderation", "bccf", "campaign", form.instance.pk)            
+            send_moderate("A Campaign needs moderation", context={'campaign':form.instance.pk})            
             
             messages.success(request, 'Campaign successfully created. The campaign is subject to review and can be taken down without notice.')
             return HttpResponseRedirect(form.instance.edit_url())

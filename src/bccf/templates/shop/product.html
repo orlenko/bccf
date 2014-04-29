@@ -25,6 +25,15 @@
 <script>var variations = {{ variations_json|safe }};</script>
 <script src="{{ STATIC_URL }}cartridge/js/product_variations.js"></script>
 
+<script>
+    $(function() {
+        $('.expand').click(function() {
+            var parent = $(this).parents('.comment-header');
+            parent.next('.comments').slideToggle('medium');
+        });
+    });
+</script> 
+
 <script type="text/javascript">
 $('#close-btn').on('click', function(e) {
     e.preventDefault(); reset();

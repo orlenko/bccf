@@ -51,6 +51,11 @@ class EventManager(ChildPageManager):
             Q(date_start__lte=limit), Q(date_start__gte=now()),
             ~Q(event_product=None)
         )
+        
+    def user_event_list(self, user):
+        return self.published().filter(
+            Q(date_start__gte=now()), provider=user        
+        )
 
 class TagManager(ChildPageManager):
         

@@ -1,11 +1,14 @@
 {% if author %}
-    <div class="author-box section row row-one">
-        <div class="author-photo col two">
-            <img src="{{ MEDIA_URL }}{{ author.profile.photo }}" alt="{{ author.get_full_name }}"/>        
+    <section class="section row row-one">
+        <h4 class="author-header h6 strong">ABOUT THE AUTHOR</h4>
+        <div class="author-box">
+            <div class="author-photo col two">
+                <img src="{{ MEDIA_URL }}{{ author.profile.photo }}" alt="{{ author.get_full_name }}"/>        
+            </div>
+            <div class="author-description col ten">
+                <p><span class="author-name strong">{{ author.get_full_name }}</span>
+                {{ author.profile.description }}</p>        
+            </div>
         </div>
-        <div class="author-description col ten">
-            <p><span class="author-name">{{ author.get_full_name }}</span>
-            {{ author.profile.description }}</p>        
-        </div>
-    </div>
+    </section>
 {% endif %}

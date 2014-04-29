@@ -24,6 +24,8 @@ from bccf.widgets import AdvancedFileInput
 
 from formable.builder.models import FormStructure, FormPublished, Question
 
+from ckeditor.widgets import CKEditor
+
 log = logging.getLogger(__name__)
 
 class RatingRenderer(RadioFieldRenderer):
@@ -113,6 +115,7 @@ class EventForm(forms.ModelForm):
             'image',
             )
         widgets = {
+            'content': CKEditor(ckeditor_config='basic'),
             'provider': forms.HiddenInput(),
             'page_for': forms.HiddenInput(),
             'status': forms.HiddenInput(),
@@ -124,84 +127,23 @@ class EventForm(forms.ModelForm):
     def __init__(self, user=None, *args, **kwargs):
         super(EventForm, self).__init__(*args, **kwargs)
         if user:
-            self.fields['program'].queryset = Program.objects.filter(Q(users=None)|Q(users=user))
+            q = Q(users=user)
+            if user.profile.is_level_C:
+                q = q | Q(users=None)
+            self.fields['program'].queryset = Program.objects.filter(q)
 
 class CampaignForm(forms.ModelForm):
     class Meta:
         model = Campaign
         fields = ('title', 'content', 'status', 'bccf_topic', 'page_for', 'image', 'user', 'by_user', 'approve')
         widgets = {
+            'content': CKEditor(ckeditor_config='basic'),
             'image': AdvancedFileInput(),
             'approve': forms.HiddenInput,
             'status': forms.HiddenInput,
             'user': forms.HiddenInput,
             'by_user': forms.HiddenInput
         }
-
-#
-#
-# class ParentEventForm(forms.ModelForm):
-#     class Meta:
-#         model = EventForParents
-#         fields = ('title', 'content', 'provider', 'price', 'location_city',
-#             'location_street', 'location_street2', 'location_postal_code',
-#             'date_start', 'date_end')
-#         widgets = {
-#             'date_start': forms.DateTimeInput(attrs={'class':'vDatefield', 'placeholder':'YYYY-MM-DD HH:MM'}),
-#             'date_end': forms.DateTimeInput(attrs={'class':'vDatefield', 'placeholder':'YYYY-MM-DD HH:MM'})
-#         }
-#
-# ##################
-# # For Wizard
-#
-# class ProfessionalEventForm(forms.ModelForm):
-#     """
-#     Form for creating a Professional Event using the Wizard
-#     """
-#     image = forms.ImageField()
-#     content = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 30}))#CKEditorWidget())
-#     class Meta:
-#         model = EventForProfessionals
-#         fields = ('title', 'content', 'provider', 'price', 'location_city',
-#             'location_street', 'location_street2', 'location_postal_code',
-#             'date_start', 'date_end', 'bccf_topic')
-#         widgets = {
-#             'date_start': forms.DateTimeInput(attrs={'class':'vDatefield', 'placeholder':'YYYY-MM-DD HH:MM'}),
-#             'date_end': forms.DateTimeInput(attrs={'class':'vDatefield', 'placeholder':'YYYY-MM-DD HH:MM'})
-#         }
-#
-#     def __init__(self, *args, **kwargs):
-#         super(ProfessionalEventForm, self).__init__(*args, **kwargs)
-#         self.fields['survey'] = forms.BooleanField(label='Create Surveys?',
-#             widget=forms.CheckboxInput, required=False)
-#
-#
-#     def handle_upload(self):
-#         image_path = 'uploads/childpage/'+self.files['0-image'].name
-#         destination = open(MEDIA_ROOT+'/'+image_path, 'wb+')
-#         for chunk in self.files['0-image'].chunks():
-#             destination.write(chunk)
-#         destination.close()
-#         return image_path
-#
-#     def save(self, **kwargs):
-#         data = self.cleaned_data
-#         if 'survey' in data: # check and remove the survey key-value pair
-#             del data['survey']
-#         if 'bccf_topic' in data:
-#             topics = data['bccf_topic']
-#             del data['bccf_topic']
-#         if 'image' in data:
-#             del data['image']
-#         event = EventForProfessionals(**data)
-#         if '0-image' in self.files:
-#             event.image = self.handle_upload()
-#
-#         event.save()
-#         for topic in topics:
-#             event.bccf_topic.add(topic)
-#         return event
-
 
 class FormStructureSurveyBase(forms.Form):
     """
@@ -672,24 +614,7 @@ class AccountPreferencesForm(forms.ModelForm):
 class ForumPreferencesForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('avatar', 'show_signatures', 'signature', 'signature_html',)
-        widgets = {
-            'avatar': AdvancedFileInput        
-        }
-        
-    def handle_upload(self):
-        image_path = 'pybb/avatar'+self.files['avatar'].name
-        destination = open(MEDIA_ROOT+'/'+image_path, 'wb+')
-        for chunk in self.files['avatar'].chunks():
-            destination.write(chunk)
-        destination.close()
-        return image_path
-        
-    def save(self, *args, **kwargs):
-        super(ForumPreferencesForm, self).save(*args, **kwargs)
-        if 'avatar' in self.files:
-            self.instance.avatar = self.handle_upload()
-            self.instance.save()
+        fields = ('show_signatures', 'signature', 'signature_html')
         
 class SocialMediaForm(forms.ModelForm):
     class Meta:

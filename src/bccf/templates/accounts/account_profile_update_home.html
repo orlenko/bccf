@@ -1,4 +1,4 @@
-{% load bccf_tags %}
+{% load bccf_tags shop_tags %}
 <h1>Hello {{ user.get_full_name }}</h1>
 <div class="section row row-one">
 	{% if user.profile.requested_cancellation %}
@@ -7,28 +7,86 @@
 			We are processing your request, and will contact you soon.
 		</p>
 	{% else %}
-		<p>Membership: {% if membership %}Level {{ profile.membership_level }} {{ profile.membership_type|title }}{% else %}Free {{ profile.membership_type|title }}{% endif %}</p>
-		<p>Expires: {% if expiration %}{{ expiration }}{% else %}Never{% endif %}</p>
-
-        {% if not profile.is_parent or not profile.is_level_A %}
-		<p>
-			To extend your current membership, <a href="{{ membership|membership_renew_url }}">click here</a>.
+        <div class="membership-info section">
+    		<div>
+                <span class="col three membership-info-type tablet-six">Membership</span>
+                <span class="col nine tablet-six">
+                    {% if membership %}Level {{ profile.membership_level }} {{ profile.membership_type|title }}{% else %}Free {{ profile.membership_type|title }}{% endif %}
+                </span>
+            </div>
+            {% if expiration %}
+            <div>
+                <span class="col three tablet-six membership-info-type">Expires</span>
+                <span class="col nine tablet-six">{{ expiration|date:"M j, Y" }}</span>         
+            </div>
+            {% endif %}
+        </div>
+        {% if not profile.is_parent and not profile.is_level_A %}
+		<div class="row row-two">
+            <h3>Extend Membership</h3>
+			<a href="{{ membership|membership_renew_url }}" class="lgreen-btn">click here</a> to extend your current membership.
 		</p>
 		{% endif %}
 
-		{% if not profile.is_level_C and upgrades %}
+		{% if not profile.membership_type == 'parent' and not profile.is_level_C and upgrades %}
+		<div id="membership-upgrades" class="row row-two">
 			<h3>Upgrade to:</h3>
-			<ul>
-				{% for upgrade in upgrades %}
-					<li><a href="{{ upgrade|membership_upgrade_url }}">{{ upgrade }}</a></li>
-				{% endfor %}
-			</ul>
+		     {% if upgrades.level_B %}
+		     <div class="section row upgrade-level">
+		         <h4>Level B</h4>
+		         {% with upgrades.level_B|first as var %}
+		         <p>Benefits</p>
+		         <ul class="upgrade-benefits section">
+				   {% for option in var.get_options %}
+				       {% if option.type != 'Subscription Term' %}
+				       <li><span class="col six benefit-type">{{ option.type }}</span><span class="col six">{{ option.opt }}</span></li>
+				       {% endif %}
+				   {% endfor %}
+				 </ul>
+				 {% endwith %}
+				 <div class="section upgrade-btn-container">
+				    <span class="col three tablet-full">Upgrade now:</span>
+				    {% for upgrade in upgrades.level_B %}
+                    <a href="{{ upgrade|membership_upgrade_url }}" class="col three tablet-four lgreen-btn upgrade-btn" title="{{ upgrade.price|currency }}">
+                        <span class="no-hover">{{ upgrade|membership_frequency }}</span>
+                        <span class="hover no-desktop">{{ upgrade.price|currency }}</span>
+                    </a>
+                    {% endfor %}
+				 </div>
+		     </div>
+		     {% endif %}
+		     {% if upgrades.level_C %}
+		     <div class="section row">
+		         <h4>Level C</h4>
+		         {% with upgrades.level_C|first as var %}
+		         <p>Benefits</p>
+		         <ul class="upgrade-benefits section">
+				   {% for option in var.get_options %}
+				       {% if option.type != 'Subscription Term' %}
+				       <li><span class="col six benefit-type">{{ option.type }}</span><span class="col six">{{ option.opt }}</span></li>
+				       {% endif %}
+				   {% endfor %}
+				 </ul>
+				 {% endwith %}
+				 <div class="section upgrade-btn-container">
+				    <span class="col three tablet-full">Upgrade now:</span>
+				    {% for upgrade in upgrades.level_C %}
+                    <a href="{{ upgrade|membership_upgrade_url }}" class="col three tablet-four lgreen-btn upgrade-btn" title="{{ upgrade.price|currency }}">
+                        <span class="no-hover">{{ upgrade|membership_frequency }}</span>
+                        <span class="hover no-desktop">{{ upgrade.price|currency }}</span>
+                    </a>
+                    {% endfor %}
+				 </div>
+		     </div>
+		     {% endif %}
+        </div>
 		{% endif %}
 
         {% if not profile.is_parent or not profile.is_level_A %}
-		<p>
-			To cancel your membership, <a href="{% url 'member-membership-cancel' %}">click here</a>
-		</p>
+		<div class="row row-two">
+			<h3>Cancel Membership</h3>
+			<a href="{% url 'member-membership-cancel' %}" class="lgreen-btn">click here</a> to cancel your membership.
+		</div>
 		{% endif %}
 	{% endif %}
 </div>

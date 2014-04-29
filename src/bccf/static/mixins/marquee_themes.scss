@@ -57,20 +57,8 @@
 		font-family:$roboto;    
     }
     
-    .a-wrapper {
-        background-color: $dgreen;
+    a {
         float: right;
-        text-align: center;
-        a {
-            margin: 2px;
-            color: #FFF;
-            font-weight: bold;
-            display: block;
-            text-decoration: none;
-            &:hover {
-                color: $dgreen;            
-            }
-        }
     }     
 }
 
@@ -155,21 +143,19 @@
         font-size: inherit;    
     }
     
-    .a-wrapper {
-        float: none;
-        display: block;
+    a {
         background: none;
-        a {
-            font-size: inherit;
-            padding: 0;
-            border: none; 
-            text-align: left;
-            text-decoration: underline;
-            &:hover {
-                background: none;
-                color: inherit;         
-            }      
-        }     
+        float: none;
+        font-size: inherit;
+        padding: 0;
+        border: none;
+        text-align: left;
+        text-decoration: underline;
+        text-transform: none;
+        &:hover {
+            background: none;
+            color: inherit;         
+        }      
     }  
 }
 

@@ -8,6 +8,9 @@
             @incldue font-size(30);
             font-weight: bold;        
         }
+        p:nth-child(2) {
+            text-align: right;        
+        }
     }
     .comment {
         border-bottom: 2px dashed $lgrey;
@@ -20,11 +23,6 @@
         }
         .commenter-info {
             margin-top: 20px;        
-        }
-        .comment {
-            border-bottom: none;
-            padding: 0;
-            margin: 20px 0 0 20px;
         }
         .comment-photo {
             width: 50px;

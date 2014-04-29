@@ -892,18 +892,26 @@ class UserProfile(PybbProfile):
 
     @property
     def is_parent(self):
+        if not self.membership_type:
+            return False
         return 'parent' in self.membership_type
 
     @property
     def is_professional(self):
+        if not self.membership_type:
+            return False
         return 'professional' in self.membership_type
 
     @property
     def is_organization(self):
+        if not self.membership_type:
+            return False
         return 'organization' in self.membership_type
 
     @property
     def is_corporate(self):
+        if not self.membership_type:
+            return False
         return 'corporate' in self.membership_type
 
     @property
@@ -993,6 +1001,8 @@ class Event(BCCFChildPage):
 
     event_product = models.ForeignKey('shop.Product', null=True, blank=True, related_name='event-product')
 
+    closed = models.BooleanField('Event Finished', default=False)
+
     objects = managers.EventManager()
 
     def save(self, **kwargs):
@@ -1049,7 +1059,7 @@ EventForProfessionals = Event
 
 class EventRegistration(models.Model):
     event = models.ForeignKey(Event, related_name='event')
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, related_name='registree')
     registration_date = models.DateTimeField(auto_now_add=True, blank=True)
     passed = models.BooleanField('Passed', default=False, blank=True)
     event_order = models.ForeignKey('shop.Order', default=None, null=True, blank=True, related_name='event-order')

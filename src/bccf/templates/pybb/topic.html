@@ -1,0 +1,149 @@
+{% extends 'pages/bccfpage.html' %}
+
+{% load url from future %}
+
+{% load pybb_tags i18n content_carousel_tags bccf_feature_tags mezzanine_tags bccf_rating_tags %}
+
+{% block meta_title %}{{ topic.title|title }}{% endblock %}
+{% block title %}{{ topic.title|title }}{% endblock %}
+{% block meta_description %}{% metablock %}
+{{ topic.description }}
+{% endmetablock %}{% endblock %}
+
+{% block extra_script %}
+    {{ block.super }}
+    {% include "pybb/_markitup.html" %}
+    <script type="text/javascript" src="{{ STATIC_URL }}pybb/js/jquery.formset.min.js"></script>
+{% endblock %}
+
+{% block marquee %}{% endblock %}
+
+{% block content %}
+<section class="section row row-one social-box">
+    {% include "includes/add_this.html" %}
+    {% bccf_rating_for topic %}
+</section>
+<section>
+    <h1>{{ topic.title|title }}</h1>
+    {{ topic.content|safe }}
+</section>
+<section class="section topic-stats">
+    <span class="col two strong">{{ topic.views }} Views</span>
+    <span class="col two strong">{{ topic.post_count }} Replies</span>
+    {% if topic.post_count > 0 %}
+    <span class="col eight"><span class="lgreen-text">Latest reply:</span> {{ topic|pybb_last_post }}</span>
+    {% endif %}
+</section>
+{% endblock %}
+
+{% block carousels %}
+    <div class="topic">
+        {% with _('Posts') as label %}
+            {% include "pybb/pagination.html" %}
+        {% endwith %}
+
+        {% if topic.poll_type %}
+            {% include 'pybb/poll.html' %}
+        {% endif %}
+
+        <ul class="posts">
+            {% if first_post %}{% ifnotequal first_post post_list.0 %}
+                {% with first_post as post %}
+                    <li class="first_post">{% include "pybb/post_template.html" %}</li>
+                {% endwith %}
+            {% endifnotequal %}{% endif %}
+            {% for post in post_list %}
+                {% cycle 'odd' 'even' as rowcolors silent %}
+                {% include "pybb/post_template.html" %}
+            {% endfor %}
+        </ul>
+        <div>&nbsp;</div>
+        {% with _('Posts') as label %}
+            {% include "pybb/pagination.html" %}
+        {% endwith %}
+
+        {% if user.is_authenticated %}
+            <div class="controls section row">
+                {% if user.is_moderator %}
+                    {% if topic.closed %}
+                        <a href="{% url 'pybb:open_topic' topic.id %}" class="lgreen-btn">{% trans "Open topic" %}</a>
+                    {% else %}
+                        <a href="{% url 'pybb:close_topic' topic.id %}" class="lgreen-btn">{% trans "Close topic" %}</a>
+                    {% endif %}
+                    {% if perms.pybb.change_topic and user.is_staff %}
+                        <a href="{% url 'admin:pybb_topic_change' topic.id %}" class="lgreen-btn">{% trans 'Admin' %}</a>
+                    {% endif %}
+            {% comment %}
+            <a href="{% url 'pybb:merge_topics' %}?topic={{ topic.id }}">{% trans 'Merge topics' %}</a>
+            {% endcomment %}
+                {% endif %}
+
+                {% if user.is_subscribed %}
+                    <a href="{% url 'pybb:delete_subscription' topic.id %}?from_topic" class="lgreen-btn">{% trans "Unsubscribe" %}</a>
+                {% else %}
+                    <a href="{% url 'pybb:add_subscription' topic.id %}" class="lgreen-btn">{% trans "Subscribe" %}</a>
+                {% endif %}
+            </div>
+        {% endif %}
+
+        <div id="form-aux">
+        {% if user.is_authenticated or PYBB_ENABLE_ANONYMOUS_POST %}
+            
+            {% pybb_get_profile user=user as user_profile %}
+
+            {% if not user_profile.is_banned %}
+                {% if not topic.closed %}
+                    {% include "pybb/post_form.html" %}
+                {% endif %}
+            {% endif %}
+        {% else %}
+            <div class="login-container">
+                <a href="/accounts/login/?next={{ topic.get_absolute_url }}" class="login-btn">{% trans "Sign in" %}</a> {% trans "or" %}
+                <a href="/accounts/signup" class="login-btn">{% trans "Sign up" %}</a> {% trans "to create or post a reply" %}.
+            </div>
+        {% endif %}
+        </div>
+
+        {% if user.is_staff %}
+            <div class="subscriber-list">
+                {% trans "Subscribers" %}:
+                {% for subscriber in topic.subscribers.all %}
+                    <a href="{% url 'pybb:user' subscriber.username %}">{{ subscriber.username }}</a>,
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+    <div class="section row row-two">
+        {% content_carousel_for topic.gparent 'Continue Talking' None 'topic' %}
+    </div>
+    <div id="related-resource-container" class="section row row-two">
+        <h3>Related Resources</h3>
+        {% related_resources_for topic 'article' 'Articles' %}
+        {% related_resources_for topic 'downloadableform' 'Downloadable Forms' %}
+        {% related_resources_for topic 'magazine' 'Magazines' %}
+        {% related_resources_for topic 'tipsheet' 'Tip Sheets' %}
+        {% related_resources_for topic 'video' 'Videos' %}
+    </div>
+
+{% endblock %}
+
+{% block footer_scripts %}
+{{ block.super }}
+<script type="text/javascript" >
+$(function() {
+    var height = 0;
+    var highest = 0;
+    $('#related-resource-container > .related-resource').each(function() {
+        var h = $(this).height();
+        if(h > height) {
+            height = h;
+            console.log(h);
+            highest = $(this).height();  
+        }
+    });
+    $('#related-resource-container > .related-resource').each(function() {
+        $(this).css('height', highest);
+    });
+});
+</script>
+{% endblock %}

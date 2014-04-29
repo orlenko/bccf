@@ -1,23 +1,28 @@
-<strong class="fieldset-header">Your Trainings</strong>
-{% if user.campaigns.count %}
-    <nav>
-    	<ul>
-    	{% for campaign in user.campaigns.all %}
-    		<li><h3 class="h6">{{ campaign.title }}</h3>
-    			<p><a href="{{ campaign.edit_url }}">Edit</a>{% if campaign.approve %} | <a href="{{ campaign.get_absolute_url }}">View</a>{% endif %}
-    			{% if campaign.approve %}
-                <p>Status: Approved</p>
-                <p>Accepted On: {{ campaign.approved_on }}</p>
-                {% else %}
-                <p>Status: Pending</p>
-                {% endif %}
-    	    </li>
-    	{% endfor %}
-    	</ul>
-	</nav>
-{% else %}
-<p>No campaigns created yet</p>
-{% endif %}
-<div class="dashed-button">
-    <a href="{% url 'campaigns-create' %}">Create Campaign</a>
-</div>
+<strong class="fieldset-header">Your Campaigns</strong>
+<nav class="main-list">
+	<ul>
+	{% for campaign in user.campaigns.all %}
+		<li>
+		    <h3 class="h5">{{ campaign.title }}</h3>
+			<p>
+			{% if not campaign.approve %}
+			    <a href="{{ campaign.edit_url }}" class="lgreen-btn">Edit</a>
+			{% else %}
+			    <a href="{{ campaign.get_absolute_url }}">View</a>
+			{% endif %}
+			
+			<ul>
+			{% if campaign.approve %}
+                <li><span class="list-item-name">Status</span><span class="approved">Approved</span></li>
+                <li><span class="list-item-name">Accepted On</span>{{ campaign.approved_on }}</li>
+            {% else %}
+                <li><span class="list-item-name">Status</span><span class="pending">Pending</span></li>
+            {% endif %}
+            </ul>
+	    </li>
+	{% empty %}
+	   <li>No campaigns created yet</li>
+	{% endfor %}
+	</ul>
+</nav>
+<a href="{% url 'campaigns-create' %}" class="lgreen-btn">Create Campaign</a>

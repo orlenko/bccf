@@ -1,4 +1,3 @@
-
 ######################
 # CARTRIDGE SETTINGS #
 ######################
@@ -123,6 +122,7 @@ ADMIN_MENU_ORDER = (
     ("News", ("news.NewsPost",)),
     ("Programs", ("bccf.Program", "bccf.ProgramRequest")),
     ("Resources", ("bccf.Article", "bccf.DownloadableForm", "bccf.Magazine", "bccf.Podcast", "bccf.TipSheet", "bccf.Video")),
+    ("Builder", (("Create Survey", "formable-create-form"), "formable.FormFilled", "formable.FormPublished", "formable.FormStructure", "formable.Question")),
     ("Forum", ("pybb.Forum", "pybb.Topic", "pybb.Post", "pybb.Profile")),
 )
 
@@ -571,9 +571,7 @@ BCCF_RESOURCE_TYPES = '(article|downloadableform|magazine|podcast|tipsheet|video
 BCCF_SPECIAL_PAGES = ['trainings','resources','tag','programs']
 BCCF_CORE_PAGES = ['trainings','resources','tag','programs','blog','news']
 SEARCH_MODEL_CHOICES = (
-    'bccf.BCCFChildPage',
-    #'bccf.BCCFGenericPage',
-    #'bccf.Magazine',    
+    'bccf.BCCFChildPage', 
     'bccf.BCCFTopic',
     'bccf.BCCFPage',
     'shop.product',
@@ -602,7 +600,7 @@ CKEDITOR_CONFIGS = {
         'height': 300,
         'allowedContent': True,
     },
-    'basic': {
+    'basic': { # not for superusers
         'toolbar': 'Basic',
         'toolbarGroups': [
            # { 'name': 'clipboard',   'groups': [ 'clipboard', 'undo' ] },

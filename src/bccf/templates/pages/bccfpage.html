@@ -13,7 +13,7 @@
 <script src="{% static "js/rating/jquery.rating.pack.js" %}"></script>
 {% endblock %}
 
-{% block marquee %}{% big_marquee_for page %}{% endblock %}
+{% block marquee %}{% big_marquee_for page.get_content_model %}{% endblock %}
 
 {% block content %}
     {% editable page.title page.get_content_model.content %}

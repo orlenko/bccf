@@ -1,3 +1,22 @@
+.list-item-name {
+    display: inline-block;
+    padding: 5px 0;
+    width: 80px;
+    font-weight: bold;
+    &:after {
+        content: ':';          
+    }
+}
+.main-list {
+    & > ul {
+        & > li {
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+            border-bottom: 2px dashed $lgrey;   
+        }
+    }
+}
+
 #profile-social {
     a {
         color: $lgreen;
@@ -18,13 +37,92 @@
             padding: 0;
             margin: 0;        
         }
-        .list-item-name {
-            display: inline-block;
-            padding: 5px 0;
-            width: 80px;        
+    }
+    .user-events {
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 3px dashed $lgrey;
+        strong {
+            font-family: $roboto;
         }
-        .list-item-name:after {
-            content: ':';        
+        ul {
+            @include font-size(13);
+            list-style: none;
+            padding-left: 0;
+            li {
+                display: inline-block;    
+            }    
         }
+        .event-header {
+            font-weight: 600;    
+        }
+        .event-row {
+            padding-top: 5px;
+            padding-bottom: 5px;
+            ul {
+                margin: 0;  
+            }
+            .action {
+                text-align: center;    
+            }
+            input[type='submit'] {
+                border: 0;
+                background: 0;
+                &:hover {
+                    text-decoration: underline;    
+                }    
+            }
+        }
+        .event-header,
+        .event-row {
+            border-bottom: 1px solid #000;
+        }  
+    }
+}
+
+.orders-tab,
+.attending-tab,
+.program-tab,
+.campaign-tab,
+.training-tab {
+    .h5, .h6 {
+        font-family: $pt;
+        font-weight: bold;    
+    }
+    ul {
+        padding: 0 !important;
+        margin: 0 !important;    
+    }
+}
+
+.training-tab {
+    .attendee-list {
+        padding: 0;
+        margin: 0;    
+    }
+    .event-full:after {
+        content: ' - Full';
+        color: $lgreen;
+    }
+    .btn-expand {
+        text-align: right;
+        text-decoration: none;
+        i {
+            margin-right: 5px;        
+        }    
+    }
+}
+
+.program-tab,
+.campaign-tab {
+    .approved,
+    .pending {
+        font-weight: bold;    
+    }
+    .approved {
+        color: $lgreen;
+    }
+    .pending {
+        color: #F00;
     }
 }

@@ -1,5 +1,6 @@
 import logging
 
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, Http404
 from django.template import RequestContext, loader
@@ -38,6 +39,7 @@ def publish_form(request, id):
             hide = False
             status = 2
     except ObjectDoesNotExist:
+        messages.error("You don't have access to that survey structure.")
         return redirect('/');
 
     form = FormPublishForm(hide,initial={'form_structure': struct.pk, 'user': request.user.pk, 'status':status})
@@ -75,6 +77,13 @@ def create_survey(request, type=None, id=None):
     """
     View to create a survey structure.
     """
+    user = request.user
+    profile = request.user.profile
+                            
+    if profile.is_parent and not user.is_superuser and not user.is_staff and not profile.is_level_C:
+        messages.error(request, "Need to be level C, and a professional or an organization to access the survey builder.")
+        return redirect('/')
+    
     if request.method == 'POST':
         log.debug('Saving survey: %s - %s' % (request.POST, request.GET))
         form = FormStructureForm(request.POST)
@@ -104,8 +113,11 @@ def create_survey(request, type=None, id=None):
                     % (reverse('formable-publish-form', kwargs={'id': struct.pk}),
                        request.GET['after_event']))
 
-            context = RequestContext(request, locals())
-            return render_to_response('success/create_struct.html', {}, context_instance=context)
+            if user.is_superuser:
+                response = redirect(struct.get_admin_url())
+            # else:
+                # redirect to surveys in the update account
+            return response
     else:
         if id:
             struct = FormStructure.objects.get(pk=id)

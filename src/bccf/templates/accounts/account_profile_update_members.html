@@ -1,20 +1,34 @@
-{% load mezzanine_tags %}
+{% load mezzanine_tags bccf_tags %}
 <strong class="fieldset-header">Organization Members</strong>
 <div class="section">
     {% for member in members %}
-    <a href="#" class="col six">{{ member.get_full_name }}</a>
-    <form method="POST" action="{% url 'member-delete'%}" class="col six">
-        <input type="hidden" value="{{ member.pk }}" name="user">
-        {% csrf_token %}
-        <div class="form-actions dashed-button">
-            <input type="submit" class="btn btn-primary btn-large" value="Delete">
+    <div class="section organization-member">
+        <div class="col three">
+            <img src="{{ MEDIA_URL }}{% bccf_thumbnail member.profile.photo 100 100 %}" alt="{{ member.get_full_name}}" />
         </div>
-    </form>
+        <div class="member-info col nine">
+            <a href="{{ member.profile.get_absolute_url }}" target="_blank" title="{{ member.get_full_name }}">{{ member.get_full_name }}</a>
+            <form method="POST" action="{% url 'member-delete'%}">
+                <input type="hidden" value="{{ member.pk }}" name="user">
+                {% csrf_token %}
+                <input type="submit" class="btn btn-primary btn-large lgreen-btn delete-btn" value="Delete">
+            </form>
+        </div>
+    </div>
     {% empty %}
     No members yet
     {% endfor %}
 </div>
 {% pagination_for members %}
-<div class="section row row-one dashed-button">
-    <a href="{% url 'update-tab' 'adduser' %}">Add Member</a>    
-</div>
+<a href="{% url 'update-tab' 'adduser' %}" class="lgreen-btn">Add Member</a>    
+<script type="text/javascript">
+    $(function() {
+        $('.delete-btn').click(function(e) {
+            e.preventDefault();
+            form = $(this).parent('form');
+            if(confirm('Are you sure you want to remove this member from your organization?')) {
+                form.submit();
+            }
+        });    
+    })
+</script>

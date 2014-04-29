@@ -24,7 +24,7 @@
                         {% if slide.content_model == 'formpublished' and slide.get_content_model.closed %}
                             View Results
                         {% else %}
-                            {{ slide.description|truncatechars:75 }}
+                            {{ slide.description|truncatechars:60 }}
                         {% endif %}
                     </p>
                 </div>

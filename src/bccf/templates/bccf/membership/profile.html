@@ -1,5 +1,5 @@
 {% extends 'pages/base_bccfpage.html' %}
-{% load static mezzanine_tags static bccf_rating_tags bccf_tags %}
+{% load static mezzanine_tags static bccf_rating_tags bccf_event_tags bccf_tags %}
 
 {% block meta_title %}{{ profile.user.get_full_name }}{% endblock %}
 
@@ -78,6 +78,7 @@
                     {% endif %} 
                 </ul>
             </div>
+            {% events_of profile True %}
         </div>
     </div>
 {% endblock %}

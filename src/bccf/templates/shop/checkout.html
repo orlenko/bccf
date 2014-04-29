@@ -1,0 +1,109 @@
+{% extends "shop/base.html" %}
+{% load shop_tags mezzanine_tags i18n future %}
+
+{% block meta_title %}{% trans "Checkout" %} - {{ step_title }}{% endblock %}
+{% block title %}{% trans "Checkout" %} - {% trans "Step" %} {{ step }} {% trans "of" %} {{ steps|length }}{% endblock %}
+{% block body_id %}checkout{% endblock %}
+
+{% block extra_head %}
+<script>
+var _gaq = [['_trackPageview', '{{ request.path }}{{ step_url }}/']];
+$(function() {$('.middle :input:visible:enabled:first').focus();});
+</script>
+{% endblock %}
+
+{% block breadcrumb_menu %}
+{% for step in steps %}
+<li>
+	{% if step.title == step_title %}
+	<strong>{{ step.title }}</strong>
+	{% else %}
+	{{ step.title }}
+	{% endif %}
+	<span class="divider">/</span>
+</li>
+{% endfor %}
+<li>{% trans "Complete" %}</li>
+{% endblock %}
+
+{% block content %}
+    <h1>Checkout - {{ step_title }}</h1>
+{% endblock %}
+
+{% block carousels %}
+
+{% block before-form %}{% endblock %}
+
+{% if request.cart.has_items %}
+<div class="section row">
+<ul id="products-header" class="section">
+    <li class="col six">Item</li>
+    <li class="col two">Item Price</li>
+    <li class="col two">Quantity</li>
+    <li class="col two">Total Price
+</ul>
+<ul id="products-list" class="section row no-style-list center-text">
+    {% for item in request.cart %}
+    <li>
+        <div class="col six strong"><a href="{{ item.get_absolute_url }}" target="_blank" title="{{ item.description }}">{{ item.description }}</a></div>
+    	<div class="col two">{{ item.unit_price|currency }}</div>
+    	<div class="col two">{{ item.quantity }}</div>
+    	<div class="col two">
+    	   <span class="price">{{ item.total_price|currency }}</span>
+    	</div>
+    </li>
+    {% endfor %}
+</ul>
+<div class="total section">
+    <div class="col eight">{% include "shop/includes/two_weeks.html" %}</div>
+    <div class="col four"><ul class="no-style-list">{% order_totals %}</ul></div>
+</div>
+<div id="edit-cart" class="section row row-two">
+    <a class="lgreen-btn" href="{% url "shop_cart" %}">{% trans "Return to Cart" %}</a>
+</div>
+</div>
+{% endif %}
+
+<form method="post" id="checkout-form" class="form-horizontal form-shop span8">
+	{% csrf_token %}
+
+	{% with form.non_field_errors as errors %}
+	{% if errors or form.errors %}
+	<div class="control-group error non-field-errors">
+		{% for error in errors %}
+		<span class="help-inline">{{ error }}</span>
+		{% empty %}
+		<span class="help-inline">{% trans "Please correct the errors below." %}</span>
+		{% endfor %}
+	</div>
+	{% endif %}
+	{% endwith %}
+
+    <div class="section">
+	{% block fields %}{% endblock %}
+    </div>    
+    
+	{% block nav-buttons %}
+		{% if request.cart.has_items %}
+			<div class="form-actions">
+				<div class="form-actions-wrap section">
+				    {% if not CHECKOUT_STEP_FIRST %}
+					<input type="submit" class="lgreen-btn" name="back" value="{% trans "Back" %}">
+					{% endif %}
+					<input type="submit" class="lgreen-btn" value="{% if CHECKOUT_STEP_LAST %}{% trans "Complete" %}{% else %}{% trans "Continue" %}{% endif %}">
+				</div>
+			</div>
+		{% else %}
+			<p>{% trans "Your cart is empty." %}</p>
+			<p>{% trans "This may be due to your session timing out after a period of inactivity." %}</p>
+			<p>{% trans "We apologize for the inconvenience." %}</p>
+			<br>
+			<p><a class="btn btn-large btn-primary" href="{% url "page" "shop" %}">{% trans "Continue Shopping" %}</a></p>
+		{% endif %}
+	{% endblock %}
+
+</form>
+
+{% block after-form %}{% endblock after-form %}
+
+{% endblock %}

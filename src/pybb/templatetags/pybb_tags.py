@@ -98,6 +98,10 @@ def pybb_link(object, anchor=u''):
     anchor = anchor or smart_unicode(object)
     return mark_safe('<a href="%s">%s</a>' % (url, escape(anchor)))
 
+@register.filter
+def pybb_last_post(topic):
+    post = Post.objects.filter(topic=topic, on_moderation=False).order_by('-created')[1:]
+    return post[0].created
 
 @register.filter
 def pybb_topic_moderated_by(topic, user):

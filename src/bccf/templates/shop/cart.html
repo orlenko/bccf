@@ -12,6 +12,7 @@
 {% block content %}<h1>Your Cart</h1>{% endblock %}
 
 {% block carousels %}
+<div class="shop-cart">
 {% if request.cart.has_items %}
 <form method="post" class="form-cart form-shop">
 {% csrf_token %}
@@ -25,46 +26,39 @@
 </div>
 {% endif %}
 {{ cart_formset.management_form }}
-<table class="table table-striped">
-	<tr>
-		<th colspan="2" class="left">{% trans "Item" %}</th>
-		<th>{% trans "Unit Price" %}</th>
-		<th class="center">{% trans "Qty" %}</th>
-		<th>{% trans "Price" %}</th>
-		<th class="center">{% trans "Remove?" %}</th>
-	</tr>
+<ul id="products-header" class="section">
+    <li class="col four">Item</li>
+    <li class="col two">Unit Price</li>
+    <li class="col two">Quantity</li>
+    <li class="col two">Price</li>
+    <li class="col two">Remove</li>
+</ul>
+<ul id="products-list" class="section">
     {% for form in cart_formset.forms %}
     {% with form.instance as item %}
-	<tr>
-		<td width="30">
-            {{ form.id }}
-			{% if item.image %}
-			<a href="{{ item.get_absolute_url }}">
-                <img alt="{{ item.description }}" src="{{ MEDIA_URL }}{% thumbnail item.image 30 30 %}">
-            </a>
-			{% endif %}
-		</td>
-		<td class="left">
-		    <a href="{{ item.get_absolute_url }}">{{ item.description }}</a>
-        </td>
-		<td>{{ item.unit_price|currency }}</td>
-		<td class="quantity">{{ form.quantity }}</td>
-		<td>{{ item.total_price|currency }}</td>
-		<td class="center">{{ form.DELETE }}</td>
-	</tr>
-	{% endwith %}
-	{% endfor %}
-	<tr>
-		<td colspan="5">{% order_totals %}</td>
-		<td>&nbsp;</td>
-	</tr>
-</table>
-<div class="form-actions clearfix">
+    <li class="section">
+        {{ form.id }}
+        <div class="col four strong">
+            <a href="{{ item.get_absolute_url }}" title="{{ item.description }}" target="_blank">{{ item.description }}</a>
+        </div>
+        <div class="col two">{{ item.unit_price|currency }}</div>
+        <div class="col two">{{ form.quantity }}</div>
+        <div class="col two">{{ item.total_price|currency }}</div>
+        <div class="col two">{{ form.DELETE }}</div>
+    </li>
+    {% endwith %}
+    {% endfor %}
+</ul>
+<div class="section total">
+    <div class="col eight">&nbsp;</div>
+    <div class="col four"><ul class="no-style-list">{% order_totals %}</ul></div>
+</div>
+<div class="form-actions section">
     <div class="form-actions-wrap">
-    <a href="{% url "shop_checkout" %}" class="btn btn-primary btn-large">
-        {% if request.session.order.step %}{% trans "Return to Checkout" %}{% else %}{% trans "Go to Checkout" %}{% endif %}
+    <input type="submit" name="update_cart" class="btn btn-large lgreen-btn" value="{% trans "Update Cart" %}" />    
+    <a href="{% url "shop_checkout" %}" class="btn btn-primary btn-large lgreen-btn strong">
+        {% trans "Checkout" %}
     </a>
-    <input type="submit" name="update_cart" class="btn btn-large" value="{% trans "Update Cart" %}">
     </div>
 </div>
 </form>
@@ -101,8 +95,9 @@
 </ul>
 {% endif %}
 {% endwith %}
-
+{% include "shop/includes/two_weeks.html" %}
 {% else %}
 <p>{% trans "Your Cart is empty." %}</p>
 {% endif %}
+</div>
 {% endblock %}

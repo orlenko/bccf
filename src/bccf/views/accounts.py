@@ -133,16 +133,6 @@ def profile_update(request, tab='home'):
             
     page = request.GET.get('page', 1)
 
-    if 'addmembers' in request.session:
-        try:
-            new_users, new_user_errors = request.session.pop('addmembers')
-            feedback = {
-                'new_users': new_users,
-                'new_user_errors': new_user_errors
-            }
-        except:
-            pass
-
     if tab == 'orders':
         from cartridge.shop.models import Order
         """

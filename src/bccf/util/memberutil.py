@@ -96,7 +96,6 @@ def require_professional(func):
         #return require_member(Settings.get_setting('PROFESSIONAL_MEMBERSHIP_CATEGORY'), func, request, *args, **kwargs)
     return _wrapper
 
-
 def require_event_audience(func):
     @wraps(func, assigned=available_attrs(func))
     def _wrapper(request, slug, *args, **kwargs):
@@ -112,9 +111,9 @@ def billship_handler(request, order_form):
     if not request.session.get("free_shipping"):
         cart = Cart.objects.from_request(request)
         for item in cart.items.all():
-            if not item.sku.startswith('PRO-') and not item.sku.startswith('ORG-') and not item.startswith('EVENT-'):
+            if not item.sku.startswith('PRO-') and not item.sku.startswith('ORG-') and not item.sku.startswith('EVENT-'):
                 shipping += item.unit_price * Decimal(Settings.get_setting('SHOP_DEFAULT_SHIPPING_VALUE')) 
-        set_shipping(request, "Shipping and Handling", shipping)
+        set_shipping(request, "Shipping", shipping)
 
 def tax_handler(request, order_form):
     """
@@ -161,14 +160,16 @@ def handle_membership(profile, order):
                     return
 
 def get_upgrades(profile):
-    upgrades = []
-    type = profile.membership_type[:3].upper()
-    log.debug(type)
+    upgrades = {}
+    if profile.membership_type:
+        type = profile.membership_type[:3].upper()
+    else:
+        return upgrades
     if profile.is_level_A:
-        upgrades.extend(ProductVariation.objects.filter(sku__startswith='%s-B' % type))
-        upgrades.extend(ProductVariation.objects.filter(sku__startswith='%s-C' % type))
+        upgrades['level_B'] = ProductVariation.objects.filter(sku__startswith='%s-B' % type)
+        upgrades['level_C'] = ProductVariation.objects.filter(sku__startswith='%s-C' % type)
     elif profile.is_level_B:
-        upgrades.extend(ProductVariation.objects.filter(sku__startswith='%s-C' % type))
+        upgrades['level_C'] = ProductVariation.objects.filter(sku__startswith='%s-C' % type)
     return upgrades
 
 
