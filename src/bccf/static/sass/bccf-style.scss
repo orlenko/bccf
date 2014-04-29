@@ -291,6 +291,7 @@ code {
    ========================================================================== */
 dl, menu, ol, ul {
   margin: 1em 0;
+  list-style-image: url(../img/bccf_bullet.png);
 }
 ul ul, ol ol, ul ol, ol ul { margin: 0; }
 dd { margin: 0 0 0 40px; }
