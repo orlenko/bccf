@@ -2573,6 +2573,7 @@ code {
 /* line 292, ../sass/bccf-style.scss */
 dl, menu, ol, ul {
   margin: 1em 0;
+  list-style-image: url(../img/bccf_bullet.png);
 }
 
 /* line 295, ../sass/bccf-style.scss */
