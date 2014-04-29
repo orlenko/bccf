@@ -7,7 +7,7 @@
         height: 150px;    
     }
     .post-data {
-        @include rounded(5);
+		
         padding: 10px;
         border: 1px solid $sgrey; 
     }
