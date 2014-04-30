@@ -107,7 +107,7 @@ def user_list(request):
 
 def next(request, parent, which, offset):
     if request.is_ajax():
-        obj = BCCFPage.objects.get(slug__exact='bccf/%s' % parent)
+        obj = BCCFPage.objects.get(id=parent)
 
         slides = BCCFChildPage.objects.by_gparent(obj)
         limit = int(offset)+12
@@ -129,7 +129,7 @@ def next(request, parent, which, offset):
 def topic_next(request, topic, which, offset):
     if request.is_ajax():
         limit = int(offset)+12
-        topic = BCCFTopic.objects.get(slug__exact=topic)
+        topic = BCCFTopic.objects.get(id=topic)
 
         slides = BCCFChildPage.objects.by_topic(topic).filter(page_for=which).order_by('-created')[offset:limit]
         parts = {
