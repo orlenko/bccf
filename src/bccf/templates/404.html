@@ -1,1 +1,12 @@
-The 404
+{% extend "pages/base_bccfpage.html" %}
+
+{% block meta_title %}Page not found{% endblock %}
+{% block meta_description %}{% metablock %}
+BCCF 404 page
+{% endmetablock %}{% endblock %}
+
+
+{% block content %}
+    <p><span class="lgreen-text">Sorry</span> we can't find the page you are looking for!</p>
+    <p>You can try searching the contents of our website using the search bar in the upper right corner</p>
+{% endblock %}
