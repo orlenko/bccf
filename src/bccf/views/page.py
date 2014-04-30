@@ -113,7 +113,7 @@ def next(request, parent, which, offset):
         limit = int(offset)+12
         
         if obj.slug == 'bccf/resources' or obj.slug == 'bccf/tag':
-            slides = slides.filter(content_type=which)
+            slides = slides.filter(content_model=which)
         elif which == 'parent' or which == 'professional':
             slides = slides.filter(page_for=which)     
         
