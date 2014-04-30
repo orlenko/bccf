@@ -154,11 +154,3 @@ def filter(request, query=None, type='slide'):
         return HttpResponse(json.dumps(parts), content_type="application/json")
     else:
         return HttpResponse('No')
-        
-def handler404(request, template="404.html"):
-    """
-    404 Handler
-    """
-    response = render(request, template)
-    response.status_code = 404
-    return response
