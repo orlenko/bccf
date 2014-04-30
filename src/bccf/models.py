@@ -989,21 +989,25 @@ class Event(BCCFChildPage):
     location_street2 = models.CharField('Street (line2)', max_length=255, blank=True, null=True)
     location_postal_code = models.CharField('Postal Code', max_length=255, blank=True, null=True)
 
-    date_start = models.DateTimeField('Event Start', blank=True, null=True)
-    date_end = models.DateTimeField('Event End', blank=True, null=True)
+    date_start = models.DateTimeField('Training Start', blank=True, null=True)
+    date_end = models.DateTimeField('Training End', blank=True, null=True)
 
     survey_before = models.ForeignKey('builder.FormPublished', null=True, blank=True, related_name='survey_before')
     survey_after = models.ForeignKey('builder.FormPublished', null=True, blank=True, related_name='survey_after')
     
     program = models.ForeignKey(Program, null=True, blank=True, related_name='program')
     max_seats = models.PositiveIntegerField('Max number of seats', null=True, blank=True, default=1)
-    full = models.BooleanField('Event is full', blank=True, default=False)
+    full = models.BooleanField('Training is full', blank=True, default=False)
 
     event_product = models.ForeignKey('shop.Product', null=True, blank=True, related_name='event-product')
 
-    closed = models.BooleanField('Event Finished', default=False)
+    closed = models.BooleanField('Training Finished', default=False)
 
     objects = managers.EventManager()
+    
+    class Meta:
+        verbose_name = 'Training'
+        verbose_name_plural = 'Trainings'
 
     def save(self, **kwargs):
         if not self.pk:
