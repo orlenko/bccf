@@ -147,7 +147,7 @@ var get_next = function(carousel) {
         var offset = carousel.find('.owl-item .page-box').length;
         if(offset % 1 === 0 {% if filter %} && parent.find('.filter').val() == '' {% endif %}) {
             $.ajax({
-                url: '/next/{{ page.slug }}/'+parent.attr('id')+'/'+offset+'/',
+                url: '/next/'+parent.attr('id')+'/'+offset+'/',
                 context: parent,
                 success: function(data) {                        
                     if(data.slide.length > 1 && data.grid.length > 1) {

@@ -1011,7 +1011,7 @@ class Event(BCCFChildPage):
 
     def save(self, **kwargs):
         if not self.pk:
-            gp = BCCFPage.objects.get(slug='bccf/trainings')
+            gp = BCCFPage.objects.get(slug__exact='bccf/trainings')
             self.gparent = gp
             super(Event, self).save(**kwargs)
                     
