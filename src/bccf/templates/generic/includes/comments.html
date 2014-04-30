@@ -6,7 +6,7 @@
         <p class="col six">{{ object_for_comments.comments_count }} Comment{{ object_for_comments.comments_count|pluralize }}</p>
         <p class="col six">
             <a href="#expand-{{ object_for_comments.pk }}" id="expand-{{ object_for_comments.pk }}" class="expand lgreen-btn">
-                <i class="fa fa-chevron-down"></i> {% trans "Hide" %}
+                <i class="fa fa-chevron-down"></i><span class="toggle-text">{% trans "Show" %}</span>
             </a>
         </p>
     </div>

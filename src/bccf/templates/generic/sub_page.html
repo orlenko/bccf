@@ -46,7 +46,20 @@
     $(function() {
         $('.expand').click(function() {
             var parent = $(this).parents('.comment-header');
-            parent.next('.comments').slideToggle('medium');
+            var toggle_text = $(this).find('.toggle-text');
+            var icon = $(this).find('i');
+            parent.next('.comments').slideToggle({
+                done: function() {
+                    if(toggle_text.html() === 'Show') {
+                        toggle_text.html('Hide');        
+                    } else {
+                        toggle_text.html('Show');
+                    }
+                    
+                    icon.toggleClass('fa-chevron-down');
+                    icon.toggleClass('fa-chevron-up');   
+                }            
+            });
         });
     });
 </script> 
