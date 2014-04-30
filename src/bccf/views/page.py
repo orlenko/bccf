@@ -112,7 +112,7 @@ def next(request, parent, which, offset):
         slides = BCCFChildPage.objects.by_gparent(obj)
         limit = int(offset)+12
         
-        if obj.slug == 'resources' or obj.slug == 'tag':
+        if obj.slug == 'bccf/resources' or obj.slug == 'bccf/tag':
             slides = slides.filter(content_type=which)
         elif which == 'parent' or which == 'professional':
             slides = slides.filter(page_for=which)     
