@@ -48,29 +48,27 @@ def bccf_admin_page_ordering(request):
     return HttpResponse("ok")
 
 def page(request, parent=None, child=None, baby=None):
-    try:
-        if not request.is_ajax():
-            page = get_object_or_404(BCCFPage, slug__exact='bccf/%s' % parent)
-            if parent in BCCF_SPECIAL_PAGES:
-                template = u"pages/%s.html" % parent
-            else:
-                template = u"pages/bccfpage.html"
+    if not request.is_ajax():
+        page = get_object_or_404(BCCFPage, slug__exact='bccf/%s' % parent)
+        log.debug(page)
+        if parent in BCCF_SPECIAL_PAGES:
+            template = u"pages/%s.html" % parent
         else:
-            baby_obj = None
-            if baby and baby != 'baby-resources' and baby != 'child-home' and baby != 'child-info':
-                baby_temp = BCCFBabyPage.objects.get(slug=('%s/%s') % (child, baby))
-                baby_obj = slugify(baby_temp.title)
-            elif baby:
-                baby_obj = baby
-            child_obj = BCCFChildPage.objects.get(slug=child)
-            babies = BCCFBabyPage.objects.filter(parent=child_obj).order_by('order')
-            if child_obj.content_model == 'event':
-                babies = BCCFChildPage.objects.filter(~Q(content_model='formpublished'), parent=child_obj).order_by('_order')  # @UndefinedVariable
-            template = 'generic/sub_page.html'
-        context = RequestContext(request, locals())
-        return render_to_response(template, {}, context_instance=context)
-    except:
-        log.debug('Failed to generate page', exc_info=1)
+            template = u"pages/bccfpage.html"
+    else:
+        baby_obj = None
+        if baby and baby != 'baby-resources' and baby != 'child-home' and baby != 'child-info':
+            baby_temp = BCCFBabyPage.objects.get(slug=('%s/%s') % (child, baby))
+            baby_obj = slugify(baby_temp.title)
+        elif baby:
+            baby_obj = baby
+        child_obj = BCCFChildPage.objects.get(slug=child)
+        babies = BCCFBabyPage.objects.filter(parent=child_obj).order_by('order')
+        if child_obj.content_model == 'event':
+            babies = BCCFChildPage.objects.filter(~Q(content_model='formpublished'), parent=child_obj).order_by('_order')  # @UndefinedVariable
+        template = 'generic/sub_page.html'
+    context = RequestContext(request, locals())
+    return render_to_response(template, {}, context_instance=context)
 
 def resource_type_page(request, type):
     page = get_object_or_404(BCCFPage, slug__exact='bccf/resources')
@@ -79,7 +77,6 @@ def resource_type_page(request, type):
     return render_to_response('pages/resources.html', {}, context_instance=context)
 
 def topic_page(request, topic):
-    log.debug('topic_page')
     page = get_object_or_404(BCCFTopic, slug=topic)
     context = RequestContext(request, locals())
     return render_to_response('pages/bccftopic.html', {}, context_instance=context)
