@@ -107,7 +107,7 @@ def user_list(request):
 
 def next(request, parent, which, offset):
     if request.is_ajax():
-        obj = BCCFPage.objects.get(slug='bccf/'%parent)
+        obj = BCCFPage.objects.get(slug='bccf/%s' % parent)
 
         slides = BCCFChildPage.objects.by_gparent(obj)
         limit = int(offset)+12
@@ -115,8 +115,8 @@ def next(request, parent, which, offset):
         if obj.slug == 'resources' or obj.slug == 'tag':
             slides = slides.filter(content_type=which)
         elif which == 'parent' or which == 'professional':
-            slides = slides.filter(page_for=which)
-            
+            slides = slides.filter(page_for=which)     
+        
         slides = slides.order_by('-created')[offset:limit]
         parts = {
             'slide': render_to_string('generic/carousel_slide_part.html', {'slides':slides, 'MEDIA_URL':MEDIA_URL}),
