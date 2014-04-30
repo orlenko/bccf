@@ -13,5 +13,28 @@
         <p class="error-block">{{ form.in_mailing_list.errors.as_text|cut:'*' }}</p>
     </div>
     {% csrf_token %}
+    
+    <div class="section affiliation">
+        <strong class="fieldset-header row-one">Affiliation Preferences</strong>
+        <div class="section row row-one">
+        	<div class="col eight mobile-full">
+                Upgrade or renew your affiliation    	
+        	</div>
+        	<div class="col four mobile-full">
+        	   <a href="#" class="lgreen-btn">Upgrade or Renew</a>
+        	</div>
+        </div>
+        {% if not user.profile.is_level_A %}
+        <div class="section row row-two">
+        	<div class="col ten mobile-full">
+                Cancel affiliation    	
+        	</div>
+        	<div class="col two mobile-full">
+        	   <a href="{% url 'member-membership-cancel' %}" class="lgreen-btn">Cancel</a>
+        	</div>
+        </div>
+        {% endif %}
+    </div>    
+    
      <input id="submit" class="btn btn-primary btn-large lgreen-btn" type="submit" value="Save">
 </form>
