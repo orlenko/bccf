@@ -624,6 +624,3 @@ CKEDITOR_CONFIGS = {
     }
 }
 RICHTEXT_WIDGET_CLASS = 'ckeditor.widgets.CKEditor'
-
-# Error Views
-handler404 = "bccf.views.page.handler404"
