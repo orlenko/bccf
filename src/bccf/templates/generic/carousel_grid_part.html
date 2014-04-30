@@ -2,7 +2,7 @@
 {% for slide in slides %}
     {% if forloop.counter|divisibleby:"13" or forloop.first %} <!-- If the first box of the slide -->
     <div>
-        <ul class="page-container-inner">
+        <ul class="page-container-inner no-style-list">
     {% endif %}
             <li id="id_{{ slide.slug }}" class="page-box {% if slide.content_model == 'topic' or slide.content_model == 'formpublished' %} go-blank {% endif %} grid-box col four">
                 <div class="page-image" style="background: url('{{ MEDIA_URL }}{% bccf_thumbnail slide.image 195 110 %}') top left no-repeat">
