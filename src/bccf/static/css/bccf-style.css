@@ -6476,45 +6476,51 @@ footer #newsletter .dashed-button a:hover {
 }
 
 /* line 1, ../mixins/generic.scss */
+.text-50 {
+  font-size: 50px;
+  font-size: 3.125rem;
+}
+
+/* line 4, ../mixins/generic.scss */
 .lgreen-text {
   color: #8fab3d;
 }
 
-/* line 4, ../mixins/generic.scss */
+/* line 7, ../mixins/generic.scss */
 .login-container {
   font-weight: bold;
   font-size: 20px;
   font-size: 1.25rem;
 }
 
-/* line 8, ../mixins/generic.scss */
+/* line 11, ../mixins/generic.scss */
 .login-btn {
   color: #8fab3d;
 }
 
 /* FORMS */
-/* line 13, ../mixins/generic.scss */
+/* line 16, ../mixins/generic.scss */
 legend {
   text-indent: 0 !important;
   border-bottom: 1px solid #000;
   width: 100%;
 }
 
-/* line 18, ../mixins/generic.scss */
+/* line 21, ../mixins/generic.scss */
 label {
   padding: 0 !important;
 }
 
-/* line 22, ../mixins/generic.scss */
+/* line 25, ../mixins/generic.scss */
 .has-error label {
   font-weight: bold;
 }
-/* line 25, ../mixins/generic.scss */
+/* line 28, ../mixins/generic.scss */
 .has-error input {
   border: 1px solid #8fab3d !important;
 }
 
-/* line 29, ../mixins/generic.scss */
+/* line 32, ../mixins/generic.scss */
 .error-block {
   font-size: 12px;
   font-size: 0.75rem;
@@ -6522,18 +6528,18 @@ label {
   color: #8fab3d;
 }
 
-/* line 34, ../mixins/generic.scss */
+/* line 37, ../mixins/generic.scss */
 .form-help {
   font-size: 12px;
   font-size: 0.75rem;
   font-family: "PT Sans", sans-serif;
 }
-/* line 37, ../mixins/generic.scss */
+/* line 40, ../mixins/generic.scss */
 .form-help a {
   text-decoration: none;
 }
 
-/* line 41, ../mixins/generic.scss */
+/* line 44, ../mixins/generic.scss */
 .bccf-btn, .lgreen-btn, .dgreen-btn {
   font-size: 12px;
   font-size: 0.75rem;
@@ -6543,70 +6549,70 @@ label {
   font-weight: bold;
   text-decoration: none;
 }
-/* line 48, ../mixins/generic.scss */
+/* line 51, ../mixins/generic.scss */
 .bccf-btn:hover, .lgreen-btn:hover, .dgreen-btn:hover {
   background: #fdcd26;
   color: #336442;
   text-decoration: none !important;
 }
 
-/* line 54, ../mixins/generic.scss */
+/* line 57, ../mixins/generic.scss */
 .lgreen-btn {
   color: #000;
   background: #8fab3d;
 }
 
-/* line 60, ../mixins/generic.scss */
+/* line 63, ../mixins/generic.scss */
 .dgreen-btn {
   color: #FFF;
   background: #336442;
 }
 
-/* line 66, ../mixins/generic.scss */
+/* line 69, ../mixins/generic.scss */
 #form-body,
 .form-group {
   margin: 10px 0;
 }
-/* line 68, ../mixins/generic.scss */
+/* line 71, ../mixins/generic.scss */
 #form-body .section-head,
 .form-group .section-head {
   font-size: 20px;
   font-size: 1.25rem;
   font-family: "Roboto Slab", serif;
 }
-/* line 72, ../mixins/generic.scss */
+/* line 75, ../mixins/generic.scss */
 #form-body p,
 .form-group p {
   margin-top: 2px;
   margin-bottom: 0;
 }
-/* line 76, ../mixins/generic.scss */
+/* line 79, ../mixins/generic.scss */
 #form-body ul,
 .form-group ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
-/* line 80, ../mixins/generic.scss */
+/* line 83, ../mixins/generic.scss */
 #form-body ul li,
 .form-group ul li {
   display: inline-block;
 }
-/* line 84, ../mixins/generic.scss */
+/* line 87, ../mixins/generic.scss */
 #form-body label,
 .form-group label {
   font-size: 12px;
   font-size: 0.75rem;
   text-transform: uppercase;
 }
-/* line 88, ../mixins/generic.scss */
+/* line 91, ../mixins/generic.scss */
 #form-body .help-block,
 .form-group .help-block {
   font-size: 12px;
   font-size: 0.75rem;
   margin-top: 0;
 }
-/* line 94, ../mixins/generic.scss */
+/* line 97, ../mixins/generic.scss */
 #form-body select,
 #form-body textarea,
 #form-body input,
@@ -6616,7 +6622,7 @@ label {
   border: 1px solid #000;
   background-color: whitesmoke;
 }
-/* line 98, ../mixins/generic.scss */
+/* line 101, ../mixins/generic.scss */
 #form-body textarea,
 .form-group textarea {
   resize: vertical;
@@ -6624,7 +6630,7 @@ label {
   min-height: 200px;
   width: 100%;
 }
-/* line 105, ../mixins/generic.scss */
+/* line 108, ../mixins/generic.scss */
 #form-body #clear-photo,
 #form-body #fake-photo,
 .form-group #clear-photo,
@@ -6634,7 +6640,7 @@ label {
   background-color: #000;
   color: #FFF;
 }
-/* line 110, ../mixins/generic.scss */
+/* line 113, ../mixins/generic.scss */
 #form-body #clear-photo:hover,
 #form-body #fake-photo:hover,
 .form-group #clear-photo:hover,
@@ -6643,11 +6649,11 @@ label {
   color: #000;
 }
 
-/* line 116, ../mixins/generic.scss */
+/* line 119, ../mixins/generic.scss */
 .form-actions.dashed {
   margin-top: 20px;
 }
-/* line 118, ../mixins/generic.scss */
+/* line 121, ../mixins/generic.scss */
 .form-actions.dashed input {
   font-size: 12px;
   font-size: 0.75rem;
@@ -6659,7 +6665,7 @@ label {
   text-decoration: none;
   text-transform: uppercase;
 }
-/* line 127, ../mixins/generic.scss */
+/* line 130, ../mixins/generic.scss */
 .form-actions.dashed input:hover {
   color: #336442;
   text-decoration: none;

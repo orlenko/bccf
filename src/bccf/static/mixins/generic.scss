@@ -1,3 +1,6 @@
+.text-50 {
+    @include font-size(50);
+}
 .lgreen-text {
     color: $lgreen;
 }
