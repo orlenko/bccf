@@ -117,7 +117,7 @@ ADMIN_MENU_ORDER = (
     ("Users", ("auth.User", "auth.Group",)),
     ("Blogs", ("bccf.Blog",)),
     ("Campaigns", ("bccf.Campaign",)),
-    ("Events", ("bccf.Event",)),
+    ("Trainings", ("bccf.Event",)),
     ("Marquees", ("bccf.HomeMarquee", "bccf.HomeMarqueeSlide", "bccf.PageMarquee", "bccf.PageMarqueeSlide", "bccf.FooterMarquee", "bccf.FooterMarqueeSlide")),
     ("News", ("news.NewsPost",)),
     ("Programs", ("bccf.Program", "bccf.ProgramRequest")),
