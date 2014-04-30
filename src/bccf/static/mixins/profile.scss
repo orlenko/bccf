@@ -1,7 +1,8 @@
 .list-item-name {
     display: inline-block;
     padding: 5px 0;
-    width: 80px;
+    min-width: 80px;
+    margin-right: 10px;
     font-weight: bold;
     &:after {
         content: ':';          
@@ -27,9 +28,12 @@
     }
 }
 #profile-container {
-    .profile-part:not(:first-of-type) {
-        padding-top: 20px;
-        border-top: 3px dashed $lgrey;
+    h4 {
+        @include font-size(16);
+        font-weight: bold;
+        font-family: $pt;
+        border-bottom: 1px solid #000;
+        width: 100%;    
     }
     .contact-info {
         ul {
