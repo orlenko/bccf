@@ -409,10 +409,10 @@ def invoice(request, order_id, template="shop/order_invoice.html"):
         import cStringIO as StringIO
         import cgi
         
-        dest = StringIO.StringIO()
+        result = StringIO.StringIO()
         name = slugify("%s-invoice-%s" % (settings.SITE_TITLE, order.id))
         html = render_to_string(template, {}, context_instance=context)
-        pdf = pisa.pisaDocument(StringIO.StringIO(html.encode("UTF-8")), dest=restult, link_callback=fetch_resources)
+        pdf = pisa.pisaDocument(StringIO.StringIO(html.encode("UTF-8")), dest=result, link_callback=fetch_resources)
         if not pdf.err:
             response = HttpResponse(result.getValue(), mimetype="application/pdf")
             response["Content-Disposition"] = "attachment; filename=%s.pdf" % name
