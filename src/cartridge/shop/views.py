@@ -413,8 +413,8 @@ def invoice(request, order_id, template="shop/order_invoice.html"):
         pdf = pisa.pisaDocuments(StringIO.StringIO(html.endcode("UTF-8")), dest=restult, link_callback=fetch_resources)
         if not pdf.err:
             return HttpResponse(result.getValue(), mimetype="application/pdf")
-         else:
-             return HttpResponse('Gremlins ate your pdf! %s' %  cgi.escape(html))
+        else:
+            return HttpResponse('Gremlins ate your pdf! %s' %  cgi.escape(html))
         #ho.pisa.CreatePDF(html, response)
         #return response
     return render(request, template, context)
