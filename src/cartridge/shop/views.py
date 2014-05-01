@@ -412,7 +412,7 @@ def invoice(request, order_id, template="shop/order_invoice.html"):
         dest = StringIO.StringIO()
         name = slugify("%s-invoice-%s" % (settings.SITE_TITLE, order.id))
         html = get_template(template).render(context)
-        pdf = pisa.pisaDocuments(StringIO.StringIO(html.endcode("UTF-8")), dest=restult, link_callback=fetch_resources)
+        pdf = pisa.pisaDocument(StringIO.StringIO(html.endcode("UTF-8")), dest=restult, link_callback=fetch_resources)
         if not pdf.err:
             response = HttpResponse(result.getValue(), mimetype="application/pdf")
             response["Content-Disposition"] = "attachment; filename=%s.pdf" % name
