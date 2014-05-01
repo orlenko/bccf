@@ -398,70 +398,59 @@ nav ul, nav ol {
 /* line 255, ../sass/invoice.scss */
 .one {
   width: 7%;
-  *width: expression(Math.floor(0.065 * (this.parentNode.offsetWidth - parseFloat(this.parentNode.currentStyle.paddingLeft) - parseFloat(this.parentNode.currentStyle.paddingRight))) + "px");
 }
 
-/* line 259, ../sass/invoice.scss */
+/* line 258, ../sass/invoice.scss */
 .two {
   width: 15.5%;
-  *width: expression(Math.floor(0.15 * (this.parentNode.offsetWidth - parseFloat(this.parentNode.currentStyle.paddingLeft) - parseFloat(this.parentNode.currentStyle.paddingRight))) + "px");
 }
 
-/* line 263, ../sass/invoice.scss */
+/* line 261, ../sass/invoice.scss */
 .three, .quarter {
   width: 24%;
-  *width: expression(Math.floor(0.235 * (this.parentNode.offsetWidth - parseFloat(this.parentNode.currentStyle.paddingLeft) - parseFloat(this.parentNode.currentStyle.paddingRight))) + "px");
+}
+
+/* line 264, ../sass/invoice.scss */
+.four, .one-third {
+  width: 32.5%;
 }
 
 /* line 267, ../sass/invoice.scss */
-.four, .one-third {
-  width: 32.5%;
-  *width: expression(Math.floor(0.32 * (this.parentNode.offsetWidth - parseFloat(this.parentNode.currentStyle.paddingLeft) - parseFloat(this.parentNode.currentStyle.paddingRight))) + "px");
-}
-
-/* line 271, ../sass/invoice.scss */
 .five {
   width: 41%;
-  *width: expression(Math.floor(0.405 * (this.parentNode.offsetWidth - parseFloat(this.parentNode.currentStyle.paddingLeft) - parseFloat(this.parentNode.currentStyle.paddingRight))) + "px");
+}
+
+/* line 270, ../sass/invoice.scss */
+.six, .half {
+  width: 49.5%;
+}
+
+/* line 273, ../sass/invoice.scss */
+.seven {
+  width: 58%;
 }
 
 /* line 276, ../sass/invoice.scss */
-.six, .half {
-  width: 49.5%;
-  *width: expression(Math.floor(0.49 * (this.parentNode.offsetWidth - parseFloat(this.parentNode.currentStyle.paddingLeft) - parseFloat(this.parentNode.currentStyle.paddingRight))) + "px");
-}
-
-/* line 280, ../sass/invoice.scss */
-.seven {
-  width: 58%;
-  *width: expression(Math.floor(0.575 * (this.parentNode.offsetWidth - parseFloat(this.parentNode.currentStyle.paddingLeft) - parseFloat(this.parentNode.currentStyle.paddingRight))) + "px");
-}
-
-/* line 284, ../sass/invoice.scss */
 .eight {
   width: 66.5%;
-  *width: expression(Math.floor(0.66 * (this.parentNode.offsetWidth - parseFloat(this.parentNode.currentStyle.paddingLeft) - parseFloat(this.parentNode.currentStyle.paddingRight))) + "px");
+}
+
+/* line 279, ../sass/invoice.scss */
+.nine {
+  width: 75%;
+}
+
+/* line 282, ../sass/invoice.scss */
+.ten {
+  width: 83.5%;
+}
+
+/* line 285, ../sass/invoice.scss */
+.eleven {
+  width: 92%;
 }
 
 /* line 288, ../sass/invoice.scss */
-.nine {
-  width: 75%;
-  *width: expression(Math.floor(0.745 * (this.parentNode.offsetWidth - parseFloat(this.parentNode.currentStyle.paddingLeft) - parseFloat(this.parentNode.currentStyle.paddingRight))) + "px");
-}
-
-/* line 292, ../sass/invoice.scss */
-.ten {
-  width: 83.5%;
-  *width: expression(Math.floor(0.83 * (this.parentNode.offsetWidth - parseFloat(this.parentNode.currentStyle.paddingLeft) - parseFloat(this.parentNode.currentStyle.paddingRight))) + "px");
-}
-
-/* line 296, ../sass/invoice.scss */
-.eleven {
-  width: 92%;
-  *width: expression(Math.floor(0.915 * (this.parentNode.offsetWidth - parseFloat(this.parentNode.currentStyle.paddingLeft) - parseFloat(this.parentNode.currentStyle.paddingRight))) + "px");
-}
-
-/* line 300, ../sass/invoice.scss */
 .twelve {
   width: 100%;
 }
@@ -469,27 +458,27 @@ nav ul, nav ol {
 /* =======================================================
 INVOICE
 ========================================================== */
-/* line 311, ../sass/invoice.scss */
+/* line 299, ../sass/invoice.scss */
 .container {
   font-family: "PT Sans", sans-serif;
 }
-/* line 313, ../sass/invoice.scss */
+/* line 301, ../sass/invoice.scss */
 .container h2 {
   font-family: "Roboto Slab", serif;
 }
 
-/* line 317, ../sass/invoice.scss */
+/* line 305, ../sass/invoice.scss */
 .text-right {
   text-align: right;
 }
 
-/* line 320, ../sass/invoice.scss */
+/* line 308, ../sass/invoice.scss */
 #bccflogo {
   border-right: 1px solid #a6b2a6;
   height: 75px;
 }
 
-/* line 324, ../sass/invoice.scss */
+/* line 312, ../sass/invoice.scss */
 #bccftagline {
   padding: 16px;
   font-size: 26px;
@@ -497,65 +486,65 @@ INVOICE
   height: 75px;
 }
 
-/* line 330, ../sass/invoice.scss */
+/* line 318, ../sass/invoice.scss */
 #order-details {
   margin-bottom: 40px;
 }
 
-/* line 334, ../sass/invoice.scss */
+/* line 322, ../sass/invoice.scss */
 #order-info header {
   border-bottom: 2px solid #000;
 }
-/* line 336, ../sass/invoice.scss */
+/* line 324, ../sass/invoice.scss */
 #order-info header h2 {
   margin-bottom: 0;
 }
-/* line 340, ../sass/invoice.scss */
+/* line 328, ../sass/invoice.scss */
 #order-info section.header {
   background: #9fceb4;
   color: #000;
   padding: 5px;
   border-bottom: 1px solid #000;
 }
-/* line 347, ../sass/invoice.scss */
+/* line 335, ../sass/invoice.scss */
 #order-info ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-/* line 354, ../sass/invoice.scss */
+/* line 342, ../sass/invoice.scss */
 #billing li {
   margin-top: 5px;
   margin-bottom: 5px;
 }
 
-/* line 360, ../sass/invoice.scss */
+/* line 348, ../sass/invoice.scss */
 #items .header {
   margin-bottom: 0;
 }
-/* line 363, ../sass/invoice.scss */
+/* line 351, ../sass/invoice.scss */
 #items li {
   padding-top: 5px;
   border-bottom: 1px solid #000;
 }
 
-/* line 370, ../sass/invoice.scss */
+/* line 358, ../sass/invoice.scss */
 #totals li span {
   padding-right: 10px;
 }
-/* line 374, ../sass/invoice.scss */
+/* line 362, ../sass/invoice.scss */
 #totals .total {
   border-top: 1px solid #000;
   border-bottom: none;
 }
 
-/* line 380, ../sass/invoice.scss */
+/* line 368, ../sass/invoice.scss */
 footer div:first-child {
   border-bottom: 1px solid #000;
   padding-bottom: 10px;
 }
-/* line 384, ../sass/invoice.scss */
+/* line 372, ../sass/invoice.scss */
 footer div:last-child {
   margin-top: 10px;
 }
