@@ -114,7 +114,7 @@ html {
 }
 
 /* line 75, ../sass/invoice.scss */
-.strong, b, strong, dt, #order-info section.header {
+.strong, b, strong, dt, #order-info tr.header {
   font-weight: bold;
 }
 
@@ -458,26 +458,32 @@ nav ul, nav ol {
 INVOICE
 ========================================================== */
 /* line 299, ../sass/invoice.scss */
+table {
+  border-collapse: collapse;
+}
+
+/* line 302, ../sass/invoice.scss */
 .container {
   font-family: "PT Sans", sans-serif;
 }
-/* line 301, ../sass/invoice.scss */
+/* line 304, ../sass/invoice.scss */
 .container h2 {
+  font-size: 32px;
   font-family: "Roboto Slab", serif;
 }
 
-/* line 305, ../sass/invoice.scss */
+/* line 309, ../sass/invoice.scss */
 .text-right {
   text-align: right;
 }
 
-/* line 308, ../sass/invoice.scss */
+/* line 312, ../sass/invoice.scss */
 #bccflogo {
   border-right: 1px solid #a6b2a6;
   height: 75px;
 }
 
-/* line 312, ../sass/invoice.scss */
+/* line 316, ../sass/invoice.scss */
 #bccftagline {
   padding: 16px;
   font-size: 26px;
@@ -485,65 +491,74 @@ INVOICE
   height: 75px;
 }
 
-/* line 318, ../sass/invoice.scss */
+/* line 322, ../sass/invoice.scss */
 #order-details {
   margin-bottom: 40px;
 }
 
-/* line 322, ../sass/invoice.scss */
+/* line 326, ../sass/invoice.scss */
 #order-info header {
   border-bottom: 2px solid #000;
+  margin-bottom: 15px;
 }
-/* line 324, ../sass/invoice.scss */
+/* line 329, ../sass/invoice.scss */
 #order-info header h2 {
   margin-bottom: 0;
 }
-/* line 328, ../sass/invoice.scss */
-#order-info section.header {
-  background: #9fceb4;
+/* line 333, ../sass/invoice.scss */
+#order-info tr.header {
+  text-align: left;
+  background-color: #9fceb4;
   color: #000;
-  padding: 5px;
-  border-bottom: 1px solid #000;
 }
-/* line 335, ../sass/invoice.scss */
+/* line 338, ../sass/invoice.scss */
+#order-info tr.header th {
+  border-bottom: 1px solid #000;
+  padding: 5px;
+}
+/* line 343, ../sass/invoice.scss */
 #order-info ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-/* line 342, ../sass/invoice.scss */
+/* line 349, ../sass/invoice.scss */
+#billing {
+  width: 100%;
+}
+/* line 351, ../sass/invoice.scss */
 #billing li {
   margin-top: 5px;
   margin-bottom: 5px;
 }
 
-/* line 348, ../sass/invoice.scss */
+/* line 357, ../sass/invoice.scss */
 #items .header {
   margin-bottom: 0;
 }
-/* line 351, ../sass/invoice.scss */
+/* line 360, ../sass/invoice.scss */
 #items li {
   padding-top: 5px;
   border-bottom: 1px solid #000;
 }
 
-/* line 358, ../sass/invoice.scss */
+/* line 367, ../sass/invoice.scss */
 #totals li span {
   padding-right: 10px;
 }
-/* line 362, ../sass/invoice.scss */
+/* line 371, ../sass/invoice.scss */
 #totals .total {
   border-top: 1px solid #000;
   border-bottom: none;
 }
 
-/* line 368, ../sass/invoice.scss */
+/* line 377, ../sass/invoice.scss */
 footer div:first-child {
   border-bottom: 1px solid #000;
   padding-bottom: 10px;
 }
-/* line 372, ../sass/invoice.scss */
+/* line 381, ../sass/invoice.scss */
 footer div:last-child {
   margin-top: 10px;
 }

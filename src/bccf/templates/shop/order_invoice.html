@@ -18,15 +18,24 @@
         <div>Customer number: {{ order.account_number }}</div>
     </div>
     
-    <div id="order-info" class="section">
+    <div id="order-info" class="section" cellspacing="0">
         <header class="section">
             <div class="col six">
                 <h2>Your Details</h2>
             </div>
             <div class="col six text-right">
-                Paid By: {{ order.payment_method }}
+                Paid Via: {{ order.payment_method }}
             </div>
         </header>
+        
+        <!-- Billing -->
+        <table id="billing">
+            <tr class="header">
+                <th>Billing Details</th>
+                <th>Shipping Details</th>            
+            </tr>
+            
+        </table>        
         
         <!-- BODY -->
         <div id="billing">

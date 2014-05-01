@@ -296,9 +296,13 @@ nav ul, nav ol {
 /* =======================================================
 INVOICE
 ========================================================== */
+table {
+    border-collapse: collapse;    
+}
 .container {
     font-family: $pt;
     h2 {
+        font-size: 32px;
         font-family: $roboto    
     }
 }
@@ -320,17 +324,21 @@ INVOICE
 }
 #order-info {
     header {
-        border-bottom: 2px solid #000;  
+        border-bottom: 2px solid #000;
+        margin-bottom: 15px;  
         h2 {
             margin-bottom: 0;        
         }
     }
-    section.header {
+    tr.header {
         @extend .strong;
-        background: $lteal;
+        text-align: left;
+        background-color: $lteal;
         color: #000;
-        padding: 5px;
-        border-bottom: 1px solid #000;
+        th {
+            border-bottom: 1px solid #000;
+            padding: 5px;    
+        }
     }
     ul {
         list-style: none;
@@ -339,6 +347,7 @@ INVOICE
     }
 }
 #billing {
+    width: 100%;
     li {
         margin-top: 5px;    
         margin-bottom: 5px;    
