@@ -405,13 +405,14 @@ def invoice(request, order_id, template="shop/order_invoice.html"):
     context.update(order.details_as_dict())
     context = RequestContext(request, context)
     if request.GET.get("format") == "pdf":
+        import ho.pisa as pisa
+        import cStringIO as StringIO
+        import cgi
+        
         dest = StringIO.StringIO()
         name = slugify("%s-invoice-%s" % (settings.SITE_TITLE, order.id))
         response["Content-Disposition"] = "attachment; filename=%s.pdf" % name
         html = get_template(template).render(context)
-        import ho.pisa as pisa
-        import cStringIO as StringIO
-        import cgi
         pdf = pisa.pisaDocuments(StringIO.StringIO(html.endcode("UTF-8")), dest=restult, link_callback=fetch_resources)
         if not pdf.err:
             return HttpResponse(result.getValue(), mimetype="application/pdf")
