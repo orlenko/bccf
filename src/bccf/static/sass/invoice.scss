@@ -314,19 +314,19 @@ table {
         margin: 0;   
     }
     .total-row {
-        td:not(:first-child) {
-            border-bottom: 1px solid #000;
-        }
-        td:nth-child(2) {
+        .total-type {
             text-align: right;
             padding-right: 15px;
             &:after {
                 content: ':'    
-            }  
-        }    
+            }
+        }
+        .total-row {
+            border-bottom: 1px solid #000;
+        }   
     }
     .total {
-        td:not(:first-child) {
+        .total-row {
             border-top: 2px solid #000; 
             border-bottom: none;
         }
