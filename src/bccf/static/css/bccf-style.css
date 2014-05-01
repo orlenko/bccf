@@ -6115,37 +6115,33 @@ footer #newsletter .dashed-button a:hover {
   font-weight: bold;
 }
 
-/* line 232, ../mixins/account.scss */
-.affiliation {
-  padding-top: 10px;
-}
-/* line 234, ../mixins/account.scss */
+/* line 233, ../mixins/account.scss */
 .affiliation div {
   font-size: 12px;
   font-size: 0.75rem;
 }
 
 @media only screen and (min-width: 740px) and (max-width: 1139px) {
-  /* line 241, ../mixins/account.scss */
+  /* line 240, ../mixins/account.scss */
   .photo {
     border: 10px solid whitesmoke;
     width: 150px;
     height: 150px;
   }
 
-  /* line 248, ../mixins/account.scss */
+  /* line 247, ../mixins/account.scss */
   #photo-form img {
     width: 150px;
     height: 150px;
   }
-  /* line 252, ../mixins/account.scss */
+  /* line 251, ../mixins/account.scss */
   #photo-form .photo-over {
     width: 150px;
     height: 150px;
     background-size: 150px 150px;
   }
 
-  /* line 260, ../mixins/account.scss */
+  /* line 259, ../mixins/account.scss */
   .fake-photo-container .photo-over {
     font-size: 10px;
     font-size: 0.625rem;
@@ -6153,28 +6149,28 @@ footer #newsletter .dashed-button a:hover {
     width: 150px;
     height: 150px;
   }
-  /* line 265, ../mixins/account.scss */
+  /* line 264, ../mixins/account.scss */
   .fake-photo-container .photo-over span {
     left: 10px;
   }
 
-  /* line 272, ../mixins/account.scss */
+  /* line 271, ../mixins/account.scss */
   #tabs a {
     font-size: 12px;
     font-size: 0.75rem;
     font-weight: normal;
     padding: 7px 0 7px 10px;
   }
-  /* line 276, ../mixins/account.scss */
+  /* line 275, ../mixins/account.scss */
   #tabs a:hover {
     font-weight: inherit;
   }
-  /* line 279, ../mixins/account.scss */
+  /* line 278, ../mixins/account.scss */
   #tabs a.current {
     font-weight: inherit;
   }
 
-  /* line 285, ../mixins/account.scss */
+  /* line 284, ../mixins/account.scss */
   #main-form {
     font-size: 14px;
     font-size: 0.875rem;
@@ -6182,17 +6178,17 @@ footer #newsletter .dashed-button a:hover {
   }
 }
 @media only screen and (max-width: 739px) {
-  /* line 295, ../mixins/account.scss */
+  /* line 294, ../mixins/account.scss */
   #tabs ul {
     padding-bottom: 0;
   }
 
-  /* line 300, ../mixins/account.scss */
+  /* line 299, ../mixins/account.scss */
   #main-form {
     padding-left: 0;
   }
 
-  /* line 304, ../mixins/account.scss */
+  /* line 303, ../mixins/account.scss */
   .fake-photo-container {
     width: 200px;
   }
