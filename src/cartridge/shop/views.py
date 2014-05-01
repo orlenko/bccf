@@ -424,7 +424,7 @@ def invoice(request, order_id, template="shop/order_invoice.html"):
     
 def fetch_resources(uri, rel):
     import os
-    path = os.path.join(settings.MEDIA_ROOT, uri.replace(settings.MEDIA_URL, ""))
+    path = os.path.join(settings.STATIC_ROOT, uri.replace(settings.STATIC_URL, ""))
     return path
 
 
