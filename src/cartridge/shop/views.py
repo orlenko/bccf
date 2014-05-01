@@ -411,15 +411,15 @@ def invoice(request, order_id, template="shop/order_invoice.html"):
         
         dest = StringIO.StringIO()
         name = slugify("%s-invoice-%s" % (settings.SITE_TITLE, order.id))
-        response["Content-Disposition"] = "attachment; filename=%s.pdf" % name
         html = get_template(template).render(context)
         pdf = pisa.pisaDocuments(StringIO.StringIO(html.endcode("UTF-8")), dest=restult, link_callback=fetch_resources)
         if not pdf.err:
-            return HttpResponse(result.getValue(), mimetype="application/pdf")
+            response = HttpResponse(result.getValue(), mimetype="application/pdf")
+            response["Content-Disposition"] = "attachment; filename=%s.pdf" % name
         else:
-            return HttpResponse('Gremlins ate your pdf! %s' %  cgi.escape(html))
+            response HttpResponse('Gremlins ate your pdf! %s' %  cgi.escape(html))
         #ho.pisa.CreatePDF(html, response)
-        #return response
+        return response
     return render(request, template, context)
     
 def fetch_resources(uri, rel):
