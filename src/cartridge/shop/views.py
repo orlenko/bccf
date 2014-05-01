@@ -7,7 +7,7 @@ from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render_to_response
 from django.template import RequestContext
 from django.template.defaultfilters import slugify
-from django.template.loader import get_template
+from django.template.loader import get_template, render_to_string
 from django.utils import simplejson
 from django.utils.translation import ugettext as _
 from django.views.decorators.cache import never_cache
@@ -411,7 +411,7 @@ def invoice(request, order_id, template="shop/order_invoice.html"):
         
         dest = StringIO.StringIO()
         name = slugify("%s-invoice-%s" % (settings.SITE_TITLE, order.id))
-        html = get_template(template).render(context)
+        html = render_to_string(template, {}, context_instance=context)
         pdf = pisa.pisaDocument(StringIO.StringIO(html.endcode("UTF-8")), dest=restult, link_callback=fetch_resources)
         if not pdf.err:
             response = HttpResponse(result.getValue(), mimetype="application/pdf")
