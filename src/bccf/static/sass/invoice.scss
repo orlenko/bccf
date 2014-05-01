@@ -102,7 +102,7 @@ html { font-size: 100%; }
    ========================================================================== */
 /* Body */
 body {
-  @include font-size(16);
+  font-size: 16px;
   color: #555;
   background-color: #fff;
   -webkit-text-size-adjust: 100%;

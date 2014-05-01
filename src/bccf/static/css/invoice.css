@@ -161,7 +161,6 @@ html {
 /* line 104, ../sass/invoice.scss */
 body {
   font-size: 16px;
-  font-size: 1rem;
   color: #555;
   background-color: #fff;
   -webkit-text-size-adjust: 100%;
