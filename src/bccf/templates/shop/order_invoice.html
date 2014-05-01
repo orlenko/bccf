@@ -24,7 +24,7 @@
                 <h2>Your Details</h2>
             </div>
             <div class="col six text-right">
-                Paid Via: {{ order.payment_method }}
+                Paid Via: {{ order.payment_method|title }}
             </div>
         </header>
         
@@ -34,72 +34,56 @@
                 <th>Billing Details</th>
                 <th>Shipping Details</th>            
             </tr>
-            
-        </table>        
-        
-        <!-- BODY -->
-        <div id="billing">
-            <section class="header section row row-one">
-                <div class="col six">Billing Details</div>
-                <div class="col six">Shipping Details</div>
-            </section>
-            <section class="body section row row-one">
-                <div class="col six">
+            <tr>
+                <td>
                     <ul>
-                        {% for field, value in order_billing_detail_fields %}
+                    {% for field,value in order_billing_detail_fields %}
+                    <li class="section">
+                        <span class="col three strong">{{ field }}</span>                                
+                        <span class="col nine">{{ value }}</span>                                
+                    </li>
+                    {% endfor %}
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                    {% for field, value in order_shipping_detail_fields %}
                         <li class="section">
                             <span class="col three strong">{{ field }}</span>                                
                             <span class="col nine">{{ value }}</span>                                
                         </li>
-                        {% endfor %}
-                    </ul>                
-                </div>
-                <div class="col six">
-                    <ul>
-                        {% for field, value in order_shipping_detail_fields %}
-                        <li class="section">
-                            <span class="col three strong">{{ field }}</span>                                
-                            <span class="col nine">{{ value }}</span>                                
-                        </li>
-                        {% endfor %}
-                    </ul>                
-                </div>
-            </section>
-        </div>
-        
+                    {% endfor %}        
+                    </ul>
+                </td>
+            </tr>
+        </table>
         
         <header class="section">
             <div class="col twelve">
                 <h2>Items Ordered</h2>
             </div>
-        </header>        
-        <div id="items">
-            <section class="header section row row-one">
-                <div class="col three">Item</div>
-                <div class="col three">Unit Price</div>
-                <div class="col three">Qty</div>
-                <div class="col three">Price</div>
-            </section>
-            <section class="body section">
-                <ul>
-                    {% for items in order.items.all %}
-                    <li class="section">
-                        <span class="col three">{{ items.description }}</span>                    
-                        <span class="col three">{{ items.unit_price|currency }}</span>                    
-                        <span class="col three">{{ items.quantity }}</span>                    
-                        <span class="col three">{{ items.total_price|currency }}</span>                    
-                    </li>
-                    {% endfor %}
-                </ul>
-            </section>
-            <section id="totals">
-                <div class="six right">
-                    <ul>
-                        {% order_totals %}
-                    </ul>
-                </div>
-            </section>
-        </div>
+        </header>
+        
+        <table id="items">
+            <tr class="header">
+                <th>Item</th>            
+                <th>Unit Price</th>            
+                <th>Qty</th>            
+                <th>Price</th>            
+            </tr>
+            
+            {% for item in order.items.all %}
+            <tr>
+                <td>{{ item.description }}</td>
+                <td>{{ item.unit_price|currency }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.total_price|currency }}</td>
+            </tr>
+            {% endfor %}
+            
+            <!-- totals -->
+            {% order_totals_invoice %}            
+        </table>        
     </div>
     
     <footer class="section row row-three">

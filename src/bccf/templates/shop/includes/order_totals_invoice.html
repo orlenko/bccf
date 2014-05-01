@@ -1,0 +1,50 @@
+{% load shop_tags %}
+<tr class="total-row">
+    <td colspan="2"></td>
+    <td>Sub Total</td>
+    <td>{{ item_total|currency }}</td>
+</tr>
+{% if discount_total %}
+<tr class="total-row">
+    <td colspan="2"></td>
+    <td>
+        {% if discount_type %}
+        {{ discount_type }}
+        {% else %}
+        Discount Total
+        {% endif %}    
+    </td>
+    <td>{{ discount_total|currency }}</td>
+</tr>
+{% endif %}
+{% if shipping_total %}
+<tr class="total-row">
+    <td colspan="2"></td>
+    <td>
+        {% if shipping_type %}
+        {{ shipping_type }}
+        {% else %}
+        Shipping Total
+        {% endif %}    
+    </td>
+    <td>{{ shipping_total|currency }}</td>
+</tr>
+{% endif %}
+{% if tax_total %}
+<tr class="total-row">
+    <td colspan="2"></td>
+    <td>
+        {% if tax_type %}
+        {{ tax_type }}
+        {% else %}
+        Tax Total
+        {% endif %}    
+    </td>
+    <td>{{ tax_total|currency }}</td>
+</tr>
+{% endif %}
+<tr class="total total-row">
+    <td colspan="2"></td>
+    <td>Total</td>
+    <td>{{ order_total|currency }}</td>
+</tr>

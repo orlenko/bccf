@@ -72,6 +72,12 @@ def order_totals(context):
     """
     return _order_totals(context)
 
+@register.inclusion_tag("shop/includes/order_totals_invoice.html", takes_context=True)
+def order_totals_invoice(context):
+    """
+    Used for the invoice
+    """
+    return _order_totals(context);
 
 @register.inclusion_tag("shop/includes/order_totals.txt", takes_context=True)
 def order_totals_text(context):
