@@ -117,18 +117,6 @@ b, strong { @extend .strong; }
 p, pre { margin: 1em 0; }
 small { font-size: 80%; }
 
-/* Abbreviations */
-abbr[title] { border-bottom: 1px dotted; }
-
-/* Audio */
-audio, canvas, video {
-  @extend .inline-block;
-}
-audio:not([controls]) {
-  @extend .none;
-  height: 0;
-}
-
 /* Small,
 Sub and Sup */
 small { font-size:80%; }
@@ -151,8 +139,6 @@ img {
   border: 0;
   -ms-interpolation-mode: bicubic;
 }
-svg:not(:root) { overflow: hidden; }
-figure { margin: 0; }
 
 .image-left { margin-right: 20px; }
 .image-right { margin-left: 20px; }
