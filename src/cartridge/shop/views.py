@@ -417,7 +417,7 @@ def invoice(request, order_id, template="shop/order_invoice.html"):
             response = HttpResponse(result.getValue(), mimetype="application/pdf")
             response["Content-Disposition"] = "attachment; filename=%s.pdf" % name
         else:
-            response HttpResponse('Gremlins ate your pdf! %s' %  cgi.escape(html))
+            response = HttpResponse('Gremlins ate your pdf! %s' %  cgi.escape(html))
         #ho.pisa.CreatePDF(html, response)
         return response
     return render(request, template, context)
