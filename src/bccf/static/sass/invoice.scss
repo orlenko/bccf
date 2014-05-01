@@ -8,15 +8,8 @@
 
   @import "../mixins/mixins"; // Import the base mixins
 
-  // Global Defaults
-  $mobile-container:              100%;
-  $tablet-container:              720px;
   $desktop-container:             1100px;
 
-
-  // Resonsive Design Break Points
-  $mobile-breakpoint:         $tablet-container + 19px;
-  $tablet-breakpoint:         $tablet-container + 20px;
   $desktop-breakpoint:        $desktop-container + 39px;
 
   // Heading                  Size
@@ -51,13 +44,6 @@ $sgreen: #E5E9D2;
 $lgreen: #8FAB3D;
 $dgreen: #336442;
 
-// Main BCCF Background Stripe Images
-
-$grey-stripes: url(../img/stripe-BG-grey.jpg);
-$white-stripes: url(../img/stripe-BG-white.jpg);
-$green-stripes: url(../img/stripe-BG-green.jpg);
-$teal-stripes: url(../img/stripe-BG-stripes.jpg);
-
 
 
 /* General Resets */
@@ -89,8 +75,7 @@ html { font-size: 100%; }
 .strong { font-weight: bold; }
 .italic { font-style: italic; }
 .center-text { text-align: center; }
-.none,
-[hidden] {
+.none {
   display: none;
 }
 .visuallyhidden {
@@ -111,15 +96,6 @@ html { font-size: 100%; }
   left: 0;
 }
 
-/* Alert */
-.alert {
-  background-color: #ffc;
-  @extend .block;
-  padding: 8px;
-  @include rounded(5);
-}
-
-.no-desktop { @extend .none; }
 
 /* ==========================================================================
 /* 1.0 - Document Setup (typography, links, paragraph, etc)
@@ -136,19 +112,6 @@ body {
 
 /* Strong and Italic */
 b, strong { @extend .strong; }
-
-/* Links */
-a { color: $dgrey;}
-a:hover { text-decoration: none;
-  img {
-  	opacity:0.7;
-	filter:alpha(opacity=70); /* For IE8 and earlier */
-  }
-
-}
-a:focus { outline: thin dotted; }
-a:active, a:hover { outline: 0; }
-
 
 /* Paragraph and Small */
 p, pre { margin: 1em 0; }
@@ -245,47 +208,6 @@ hr {
   height: 1px;
 }
 
-
-/* 1.2 Quotes and Code - block quotes, quotes, code, pre, etc
-   ========================================================================== */
-/* Block Quotes and Quotes */
-blockquote {
-  font-family: "Georgia", "Times" serif;
-  @include font-size(20);
-  color: #777;
-  margin: 1em 0;
-  @extend .italic;
-}
-cite {
-  color: #222;
-  font-style: normal;
-}
-
-q { quotes: none; }
-q:before, q:after {
-  content: '';
-  content: none;
-}
-
-/* Mark */
-mark {
-  background: #ff0;
-  color: #111;
-}
-
-/* Code */
-code, kbd, pre, samp {
-  font-family: monospace, serif;
-  _font-family: 'courier new', monospace;
-  font-size: 1em;
-}
-code {
-  color: #111;
-  padding: 2px 5px;
-  background-color: #f1f1f1;
-  @include rounded(3);
-}
-
 /* 1.3 Lists
    ========================================================================== */
 dl, menu, ol, ul {
@@ -304,194 +226,6 @@ nav ul, nav ol {
   list-style: none;
   padding: 0;
   margin: 0;
-}
-
-/* 1.4 Tables
-   ========================================================================== */
-table {
-  width: 100%;
-  table-layout: fixed;
-  border-collapse: collapse;
-  border-spacing: 0;
-  border-right: 1px solid #eee;
-  border-bottom: 1px solid #eee;
-  word-wrap: break-word; // CSS3 Browsers
-  -ms-word-wrap: break-word; // IE8
-  *white-space: normal;  // IE7
-}
-table th,
-table td {
-  padding: 8px;
-  text-align: left;
-  vertical-align: top;
-  border-top: 1px solid #eee;
-  border-left: 1px solid #eee;
-}
-table thead th {
-  vertical-align: bottom;
-  font-weight: bold;
-  background-color: #e1e1e1;
-  color: #333;
-}
-table tfoot td {
-  font-weight: bold;
-}
-table caption {
-  padding: 0.5em;
-  font-style: italic;
-  background-color: #eee;
-  border-bottom: 0;
-  font-weight: bold;
-}
-
-/* 1.5 Forms, Labels and Inputs, browser input text color overide
-   ========================================================================== */
-
-
-fieldset {
-  border: 0;
-  padding: 0;
-}
-legend {
-  border: 0;
-  padding: 0;
-  white-space: normal;
-  *margin-left: -7px;
-  @extend .strong;
-}
-label { cursor: pointer; }
-
-button, input, select, textarea {
-  font-size: 100%;
-  vertical-align: baseline;
-  *vertical-align: middle;
-}
-
-input[type=text],
-input[type=password],
-input[type=email],
-input[type=search],
-input[type=tel],
-input[type=url],
-textarea {
-  padding: 5px 7px;
-  -webkit-appearance: none; // Remove Default Browser Behaviour for Safari
-  -moz-appearance: none; // Remove Default Browser Behaviour for Firefox
-  @extend .strong;
-  background-color: #fff;
-  color: #777;
-  border: 1px solid #ddd;
-  border-top: 1px solid #999;
-  -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
-}
-input[type=checkbox],
-input[type=radio] {
-  cursor: pointer;
-  box-sizing: border-box;
-  padding: 0;
-  *height: 13px;
-  *width: 13px;
-}
-
-.checkbox {
-  @extend .block;
-  margin: .2em 0;
-  input[type=checkbox],
-  input[type=radio] {
-    @extend .left;
-  }
-  label {
-    padding-left: 5px;
-    overflow: hidden;
-    display: table;
-    *zoom: 1;
-  }
-}
-
-button, input { line-height: normal; }
-button, select { text-transform: none; }
-
-/* Buttons */
-button,
-html input[type="button"],
-input[type="reset"],
-input[type="submit"] {
-  cursor: pointer;
-  -webkit-appearance: button;
-  cursor: pointer;
-  *overflow: visible;
-}
-button[disabled],
-html input[disabled] { cursor: default; }
-
-input[type="search"] {
-  -webkit-appearance: textfield;
-  -moz-box-sizing: content-box;
-  -webkit-box-sizing: content-box;
-  box-sizing: content-box;
-}
-input[type="search"]::-webkit-search-cancel-button,
-input[type="search"]::-webkit-search-decoration { -webkit-appearance: none; }
-button::-moz-focus-inner,
-input::-moz-focus-inner {
-  border: 0;
-  padding: 0;
-}
-textarea {
-  overflow: auto;
-  vertical-align: top;
-  resize: none;
-}
-
-/* Custom Buttons */
-.button {
-  @include rounded(5);
-  border: 0;
-  padding: 1em 3em;
-  color: #333;
-  text-decoration: none;
-  text-align: center;
-  @extend .inline-block;
-}
-
-.orange-button {
-  background-color: #fee9cc;
-
-  &:hover {
-    background-color: #ffe0b5;
-    -webkit-tap-highlight-color: #fdeed8;
-  } // end hover
-  &:active {
-    background-color: #fdeed8;
-  } // end hover
-}
-.button[disabled],
-.button.disabled {
-  color: #999;
-  background-color: #f1f1f1;
-}
-
-.no-style-button {
-  @include font-size(13);
-  color: #f30;
-  text-decoration: underline;
-  border: 0;
-  background: transparent;
-  height: auto;
-  padding: 0;
-  cursor: pointer;
-  outline: 0;
-
-  &:hover {
-  text-decoration: none;
-  } // end hover
-}
-.no-style-button[disabled],
-.no-style-button.disabled {
-  text-decoration: none;
-  color: #999;
 }
 
 
