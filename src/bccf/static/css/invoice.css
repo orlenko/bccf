@@ -504,7 +504,7 @@ table .total .total-row {
 }
 
 /* line 339, ../sass/invoice.scss */
-table.header th {
+table.section-header th {
   text-align: left;
 }
 
