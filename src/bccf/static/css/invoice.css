@@ -543,12 +543,12 @@ table.header th {
 }
 
 /* line 367, ../sass/invoice.scss */
-#order-info .header {
+#order-info .section-header {
   border-bottom: 2px solid #000;
   margin-bottom: 15px;
 }
 /* line 370, ../sass/invoice.scss */
-#order-info .header h2 {
+#order-info .section-header h2 {
   margin-bottom: 0;
 }
 
