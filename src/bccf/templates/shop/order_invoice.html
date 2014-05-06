@@ -15,7 +15,7 @@
     <div id="order-details" class="section">
         <div class="col six">Invoice number: {{ order.id }}</div>
         <div class="col six text-right">{{ order.time|date:"F j, Y" }}</div>
-        <div>Customer number: {{ order.account_number }}</div>
+        <div>Customer number: {{ request.user.profile.account_number }}</div>
     </div>
     
     <div id="order-info" class="section" cellspacing="0">
