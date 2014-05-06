@@ -336,7 +336,9 @@ table {
     }
 }
 table.header {
-    border-bottom: 2px solid #000;    
+    th {
+        text-align: left;    
+    }
 }
 .container {
     font-family: $pt;
@@ -362,11 +364,11 @@ table.header {
     margin-bottom: 40px;
 }
 #order-info {
-    header {
+    .header {
         border-bottom: 2px solid #000;
-        margin-bottom: 15px;  
+        margin-bottom: 15px;
         h2 {
-            margin-bottom: 0;        
+            margin-bottom: 0;    
         }
     }
 }
@@ -380,7 +382,7 @@ table.header {
     .header {
         margin-bottom: 0;    
     }
-    tr:nth-of-type(2) {
+    tr.item {
         border-bottom: 1px solid #000;
         td {
             padding-top: 10px;        

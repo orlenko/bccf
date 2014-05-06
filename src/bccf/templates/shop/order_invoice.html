@@ -25,7 +25,7 @@
     <div id="order-info" class="section" cellspacing="0">
         <table class="header">
             <tr>
-                <th>Your Details</th>
+                <th><h2>Your Details</h2></th>
                 <td class="right-text">Paid Via: {{ order.payment_method|title }}</td>            
             </tr>        
         </table>
@@ -60,7 +60,7 @@
             </tr>
         </table>
         
-        <header class="section">
+        <header class="section header">
             <h2>Items Ordered</h2>
         </header>
         
@@ -73,7 +73,7 @@
             </tr>
             
             {% for item in order.items.all %}
-            <tr>
+            <tr class="item">
                 <td>{{ item.description }}</td>
                 <td>{{ item.unit_price|currency }}</td>
                 <td>{{ item.quantity }}</td>
