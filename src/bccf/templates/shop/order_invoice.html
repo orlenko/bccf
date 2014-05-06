@@ -23,14 +23,12 @@
     </table>
     
     <div id="order-info" class="section" cellspacing="0">
-        <header class="section">
-            <div class="col six">
-                <h2>Your Details</h2>
-            </div>
-            <div class="col six text-right">
-                Paid Via: {{ order.payment_method|title }}
-            </div>
-        </header>
+        <table class="header">
+            <tr>
+                <th>Your Details</th>
+                <td class="right-text">Paid Via: {{ order.payment_method|title }}</td>            
+            </tr>        
+        </table>
         
         <!-- Billing -->
         <table id="billing">
@@ -63,9 +61,7 @@
         </table>
         
         <header class="section">
-            <div class="col twelve">
-                <h2>Items Ordered</h2>
-            </div>
+            <h2>Items Ordered</h2>
         </header>
         
         <table id="items">

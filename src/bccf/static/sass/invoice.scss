@@ -335,6 +335,9 @@ table {
         }
     }
 }
+table.header {
+    border-bottom: 2px solid #000;    
+}
 .container {
     font-family: $pt;
     h2 {

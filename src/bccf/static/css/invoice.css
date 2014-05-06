@@ -504,27 +504,32 @@ table .total .total-row {
 }
 
 /* line 338, ../sass/invoice.scss */
+table.header {
+  border-bottom: 2px solid #000;
+}
+
+/* line 341, ../sass/invoice.scss */
 .container {
   font-family: "PT Sans", sans-serif;
 }
-/* line 340, ../sass/invoice.scss */
+/* line 343, ../sass/invoice.scss */
 .container h2 {
   font-size: 32px;
   font-family: "Roboto Slab", serif;
 }
 
-/* line 345, ../sass/invoice.scss */
+/* line 348, ../sass/invoice.scss */
 .text-right {
   text-align: right;
 }
 
-/* line 348, ../sass/invoice.scss */
+/* line 351, ../sass/invoice.scss */
 #bccflogo {
   border-right: 1px solid #a6b2a6;
   height: 75px;
 }
 
-/* line 352, ../sass/invoice.scss */
+/* line 355, ../sass/invoice.scss */
 #bccftagline {
   padding: 16px;
   font-size: 26px;
@@ -532,46 +537,46 @@ table .total .total-row {
   height: 75px;
 }
 
-/* line 358, ../sass/invoice.scss */
+/* line 361, ../sass/invoice.scss */
 #order-details {
   margin-bottom: 40px;
 }
 
-/* line 362, ../sass/invoice.scss */
+/* line 365, ../sass/invoice.scss */
 #order-info header {
   border-bottom: 2px solid #000;
   margin-bottom: 15px;
 }
-/* line 365, ../sass/invoice.scss */
+/* line 368, ../sass/invoice.scss */
 #order-info header h2 {
   margin-bottom: 0;
 }
 
-/* line 371, ../sass/invoice.scss */
+/* line 374, ../sass/invoice.scss */
 #billing li {
   margin-top: 5px;
   margin-bottom: 5px;
 }
 
-/* line 377, ../sass/invoice.scss */
+/* line 380, ../sass/invoice.scss */
 #items .header {
   margin-bottom: 0;
 }
-/* line 380, ../sass/invoice.scss */
+/* line 383, ../sass/invoice.scss */
 #items tr:nth-of-type(2) {
   border-bottom: 1px solid #000;
 }
-/* line 382, ../sass/invoice.scss */
+/* line 385, ../sass/invoice.scss */
 #items tr:nth-of-type(2) td {
   padding-top: 10px;
 }
 
-/* line 388, ../sass/invoice.scss */
+/* line 391, ../sass/invoice.scss */
 footer div:first-child {
   border-bottom: 1px solid #000;
   padding-bottom: 10px;
 }
-/* line 392, ../sass/invoice.scss */
+/* line 395, ../sass/invoice.scss */
 footer div:last-child {
   margin-top: 10px;
 }
