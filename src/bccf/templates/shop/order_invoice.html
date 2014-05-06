@@ -12,11 +12,15 @@
         <div id="bccftagline" class="col tablet-three five mobile-full">y<em><strong>our</strong></em> family.</div>
     </header>
     
-    <div id="order-details" class="section">
-        <div class="col six">Invoice number: {{ order.id }}</div>
-        <div class="col six text-right">{{ order.time|date:"F j, Y" }}</div>
-        <div>Customer number: {{ request.user.profile.account_number }}</div>
-    </div>
+    <table id="order-details">
+        <tr>
+            <td>Invoice number: {{ order.id }}</td>        
+            <td>{{ order.time|date:"F j, Y" }}</td>        
+        </tr>
+        <tr>
+            <td>Customer number: {{ request.user.profile.account_number }}</td>        
+        </tr>
+    </table>
     
     <div id="order-info" class="section" cellspacing="0">
         <header class="section">
