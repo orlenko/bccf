@@ -15,7 +15,7 @@
     <table id="order-details">
         <tr>
             <td>Invoice number: {{ order.id }}</td>        
-            <td>{{ order.time|date:"F j, Y" }}</td>        
+            <td class="right-text">{{ order.time|date:"F j, Y" }}</td>        
         </tr>
         <tr>
             <td>Customer number: {{ request.user.profile.account_number }}</td>        
