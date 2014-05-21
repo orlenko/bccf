@@ -92,6 +92,24 @@ def content_carousel_for_topic(context, topic, type):
         log.info('Unspecified Exception')
         log.error(e)
     return context
+    
+@register.inclusion_tag("generic/includes/content_carousel.html", takes_context=True)
+def content_carousel_for_program(context, program, type, child=None):
+    """
+    The same a the content carousel_for but this focuses on all pages that are related to a Topic
+    """
+    try:
+        context['slides'] = BCCFChildPage.objects.by_program(program).filter(page_for=type).order_by('-created')[:12]
+        context['carousel_color'] = program.carousel_color
+        context['carousel_title'] = type
+        context['carousel_name'] = type.replace(' ', '_').lower()
+    except ObjectDoesNotExist, e:
+        log.info('Object Does Not Exist')
+        log.error(e)
+    except Exception, e:
+        log.info('Unspecified Exception')
+        log.error(e)
+    return context
 
 @register.inclusion_tag("generic/includes/tag_carousel.html", takes_context=True)
 def content_carousel_for_tag(context):

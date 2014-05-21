@@ -7,7 +7,6 @@ register = template.Library()
 def add(value, to_add):
     return value + to_add
 
-
 @register.filter
 def has_feature(membership, feature):
     feature_map = {
@@ -18,3 +17,7 @@ def has_feature(membership, feature):
     for categ in feature_map.get(feature, []):
         if models.is_product_variation_categ(membership, categ):
             return True
+
+@register.filter
+def get_class_name(value):
+    return value.__class__.__name__

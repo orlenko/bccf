@@ -1,16 +1,1 @@
-{% extends "pages/bccfpage.html" %}
-
-{% load static content_carousel_tags %}
-
-{% block carousels %}
-
-{% if child %}
-    {% content_carousel_for page 'parent' child 'parent' %}
-    {% content_carousel_for page 'professional' child 'professional' %}
-{% else %}
-    {% content_carousel_for page 'parent' None 'parent' %}
-    {% content_carousel_for page 'professional' None 'professional' %}
-{% endif %}
-
-<div id="mobile-content" class="no-desktop no-tablet mobile-content-container"></div>
-{% endblock %}
+{% extends "pages/base_category.html" %}

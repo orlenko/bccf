@@ -1,0 +1,205 @@
+{% extends 'pages/base_bccfpage.html' %}
+
+{% load static content_carousel_tags bccf_filters mezzanine_tags bccf_big_marquee_tags %}
+
+{% block marquee %}{% big_marquee_for page %}{% endblock %}
+
+{% block content %}
+    {% editable page.title page.content %}
+    <h1>{{ page.title }}</h1>
+    {{ page.content|safe }}
+    {% endeditable %}
+{% endblock %}
+
+{% block carousels %}
+
+{% content_carousel_for_program page 'parent' %}
+{% content_carousel_for_program page 'professional' %}
+
+<div id="mobile-content" class="no-desktop no-tablet mobile-content-container"></div>
+{% endblock %}
+
+{% block footer_scripts %}
+{{ block.super }}
+<script type="text/javascript" >
+var open_baby = false;
+var pathname = '';
+$(function() {
+    pathname = location.pathname;
+    $('.to-carousel').owlCarousel({
+        'singleItem': true,
+        'pagination': false,
+        'addClassActive': true,
+        'startDragging': function() { reset(); },
+        'afterMove': function() { get_next($(this.owl.baseElement[0])); },
+        'beforeMove': function() { reset(); },
+    });
+    $('.carousel-grid').hide();
+    reset();    
+    
+    {% if child %}
+    
+    {% if baby %}        
+    open_baby = true;
+    {% endif %}
+
+    $('#id_{{ child }}:visible').trigger('click');
+    
+    {% endif %}    
+
+    $('#slide-container').owlCarousel({
+        'singleItem': true,
+        'autoPlay': 5000,
+        'autoHeight': true,
+        'theme': "normal-marquee",
+    });    
+    
+    $(window).bind('popstate', function(e) {
+        console.log('Pathname: '+pathname);
+        if(pathname !== location.pathname) {
+            location.pathname = location.pathname;
+        }
+    });
+    
+    $(window).on('resize', function(e) {
+        reset();
+        if($('.mnav-mobile-btn').is(':visible')) {
+            $('.to-slide').trigger('click');
+        }
+    });  
+    
+    {% if type %}
+    $('#{{ type }}').find('.to-grid').trigger('click');
+    $('html, body').animate({
+        scrollTop:$('#{{ type }}').offset().top
+    }, 'slow');
+    {% endif %}
+});
+
+/** EVENT LISTENTERS **/
+$('.content-pages').on('click', '.page-box', function(e) {
+    e.preventDefault();
+    if($(e.target).hasClass('page-box')) {
+        clicked = $(e.target);
+    } else {
+        clicked = $(e.target).parents('.page-box');
+    }
+    if(clicked.hasClass('go-blank')) {
+        window.open(clicked.find('a').attr('href'), '_blank');
+        return;     
+    }    
+    
+    if(!clicked.hasClass('page-box-active')) { // was the active one clicked?
+        reset();
+        pageURL = clicked.find('a').attr('href');
+        if(open_baby) {
+            pageURL = pageURL+'{{ baby }}';
+            open_baby = false;          
+        }
+        $(document).find('.page-box-active').removeClass('page-box-active');
+        clicked.addClass('page-box-active');
+        load_content(clicked);
+    } else {
+        clicked.removeClass('page-box-active');
+        reset();
+    }
+});
+
+$('.control-buttons').on('click', 'a', function(e) {
+    e.preventDefault();
+    reset();
+    parent = $(this).parents('.content-pages');
+    if($(this).hasClass('to-grid')) {
+        parent.find('.carousel-slide').hide();
+        parent.find('.carousel-grid').show();
+    } else {
+        parent.find('.carousel-grid').hide();
+        parent.find('.carousel-slide').show();
+    }
+});
+
+$('.content-pages').on('click', 'a[class^="button"]', function(e) {
+    e.preventDefault();
+    var carousel = $(this).siblings('.page-container-outer').children('div[class^="carousel"]:visible');
+    if($(this).hasClass('button-prev')) {
+        carousel.trigger('owl.prev');
+    } else {
+        carousel.trigger('owl.next');    
+    }
+});
+
+/** HELPER FUNCTIONS **/
+var get_next = function(carousel) {
+    var parent = carousel.parents('.content-pages');
+    if(carousel.find('.active').is(':last-child')) {
+        var offset = carousel.find('.owl-item .page-box').length;
+        if(offset % 1 === 0 {% if filter %} && parent.find('.filter').val() == '' {% endif %}) {
+            $.ajax({
+                url: '/category/next',
+                context: parent,
+                data: {for:'{{ page|get_class_name }}', page_pk:{{ page.pk }}, type:parent.attr('id'), offset:offset}, 
+                success: function(data) {                        
+                    if(data !== 'No' && data.slide.length > 1 && data.grid.length > 1) {
+                        parent.find('.carousel-slide').data('owlCarousel').addItem(data.slide);
+                        parent.find('.carousel-grid').data('owlCarousel').addItem(data.grid);
+                        if(carousel.hasClass('carousel-slide')) {
+                            parent.find('.carousel-grid').hide();                     
+                        } else {
+                            parent.find('.carousel-slide').hide();
+                        }
+                        carousel.trigger('owl.next');
+                    }
+                },
+            });
+        }   
+    }
+    return true;
+}
+
+var reset = function() {
+    $('.reset').hide().html('');
+    $('#mobile-content').hide().html('');
+    $('.page-box-active').removeClass('page-box-active');
+    $('body').css({overflow: 'auto', height: 'auto'});
+    $(window).off('touchmove');
+};
+
+var load_content = function(box) {
+    var container = null
+    var loader =  $('<img>', {
+        src: '{% static "img/bccf-loader.gif" %}',
+        alt: 'Loader',
+        class: 'ajax-loader',
+    });
+    if($('.mnav-mobile-btn').is(':visible')) { // For mobiles
+        $('body').css({overflow: 'hidden', height: '100%'});
+        $('#mobile-content').show();
+        container = $('#mobile-content');
+    } else if(box.parents('.carousel-slide').length) { // If Slide
+        container = box.parents('.carousel-slide').siblings('.slide-content');
+    } else if(box.parents('.carousel-grid').length) { // If Grid
+        container = box.nextAll('.grid-content').first();
+    }
+    container.html(loader).show();
+    $.ajax({
+        url: pageURL,
+        context: container,
+        success: function(data) {
+            $(this).html(data);
+            if(!$('.mnav-mobile-btn').is(':visible')) {
+                $('body, html').animate({
+                    'scrollTop':   $(this).offset().top-160
+                }, 500);
+            }
+            if(pageURL != window.location) {
+                window.history.pushState({ path: pageURL }, '', pageURL);
+            }
+            pathname = pageURL;
+        },
+        error: function() {
+            $(this).html('<h3>Error Loading Page</h3>');        
+        }
+    });
+}
+</script>
+{% endblock %}

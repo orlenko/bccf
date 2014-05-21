@@ -25,7 +25,7 @@ def featured_programs(context):
     being rendered for.
     """
     context['class'] = 'hpro'
-    context['slides'] = BCCFChildPage.objects.published().filter(Q(content_model='program'), featured=True).order_by('-created')
+    context['slides'] = Program.objects.published().filter(featured=True).order_by('-created')
     return context
     
 @register.inclusion_tag('generic/includes/featured.html', takes_context=True)

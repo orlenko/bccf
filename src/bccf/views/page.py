@@ -1,3 +1,4 @@
+from django.db.models.loading import get_model
 from django.shortcuts import render_to_response, render
 from django.template.context import RequestContext
 from django.template.loader import render_to_string
@@ -9,7 +10,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import get_object_or_404
 from django.utils.text import slugify
 
-from bccf.models import BCCFPage, BCCFChildPage, BCCFBabyPage, BCCFTopic, UserProfile
+from bccf.models import BCCFPage, BCCFChildPage, BCCFBabyPage, BCCFTopic, Program, UserProfile
 from bccf.settings import MEDIA_URL, BCCF_RESOURCE_TYPES, BCCF_SPECIAL_PAGES
 from pybb.models import Topic
 
@@ -80,6 +81,11 @@ def topic_page(request, topic):
     page = get_object_or_404(BCCFTopic, slug=topic)
     context = RequestContext(request, locals())
     return render_to_response('pages/bccftopic.html', {}, context_instance=context)
+    
+def program_page(request, program, child=None, baby=None):
+    page = get_object_or_404(Program, slug=program)
+    context = RequestContext(request, locals())
+    return render_to_response('pages/programs.html', {}, context_instance=context)
 
 def user_list(request):
     page = BCCFPage.objects.get(slug__exact='member/directory');
@@ -126,16 +132,34 @@ def next(request, parent, which, offset):
     else:
         return HttpResponse('No')
 
-def topic_next(request, topic, which, offset):
-    if request.is_ajax():
-        limit = int(offset)+12
-        topic = BCCFTopic.objects.get(id=topic)
+def cat_next(request):
+    if request.is_ajax():    
+        offset = request.GET.get('offset', 0)
+        page_pk = request.GET.get('page_pk', 0)
+        page_type = request.GET.get('for', 'Program')
+        page_for = request.GET.get('type', 'parent')
+        
+        model = get_model('bccf', page_type)
 
-        slides = BCCFChildPage.objects.by_topic(topic).filter(page_for=which).order_by('-created')[offset:limit]
+        try:
+            obj = model.objects.get(id=page_pk)
+        except:
+            return HttpResponse('No')
+            
+        limit = int(offset)+12
+        
+        if page_type == 'Program':
+            slides = BCCFChildPage.objects.by_program(obj)
+        else:
+            slides = BCCFChildPage.objects.by_topic(obj)
+            
+        slides = slides.filter(page_for=page_for).order_by('-created')[offset:limit]
+        
         parts = {
             'slide': render_to_string('generic/carousel_slide_part.html', {'slides':slides, 'MEDIA_URL':MEDIA_URL}),
             'grid': render_to_string('generic/carousel_grid_part.html', {'slides':slides, 'MEDIA_URL':MEDIA_URL}),
         }
+        
         return HttpResponse(json.dumps(parts), content_type="application/json")
     else:
         return HttpResponse('No')

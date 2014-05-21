@@ -154,29 +154,69 @@ class BCCFPage(Page, RichText):
             slug = 'bccf/%s' % slug
         return slug
 
-#Topic
-class BCCFTopic(Displayable, RichText):
+#Category
+class Category(Displayable, RichText):
     """
-    Special page for topic.
+    Category Superclass for Topic and Program
     """
     COLORS = (
         ('dgreen-list', 'Dark Green'),
         ('green-list', 'Green'),
         ('teal-list', 'Teal'),
-        ('yellow-list', 'Yellow'),
+        ('yellow-list', 'Yellow'),   
     )
     marquee = models.ForeignKey(PageMarquee, blank=True, null=True)
     carousel_color = models.CharField(max_length=11, default='dgreen-list', choices=COLORS)
+    
+    class Meta:
+        abstract = True
+
+#Topic
+class BCCFTopic(Category):
+    """
+    Special page for topic.
+    """
+
     class Meta:
         verbose_name = 'Topic'
         verbose_name_plural = 'Topics'
-
+        
     def get_absolute_url(self):
         """
         URL for a page
         """
         slug = self.slug
         return reverse('topic-page', kwargs={'topic': slug})
+        
+#Program Pages
+class Program(Category):
+    """
+    Model for Programs
+    """
+    image = FileField("Image",
+        upload_to = upload_to("bccf.Program.image_file", "childpage"),
+        extensions = ['.png', '.jpg', '.bmp', '.gif'],
+        max_length = 255,
+        null = True,
+        blank = True,
+        help_text = 'You can upload an image. '
+            'Acceptable file types: .png, .jpg, .bmp, .gif.')
+    short_title = models.CharField('Short Title', max_length=20, null=True, blank=True, help_text='Max 20 characters')
+    featured = models.BooleanField('Featured', default=False)
+    bccf_topic = models.ManyToManyField(BCCFTopic, verbose_name='Topics', blank=True, null=True)
+    users = models.ManyToManyField(User, verbose_name='Requester', blank=True, null=True)
+    user_added = models.BooleanField('Added By User', default=False, blank=True) 
+    
+    class Meta:
+        verbose_name = 'Program'
+        verbose_name_plural = 'Programs'
+        
+    def get_absolute_url(self):
+        """
+        URL for a page
+        """
+        slug = self.slug
+        return reverse('program-page', kwargs={'program': slug})
 
 #BCCF Child Class Pages
 class BCCFChildPage(BCCFBasePage, RichText, AdminThumbMixin):
@@ -192,6 +232,7 @@ class BCCFChildPage(BCCFBasePage, RichText, AdminThumbMixin):
     parent = models.ForeignKey('BCCFChildPage', blank=True, null=True)
     gparent = models.ForeignKey('BCCFPage', verbose_name="Parent Page", blank=True, null=True)
     bccf_topic = models.ManyToManyField('BCCFTopic', blank=True, null=True)
+    bccf_program = models.ManyToManyField('Program', blank=True, null=True)
     featured = models.BooleanField('Featured', default=False)
     titles = models.CharField(editable=False, max_length=1000, null=True)
     content_model = models.CharField(editable=False, max_length=50, null=True, blank=True)
@@ -585,20 +626,6 @@ class Video(BCCFChildPage):
         super(Video, self).save(**kwargs)
     def get_resource_type(self):
         return 'Video'
-
-#Program Pages
-class Program(BCCFChildPage):
-    users = models.ManyToManyField(User, verbose_name='Requester', blank=True, null=True)
-    user_added = models.BooleanField('Added By User', default=False, blank=True) 
-    
-    objects = managers.ChildPageManager()    
-    
-    def save(self, **kwargs):
-        self.gparent = BCCFPage.objects.get(slug='bccf/programs')
-        super(Program, self).save(**kwargs)
-    class Meta:
-        verbose_name = 'Program'
-        verbose_name_plural = 'Programs'
 
 #Blog Pages
 class Blog(BCCFChildPage):

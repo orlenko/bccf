@@ -72,8 +72,9 @@ urlpatterns = patterns("",
 
     #Pages
     url(r'^filter/(?P<query>.*)/$', 'bccf.views.page.filter', name='filter'),
-    url(r'^next/topic/(?P<topic>\d+)/(?P<which>.*)/(?P<offset>\d+)/$', 'bccf.views.page.topic_next', name='topic-next'),
+    url(r'^category/next/$', 'bccf.views.page.cat_next', name='cat-next'),
     url(r'^next/(?P<parent>\d+)/(?P<which>.*)/(?P<offset>\d+)/$', 'bccf.views.page.next', name='bccf-next'),
+    url(r'^program/(?P<program>.+)/$', 'bccf.views.page.program_page', name='program-page'),
     url(r'^topic/(?P<topic>.+)/$', 'bccf.views.page.topic_page', name='topic-page'),
     url(r'^bccf/resources/type/(?P<type>%s)/$' % settings.BCCF_RESOURCE_TYPES, 'bccf.views.page.resource_type_page', name='resource-type'),
     url(r'^bccf/(?P<parent>.+)/(?P<child>.+)/(?P<baby>.+)/$', 'bccf.views.page.page', name='bccf-baby'),

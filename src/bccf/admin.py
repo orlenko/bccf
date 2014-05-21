@@ -158,7 +158,7 @@ admin.site.register(Event, EventAdmin)
 
 #Pages
 page_fieldsets = deepcopy(DisplayableAdmin.fieldsets)
-page_fieldsets[0][1]["fields"] += ("gparent", "page_for", "bccf_topic", "featured", "content",)
+page_fieldsets[0][1]["fields"] += ("gparent", "page_for", "bccf_topic", "bccf_program", "featured", "content",)
 
 # Actions
 def make_featured(modeladmin, request, queryset):
@@ -225,6 +225,7 @@ class BCCFGenericAdmin(DisplayableAdmin):
             self.fieldsets = deepcopy(self.fieldsets)
             for field in reversed(['content',
                                     'bccf_topic',
+                                    'bccf_program',
                                     'gparent',
                                     'page_for',
                                     'show_resources',
@@ -272,6 +273,7 @@ class BCCFChildAdmin(DisplayableAdmin):
             self.fieldsets = deepcopy(self.fieldsets)
             for field in reversed(['content',
                                     'bccf_topic',
+                                    'bccf_program',
                                     'page_for',
                                     'image']):
                 self.fieldsets[0][1]['fields'].insert(3, field)
@@ -307,6 +309,7 @@ class BCCFBlogAdmin(DisplayableAdmin):
             for field in reversed(['content',
                                     'author',
                                     'bccf_topic',
+                                    'bccf_program',
                                     'page_for',
                                     'image']):
                 self.fieldsets[0][1]['fields'].insert(3, field)
@@ -331,7 +334,6 @@ class BCCFBlogAdmin(DisplayableAdmin):
 
 class BCCFProgramAdmin(DisplayableAdmin):
     actions = [make_featured, make_unfeatured]
-    inlines = (BCCFBabyInlineAdmin,)
     ordering = ('user_added', '-created',)
 
     def __init__(self, *args, **kwargs):
@@ -343,7 +345,6 @@ class BCCFProgramAdmin(DisplayableAdmin):
             for field in reversed(['short_title',
                                     'content',
                                     'bccf_topic',
-                                    'page_for',
                                     'featured',
                                     'users',
                                     'user_added',
@@ -353,19 +354,19 @@ class BCCFProgramAdmin(DisplayableAdmin):
         # Editable in the list display
         if self.list_editable == DisplayableAdmin.list_editable:
             self.list_editable = list(deepcopy(self.list_editable))
-            for fieldname in ['page_for', 'bccf_topic', 'featured']:
+            for fieldname in ['bccf_topic', 'featured']:
                 self.list_editable.insert(-1, fieldname)                
           
         # List Display      
         if self.list_display == DisplayableAdmin.list_display:
             self.list_display = list(deepcopy(self.list_display))
-            for fieldname in ['page_for', 'bccf_topic', 'featured', 'user_added']:
+            for fieldname in ['bccf_topic', 'featured', 'user_added']:
                 self.list_display.insert(-1, fieldname)                
 
         # Filter
         if self.list_filter == DisplayableAdmin.list_filter:
             self.list_filter = list(deepcopy(self.list_filter))
-            for fieldname in ['page_for', 'bccf_topic', 'featured']:
+            for fieldname in ['bccf_topic', 'featured']:
                 self.list_filter.insert(-1, fieldname)
 
 class BCCFResourceAdmin(DisplayableAdmin):
@@ -382,6 +383,7 @@ class BCCFResourceAdmin(DisplayableAdmin):
             for field in reversed(['content',
                                     'attached_document',
                                     'bccf_topic',
+                                    'bccf_program',
                                     'featured',
                                     'page_for',
                                     'image']):
@@ -419,6 +421,7 @@ class BCCFPodcastResourceAdmin(DisplayableAdmin):
             for field in reversed(['content',
                                     'attached_audio',
                                     'bccf_topic',
+                                    'bccf_program',
                                     'featured',
                                     'page_for',
                                     'image']):
@@ -456,6 +459,7 @@ class BCCFVideoResourceAdmin(AdminVideoMixin, DisplayableAdmin):
             for field in reversed(['content',
                                     'video_url',
                                     'bccf_topic',
+                                    'bccf_program',
                                     'featured',
                                     'page_for',
                                     'image']):
@@ -490,6 +494,7 @@ class BCCFTagAdmin(DisplayableAdmin):
             self.fieldsets = deepcopy(self.fieldsets)
             for field in reversed(['content',
                                     'bccf_topic',
+                                    'bccf_program',
                                     'featured',
                                     'page_for',
                                     'user',

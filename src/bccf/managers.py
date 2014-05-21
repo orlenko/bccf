@@ -29,6 +29,9 @@ class ChildPageManager(DisplayableManager):
     def by_topic(self, topic):
         return self.published().filter(bccf_topic=topic)
         
+    def by_program(self, program):
+        return self.published().filter(bccf_program=program)
+        
     def featured(self):
         return self.published().filter(featured=True)
     
