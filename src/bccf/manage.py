@@ -2,6 +2,8 @@
 
 import os
 import sys
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+print sys.path
 
 
 # Corrects some pathing issues in various contexts, such as cron jobs,
@@ -9,7 +11,7 @@ import sys
 from settings import PROJECT_ROOT, PROJECT_DIRNAME
 os.chdir(PROJECT_ROOT)
 sys.path.insert(0, os.path.abspath(os.path.join(PROJECT_ROOT, "..")))
-
+print sys.path
 
 # Add the site ID CLI arg to the environment, which allows for the site
 # used in any site related queries to be manually set for management
@@ -26,3 +28,4 @@ if __name__ == "__main__":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", settings_module)
     from django.core.management import execute_from_command_line
     execute_from_command_line(sys.argv)
+from django.conf import settings

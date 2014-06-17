@@ -17,6 +17,7 @@ mostly get applied globally to different parts of the admin.
 {% block nav-global %}{% endblock %}
 
 {% block extrahead %}
+<!-- BEGIN BLOCK extrahead -->
 <link rel="stylesheet" href="{% static "mezzanine/css/admin/global.css" %}">
 <style>
 /*
@@ -43,8 +44,10 @@ window.__grappelli_installed = {{ settings.GRAPPELLI_INSTALLED|lower }};
 window.__language_code = '{{ LANGUAGE_CODE }}';
 </script>
 {% if not settings.GRAPPELLI_INSTALLED %}
+<!-- Grappelli not installed -->
 <script src="{% static "mezzanine/js/"|add:settings.JQUERY_FILENAME %}"></script>
 {% endif %}
+<!-- END BLOCK extrahead -->
 {% endblock %}
 {% block rtl_styles %}
 {{ block.super }}

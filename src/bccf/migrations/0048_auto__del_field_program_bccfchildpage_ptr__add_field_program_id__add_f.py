@@ -13,7 +13,7 @@ class Migration(SchemaMigration):
 
         # Adding field 'Program.id'
         db.add_column(u'bccf_program', u'id',
-                      self.gf('django.db.models.fields.AutoField')(default=1, primary_key=True),
+                      self.gf('django.db.models.fields.AutoField')(primary_key=True),
                       keep_default=False)
 
         # Adding field 'Program.keywords_string'

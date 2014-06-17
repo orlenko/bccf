@@ -406,9 +406,9 @@ MIDDLEWARE_CLASSES = (
 CRON_CLASSES = [
     'bccf.cron.EventPaymentReminder',
     'bccf.cron.EventFreeRemind',
-    'bccf.cron.EventClose',    
-    'bccf.cron.UserMembershipReminder',    
-    'bccf.cron.UserMembershipExpire',    
+    'bccf.cron.EventClose',
+    'bccf.cron.UserMembershipReminder',
+    'bccf.cron.UserMembershipExpire',
 ]
 
 # Store these package names here as they may change in the future since
@@ -434,7 +434,8 @@ OPTIONAL_APPS = (
     "django_extensions",
     "compressor",
     PACKAGE_NAME_FILEBROWSER,
-    PACKAGE_NAME_GRAPPELLI,'ckeditor',
+    PACKAGE_NAME_GRAPPELLI,
+    'ckeditor',
 )
 
 DEBUG_TOOLBAR_CONFIG = {"INTERCEPT_REDIRECTS": False}
@@ -571,7 +572,7 @@ BCCF_RESOURCE_TYPES = '(article|downloadableform|magazine|podcast|tipsheet|video
 BCCF_SPECIAL_PAGES = ['trainings','resources','tag','programs']
 BCCF_CORE_PAGES = ['trainings','resources','tag','programs','blog','news']
 SEARCH_MODEL_CHOICES = (
-    'bccf.BCCFChildPage', 
+    'bccf.BCCFChildPage',
     'bccf.BCCFTopic',
     'bccf.BCCFPage',
     'shop.product',
