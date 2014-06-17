@@ -1,4 +1,5 @@
 import logging
+from bccf.models import EmailLog
 log = logging.getLogger(__name__)
 
 from django.db.models.loading import get_model
@@ -14,7 +15,17 @@ from cartridge.shop.models import Order
 TEMPLATE_DIR = "email/%s"
 NO_EMAIL = Settings.get_setting('NO_REPLY_EMAIL')
 MOD_EMAIL = Settings.get_setting('MODERATOR_EMAIL')
-    
+
+
+def send_email(fr, to, subject, plain, html=None):
+    msg = EmailMultiAlternatives(subject, plain, fr, [to])
+    if html:
+        msg.attach_alternative(html, "text/html")
+    if EmailLog.can_send(to, subject, plain, html):
+        msg.send()
+        EmailLog.on_send(to, subject,  plain, html)
+
+
 def send_welcome(user, subject="Welcome to BCCF", fr=NO_EMAIL, template="email_welcome.txt", template_html="email_welcome.html"):
     """
     Helper function that sends a welcome email to users upon registration.
@@ -23,11 +34,9 @@ def send_welcome(user, subject="Welcome to BCCF", fr=NO_EMAIL, template="email_w
     c = Context({'user': user})
     plain_content = render_to_string(TEMPLATE_DIR % template, {}, context_instance=c)
     html_content = render_to_string(TEMPLATE_DIR % template_html, {}, context_instance=c)
-    
-    msg = EmailMultiAlternatives(subject, plain_content, fr, [to])
-    msg.attach_alternative(html_content, "text/html")
-    msg.send()
-    
+    send_email(fr, to, subject, plain_content, html_content)
+
+
 def send_moderate(subject, context={}, to=MOD_EMAIL, fr=NO_EMAIL,
     template="email_moderate.txt", template_html="email_moderate.html"):
     """
@@ -43,11 +52,9 @@ def send_moderate(subject, context={}, to=MOD_EMAIL, fr=NO_EMAIL,
     c = Context(context)
     plain_content = render_to_string(TEMPLATE_DIR % template, {}, context_instance=c)
     html_content = render_to_string(TEMPLATE_DIR % template_html, {}, context_instance=c)
-    
-    msg = EmailMultiAlternatives(subject, plain_content, fr, [to])
-    msg.attach_alternative(html_content, "text/html")
-    msg.send()
-    
+    send_email(fr, to, subject, plain_content, html_content)
+
+
 def send_reminder(subject, user, context={}, fr=NO_EMAIL, template="email_remind.txt",
     template_html="email_remind.html"):
     """
@@ -62,11 +69,9 @@ def send_reminder(subject, user, context={}, fr=NO_EMAIL, template="email_remind
     c = Context(context)
     plain_content = render_to_string(TEMPLATE_DIR % template, {}, context_instance=c)
     html_content = render_to_string(TEMPLATE_DIR % template_html, {}, context_instance=c)
-    
-    msg = EmailMultiAlternatives(subject, plain_content, fr, [to])
-    msg.attach_alternative(html_content, "text/html")
-    msg.send()
-    
+    send_email(fr, to, subject, plain_content, html_content)
+
+
 # def send_receipt(request, user, order, fr=NO_EMAIL):
 #    """
 #    Helper function that sends an receipt to the user who bought a product
@@ -76,27 +81,30 @@ def send_reminder(subject, user, context={}, fr=NO_EMAIL, template="email_remind
 #    c = Context({'order': order, 'user': user})
 #    plain_content = render_to_string(TEMPLATE_DIR % template, {}, context_instance=c)
 #    html_content = render_to_string(TEMPLATE_DIR % template, {}, context_instance=c)
-#    
+#
 #    msg = EmailMultiAlternatives(subject, plain_content, fr, [to])
 #    msg.attach_alternative(html_content, "text/html")
 #    msg.send()
-    
+
 def send_after_survey(request, id, fr=NO_EMAIL):
     """
     Helper function that sends a link to the after survey after the event
     has finished.
-    """
-    to = []
-    event = Event.objects.get(id=id)
-    registrations = EventRegistration.objects.filter(event=event)
 
-    # Grab all the user's emails    
-    for regs in registrations:
-        to.append(regs.user.email)
-    c = Context({'event': event, 'user': user})
-    plain_content = render_to_string(TEMPLATE_DIR % template, {}, context_instance=c)
-    html_content = render_to_string(TEMPLATE_DIR % template, {}, context_instance=c)
-    
-    msg = EmailMultiAlternatives(subject, plain_content, fr, to)
-    msg.attach_alternative(html_content, "text/html")
-    msg.send()
+    THIS IS BROKEN!
+    """
+    return
+#     to = []
+#     event = Event.objects.get(id=id)
+#     registrations = EventRegistration.objects.filter(event=event)
+#
+#     # Grab all the user's emails
+#     for regs in registrations:
+#         to.append(regs.user.email)
+#     c = Context({'event': event, 'user': user})
+#     plain_content = render_to_string(TEMPLATE_DIR % template, {}, context_instance=c)
+#     html_content = render_to_string(TEMPLATE_DIR % template, {}, context_instance=c)
+#
+#     msg = EmailMultiAlternatives(subject, plain_content, fr, to)
+#     msg.attach_alternative(html_content, "text/html")
+#     msg.send()

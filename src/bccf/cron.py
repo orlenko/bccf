@@ -17,8 +17,8 @@ class EventPaymentReminder(CronJobBase):
     schedule = Schedule(run_every_mins=RUN_EVERY_MINS)
     code = 'bccf.event_payment_reminder'
 
-    email_title = 'Event Registration Payment Reminder'    
-    
+    email_title = 'Event Registration Payment Reminder'
+
     def do(self):
         events = Event.objects.need_reminder().all()
         for event in events:
@@ -26,12 +26,13 @@ class EventPaymentReminder(CronJobBase):
             for reg in regs:
                 context = {
                     'event': event,
-                    'reg': reg                
+                    'reg': reg
                 }
                 email.send_reminder(self.email_title, reg.user, context)
                 reg.reminder = True
                 reg.save()
-        
+
+
 class EventFreeRemind(CronJobBase):
     """
     Removes registered users from the event because he/she has not paid the
@@ -41,7 +42,7 @@ class EventFreeRemind(CronJobBase):
     RUN_EVERY_MINS = 5
     schedule = Schedule(run_every_mins=RUN_EVERY_MINS)
     code = 'bccf.event_free_seat'
-    
+
     def do(self):
         events = Event.objects.need_freeing().all()
         for event in events:
@@ -56,7 +57,8 @@ class EventFreeRemind(CronJobBase):
             if counter > 0: # Set event to not full if there are people who has not paid
                 event.full = False
                 event.save()
-                
+
+
 class EventClose(CronJobBase):
     """
     Closes an event that passed
@@ -64,7 +66,7 @@ class EventClose(CronJobBase):
     RUN_EVERY_MINS = 5
     schedule = Schedule(run_every_mins=RUN_EVERY_MINS)
     code = 'bccf.event_close'
-    
+
     def do(self):
         events = Event.objects.filter(date_start__lte=now(), closed=False)
         for event in events:
@@ -80,7 +82,7 @@ class EventClose(CronJobBase):
                 event.survey_before.closed = True
                 event.survey_before.save()
             event.save()
-    
+
 class UserMembershipReminder(CronJobBase):
     """
     Sends reminders to users about their expiring memberships.
@@ -88,7 +90,7 @@ class UserMembershipReminder(CronJobBase):
     RUN_EVERY_MINS = 5
     schedule = Schedule(run_every_mins=RUN_EVERY_MINS)
     code = 'bccf.user_membership_reminder'
-    
+
     def do(self):
         users = User.objects.filter(~Q(profile__membership_order=None))
         for user in users:
@@ -111,7 +113,7 @@ class UserMembershipExpire(CronJobBase):
     RUN_EVERY_MINS = 5
     schedule = Schedule(run_every_mins=RUN_EVERY_MINS)
     code = 'bccf.user_membership_expire'
-    
+
     def do(self):
         users = User.objects.filter(~Q(profile__membership_order=None))
         for user in users:

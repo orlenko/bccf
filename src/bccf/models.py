@@ -1,7 +1,8 @@
 import logging
+import hashlib
 log = logging.getLogger(__name__)
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from decimal import Decimal
 
 from cartridge.shop.fields import MoneyField
@@ -1175,3 +1176,35 @@ def remaining_subscription_balance(purchase_date, expiration_date, to_date, paid
 #       'Parent Membership': [],
 #        'Admin Membership': [],
 #    }
+
+
+
+class EmailLog(models.Model):
+    '''Keep track of what emails we sent recently. Never repeat yourself
+    more frequently than once a day.
+    '''
+    MIN_PAUSE = timedelta(1)
+    to_email = models.EmailField(blank=False)
+    timestamp = models.DateTimeField(auto_now_add=True, blank=False)
+    hash = models.CharField(max_length=256, blank=False)
+
+    @classmethod
+    def mkhash(cls, subject=None, text_body=None, html_body=None, attachments=None):
+        onestr = '|'.join([str(x) for x in [subject, text_body, html_body] + (attachments or [])])
+        m = hashlib.new()
+        m.update(onestr)
+        h = m.hexdigest()
+        return h
+
+    @classmethod
+    def can_send(cls, to_email, subject=None, text_body=None, html_body=None, attachments=None):
+        h = cls.mkhash(subject, text_body, html_body, attachments)
+        cutoff = datetime.now() - cls.MIN_PAUSE
+        for _rec in cls.objects.filter(to_email=to_email, hash=h, timestamp__gt=cutoff):
+            log.debug('Cannot send email "%s" to %s: too soon' % (subject, to_email))
+            return False
+
+    @classmethod
+    def on_send(cls, to_email, subject=None, text_body=None, html_body=None, attachments=None):
+        log.debug('Just sent "%s" email to %s. Will not bother this person for 24 hours' % (subject, to_email))
+        cls.objects.create(to_email=to_email, hash=cls.mkhash(subject, text_body, html_body, attachments))
