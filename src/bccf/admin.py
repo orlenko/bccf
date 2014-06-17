@@ -38,7 +38,7 @@ class BCCFProfileInline(admin.StackedInline):
     readonly_fields = ('account_number', 'post_count', 'membership_type')
     fieldsets = (
         ('Account Information', {
-            'fields': ('account_number', 'membership_order', ('membership_type', 'membership_level'), 'requested_cancellation'),       
+            'fields': ('account_number', 'membership_order', ('membership_type', 'membership_level'), 'requested_cancellation'),
         }),
         ('Contact Information', {
             'fields': ('street', 'street_2', 'street_3', 'city', 'region', 'province', 'postal_code', 'country', 'phone_primary', 'phone_work', 'phone_mobile',
@@ -48,7 +48,7 @@ class BCCFProfileInline(admin.StackedInline):
             'fields': ('photo', 'description', 'job_title', 'organization', 'website', 'facebook', 'twitter', 'linkedin', 'youtube', 'pinterest')
         }),
         ('Forum Profile', {
-            'fields': ('avatar', 'signature', 'signature_html', 'post_count')        
+            'fields': ('avatar', 'signature', 'signature_html', 'post_count')
         }),
         ('Miscellaneous Information', {
             'fields': ('gender', 'payment')
@@ -61,10 +61,10 @@ class BCCFProfileInline(admin.StackedInline):
 
 class BCCFUserAdmin(UserAdmin):
     actions = ['make_payment']
-    inlines = [BCCFProfileInline, ProPaymentInline]    
+    inlines = [BCCFProfileInline, ProPaymentInline]
     list_filter = UserAdmin.list_filter + ('profile__membership_type', 'profile__membership_level')
     list_display = ('username', 'get_account_number', 'email', 'first_name', 'last_name', 'is_staff', 'get_membership_type', 'get_membership_level')
-    
+
     def get_account_number(self, obj):
         return obj.profile.account_number
     def get_membership_type(self, obj):
@@ -72,8 +72,8 @@ class BCCFUserAdmin(UserAdmin):
     def get_membership_level(self, obj):
         return obj.profile.membership_level
 
-    def make_payment(modeladmin, request, queryset):
-        counter = 0        
+    def make_payment(modeladmin, request, queryset):  # @NoSelf
+        counter = 0
         for user in queryset.all():
             if user.profile.is_parent:
                 continue
@@ -86,7 +86,7 @@ class BCCFUserAdmin(UserAdmin):
         else:
             return "%s users paid" % counter
     make_payment.short_description = "Mark selected users as payment sent"
-    
+
 admin.site.unregister(User)
 admin.site.register(User, BCCFUserAdmin)
 # End User Admin
@@ -104,7 +104,7 @@ class EventAttendeeInline(admin.StackedInline):
         return obj.user.get_full_name()
     get_full_name.short_description = "Attendee Name"
     def get_invoice_link(self, obj):
-        return '<a target="_blank" href="/shop/invoice/%s">View Invoice</a>' % obj.event_order.pk 
+        return '<a target="_blank" href="/shop/invoice/%s">View Invoice</a>' % obj.event_order.pk
     get_invoice_link.allow_tags = True
     get_invoice_link.short_description = "View event invoice online"
 
@@ -138,7 +138,7 @@ class EventAdmin(DisplayableAdmin):
             self.list_display = list(deepcopy(self.list_display))
             for fieldname in ['provider', 'created', 'date_start', 'date_end', 'price', 'report_link', 'attendee_link', 'full']:
                 self.list_display.insert(-1, fieldname)
-                
+
         # Filter
         if self.list_filter == DisplayableAdmin.list_filter:
             self.list_filter = list(deepcopy(self.list_filter))
@@ -181,7 +181,7 @@ class BCCFTopicAdmin(DisplayableAdmin):
     ordering = ('-created',)
     def __init__(self, *args, **kwargs):
         super(BCCFTopicAdmin, self).__init__(*args, **kwargs)
-        
+
         # Fields
         if self.fieldsets == DisplayableAdmin.fieldsets:
             self.fieldsets = deepcopy(self.fieldsets)
@@ -189,25 +189,25 @@ class BCCFTopicAdmin(DisplayableAdmin):
                                     'marquee',
                                     'carousel_color']):
                 self.fieldsets[0][1]['fields'].insert(3, field)
-                
+
         # Editable in the list display
         if self.list_editable == DisplayableAdmin.list_editable:
             self.list_editable = list(deepcopy(self.list_editable))
             for fieldname in ['marquee', 'carousel_color']:
-                self.list_editable.insert(-1, fieldname)                
-          
-        # List Display      
+                self.list_editable.insert(-1, fieldname)
+
+        # List Display
         if self.list_display == DisplayableAdmin.list_display:
             self.list_display = list(deepcopy(self.list_display))
             for fieldname in ['carousel_color', 'marquee']:
-                self.list_display.insert(-1, fieldname)                
+                self.list_display.insert(-1, fieldname)
 
         # Filter
         if self.list_filter == DisplayableAdmin.list_filter:
             self.list_filter = list(deepcopy(self.list_filter))
             for fieldname in ['carousel_color', 'marquee']:
                 self.list_filter.insert(-1, fieldname)
-                
+
 class BCCFBabyInlineAdmin(admin.StackedInline):
     model = BCCFBabyPage
     fk_name = "parent"
@@ -216,10 +216,10 @@ class BCCFBabyInlineAdmin(admin.StackedInline):
 class BCCFGenericAdmin(DisplayableAdmin):
     ordering = ('-created',)
     inlines = (BCCFBabyInlineAdmin,)
-    
+
     def __init__(self, *args, **kwargs):
         super(BCCFGenericAdmin, self).__init__(*args, **kwargs)
-        
+
         # Fields
         if self.fieldsets == DisplayableAdmin.fieldsets:
             self.fieldsets = deepcopy(self.fieldsets)
@@ -238,23 +238,23 @@ class BCCFGenericAdmin(DisplayableAdmin):
         if self.list_editable == DisplayableAdmin.list_editable:
             self.list_editable = list(deepcopy(self.list_editable))
             for fieldname in ['page_for', 'gparent', 'bccf_topic']:
-                self.list_editable.insert(-1, fieldname)                
-          
-        # List Display      
+                self.list_editable.insert(-1, fieldname)
+
+        # List Display
         if self.list_display == DisplayableAdmin.list_display:
             self.list_display = list(deepcopy(self.list_display))
             for fieldname in ['page_for', 'gparent', 'bccf_topic']:
-                self.list_display.insert(-1, fieldname)                
+                self.list_display.insert(-1, fieldname)
 
         # Filter
         if self.list_filter == DisplayableAdmin.list_filter:
             self.list_filter = list(deepcopy(self.list_filter))
             for fieldname in ['page_for', 'gparent', 'bccf_topic']:
                 self.list_filter.insert(-1, fieldname)
-                
+
     def formfield_for_foreignkey(self, db_field, request=None, **kwargs):
         if db_field.name == 'gparent':
-            q = Q() 
+            q = Q()
             for core in BCCF_CORE_PAGES:
                 q  = q | Q(slug='bccf/%s' % core)
             kwargs['queryset'] = BCCFPage.objects.exclude(q)
@@ -264,10 +264,10 @@ class BCCFGenericAdmin(DisplayableAdmin):
 class BCCFChildAdmin(DisplayableAdmin):
     inlines = (BCCFBabyInlineAdmin,)
     ordering = ('-created',)
-    
+
     def __init__(self, *args, **kwargs):
         super(BCCFChildAdmin, self).__init__(*args, **kwargs)
-        
+
         # Fields
         if self.fieldsets == DisplayableAdmin.fieldsets:
             self.fieldsets = deepcopy(self.fieldsets)
@@ -277,32 +277,32 @@ class BCCFChildAdmin(DisplayableAdmin):
                                     'page_for',
                                     'image']):
                 self.fieldsets[0][1]['fields'].insert(3, field)
-                
+
         # Editable in the list display
         if self.list_editable == DisplayableAdmin.list_editable:
             self.list_editable = list(deepcopy(self.list_editable))
             for fieldname in ['page_for', 'bccf_topic']:
-                self.list_editable.insert(-1, fieldname)                
-          
-        # List Display      
+                self.list_editable.insert(-1, fieldname)
+
+        # List Display
         if self.list_display == DisplayableAdmin.list_display:
             self.list_display = list(deepcopy(self.list_display))
             for fieldname in ['page_for', 'bccf_topic']:
-                self.list_display.insert(-1, fieldname)                
+                self.list_display.insert(-1, fieldname)
 
         # Filter
         if self.list_filter == DisplayableAdmin.list_filter:
             self.list_filter = list(deepcopy(self.list_filter))
             for fieldname in ['page_for', 'bccf_topic']:
                 self.list_filter.insert(-1, fieldname)
-                
+
 class BCCFBlogAdmin(DisplayableAdmin):
     inlines = (BCCFBabyInlineAdmin,)
     ordering = ('-created',)
-    
+
     def __init__(self, *args, **kwargs):
         super(BCCFBlogAdmin, self).__init__(*args, **kwargs)
-        
+
         # Fields
         if self.fieldsets == DisplayableAdmin.fieldsets:
             self.fieldsets = deepcopy(self.fieldsets)
@@ -313,18 +313,18 @@ class BCCFBlogAdmin(DisplayableAdmin):
                                     'page_for',
                                     'image']):
                 self.fieldsets[0][1]['fields'].insert(3, field)
-                
+
         # Editable in the list display
         if self.list_editable == DisplayableAdmin.list_editable:
             self.list_editable = list(deepcopy(self.list_editable))
             for fieldname in ['page_for', 'bccf_topic']:
-                self.list_editable.insert(-1, fieldname)                
-          
-        # List Display      
+                self.list_editable.insert(-1, fieldname)
+
+        # List Display
         if self.list_display == DisplayableAdmin.list_display:
             self.list_display = list(deepcopy(self.list_display))
             for fieldname in ['page_for', 'bccf_topic']:
-                self.list_display.insert(-1, fieldname)                
+                self.list_display.insert(-1, fieldname)
 
         # Filter
         if self.list_filter == DisplayableAdmin.list_filter:
@@ -338,7 +338,8 @@ class BCCFProgramAdmin(DisplayableAdmin):
 
     def __init__(self, *args, **kwargs):
         super(BCCFProgramAdmin, self).__init__(*args, **kwargs)
-        
+        #print 'Field sets: %s' % list(self.fieldsets)
+
         # Fields
         if self.fieldsets == DisplayableAdmin.fieldsets:
             self.fieldsets = deepcopy(self.fieldsets)
@@ -350,18 +351,18 @@ class BCCFProgramAdmin(DisplayableAdmin):
                                     'user_added',
                                     'image']):
                 self.fieldsets[0][1]['fields'].insert(3, field)
-                
+
         # Editable in the list display
         if self.list_editable == DisplayableAdmin.list_editable:
             self.list_editable = list(deepcopy(self.list_editable))
             for fieldname in ['bccf_topic', 'featured']:
-                self.list_editable.insert(-1, fieldname)                
-          
-        # List Display      
+                self.list_editable.insert(-1, fieldname)
+
+        # List Display
         if self.list_display == DisplayableAdmin.list_display:
             self.list_display = list(deepcopy(self.list_display))
             for fieldname in ['bccf_topic', 'featured', 'user_added']:
-                self.list_display.insert(-1, fieldname)                
+                self.list_display.insert(-1, fieldname)
 
         # Filter
         if self.list_filter == DisplayableAdmin.list_filter:
@@ -369,14 +370,16 @@ class BCCFProgramAdmin(DisplayableAdmin):
             for fieldname in ['bccf_topic', 'featured']:
                 self.list_filter.insert(-1, fieldname)
 
+        #print 'Field sets updated: %s' % list(self.fieldsets)
+
 class BCCFResourceAdmin(DisplayableAdmin):
     actions = [make_featured, make_unfeatured]
     inlines = (BCCFBabyInlineAdmin,)
     ordering = ('-created',)
-    
+
     def __init__(self, *args, **kwargs):
         super(BCCFResourceAdmin, self).__init__(*args, **kwargs)
-        
+
         # Fields
         if self.fieldsets == DisplayableAdmin.fieldsets:
             self.fieldsets = deepcopy(self.fieldsets)
@@ -388,18 +391,18 @@ class BCCFResourceAdmin(DisplayableAdmin):
                                     'page_for',
                                     'image']):
                 self.fieldsets[0][1]['fields'].insert(3, field)
-                
+
         # Editable in the list display
         if self.list_editable == DisplayableAdmin.list_editable:
             self.list_editable = list(deepcopy(self.list_editable))
             for fieldname in ['page_for', 'bccf_topic', 'featured']:
-                self.list_editable.insert(-1, fieldname)                
-          
-        # List Display      
+                self.list_editable.insert(-1, fieldname)
+
+        # List Display
         if self.list_display == DisplayableAdmin.list_display:
             self.list_display = list(deepcopy(self.list_display))
             for fieldname in ['page_for', 'bccf_topic', 'featured']:
-                self.list_display.insert(-1, fieldname)                
+                self.list_display.insert(-1, fieldname)
 
         # Filter
         if self.list_filter == DisplayableAdmin.list_filter:
@@ -414,7 +417,7 @@ class BCCFPodcastResourceAdmin(DisplayableAdmin):
 
     def __init__(self, *args, **kwargs):
         super(BCCFPodcastResourceAdmin, self).__init__(*args, **kwargs)
-        
+
         # Fields
         if self.fieldsets == DisplayableAdmin.fieldsets:
             self.fieldsets = deepcopy(self.fieldsets)
@@ -426,33 +429,33 @@ class BCCFPodcastResourceAdmin(DisplayableAdmin):
                                     'page_for',
                                     'image']):
                 self.fieldsets[0][1]['fields'].insert(3, field)
-                
+
        # Editable in the list display
         if self.list_editable == DisplayableAdmin.list_editable:
             self.list_editable = list(deepcopy(self.list_editable))
             for fieldname in ['page_for', 'bccf_topic', 'featured']:
-                self.list_editable.insert(-1, fieldname)                
-          
-        # List Display      
+                self.list_editable.insert(-1, fieldname)
+
+        # List Display
         if self.list_display == DisplayableAdmin.list_display:
             self.list_display = list(deepcopy(self.list_display))
             for fieldname in ['page_for', 'bccf_topic', 'featured']:
-                self.list_display.insert(-1, fieldname)                
+                self.list_display.insert(-1, fieldname)
 
         # Filter
         if self.list_filter == DisplayableAdmin.list_filter:
             self.list_filter = list(deepcopy(self.list_filter))
             for fieldname in ['page_for', 'bccf_topic', 'featured']:
-                self.list_filter.insert(-1, fieldname)     
+                self.list_filter.insert(-1, fieldname)
 
 class BCCFVideoResourceAdmin(AdminVideoMixin, DisplayableAdmin):
     actions = [make_featured, make_unfeatured]
     inlines = (BCCFBabyInlineAdmin,)
     ordering = ('-created',)
-    
+
     def __init__(self, *args, **kwargs):
         super(BCCFVideoResourceAdmin, self).__init__(*args, **kwargs)
-        
+
         # Fields
         if self.fieldsets == DisplayableAdmin.fieldsets:
             self.fieldsets = deepcopy(self.fieldsets)
@@ -464,30 +467,30 @@ class BCCFVideoResourceAdmin(AdminVideoMixin, DisplayableAdmin):
                                     'page_for',
                                     'image']):
                 self.fieldsets[0][1]['fields'].insert(3, field)
-                
+
        # Editable in the list display
         if self.list_editable == DisplayableAdmin.list_editable:
             self.list_editable = list(deepcopy(self.list_editable))
             for fieldname in ['page_for', 'bccf_topic', 'featured']:
-                self.list_editable.insert(-1, fieldname)                
-          
-        # List Display      
+                self.list_editable.insert(-1, fieldname)
+
+        # List Display
         if self.list_display == DisplayableAdmin.list_display:
             self.list_display = list(deepcopy(self.list_display))
             for fieldname in ['page_for', 'bccf_topic', 'featured']:
-                self.list_display.insert(-1, fieldname)                
+                self.list_display.insert(-1, fieldname)
 
         # Filter
         if self.list_filter == DisplayableAdmin.list_filter:
             self.list_filter = list(deepcopy(self.list_filter))
             for fieldname in ['page_for', 'bccf_topic', 'featured']:
-                self.list_filter.insert(-1, fieldname)         
-        
+                self.list_filter.insert(-1, fieldname)
+
 class BCCFTagAdmin(DisplayableAdmin):
     actions = [make_featured, make_unfeatured, 'approve_campaigns']
     inlines = (BCCFBabyInlineAdmin,)
     ordering = ('-created',)
-    
+
     def __init__(self, *args, **kwargs):
         super(BCCFTagAdmin, self).__init__(*args, **kwargs)
         if self.fieldsets == DisplayableAdmin.fieldsets:
@@ -501,25 +504,25 @@ class BCCFTagAdmin(DisplayableAdmin):
                                     'approve',
                                     'image']):
                 self.fieldsets[0][1]['fields'].insert(3, field)
-                
+
         # Editable in the list display
         if self.list_editable == DisplayableAdmin.list_editable:
             self.list_editable = list(deepcopy(self.list_editable))
             for fieldname in ['featured', 'page_for', 'bccf_topic']:
-                self.list_editable.insert(-1, fieldname)              
-          
-        # List Display      
+                self.list_editable.insert(-1, fieldname)
+
+        # List Display
         if self.list_display == DisplayableAdmin.list_display:
             self.list_display = list(deepcopy(self.list_display))
             for fieldname in ['featured', 'page_for', 'bccf_topic']:
                 self.list_display.insert(-1, fieldname)
-                
+
         # Filters
         if self.list_filter == DisplayableAdmin.list_filter:
             self.list_filter = list(deepcopy(self.list_filter))
             for fieldname in ['featured', 'page_for']:
                 self.list_filter.insert(-1, fieldname)
-                
+
         def approve_campaigns(self, request, queryset):
             for row in queryset:
                 row.accept_request()
@@ -527,7 +530,7 @@ class BCCFTagAdmin(DisplayableAdmin):
             if num_rows == 1:
                 return '%s Request Accepted.'% num_rows
             else:
-                return '%s Requests Accepted.' % num_rows    
+                return '%s Requests Accepted.' % num_rows
         approve_campaigns.short_description = 'Approve Selected Campaigns'
 
 admin.site.register(BCCFPage, PageAdmin)
@@ -552,7 +555,7 @@ class ProgramRequestAdmin(admin.ModelAdmin):
     list_display = ['title', 'user', 'accept', 'accepted_on', 'created']
     list_filter = ('accept', 'created')
     ordering = ('-created',)
-    
+
     def accept_requests(self, request, queryset):
         for row in queryset:
             row.accept_request()
@@ -560,9 +563,9 @@ class ProgramRequestAdmin(admin.ModelAdmin):
         if num_rows == 1:
             return '%s Request Accepted.'% num_rows
         else:
-            return '%s Requests Accepted.' % num_rows    
+            return '%s Requests Accepted.' % num_rows
     accept_requests.short_description = 'Accept Selected Requests'
-    
+
 admin.site.register(ProgramRequest, ProgramRequestAdmin)
 
 #Inline

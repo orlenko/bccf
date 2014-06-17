@@ -163,11 +163,11 @@ class Category(Displayable, RichText):
         ('dgreen-list', 'Dark Green'),
         ('green-list', 'Green'),
         ('teal-list', 'Teal'),
-        ('yellow-list', 'Yellow'),   
+        ('yellow-list', 'Yellow'),
     )
     marquee = models.ForeignKey(PageMarquee, blank=True, null=True)
     carousel_color = models.CharField(max_length=11, default='dgreen-list', choices=COLORS)
-    
+
     class Meta:
         abstract = True
 
@@ -180,14 +180,14 @@ class BCCFTopic(Category):
     class Meta:
         verbose_name = 'Topic'
         verbose_name_plural = 'Topics'
-        
+
     def get_absolute_url(self):
         """
         URL for a page
         """
         slug = self.slug
         return reverse('topic-page', kwargs={'topic': slug})
-        
+
 #Program Pages
 class Program(Category):
     """
@@ -205,12 +205,12 @@ class Program(Category):
     featured = models.BooleanField('Featured', default=False)
     bccf_topic = models.ManyToManyField(BCCFTopic, verbose_name='Topics', blank=True, null=True)
     users = models.ManyToManyField(User, verbose_name='Requester', blank=True, null=True)
-    user_added = models.BooleanField('Added By User', default=False, blank=True) 
-    
+    user_added = models.BooleanField('Added By User', default=False, blank=True)
+
     class Meta:
         verbose_name = 'Program'
         verbose_name_plural = 'Programs'
-        
+
     def get_absolute_url(self):
         """
         URL for a page
@@ -477,13 +477,13 @@ class BCCFGenericPage(BCCFChildPage):
     show_resources = models.BooleanField('Show Resources', default=True)
     show_comments = models.BooleanField('Show Comments', default=True)
     show_rating = models.BooleanField('Show Rating', default=True)
-    
-    objects = managers.ChildPageManager()    
-    
+
+    objects = managers.ChildPageManager()
+
     class Meta:
         verbose_name = 'Sub Page'
         verbose_name_plural = 'Sub Pages'
-        
+
     def __init__(self, *args, **kwargs):
         super(BCCFGenericPage, self).__init__(*args, **kwargs)
 
@@ -521,12 +521,12 @@ class DocumentResourceBase(BCCFChildPage):
         blank = True,
         help_text = 'You can upload an office document or a PDF file. This field is not used by Video '
             'Acceptable file types: .doc, .pdf, .rtf, .txt, .odf, .docx, .xls, .xlsx, .ppt, .pptx.')
-            
+
     objects = managers.ChildPageManager()
-    
+
     def __init__(self, *args, **kwargs):
-        super(DocumentResourceBase, self).__init__(*args, **kwargs)    
-    
+        super(DocumentResourceBase, self).__init__(*args, **kwargs)
+
     def save(self, **kwargs):
         if not self.image:
             self.image = 'uploads/childpage/placeholder-resource.png'
@@ -537,51 +537,51 @@ class DocumentResourceBase(BCCFChildPage):
 
 class Article(DocumentResourceBase):
     objects = managers.ChildPageManager()
-    
+
     def __init__(self, *args, **kwargs):
         super(Article, self).__init__(*args, **kwargs)
-        
+
     def get_resource_type(self):
         return 'Article'
 
 class DownloadableForm(DocumentResourceBase):
     objects = managers.ChildPageManager()
-    
+
     class Meta:
         verbose_name = 'Downloadable Form'
         verbose_name_plural = 'Downloadable Forms'
-        
+
     def __init__(self, *args, **kwargs):
-        super(DownloadableForm, self).__init__(*args, **kwargs)        
+        super(DownloadableForm, self).__init__(*args, **kwargs)
 
     def get_resource_type(self):
         return 'Downloadable Form'
 
 class Magazine(DocumentResourceBase):
     objects = managers.ChildPageManager()
-    
+
     def __init__(self, *args, **kwargs):
-        super(Magazine, self).__init__(*args, **kwargs)     
-    
+        super(Magazine, self).__init__(*args, **kwargs)
+
     def get_resource_type(self):
         return 'Magazine'
 
 class TipSheet(DocumentResourceBase):
     objects = managers.ChildPageManager()
-    
+
     class Meta:
         verbose_name = 'Tip Sheet'
         verbose_name_plural = 'Tip Sheets'
-        
+
     def __init__(self, *args, **kwargs):
-        super(TipSheet, self).__init__(*args, **kwargs)            
-        
+        super(TipSheet, self).__init__(*args, **kwargs)
+
     def get_resource_type(self):
         return 'Tip Sheet'
 
 class Podcast(BCCFChildPage):
     objects = managers.ChildPageManager()
-    
+
     attached_audio = FileField('Audio File',
        upload_to = upload_to("bccf.Podcast.attachment_audio", "resource/audio"),
         extensions = ['.mp3'],
@@ -589,13 +589,13 @@ class Podcast(BCCFChildPage):
         null = True,
         blank = True,
         help_text = 'You can upload an MP3. Acceptable file types: mp3')
-    
+
     class Meta:
         verbose_name = 'Podcast'
-        verbose_name_plural = 'Podcasts'       
-    
+        verbose_name_plural = 'Podcasts'
+
     def __init__(self, *args, **kwargs):
-        super(Podcast, self).__init__(*args, **kwargs)     
+        super(Podcast, self).__init__(*args, **kwargs)
 
     def save(self, **kwargs):
         self.gparent = BCCFPage.objects.get(slug='bccf/resources')
@@ -603,7 +603,7 @@ class Podcast(BCCFChildPage):
             self.image = 'uploads/childpage/placeholder-podcast.png'
         super(Podcast, self).save(**kwargs)
     def get_resource_type(self):
-        return 'Podcast'   
+        return 'Podcast'
 
 class Video(BCCFChildPage):
     video_url = EmbedVideoField("Video", max_length=1024, blank=True, default='', null=True,
@@ -614,10 +614,10 @@ class Video(BCCFChildPage):
 
     class Meta:
         verbose_name = 'Video'
-        verbose_name_plural = 'Videos'    
+        verbose_name_plural = 'Videos'
 
     def __init__(self, *args, **kwargs):
-        super(Video, self).__init__(*args, **kwargs)  
+        super(Video, self).__init__(*args, **kwargs)
 
     def save(self, **kwargs):
         self.gparent = BCCFPage.objects.get(slug='bccf/resources')
@@ -631,21 +631,21 @@ class Video(BCCFChildPage):
 class Blog(BCCFChildPage):
     objects = managers.ChildPageManager()
     author = models.ForeignKey(User, blank=True, null=True, verbose_name='Author')
-    
+
     def save(self, **kwargs):
         self.gparent = BCCFPage.objects.get(slug='bccf/blog')
         super(Blog, self).save(**kwargs)
     class Meta:
         verbose_name = 'Blog Post'
         verbose_name_plural = 'Blog Posts'
-        
+
     def __init__(self, *args, **kwargs):
-        super(Blog, self).__init__(*args, **kwargs) 
+        super(Blog, self).__init__(*args, **kwargs)
 
 #TAG
 class TagBase(BCCFChildPage):
     objects = managers.TagManager()
-    
+
     class Meta:
         abstract = True
 
@@ -661,21 +661,21 @@ class Campaign(TagBase):
     approve = models.BooleanField('Approve Campaign', default=True)
     approved_on = models.DateTimeField('Approved On', blank=True, null=True)
     by_user = models.BooleanField('Created By User', default=False)
-    
+
     def __init__(self, *args, **kwargs):
-        super(Campaign, self).__init__(*args, **kwargs)    
+        super(Campaign, self).__init__(*args, **kwargs)
 
     @permalink
     def edit_url(self):
         return('campaigns-edit', (), {'slug': self.slug})
-        
+
     def save(self, *args, **kwargs):
         super(Campaign, self).save(*args, **kwargs)
         if not self.image:
             self.image = 'uploads/childpage/placeholder-campaign.png'
         if self.approve:
             self.accept_request()
-        
+
     def accept_request(self):
         if self.by_user and not self.approved_on:
             self.approve = True
@@ -692,7 +692,7 @@ class ProfessionalPayment(models.Model):
     user = models.ForeignKey(User, related_name='paid_to')
     amount = MoneyField()
     paid_on = models.DateTimeField('Paid On', auto_now_add=True)
-    
+
     class Meta:
         ordering = ('-paid_on',)
 
@@ -708,12 +708,12 @@ class UserProfile(PybbProfile):
     ]
     GENDER_TYPES = [
             ('male', 'Male'),
-            ('female', 'Female')    
+            ('female', 'Female')
     ]
     MEMBERSHIP_LEVELS = [
             ('A', 'Level A'),
             ('B', 'Level B'),
-            ('C', 'Level C')    
+            ('C', 'Level C')
     ]
 
     user = models.OneToOneField(User, related_name='profile')
@@ -724,13 +724,13 @@ class UserProfile(PybbProfile):
         format="Image", max_length=255, null=True, blank=True,
         help_text='User photo')
     admin_thumb_field = "photo"
-    
+
     # Membership Fields
     membership_type = models.CharField('Membership Type', max_length=128, null=True, blank=True, choices=MEMBERSHIP_TYPES)
     membership_order = models.ForeignKey('shop.Order', null=True, blank=True, related_name='order')
     membership_level = models.CharField('Membership Level', max_length=1, default='A', choices=MEMBERSHIP_LEVELS)
     requested_cancellation = models.NullBooleanField(null=True, blank=True, default=False)
-    
+
     organization = models.ForeignKey('UserProfile', null=True, blank=True, related_name='members')
 
     accreditation = models.ManyToManyField(Program, verbose_name='Certifications', blank=True, null=True)
@@ -763,11 +763,11 @@ class UserProfile(PybbProfile):
     linkedin = models.CharField('LinkedIn', max_length=255, null=True, blank=True)
     youtube = models.CharField('Youtube', max_length=255, null=True, blank=True)
     pinterest = models.CharField('Pinterest', max_length=255, null=True, blank=True)
-    
+
     #Banking
     account_number = models.CharField('Account Number', max_length=12, null=True, blank=True)
     payment = MoneyField()
-    
+
     #Rating
     rating = RatingField(verbose_name='Rating')
 
@@ -797,7 +797,7 @@ class UserProfile(PybbProfile):
         variation = self.membership_product_variation
         sku_parts = variation.sku.split('-')
         self.membership_level = sku_parts[1] # only get the middle one (B or C)
-                
+
     @property
     def membership_product_variation(self):
         if not self.membership_order:
@@ -870,8 +870,8 @@ class UserProfile(PybbProfile):
         if subscription_term == 'Quarterly':
             return d + relativedelta(months=+3)
         if subscription_term == 'Monthly':
-            return d + relativedelta(months=+1)       
-            
+            return d + relativedelta(months=+1)
+
     @property
     def membership_payment_type(self):
         variation = self.membership_product_variation
@@ -912,7 +912,7 @@ class UserProfile(PybbProfile):
     @property
     def is_level_B(self):
         return 'B' in self.membership_level
-        
+
     @property
     def is_level_C(self):
         return 'C' in self.membership_level
@@ -948,23 +948,23 @@ class UserProfile(PybbProfile):
             return 'all'
         if memb == 'professional':
             return 'parent'
-            
+
     def create_account_number(self):
         from random import randrange
         first = self.user.first_name[:3].upper()
         second = self.user.last_name[:3].upper()
         third = ''
-        
+
         for x in range(0, 6):
             num = randrange(0, 9)
             third  += `num`
-            
+
         return first+second+third
-        
+
     def pay_professional(self):
         if self.is_professional() or self.is_organization():
             payment = ProfessionalPayment.objects.create(user=self, amount=self.payment)
-        
+
     @permalink
     def get_absolute_url(self):
         return ('member-profile', (), {'id':self.id})
@@ -984,12 +984,12 @@ class ProgramRequest(models.Model):
     accept = models.BooleanField('Accept', default=False)
     created = models.DateTimeField('Requested On', auto_now_add=True, blank=True, null=True)
     accepted_on = models.DateTimeField('Accepted On', blank=True, null=True)
-    
+
     class Meta:
         verbose_name = 'Program Request'
         verbose_name_plural = 'Program Requests'
         ordering = ('-created',)
-    
+
     def accept_request(self):
         if self.accept:
             return
@@ -999,7 +999,7 @@ class ProgramRequest(models.Model):
             program = Program(title=self.title, content=self.comment, status=1, user_added=True)
         program.save()
         program.users.add(self.user)
-        
+
         self.accepted_on = datetime.now()
         self.accept = True
         self.save()
@@ -1021,7 +1021,7 @@ class Event(BCCFChildPage):
 
     survey_before = models.ForeignKey('builder.FormPublished', null=True, blank=True, related_name='survey_before')
     survey_after = models.ForeignKey('builder.FormPublished', null=True, blank=True, related_name='survey_after')
-    
+
     program = models.ForeignKey(Program, null=True, blank=True, related_name='program')
     max_seats = models.PositiveIntegerField('Max number of seats', null=True, blank=True, default=1)
     full = models.BooleanField('Training is full', blank=True, default=False)
@@ -1031,7 +1031,7 @@ class Event(BCCFChildPage):
     closed = models.BooleanField('Training Finished', default=False)
 
     objects = managers.EventManager()
-    
+
     class Meta:
         verbose_name = 'Training'
         verbose_name_plural = 'Trainings'
@@ -1041,7 +1041,7 @@ class Event(BCCFChildPage):
             gp = BCCFPage.objects.get(slug__exact='bccf/trainings')
             self.gparent = gp
             super(Event, self).save(**kwargs)
-                    
+
         if self.price: # If it's not free create a product
             event_cat = Category.objects.get(slug='shop/events')
             if not self.event_product:
@@ -1058,7 +1058,7 @@ class Event(BCCFChildPage):
             if self.event_product:
                 self.event_product.delete()
                 self.event_product = None
-                
+
         super(Event, self).save(**kwargs)
 
     def is_full(self):
@@ -1079,7 +1079,7 @@ class Event(BCCFChildPage):
     @permalink
     def report_url(self):
         return('event-survey-report', (), {'slug':self.slug})
-        
+
     @permalink
     def attendee_url(self):
         return ('events-attendees', (), {'id':self.id})
@@ -1096,13 +1096,13 @@ class EventRegistration(models.Model):
     event_order = models.ForeignKey('shop.Order', default=None, null=True, blank=True, related_name='event-order')
     paid = models.NullBooleanField('Paid', null=True, blank=True)
     reminder = models.NullBooleanField('Reminded', null=True, blank=True)
-    
+
     class Meta:
         verbose_name = "Event Registration"
         verbose_name_plural = "Event Registrations"
-    
+
     def __unicode__(self):
-        return '%s-%s-%s' % (self.user.last_name, self.event.pk, self.registration_date)    
+        return '%s-%s-%s' % (self.user.last_name, self.event.pk, self.registration_date)
 
     @property
     def is_paid_description(self):
@@ -1118,7 +1118,7 @@ class EventRegistration(models.Model):
             else:
                 user.accreditation.remove(self.event.program)
         super(EventRegistration, self).save(**kwargs)
-        
+
 
 class Settings(models.Model):
     name = models.CharField(max_length=255)
