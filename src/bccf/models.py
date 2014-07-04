@@ -1191,7 +1191,7 @@ class EmailLog(models.Model):
     @classmethod
     def mkhash(cls, subject=None, text_body=None, html_body=None, attachments=None):
         onestr = '|'.join([str(x) for x in [subject, text_body, html_body] + (attachments or [])])
-        m = hashlib.new()
+        m = hashlib.md5()
         m.update(onestr)
         h = m.hexdigest()
         return h
