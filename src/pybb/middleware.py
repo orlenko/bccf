@@ -12,7 +12,7 @@ class PybbMiddleware(object):
                 # if user created during syncdb but profile model
                 # under south control. (Like pybb.Profile).
                 profile = util.get_pybb_profile(request.user)
-            except ObjectDoesNotExist:
+            except (ObjectDoesNotExist, AttributeError) as e:
                 # Ok, we should create new profile for this user
                 # and grant permissions for add posts
                 # It should be caused rarely, so we move import signal here
