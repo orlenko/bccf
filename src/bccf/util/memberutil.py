@@ -4,8 +4,8 @@ from decimal import Decimal
 import logging
 from urlparse import urlparse
 
-from cartridge.shop.models import ProductVariation, Cart, Order
-from cartridge.shop.utils import set_shipping, set_tax, generate_transaction_id
+from cartridge.shop.models import ProductVariation, Cart
+from cartridge.shop.utils import set_shipping, set_tax
 
 from django.conf import settings
 from django.contrib import messages
@@ -20,6 +20,8 @@ from bccf.models import Settings, BCCFChildPage, EventRegistration
 from bccf.util.eventutil import handle_event
 from bccf.util.emailutil import send_reminder
 from dateutil import relativedelta
+from cartridge.shop.payment import paypal
+from bccf.util import generate_transaction_id
 
 
 log = logging.getLogger(__name__)
@@ -102,7 +104,7 @@ def require_event_audience(func):
         event = BCCFChildPage.objects.get(slug=slug)
         return require_member(event.page_for, func, request, slug, *args, **kwargs)
     return _wrapper
-   
+
 def billship_handler(request, order_form):
     """
     Calculates Shipping(Processing)
@@ -112,7 +114,7 @@ def billship_handler(request, order_form):
         cart = Cart.objects.from_request(request)
         for item in cart.items.all():
             if not item.sku.startswith('PRO-') and not item.sku.startswith('ORG-') and not item.sku.startswith('EVENT-'):
-                shipping += item.unit_price * Decimal(Settings.get_setting('SHOP_DEFAULT_SHIPPING_VALUE')) 
+                shipping += item.unit_price * Decimal(Settings.get_setting('SHOP_DEFAULT_SHIPPING_VALUE'))
         set_shipping(request, "Shipping", shipping)
 
 def tax_handler(request, order_form):
@@ -127,6 +129,7 @@ def tax_handler(request, order_form):
             tax += item.unit_price * Decimal(Settings.get_setting('SHOP_DEFAULT_TAX_RATE'))
     set_tax(request, "GST 5%", tax)
 
+
 def order_handler(request, order_form, order):
     '''checks if the user who ordered the order
     has a pre-existing membership, and if so, we delete the old membership.
@@ -136,14 +139,15 @@ def order_handler(request, order_form, order):
     handle_membership(profile, order)
     handle_event(request, user, order)
 
+
 def payment_handler(request, order_form, order):
     """
     Processes Payment
     """
     if order_form.cleaned_data.get('payment_method') == 'paypal':
-        from cartridge.shop.payment import paypal_rest as paypal
         paypal.execute(request)
         return generate_transaction_id()
+
 
 def handle_membership(profile, order):
     if profile.membership_product_variation:
@@ -154,22 +158,23 @@ def handle_membership(profile, order):
                     profile.cancel_membership()
                     profile.membership_order = order
                     profile.save()
-                    
+
                     # Send confirmation
                     send_reminder("Membership Purchase Confirmation", profile.user, context={'order': order})
                     return
 
+
 def get_upgrades(profile):
     upgrades = {}
     if profile.membership_type:
-        type = profile.membership_type[:3].upper()
+        typ = profile.membership_type[:3].upper()
     else:
         return upgrades
     if profile.is_level_A:
-        upgrades['level_B'] = ProductVariation.objects.filter(sku__startswith='%s-B' % type)
-        upgrades['level_C'] = ProductVariation.objects.filter(sku__startswith='%s-C' % type)
+        upgrades['level_B'] = ProductVariation.objects.filter(sku__startswith='%s-B' % typ)
+        upgrades['level_C'] = ProductVariation.objects.filter(sku__startswith='%s-C' % typ)
     elif profile.is_level_B:
-        upgrades['level_C'] = ProductVariation.objects.filter(sku__startswith='%s-C' % type)
+        upgrades['level_C'] = ProductVariation.objects.filter(sku__startswith='%s-C' % typ)
     return upgrades
 
 

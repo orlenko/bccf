@@ -6,7 +6,8 @@ from datetime import datetime, timedelta
 from decimal import Decimal
 
 from cartridge.shop.fields import MoneyField
-from cartridge.shop.models import Order, ProductVariation, Product, Category
+from cartridge.shop.models import Order, ProductVariation, Product
+from cartridge.shop.models import Category as ShopCategory
 from dateutil.relativedelta import relativedelta
 
 from django.db import models
@@ -33,6 +34,7 @@ from bccf.settings import (OPTION_SUBSCRIPTION_TERM,
                            get_option_number,)
 
 from mezzanine.utils.email import send_mail_template
+
 
 # Order statuses
 ORDER_STATUS_COMPLETE = 2
@@ -636,6 +638,7 @@ class Blog(BCCFChildPage):
     def save(self, **kwargs):
         self.gparent = BCCFPage.objects.get(slug='bccf/blog')
         super(Blog, self).save(**kwargs)
+
     class Meta:
         verbose_name = 'Blog Post'
         verbose_name_plural = 'Blog Posts'
@@ -1044,7 +1047,7 @@ class Event(BCCFChildPage):
             super(Event, self).save(**kwargs)
 
         if self.price: # If it's not free create a product
-            event_cat = Category.objects.get(slug='shop/events')
+            event_cat = ShopCategory.objects.get(slug='shop/events')
             if not self.event_product:
                 product = Product.objects.create(title=self.title, content=self.content)
                 product.categories.add(event_cat)

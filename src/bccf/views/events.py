@@ -20,6 +20,7 @@ from bccf.util.emailutil import send_moderate, send_reminder
 from bccf.models import Event, EventRegistration, BCCFPage
 from bccf.forms import EventForm
 from mezzanine.core.models import CONTENT_STATUS_DRAFT, CONTENT_STATUS_PUBLISHED, CONTENT_STATUS_CHOICES
+from django.db.models.query_utils import Q
 
 log = logging.getLogger(__name__)
 
@@ -85,40 +86,40 @@ def signup(request, slug):
         # Check if such registration already exists
         exists = False
         if not event.is_full():
-           for existing in EventRegistration.objects.filter(user=request.user, event=event):
-               messages.warning(request, 'You are already signed up to this event')
-               exists = True
-           if not exists:
-               if event.event_product:
-                   variation = ProductVariation.objects.get(sku='EVENT-%s' % event.pk)
-                   request.cart.add_item(variation, 1)
-                   recalculate_cart(request)
-                   messages.success(request, 'To complete the registration, please go through the checkout.')
-                   
-                   # Send event registration confirmation
-                   send_reminder("Event Registration Pending.", request.user, context={'event':event})
-                   
-               else:
-                   registration = EventRegistration.objects.create(user=request.user, event=event)
-                   
-                   # Send event registration confirmation
-                   send_reminder("Event Registration Complete.", request.user, context={'event':event})
-                   
-                   messages.success(request, 'Thank you! You signed up to the event successfully.')              
-           if event.max_seats == len(EventRegistration.objects.filter(event=event)):
-               event.full = True
-               event.save()
+            for existing in EventRegistration.objects.filter(user=request.user, event=event):
+                messages.warning(request, 'You are already signed up to this event')
+                exists = True
+            if not exists:
+                if event.event_product:
+                    variation = ProductVariation.objects.get(sku='EVENT-%s' % event.pk)
+                    request.cart.add_item(variation, 1)
+                    recalculate_cart(request)
+                    messages.success(request, 'To complete the registration, please go through the checkout.')
 
-               # Send event registration for provider
-               attendees = EventRegistration.objects.filter(event=event)
-               send_reminder("Event is now full", event.provider, context={'event':event, 'attendees':attendees})
-             
-           # Send event registration for provider
-           send_reminder("A user registered for your event", event.provider, context={'event':event, 'attendee':request.user})
-             
+                    # Send event registration confirmation
+                    send_reminder("Event Registration Pending.", request.user, context={'event':event})
+
+                else:
+                    registration = EventRegistration.objects.create(user=request.user, event=event)
+
+                    # Send event registration confirmation
+                    send_reminder("Event Registration Complete.", request.user, context={'event':event})
+
+                    messages.success(request, 'Thank you! You signed up to the event successfully.')
+            if event.max_seats == len(EventRegistration.objects.filter(event=event)):
+                event.full = True
+                event.save()
+
+                # Send event registration for provider
+                attendees = EventRegistration.objects.filter(event=event)
+                send_reminder("Event is now full", event.provider, context={'event':event, 'attendees':attendees})
+
+            # Send event registration for provider
+            send_reminder("A user registered for your event", event.provider, context={'event':event, 'attendee':request.user})
+
         else:
             messages.warning(request, 'The event is full.')
-            
+
         return HttpResponseRedirect(event.get_absolute_url())
     context = RequestContext(request, locals())
     return render_to_response('bccf/event_signup.html', {}, context_instance=context)
@@ -135,42 +136,42 @@ def event_payment(request, event_id):
 
 def event(request):
     pass
-    
+
 def attendees(request, id):
     event = Event.objects.get(id=id)
     if not request.user.is_authenticated() and not request.user.is_superuser() and event.user != request.user:
         redirect('/')
-    
-    attendees = EventRegistration.objects.filter(event=event)    
-    
+
+    attendees = EventRegistration.objects.filter(event=event)
+
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="%s-%s-attendees.csv"' % (event.slug, datetime.datetime.now())
-    
+
     writer = csv.writer(response)
     writer.writerow(['Attendees for %s' % (event.title)])
-      
+
     writer.writerow(['First Name', 'Last Name', 'Email'])
 
     for attendee in attendees:
         writer.writerow([attendee.user.first_name, attendee.user.last_name, attendee.user.email])
-    
+
     return response
-    
+
 def remove_survey(request):
     if request.is_ajax():
         event = None
         before = None
         if 'e' in request.GET:
             event = Event.objects.get(id=request.GET['e'])
-        
+
         if 'b' in request.GET:
             before = True
         elif 'a' in request.GET:
             before = False
-        
+
         if not event or not before:
             return HttpResponse('No')
-            
+
         if before:
             before = event.survey_before
             event.survey_before = None
@@ -184,4 +185,3 @@ def remove_survey(request):
         return HttpResponse('Yes')
     else:
         return HttpResponse('No')
-    
