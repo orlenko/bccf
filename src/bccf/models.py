@@ -681,7 +681,8 @@ class UserProfile(PybbProfile):
     ]
     GENDER_TYPES = [
             ('male', 'Male'),
-            ('female', 'Female')    
+            ('female', 'Female'),
+            ('other', 'Other')
     ]
     MEMBERSHIP_LEVELS = [
             ('A', 'Level A'),
