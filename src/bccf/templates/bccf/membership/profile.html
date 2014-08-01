@@ -56,8 +56,8 @@
                     </li>
                     {% if profile.phone_primary %}
                     <li>
-                         <span class="list-item-name"><i class="fa fa-phone-square"></i> Phone</span>
-                         {{ profile.phone_primary }}
+                         <span class="list-item-name"><a href="tel:{{ profile.phone_primary }}"><i class="fa fa-phone-square"></i> Phone</span>
+                         {{ profile.phone_primary }}</a>
                     </li>
                     {% endif %}
                     {% if profile.fax %}
@@ -67,8 +67,9 @@
                     </li>
                     {% endif %}
                     <li>
+                        <a href="mailto:{{ profile.user.email }}" target="_blank">
                         <span class="list-item-name"><i class="fa fa-envelope"></i> Email</span>
-                        {{ profile.user.email }}
+                        {{ profile.user.email }}</a>
                     </li>
                     {% if profile.website %}
                     <li>

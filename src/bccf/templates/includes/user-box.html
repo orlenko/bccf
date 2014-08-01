@@ -25,9 +25,9 @@
             <p class="contact">
                 <span class="section">{{ user.get_full_address }}</span>
                 {% if user.phone_primary %}
-                <span><i class="fa fa-phone-square"></i>{{ user.phone_primary }}</span>
+                <span><a href="tel:{{ user.phone_primary }}"><i class="fa fa-phone-square"></i>{{ user.phone_primary }}</a></span>
                 {% endif %}
-                <span><i class="fa fa-envelope"></i>{{ user.user.email }}</span>
+                <span><a href="mailto:{{ user.user.email }}"><i class="fa fa-envelope"></i>{{ user.user.email }}</a></span>
                 {% if user.website %}
                 <span><a href="{{ user.website }}"><i class="fa fa-desktop"></i>{{ user.website }}</a></span>
                 {% endif %}          

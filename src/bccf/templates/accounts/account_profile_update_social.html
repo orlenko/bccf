@@ -30,6 +30,6 @@
         <p class="help-block">{{ form.pinterest.help_text }}</p>
         <p class="error-block">{{ form.pinterest.errors.as_text|cut:'*' }}</p>
     </div>
-    {% csrf_token %}
+   {% csrf_token %}
     <input id="submit" class="btn btn-primary btn-large lgreen-btn" type="submit" value="Save">
 </form>

@@ -32,7 +32,7 @@ label {
 .error-block {
     @include font-size(12);
     font-weight: bold;
-    color: $lgreen;
+    color: red;
 }
 .form-help {
     @include font-size(12);

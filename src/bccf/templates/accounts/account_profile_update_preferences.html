@@ -1,7 +1,7 @@
 <form method="POST">
     <strong class="fieldset-header">Account Preferences</strong>
     <div class="form-group checkbox-group input_id_show_in_list"> 
-        <label class="req" for="id_show_in_list">Plase add my profile to your <a href="/member/directory" target="_blank">listing of professionals</a></label>
+        <label class="req" for="id_show_in_list">Please add my profile to your <a href="/member/directory" target="_blank">listing of professionals</a></label>
         {{ form.show_in_list }}
         <p class="help-block">{{ form.show_in_list.help_text }}</p>
         <p class="error-block">{{ form.show_in_list.errors.as_text|cut:'*' }}</p>

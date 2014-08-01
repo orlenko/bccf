@@ -16,7 +16,7 @@
 
 {% block carousel %}
 	<div style="float:right;">
-		<img style="margin:0 0 20px 10px;" src="{% gravatar_url profile_user.email 128 %}">
+		<a href="mailto:{{ profile.user.email }}" target"_blank"> <img style="margin:0 0 20px 10px;" src="{% gravatar_url profile_user.email 128 %}"></a>
 		{% if profile_user == request.user %}
 			<p><a class="btn btn-large btn-primary" style="" href="{% url "profile_update" %}">{% trans "Update profile" %}</a></p>
 		{% endif %}

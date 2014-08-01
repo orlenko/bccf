@@ -1,5 +1,5 @@
 <form method="POST">
-    <strong class="fieldset-header">Profile Profile</strong>
+    <strong class="fieldset-header">Professional Profile</strong>
     <div class="form-group input_id_description"> 
         <p><label for="id_description">{{ form.description.label }}</label></p>
         {{ form.description }}
@@ -7,10 +7,10 @@
         <p class="error-block">{{ form.description.errors.as_text|cut:'*' }}</p>
     </div>
     <div class="form-group input_id_accreditation"> 
-        <p><label for="id_description">I am certified in:</label><span class="help-block">(this data may be reviewed for accuracy)</span></p>
+        <p><label for="id_description"><u>I am certified in: </label><span class="help-block">(this data may be reviewed for accuracy)</u></span></p>
         {% for pk, choice in form.accreditation.field.widget.choices %}
         <div class="form-group checkbox-group input_id_show_in_list"> 
-            <label for="id_accreditation_{{ forloop.counter0 }}">{{ choice }}</label>
+            <label for="id_accreditation_{{ forloop.counter0 }}"><a href="{{ form.accreditation.slug }}">{{ choice }}</a></label>
             <input type="checkbox" id="id_accreditation_{{ forloop.counter0 }}" value="{{ pk }}" name="accreditation"/>
         </div>
         {% endfor %}

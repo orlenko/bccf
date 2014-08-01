@@ -13,7 +13,7 @@
         & > li {
             padding-bottom: 20px;
             margin-bottom: 20px;
-            border-bottom: 2px dashed $lgrey;   
+            border-bottom: 1px solid black;   
         }
     }
 }
@@ -33,6 +33,7 @@
         font-weight: bold;
         font-family: $pt;
         border-bottom: 1px solid #000;
+        padding-bottom: 8px;
         width: 100%;    
     }
     .contact-info {
