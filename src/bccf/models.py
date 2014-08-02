@@ -712,12 +712,13 @@ class UserProfile(PybbProfile):
     ]
     GENDER_TYPES = [
             ('male', 'Male'),
-            ('female', 'Female')
+            ('female', 'Female'),
+            ('other', 'Other')
     ]
     MEMBERSHIP_LEVELS = [
-            ('A', 'Level A'),
-            ('B', 'Level B'),
-            ('C', 'Level C')
+            ('A', 'Free'),
+            ('B', 'Regular'),
+            ('C', 'Premium')
     ]
 
     user = models.OneToOneField(User, related_name='profile')

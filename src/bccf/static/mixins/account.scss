@@ -71,7 +71,7 @@
             input {
                 @include font-size(12);
                 background-color: inherit;
-                border: 1px dashed #FFF;
+                border: none;
                 color: #000;
                 float: left;
                 font-weight: bold;
@@ -154,7 +154,7 @@
     }
     .error-block {
         @include font-size(12);
-        color: $lgreen;    
+        color: red;    
     }
     &.contact-tab {
         .form-group {

@@ -110,6 +110,8 @@ SHOP_USE_WISHLIST = False
 
 # Controls the ordering and grouping of the admin menu.
 #
+SITE_TITLE = "BCCF"
+
 ADMIN_MENU_ORDER = (
     ("Content", ("pages.Page", "bccf.BCCFGenericPage", "bccf.BCCFTopic",
        "generic.ThreadedComment", ("Media Library", "fb_browse"),)),
@@ -125,6 +127,7 @@ ADMIN_MENU_ORDER = (
     ("Builder", (("Create Survey", "formable-create-form"), "formable.FormFilled", "formable.FormPublished", "formable.FormStructure", "formable.Question")),
     ("Forum", ("pybb.Forum", "pybb.Topic", "pybb.Post", "pybb.Profile")),
 )
+
 
 # A three item sequence, each containing a sequence of template tags
 # used to render the admin dashboard.
@@ -184,7 +187,6 @@ ADMIN_MENU_ORDER = (
 # If True, the south application will be automatically added to the
 # INSTALLED_APPS setting.
 USE_SOUTH = True
-
 
 ########################
 # MAIN DJANGO SETTINGS #

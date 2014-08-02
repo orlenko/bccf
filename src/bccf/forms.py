@@ -215,9 +215,9 @@ class CreateAccountForm(UserCreationForm):
         ('organization', 'Organization')    
     )
     MEMBERSHIP_LEVELS = (
-        ('A', 'Level A (Free)'),
-        ('B', 'Level B'),
-        ('C', 'Level C')    
+        ('A', 'Free'),
+        ('B', 'Regular'),
+        ('C', 'Premium')    
     )
     PAYMENT_TYPES = (
         ('Annual', 'Annual'),
