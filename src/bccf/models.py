@@ -717,8 +717,8 @@ class UserProfile(PybbProfile):
     ]
     MEMBERSHIP_LEVELS = [
             ('A', 'Free'),
-            ('B', 'Regular'),
-            ('C', 'Premium')
+            ('level_B', 'Regular'),
+            ('level_C', 'Premium')
     ]
 
     user = models.OneToOneField(User, related_name='profile')
@@ -768,6 +768,7 @@ class UserProfile(PybbProfile):
     linkedin = models.CharField('LinkedIn', max_length=255, null=True, blank=True)
     youtube = models.CharField('Youtube', max_length=255, null=True, blank=True)
     pinterest = models.CharField('Pinterest', max_length=255, null=True, blank=True)
+    othersm = models.CharField('Other', max_length=255, null=True, blank=True)
 
     #Banking
     account_number = models.CharField('Account Number', max_length=12, null=True, blank=True)
@@ -1027,7 +1028,7 @@ class Event(BCCFChildPage):
     survey_before = models.ForeignKey('builder.FormPublished', null=True, blank=True, related_name='survey_before')
     survey_after = models.ForeignKey('builder.FormPublished', null=True, blank=True, related_name='survey_after')
 
-    program = models.ForeignKey(Program, null=True, blank=True, related_name='program')
+    program = models.ForeignKey(Program, null=True, related_name='program')
     max_seats = models.PositiveIntegerField('Max number of seats', null=True, blank=True, default=1)
     full = models.BooleanField('Training is full', blank=True, default=False)
 

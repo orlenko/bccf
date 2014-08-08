@@ -110,7 +110,7 @@ SHOP_USE_WISHLIST = False
 
 # Controls the ordering and grouping of the admin menu.
 #
-SITE_TITLE = "BCCF"
+SITE_TITLE = "BC Council for Families"
 
 ADMIN_MENU_ORDER = (
     ("Content", ("pages.Page", "bccf.BCCFGenericPage", "bccf.BCCFTopic",
@@ -363,6 +363,7 @@ INSTALLED_APPS = (
     'embed_video',
     'django_cron',
     'bccf_mc',
+    'captcha',
 )
 
 # List of processors used by RequestContext to populate the context.
@@ -627,3 +628,4 @@ CKEDITOR_CONFIGS = {
     }
 }
 RICHTEXT_WIDGET_CLASS = 'ckeditor.widgets.CKEditor'
+CAPTCHA_FONT_SIZE = 100

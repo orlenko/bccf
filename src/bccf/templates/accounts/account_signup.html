@@ -134,7 +134,7 @@
             </div>
             <strong class="fieldset-header row row-one">Account Preferences</strong>
             <div class="form-group checkbox-group input_id_show_in_list"> 
-                <label for="id_show_in_list">Plase add my profile to your <a href="/member/directory" target="_blank">listing of professionals</a></label>
+                <label for="id_show_in_list">Please add my profile to your <a href="/member/directory" target="_blank">listing of professionals</a></label>
                 {% if form.show_in_list.field.required %}<i class="req-asterisk fa fa-asterisk"></i>{% endif %}
                 {{ form.show_in_list }}
                 <p class="help-block">{{ form.show_in_list.help_text }}</p>
@@ -155,6 +155,10 @@
                 <p class="error-block">{{ form.accept.errors.as_text|cut:'*' }}</p>
             </div>
             {% csrf_token %}
+            <div class="form-group captcha">
+                {{ form.captcha }}
+                <p class="error-block">{{ form.captcha.errors.as_text|cut:'*' }}</p>
+            </div>
             <div class="form-actions dashed-button">
                 <input id="create-submit" class="btn btn-primary btn-large" type="submit" value="Create Account">
             </div>

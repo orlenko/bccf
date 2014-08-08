@@ -8,14 +8,16 @@
     </div>
     <div class="form-group input_id_accreditation"> 
         <p><strong><label for="id_description">I am certified in: </label><span class="help-block">(this data may be reviewed for accuracy)</span></strong></p>
-        {% for pk, choice, choice.slug in form.accreditation.field.widget.choices %}
+        {% for pk, choice in form.accreditation.field.widget.choices %}
         <div class="form-group checkbox-group input_id_show_in_list"> 
-            <label for="id_accreditation_{{ forloop.counter0 }}"><a href="{{ choice.slug }}">{{ choice }}</a></label>
+            <label for="id_accreditation_{{ forloop.counter0 }}"><a href="">{{ choice }}</a></label>
             <input type="checkbox" id="id_accreditation_{{ forloop.counter0 }}" value="{{ pk }}" name="accreditation"/>
         </div>
         {% endfor %}
+        
         <p class="error-block">{{ form.accreditation.errors.as_text|cut:'*' }}</p>
     </div>
     {% csrf_token %}
+    {{ form.accreditation.field.get_absolute_url }}
     <input id="submit" class="btn btn-primary btn-large lgreen-btn" type="submit" value="Save">
 </form>

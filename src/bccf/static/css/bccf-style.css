@@ -4606,8 +4606,8 @@ textarea {
 /* line 2062, ../sass/bccf-style.scss */
 .photo {
   border: 10px solid whitesmoke;
-  width: 200px;
-  height: 200px;
+  max-width: 200px;
+  max-height: 200px;
 }
 
 /* line 2067, ../sass/bccf-style.scss */
@@ -5933,8 +5933,8 @@ footer #newsletter .dashed-button a:hover {
 }
 /* line 65, ../mixins/account.scss */
 #account #form-container .checkbox-group label {
-  font-size: 10px;
-  font-size: 0.625rem;
+  font-size: 12px;
+  font-size: 0.75rem;
 }
 /* line 69, ../mixins/account.scss */
 #account #form-container .form-actions {
@@ -5978,8 +5978,8 @@ footer #newsletter .dashed-button a:hover {
 /* line 105, ../mixins/account.scss */
 #photo-form .photo-over,
 #photo-form img {
-  width: 200px;
-  height: 200px;
+  max-width: 200px;
+  max-height: 200px;
 }
 
 /* line 111, ../mixins/account.scss */
@@ -6118,8 +6118,8 @@ footer #newsletter .dashed-button a:hover {
 
 /* line 233, ../mixins/account.scss */
 .affiliation div {
-  font-size: 12px;
-  font-size: 0.75rem;
+  font-size: 14px;
+  font-size: 0.875rem;
 }
 
 @media only screen and (min-width: 740px) and (max-width: 1139px) {
@@ -6211,7 +6211,7 @@ footer #newsletter .dashed-button a:hover {
 .main-list > ul > li {
   padding-bottom: 20px;
   margin-bottom: 20px;
-  border-bottom: 2px dashed #a6b2a6;
+  border-bottom: 1px solid #000000;
 }
 
 /* line 22, ../mixins/profile.scss */
@@ -6231,68 +6231,74 @@ footer #newsletter .dashed-button a:hover {
   font-weight: bold;
   font-family: "PT Sans", sans-serif;
   border-bottom: 1px solid #000;
+  padding-bottom: 6px;
   width: 100%;
 }
-/* line 39, ../mixins/profile.scss */
+/* line 40, ../mixins/profile.scss */
 #profile-container .contact-info ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
-/* line 45, ../mixins/profile.scss */
+/* line 46, ../mixins/profile.scss */
 #profile-container .user-events {
   margin-top: 20px;
   padding-top: 20px;
   border-top: 3px dashed #a6b2a6;
 }
-/* line 49, ../mixins/profile.scss */
+/* line 50, ../mixins/profile.scss */
 #profile-container .user-events strong {
   font-family: "Roboto Slab", serif;
 }
-/* line 52, ../mixins/profile.scss */
+/* line 53, ../mixins/profile.scss */
 #profile-container .user-events ul {
   font-size: 13px;
   font-size: 0.8125rem;
   list-style: none;
   padding-left: 0;
 }
-/* line 56, ../mixins/profile.scss */
+/* line 57, ../mixins/profile.scss */
 #profile-container .user-events ul li {
   display: inline-block;
 }
-/* line 60, ../mixins/profile.scss */
+/* line 61, ../mixins/profile.scss */
 #profile-container .user-events .event-header {
   font-weight: 600;
 }
-/* line 63, ../mixins/profile.scss */
+/* line 64, ../mixins/profile.scss */
 #profile-container .user-events .event-row {
   padding-top: 5px;
   padding-bottom: 5px;
 }
-/* line 66, ../mixins/profile.scss */
+/* line 67, ../mixins/profile.scss */
 #profile-container .user-events .event-row ul {
   margin: 0;
 }
-/* line 69, ../mixins/profile.scss */
+/* line 70, ../mixins/profile.scss */
 #profile-container .user-events .event-row .action {
   text-align: center;
 }
-/* line 72, ../mixins/profile.scss */
+/* line 73, ../mixins/profile.scss */
 #profile-container .user-events .event-row input[type='submit'] {
   border: 0;
   background: 0;
 }
-/* line 75, ../mixins/profile.scss */
+/* line 76, ../mixins/profile.scss */
 #profile-container .user-events .event-row input[type='submit']:hover {
   text-decoration: underline;
 }
-/* line 81, ../mixins/profile.scss */
+/* line 82, ../mixins/profile.scss */
 #profile-container .user-events .event-header,
 #profile-container .user-events .event-row {
   border-bottom: 1px solid #000;
 }
 
-/* line 92, ../mixins/profile.scss */
+/* line 89, ../mixins/profile.scss */
+#profile-title h1 {
+  padding-top: 20px;
+}
+
+/* line 99, ../mixins/profile.scss */
 .orders-tab .h5, .orders-tab .h6,
 .attending-tab .h5,
 .attending-tab .h6,
@@ -6305,7 +6311,7 @@ footer #newsletter .dashed-button a:hover {
   font-family: "PT Sans", sans-serif;
   font-weight: bold;
 }
-/* line 96, ../mixins/profile.scss */
+/* line 103, ../mixins/profile.scss */
 .orders-tab ul,
 .attending-tab ul,
 .program-tab ul,
@@ -6315,39 +6321,39 @@ footer #newsletter .dashed-button a:hover {
   margin: 0 !important;
 }
 
-/* line 103, ../mixins/profile.scss */
+/* line 110, ../mixins/profile.scss */
 .training-tab .attendee-list {
   padding: 0;
   margin: 0;
 }
-/* line 107, ../mixins/profile.scss */
+/* line 114, ../mixins/profile.scss */
 .training-tab .event-full:after {
   content: ' - Full';
   color: #8fab3d;
 }
-/* line 111, ../mixins/profile.scss */
+/* line 118, ../mixins/profile.scss */
 .training-tab .btn-expand {
   text-align: right;
   text-decoration: none;
 }
-/* line 114, ../mixins/profile.scss */
+/* line 121, ../mixins/profile.scss */
 .training-tab .btn-expand i {
   margin-right: 5px;
 }
 
-/* line 123, ../mixins/profile.scss */
+/* line 130, ../mixins/profile.scss */
 .program-tab .approved,
 .program-tab .pending,
 .campaign-tab .approved,
 .campaign-tab .pending {
   font-weight: bold;
 }
-/* line 126, ../mixins/profile.scss */
+/* line 133, ../mixins/profile.scss */
 .program-tab .approved,
 .campaign-tab .approved {
   color: #8fab3d;
 }
-/* line 129, ../mixins/profile.scss */
+/* line 136, ../mixins/profile.scss */
 .program-tab .pending,
 .campaign-tab .pending {
   color: #F00;
@@ -6938,92 +6944,94 @@ label {
   min-height: 50px;
   border-bottom: 1px solid #a6b2a6;
   padding-bottom: 20px;
+  overflow: auto;
 }
-/* line 126, ../mixins/shop.scss */
+/* line 127, ../mixins/shop.scss */
 #products-list li div {
   padding-top: 13px;
+  padding-bottom: 5px;
 }
-/* line 129, ../mixins/shop.scss */
+/* line 131, ../mixins/shop.scss */
 #products-list li div:first-of-type {
   text-align: left;
 }
-/* line 132, ../mixins/shop.scss */
+/* line 134, ../mixins/shop.scss */
 #products-list li div:not(:first-of-type) {
   text-align: right;
 }
-/* line 135, ../mixins/shop.scss */
+/* line 137, ../mixins/shop.scss */
 #products-list li input[type='number'] {
   width: 50%;
   border: 1px solid #414042;
   background-color: whitesmoke;
 }
-/* line 140, ../mixins/shop.scss */
+/* line 142, ../mixins/shop.scss */
 #products-list li input[type='checkbox'] {
   border: 1px solid #414042;
   background-color: whitesmoke;
 }
 
-/* line 147, ../mixins/shop.scss */
+/* line 149, ../mixins/shop.scss */
 #checkout-form fieldset {
   background: none !important;
 }
-/* line 149, ../mixins/shop.scss */
+/* line 151, ../mixins/shop.scss */
 #checkout-form fieldset p {
   text-align: left;
 }
-/* line 151, ../mixins/shop.scss */
+/* line 153, ../mixins/shop.scss */
 #checkout-form fieldset p label {
   margin: 0;
 }
-/* line 156, ../mixins/shop.scss */
+/* line 158, ../mixins/shop.scss */
 #checkout-form fieldset #id_same_billing_shipping,
 #checkout-form fieldset #id_remember {
   position: absolute;
   left: 350px;
   top: 5px;
 }
-/* line 162, ../mixins/shop.scss */
+/* line 164, ../mixins/shop.scss */
 #checkout-form .form-actions-wrap {
   text-align: right;
   float: none !important;
   margin-left: 0 !important;
 }
-/* line 166, ../mixins/shop.scss */
+/* line 168, ../mixins/shop.scss */
 #checkout-form .form-actions-wrap input {
   float: none !important;
 }
 
-/* line 171, ../mixins/shop.scss */
+/* line 173, ../mixins/shop.scss */
 .two-weeks {
   font-size: 12px;
   font-size: 0.75rem;
   font-style: italic;
 }
 
-/* line 175, ../mixins/shop.scss */
+/* line 177, ../mixins/shop.scss */
 div.total {
   margin-top: 15px;
   text-align: right;
 }
-/* line 178, ../mixins/shop.scss */
+/* line 180, ../mixins/shop.scss */
 div.total li {
   padding-top: 5px;
 }
-/* line 180, ../mixins/shop.scss */
+/* line 182, ../mixins/shop.scss */
 div.total li span {
   text-align: left;
 }
-/* line 187, ../mixins/shop.scss */
+/* line 189, ../mixins/shop.scss */
 div.total li:not(.total) {
   border-bottom: 1px solid #a6b2a6;
   padding-bottom: 5px;
 }
-/* line 191, ../mixins/shop.scss */
+/* line 193, ../mixins/shop.scss */
 div.total .two-weeks:before {
   content: '*';
   margin-right: 5px;
 }
-/* line 195, ../mixins/shop.scss */
+/* line 197, ../mixins/shop.scss */
 div.total .two-weeks {
   padding-top: 50px;
   text-align: center;

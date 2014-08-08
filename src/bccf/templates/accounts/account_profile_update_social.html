@@ -30,6 +30,12 @@
         <p class="help-block">{{ form.pinterest.help_text }}</p>
         <p class="error-block">{{ form.pinterest.errors.as_text|cut:'*' }}</p>
     </div>
+    <div class="form-group input_id_othersm">
+        <p><label for="id_othersm">{{ form.othersm.label }}</label></p>
+        {{ form.othersm }}
+        <p class="help-block">{{ form.othersm.help_text }}</p>
+        <p class="error-block">{{ form.othersm.errors.as_text|cut:'*' }}</p>
+    </div>
     {% csrf_token %}
     <input id="submit" class="btn btn-primary btn-large lgreen-btn" type="submit" value="Save">
 </form>

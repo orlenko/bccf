@@ -80,7 +80,7 @@ def signup(request):
         form = f.CreateAccountForm(data=request.POST, files=request.FILES)
         if form.is_valid():
             response = redirect('update')
-            if form.cleaned_data.get('membership_level') != 'A':
+            if form.cleaned_data.get('membership_level') != 'A' and form.cleaned_data.get('membership_type') != 'parent':
                 """
                 If SKU exists in the query string and the SKU fits with the membership type, 
                 add that product to the cart and redirect the user to the checkout

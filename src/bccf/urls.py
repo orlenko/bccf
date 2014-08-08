@@ -31,6 +31,9 @@ urlpatterns = patterns("",
     # Podcasts
     #('^podcasts/', include('podcasting.urls')),
 
+    #Captcha
+    url(r'^captcha/', include('captcha.urls')),
+
     url('^bccf_admin_page_ordering/$', 'bccf.views.page.bccf_admin_page_ordering', name='bccf-admin-page-ordering'),
 
     url("^accounts/voting/(?P<type>.+)/$", "bccf.views.accounts.membership_voting", name="voting-membership"),

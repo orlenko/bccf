@@ -3,7 +3,9 @@
     <style>.input_id_honeypot {display:none !important;}</style>
     
     <div class="comment-header section">
-        <p class="col six">{{ object_for_comments.comments_count }} Comment{{ object_for_comments.comments_count|pluralize }}</p>
+        <p class="col six">
+        {% comment_count object_for_comments %}
+        {{ comments_count }} Comment{{ comments_count|pluralize }}</p>
         <p class="col six">
             <a href="#expand-{{ object_for_comments.pk }}" id="expand-{{ object_for_comments.pk }}" class="expand lgreen-btn">
                 <i class="fa fa-chevron-down"></i><span class="toggle-text">{% trans "Show" %}</span>

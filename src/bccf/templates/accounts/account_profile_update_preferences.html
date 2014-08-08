@@ -1,7 +1,7 @@
 <form method="POST">
     <strong class="fieldset-header">Account Preferences</strong>
     <div class="form-group checkbox-group input_id_show_in_list"> 
-        <label class="req" for="id_show_in_list">Plase add my profile to your <a href="/member/directory" target="_blank">listing of professionals</a></label>
+        <label class="req" for="id_show_in_list">Please add my profile to your <a href="/member/directory" target="_blank">listing of professionals</a></label>
         {{ form.show_in_list }}
         <p class="help-block">{{ form.show_in_list.help_text }}</p>
         <p class="error-block">{{ form.show_in_list.errors.as_text|cut:'*' }}</p>
@@ -18,8 +18,13 @@
         <strong class="fieldset-header row-one">Affiliation Preferences</strong>
         <div class="section row row-one">
         	<div class="col eight mobile-full">
-                Upgrade or renew your affiliation    	
+                Upgrade or renew your <a href="/bccf/memberships/">affiliation</a>
         	</div>
+            <div class="form-group input_id_membership_level">
+                <p>
+                    <label for="id_membership_level">{{ form.membership_level.label }}</label>
+                    {{ form.membership_level }}
+                </p>
         	<div class="col four mobile-full">
         	   <a href="#" class="lgreen-btn">Upgrade or Renew</a>
         	</div>

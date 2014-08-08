@@ -31,7 +31,7 @@
     <span class="col two strong">{{ topic.views }} Views</span>
     <span class="col two strong">{{ topic.post_count }} Replies</span>
     {% if topic.post_count > 0 %}
-    <span class="col eight"><span class="lgreen-text">Latest reply:</span> {{ topic|pybb_last_post }}</span>
+    {#<span class="col eight"><span class="lgreen-text">Latest reply:</span> {{ topic|pybb_last_post }}</span >#}
     {% endif %}
 </section>
 {% endblock %}

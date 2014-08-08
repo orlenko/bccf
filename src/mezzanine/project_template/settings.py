@@ -357,3 +357,6 @@ except ImportError:
     pass
 else:
     set_dynamic_settings(globals())
+
+
+SET_TITLE = "BC Council for Families"

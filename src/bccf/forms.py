@@ -26,6 +26,8 @@ from formable.builder.models import FormStructure, FormPublished, Question
 
 from ckeditor.widgets import CKEditor
 
+from captcha.fields import CaptchaField
+
 log = logging.getLogger(__name__)
 
 class RatingRenderer(RadioFieldRenderer):
@@ -217,7 +219,7 @@ class CreateAccountForm(UserCreationForm):
     MEMBERSHIP_LEVELS = (
         ('A', 'Free'),
         ('B', 'Regular'),
-        ('C', 'Premium')    
+        ('level_C', 'Premium')    
     )
     PAYMENT_TYPES = (
         ('Annual', 'Annual'),
@@ -239,6 +241,7 @@ class CreateAccountForm(UserCreationForm):
     payment_frequency = forms.ChoiceField(required=True, choices=PAYMENT_TYPES,
         help_text='Ignored if Level A is chosen.')
     membership_level = forms.ChoiceField(required=True, choices=MEMBERSHIP_LEVELS)
+    captcha = CaptchaField()
 
     class Meta:
         model = User
@@ -619,7 +622,7 @@ class ForumPreferencesForm(forms.ModelForm):
 class SocialMediaForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('facebook', 'twitter', 'linkedin', 'youtube', 'pinterest')
+        fields = ('facebook', 'twitter', 'linkedin', 'youtube', 'pinterest', 'othersm')
         
 class RegisterUserForm(forms.Form):
     """

@@ -2061,8 +2061,8 @@ textarea {
 
 .photo {
     border: 10px solid $sgrey;
-    width: 200px;
-    height: 200px; 
+    max-width: 200px;
+    max-height: 200px; 
 }
 .fake-photo-container {
     cursor: pointer;

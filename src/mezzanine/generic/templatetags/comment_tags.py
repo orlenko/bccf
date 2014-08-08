@@ -59,6 +59,20 @@ def comment_thread(context, parent):
     })
     return context
 
+@register.inclusion_tag("generic/includes/comment.html", takes_context=True)
+def comment_count(context, parent):
+    if "all_comments" not in context:
+        comments = defaultdict(list)
+        comments_count = 0
+        comments_queryset = parent.comments.visible()
+        for comment in comments_queryset.select_related("user"):
+            comments_count = comments_count + 1
+#    for parent.comments.visible():
+#        comment_count = comment_count + 1
+    context.update({
+        "comments_count": comments_count,
+    })
+    return context 
 
 @register.inclusion_tag("admin/includes/recent_comments.html",
     takes_context=True)

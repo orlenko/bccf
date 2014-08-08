@@ -24,7 +24,7 @@ def create(request):
             send_moderate("A Campaign needs moderation", context={'campaign':form.instance.pk})            
             
             messages.success(request, 'Campaign successfully created. The campaign is subject to review and can be taken down without notice.')
-            return HttpResponseRedirect(form.instance.edit_url())
+            return HttpResponseRedirect("/accounts/update/campaign/")
         else:
             messages.error(request, 'Please fix the errors below')
     title = 'Create Campaign'

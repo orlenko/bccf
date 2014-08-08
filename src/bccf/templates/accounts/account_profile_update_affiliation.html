@@ -1,0 +1,15 @@
+{% load i18n mezzanine_tags static %}
+
+{% block content %}
+<h2>{{ title }}</h2>
+{% endblock %}
+{% block carousels %}
+<form enctype="multipart/form-data" method="POST">
+    <strong class="fieldset-header">Affiliation Level</strong>
+    <div class="form-group input_id_membership_level">
+        <p><label for="id_membership_level">{{ form.membership_level }}</label</p>
+        {{ form.membership_level }}
+        <p class="help-block">{{ form.membership_level.help_text }}</p>
+        <p class="error-block">{{ form.membership_level.errors.as_text|cut:'*' }}</p>
+    </div>
+{% endblock %}

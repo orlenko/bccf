@@ -23,7 +23,9 @@
             {% bccf_rating_for profile %}
         {% endif %}
     </div>
-    <h1>{{ profile.user.get_full_name }}'s Profile</h1>
+    <div id="profile-title">  
+        <h1>{{ profile.user.get_full_name }}'s Profile</h1>
+    </div>
     <p id="profile-social">
         {% if profile.facebook %}
         <a href="{{ profile.facebook }}" class="fa fa-facebook"></a>

@@ -123,8 +123,10 @@
         min-height: 50px;
         border-bottom: 1px solid $lgrey;
         padding-bottom: 20px;
+        overflow: auto;
         div {
             padding-top: 13px;        
+            padding-bottom: 5px;
         }
         div:first-of-type {
             text-align: left;        

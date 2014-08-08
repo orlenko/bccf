@@ -4,7 +4,8 @@
     {% for comment in comments_for_thread %}
     <div id="comment-{{ comment.id }}"
     class="comment media section{% if comment.by_author %} comment-author{% endif %}">
-        {% comment_for comment %}
+        <strong><a href="{{ comment.user.get_absolute_url }}">{{ comment.user }}</a></strong>
+        {{ comment.comment }}
     </div>
     {% endfor %}
     

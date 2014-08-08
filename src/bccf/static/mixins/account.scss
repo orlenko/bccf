@@ -63,7 +63,7 @@
         .checkbox-group {
             @extend .section;
             label {
-                @include font-size(10);    
+                @include font-size(12);    
             }    
         }
         .form-actions {
@@ -103,8 +103,8 @@
     }
     .photo-over,
     img {
-        width: 200px;
-        height: 200px;
+        max-width: 200px;
+        max-height: 200px;
     }
 }
 
@@ -231,7 +231,7 @@
 
 .affiliation {
     div {
-        @include font-size(12);    
+        @include font-size(14);    
     }
 }
 
