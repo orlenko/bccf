@@ -25,6 +25,6 @@ class NewsPost(BCCFChildPage):
         super(NewsPost, self).__init__(*args, **kwargs)          
 
     def save(self, **kwargs):
-        page = BCCFPage.objects.get(slug='news')
+        page = BCCFPage.objects.get(slug='bccf/news')
         self.gparent = page
         super(NewsPost, self).save(**kwargs);
