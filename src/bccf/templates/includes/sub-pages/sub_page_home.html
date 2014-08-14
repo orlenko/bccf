@@ -19,7 +19,7 @@
                 <li>{{ child_obj.get_content_model.location_city }} {{ child_obj.get_content_model.location_postal_code }}</li> 
                 <li><a href="http://maps.google.com/?q={{ child_obj.get_content_model.location_street }}, {{ child_obj.get_content_model.location_city }}, {{ child_obj.get_content_model.location_postal_code }}">View Map</a></li>
             </ul>
-            <p>Event Fee(s) {{ child_obj.get_content_model.price|currency }}</p>
+            <p>Training Fee(s) {{ child_obj.get_content_model.price|currency }}</p>
         </div>
     {% endif %}
     
@@ -32,7 +32,7 @@
     
     <section>
         {% if child_obj.content_model == 'event' %}
-            <h4 class="event-header">Event Details</h4>
+            <h4 class="event-header">Training Details</h4>
         {% endif %}
         {{ child_obj.content|safe }}
     </section>

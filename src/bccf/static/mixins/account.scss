@@ -29,6 +29,7 @@
             input {
                 border: 1px solid #000;
                 background-color: $sgrey;   
+                
             }
             textarea {
                 resize: vertical;
@@ -86,7 +87,11 @@
                 }
             }    
         }
-    }    
+    }    #input_id_membership_level select input textarea{
+                    right: 2px;
+                    padding: 20px;
+                    position: absolute;
+                }
 }
 
 #photo-form {

@@ -58,7 +58,6 @@ def membership(request, slug):
     context = RequestContext(request, locals())
     return render_to_response('bccf/membership/membership.html', {}, context_instance=context)
 
-
 def membership_upgrade(request, variation_id):
     '''This view handles these scenarios:
      - A purchase of a paid membership by a holder of a free membership

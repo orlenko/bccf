@@ -5896,14 +5896,14 @@ footer #newsletter .dashed-button a:hover {
   border: 1px solid #000;
   background-color: whitesmoke;
 }
-/* line 33, ../mixins/account.scss */
+/* line 34, ../mixins/account.scss */
 #account #form-container .form-group textarea {
   resize: vertical;
   overflow-y: scroll;
   min-height: 200px;
   width: 100%;
 }
-/* line 39, ../mixins/account.scss */
+/* line 40, ../mixins/account.scss */
 #account #form-container .form-group input[type='checkbox'] {
   background-color: #FFF;
   position: absolute;
@@ -5911,13 +5911,13 @@ footer #newsletter .dashed-button a:hover {
   top: 5px;
   padding: 3px;
 }
-/* line 46, ../mixins/account.scss */
+/* line 47, ../mixins/account.scss */
 #account #form-container .form-group input[type='file'] {
   opacity: 0;
   position: absolute;
   z-index: -2;
 }
-/* line 52, ../mixins/account.scss */
+/* line 53, ../mixins/account.scss */
 #account #form-container .form-group #clear-photo,
 #account #form-container .form-group #fake-photo {
   height: 30px;
@@ -5925,22 +5925,22 @@ footer #newsletter .dashed-button a:hover {
   background-color: #000;
   color: #FFF;
 }
-/* line 57, ../mixins/account.scss */
+/* line 58, ../mixins/account.scss */
 #account #form-container .form-group #clear-photo:hover,
 #account #form-container .form-group #fake-photo:hover {
   background-color: #fdcd26;
   color: #000;
 }
-/* line 65, ../mixins/account.scss */
+/* line 66, ../mixins/account.scss */
 #account #form-container .checkbox-group label {
   font-size: 12px;
   font-size: 0.75rem;
 }
-/* line 69, ../mixins/account.scss */
+/* line 70, ../mixins/account.scss */
 #account #form-container .form-actions {
   margin-top: 20px;
 }
-/* line 71, ../mixins/account.scss */
+/* line 72, ../mixins/account.scss */
 #account #form-container .form-actions input {
   font-size: 12px;
   font-size: 0.75rem;
@@ -5954,14 +5954,20 @@ footer #newsletter .dashed-button a:hover {
   text-decoration: none;
   text-transform: uppercase;
 }
-/* line 82, ../mixins/account.scss */
+/* line 83, ../mixins/account.scss */
 #account #form-container .form-actions input:hover {
   color: #336442;
   text-decoration: none;
   background-color: #fdcd26;
 }
+/* line 90, ../mixins/account.scss */
+#account #input_id_membership_level select input textarea {
+  right: 2px;
+  padding: 20px;
+  position: absolute;
+}
 
-/* line 94, ../mixins/account.scss */
+/* line 99, ../mixins/account.scss */
 #photo-form button,
 #photo-form input[type='submit'] {
   height: 30px;
@@ -5969,41 +5975,41 @@ footer #newsletter .dashed-button a:hover {
   background-color: #000;
   color: #FFF;
 }
-/* line 99, ../mixins/account.scss */
+/* line 104, ../mixins/account.scss */
 #photo-form button:hover,
 #photo-form input[type='submit']:hover {
   background-color: #fdcd26;
   color: #000;
 }
-/* line 105, ../mixins/account.scss */
+/* line 110, ../mixins/account.scss */
 #photo-form .photo-over,
 #photo-form img {
   max-width: 200px;
   max-height: 200px;
 }
 
-/* line 111, ../mixins/account.scss */
+/* line 116, ../mixins/account.scss */
 #account-number {
   padding: 5px 0 5px 10px;
   background-color: whitesmoke;
   margin-bottom: 0;
 }
-/* line 115, ../mixins/account.scss */
+/* line 120, ../mixins/account.scss */
 #account-number strong {
   color: #8fab3d;
 }
 
-/* line 120, ../mixins/account.scss */
+/* line 125, ../mixins/account.scss */
 #tabs {
   margin: 0;
 }
-/* line 122, ../mixins/account.scss */
+/* line 127, ../mixins/account.scss */
 #tabs ul {
   padding: 0;
   padding-bottom: 100px;
   border-right: 1px solid whitesmoke;
 }
-/* line 127, ../mixins/account.scss */
+/* line 132, ../mixins/account.scss */
 #tabs a {
   font-size: 15px;
   font-size: 0.9375rem;
@@ -6012,137 +6018,137 @@ footer #newsletter .dashed-button a:hover {
   text-decoration: none;
   height: 30px;
 }
-/* line 134, ../mixins/account.scss */
+/* line 139, ../mixins/account.scss */
 #tabs a:hover, #tabs a.current {
   background-color: whitesmoke;
   color: #8fab3d;
   font-weight: bold;
 }
 
-/* line 142, ../mixins/account.scss */
+/* line 147, ../mixins/account.scss */
 #main-form {
   padding-left: 25px;
 }
-/* line 147, ../mixins/account.scss */
+/* line 152, ../mixins/account.scss */
 #main-form input[type='text'],
 #main-form input[type='email'],
 #main-form input[type='password'],
 #main-form input[type='url'] {
   width: 100%;
 }
-/* line 151, ../mixins/account.scss */
+/* line 156, ../mixins/account.scss */
 #main-form .dashed-button a {
   font-size: 12px;
   font-size: 0.75rem;
 }
-/* line 155, ../mixins/account.scss */
+/* line 160, ../mixins/account.scss */
 #main-form .error-block {
   font-size: 12px;
   font-size: 0.75rem;
   color: red;
 }
-/* line 161, ../mixins/account.scss */
+/* line 166, ../mixins/account.scss */
 #main-form.contact-tab .form-group .form-group {
   margin: 0 !important;
 }
-/* line 164, ../mixins/account.scss */
+/* line 169, ../mixins/account.scss */
 #main-form.contact-tab .form-group .form-group:first-of-child {
   padding-right: 5px;
 }
-/* line 167, ../mixins/account.scss */
+/* line 172, ../mixins/account.scss */
 #main-form.contact-tab .form-group .form-group:nth-child(2) {
   padding-left: 5px;
 }
-/* line 173, ../mixins/account.scss */
+/* line 178, ../mixins/account.scss */
 #main-form.forum-tab #id_show_signatures {
   top: 5px !important;
 }
 
-/* line 180, ../mixins/account.scss */
+/* line 185, ../mixins/account.scss */
 .membership-info-type,
 .benefit-type {
   font-weight: bold;
 }
-/* line 182, ../mixins/account.scss */
+/* line 187, ../mixins/account.scss */
 .membership-info-type:after,
 .benefit-type:after {
   content: ':';
 }
 
-/* line 188, ../mixins/account.scss */
+/* line 193, ../mixins/account.scss */
 #membership-upgrades ul {
   list-style: none;
   padding: 0;
 }
-/* line 192, ../mixins/account.scss */
+/* line 197, ../mixins/account.scss */
 #membership-upgrades p {
   font-weight: bold;
 }
-/* line 195, ../mixins/account.scss */
+/* line 200, ../mixins/account.scss */
 #membership-upgrades .upgrade-level:first-of-type {
   border-bottom: 2px dashed #a6b2a6;
   padding-bottom: 20px;
   margin-bottom: 20px;
 }
-/* line 201, ../mixins/account.scss */
+/* line 206, ../mixins/account.scss */
 #membership-upgrades .upgrade-btn-container span {
   font-weight: bold;
 }
-/* line 204, ../mixins/account.scss */
+/* line 209, ../mixins/account.scss */
 #membership-upgrades .upgrade-btn-container .upgrade-btn {
   text-align: center;
 }
-/* line 207, ../mixins/account.scss */
+/* line 212, ../mixins/account.scss */
 #membership-upgrades .upgrade-btn-container .upgrade-btn:hover .no-hover {
   display: none;
 }
-/* line 210, ../mixins/account.scss */
+/* line 215, ../mixins/account.scss */
 #membership-upgrades .upgrade-btn-container .upgrade-btn:hover .hover {
   display: inline-block;
 }
 
-/* line 219, ../mixins/account.scss */
+/* line 224, ../mixins/account.scss */
 .organization-member .member-info {
   padding-top: 20px;
 }
-/* line 221, ../mixins/account.scss */
+/* line 226, ../mixins/account.scss */
 .organization-member .member-info a {
   text-decoration: none;
   display: block;
   margin-bottom: 10px;
 }
-/* line 225, ../mixins/account.scss */
+/* line 230, ../mixins/account.scss */
 .organization-member .member-info a:hover {
   font-weight: bold;
 }
 
-/* line 233, ../mixins/account.scss */
+/* line 238, ../mixins/account.scss */
 .affiliation div {
   font-size: 14px;
   font-size: 0.875rem;
 }
 
 @media only screen and (min-width: 740px) and (max-width: 1139px) {
-  /* line 240, ../mixins/account.scss */
+  /* line 245, ../mixins/account.scss */
   .photo {
     border: 10px solid whitesmoke;
     width: 150px;
     height: 150px;
   }
 
-  /* line 247, ../mixins/account.scss */
+  /* line 252, ../mixins/account.scss */
   #photo-form img {
     width: 150px;
     height: 150px;
   }
-  /* line 251, ../mixins/account.scss */
+  /* line 256, ../mixins/account.scss */
   #photo-form .photo-over {
     width: 150px;
     height: 150px;
     background-size: 150px 150px;
   }
 
-  /* line 259, ../mixins/account.scss */
+  /* line 264, ../mixins/account.scss */
   .fake-photo-container .photo-over {
     font-size: 10px;
     font-size: 0.625rem;
@@ -6150,28 +6156,28 @@ footer #newsletter .dashed-button a:hover {
     width: 150px;
     height: 150px;
   }
-  /* line 264, ../mixins/account.scss */
+  /* line 269, ../mixins/account.scss */
   .fake-photo-container .photo-over span {
     left: 10px;
   }
 
-  /* line 271, ../mixins/account.scss */
+  /* line 276, ../mixins/account.scss */
   #tabs a {
     font-size: 12px;
     font-size: 0.75rem;
     font-weight: normal;
     padding: 7px 0 7px 10px;
   }
-  /* line 275, ../mixins/account.scss */
+  /* line 280, ../mixins/account.scss */
   #tabs a:hover {
     font-weight: inherit;
   }
-  /* line 278, ../mixins/account.scss */
+  /* line 283, ../mixins/account.scss */
   #tabs a.current {
     font-weight: inherit;
   }
 
-  /* line 284, ../mixins/account.scss */
+  /* line 289, ../mixins/account.scss */
   #main-form {
     font-size: 14px;
     font-size: 0.875rem;
@@ -6179,17 +6185,17 @@ footer #newsletter .dashed-button a:hover {
   }
 }
 @media only screen and (max-width: 739px) {
-  /* line 294, ../mixins/account.scss */
+  /* line 299, ../mixins/account.scss */
   #tabs ul {
     padding-bottom: 0;
   }
 
-  /* line 299, ../mixins/account.scss */
+  /* line 304, ../mixins/account.scss */
   #main-form {
     padding-left: 0;
   }
 
-  /* line 303, ../mixins/account.scss */
+  /* line 308, ../mixins/account.scss */
   .fake-photo-container {
     width: 200px;
   }
@@ -6737,29 +6743,34 @@ label {
   width: 50px;
   height: 50px;
 }
-/* line 32, ../mixins/comment.scss */
+/* line 31, ../mixins/comment.scss */
+#comments .comment .comment-date {
+  font-size: 12px;
+  color: #8fab3d;
+}
+/* line 36, ../mixins/comment.scss */
 #comments .comment-form {
   padding-top: 20px;
 }
-/* line 34, ../mixins/comment.scss */
+/* line 38, ../mixins/comment.scss */
 #comments .comment-form h3 {
   font-size: 20px;
   font-size: 1.25rem;
   font-family: "PT Sans", sans-serif;
   font-weight: bold;
 }
-/* line 39, ../mixins/comment.scss */
+/* line 43, ../mixins/comment.scss */
 #comments .comment-form textarea {
   width: 100%;
   border: 1px solid #414042;
   background-color: whitesmoke;
 }
-/* line 45, ../mixins/comment.scss */
+/* line 49, ../mixins/comment.scss */
 #comments .form-actions {
   margin: 10px auto !important;
   display: block;
 }
-/* line 48, ../mixins/comment.scss */
+/* line 52, ../mixins/comment.scss */
 #comments .form-actions input {
   font-size: 12px;
   font-size: 0.75rem;
@@ -6772,7 +6783,7 @@ label {
   text-transform: uppercase;
   border: none;
 }
-/* line 58, ../mixins/comment.scss */
+/* line 62, ../mixins/comment.scss */
 #comments .form-actions input:hover {
   color: #336442;
   text-decoration: none;
@@ -6796,8 +6807,8 @@ label {
   margin-right: auto;
   width: 500px;
   padding: 15px;
-  background-color: #FFF;
   background: url(../img/pupup-close.png) right top no-repeat;
+  background-color: #FFF;
 }
 
 /* line 1, ../mixins/shop.scss */

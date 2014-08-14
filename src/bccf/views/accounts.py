@@ -27,6 +27,7 @@ from bccf_mc.utils import subscribe, unsubscribe, ping
 from bccf import forms as f
 from bccf.util.memberutil import get_upgrades
 from bccf.util.emailutil import send_welcome, send_moderate, send_welcome
+from bccf.views.member import membership_upgrade
 
 @sensitive_post_parameters()
 @csrf_protect
@@ -186,6 +187,11 @@ def profile_update(request, tab='home'):
                 request.session['register_selected_members'] = request.POST.getlist('members')
                 request.session['register_selected_event'] = request.POST.get('event')
                 return redirect(reverse('register-event'))
+            elif tab == 'affiliation':
+                form = f.AffiliationForm(request.POST, instance=profile)
+                print profile.membership_level
+                print request.POST.get('membership_level')
+                membership_upgrade(request, request.POST.get('membership_level'))
             if form.is_valid():
                 ping()
                 user = form.save()

@@ -608,11 +608,16 @@ class ProfessionalProfileForm(forms.ModelForm):
         widgets = {
             'accreditation': forms.CheckboxSelectMultiple        
         }
-        
+ 
+class AffiliationForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('membership_level', 'membership_type')
+               
 class AccountPreferencesForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('show_in_list', 'in_mailing_list')
+        fields = ('show_in_list', 'in_mailing_list', 'membership_level')
         
 class ForumPreferencesForm(forms.ModelForm):
     class Meta:

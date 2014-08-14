@@ -717,8 +717,8 @@ class UserProfile(PybbProfile):
     ]
     MEMBERSHIP_LEVELS = [
             ('A', 'Free'),
-            ('level_B', 'Regular'),
-            ('level_C', 'Premium')
+            ('B', 'Regular'),
+            ('C', 'Premium')
     ]
 
     user = models.OneToOneField(User, related_name='profile')
