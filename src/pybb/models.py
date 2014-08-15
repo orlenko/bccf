@@ -178,7 +178,7 @@ class Topic(TagBase):
 
     class Meta(object):
         ordering = ['-created']
-        verbose_name = _('Thred')
+        verbose_name = _('Thread')
         verbose_name_plural = _('Threads')
 
     def __unicode__(self):
