@@ -63,8 +63,10 @@ def content_carousel_for(context, obj, title, child=None, which=None):
             context['slides'].extend(temp)
             slides = slides.filter(~Q(slug=child))
             limit = 11
-            
-        context['slides'].extend(slides.order_by('-created')[:limit])
+        if obj.slug == 'bccf/trainings':
+            context['slides'].extend(slides.order_by('-created')[:limit])
+        else:
+            context['slides'].extend(slides.order_by('-created')[:limit])
             
     except ObjectDoesNotExist, e:
         log.info('Object Does Not Exist')

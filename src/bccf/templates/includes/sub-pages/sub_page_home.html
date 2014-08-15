@@ -11,6 +11,9 @@
         <p class="event-date"> 
             {{ child_obj.get_content_model.date_start|date:"l, F j, Y" }}, from
             {{ child_obj.get_content_model.date_start|date:"g:i A" }} to
+            {% if child_obj.get_content_model.date_start|date:"l, F j, Y" != child_obj.get_content_model.date_end|date:"l, F j, Y" %}
+                {{ child_obj.get_content_model.date_end|date:"l, F j, Y" }}
+            {% endif %}
             {{ child_obj.get_content_model.date_end|date:"g:i A" }}
         </p>
         <div class="event-info">
