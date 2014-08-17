@@ -27,6 +27,8 @@ def tab_content(context, token):
         context['form'] = forms.ProfessionalProfileForm(instance=user.profile)
     elif tab == 'social':
         context['form'] = forms.SocialMediaForm(instance=user.profile)
+    elif tab == 'affiliation':
+        context['form'] = forms.AffiliationForm(instance=user, initial={'membership_level':user.profile.membership_level})
     elif tab == 'preferences':
         context['form'] = forms.AccountPreferencesForm(instance=user.profile)
     elif tab == 'forum':

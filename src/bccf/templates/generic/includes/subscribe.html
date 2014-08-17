@@ -11,12 +11,12 @@
         		</form>
         	</div>
     	{% else %}
-    	   <p>The event is full.</p>
+    	   <p>The training is full.</p>
     	{% endif %}
     {% else %}
         <div class="login-container section row row-one">
             {% if not user.is_authenticated %}<a href="{% url 'login' %}?next={{ request.get_full_path }}" class="login-btn">Sign in</a> or{% endif %} 
-            <a href="{% url 'signup' %}?type={{ event_for }}" class="login-btn">Sign up</a> as a {{ event_for }} to register for this event.
+            <a href="{% url 'signup' %}?type={{ event_for }}" class="login-btn">Sign up</a> as a {{ event_for }} to register for this training.
         </div>
     {% endif %}
 {% endif %}

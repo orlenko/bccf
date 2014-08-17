@@ -18,7 +18,7 @@
 	It will expire on {{ profile.membership_expiration_datetime }}.
 {% endif %}
 
-<h2>Sign up to Events:</h2>
+<h2>Sign up to Trainings:</h2>
 <ul>
 	{% for event in events %}
 		<li><a href="{{event.get_absolute_url}}">{{event.title}}</a></li>

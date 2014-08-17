@@ -12,24 +12,25 @@
         <p class="help-block">{{ form.in_mailing_list.help_text }}</p>
         <p class="error-block">{{ form.in_mailing_list.errors.as_text|cut:'*' }}</p>
     </div>
-    {% csrf_token %}
     
+     <input id="submit" class="btn btn-primary btn-large lgreen-btn" type="submit" value="Save">
+</form> 
+{% if not user.profile.is_level_A %}
+<form method="POST">    
+    {% csrf_token %}
     <div class="section affiliation">
         <strong class="fieldset-header row-one">Affiliation Preferences</strong>
         <div class="section row row-one">
-        	<div class="col eight mobile-full">
-                Upgrade or renew your <a href="/bccf/memberships/">affiliation</a>
-        	</div>
-            <div class="form-group input_id_membership_level">
-                <p>
-                    <label for="id_membership_level">{{ form.membership_level.label }}</label>
-                    {{ form.membership_level }}
-                </p>
-        	<div class="col four mobile-full">
-        	   <a href="#" class="lgreen-btn">Upgrade or Renew</a>
+            <div class="form-group" id="input_id_membership_level">
+                    <a href="/bccf/memberships"><label for="id_membership_level">{{ form.membership_level.label }}</label></a>
+                    <div id="input_id_membership_level">{{ form.membership_level }}
+                    <p class="help-block">{{ form.membership_level.help_text }}</p>
+                    <p class="error-block">{{ form.membership_level.help_text }}</p></div>
+            </div>
+<!--        	<div class="col four mobile-full">
+        	   <input id="change-affiliation" class="btn btn-large lgreen-btn" type='submit' value="Purchase Upgrade">
         	</div>
         </div>
-        {% if not user.profile.is_level_A %}
         <div class="section row row-two">
         	<div class="col ten mobile-full">
                 Cancel affiliation    	
@@ -38,8 +39,6 @@
         	   <a href="{% url 'member-membership-cancel' %}" class="lgreen-btn">Cancel</a>
         	</div>
         </div>
-        {% endif %}
     </div>    
-    
-     <input id="submit" class="btn btn-primary btn-large lgreen-btn" type="submit" value="Save">
-</form>
+  </form> 
+{% endif %}

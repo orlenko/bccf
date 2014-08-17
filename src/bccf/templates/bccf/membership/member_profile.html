@@ -101,10 +101,10 @@
 		{% endif %}
 
 		{% if membership|has_feature:'events' %}
-			<h2>Events</h2>
+			<h2>Trainings</h2>
 			<div class="groupcontent">
 				{% if user.events.count %}
-					<h3>Current Events</h3>
+					<h3>Current Trainings</h3>
 					<ul>
 					{% for event in user.events.all %}
 						<li>{{ event.title }} ({{ event.date_start|date:'DATETIME_FORMAT' }} &mdash;  {{ event.date_end|date:'DATETIME_FORMAT' }}):
@@ -118,7 +118,7 @@
 					{% endfor %}
 					</ul>
 				{% endif %}
-				<a href="{% url 'events-create' %}">Create Event</a>
+				<a href="{% url 'events-create' %}">Create Training</a>
 			</div>
 			<h2>Request Program</h2>
 			<div class="groupcontent">
@@ -144,9 +144,9 @@
 		{% endif %}
 
 		{% if membership|has_feature:'subscriptions' %}
-			<h2>My Events</h2>
+			<h2>My Trainings</h2>
 			<div class="groupcontent">
-				<h3>Events I am attending:</h3>
+				<h3>Trainings I am attending:</h3>
 				{% if user.eventregistration_set.count %}
 					<ul>
 					{% for reg in user.eventregistration_set.all %}
