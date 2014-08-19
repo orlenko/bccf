@@ -87,6 +87,11 @@
         }
     }
 }
+#edit-cart {
+    a, input {
+        float: right;
+    }
+}
 .shop-cart {
     .form-actions {
         text-align: left !important;

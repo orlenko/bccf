@@ -10,9 +10,9 @@ var prep_history_carousel = function(elem) {
 };
 var history_not_mobile = {
     'singleItem': true,
-    'slideSpeed': 800,
-    'paginationSpeed': 800,
-    'rewindSpeed': 800,
+    'slideSpeed': 1200,
+    'paginationSpeed': 1200,
+    'rewindSpeed': 1200,
     'pagination': false,
     'stopOnHover': true,
     'addClassActive': true,

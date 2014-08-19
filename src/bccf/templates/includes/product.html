@@ -28,6 +28,7 @@
                     {% if user.profile.is_level_C %}
                         <span class="save-price price">{% trans "Save 15%" %}</span>
                     {% endif %}
+                    {{ variation.sale_from }}
                     {% if variation.on_sale %}
                         <span class="old-price price">{{ variation.unit_price|currency }}</span>
                     {% endif %}
