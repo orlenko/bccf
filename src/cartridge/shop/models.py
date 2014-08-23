@@ -152,8 +152,13 @@ class ProductImage(Orderable):
     for the product.
     """
 
-    file = models.ImageField(_("Image"),
-        upload_to=upload_to("shop.ProductImage.file", "product"))
+    file = FileField("Image",
+        upload_to=upload_to("shop.ProductImage.file", "product"),
+        extensions = ['.jpg', '.JPG', '.jpeg', '.JPEG', '.gif', '.GIF', '.png', '.PNG'],
+        max_length = 255,
+        null = True,
+        blank = True,
+        help_text = 'You can upload an image. ')
     description = CharField(_("Description"), blank=True, max_length=100)
     product = models.ForeignKey("Product", related_name="images")
 

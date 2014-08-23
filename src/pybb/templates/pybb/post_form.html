@@ -14,7 +14,10 @@
   <fieldset>
     {% include "pybb/form_errors.html" %}
 
-    {% fields_for form %}
+    Subject <i class="req-asterisk fa fa-asterisk"></i><br> 
+    {{ form.name }} <br>
+    Message: <i class="req-asterisk fa fa-asterisk"></i><br>
+    {{ form.body }}
 
     {% if form.poll_type %}
       {% include "pybb/poll_edit_form.html" %}

@@ -1,5 +1,6 @@
 {% load i18n %}
 {% include "pybb/form_field.html" with field=form.poll_type %}
+<script type="text/javascript" src="{{ STATIC_URL }}pybb/js/jquery.formset.min.js"></script>    
 <div id="poll-question">
   {% include "pybb/form_field.html" with field=form.poll_question %}
 </div>
@@ -15,7 +16,7 @@
 </div>
 
 <script type="text/javascript">
-  window.onload = function () {
+  $(window).bind("load", function() {
     $('div#poll-answers-formset div.poll-answer-form').formset({
       deleteText:'{% trans 'remove answer' %}',
       addText:'{% trans 'add answer' %}',
@@ -37,5 +38,5 @@
     }).change(function () {
       toggle_poll_answers_formset($(this).val());
     });
-  };
+  });
 </script>
