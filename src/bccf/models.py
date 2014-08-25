@@ -1,5 +1,6 @@
 import logging
 import hashlib
+from django.db.models.signals import post_save
 log = logging.getLogger(__name__)
 
 from datetime import datetime, timedelta
@@ -690,7 +691,7 @@ class Campaign(TagBase):
 #### PAGE STUFF END ####
 
 #### USER STUFF ####
-from pybb.models import PybbProfile
+from pybb.models import PybbProfile, user_saved
 
 class ProfessionalPayment(models.Model):
     user = models.ForeignKey(User, related_name='paid_to')
@@ -974,6 +975,11 @@ class UserProfile(PybbProfile):
     @permalink
     def get_absolute_url(self):
         return ('member-profile', (), {'id':self.id})
+
+
+# Moved this over here from Pybb models, to avoid circular import problem.
+post_save.connect(user_saved, sender=User)
+
 
 def is_product_variation_categ(variation, categ):
     for category in variation.product.categories.all():

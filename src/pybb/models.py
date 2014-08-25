@@ -185,7 +185,7 @@ class Topic(TagBase):
         return self.name
 
     def __init__(self, *args, **kwargs):
-        super(Topic, self).__init__(*args, **kwargs)  
+        super(Topic, self).__init__(*args, **kwargs)
 
     @property
     def head(self):
@@ -212,7 +212,7 @@ class Topic(TagBase):
             self.image = 'uploads/childpage/placeholder-forum.png'
         if self.id is None:
             self.created = tznow()
-            
+
         self.gparent = BCCFPage.objects.get(slug='bccf/tag')
         forum_changed = False
         old_topic = None
@@ -562,5 +562,7 @@ def user_saved(instance, created, **kwargs):
 
 post_save.connect(post_saved, sender=Post)
 post_delete.connect(post_deleted, sender=Post)
-if defaults.PYBB_AUTO_USER_PERMISSIONS:
-    post_save.connect(user_saved, sender=get_user_model())
+
+# Moved this over to bccf.models, to avoid circular import problem.
+#if defaults.PYBB_AUTO_USER_PERMISSIONS:
+#    post_save.connect(user_saved, sender=get_user_model())
