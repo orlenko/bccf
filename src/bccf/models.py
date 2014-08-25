@@ -1,5 +1,6 @@
 import logging
 import hashlib
+from django.db.models.signals import post_save
 log = logging.getLogger(__name__)
 
 from datetime import datetime, timedelta
@@ -690,7 +691,7 @@ class Campaign(TagBase):
 #### PAGE STUFF END ####
 
 #### USER STUFF ####
-from pybb.models import PybbProfile
+from pybb.models import PybbProfile, user_saved
 
 class ProfessionalPayment(models.Model):
     user = models.ForeignKey(User, related_name='paid_to')

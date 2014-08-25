@@ -562,5 +562,5 @@ def user_saved(instance, created, **kwargs):
 
 post_save.connect(post_saved, sender=Post)
 post_delete.connect(post_deleted, sender=Post)
-if defaults.PYBB_AUTO_USER_PERMISSIONS:
-    post_save.connect(user_saved, sender=get_user_model())
+#if defaults.PYBB_AUTO_USER_PERMISSIONS:
+#    post_save.connect(user_saved, sender=get_user_model())
