@@ -946,6 +946,9 @@ textarea {
 				}
 			}
 		}
+        .program {
+                width:270px;
+        }
 	}
 	.hcal-heading {
 		width:100%;
@@ -1458,6 +1461,9 @@ textarea {
             border: none;
             text-transform: uppercase;
             margin: 0 10px;
+            padding: 5px 7px;
+            font-weight: bold;
+            font-size: 14px;
         }
         .rating-cancel {
             display: none !important;        

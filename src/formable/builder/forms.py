@@ -38,7 +38,7 @@ class FormPublishForm(forms.ModelForm):
             'user': forms.HiddenInput,
             'form_structure': forms.HiddenInput
         }
-        fields = ('user', 'form_structure', 'title', 'status', 'content', 'page_for', 'bccf_topic', 'featured', 'image')
+        fields = ('user', 'form_structure', 'status', 'content', 'page_for', 'bccf_topic', 'featured', 'image')
 
     def __init__(self, hide, *args, **kwargs):
         super(FormPublishForm, self).__init__(*args, **kwargs)

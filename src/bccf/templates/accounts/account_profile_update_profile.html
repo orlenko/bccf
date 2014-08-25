@@ -13,11 +13,13 @@
             <label for="id_accreditation_{{ forloop.counter0 }}"><a href="">{{ choice }}</a></label>
             <input type="checkbox" id="id_accreditation_{{ forloop.counter0 }}" value="{{ pk }}" name="accreditation"/>
         </div>
+        {{ form.accreditation.get_absolute_url }}
         {% endfor %}
-        
+        {% for all in form.accreditation.field.widget.choices %}
+            {{ all }}
+        {% endfor %}
         <p class="error-block">{{ form.accreditation.errors.as_text|cut:'*' }}</p>
     </div>
     {% csrf_token %}
-    {{ form.accreditation.field.get_absolute_url }}
     <input id="submit" class="btn btn-primary btn-large lgreen-btn" type="submit" value="Save">
 </form>

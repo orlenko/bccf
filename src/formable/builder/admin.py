@@ -1,6 +1,8 @@
 from copy import deepcopy
 
+from django import forms
 from django.contrib import admin
+from django.db import models
 from mezzanine.core.admin import DisplayableAdmin
 from bccf.admin import make_featured, make_unfeatured
 from formable.builder.models import FormStructure, FormPublished, FormFilled, Question, FieldAnswer
@@ -72,17 +74,21 @@ class FormStructureAdmin(admin.ModelAdmin):
 class FormPublishedAdmin(DisplayableAdmin):
     actions = ['make_closed', 'make_open', make_featured, make_unfeatured]
     ordering = ('-created',)
+    widgets = {
+        'form_structure': forms.HiddenInput
+    }
     
     def __init__(self, *args, **kwargs):
         super(FormPublishedAdmin, self).__init__(*args, **kwargs)
         if self.fieldsets == DisplayableAdmin.fieldsets:
             self.fieldsets = deepcopy(self.fieldsets)
-            for field in reversed(['title',
-                                    'content',
+            for field in reversed([ 'content',
                                     'closed',
                                     'page_for',
                                     'bccf_topic',
                                     'featured',
+                                    'user',
+                                    'form_structure',
                                     'image',]):
                 self.fieldsets[0][1]['fields'].insert(3, field)
                 
