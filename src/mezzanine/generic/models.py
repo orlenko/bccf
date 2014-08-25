@@ -40,6 +40,7 @@ class ThreadedComment(Comment):
         appended that references the individual comment.
         """
         url = self.content_object.get_absolute_url()
+	#url = "http://example.com"
         return "%s#comment-%s" % (url, self.id)
 
     def save(self, *args, **kwargs):
