@@ -1,4 +1,5 @@
 import logging
+from bccf.models import Program
 log = logging.getLogger(__name__)
 
 from django.template.context import Context
@@ -16,6 +17,13 @@ def tab_content(context, token):
     tab = context['tab']
     user = context['user']
     t = get_template('accounts/account_profile_update_%s.html' % tab)
+
+    # Special case: accredited and available programs
+    if tab == 'profile':
+        selected_programs = list(user.profile.accreditation.all())
+        context['selected_accreditations'] = selected_programs
+        selected_program_ids = [p.id for p in selected_programs]
+        context['available_programs'] = [p for p in Program.objects.all() if not p.id in selected_program_ids]
 
     if 'form' in context and context['form']:
         return t.render(Context(context))

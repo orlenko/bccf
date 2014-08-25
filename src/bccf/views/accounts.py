@@ -36,7 +36,7 @@ def my_login(request, template_name='accounts/account_login.html',#'registration
           redirect_field_name='next',
           authentication_form=AuthenticationForm,
           current_app=None, extra_context=None):
-              
+
     redirect_to = request.POST.get(redirect_field_name,
                                    request.GET.get(redirect_field_name, reverse('update')))
 
@@ -73,17 +73,17 @@ def signup(request):
     membership_type = request.GET.get('type', None)
     membership_level = request.GET.get('level', None)
     payment_frequency = request.GET.get('freq', None)
-    
+
     form = f.CreateAccountForm(initial={'membership_type': membership_type,
         'membership_level': membership_level, 'payment_frequency': payment_frequency})
-    
+
     if request.method == 'POST':
         form = f.CreateAccountForm(data=request.POST, files=request.FILES)
         if form.is_valid():
             response = redirect('update')
             if form.cleaned_data.get('membership_level') != 'A' and form.cleaned_data.get('membership_type') != 'parent':
                 """
-                If SKU exists in the query string and the SKU fits with the membership type, 
+                If SKU exists in the query string and the SKU fits with the membership type,
                 add that product to the cart and redirect the user to the checkout
                 """
                 membership_type = form.cleaned_data.get('membership_type')[:3].upper()
@@ -93,23 +93,23 @@ def signup(request):
                 recalculate_cart(request)
                 response = redirect('shop_checkout')
             form.save()
-            
+
             subscribe(request, 'af67fb20e3', form.cleaned_data.get('email')) # Members list
-            
+
             if form.cleaned_data.get('in_mailing_list'):
                 subscribe(request, '8aebc01ca2', form.cleaned_data.get('email')) # News Letter
-            
-            new_user = authenticate(username=form.cleaned_data.get('username'), 
+
+            new_user = authenticate(username=form.cleaned_data.get('username'),
                                     password=form.cleaned_data.get('password1'))
             auth_login(request, new_user)
-            
+
             # Send welcome message
             send_welcome(new_user)
             send_moderate("New user signed up.", context={'user': new_user})
-            
+
             success(request, 'User created successfully! Welcome to the BCCF community %s' % form.instance.get_full_name())
             return response
-    
+
     context = RequestContext(request, locals())
     return render_to_response('accounts/account_signup.html', {}, context)
 
@@ -123,7 +123,7 @@ def membership_voting(request, type):
 
 @sensitive_post_parameters()
 @csrf_protect
-@login_required    
+@login_required
 def profile_update(request, tab='home'):
     user = request.user
     profile = user.profile
@@ -131,7 +131,7 @@ def profile_update(request, tab='home'):
     order = profile.membership_order
     membership = profile.membership_product_variation
     expiration = profile.membership_expiration_datetime
-            
+
     page = request.GET.get('page', 1)
 
     if tab == 'orders':
@@ -162,11 +162,11 @@ def profile_update(request, tab='home'):
 
     if request.method == 'POST':
         if 'update-photo' in request.POST:
-           photo_form = f.PhotoForm(request.POST, request.FILES, instance=profile)
-           if photo_form.is_valid():
+            photo_form = f.PhotoForm(request.POST, request.FILES, instance=profile)
+            if photo_form.is_valid():
                 user = photo_form.save()
                 success(request, 'Photo Updated Successfully')
-           photo_form = f.PhotoForm()
+            photo_form = f.PhotoForm()
         else:
             if tab == 'account':
                 form = f.AccountInformationForm(request.POST, instance=user)
@@ -201,12 +201,12 @@ def profile_update(request, tab='home'):
                         subscribe(request, '8aebc01ca2', request.user.email) # News letter
                     else:
                         unsubscribe(request, '8aebc01ca2', request.user.email)
-                        
+
                 elif tab == 'adduser':
                     form = None
             else:
                 error(request, 'Please fix the form errors below')
-            
+
     context = RequestContext(request, locals())
     return render_to_response('accounts/accounts_base_profile_update.html', {}, context)
 
@@ -218,7 +218,7 @@ def register_event(request):
     """
     from cartridge.shop.utils import recalculate_cart
     from bccf.models import Event, EventRegistration
-    
+
     member_ids = request.session['register_selected_members']
     event_id = request.session['register_selected_event']
     response = redirect(reverse('update'))
@@ -226,35 +226,35 @@ def register_event(request):
 
     event = Event.objects.get(id=event_id)
     seats = len(EventRegistration.objects.filter(event=event)) + len(member_ids)
-    
+
     if event.max_seats < seats: # Not everyone will fit
         error(request, 'There is not enough space in the event for your members.')
         return response
-    
+
     if event.event_product: # If paid event, add event to cart
         variation = ProductVariation.objects.get(sku='EVENT-%s' % event.pk)
         request.cart.add_item(variation, len(member_ids))
         recalculate_cart(request)
         response = redirect('/shop/checkout')
         message = 'Users registered successfully. Please continue with the  checkout to complete registrations.'
-        
+
         # Send event registration confirmation
         send_reminder("Event Registration Pending.", request.user, context={'event':event})
-        
+
     else: # If not paid event, auto-register the members
-        members = []        
+        members = []
         for member_id in member_ids:
             user = User.objects.get(id=member_id)
             members.append(user)
             EventRegistration.objects.create(user=user, event=event)
             send_reminder("Event Registration Complete.", user, context={'event': event})
-          
+
         # Send event registration confirmation
         send_reminder("Event Registration Complete.", request.user, context={'event': event, 'members': members})
 
         # Delete session variables since the IDs have been registered
         del request.session['register_selected_members']
-        del request.session['register_selected_event']   
+        del request.session['register_selected_event']
 
     success(request, message)
     return response

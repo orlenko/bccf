@@ -1,23 +1,33 @@
 <form method="POST">
     <strong class="fieldset-header">Professional Profile</strong>
-    <div class="form-group input_id_description"> 
+    <div class="form-group input_id_description">
         <p><label for="id_description">{{ form.description.label }}</label></p>
         {{ form.description }}
         <p class="help-block">{{ form.description.help_text }}</p>
         <p class="error-block">{{ form.description.errors.as_text|cut:'*' }}</p>
     </div>
-    <div class="form-group input_id_accreditation"> 
+    <div class="form-group input_id_accreditation">
         <p><strong><label for="id_description">I am certified in: </label><span class="help-block">(this data may be reviewed for accuracy)</span></strong></p>
-        {% for pk, choice in form.accreditation.field.widget.choices %}
-        <div class="form-group checkbox-group input_id_show_in_list"> 
-            <label for="id_accreditation_{{ forloop.counter0 }}"><a href="">{{ choice }}</a></label>
-            <input type="checkbox" id="id_accreditation_{{ forloop.counter0 }}" value="{{ pk }}" name="accreditation"/>
-        </div>
-        {{ form.accreditation.get_absolute_url }}
-        {% endfor %}
-        {% for all in form.accreditation.field.widget.choices %}
-            {{ all }}
-        {% endfor %}
+        <h3>Selected accreditations:</h3>
+
+		{% for accred in selected_accreditations %}
+			<div class="form-group checkbox-group input_id_show_in_list">
+	            <label><a href="{{ accred.get_absolute_url }}">{{accred.title}}</a></label>
+	            <input readonly="readonly" type="checkbox" value="{{ accred.id }}"
+	            	name="accreditation"
+	            	checked="checked" />
+	        </div>
+		{% endfor %}
+
+        <h3>Available programs (check to apply):</h3>
+
+		{% for accred in  available_programs %}
+			<div class="form-group checkbox-group input_id_show_in_list">
+	            <label><a href="{{ accred.get_absolute_url }}">{{accred.title}}</a></label>
+	            <input type="checkbox" value="{{ accred.id }}" name="accreditation" />
+	        </div>
+		{% endfor %}
+
         <p class="error-block">{{ form.accreditation.errors.as_text|cut:'*' }}</p>
     </div>
     {% csrf_token %}
