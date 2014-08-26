@@ -15,30 +15,3 @@
     
      <input id="submit" class="btn btn-primary btn-large lgreen-btn" type="submit" value="Save">
 </form> 
-{% if not user.profile.is_level_A %}
-<form method="POST">    
-    {% csrf_token %}
-    <div class="section affiliation">
-        <strong class="fieldset-header row-one">Affiliation Preferences</strong>
-        <div class="section row row-one">
-            <div class="form-group" id="input_id_membership_level">
-                    <a href="/bccf/memberships"><label for="id_membership_level">{{ form.membership_level.label }}</label></a>
-                    <div id="input_id_membership_level">{{ form.membership_level }}
-                    <p class="help-block">{{ form.membership_level.help_text }}</p>
-                    <p class="error-block">{{ form.membership_level.help_text }}</p></div>
-            </div>
-<!--        	<div class="col four mobile-full">
-        	   <input id="change-affiliation" class="btn btn-large lgreen-btn" type='submit' value="Purchase Upgrade">
-        	</div>
-        </div>
-        <div class="section row row-two">
-        	<div class="col ten mobile-full">
-                Cancel affiliation    	
-        	</div>
-        	<div class="col two mobile-full">
-        	   <a href="{% url 'member-membership-cancel' %}" class="lgreen-btn">Cancel</a>
-        	</div>
-        </div>
-    </div>    
-  </form> 
-{% endif %}

@@ -349,6 +349,7 @@ class BCCFProgramAdmin(DisplayableAdmin):
                                     'featured',
                                     'users',
                                     'user_added',
+                                    'marquee',
                                     'image']):
                 self.fieldsets[0][1]['fields'].insert(3, field)
 

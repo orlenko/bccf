@@ -8,10 +8,16 @@
     {% csrf_token %}
     <strong class="fieldset-header">Affiliation Level</strong>
     <div class="form-group input_id_membership_level">
-        <p><label for="id_membership_level">{{ form.membership_level.label }}</label</p>
+        <p><label for="id_membership_level">{{ form.membership_level.label }}</label></p>
         {{ form.membership_level }}
         <p class="help-block">{{ form.membership_level.help_text }}</p>
         <p class="error-block">{{ form.membership_level.errors.as_text|cut:'*' }}</p>
+    </div>
+    <div clas="form-group input_id_payment_frequency">
+        <p><label for="id_payment_frequency">{{ form.membership_order.label }}</label></p>
+        {{ form.payment_frequency }}
+        <p class="help-block">{{ form.payment_frequency.help_text }}</p>
+        <p class="error-block"{{ form.payment_frequency.errors.as_text|cut:'*' }}</p>
     </div>
     <div class="form-actions dashed-button">
     <input id="change-affiliation" class="btn btn-primary btn-large" type="submit" value="Change Affiliation">

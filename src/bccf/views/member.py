@@ -28,7 +28,6 @@ def profile(request, id, template='bccf/membership/profile.html'):
 def membership(request, slug):
     slugs = [slug, 'membership/%s' % slug]
     the_category = None
-    print "Inside membership"
     for categ in Category.objects.all():
         if categ.slug in slugs:
             the_category = categ
@@ -39,7 +38,6 @@ def membership(request, slug):
 
     if request.method == 'POST':
         variation_id = int(request.POST.get('variation_id'))
-        print variation_id
         variation = ProductVariation.objects.get(id=variation_id)
         request.cart.add_item(variation, 1)
         recalculate_cart(request)
@@ -60,7 +58,7 @@ def membership(request, slug):
     context = RequestContext(request, locals())
     return render_to_response('bccf/membership/membership.html', {}, context_instance=context)
 
-@login_required
+
 def membership_upgrade(request, variation_id):
     '''This view handles these scenarios:
      - A purchase of a paid membership by a holder of a free membership
@@ -75,11 +73,7 @@ def membership_upgrade(request, variation_id):
     user = request.user
     profile = user.profile
     current_order = profile.membership_order
-    membership_type = profile.membership_type
-    print membership_type
-    print variation_id
-    print profile.membership_order
-    variation = ProductVariation.objects.get(id=variation_id)
+    variation = ProductVariation.objects.get(pk=variation_id)
     membership_type = profile.membership_type[:3].upper()
     if not membership_type in variation.sku:
         # Cannot upgrade between membership types
@@ -87,7 +81,7 @@ def membership_upgrade(request, variation_id):
         return HttpResponseRedirect(reverse('member-profile'))
     discount_amount = profile.remaining_balance
     if discount_amount:
-        discount_code = str(uuid4())
+        discount_code = str(uuid4()) 
         discount = DiscountCode.objects.create(title='[temporary discount for membership upgrade]',
                                 active=True,
                                 discount_deduct=discount_amount,
@@ -105,7 +99,6 @@ def membership_upgrade(request, variation_id):
     log.debug('Adding item to cart: %s' % variation)
     request.cart.add_item(variation, 1)
     return redirect('shop_checkout')
-
 
 @require_any_membership
 def membership_renew(request):
@@ -136,10 +129,10 @@ def membership_cancel(request):
                          'Your membership cancellation request has been submitted. '
                          'You should receive an email about this. '
                          'We will get back to you as soon as we can.')
-
+        
         # Send email moderate
-        send_moderate('Membership Cancellation Request', context={'user': user})
-
+        send_moderate('Membership Cancellation Request', context={'user': user})        
+        
         return HttpResponseRedirect('/')
     context = RequestContext(request, locals())
     return render_to_response('bccf/membership/cancel.html', {}, context_instance=context)
@@ -154,7 +147,7 @@ def voting_membership(request, variation_id):
     current_order = profile.voting_order
     current_membership = profile.voting_product_variation
     variation = ProductVariation.objects.get(id=variation_id)
-
+    
 
 def addmember(request):
     form = AddUsersForm(data=request.REQUEST)
