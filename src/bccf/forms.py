@@ -610,6 +610,7 @@ class ProfessionalProfileForm(forms.ModelForm):
         }
  
 class AffiliationForm(forms.ModelForm):
+
     class Meta:
         model = UserProfile
         fields = ('membership_level', 'membership_type')

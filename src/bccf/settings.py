@@ -110,7 +110,7 @@ SHOP_USE_WISHLIST = False
 
 # Controls the ordering and grouping of the admin menu.
 #
-SITE_TITLE = "BC Council for Families"
+SITE_TITLE = 'BC Council for Families'
 
 ADMIN_MENU_ORDER = (
     ("Content", ("pages.Page", "bccf.BCCFGenericPage", "bccf.BCCFTopic",

@@ -359,4 +359,4 @@ else:
     set_dynamic_settings(globals())
 
 
-SET_TITLE = "BC Council for Families"
+SITE_TITLE = "BC Council for Families"

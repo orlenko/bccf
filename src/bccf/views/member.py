@@ -73,6 +73,8 @@ def membership_upgrade(request, variation_id):
     user = request.user
     profile = user.profile
     current_order = profile.membership_order
+    membership = request.user.profile.membership_product_variation
+    print membership
     variation = ProductVariation.objects.get(pk=variation_id)
     membership_type = profile.membership_type[:3].upper()
     if not membership_type in variation.sku:

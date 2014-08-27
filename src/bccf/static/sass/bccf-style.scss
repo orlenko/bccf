@@ -74,7 +74,7 @@ html { font-size: 100%; }
 
 /* Micro Clearfix */
 .clear:before, .clear:after { content: ""; display: table; } .clear:after { clear: both; } .clear { zoom: 1; }
-.section:before, .section:after { content: ""; display: table; } .section:after { clear: both; } .section { zoom: 1; }
+.section:before, .section:after { content: ""; display: table; padding-top:10px } .section:after { clear: both; } .section { zoom: 1; }
 .checkbox:before, .checkbox:after { content: ""; display: table; } .checkbox:after { clear: both; } .checkbox { zoom: 1; }
 
 /* Helpers */
@@ -918,6 +918,7 @@ textarea {
 	.hcal-inner {
 		float:left;
 		width:98.5%;
+        height: 50%;
 		margin:4px;
 		padding:4px 20px 18px;
 		border:1px dashed $lgrey;
@@ -931,7 +932,7 @@ textarea {
 		li{
 			display:inline-block;
 			height:30px;
-			width:103px;
+			width:22%;
 			padding:4px 6px 0 0;
 			a,
 			input[type="submit"] {
@@ -947,7 +948,7 @@ textarea {
 			}
 		}
         .program {
-                width:270px;
+                width:52%;
         }
 	}
 	.hcal-heading {

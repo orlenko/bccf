@@ -801,7 +801,7 @@ class UserProfile(PybbProfile):
     def set_membership_order(self, order):
         self.membership_order = order
         # Update membership type and level
-        variation = self.membership_product_variation
+        variation = self.membership_product_variation.id
         sku_parts = variation.sku.split('-')
         self.membership_level = sku_parts[1] # only get the middle one (B or C)
 

@@ -7,6 +7,8 @@
 <form enctype="multipart/form-data" method="POST">
     {% csrf_token %}
     <strong class="fieldset-header">Affiliation Level</strong>
+    {{ form.variation }}
+    after
     <div class="form-group input_id_membership_level">
         <p><label for="id_membership_level">{{ form.membership_level.label }}</label></p>
         {{ form.membership_level }}
