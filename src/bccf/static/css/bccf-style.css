@@ -7066,7 +7066,7 @@ div.total .two-weeks {
 For BCCF Memberships
 */
 /* line 5, ../mixins/memberships.scss */
-.membership, .mem-yellow, .mem-dteal, .mem-lteal, .mem-green, .two-words {
+.membership, .mem-yellow, .mem-dteal, .mem-lteal, .mem-green, .two-words, .free, .regular, .premium {
   max-width: 562px;
   margin-bottom: 18px;
   float: left;
@@ -7074,11 +7074,11 @@ For BCCF Memberships
   background-repeat: repeat-y;
 }
 /* line 12, ../mixins/memberships.scss */
-.membership ul, .mem-yellow ul, .mem-dteal ul, .mem-lteal ul, .mem-green ul, .two-words ul {
+.membership ul, .mem-yellow ul, .mem-dteal ul, .mem-lteal ul, .mem-green ul, .two-words ul, .free ul, .regular ul, .premium ul {
   list-style: none;
 }
 /* line 15, ../mixins/memberships.scss */
-.membership li, .mem-yellow li, .mem-dteal li, .mem-lteal li, .mem-green li, .two-words li {
+.membership li, .mem-yellow li, .mem-dteal li, .mem-lteal li, .mem-green li, .two-words li, .free li, .regular li, .premium li {
   float: left;
   width: 100%;
   min-height: 40px;
@@ -7086,13 +7086,13 @@ For BCCF Memberships
   margin-top: 6px;
 }
 /* line 22, ../mixins/memberships.scss */
-.membership li p, .mem-yellow li p, .mem-dteal li p, .mem-lteal li p, .mem-green li p, .two-words li p {
+.membership li p, .mem-yellow li p, .mem-dteal li p, .mem-lteal li p, .mem-green li p, .two-words li p, .free li p, .regular li p, .premium li p {
   float: right;
   margin-right: 72px;
   text-align: center;
 }
 /* line 26, ../mixins/memberships.scss */
-.membership li p:first-child, .mem-yellow li p:first-child, .mem-dteal li p:first-child, .mem-lteal li p:first-child, .mem-green li p:first-child, .two-words li p:first-child {
+.membership li p:first-child, .mem-yellow li p:first-child, .mem-dteal li p:first-child, .mem-lteal li p:first-child, .mem-green li p:first-child, .two-words li p:first-child, .free li p:first-child, .regular li p:first-child, .premium li p:first-child {
   float: left;
   width: 50%;
   text-align: left;
@@ -7100,12 +7100,12 @@ For BCCF Memberships
   margin-right: 10px;
 }
 /* line 36, ../mixins/memberships.scss */
-.membership li:first-child, .mem-yellow li:first-child, .mem-dteal li:first-child, .mem-lteal li:first-child, .mem-green li:first-child, .two-words li:first-child {
+.membership li:first-child, .mem-yellow li:first-child, .mem-dteal li:first-child, .mem-lteal li:first-child, .mem-green li:first-child, .two-words li:first-child, .free li:first-child, .regular li:first-child, .premium li:first-child {
   background: none;
   min-height: 100px;
 }
 /* line 38, ../mixins/memberships.scss */
-.membership li:first-child p, .mem-yellow li:first-child p, .mem-dteal li:first-child p, .mem-lteal li:first-child p, .mem-green li:first-child p, .two-words li:first-child p {
+.membership li:first-child p, .mem-yellow li:first-child p, .mem-dteal li:first-child p, .mem-lteal li:first-child p, .mem-green li:first-child p, .two-words li:first-child p, .free li:first-child p, .regular li:first-child p, .premium li:first-child p {
   float: right;
   clear: both;
   width: auto;
@@ -7113,14 +7113,14 @@ For BCCF Memberships
   margin: -8px 50px 18px;
 }
 /* line 43, ../mixins/memberships.scss */
-.membership li:first-child p:nth-child(2), .mem-yellow li:first-child p:nth-child(2), .mem-dteal li:first-child p:nth-child(2), .mem-lteal li:first-child p:nth-child(2), .mem-green li:first-child p:nth-child(2), .two-words li:first-child p:nth-child(2) {
+.membership li:first-child p:nth-child(2), .mem-yellow li:first-child p:nth-child(2), .mem-dteal li:first-child p:nth-child(2), .mem-lteal li:first-child p:nth-child(2), .mem-green li:first-child p:nth-child(2), .two-words li:first-child p:nth-child(2), .free li:first-child p:nth-child(2), .regular li:first-child p:nth-child(2), .premium li:first-child p:nth-child(2) {
   background-color: #8fab3d;
   float: right;
   text-align: center;
   margin: 0px 30px 18px;
 }
 /* line 49, ../mixins/memberships.scss */
-.membership li:first-child p:nth-child(2) a, .mem-yellow li:first-child p:nth-child(2) a, .mem-dteal li:first-child p:nth-child(2) a, .mem-lteal li:first-child p:nth-child(2) a, .mem-green li:first-child p:nth-child(2) a, .two-words li:first-child p:nth-child(2) a {
+.membership li:first-child p:nth-child(2) a, .mem-yellow li:first-child p:nth-child(2) a, .mem-dteal li:first-child p:nth-child(2) a, .mem-lteal li:first-child p:nth-child(2) a, .mem-green li:first-child p:nth-child(2) a, .two-words li:first-child p:nth-child(2) a, .free li:first-child p:nth-child(2) a, .regular li:first-child p:nth-child(2) a, .premium li:first-child p:nth-child(2) a {
   font-weight: bold;
   color: #000;
   float: left;
@@ -7131,7 +7131,7 @@ For BCCF Memberships
   border: 1px dashed #fff;
 }
 /* line 59, ../mixins/memberships.scss */
-.membership li:first-child p:nth-child(2) a:hover, .mem-yellow li:first-child p:nth-child(2) a:hover, .mem-dteal li:first-child p:nth-child(2) a:hover, .mem-lteal li:first-child p:nth-child(2) a:hover, .mem-green li:first-child p:nth-child(2) a:hover, .two-words li:first-child p:nth-child(2) a:hover {
+.membership li:first-child p:nth-child(2) a:hover, .mem-yellow li:first-child p:nth-child(2) a:hover, .mem-dteal li:first-child p:nth-child(2) a:hover, .mem-lteal li:first-child p:nth-child(2) a:hover, .mem-green li:first-child p:nth-child(2) a:hover, .two-words li:first-child p:nth-child(2) a:hover, .free li:first-child p:nth-child(2) a:hover, .regular li:first-child p:nth-child(2) a:hover, .premium li:first-child p:nth-child(2) a:hover {
   color: #336442;
   text-decoration: none;
   background-color: #fdcd26;
@@ -7164,6 +7164,33 @@ For BCCF Memberships
   width: auto;
   text-align: center;
   margin: -8px 40px 18px;
+}
+
+/* line 103, ../mixins/memberships.scss */
+.free li:first-child p {
+  float: right;
+  clear: both;
+  width: auto;
+  text-align: center;
+  margin: -8px 64px 18px;
+}
+
+/* line 114, ../mixins/memberships.scss */
+.regular li:first-child p {
+  float: right;
+  clear: both;
+  width: auto;
+  text-align: center;
+  margin: -8px 51px 18px;
+}
+
+/* line 125, ../mixins/memberships.scss */
+.premium li:first-child p {
+  float: right;
+  clear: both;
+  width: auto;
+  text-align: center;
+  margin: -8px 48px 18px;
 }
 
 /* line 2, ../mixins/marquee_themes.scss */

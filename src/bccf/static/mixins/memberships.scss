@@ -96,3 +96,37 @@ For BCCF Memberships
 		margin: -8px 40px 18px;}}
 	}
 }
+.free {
+	@extend .membership;
+	li { &:first-child 
+	{
+					       		p{float:right;
+								clear:both;
+								width:auto;
+								text-align:center;
+		margin: -8px 64px 18px;}}
+	}
+}
+.regular {
+	@extend .membership;
+	li { &:first-child 
+	{
+					       		p{float:right;
+								clear:both;
+								width:auto;
+								text-align:center;
+		margin: -8px 51px 18px;}}
+	}
+}
+.premium {
+	@extend .membership;
+	li { &:first-child 
+	{
+					       		p{float:right;
+								clear:both;
+								width:auto;
+								text-align:center;
+		margin: -8px 48px 18px;}}
+	}
+}
+	
