@@ -1,6 +1,7 @@
 <div class="page-container-outer col ten mobile-twelve tablet-twelve">
     <div id="{{ carousel_name }}_id-carousel" class="carousel-slide to-carousel">
         <!-- SLIDER -->
+        {% autoescape off %}
         {% include 'generic/carousel_slide_part.html' %}
     </div>
     <div class="reset section slide-content twelve"></div>
@@ -9,4 +10,5 @@
     <div id="{{ carousel_name }}_id-grid" class="carousel-grid to-carousel">
         {% include 'generic/carousel_grid_part.html' %}
     </div>
+    {% endautoescape %}
 </div>
