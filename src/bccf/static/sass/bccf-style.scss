@@ -74,7 +74,7 @@ html { font-size: 100%; }
 
 /* Micro Clearfix */
 .clear:before, .clear:after { content: ""; display: table; } .clear:after { clear: both; } .clear { zoom: 1; }
-.section:before, .section:after { content: ""; display: table; padding-top:10px } .section:after { clear: both; } .section { zoom: 1; }
+.section:before, .section:after { content: ""; display: table} .section:after { clear: both; } .section { zoom: 1; }
 .checkbox:before, .checkbox:after { content: ""; display: table; } .checkbox:after { clear: both; } .checkbox { zoom: 1; }
 
 /* Helpers */
@@ -753,6 +753,13 @@ textarea {
 
     .page-marquee {
         min-height: 300px;        
+
+        .lightbox {
+            height: 100%;
+            right: 0;
+            width: 300px;
+            bottom: 0;
+        }
     }
 
 	img {
@@ -2243,6 +2250,9 @@ footer {
 		border-right:2px solid $lgrey;
 		font-size:14px;
 		color:$dgrey;
+        height: 80%;
+        width: 80%;
+        line-height: 24px;
 
 		p {
 			margin:2px 0;
