@@ -2,7 +2,7 @@
 
   VCN BCCF Project 2014
   From the original work of Matthew Hartman with BASE
-  Authors/Contributors: Hugues Deraps, Karl Castillo & Vlad Orlenko. 
+  Authors/Contributors: Hugues Deraps, Karl Castillo & Vlad Orlenko.
 
 ========================================================================== */
 
@@ -719,7 +719,7 @@ textarea {
 		}
 
         .form-group {
-            margin: 0;                
+            margin: 0;
         }
 
 		input[type="text"] {
@@ -752,7 +752,7 @@ textarea {
 	padding:0;
 
     .page-marquee {
-        min-height: 300px;        
+        min-height: 300px;
 
         .lightbox {
             height: 100%;
@@ -1023,7 +1023,7 @@ textarea {
             color:#000000;
 		}
 		.caption-body {
-		  margin-top: 10px;    
+		  margin-top: 10px;
 		}
 	}
     .hnote-buttons {
@@ -1086,7 +1086,7 @@ textarea {
 			color:#000000;
 		}
 		.caption-body {
-		  margin-top: 10px;    
+		  margin-top: 10px;
 		}
 	}
 	.hpro-buttons {
@@ -1174,16 +1174,16 @@ textarea {
 				width: 75px;
 				height: 75px;
 			}
-			
+
 			.user-info {
-			    padding: 10px; 
-			    color: $dgrey;   
+			    padding: 10px;
+			    color: $dgrey;
 			}
 
             a {
                 text-decoration: none;
-            }			
-			
+            }
+
 			h6 {
 				color:$lgreen;
 				margin: 6px;
@@ -1195,9 +1195,9 @@ textarea {
 				margin:0;
 		    }
 		    span {
-		      margin-right: 5px;    
+		      margin-right: 5px;
 		      i {
-		          margin-right: inherit;    
+		          margin-right: inherit;
 		      }
 		    }
 
@@ -1368,7 +1368,7 @@ textarea {
         		  padding: 4px 10px 10px 10px;
         		}
         		.page-image {
-                    padding: 0;        		    
+                    padding: 0;
       		    }
         		p {
         		  @include font-size(11);
@@ -1391,7 +1391,7 @@ textarea {
                 margin-bottom: 10px;
             }
             .page-box:nth-of-type(4n) {
-                margin-left: 0;    
+                margin-left: 0;
             }
             .grid-content {
                 margin-top: -10px;
@@ -1443,7 +1443,7 @@ textarea {
         z-index: 999;
         &:hover {
             color: #FFF;
-            text-decoration: none;    
+            text-decoration: none;
         }
     }
 }
@@ -1456,7 +1456,7 @@ textarea {
         > div:first-child {
             //background-color: #FFF;
             //padding: 5px;
-        }    
+        }
     }
 
     .my-rating {
@@ -1474,23 +1474,23 @@ textarea {
             font-size: 14px;
         }
         .rating-cancel {
-            display: none !important;        
+            display: none !important;
         }
         form {
             position: absolute;
             right: 0;
-            bottom: 0;    
+            bottom: 0;
         }
     }
-    
+
     #related-resource-outer {
         border-top: 2px solid #000;
         color: #000;
-        background-color: $lgreen;  
+        background-color: $lgreen;
         margin: -10px;
         margin-top: -5px;
         min-height: 30vh;
-        padding: 20px;  
+        padding: 20px;
     }
 
     .related-resource {
@@ -1499,7 +1499,7 @@ textarea {
         margin: 0;
         ul {
             padding: 0;
-            list-style: none;    
+            list-style: none;
         }
         h4 {
             @include font-size(15);
@@ -1519,17 +1519,17 @@ textarea {
         }
         .downloadable-forms-class {
             i:before {
-                @extend .fa-check-square-o   
+                @extend .fa-check-square-o
             }
         }
         .magazines-class {
             i:before {
-                @extend .fa-book    
+                @extend .fa-book
             }
         }
         .podcasts-class {
             i:before {
-                @extend .fa-volume-up    
+                @extend .fa-volume-up
             }
         }
         .tip-sheets-class {
@@ -1539,7 +1539,7 @@ textarea {
         }
         .videos-class {
             i:before {
-                @extend .fa-video-camera    
+                @extend .fa-video-camera
             }
         }
     }
@@ -1577,19 +1577,19 @@ textarea {
                         color: #FFF;
                     }
                     &.active {
-                        background-color: $sgreen;    
+                        background-color: $sgreen;
                     }
                 }
             }
         }
         .baby-content {
-            padding: 10px;    
+            padding: 10px;
         }
         #child-home {
-            color: #FFF;    
+            color: #FFF;
         }
     }
-    
+
     .author-box {
         border-top: 2px dashed $lgrey;
         padding-top: 20px;
@@ -1598,11 +1598,11 @@ textarea {
             padding-left: 10px;
             p {
                 margin-top: 0;
-                margin-bottom: 0;    
-            }    
+                margin-bottom: 0;
+            }
         }
-        .author-name { 
-            font-family: $roboto;    
+        .author-name {
+            font-family: $roboto;
         }
 
 .ajax-loader {
@@ -1612,7 +1612,7 @@ textarea {
 
 #related-resource-container {
     background-color: $lgreen;
-    border-top: 2px solid $dgrey; 
+    border-top: 2px solid $dgrey;
     padding: 15px;
 }
 
@@ -1780,8 +1780,8 @@ textarea {
 
     .tag-carousel {
         .section {
-            padding: 5px;    
-        }    
+            padding: 5px;
+        }
     }
     .tag-img {
         display: block;
@@ -1882,8 +1882,8 @@ textarea {
         clear: both;
         border: none;
         background-color: $sgrey;
-        color: $dgrey;    
-    }  
+        color: $dgrey;
+    }
 }
 .user-box {
     .user-rating-box {
@@ -1893,7 +1893,7 @@ textarea {
         width: 100%;
         .rate-count {
             @include font-size(12);
-            margin-left: 5px;    
+            margin-left: 5px;
         }
     }
     img {
@@ -1903,7 +1903,7 @@ textarea {
         height: 150px;
     }
     .social {
-        margin-top: 0;    
+        margin-top: 0;
     }
     a {
         text-decoration: none;
@@ -1913,47 +1913,47 @@ textarea {
             text-align: center;
             line-height: 20px;
             &:hover {
-                color: #FFF; 
-                text-decoration: none !important;   
-            }   
+                color: #FFF;
+                text-decoration: none !important;
+            }
         }
         &.fa-facebook:hover {
-            background-color: #3B5998;        
-        }    
+            background-color: #3B5998;
+        }
         &.fa-twitter:hover {
-            background-color: #9AE4E8;    
+            background-color: #9AE4E8;
         }
         &.fa-linkedin:hover {
-            background-color: #03659A;    
+            background-color: #03659A;
         }
     }
     .info {
         @include font-size(13);
         padding-top: 50px;
-        padding-left: 25px;       
+        padding-left: 25px;
         h3 {
-            margin-bottom: 0;    
+            margin-bottom: 0;
         }
         strong {
-            @include font-size(15);    
+            @include font-size(15);
         }
         i.fa:before {
-            margin-right: 5px;    
+            margin-right: 5px;
         }
         .contact {
             > span:not(:first-child):not(:nth-child(2)) {
-                margin-left: 10px;    
+                margin-left: 10px;
             }
         }
         a:hover {
-            text-decoration: underline;    
+            text-decoration: underline;
         }
     }
     .contact {
         margin-bottom: 0;
     }
     .accreditation {
-        margin-top: 0;    
+        margin-top: 0;
     }
     .user-events {
         h4 {
@@ -1965,27 +1965,27 @@ textarea {
             list-style: none;
             padding-left: 0;
             li {
-                display: inline-block;    
-            }    
+                display: inline-block;
+            }
         }
         .event-header {
-            font-weight: 600;    
+            font-weight: 600;
         }
         .event-row {
             padding-top: 5px;
             padding-bottom: 5px;
             ul {
-                margin: 0;  
+                margin: 0;
             }
             .action {
-                text-align: center;    
+                text-align: center;
             }
             input[type='submit'] {
                 border: 0;
                 background: 0;
                 &:hover {
-                    text-decoration: underline;    
-                }    
+                    text-decoration: underline;
+                }
             }
         }
         .event-header,
@@ -1995,7 +1995,7 @@ textarea {
         a[title='More'] {
             text-decoration: underline;
             color: $lgreen;
-            font-weight: bold;    
+            font-weight: bold;
         }
     }
 }
@@ -2060,7 +2060,7 @@ textarea {
 
 .req-asterisk {
     @include font-size(10);
-    color: $lgreen;    
+    color: $lgreen;
 }
 
 /* Generic Above Footer */
@@ -2076,14 +2076,14 @@ textarea {
 .photo {
     border: 10px solid $sgrey;
     max-width: 200px;
-    max-height: 200px; 
+    max-height: 200px;
 }
 .fake-photo-container {
     cursor: pointer;
     &:hover {
         .photo-over {
-            display: block;    
-        }    
+            display: block;
+        }
     }
     .photo-over {
         @include font-size(13);
@@ -2257,6 +2257,12 @@ footer {
 		p {
 			margin:2px 0;
 			padding:0;
+			a {
+			  img {
+			    width: 18px;
+			    height: 18px;
+			  }
+			}
 		}
 
 
@@ -2410,7 +2416,7 @@ footer {
 
 #browse-by {
     #browse-by-nav {
-        > ul { 
+        > ul {
             > li {
                 @include font-size(12);
                 width: 112px;
@@ -2418,13 +2424,13 @@ footer {
                     > li {
                       line-height: 10px;
                       a {
-                        padding: 15px 0;                      
+                        padding: 15px 0;
                       }
-                    }    
+                    }
                 }
-            }    
+            }
         }
-    }    
+    }
 }
 
 
@@ -2563,7 +2569,7 @@ footer {
 
     .related-resource {
         width: 50%;
-    } 
+    }
 
 #tag-widget {
 
@@ -2606,7 +2612,7 @@ footer {
         left: 0;
     }
     form {
-        position: static;    
+        position: static;
     }
 }
 
@@ -3058,11 +3064,11 @@ table td {
         > li {
             width: 100%;
             a {
-                @include font-size(20); 
-                background-color: $lgreen !important;   
+                @include font-size(20);
+                background-color: $lgreen !important;
             }
         }
-    }    
+    }
 }
 
 .social-box,
@@ -3078,7 +3084,7 @@ table td {
         left: 0;
     }
     form {
-        position: static;    
+        position: static;
     }
 }
 
