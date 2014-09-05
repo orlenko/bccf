@@ -10,9 +10,9 @@ var prep_history_carousel = function(elem) {
 };
 var history_not_mobile = {
     'singleItem': true,
-    'slideSpeed': 1200,
-    'paginationSpeed': 1200,
-    'rewindSpeed': 1200,
+    'slideSpeed': 2000,
+    'paginationSpeed': 2000,
+    'rewindSpeed': 4000,
     'pagination': false,
     'stopOnHover': true,
     'addClassActive': true,
@@ -22,7 +22,7 @@ var history_not_mobile = {
     'afterUpdate': function(elem) { prep_history_carousel(elem); },
     'afterInit': function(elem) { elem.find('.active .history-image').show(); },
     'theme': 'history-theme',
-}
+};
 var history_mobile = {
     'singleItem': true,
     'pagination': false,
@@ -31,11 +31,14 @@ var history_mobile = {
     'responsiveRefreshRate': 1,
     'afterInit': function(elem) { elem.find('.history-image').show(); },
     'afterUpdate': function(elem) { prep_history_carousel(elem); },
-}
+};
 $(function(){
     $('#slide-container').owlCarousel({
         'singleItem': true,
-        'autoPlay': true,
+        'autoPlay': 10000,
+	    'slideSpeed': 2000,
+	    'paginationSpeed': 2000,
+	    'rewindSpeed': 4000,
         'stopOnHover': true,
         'theme': "big-marquee",
     });
@@ -64,7 +67,7 @@ $(function(){
     if($('.mnav-mobile-btn').is(':visible')) {
         $('#history-carousel').owlCarousel(history_mobile);
     } else {
-        $('#history-carousel').owlCarousel(history_not_mobile);  
+        $('#history-carousel').owlCarousel(history_not_mobile);
     }
     $('#member-professionals-carousel').owlCarousel({
         'singleItem': true,
@@ -76,7 +79,7 @@ $(function(){
         'beforeMove': function(elem) {
             if(!elem.is(':hover') && (this.owl.currentItem+1) === this.owl.owlItems.length && !$('.mnav-mobile-btn').is(':visible')) {
                 $('#member-organization').trigger('click');
-            }     
+            }
         }
     });
     $('#member-organization-carousel').owlCarousel({
@@ -87,7 +90,7 @@ $(function(){
         'theme': 'normal-marquee',
         'addClassActive': true,
         'beforeMove': function(elem) {
-            if(!elem.is(':hover') && (this.owl.currentItem+1) === this.owl.owlItems.length && !$('.mnav-mobile-btn').is(':visible')) { 
+            if(!elem.is(':hover') && (this.owl.currentItem+1) === this.owl.owlItems.length && !$('.mnav-mobile-btn').is(':visible')) {
                 $('#member-professionals').trigger('click');
             }
          }
@@ -99,10 +102,10 @@ $(function(){
         'stopOnHover': true,
         'theme': "normal-marquee",
         'beforeMove': function(elem) {
-            if(!elem.is(':hover') && (this.owl.currentItem+1) === this.owl.owlItems.length && !$('.mnav-mobile-btn').is(':visible')) { 
+            if(!elem.is(':hover') && (this.owl.currentItem+1) === this.owl.owlItems.length && !$('.mnav-mobile-btn').is(':visible')) {
                 $('#training-families').trigger('click');
             }
-        } 
+        }
     });
     $('#hcal-families-carousel').owlCarousel({
         'singleItem': true,
@@ -111,9 +114,9 @@ $(function(){
         'stopOnHover': true,
         'theme': "normal-marquee",
         'beforeMove': function(elem) {
-            if(!elem.is(':hover') && (this.owl.currentItem+1) === this.owl.owlItems.length && !$('.mnav-mobile-btn').is(':visible')) { 
+            if(!elem.is(':hover') && (this.owl.currentItem+1) === this.owl.owlItems.length && !$('.mnav-mobile-btn').is(':visible')) {
                 $('#training-professionals').trigger('click');
-            }    
+            }
         }
     });
     $('#training-families').trigger('click');
@@ -197,8 +200,8 @@ function slideDownImage(elem, direction) {
             }
         },
         complete: function() {
-            elem.trigger('owl.'+direction);    
-        }  
+            elem.trigger('owl.'+direction);
+        }
     });
 }
 
@@ -207,7 +210,7 @@ function slideUpImage(elem) {
     var $revealMe = elem.find('.active .history-image');
     $revealMe.css({
         position: "relative",
-        top: $(this).height(),           
+        top: $(this).height(),
     }).delay(800).show().animate({
         top: -20,
     }, {
@@ -218,7 +221,7 @@ function slideUpImage(elem) {
             }
         }
     }).delay(20).animate({
-        top: 0,        
+        top: 0,
     }, {
         duration: 20,
         step: function(now, fx) {
@@ -226,5 +229,5 @@ function slideUpImage(elem) {
                 $(fx.elem).scroll(now);
             }
         }
-    });    
+    });
 }
