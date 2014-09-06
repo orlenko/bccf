@@ -183,23 +183,23 @@ class ProductDownloadableContent(Orderable):
     Downloadable Content`` model ensures there is a single set of downloadable content
     for the product.
     """
-    
+
     file = FileField("Downloadable Content",
-        upload_to = upload_to("shop.ProductDownloadable.file", "product"),     
+        upload_to = upload_to("shop.ProductDownloadable.file", "product"),
         extensions = ['.pdf'],
         max_length = 255,
         null = True,
         blank = True,
-        help_text = 'You can upload a downloadable content. ' 
+        help_text = 'You can upload a downloadable content. '
             'Acceptable file types: .pdf.')
     description = CharField(_('Description'), blank=True, max_length=1000)
     product = models.ForeignKey("Product", related_name="downloadables")
-        
+
     class Meta:
         verbose_name = _("Downloadable Content")
         verbose_name_plural = _("Downloadable Contents")
         order_with_respect_to = "product"
-        
+
     def __unicode__(self):
         value = self.description
         if not value:
@@ -450,7 +450,7 @@ class Order(models.Model):
 
     PAYMENT_METHOD = (
         ('paypal', 'Paypal'),
-        ('bill', 'Bill Payment')    
+        ('bill', 'Bill Payment')
     )
 
     billing_detail_first_name = CharField(_("First name"), max_length=100)
@@ -545,6 +545,7 @@ class Order(models.Model):
         remaining count for discount code (if applicable) and then
         delete the cart.
         """
+        self.status = 2
         self.save()  # Save the transaction ID.
         discount_code = request.session.get('discount_code')
         for field in ("order",) + self.session_fields:
@@ -676,7 +677,7 @@ class Cart(models.Model):
             if item.sku in discount_skus:
                 total += discount.calculate(item.unit_price) * item.quantity
         return total
-        
+
     def calculate_item_discount(self, product, discount):
         """
         Calculates the discount for a specific product, some might not have

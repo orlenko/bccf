@@ -145,7 +145,7 @@ def payment_handler(request, order_form, order):
     Processes Payment
     """
     if order_form.cleaned_data.get('payment_method') == 'paypal':
-        paypal.execute(request)
+        paypal.process(request, order_form, order)
         return generate_transaction_id()
 
 

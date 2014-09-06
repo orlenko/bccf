@@ -169,6 +169,7 @@ def send_order_email(request, order):
                      "order_items": order.items.all()}
     order_context.update(order.details_as_dict())
     try:
+        log.debug('Loading template: order_receipt')
         get_template("shop/email/order_receipt.html")
     except TemplateDoesNotExist:
         receipt_template = "email/order_receipt"

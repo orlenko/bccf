@@ -58,7 +58,7 @@ def product(request, slug, template="shop/product.html"):
         child_categories = Category.objects.filter(id__in=sub_categories)
         context = RequestContext(request, locals())
         return render_to_response('pages/category.html', {}, context_instance=context)
-    else: 
+    else:
         fields = [f.name for f in ProductVariation.option_fields()]
         variations = product.variations.all()
         variations_json = simplejson.dumps([dict([(f, getattr(v, f))
@@ -71,9 +71,9 @@ def product(request, slug, template="shop/product.html"):
             initial_data = dict([(f, getattr(variations[0], f)) for f in fields])
         initial_data["quantity"] = 1
         add_product_form = AddProductForm(request.POST or None, product=product,
-                                          initial=initial_data, to_cart=to_cart)     
+                                          initial=initial_data, to_cart=to_cart)
         if request.method == "POST":
-            if add_product_form.is_valid(): 
+            if add_product_form.is_valid():
                 if to_cart:
                     quantity = add_product_form.cleaned_data["quantity"]
                     request.cart.add_item(add_product_form.variation, quantity)
@@ -143,7 +143,7 @@ def wishlist(request, template="shop/wishlist.html"):
     published_products = Product.objects.published(for_user=request.user)
     f = {"product__in": published_products, "sku__in": skus}
     wishlist = ProductVariation.objects.filter(**f).select_related(depth=1)  # @UndefinedVariable - PyDev is wrongly freaking out over select_related
-    wishlist = sorted(wishlist, key=lambda v: skus.index(v.sku))     
+    wishlist = sorted(wishlist, key=lambda v: skus.index(v.sku))
     context = {"wishlist_items": wishlist, "error": error}
     response = render(request, template, context)
     if len(wishlist) < len(skus):
@@ -215,22 +215,22 @@ def checkout_steps(request):
 
     # Level C Discount
     if request.user.profile.is_level_C:
-        request.session['force_discount'] = 'l3v3lC15' 
+        request.session['force_discount'] = 'l3v3lC15'
 
     # Determine the Form class to use during the checkout process
     form_class = get_callable(settings.SHOP_CHECKOUT_FORM_CLASS)
 
     initial = checkout.initial_order_data(request, form_class)
 
-    cancelled = request.GET.get('c', None)    
-    
+    cancelled = request.GET.get('c', None)
+
     if not cancelled:
         step = int(request.POST.get("step", None)
                    or initial.get("step", None)
                    or checkout.CHECKOUT_STEP_FIRST)
     else:
         step = checkout.CHECKOUT_STEP_FIRST
-        
+
     form = form_class(request, step, initial=initial)
     data = request.POST
     checkout_errors = []
@@ -263,9 +263,9 @@ def checkout_steps(request):
                     tax_handler(request, form)
                 except checkout.CheckoutError, e:
                     checkout_errors.append(e)
-                    
+
                 form.set_discount()
-                
+
                 if form.cleaned_data.get('payment_method') == 'paypal':
                     step += 1
                     try:
@@ -273,10 +273,12 @@ def checkout_steps(request):
                         request.session.modified = True
                     except KeyError:
                         pass
+                    log.debug('Redirecting to Paypal')
                     return redirect(Paypal.process(request, form))
 
             # FINAL CHECKOUT STEP - handle payment and process order.
             if step == checkout.CHECKOUT_STEP_LAST and not checkout_errors:
+                log.debug('Last step!')
                 # Create and save the initial order object so that
                 # the payment handler has access to all of the order
                 # fields. If there is a payment error then delete the
@@ -286,7 +288,9 @@ def checkout_steps(request):
                 order.setup(request)
                 # Try payment.
                 try:
+                    log.debug('Handling payment')
                     transaction_id = payment_handler(request, form, order)
+                    log.debug('Payment successful')
                 except checkout.CheckoutError, e:
                     # Error in payment handler.
                     order.delete()
@@ -299,7 +303,7 @@ def checkout_steps(request):
                     # ``order_handler()`` can be defined by the
                     # developer to implement custom order processing.
                     # Then send the order email to the customer.
-                    
+                    log.debug('Finishing the order')
                     if form.cleaned_data.get('payment_method') == 'paypal':
                         payment = Paypal.find(request)
                         if payment.shipping_info:
@@ -309,15 +313,17 @@ def checkout_steps(request):
                             order.shipping_detail_city = payment.shipping_info.address.city
                             order.shipping_detail_state = payment.shipping_info.address.state
                             order.shipping_detail_postcode = payment.shipping_info.address.postal_code
-                            order.shipping_detail_country = payment.shipping_info.address.country_code                    
-                    
+                            order.shipping_detail_country = payment.shipping_info.address.country_code
+
                     order.transaction_id = transaction_id
                     order.complete(request)
                     order_handler(request, form, order)
+                    log.debug('Sending email')
                     checkout.send_order_email(request, order)
+                    log.debug('Email sent')
                     # Set the cookie for remembering address details
                     # if the "remember" checkbox was checked.
-                    response = redirect("shop_complete")   
+                    response = redirect("shop_complete")
                     if form.cleaned_data.get("remember"):
                         remembered = "%s:%s" % (sign(order.key), order.key)
                         set_cookie(response, "remember", remembered,
@@ -325,6 +331,8 @@ def checkout_steps(request):
                     else:
                         response.delete_cookie("remember")
                     return response
+            else:
+                log.debug('Not last step! Current step %s, last %s' % (step, checkout.CHECKOUT_STEP_LAST))
 
             # If any checkout errors, assign them to a new form and
             # re-run is_valid. If valid, then set form to the next step.
@@ -372,22 +380,27 @@ def complete(request, template="shop/complete.html"):
         names[variation.sku] = variation.product.title
     for i, item in enumerate(items):
         setattr(items[i], "name", names[item.sku])
+    order.complete(request)
+    log.debug('Sending email')
+    checkout.send_order_email(request, order)
+    log.debug('Email sent')
     context = {"order": order, "items": items,
                "steps": checkout.CHECKOUT_STEPS}
     return render(request, template, context)
 
 
-def fetch_resources(uri, rel):
-    import os
-    from django.conf import settings
-    """
-    Callback to allow pisa/reportlab to retrieve Images,Stylesheets, etc.
-    `uri` is the href attribute from the html link element.
-    `rel` gives a relative path, but it's not used here.
+# def fetch_resources(uri, rel):
+#     import os
+#     from django.conf import settings
+#     """
+#     Callback to allow pisa/reportlab to retrieve Images,Stylesheets, etc.
+#     `uri` is the href attribute from the html link element.
+#     `rel` gives a relative path, but it's not used here.
+#
+#     """
+#     path = os.path.join(settings.MEDIA_ROOT, uri.replace(settings.MEDIA_URL, ""))
+#     return path
 
-    """
-    path = os.path.join(settings.MEDIA_ROOT, uri.replace(settings.MEDIA_URL, ""))
-    return path
 
 def invoice(request, order_id, template="shop/order_invoice.html"):
     """
@@ -408,7 +421,7 @@ def invoice(request, order_id, template="shop/order_invoice.html"):
         import ho.pisa as pisa
         import cStringIO as StringIO
         import cgi
-        
+
         result = StringIO.StringIO()
         name = slugify("%s-invoice-%s" % (settings.SITE_TITLE, order.id))
         html = render_to_string(template, {}, context_instance=context)
@@ -421,7 +434,7 @@ def invoice(request, order_id, template="shop/order_invoice.html"):
         #ho.pisa.CreatePDF(html, response)
         return response
     return render(request, template, context)
-    
+
 def fetch_resources(uri, rel):
     import os
     path = os.path.join(settings.STATIC_ROOT, uri.replace(settings.STATIC_URL, ""))

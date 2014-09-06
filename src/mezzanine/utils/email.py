@@ -9,6 +9,10 @@ from mezzanine.conf import settings
 from mezzanine.utils.urls import admin_url, next_url
 from mezzanine.conf.context_processors import settings as context_settings
 
+import logging
+
+log = logging.getLogger(__name__)
+
 
 def split_addresses(email_string_list):
     """
@@ -34,6 +38,7 @@ def send_mail_template(subject, template, addr_from, addr_to, context=None,
     Send email rendering text and html versions for the specified
     template name using the context dictionary passed in.
     """
+    log.debug('Sending email: %s, template %s' % (subject, template))
     if context is None:
         context = {}
     if attachments is None:

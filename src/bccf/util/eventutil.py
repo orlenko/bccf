@@ -49,6 +49,7 @@ def handle_event(request, user, order):
 
             # If payment is paypal everything is good!
             if order.payment_method == 'paypal':
+                log.debug('Payment complete (from handle_event)')
                 order.status = 2
                 order.save()
                 paid = True

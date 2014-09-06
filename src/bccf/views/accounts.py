@@ -1,4 +1,7 @@
 import logging
+from django.shortcuts import resolve_url
+from django.conf import settings
+from bccf.util.emailutil import send_reminder
 log = logging.getLogger(__name__)
 
 from django.contrib.auth import REDIRECT_FIELD_NAME, authenticate, login as auth_login

@@ -1,3 +1,4 @@
+from datetime import datetime
 import urllib2
 import locale
 import logging
@@ -83,11 +84,11 @@ def process(request, order_form, order):
         'LASTNAME': data['billing_detail_last_name'],
         'STREET': data['billing_detail_street'],
         'CITY': data['billing_detail_city'],
-        'STATE': data['billing_detail_state'],
-        'ZIP': data['billing_detail_postcode'],
+        'STATE': (data.get('billing_detail_state') or data.get('billing_detail_province')),
+        'ZIP': (data.get('billing_detail_postcode') or data.get('billing_detail_postal_code')),
         'COUNTRYCODE': data['billing_detail_country'],
         # optional below
-        'SHIPTOPHONENUM': data['billing_detail_phone'],
+        'SHIPTOPHONENUM': (data.get('billing_detail_phone') or data.get('billing_detail_phone_primary')),
         'EMAIL': data['billing_detail_email'],
     }
     trans['custShipData'] = {
@@ -95,14 +96,14 @@ def process(request, order_form, order):
                        data['shipping_detail_last_name']),
         'SHIPTOSTREET': data['shipping_detail_street'],
         'SHIPTOCITY': data['shipping_detail_city'],
-        'SHIPTOSTATE': data['shipping_detail_state'],
-        'SHIPTOZIP': data['shipping_detail_postcode'],
+        'SHIPTOSTATE': (data.get('shipping_detail_state') or data.get('shipping_detail_province')),
+        'SHIPTOZIP': (data.get('shipping_detail_postcode') or data.get('shipping_detail_postal_code')),
         'SHIPTOCOUNTRY': data['shipping_detail_country'],
     }
     trans['transactionData'] = {
         'CREDITCARDTYPE': data['card_type'].upper(),
         'ACCT': data['card_number'].replace(' ', ''),
-        'EXPDATE': (data['card_expiry_month'] + data['card_expiry_year']),
+        'EXPDATE': (data['card_expiry_month'] + (data['card_expiry_year'] or str(datetime.now().year + 1))),
         'CVV2': data['card_ccv'],
         'AMT': trans['amount'],
         'INVNUM': str(order.id)
