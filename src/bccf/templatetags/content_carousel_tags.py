@@ -1,10 +1,12 @@
 from django.db.models import get_model, ObjectDoesNotExist, Q
 from mezzanine import template
 from mezzanine.pages.models import Page
+from datetime import timedelta
 
-from bccf.models import BCCFChildPage, BCCFPage, Campaign, Article
+from bccf.models import BCCFChildPage, BCCFPage, Campaign, Article, Event
 from formable.builder.models import FormPublished
 from pybb.models import Topic
+from django.utils import timezone
 
 import logging
 import re
@@ -44,7 +46,6 @@ def content_carousel_for(context, obj, title, child=None, which=None):
     context['carousel_title'] = title
     context['carousel_name'] = which
     context['slides'] = []
-
     limit = 12
 
     slides = BCCFChildPage.objects.by_gparent(obj)
@@ -64,8 +65,12 @@ def content_carousel_for(context, obj, title, child=None, which=None):
             slides = slides.filter(~Q(slug=child))
             limit = 11
         if obj.slug == 'bccf/trainings':
-            context['slides'].extend(slides.order_by('-created')[:limit])
+            order = Event.objects.published().filter(date_start__gte=timezone.now().date()).order_by('date_start')
+            order = order.filter(page_for=context['carousel_name'])
+            context['open'] = True
+            context['slides'].extend(order)
         else:
+            print "else"
             context['slides'].extend(slides.order_by('-created')[:limit])
             
     except ObjectDoesNotExist, e:
