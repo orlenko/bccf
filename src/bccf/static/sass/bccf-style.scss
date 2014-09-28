@@ -1220,6 +1220,12 @@ textarea {
     background:$grey-stripes repeat;
     overflow:hidden;
 
+    h2 {background:$lyellow url(../img/header-colour-bg-yellow.gif) left top repeat-y;
+        height:50px;
+        font-weight:300;
+        font-size:24px;
+        padding:8px 34px 8px 80px;
+        display:table-cell;}
 	#carousel-resources {
 		margin:40px 0 20px;
 		float:left;
@@ -3076,6 +3082,24 @@ table td {
     color: $sgreen;
 }
 
+.user-box {
+    height: 100%;
+    img {
+        position: absolute;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .info {
+        padding-top: 170px;
+        padding-left: 0px;
+    }
+    .user-rating-box {
+        position: relative;
+        top: 0px;
+        left: 4px;
+    }
+}
 .my-rating {
     position: static;
     text-align: left;
